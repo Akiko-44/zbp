@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+
+<body class="userAccount">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include userHeaderNav.ejs %>
+
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+				<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+
+				<div class="userPhoneWrap">
+					<div class="panel userPanel">
+						<div class="panel-header">
+							<div class="panel-title">更换手机号码</div>
+						</div>
+						<div class="panel-body">
+							<div class="stepWrap">
+								<ul class="clearfix">
+									<li class="fl cur">
+										<p>验证手机号</p>
+										<span><i class="icon icon-userSuccess"></i></span>
+									</li>
+									<li class="fl" style="margin-left: 150px">
+										<p>修改手机号</p>
+										<% if(data.phone == 0){ %>
+										<span>2</span>
+										<% }else{ %>
+										<span><i class="icon icon-userSuccess"></i></span>
+										<% } %>
+										<input type="hidden" class="phoneNum" value="<%= data.phone %>">
+									</li>
+									<li class="fr">
+										<p>修改成功</p>
+										<% if(data.phone == 1){ %>
+										<span>
+											<i class="icon icon-userSuccess"></i>
+										</span>
+										<% }else{%>
+										<span>3</span>
+										<% } %>
+									</li>
+								</ul>
+							</div>
+							<% if(data.phone != 1){ %>
+							<form class="clearfix">
+								<input type="hidden" class="codeUuid" name="codeUuid">
+								<input type="hidden" class="msgId" name="msgId" value="">
+								<table>
+									<tr>
+										<td width="310">
+											<% if(data.phone == 0){ %>
+											<input type="text" class="w300" name="mobilePhone" readonly maxlength="11" datatype="/^1\d{10}$/"
+												nullmsg="请输入手机号" errormsg="手机号码格式错误">
+											<% }else{ %>
+											<input type="text" class="w300" name="mobilePhone" maxlength="11" datatype="/^1\d{10}$/"
+												nullmsg="请输入手机号" errormsg="手机号码格式错误">
+											<% } %>
+
+										</td>
+										<td width="310">
+											<span class="Validform_checktip"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<input type="text" class="w200" name="verifyCode" placeholder="请输入验证码" maxlength="6"
+												datatype="s1-6" nullmsg="请输入验证码" errormsg="请输入验证码">
+											<img src="" class="fr codeImg" width="96" height="40">
+											<p class="error">按右图填写 不区分大小写</p>
+										</td>
+										<td>
+											<a class="refreshBtn"><i class="icon icon-refresh"></i></a>
+											<span class="Validform_checktip"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<input type="text" class="w200" name="dynamicVerifyCode" placeholder="请输入验证码" maxlength="6"
+												datatype="s1-6" nullmsg="请输入验证码" errormsg="请输入验证码">
+											<a class="btn btn-warning codeBtn">获取验证码</a>
+										</td>
+										<td>
+											<span class="Validform_checktip"></span>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<p id="errorText"></p>
+										</td>
+									</tr>
+									<tr>
+										<td class="tc">
+											<a class="btn btn-warning submitBtn">提交</a>
+										</td>
+										<td></td>
+									</tr>
+								</table>
+								<br><br>
+							</form>
+							<% }else{ %>
+							<form class="tc">
+								<br>
+								<div>
+									<i class="icon icon-phoneSuccess"></i>
+								</div>
+								<p style="font-size: 18px;margin: 40px 0">
+									<strong>修改成功！<i id="countdown">3</i>秒后重新登录</strong>
+								</p>
+								<br><br>
+							</form>
+							<% } %>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<%- include ../footernew.ejs %>
+
+
+	<script>
+		var routerVm = new Vue({
+			el: "#router"
+		})
+		$(".userLeftNav li li:eq(0)").addClass("cur");
+
+		var uuid = utils.uuid();
+		var phoneValidform1 = $(".userPhoneWrap form").Validform({
+			tiptype: 2
+		});
+		$.Tipmsg.r = "";
+
+		$(".userPhoneWrap .codeImg").attr("src", "../../api/userCenter/verifyCode/getCode/" + uuid);
+		$(".userPhoneWrap .codeUuid").val(uuid);
+		$(".userPhoneWrap input[name='mobilePhone']").val(utils.getCookie("phone"))
+		var flag = false;
+		var submitFlag = false;
+		$(document).on("click", ".userPhoneWrap .refreshBtn", function () {
+			//刷新验证码
+			uuid = utils.uuid();
+			$(".userPhoneWrap .codeImg").attr("src", "../../api/userCenter/verifyCode/getCode/" + uuid);
+			$(".userPhoneWrap .codeUuid").val(uuid);
+		}).on("click", ".userPhoneWrap .codeBtn", function () {
+			//获取验证码
+			if (submitFlag) {
+				return;
+			}
+			var $phone = $(".userPhoneWrap input[name='mobilePhone']");
+			var $verifyCode = $(".userPhoneWrap input[name='verifyCode']");
+			$phone.blur();
+			$verifyCode.blur();
+
+			if (!$phone.hasClass("Validform_error") && !$verifyCode.hasClass("Validform_error")) {
+				var phone = $.trim($phone.val());
+				var verifyCode = $.trim($verifyCode.val());
+				submitFlag = true;
+				var json = {
+					mobilePhone: phone,
+					verifyCode: verifyCode,
+					codeUuid: $(".userPhoneWrap .codeUuid").val()
+				}
+				utils.ajax({
+					url: "/api/userCenter/smscode",
+					data: JSON.stringify(json),
+					success: function (data) {
+						if (data.success) {
+							$(".userPhoneWrap input[name='msgId']").val(data.data);
+							if (flag) {
+								var i = 120;
+								var timer = setInterval(function () {
+									i--;
+									$(".codeBtn").text('重发(' + i + ')');
+								}, 1000);
+								setTimeout(function () {
+									clearInterval(timer);
+									$(".codeBtn").text('重发');
+									submitFlag = false;
+								}, 120000);
+							} else {
+
+								var i = 120;
+								var timer = setInterval(function () {
+									i--;
+									$(".codeBtn").text('已发送(' + i + ')');
+								}, 1000);
+								setTimeout(function () {
+									clearInterval(timer);
+									$(".codeBtn").text('重发');
+									flag = true;
+									submitFlag = false;
+								}, 120000);
+
+
+							}
+						} else {
+							submitFlag = false;
+							$("#errorText2").text(data.msg);
+						}
+					},
+					error: function () {
+						submitFlag = false;
+					}
+				})
+			} else {
+				submitFlag = false;
+			}
+		}).on("click", ".userPhoneWrap .submitBtn", function () {
+			//提交
+			var phoneNum = $(".userPhoneWrap .phoneNum").val();
+			if (phoneNum == 0) {
+				//验证手机号
+				if (phoneValidform1.check(false)) {
+					var str = $(".userPhoneWrap form").serialize();
+					str = utils.str2json(str);
+					utils.ajax({
+						url: "/api/userCenter/mobile-phone/validate",
+						data: JSON.stringify(str),
+						success: function (data) {
+							if (data.success) {
+								location.href = "../../user/acc_phone/" + str.mobilePhone;
+							} else {
+								$(".userPhoneWrap #errorText").text(data.msg);
+							}
+						}
+					})
+				}
+			} else {
+				//修改手机号
+				if (phoneValidform1.check(false)) {
+					var str = $(".userPhoneWrap form").serialize();
+					str = utils.str2json(str);
+					utils.ajax({
+						url: "/api/userCenter/mobile-phone/change",
+						data: JSON.stringify(str),
+						success: function (data) {
+							if (data.success) {
+								utils.alert("success", "修改成功，需重新登录")
+								location.href = "../../login";
+							} else {
+								$(".userPhoneWrap #errorText").text(data.msg);
+							}
+						}
+					})
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>

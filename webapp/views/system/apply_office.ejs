@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/cropper.min.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/ImgCropping.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.img_type{color: #999;line-height: 18px;font-size: 12px;}
+.contentWrap {
+	width: 960px;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+.uploadbox {
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+	position: relative;
+}
+.uploadbox img{
+	position: absolute;
+	top: 50%;
+	left: 0;
+	-webkit-transform: translateY(-50%)
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+#getCode{
+	display: inline-block;
+	width: 80px;
+	height: 30px;
+	position: relative;
+	cursor: pointer;
+}
+#getCode span{
+	display: inline-block;
+	width: 80px;
+	height: 30px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	line-height: 30px;
+	color: #C26A3E;
+	background: #CCCCCC;
+}
+.codeImg{
+	width: 100%;
+	height: 100%;
+}
+.select-cat:not(:first-child){
+	display: none;
+}
+.el-checkbox{
+	margin-left: 30px;
+  margin-bottom: 10px;
+}
+</style>
+</head>
+<body class="business-bd">
+	
+	<%- include loginHeader %>
+	
+	<div class="contentWrap" id="apply">
+	
+		<div class="stepWrap">
+			<ul class="clearfix">
+				<li class="fl cur">
+					<span>
+						<i class="icon icon-businessStep1"></i>
+					</span>
+					<p>注册账号</p>
+				</li>
+				<li class="fl cur" style="margin-left: 150px">
+					<span>
+						<i class="icon icon-businessStep2_2"></i>
+					</span>
+					<p>选择类型</p>
+				</li>
+				<li class="fr cur">
+					<span>
+						<i class="icon icon-businessStep3_2"></i>
+					</span>
+					<p>填写资料</p>
+				</li>
+			</ul>
+		</div>
+		
+		<div>
+			<form id="applyForm">
+				<input type="hidden" name="id"/>
+				<input type="hidden" name="merchantType" value="2">
+				<table>
+					<!--<tr>
+						<td width="115" valign="top"><h4>注册主体<span class="red">*</span></h4><br><br><br></td>
+						<td valign="top">
+							<label>
+								<input type="radio" name="registType" value="2" checked="checked">
+								公司
+							</label>
+							<label>
+								<input type="radio" name="registType" value="1">
+								个人
+							</label>
+						</td>
+					</tr>-->
+					<tr>
+						<td colspan="2">
+							<h4>{{registTxt}}名称<span class="red">*</span></h4>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div>
+								<input type="text" name="name"
+									v-model="detail.name"
+									datatype="*1-20" 
+									nullmsg="请输入设计师名称" 
+									maxlength="20" 
+									errormsg="设计师名称1-20字以内">
+								<p class="tip">1-20字以内，请勿使用含特殊符号或营销推广意图的店铺名</p>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<!--<tr>
+						<td colspan="2"><h4>{{registTxt}}类别<span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div>
+								<select name="type" v-if="registType == 2"
+								datatype="*" 
+								nullmsg="请选择设计师类别" 
+								errormsg="请选择设计师类别">
+									<option value="1">首饰设计</option>
+									<option value="2">玉石雕刻</option>
+								</select>
+								<select name="type" v-else
+								datatype="*" 
+								nullmsg="请选择设计师类别" 
+								errormsg="请选择设计师类别">
+									<option value="1">首饰设计</option>
+									<option value="2">玉石雕刻</option>
+								</select>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>-->
+				</table>
+				<table>
+					<thead>
+						<tr>
+							<td colspan="3"><h4>主营类目<span class="red">*</span></h4></td>
+						</tr>
+					</thead>
+					<tbody id="secondCategoryList">
+						<tr>
+							<td colspan="3">
+								<el-checkbox-group v-model="detail.catList" @change="$forceUpdate()">
+						      <el-checkbox :label="item.id" v-for="item in secondCategoryList" :key="item.id">{{item.catName}}</el-checkbox>
+						    </el-checkbox-group>	
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<table>
+					<tr>
+						<td colspan="2"><h4>设计师logo<span class="red">*</span></h4></td>
+						<td colspan="2"><h4>设计师背景图<span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td valign="top" colspan="2">
+							<div class="clearfix">
+								<div class="uploadbox" data-target="logo">
+									<img v-if="detail.logo" :src="detail.logo | formatImg" width="100%"/>
+								</div>
+							</div>
+							 <p class="tip">1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</p>
+							<div>
+								<input type="hidden" name="logo" datatype="*"
+								v-model="detail.logo"
+								nullmsg="请上传 " 
+								errormsg="请上传">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td valign="top" colspan="2">
+							<div class="clearfix">
+								<div class="uploadbox" data-target="backgroundImg">
+									<img v-if="detail.backgroundImg" :src="detail.backgroundImg | formatImg" width="100%"/>
+								</div>
+              </div>
+              <p class="tip">1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</p>
+							<div>
+								<input type="hidden" name="backgroundImg" datatype="*"
+								v-model="detail.backgroundImg"
+								nullmsg="请上传 " 
+								errormsg="请上传">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3"><h4>设计师简介<span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td valign="top" colspan="3">
+							<div>
+								<textarea name="merchantExplain" v-model="detail.merchantExplain" maxlength="300" placeholder="300字以内，内容完整通畅、无特殊符号或者微信、QQ、微博、手机号等联系方式" 
+								datatype="*1-300" 
+								nullmsg="请输入店铺简介" 
+								errormsg="店铺简介300字以内"></textarea>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<tr>
+							<td colspan="3"><h4>联系地址<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td width="210" valign="top">
+								<div class="w200">
+									<select name="provinceId"
+									datatype="*" 
+									nullmsg="请选择联系地址" 
+									errormsg="请选择联系地址">
+										<option v-for="item in province" :value="item.regionId">{{item.regionName}}</option>
+									</select>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td width="210" valign="top">
+								<div class="w200">
+									<select name="cityId" datatype="*"
+									nullmsg="请选择所在地" 
+									errormsg="请选择所在地">
+										<option v-for="item in city" :value="item.regionId">{{item.regionName}}</option>
+									</select>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td valign="top">
+								<div class="w200">
+									<select name="countryId" datatype="*"
+									nullmsg="请选择所在区" 
+									errormsg="请选择所在区">
+										<option v-for="item in country" :value="item.regionId">{{item.regionName}}</option>
+									</select>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td width="510" valign="top" colspan="3">
+								<div>
+									<input type="text" name="address"  v-model="detail.address" maxlength="50">
+									<p class="tip">详细地址，具体到小区、街道</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+						<td colspan="3"><h4>门牌号<span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div>
+								<input name="houseNumber" 
+								v-model="detail.houseNumber"
+								type="text" 
+								datatype="*1-6" 
+								nullmsg="请输入门牌号"
+								errormsg="6个字以内"
+								maxlength="6"
+								placeholder="">
+								<p class="tip">即联系地址的门牌号，6个字以内</p>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3"><h4>电子邮箱<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<div>
+									<input type="text" class="email" v-model="detail.email" name="email" maxlength="100" datatype="/^\s*$/|e" nullmsg="请输入电子邮箱" errormsg="邮箱格式错误" placeholder="">
+									<p class="tip">需填写可用的邮箱，用于接收银联商务发送的信息</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+				</table>
+				<table>
+					<tr>
+						<td colspan="2"><h4>开户名称<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div>
+									<input type="text" name="realName"
+										 v-model="detail.realName"
+									datatype="realName" 
+									nullmsg="20字以内，只支持英文括号" 
+									maxlength="20"
+									errormsg="20字以内，只支持英文括号"
+									placeholder="">
+									<p class="tip">开户人的真实姓名，与实名认证者保持一致</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>个人银行账号<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div>
+									<input type="text" name="bankAccount" 
+									 v-model="detail.bankAccount"
+									datatype="s1-30" 
+									nullmsg="请输入个人银行账号" 
+                  errormsg="30字以内"
+                  placeholder="30字以内">
+                  <p class="tip">即个人银行卡号</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>开户银行<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div>
+									<input type="text" name="bankName"
+										v-model="detail.bankName"
+										datatype="*1-30" 
+										nullmsg="请输入开户银行" 
+										errormsg="30个字以内"
+										placeholder="30个字以内">
+									<p class="tip">即个人银行卡的开户行名称，具体到支行</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>开户银行联行号<span class="red">*</span></h4>（<a target="_blank" href="https://www.icvio.cn/">开户银行联行号查询入口</a>）</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div>
+									<input type="text" name="bankNumber"
+										v-model="detail.bankNumber"
+										maxlength="12"
+										datatype="n12-12" 
+										nullmsg="请输入正确的开户银行联行号" 
+										errormsg="请输入正确的开户银行联行号"
+										placeholder="请输入开户银行联行号">
+										<p class="tip">可通过查询入口（https://www.icvio.cn）获得开户行联行号；由12位数字组成</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						
+				</table>
+				<table>
+					<tr>
+						<!--<td width="120"><h4>自拍照<span class="img_type">(手持身份证自拍照)</span><span class="red">*</span></h4></td>-->
+						<td width="120"><h4>店铺招牌照片<span class="red">*</span></h4></td>
+						<td width="120"><h4>店铺内部照片<span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td valign="top">
+							<div class="clearfix">
+								<div class="uploadbox" data-target="doorPhotos">
+									<img v-if="detail.doorPhotos" :src="detail.doorPhotos | formatImg" width="100%"/>
+								</div>
+								<div class="fl">
+									<p class="tip">1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</p>
+								</div>
+							</div>
+							<div>
+								<input type="hidden" name="doorPhotos" datatype="*" 
+								v-model="detail.doorPhotos"
+								nullmsg="请上传 " 
+								errormsg="请上传">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td>
+							<div class="clearfix">
+								<div class="uploadbox" data-target="idroomPic">
+									<img v-if="detail.idroomPic" :src="detail.idroomPic | formatImg" width="100%"/>
+								</div>
+								<div class="fl">
+									<p class="tip">1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</p>
+								</div>
+							</div>
+							<div>
+								<input type="hidden" name="idroomPic" datatype="*"
+								v-model="detail.idroomPic"
+								nullmsg="请上传 " 
+								errormsg="请上传">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>						
+					</tr>
+					<tr>
+						<td width="120"><h4>辅助材料照片<span class="img_type">(包括但不限于营业场所租赁协议或者产权证明、集中经营场所管理方出具的证明文件等能够反映小微商户真实、合法从事商品或服务交易活动的材料；1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限；)</span><span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td valign="top">
+							<div class="clearfix">
+								<div class="uploadbox" data-target="material">
+									<img v-if="detail.material" :src="detail.material | formatImg" width="100%"/>
+								</div>
+							</div>
+							<div>
+								<input type="hidden" name="material" datatype="*" 
+								v-model="detail.material"
+								nullmsg="请上传 " 
+								errormsg="请上传">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+				</table>
+				
+				<div>
+					<table>
+						<tr>
+							<td colspan="2"><hr></td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>实名认证<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2" class="certification">
+								<table>
+									<thead>
+										<tr>
+											<th>姓名</th>
+											<th>身份证号</th>
+											<th>身份证照片</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="item in cards" :data-list="JSON.stringify(item)">
+											<td>{{item.linkName}}</td>
+											<td>{{item.idCard}}</td>
+											<td>已上传</td>
+											<td>
+												<span class="red" v-if="item.status==1">已提交</span>
+												<span class="green" v-else-if="item.status==0">已通过</span>
+											</td>
+											<td>
+												<a class="uploadBtn blue">修改</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<div class="tc">
+									<a class="btn btn-danger showAddCardBtn" v-if="!cards.length">添加</a>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<h4>手机验证<span class="red">*</span></h4>
+								<input type="hidden" name="mobilePhone" class="mobilePhone" v-model="mobilePhone">
+								<span>已绑定手机号码：{{mobilePhone}}，该手机号默认是注册的手机号，后期将用于登录商家后台、及提现等重要业务</span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="imgCode fl">
+									<div class="clearfix">
+										<input type="hidden" class="codeUuid" value="">
+										<input type="text" class="verifyCode" maxlength="6" datatype="*1-6" nullmsg="请输入验证码" errormsg="请输入验证码">
+										<span id="getCode"><img src="" class="codeImg"><span>查看验证码</span></span>
+									</div>
+									<p class="Validform_checktip"></p>
+								</div>
+								<div class="fl msgCode">
+									<div class="clearfix">
+										<input type="hidden" name="msgId" value="" />
+										<input type="text" class="dynamicVerifyCode" name="dynamicVerifyCode" maxlength="6" datatype="s1-6" nullmsg="请输入验证码" errormsg="请输入验证码">
+										<a class="btn btn-danger codeBtn">获取短信验证码</a>
+									</div>
+									<p class="Validform_checktip"></p>
+								</div>
+								
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="tc">
+								<br>
+								<label class="checkbox">
+									<span class="checkbox-input">
+										<span class="checkbox-input-inner"></span>
+									</span>
+									<span class="checkbox-label">
+										我已阅读和接受
+										<a class="blue" onclick="$('#agreement3').addClass('show')">《中宝协云平台开店协议》</a>和
+										<a class="blue" onclick="$('#protocol').addClass('show')">TN自由划付业务合作协议（三方协议）</a>
+									</span>
+								</label>
+								<br>
+								<br>
+								<br>
+								<br>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="tc">
+								<a class="btn backBtn w200" @click="back">上一步</a>
+								<a class="btn btn-danger submitBtn w200" @click="save($event)">提交开店</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+	<!--图片裁剪框 start-->
+	<div style="display: none" class="tailoring-container">
+		<div class="black-cloth" onclick="closeTailor(this)"></div>
+		<div class="tailoring-content">
+			<div class="tailoring-content-one">
+				<label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+	                    <input type="file" accept="image/jpg,image/jpeg,image/png" name="bgfile" id="chooseImg" class="hidden" onchange="selectImg(this)">
+	                    选择图片
+	                </label>
+				<div class="close-tailoring" onclick="closeTailor(this)">×</div>
+			</div>
+			<div class="tailoring-content-two">
+				<div class="tailoring-box-parcel">
+					<img id="tailoringImg">
+				</div>
+				<div class="preview-box-parcel">
+					<p>图片比例：355*175</p>
+				</div>
+			</div>
+			<div class="tailoring-content-three">
+				<button class="l-btn sureCut" id="sureCut">确定</button>
+			</div>
+		</div>
+	</div>
+	<!--图片裁剪框 end-->
+	<br><br><br><br><br><br><br><br>
+
+<%- include agreement.ejs %>
+<%- include protocol.ejs %>
+<%- include ./cardDialog.ejs %>
+<%- include ./applyCode.ejs %>
+<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+     <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+</form>	
+<script>
+var applyVm = new Vue({
+	el: "#apply",
+	data: {
+		detail: {
+		  catList: []
+		},
+		mobilePhone: utils.getCookie("phone"),
+		
+		secondCategoryList: [],
+		
+		categoryId1: [],
+		categoryId2: [],
+		categoryId3: [],
+		
+		categoryList: [],
+		
+		province: [],
+		city: [],
+		country: [],
+		
+		cards: [],
+		
+		registType: 1,
+		registTxt: '设计师'
+	},
+	mounted: function(){
+//  $(".dialog-title").text("实名认证")
+		var self = this;
+		window.applyValidform = $("#apply form").Validform({
+			tiptype: 2,
+			datatype:{
+		        "realName": function(gets,obj,curform,regxp){
+		            //参数gets是获取到的表单元素值，obj为当前表单元素，curform为当前验证的表单，regxp为内置的一些正则表达式的引用;
+		            if ((gets.indexOf('（') === -1 || gets.indexOf('）') === -1) && gets.length <= 30) { return true; }
+		 			return false;
+		            //注意return可以返回true 或 false 或 字符串文字，true表示验证通过，返回字符串表示验证失败，字符串作为错误提示显示，返回false则用errmsg或默认的错误提示;
+		        }
+		    },
+		})
+		$.Tipmsg.r = "";
+		
+		$.ajax({
+			url: "/api/userCenter/merchantInfo/info",
+			type: "get",
+			beforeSend : function(request) {
+			　　request.setRequestHeader("Authorization", utils.getCookie("token"))
+			},
+			success: function(data){
+				if(data.success){
+					$('[name=id]').val(data.data.id)
+				}
+			}
+		})
+		var data = {
+			flag: 0
+		}
+		
+		self.detailData()
+		
+		utils.ajax({
+			url: "/admin/category/getSecondCategoryList",
+			type:"get",
+			success: function(data){
+				self.secondCategoryList = data.data
+				self.secondCategoryList.map(item => {
+	      	item.selected = false
+	      	if(self.detail.categoryDTOList && self.detail.categoryDTOList.length) {
+	      		self.detail.categoryDTOList.map(citem => {
+		      		if(item.id == citem.secondCatId) {
+				  			item.selected = true
+		      		}
+				  	})
+	      	}
+	     })
+			}
+		})
+		
+		utils.ajax({
+			url: "/admin/category/getCategoryList/0",
+			type:"get",
+			success: function(data){
+				data = data.data;
+				// self.categoryList = data;
+				self.categoryId1 = data;
+				setTimeout(function(){
+					$("[name='categoryId1']").trigger("change")
+				}, 100)
+			}
+		})
+		utils.ajax({
+			url: "/admin/region/list/0",
+			type:"get",
+			success: function(data){
+				data = data.data;
+				self.province = data;
+				setTimeout(function(){
+					$("[name='provinceId']").trigger("change")
+					setTimeout(function(){
+						$("[name='cityId']").trigger("change")
+					},100)
+				}, 100)
+			}
+		})
+		
+//		self.getCards();
+	},
+	methods: {
+		back: function(){
+			location.href = "/user/openShop"
+		},
+		detailData: function(){
+			var self = this
+			$.ajax({
+				url: "/api/userCenter/merchantInfo/info",
+				type: "get",
+				beforeSend: function(request){
+					var _t = utils.getCookie("token");
+					if(!!_t){
+						request.setRequestHeader("Authorization", _t);
+					}
+				},
+				success: function(res){
+					if(res.success){
+						var data = res.data;
+            self.detail = data;
+            self.cards = data.linkmanList
+            $("[name='provinceId'] option:selected").text(self.detail.provinceName)
+            setTimeout(() => {
+              $("[name='cityId'] option:selected").text(self.detail.cityName)
+              setTimeout(() => {
+                $("[name='countryId'] option:selected").text(self.detail.countryName) 
+              }, 300);
+            }, 300);
+						self.detail.catList = self.detail.categoryDTOList.map(item => item.secondCatId)
+						$("[name=registType][value="+data.registType+"]").attr('checked', true)
+					}
+				}
+			})
+		},
+		getCards: function(){
+			var self = this;
+			utils.ajax({
+				url: "/api/userCenter/auth/list",
+				type: "get",
+				success: function(data){
+					data = data.data;
+//					self.cards = data;
+					
+				}
+			})
+		},
+		save: function(){
+			var self = this;
+			if(!$(".checkbox").hasClass("checked")){
+				utils.alert("info", "您未同意中宝协云平台商家用户注册协议");
+				return;
+			}
+			if(applyValidform.check(false)){
+				
+				clearInterval(timer);
+				$(".codeBtn").text('重发');
+				submitFlag = false;
+				
+				var str = $("#applyForm").serialize();
+				str = utils.str2json(str);
+				
+				/* 暂时取代字符转义，后续整个优化 */
+				str.name = $('[name=name]').val().trim();
+				str.companyName = $('[name=companyName]').val() == undefined ? '' : $('[name=companyName]').val().trim();
+				str.merchantExplain = $('[name=merchantExplain]').val().trim();
+				/*str.categoryDesc = $('[name=categoryDesc]').val().trim();*/
+				str.houseNumber = $('[name=houseNumber]').val().trim();
+				str.address = $('[name=address]').val().trim();
+				str.taxNumber = $('[name=taxNumber]').val() == undefined ? '' : $('[name=taxNumber]').val().trim();
+				str.realName = $('[name=realName]').val().trim();
+				str.bankName = $('[name=bankName]').val().trim();
+				str.bankNumber = $('[name=bankNumber]').val().trim();
+				str.bankAccount = $('[name=bankAccount]').val().trim().replace(/ /g, '');
+				str.codeUuid = $('.codeUuid').val().trim();
+				str.verifyCode = $('.verifyCode').val().trim();
+				str.email = $('[name=email]').val().trim();
+				
+				str.provinceName = $("[name='provinceId'] option:selected").text()
+				str.cityName = $("[name='cityId'] option:selected").text()
+				str.countryName = $("[name='countryId'] option:selected").text()
+				str.categoryName1 = $("[name='categoryId1'] option:selected").text()
+				str.categoryName2 = $("[name='categoryId2'] option:selected").text()
+				str.categoryDTOList = []
+				applyVm.secondCategoryList.map(item => {
+					if(applyVm.detail.catList.includes(item.id)) {
+						str.categoryDTOList.push({
+							secondCatId: item.id,
+							secondCatName: item.catName
+						})
+					}
+				})
+				str.linkmanList = self.cards
+				utils.ajax({
+					url: "/api/userCenter/merchantInfo/saveOrUpdate",
+          data: JSON.stringify(str),
+          el: e.target,
+					success: function(data){
+						if(data.success){
+							utils.alert("success", "提交成功")
+							setTimeout(function(){
+								location.href = "../../system/apply_checking"
+							}, 2000)
+						}else{
+							utils.alert("danger", data.msg)
+						}
+					}
+				})
+			}else{
+				utils.alert("info", "请检查资料是否填写完整")
+			}
+		},
+		download: function(){
+			utils.download("../../src/file/银联商务自由划付业务承诺书.docx");
+		}
+	},
+	filters: {
+		formatImg: utils.formatImg()
+	}
+})
+$(function(){
+
+	$(document).on("click", "#applyForm .uploadbox", function(e){
+		var t = $(e.currentTarget).attr("data-target");
+		if(t != 'backgroundImg'){
+			$("#form1 input").attr("data-target", t);
+			$("#form1 input").trigger("click");
+		}else{
+			$(".tailoring-container").toggle();
+			$('body').css('overflow','hidden')
+		}	
+	}).on("click", ".showAddCardBtn", function(){
+		if(applyVm.cards.length>0){
+			utils.alert("danger", "只能上传一条实名认证信息");
+			return;
+		}
+		$(".addCardDialog").addClass("show");
+		resetDialog();
+	}).on("change", "[name='provinceId']", function(){
+    var val = $(this).val();
+    applyVm.city = []
+    applyVm.country = []
+		utils.ajax({
+			url: "/admin/region/list/" + val,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				applyVm.city = data
+				setTimeout(function(){
+					$("[name='cityId']").trigger("change")
+				},100)
+			}
+		})
+	}).on("change", "[name='cityId']", function(){
+		var val = $(this).val();
+		utils.ajax({
+			url: "/admin/region/list/" + val,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				applyVm.country = data
+			}
+		})
+	}).on("change", "[name='categoryId1']", function(){
+		// $(this).closest('tr').find('[name="categoryName3"]').val('')
+		// $(this).closest('tr').find('[name="categoryId3"]').val('')
+		// var val = $(this).find('option:selected').val();
+		// var self = this;
+		// applyVm.categoryList.forEach(function(item, i){
+		// 	if(val && item.id == val){
+		// 		var html = [];
+		// 		item.children.forEach(function(item, i){
+		// 			html.push('<option value="'+item.id+'">'+item.name+'</option>')
+		// 		})
+		// 		$(self).closest('td').next().find('[name="categoryId2"]').html(html.join(''));
+		// 		$(self).closest('td').next().find('[name="categoryId2"]').trigger('change')
+		// 	}
+    // })
+    var val = $(this).val();
+		var self = this;
+		utils.ajax({
+			url: "/admin/category/getCategoryList/" + val,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				var html = [];
+				data.forEach(function(item, i){
+					html.push('<option value="'+item.id+'">'+item.catName+'</option>')
+				})
+				$(self).closest('td').next().find('[name="categoryId2"]').html(html.join(''));
+				$(self).closest('td').next().find('[name="categoryId2"]').trigger('change')
+			}
+		})
+	}).on("change", "[name='categoryId2']", function(){
+		// var val = $(this).closest('tr').find('[name="categoryId1"] option:selected').val();
+		// var val2 = $(this).val();
+		// var self = this;
+		// applyVm.categoryList.forEach(function(item, i){
+		// 	if(val && item.id == val){
+		// 		item.children.forEach(function(citem, ci){
+		// 			if(val2 && citem.id == val2){
+		// 				var html = [];
+		// 				citem.children.forEach(function(citem, i){
+		// 					html.push('<option value="'+citem.id+'">'+citem.name+'</option>')
+		// 				})
+		// 				$(self).closest('td').next().find('[name="categoryId3"]').html(html.join(''));
+		// 			}
+		// 		})
+		// 	}else{
+				
+		// 	}
+    // })
+    var val = $(this).val();
+		var self = this;
+		if(val){
+			utils.ajax({
+				url: "/admin/category/getCategoryList/" + val,
+				type:"get",
+				success: function(data){
+					data = data.data;
+					var html = [];
+					data.forEach(function(item, i){
+						html.push('<option value="'+item.id+'">'+item.catName+'</option>')
+					})
+					$(self).closest('td').next().find('[name="categoryId3"]').html(html.join(''));
+				}
+			})
+		}else{
+			$(self).closest('td').next().find('[name="categoryId3"]').html('');
+		}
+	}).on("click", ".addCat", function(){
+		var len = $('.select-cat:visible').length
+		len ++
+		for(var i = 0; i<len; i++){
+			$('.select-cat').eq(i).show()
+		}
+	}).on("click", ".removeCat", function(){
+		$(this).closest('.select-cat').hide();
+		$(this).closest('.select-cat').find("input").val("");
+	}).on("change", "[name='registType']", function(){
+		var val = $("[name='registType']:checked").val();
+		applyVm.registType = val;
+		if(val == '1'){
+			applyVm.registTxt = '设计师'
+		}else{
+			applyVm.registTxt = '设计师'
+		}
+	})
+	
+})
+//弹出框水平垂直居中
+var win_height = $(window).height();
+var win_width = $(window).width();
+if (win_width <= 768){
+    $(".tailoring-content").css({
+        "top": (win_height - $(".tailoring-content").outerHeight())/2,
+        "left": 0
+    });
+}else{
+    $(".tailoring-content").css({
+        "top": (win_height - $(".tailoring-content").outerHeight())/2,
+        "left": (win_width - $(".tailoring-content").outerWidth())/2
+    });
+}
+//图像上传
+function selectImg(file) {
+    if (!file.files || !file.files[0]){
+        return;
+    }
+    if(!/image\/\w+/.test(file.files[0].type)){
+			utils.alert("info", "请上传图片文件")
+			return false
+		}
+    var reader = new FileReader();
+    reader.onload = function (evt) {
+        var replaceSrc = evt.target.result;
+        //更换cropper的图片
+        $('#tailoringImg').cropper('replace', replaceSrc,false);//默认false，适应高度，不失真
+    }
+    reader.readAsDataURL(file.files[0]);
+}
+//cropper图片裁剪
+$('#tailoringImg').cropper({
+    aspectRatio: 355/175,//默认比例
+    preview: '.previewImg',//预览视图
+    guides: false,  //裁剪框的虚线(九宫格)
+    autoCropArea: 0.5,  //0-1之间的数值，定义自动剪裁区域的大小，默认0.8
+    movable: false, //是否允许移动图片
+    dragCrop: true,  //是否允许移除当前的剪裁框，并通过拖动来新建一个剪裁框区域
+    movable: true,  //是否允许移动剪裁框
+    resizable: true,  //是否允许改变裁剪框的大小
+    zoomable: false,  //是否允许缩放图片大小
+    mouseWheelZoom: false,  //是否允许通过鼠标滚轮来缩放图片
+    touchDragZoom: true,  //是否允许通过触摸移动来缩放图片
+    rotatable: true,  //是否允许旋转图片
+    crop: function(e) {
+        // 输出结果数据裁剪图像。
+    }
+});
+
+//裁剪后的处理
+$("#sureCut").on("click",function () {
+    if ($("#tailoringImg").attr("src") == null ){
+        return false;
+    }else{
+        var cas = $('#tailoringImg').cropper('getCroppedCanvas');//获取被裁剪后的canvas
+        var base64url = cas.toDataURL('image/png'); //转换为base64地址形式
+        $("#finalImg").prop("src",base64url);//显示为图片的形式
+				$('[data-target="backgroundImg"]').html('<img src="'+base64url+'" />');
+				var formData = new FormData();
+				formData.append('cloudfile', convertBase64UrlToBlob(base64url), '.png')
+				$.ajax({
+					url:'../../file/upload',
+					type:'POST',
+					data:	formData,
+					async: false,  
+					cache: false, 
+					contentType: false, //不设置内容类型
+					processData: false, //不处理数据
+					success:function(data){
+						$('[data-target="backgroundImg"]').html('<img src="'+data.data+'" width="100%" />').addClass("uploaded");
+						$("[name='backgroundImg']").val(data.data);
+						applyVm.detail['backgroundImg'] = data.data
+						
+					},
+					error:function(){
+						
+					}
+				})
+        //关闭裁剪框
+        closeTailor();
+    }
+});
+//关闭裁剪框
+function closeTailor() {
+	$('body').css('overflow','auto')
+    $(".tailoring-container").toggle();
+}
+
+function convertBase64UrlToBlob(urlData) {
+	var bytes = window.atob(urlData.split(',')[1]); //去掉url的头，并转换为byte        
+	var ab = new ArrayBuffer(bytes.length);	　　　　
+	var ia = new Uint8Array(ab);
+	for(var i = 0; i < bytes.length; i++) {
+		ia[i] = bytes.charCodeAt(i);
+	}
+	return new Blob([ab], {
+		type: 'image/png'
+	});	　　
+}
+
+//商品图片上传
+function uploadGoodsImg(self){
+	var files = self.files[0]
+	var t = $("#form1 input").attr("data-target")
+	if(files.size > 1.5*1024*1024){
+		utils.alert("info", "图片大小不能超过1.5M");
+		return;
+	}
+	if( t == 'logo' ){
+		var reader = new FileReader();
+	  	reader.onload = function(e) { 
+	  		var data = e.target.result;
+	  		//加载图片获取图片真实宽度和高度
+	  		var image = new Image();
+	  		image.onload=function(){
+	      		var width = image.width;
+	      		var height = image.height;
+	      		if(width/height != 1){
+	      			utils.alert("info", "图片分辨率必须为1:1");
+	      		}else{
+	      			uploadCallback(self)
+	      		}
+	  		}
+	  		image.src = data;
+	  	}
+	  	reader.readAsDataURL(self.files[0]);
+	}else{
+		uploadCallback(self)
+	}
+}
+function uploadCallback(self){
+	var uploadFile = new FormData($("#form1")[0]);
+	$.ajax({
+		url:'../../file/upload',
+		type:'POST',
+		data:	uploadFile,
+		async: false,  
+		cache: false, 
+		contentType: false, //不设置内容类型
+		processData: false, //不处理数据
+		success:function(data){
+			var t = $("#form1 input").attr("data-target");
+			$(".uploadbox[data-target='"+t+"']").html('<img src="'+data.data+'" width="100%">').addClass("uploaded")
+			$("[name='"+t+"']").val(data.data);
+			applyVm.detail[t] = data.data
+			$("#form1 input").val("");
+		},
+		error:function(){
+			
+		}
+	})
+}
+</script>
+</body>
+</html>
+

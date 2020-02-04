@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+</head>
+<style>
+  .navLeftItem span {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 16px 0;
+    display: inline-block;
+    margin-left: 12px;
+    margin-right: 34px;
+
+  }
+
+  body {
+    height: auto !important;
+  }
+
+  .navLeftItem ul li {
+    color: #999999;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-left: -30px
+  }
+
+  .navMy {
+    width: 22px;
+    height: 22px;
+    margin-left: -16px;
+  }
+
+  .trade {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* .count {
+    width: 7px;
+    height: 14px;
+  }
+
+  .countx {
+    width: 14px;
+    height: 7px;
+
+  } */
+
+  .userPanel .panel-header {
+    height: 262px;
+  }
+
+  .userinfo {
+    width: 355px;
+    height: 293px;
+    margin-top: -10px;
+    background: #fff;
+    margin-left: 10px;
+    border-radius: 10px;
+    position: relative;
+  }
+
+  .userinfo_card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+  }
+
+  .userinfo_card img {
+    width: 124px;
+    height: 124px;
+    float: left;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+
+  .usernames {
+    font-size: 30px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  .userchen,
+  .mobile,
+  .userid {
+    font-size: 14px;
+    color: #999999;
+    margin-top: 6px;
+  }
+
+  .userchen {
+    margin: 10px 0 16px 0;
+  }
+
+  .marginleft {
+    float: left;
+    margin-left: 10px;
+  }
+
+  .marginleft p {
+    text-align: left;
+  }
+
+  .userdescitem img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .userdescitem {
+    float: left;
+    margin-left: 78px;
+    margin-top: 42px;
+
+  }
+
+  .shoptext {
+    color: #666;
+    font-size: 16px;
+    text-align: center;
+    margin: 10px;
+  }
+
+  .shoptextbottom {
+    color: #333;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .userdesc {
+    width: 602px;
+    height: 265px;
+  }
+
+  .mycollectlike {
+    height: 278px;
+  }
+
+  .collect,
+  .like {
+    margin-top: 50px;
+    /* float: left; */
+    width: 48%;
+    background: #fff;
+    margin-left: 19px;
+    height: 278px;
+  }
+
+  .collect_head {
+    height: 60px;
+    ;
+  }
+
+  .collect_head span {
+    font-size: 16px;
+    color: #333;
+    margin-top: 20px;
+    margin-left: 10px;
+
+  }
+
+  .collect_head span:nth-child(2) {
+    font-size: 12px;
+    color: #999999;
+    margin-right: 36px;
+  }
+
+  .collectitem {
+    margin-left: 10px;
+    width: 140px;
+    height: 194px;
+    ;
+    text-align: center;
+    background: #F7F7F7;
+  }
+
+  .collectitem img {
+    height: 122px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .collectitem p {
+    color: #666;
+    font-size: 12px;
+
+  }
+
+  .collectseed {
+    margin-left: 0;
+  }
+
+  .collectitem p:nth-child(3) {
+    color: #FB746E;
+    margin: 10px 0 0 0;
+    font-size: 14px;
+  }
+
+  .collectseed {
+    width: 100%;
+  }
+
+  .collectseed .collectitem {
+    margin-left: 18px;
+  }
+
+  .userAccount {
+    background: #f4f4f4;
+    margin-bottom: 10px;
+  }
+
+  .orderStatus {
+    width: 300px;
+    height: 200px;
+  }
+
+  #orderList {
+    background: #f7f7f7;
+  }
+
+  #orderList li {
+    float: left;
+    margin-left: 5px;
+    background: #fff;
+    margin: 12px 5px;
+  }
+
+  .orderall {
+    font-size: 14px;
+    ;
+    color: #666;
+  }
+
+  .order_state {
+    color: #FB746E
+  }
+
+  .order_inner img {
+    width: 90px;
+    height: 90px;
+    margin-left: 10px;
+  }
+
+  .orderdesc {
+    font-size: 14px;
+    ;
+    color: #333;
+  }
+
+  .time {
+    color: #AAAAAA;
+    font-size: 12px;
+  }
+
+  .ordernum button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    background: #fff;
+    border: 1px solid #eee;
+    margin-right: 15px;
+
+  }
+
+  .ordernum {
+    line-height: 30px;
+  }
+
+  .order_head {
+    height: 30px;
+    padding: 10px;
+  }
+
+  .order_inner {
+    height: 100px;
+  }
+
+  .descinfo {
+    height: 103px;
+    background-color: #fff;
+    float: left;
+  }
+
+  .orderdescinfo p {
+    margin-top: 32px;
+    margin-left: 20px;
+  }
+
+  .time {
+    /* margin-top: 10px !important; */
+  }
+
+  .numorder {
+    margin-left: 10px;
+
+  }
+
+  #orderNav ul {
+    border: none;
+  }
+
+  #orderNav {
+    height: 38px;
+    line-height: 20px;
+  }
+
+  #orderNav img {
+    width: 6px;
+    height: 10px;
+  }
+
+  .order {
+    margin-top: 70px;
+    background: #fff;
+    padding: 20px;
+  }
+
+  .getmore {
+    color: #AAAAAA;
+    font-size: 14px;
+    ;
+  }
+
+  #orderNav li {
+    font-size: 14px;
+    font-weight: 100 !important;
+    color: #999999;
+  }
+
+  #orderNav li.cur {
+    color: #333;
+  }
+
+  #orderNav li span {
+    border-radius: 50%;
+    background: #FB746E;
+    position: absolute;
+    top: -10px;
+    right: -20px;
+    color: #fff;
+    font-size: 12px;
+    width: 20px;
+  }
+
+  #orderNav a {
+    position: relative;
+  }
+
+  #orderNav li.cur:after {
+    content: "";
+    position: absolute;
+    top: 28px;
+    left: 54px;
+    border-bottom: 10px solid #f7f7f7;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+  }
+  }
+
+  dd,
+  dl,
+  li,
+  ol,
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  .dw {
+    font-size: 12px;
+  }
+
+  .userLeftNav {
+    /* background: #fff;
+    position: absolute;
+    top: 80px;
+    left: 110px;
+    z-index: 99; */
+  }
+
+  html {
+    background: #f7f7f7;
+  }
+
+  .Intellectual .userRightContent .add {
+    color: #585858;
+    font-size: 18px;
+    padding: 34px 20px 20px 0;
+    padding-bottom: 1px solid #999;
+    /* border-bottom: 1px solid #ececec; */
+  }
+
+  .need {
+    width: 88px;
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+    height: 30px;
+    ;
+    line-height: 30px;
+  }
+
+  .contain {
+    margin-top: 38px;
+  }
+
+  .accountTitle,
+  .descinfo {
+    width: 365px;
+    height: 33px;
+    margin-left: 8px;
+    background-color: #fff;
+
+  }
+
+  .descinfo {
+    height: 103px;
+    ;
+  }
+
+  .desc {
+    margin-top: 10px;
+  }
+
+  /* .chooseimg {
+        border: 1px solid #dbdbdb;
+        width: 100px;
+        text-align: center;
+        position: relative;
+        margin-left: 8px;
+        background: #eee;
+
+    } */
+
+  .imgtext {
+    color: #AAAAAA;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 100px;
+  }
+
+  .submit {
+    background: #D57E6A;
+    font-size: 14px;
+    height: 50px;
+    width: 376px;
+    border: none;
+    color: #fff;
+    margin: 70px 260px;
+    text-align: center;
+    line-height: 50px;
+
+  }
+
+  .addimg {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+  }
+
+  .Intellectual_container {
+    /* width: 918px; */
+    /* height: 195px; */
+    background: #F2F2F2;
+    margin: 20px;
+  }
+
+  .Intellectual_container p {
+    color: #666;
+    padding: 10px;
+  }
+
+  .delete {
+    color: #2D69C3;
+    font-size: 12px;
+    cursor: pointer;
+    ;
+  }
+
+  .Intellectual_container .time {
+    color: #AAAAAA;
+    padding: 0 10px;
+  }
+
+  .Intellectual_container .showimg img {
+    width: 80px;
+    height: 80px;
+    margin: 10px;
+  }
+
+  .Intellectual_container .Intellectual_desc {
+    padding-top: 0;
+    color: #999;
+    line-height: 17px;
+  }
+
+  .submittop {
+    width: 100px;
+    height: 30px;
+    margin: 20px 0;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+  }
+
+  .addtitle {
+    margin: 0 20px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .imgFileUploade {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    position: relative;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .imgFileUploade .header {
+    height: 69px;
+    width: 100%;
+    line-height: 50px;
+
+  }
+
+  .imgFileUploade .header span {
+    display: block;
+    float: left;
+  }
+
+  .imgFileUploade .header span.imgTitle {
+    line-height: 50px;
+  }
+
+  .imgFileUploade .header span.imgTitle b {
+    color: red;
+    margin: 0 5px;
+    line-height: 57px;
+    display: block;
+    float: right;
+    font-size: 20px;
+  }
+
+  .imgFileUploade .header span.imgClick {
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    background: url(/src/img/hx_img/add.png) no-repeat center center;
+    background-size: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .imgFileUploade .header span.imgcontent {
+    color: #999;
+    margin-left: 120px;
+    line-height: 50px;
+  }
+
+  .imgFileUploade .imgAll {
+    width: 100%;
+    margin-left: 81px;
+  }
+
+  .imgFileUploade .addimg {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgb(235, 236, 241);
+    color: #999;
+    margin-left: 7px;
+  }
+
+  .imgFileUploade .imgAll ul {
+    padding: 0;
+    margin: 0;
+    width: 780px;
+  }
+
+  .imgFileUploade .imgAll ul:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: ".";
+    clear: both;
+    height: 0
+  }
+
+  .imgFileUploade .imgAll li {
+    width: 80px;
+    height: 80px;
+    border: solid 1px #ccc;
+    float: left;
+    position: relative;
+    box-shadow: 0 0 10px #eee;
+    list-style: none;
+  }
+
+  .imgFileUploade .imgAll li img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .delImg {
+    position: absolute;
+    top: -10px;
+    right: -7px;
+    width: 22px;
+    height: 22px;
+    background: #000;
+    border-radius: 50%;
+    display: block;
+    text-align: center;
+    line-height: 22px;
+    color: #fff;
+    font-weight: 700;
+    font-style: normal;
+    cursor: pointer;
+  }
+
+  .box {
+    width: 81px;
+    height: 81px;
+  }
+
+  /* .chooseimg {
+        border: 1px solid #dbdbdb;
+        text-align: center;
+        background: #fff;
+        height: 80px;
+        width: 200px;
+    } */
+
+  .et_form_item {
+    position: absolute;
+    left: 435px;
+    height: 81px;
+    top: 300px;
+    border: 1px solid #eee;
+    width: 81px;
+    background: #eee;
+  }
+
+  .box {
+    flex: 1;
+    /* margin-bottom: 20px; */
+    float: left;
+    background: #eee;
+    margin-left: 10px;
+  }
+
+  .imgFileUploade {
+    width: 100%;
+    display: flex;
+  }
+
+  .imgFileUploade .header {
+    height: 69px;
+    width: 100%;
+    line-height: 50px;
+    position: absolute;
+    top: 0;
+  }
+
+  .imgFileUploade .header span {
+    display: block;
+    float: left;
+  }
+
+  .imgFileUploade .header span.imgTitle {
+    line-height: 50px;
+  }
+
+  .imgFileUploade .header span.imgTitle b {
+    color: red;
+    margin: 0 5px;
+    line-height: 57px;
+    display: block;
+    float: right;
+    font-size: 20px;
+  }
+
+  .imgFileUploade .header span.imgClick {
+    width: 50px;
+    height: 50px;
+    margin: 10px 0 0 30px;
+    cursor: pointer;
+    background: url(/src/img/hx_img/addUpload.png) no-repeat center center;
+    background-size: cover;
+  }
+
+  .imgFileUploade .header span.imgcontent {
+    color: #999;
+    margin-left: 120px;
+    line-height: 50px;
+  }
+
+  .imgFileUploade .imgAll {
+    width: 100%;
+  }
+
+  .imgFileUploade .addimg {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgb(235, 236, 241);
+    color: #999;
+    margin-left: 7px;
+    position: absolute;
+    bottom: 12px;
+  }
+
+  .imgFileUploade .imgAll ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  .imgFileUploade .imgAll ul:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: ".";
+    clear: both;
+    height: 0
+  }
+
+  .imgFileUploade .imgAll li {
+    width: 81px;
+    height: 81px;
+    border: solid 1px #ccc;
+    margin: 0px 4px;
+    float: left;
+    position: relative;
+    box-shadow: 0 0 10px #eee;
+    list-style: none;
+  }
+
+  .imgFileUploade .imgAll li img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .delImg {
+    position: absolute;
+    top: -10px;
+    right: -7px;
+    width: 22px;
+    height: 22px;
+    background: #000;
+    border-radius: 50%;
+    display: block;
+    text-align: center;
+    line-height: 22px;
+    color: #fff;
+    font-weight: 700;
+    font-style: normal;
+    cursor: pointer;
+  }
+
+  /* .box{
+		border:solid 1px #ccc;
+	} */
+
+  #uploadimg {
+    width: 114px;
+    height: 108px;
+    position: absolute;
+    left: 0;
+    z-index: 99;
+    opacity: 0;
+  }
+
+  .add_icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+  }
+
+  .close {
+    width: 20px !important;
+    height: 20px !important;
+    right: -10px !important;
+    position: absolute !important;
+    left: auto !important;
+    top: -10px !important;
+    z-index: 10;
+  }
+</style>
+<%- include ../headerbar.ejs %>
+<%- include userHeaderNav.ejs %>
+
+<div style="position: relative;">
+  <form id="myForm" action="" method="post">
+    <div class="Intellectual userAccount form" id="Intellectual">
+      <div class="container">
+        <div class="router" id="router">
+          <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item>
+              <a href="/">首页</a>
+            </el-breadcrumb-item>
+            <el-breadcrumb-item :to="{ path: '/' }">
+              <a href="/user/acc_info">个人中心</a>
+            </el-breadcrumb-item>
+            <el-breadcrumb-item>知识产权保护</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
+      </div>
+      <div class="container clearfix">
+        <div class="userLeftNav">
+          <%- include userLeftNav.ejs %>
+        </div>
+        <div class="userRightContent" v-if="addContent">
+          <!-- <p class="add">添加知识产权</p> -->
+          <div class="addtitle clearfix">
+            <p class="add fl">添加知识产权</p>
+          </div>
+          <div class="contain">
+            <div class="title clearfix">
+              <p class="need fl">标题：</p>
+              <input class="accountTitle  fl" type="text" v-model="titleVal" placeholder="请输入标题" maxlength="30">
+            </div>
+            <div class="desc clearfix">
+              <p class="need fl">详情：</p>
+              <textarea class="descinfo fl" v-model="textarea" value="" placeholder="请填写说明..."
+                placeholder-style="color:#999" placeholder-class="textarea-placeholder" maxlength="140"
+                auto-focus="false" focus="false" auto-height="" bindinput="" bindfocus="" bindblur="" bindconfirm=""
+                bindlinechange="%{15}">
+                                    </textarea>
+            </div>
+            <div class="desc clearfix">
+              <p class="need fl">上传图片：</p>
+              <div class="box">
+                <div class="imgFileUploade">
+                  <img class="add_icon" src="/src/img/hx_img/add.png" alt="">
+                  <input type="file" id="uploadimg" name="cloudfile" ref="inputfile" accept="image/*"
+                    @change="uploadGoodsImg(this)">
+                  <div class="imgAll">
+                    <ul>
+                      <li v-for="(item,index) in Img">
+                        <img class="close" @click="close(index)" src="/src/img/hx_img/closeImg.png" alt="">
+                        <img :src="item" alt="">
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="imgtext"> 最多可上传3张凭证，不可超过2M，支持格式JPG、PNG、JPGE等格式</p>
+          </div>
+          <div class="submit" @click="submit($event)">保存</div>
+        </div>
+        <div class="userRightContent" v-else>
+          <div class="addtitle clearfix">
+            <p class="add fl">知识产权保护</p>
+            <div class="submit submittop fr" @click="addE()">添加</div>
+          </div>
+          <div class="no-content tc" style="padding:100px 0;color:#333;font-size:16px;" v-if="list && !list.length">
+            <img src="/src/img/user/no_content.png" width="482" alt="">
+            <p style="margin-top:-50px">暂无内容</p>
+          </div>
+          <template>
+            <div class="Intellectual_container" v-for="(item ,index) in list">
+              <p class="clearfix"><span class="fl">{{item.name}}</span><span class="delete fr"
+                  @click="del(item.id)">删除</span></p>
+              <p class="time">{{item.createTime}}</p>
+              <div class="showimg">
+                <img :src="ittem" alt="" v-for="(ittem,index) in item.pics" v-if="item.pics.length">
+                <div v-else></div>
+              </div>
+              <p class="Intellectual_desc">{{item.detail}}</p>
+            </div>
+          </template>
+
+
+        </div>
+      </div>
+  </form>
+</div>
+
+<%- include ../footer.ejs %>
+</div>
+<!-- 确认删除弹出框 -->
+<div class="dialog ensureOrderDialog" id="ensureOrderDialog">
+  <div class="mask"></div>
+  <div class="dialog-main">
+    <div class="dialog-header clearfix">
+      <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+      <h3 class="dialog-title">提示</h3>
+    </div>
+    <div class="dialog-body">
+      <p style="margin: 40px;">是否确认删除该知识产权保护？</p>
+    </div>
+    <div class="dialog-footer">
+      <button class="btn btn-danger" onclick="$('.ensureOrderDialog').removeClass('show')">取消</button>
+      <button class="btn btn-primary ensureBtn" id="ensureBtn">确定</button>
+    </div>
+  </div>
+</div>
+<script src="/src/js/imgFileupload.js"></script>
+<script>
+  $(".userLeftNav li[data-target='intellectual']").addClass("cur");
+  $(".et_form_item").hide()
+  $(".addimg").hide()
+  var app = new Vue({
+    el: '#Intellectual',
+    data: {
+      list: [],
+      titleVal: '',
+      addContent: false,
+      textarea: '',
+      Img: [],
+    },
+    mounted() {
+      this._GetIntellectualItem()
+    },
+    methods: {
+      _GetIntellectualItem() {
+        var that = this;
+        utils.ajax({
+          url: '/api/intellectual/page',
+          type: "get",
+          data: {
+            limit: 5,
+            offset: 1
+          },
+          success: function (res) {
+            that.list = res.data.records;
+          }
+        })
+      },
+      del(id) {
+        $(".ensureOrderDialog").addClass("show");
+        var that = this;
+        $(document).on("click", ".ensureBtn", function (e) {
+          // 确认删除知识产权
+          utils.ajax({
+            url: '/api/intellectual/delete/' + id,
+            type: "post",
+            success: function (res) {
+              that.list.slice(id, 1);
+              utils.alert("success", "删除成功");
+              $(".ensureOrderDialog").removeClass("show");
+              that._GetIntellectualItem()
+            }
+          })
+        })
+
+      },
+      close(index) {
+        console.log('index', index);
+        this.Img.splice(index, 1)
+      },
+      addE() {
+        this.addContent = true;
+        this.Img = [];
+        $(".et_form_item").show();
+        this.textarea = this.titleVal = "";
+        $(".imgAll ul").html("")
+      },
+      submit(e) {
+        // if (!this.titleVal || !this.textarea) return
+        if (!this.titleVal) {
+          // alert("请输入标题")
+          utils.alert("danger", "请输入标题")
+          return
+        }
+        if (!this.textarea) {
+          // alert("请输入内容")
+          utils.alert("danger", "请输入内容")
+          return
+        }
+        var number = $(".imgAll ul").children().length;
+        var arr = [];
+        if (number == 0) {
+          // alert("请上传图片")
+          utils.alert("danger", "请上传图片")
+          return
+        }
+        var that = this
+        // console.log(number);
+        if (number != 0) {
+          var imglist = $(".upload");
+          for (var index = 0; index < imglist.length; index++) {
+            arr.push($(imglist[index]).attr("src"))
+          }
+          var arry = arr.join(',');
+        }
+        var data = {
+          name: this.titleVal,
+          detail: this.textarea,
+          pics: this.Img.join(",")
+        }
+        utils.ajax({
+          url: "/api/intellectual/saveOrUpdate",
+          type: "post",
+          data: JSON.stringify(data),
+          el: e.target,
+          success: function (res) {
+            // console.log('rsdses', res);
+            if (res.code == 200) {
+              // console.log('res.code', res);
+              // alert("成功")
+              utils.alert("success", "操作成功");
+              that.addContent = false;
+              that._GetIntellectualItem()
+              $(".et_form_item").hide()
+            }
+          }
+        })
+      },
+      uploadGoodsImg(e) {
+        let inputfile = this.$refs.inputfile
+        console.log('cc', inputfile.files[0]);
+        var formFile = this.formatUpLoadImg(inputfile.files[0], 2)
+        if (formFile && this.Img && this.Img.length < 3) {
+          this.Img.push(this._TemplateUploadImgAjax("post", "/api/pic/upload", formFile))
+        } else {
+          console.log('上传');
+        }
+      },
+      // 格式化图片
+      formatUpLoadImg(_file, _fileSize) {
+        var formFile = new FormData();
+        var file = _file;
+        var fileSize = (file.size / 1024 / 1024).toFixed(0);
+        if (fileSize > _fileSize) {
+          alert("上传的文件不能超过" + _fileSize + "M")
+          return
+        }
+        formFile.append("file", file); //加入文件对象
+        return formFile
+      },
+      // data类型FormData
+      _TemplateUploadImgAjax(type, url, data) {
+        var that = this;
+        var params;
+        $.ajax({
+          url: url,
+          data: data,
+          type: type,
+          async: false,
+          cache: false,
+          contentType: false, //不设置内容类型
+          processData: false, //不处理数据
+          success: function (res) {
+            params = res.data.picUrl
+          }
+        })
+        return params
+      },
+    },
+  });
+</script>
+
+</html>

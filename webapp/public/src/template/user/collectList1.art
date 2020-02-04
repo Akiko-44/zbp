@@ -1,0 +1,21 @@
+<li id="<%= data.id %>" goodsName="<%= data.goodsName %>" onSale="<%=data.isOnSale %>" goodsId="<%= data.goodsId %>" collectSource="<%= data.collectSource %>" class="col-4">
+	<div class="clearfix">
+		<div class="fl imgWrap">
+			<span class="delBtn">
+				<i class="iconfont icon-userCollectDel"></i>
+			</span>
+			<a>
+				<img src="<%= data.thumbUrl %>" width="100%">
+			</a>
+		</div>
+		<div>
+			<h3 class="fs14"><b><%= data.goodsName %></b></h3>
+			<% if(data.collectSource != 7){ %><p class="new-red fs16"><b>￥<%= data.goodsPrice %></b></p><% } %>
+			<% if(data.isOnSale != 0){ %><p class="nosale">已下架</p><% } %>
+			<div class="clearfix hide">
+				<a class="fl yellow toBuy">立即购买</a>
+				<a class="fr toCart">加入购物车</a>
+			</div>
+		</div>
+	</div>
+</li>

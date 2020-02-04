@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+
+<body class="query_result">
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include ../headerNav.ejs %>
+
+	<div id="main" class="main container" v-cloak>
+		<div class="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item :to="{ path: '/' }">
+					<a href="../../">首页</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>
+					<a href="../../home/query_id_card">查珠宝身份证</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>查询结果</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+
+		<div v-if="(form.testFacility === '2') && success" class="result-content">
+			<div class="result-item" v-for="(item,index) in detail" :key="index">
+				<span class="result-title" v-if="item.CHName !== '　'">{{item.CHName}}：</span>
+				<img :src="item.value" alt="" v-if="item.value.includes('http')">
+				<span class="result-info" v-else>{{item.value}}</span>
+			</div>
+			<div class="result-item" v-if="platform && success">
+				<span class="result-title">出售平台：</span>
+				<span class="result-info">{{platform}}</span>
+			</div>
+		</div>
+
+		<div v-if="form.testFacility === '1' && success" class="result-img">
+			<iframe :src="backgroundImageUrl" frameborder="0"></iframe>
+		</div>
+
+		<div class="err-tip" v-if="!success">
+			<img src="../../src/img/common/no-result.png" style="width: 661px;">
+			<p>搜索没结果</p>
+		</div>
+	</div>
+	<%- include ../footer.ejs %>
+</body>
+<script type="text/javascript">
+	var mainVm = new Vue({
+		el: '#main',
+		data: {
+			form: {
+				testFacility: '',
+				testNo: '',
+				queryCode: ''
+			},
+			detail: [],
+			backgroundImageUrl: '',
+			platform: '',
+			success: true
+		},
+		mounted: function () {
+			this.form.testFacility = this.getQueryVariable('testFacility')
+			this.form.testNo = this.getQueryVariable('testNo')
+			this.form.queryCode = this.getQueryVariable('queryCode')
+			if (this.form.testFacility && this.form.testNo && this.form.queryCode) {
+				this.getList()
+			} else {
+				this.success = false
+			}
+		},
+		methods: {
+			//获取url的参数
+			getQueryVariable(variable) {
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for (var i = 0; i < vars.length; i++) {
+					var pair = vars[i].split("=");
+					if (pair[0] == variable) {
+						return pair[1];
+					}
+				}
+				return (false);
+			},
+
+			getList: function () {
+				//查询珠宝身份证
+				utils.ajax({
+					type: "get",
+					url: "/api/serv/portal/searchCredential",
+					data: {
+						testFacility: this.form.testFacility,
+						testNo: this.form.testNo,
+						queryCode: this.form.queryCode
+					},
+					success: (result) => {
+						if (this.form.testFacility === '2') {
+							if (result.data.resp.isExist) {
+								this.detail = result.data.resp.certData
+								let imgObj = {}
+								this.detail.map((item, i) => {
+									if (item.status == 1) {
+										imgObj = item
+										this.detail.splice(i, 1)
+									}
+								})
+								this.detail.unshift(imgObj)
+								this.platform = result.data.exist ? '中国珠宝云平台' : '其他'
+							} else {
+								this.showErrTip()
+							}
+						} else {
+							if (result.data.resp.success) {
+								this.backgroundImageUrl = result.data.resp.data.orderInfo.HtmlUrl
+								this.platform = result.data.exist ? '中国珠宝云平台' : '其他'
+							} else {
+								this.showErrTip()
+							}
+						}
+					},
+					error: (res) => {
+						this.showErrTip()
+					}
+				});
+			},
+
+			showErrTip: function () {
+				this.success = false
+			}
+
+		}
+	})
+</script>
+
+</html>

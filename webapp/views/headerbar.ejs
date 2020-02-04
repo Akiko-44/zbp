@@ -1,0 +1,396 @@
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+  }
+
+  .head {
+    height: 30px;
+    width: 100%;
+    color: #cccccc;
+    font-size: 12px;
+    background-color: #333;
+  }
+
+  .headbg {
+    position: relative;
+    width: 1200px;
+    margin: 0 auto;
+  }
+
+  .head-left {
+    position: absolute;
+    left: 0;
+    top: 0px;
+    line-height: 30px;
+  }
+
+  .head-left img {
+    width: 11px;
+    height: 14px;
+  }
+
+  .head-left .location {
+    color: #D57E6A;
+  }
+
+  .head-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    min-width: 130px;
+    line-height: 30px;
+  }
+
+  .head-right.nologin,
+  .head-right.logined {
+    text-align: center;
+    right: 182px;
+  }
+
+  .logined ul {
+    position: absolute;
+    background: #fff;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    text-align: center;
+    line-height: 38px;
+    color: #666;
+  }
+
+  .logined ul>li:first-child {
+    color: #DF735A;
+  }
+
+  .logined ul a:hover {
+    color: #DF735A;
+  }
+
+  .logined ul .textLink {
+    color: #666666;
+  }
+
+  .head-right span {
+    display: inline-block;
+    text-align: center;
+  }
+
+  .head-right .open-store {
+    display: inline-block;
+    text-align: center;
+    width: 72px;
+  }
+
+  .head-right .app-download {
+    width: 110px;
+    background: #424242;
+    color: #cccccc;
+  }
+
+  .head-right .app-download img {
+    padding-right: 5px;
+  }
+
+  .textLink {
+    padding: 0 5px;
+    color: #cccccc;
+  }
+
+  .textLink a {
+    color: #cccccc;
+  }
+
+  .textLink:hover {
+    color: #D57E6A;
+  }
+
+  .textLink a:hover {
+    color: #D57E6A;
+  }
+
+  .textLink a>i {
+    margin-left: 9px;
+  }
+
+  .app-qrcode {
+    position: absolute;
+    padding: 20px 10px;
+    right: 0;
+    top: 30px;
+    background: url(../../src/img/common/line.png) no-repeat;
+    z-index: 99;
+    width: 231px;
+    height: 145px;
+    font-weight: bold;
+  }
+
+  .app-qrcode .qrcode {
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+    vertical-align: top;
+    border: 1px solid #CFCFCF;
+  }
+
+  .app-qrcode .twoway {
+    display: inline-block;
+    font-weight: normal;
+  }
+
+  .app-qrcode .twoway p {
+    margin: 5px 0;
+  }
+
+  .app-qrcode .twoway .terminal {
+    font-size: 14px;
+    color: #666666;
+  }
+
+  .app-qrcode .twoway .scan {
+    margin: 9px 0px;
+    color: #C22E34;
+  }
+
+  .app-qrcode .twoway .way {
+    width: 84px;
+    height: 20px;
+    line-height: 20px;
+    background: #86C127;
+    color: #ffff;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .app-qrcode .twoway .way>img {
+    vertical-align: text-top;
+  }
+
+  .userphone {
+    cursor: pointer;
+  }
+
+  .userphone>i {
+    margin-left: 9px;
+  }
+
+  #goTop {
+    position: fixed;
+    bottom: 70px;
+    right: 246px;
+    width: 84px;
+    height: 92px;
+    text-align: center;
+    background: #ffffff;
+    color: #666666;
+    border: 1px solid #e5e5e5;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  #goTop .top-img {
+    width: 20px;
+    height: 26px;
+    margin: 20px auto 12px;
+    background: url(/src/img/common/goTop.png) no-repeat
+  }
+
+  #goTop:hover {
+    color: #DF735A;
+  }
+
+  #goTop:hover .top-img {
+    background: url(/src/img/common/goTophover.png) no-repeat
+  }
+</style>
+<script>
+  if (!IsPC()) {
+    location.href = "http://m.gacjc.com"
+  }
+
+  function IsPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone",
+      "SymbianOS", "Windows Phone",
+      "iPad", "iPod"
+    ];
+    var flag = true;
+    for (var v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) {
+        flag = false;
+        break;
+      }
+    }
+    return flag;
+  }
+</script>
+<div class="head">
+  <div class="headbg">
+    <div class="head-left" onclick="location.href = '/selectcity'" style="cursor: pointer;">
+      <img src="../../src/img/common/icon-location.png" />
+      <span class="location" id="pro_num"></span>
+      <a class="textLink">[切换城市]</a>
+      <div id="allmap"></div>
+    </div>
+    <div class="head-right logined hide" style="right: 290px;">
+      <a class="textLink" href="/">中宝平首页</a>
+    </div>
+    <div class="head-right logined hide" id="loginName">
+      <p>
+        <span class="textLink"></span>
+      </p>
+      <ul class="dropdown-list" style="display: none;">
+        <li class="userphone"></li>
+        <li><a class="textLink" href="/user/acc_info">个人中心</a></li>
+        <li><a class="textLink" href="/user/order/index">我的订单</a></li>
+        <li><a class="textLink" href="/user/collect/1">我的收藏</a></li>
+        <li><a class="textLink" href="/user/mine_evaluate">我的评价</a></li>
+        <li class="logoutBtn"><a class="textLink" href="#">退出登录</a></li>
+      </ul>
+    </div>
+    <div class="head-right nologin">
+      <p>
+        <span>您好 ，欢迎来到 中宝平！</span>
+        <a class="textLink" href="../../login">立即登录</a> |
+        <a class="textLink" href="../../reg">免费注册</a> |
+      </p>
+    </div>
+    <div class="head-right">
+      <a class="open-store textLink" onclick="javascript:;">我要开店</a>
+      <span class="app-download"><img src="../../src/img/common/iPhone.png" />APP下载</span>
+    </div>
+    <div class="app-qrcode" style="display: none;">
+      <div class="qrcode">
+        <img src="../../src/img/common/download-app.png" class="downloadAppImg" />
+      </div>
+      <div class="twoway">
+        <p class="terminal">中宝平客户端</p>
+        <p class="scan">手机扫描二维码下载</p>
+        <p class="way apple"><img src="../../src/img/common/apple.png" />iPhone</p>
+        <p class="way android"><img src="../../src/img/common/Android.png" />Android</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="goTop">
+  <!-- <img src="../src/img/common/goTop.png" /> -->
+  <div class="top-img"></div>
+  回顶部
+</div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=axuGbU5OwYN4offoWjAhErQOH8U69WYZ"></script>
+<script>
+  $(function () {
+    var host = window.location.host
+    if (host == "219.134.137.178:81" || host == "localhost") {
+      $('.downloadAppImg').attr('src', '../../src/img/common/download-apptest.png')
+    }
+  })
+  $('#pro_num').html(localStorage.getItem('cityName'));
+  // 百度地图API功能
+  var map = new BMap.Map("allmap");
+  var point = new BMap.Point(116.331398, 39.897445);
+  map.centerAndZoom(point, 12);
+  //浏览器定位
+  var geolocation = new BMap.Geolocation();
+  geolocation.getCurrentPosition(function (r) {
+    if (localStorage.getItem('cityName')) {
+      return
+    }
+    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+      var mk = new BMap.Marker(r.point);
+      map.addOverlay(mk);
+      map.panTo(r.point);
+      // alert('您的位置：'+r.point.lng+','+r.point.lat);
+      $('#lat').val(r.point.lat); //获取到的纬度
+      $('#lon').val(r.point.lng); //获取到的经度
+
+      var gc = new BMap.Geocoder();
+      var pointAdd = new BMap.Point(r.point.lng, r.point.lat);
+      gc.getLocation(pointAdd, function (rs) {
+        // 百度地图解析城市名
+        localStorage.setItem('cityName', rs.addressComponents.city)
+        $('#pro_num').html(rs.addressComponents.city);
+      })
+    } else {
+      console.log('failed' + this.getStatus());
+    }
+  }, {
+    enableHighAccuracy: true
+  });
+
+  $(document).on('mouseenter', '#loginName', function () {
+    $('.dropdown-list').show();
+  }).on('mouseleave', '#loginName', function () {
+    $('.dropdown-list').hide();
+  }).on('mouseenter', '.app-download,.app-qrcode', function () {
+    $('.app-qrcode').show();
+  }).on('mouseleave', '.app-download,.app-qrcode', function () {
+    $('.app-qrcode').hide();
+  }).on('click', '.open-store', function () {
+    if (utils.islogin()) {
+      window.location.href = "/user/openShop"
+    } else {
+      window.location.href = "/login"
+    }
+  })
+  if (utils.islogin()) {
+    utils.ajax({
+      url: "/api/userCenter/info",
+      type: "get",
+      success: (data) => {
+        if (data.data.userType == 3) {
+          $('.open-store').replaceWith('<a class="open-store textLink" href="/user/intellectual">知识产权</a>')
+        }
+        if (data.data.userType == 2 || data.data.userType == 3 || data.data.userType == 4) {
+          $('#manufacture').removeClass('hide')
+        }
+      }
+    })
+  }
+  $(document).ready(function () {
+
+    $("#goTop").hide();
+
+    $(function () {
+
+      //检测屏幕高度  
+
+      var height = $(window).height();
+
+      //scroll() 方法为滚动事件  
+
+      $(window).scroll(function () {
+
+        if ($(window).scrollTop() > height) {
+
+          $("#goTop").show();
+
+        } else {
+
+          $("#goTop").hide();
+
+        }
+
+      });
+
+      $("#goTop").click(function () {
+
+        $('body,html').animate({
+          scrollTop: 0
+        }, 100);
+
+        return false;
+
+      });
+
+    });
+
+  });
+</script>

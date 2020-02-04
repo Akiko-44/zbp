@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/cropper.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/ImgCropping.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    .userContent {
+      padding-top: 30px;
+      width: 680px;
+      margin: 0 auto;
+    }
+
+    .userContent.success-container {
+      padding-top: 50px;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .success-container p {
+      margin: 50px 0;
+    }
+
+    .title {
+      line-height: 70px;
+      font-size: 18px;
+      color: #333;
+      border-bottom: 1px solid #EAEBF0;
+    }
+
+    .save-btn {
+      width: 500px;
+      height: 40px;
+      background: #DF735A;
+    }
+
+    .el-radio__input.is-checked .el-radio__inner {
+      border-color: #DF735A !important;
+      background: #DF735A !important;
+    }
+
+    .el-radio__input.is-checked+.el-radio__label {
+      color: #DF735A !important;
+    }
+
+    .important {
+      line-height: 20px;
+      font-size: 13px;
+      color: red;
+    }
+  </style>
+</head>
+
+<body class="userShop">
+  <div id="main" class="main">
+    <div class="clearfix container">
+      <h3 class="title">中宝协APP版本参数更新</h3>
+      <div class="userContent">
+        <el-form id="form" ref="form" :model="form" :rules="rules" label-width="180px">
+          <el-form-item label="版本号：" prop="versionCode">
+            <el-input :maxlength="30" v-model="form.versionCode" placeholder="请输入版本号"></el-input>
+          </el-form-item>
+
+          <el-form-item label="版本名：" prop="versionName">
+            <el-input :maxlength="30" v-model="form.versionName" placeholder="请输入版本名"></el-input>
+          </el-form-item>
+
+          <el-form-item label="app下载链接：" prop="apkUrl">
+            <el-input v-model="form.apkUrl" placeholder="请输入app下载链接"></el-input>
+          </el-form-item>
+
+          <el-form-item label="更新内容：" prop="modifyDetail">
+            <el-input type="textarea" :rows="3" v-model="form.modifyDetail" placeholder="请输入更新内容"></el-input>
+          </el-form-item>
+
+          <el-form-item label="Android是否强制更新：" prop="isForce" v-if="form.appType === 1">
+            <el-radio-group v-model="form.isForce" fill="DF735A">
+              <el-radio :label="1">是</el-radio>
+              <el-radio :label="0">否</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="iOS是否强制更新：" prop="isForce" v-if="form.appType === 2">
+            <el-radio-group v-model="form.isForce">
+              <el-radio :label="1">是</el-radio>
+              <el-radio :label="0">否</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="APP类型：" prop="appType">
+            <el-radio-group v-model="form.appType">
+              <el-radio :label="1">Android</el-radio>
+              <el-radio :label="2">iOS</el-radio>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="danger" class="save-btn" :loading="loading" @click="save">提交</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    var mainVm = new Vue({
+      el: "#main",
+      data: {
+        loading: false,
+        success: false,
+        form: {
+          versionCode: undefined,
+          versionName: '',
+          apkUrl: 'http://219.134.137.178:83/app/download/zbp.apk',
+          modifyDetail: '1、修改已知bug;2、优化系统性能;',
+          isForce: 0,
+          appType: 1
+        },
+        rules: {
+          versionCode: [{
+            required: true,
+            pattern: /^[0-9]+$/,
+            message: '请输入正确的版本号',
+            trigger: 'blur'
+          }],
+          versionName: [{
+            required: true,
+            message: '请输入版本名',
+            trigger: 'blur'
+          }],
+          apkUrl: [{
+            required: true,
+            message: '请输入app下载链接',
+            trigger: 'blur'
+          }],
+          modifyDetail: [{
+            required: true,
+            message: '请输入更新内容',
+            trigger: 'blur'
+          }],
+          isForce: [{
+            required: true,
+            message: '请选择',
+            trigger: 'change'
+          }],
+          appType: [{
+            required: true,
+            message: '请选择APP类型',
+            trigger: 'change'
+          }],
+        }
+      },
+      created() {
+        if (location.host.includes('gacjc.com')) {
+          this.form.apkUrl = 'http://app.gacjc.com/app/download/zbp.apk'
+        }
+      },
+      methods: {
+        save() {
+          this.$refs.form.validate(valid => {
+            if (valid) {
+              this.loading = true
+              utils.ajax({
+                url: "/app/save",
+                data: JSON.stringify(this.form),
+                success: (data) => {
+                  this.loading = false
+                  utils.alert("success", "操作成功");
+                },
+                fail: (data) => {
+                  this.loading = false
+                  utils.alert("danger", data.msg)
+                },
+                error: (data) => {
+                  this.loading = false
+                  utils.alert("danger", data.msg)
+                }
+              })
+            } else {
+              this.$notify({
+                title: '警告',
+                message: '请务必填写必选项',
+                type: 'warning'
+              })
+              return false
+            }
+          })
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

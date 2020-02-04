@@ -1,0 +1,21 @@
+<div id="loginHeader" class="loginHeader">
+	<div class="container">
+		<a class="logo" href="/">
+			<img src="../../src/img/signin/logo-login.png" width="222" height="91">
+		</a>
+		<div class="head-right">
+			<img src="../../src/img/signin/source-tip.png" width="247" height="28" />
+			<p>依据《网络安全法》，为保障您的账户安全和正常使用，请尽快完成手机号绑定验证！<a onclick="showAgreement4()" style="color: #FB746E;">《隐私政策》</a>
+				已上线，将更有利于保护您的个人隐私。</p>
+		</div>
+	</div>
+</div>
+<%- include agreement %>
+<script src="../../src/js/common.js"></script>
+<script>
+
+	function showAgreement4() {
+		$('#agreement4').addClass('show');
+		$('html, body').css({ 'overflow': 'hidden' })
+	}
+</script>

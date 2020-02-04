@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+
+<body class="galleryList-bd">
+
+	<%- include headerbar %>
+
+	<%- include header %>
+
+	<%- include headerNav %>
+
+	<input type="hidden" id="id" value="<%= data.id %>">
+
+	<div id="main" class="main">
+
+		<div class="container">
+			<div class="galleryListWrap waterfallWrap">
+
+				<div class="galleryNavBox waterfallItem">
+					<div class="galleryNav">
+						<ul>
+
+						</ul>
+					</div>
+					<div class="gallerySubNav">
+						<div>
+							<ul></ul>
+						</div>
+					</div>
+				</div>
+				<div class="router waterfallItem" id="router">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item :to="{ path: '/' }"><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+						<el-breadcrumb-item><a href="../../gallery/index">图文馆</a></el-breadcrumb-item>
+						<el-breadcrumb-item v-for="item in routers">{{item}}</el-breadcrumb-item>
+					</el-breadcrumb>
+				</div>
+
+			</div>
+
+			<div class="tc">
+				<a class="btn btn-danger loadBtn hide">查看更多...</a>
+			</div>
+
+		</div>
+
+	</div>
+
+	<%- include footer %>
+
+
+	<script>
+		var id = $("#id").val();
+
+		var mainVm = new Vue({
+			el: "#main",
+			data: {
+				routers: []
+			},
+			mounted: function () {
+				var routers = utils.getUrlParam("routers");
+				this.routers = routers.split(",")
+			},
+			methods: {
+
+			}
+		})
+
+		var loading = false;
+		var curPage = 1;
+		$(function () {
+
+			$(".loadBtn").on("click", function (e) {
+				var self = $(e.currentTarget);
+				if (loading) {
+					return;
+				}
+				loading = true;
+				utils.ajax({
+					url: "/pc/gallery/atlas/page",
+					data: {
+						offset: (curPage + 1),
+						limit: 10,
+						categoryId: id
+					},
+					type: "get",
+					success: function (data) {
+						data = data.data;
+						loading = false;
+						if (data.records.length > 0) {
+							curPage++
+							var html = "";
+							for (var i = 0; i < data.records.length; i++) {
+								var item = _template.galleryList({
+									data: data.records[i]
+								});
+								html += item;
+
+							}
+							$html = $(html);
+							$(html).imagesLoaded(function () {
+								$grid.append($html).masonry('appended', $html);
+							});
+
+						} else {
+							self.addClass("hide");
+						}
+
+					},
+					error: function () {
+						loading = false;
+					}
+
+				})
+			})
+
+			getCategory();
+
+			getWaterfull();
+
+		})
+
+		//获取分类
+		function getCategory() {
+
+			utils.ajax({
+				url: "/pc/gallery/category",
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					var html = "";
+					for (var i = 0; i < data.length; i++) {
+						html += _template.galleryNav({
+							data: data[i]
+						})
+					}
+					$(".galleryNav ul").html(html);
+				}
+			});
+
+		}
+
+		$(document).on("click.showNav", ".galleryNav a", function (e) {
+			e.stopPropagation();
+			var self = $(e.currentTarget);
+			var categoryId = self.attr("data-id");
+			var name = self.text();
+			utils.ajax({
+				url: "/pc/gallery/prop/" + categoryId,
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					if (data.length == 0) {
+						window.location.href = "../../gallery/list/" + categoryId + "?routers=" + name;
+					} else {
+						var html = '';
+						for (var i = 0; i < data.length; i++) {
+							html += _template.gallerySubList({
+								data: data[i]
+							});
+						}
+						$(".gallerySubNav ul").html(html);
+						$(".gallerySubNav").addClass("show")
+					}
+				}
+			});
+		}).on("click.showNav", function () {
+			$(".gallerySubNav").removeClass("show");
+		}).on("click", ".toDetail", function (e) {
+			var id = $(e.currentTarget).attr("data-id");
+			var name = $(e.currentTarget).find("p").text();
+			if (!!id) {
+				window.location.href = "../../gallery/detail/" + id + "?routers=" + name;
+			}
+		})
+
+		//瀑布流列表
+		$container = $(".galleryListWrap");
+
+		function getWaterfull() {
+			utils.ajax({
+				url: "/pc/gallery/atlas/page",
+				data: {
+					offset: 1,
+					limit: 10,
+					categoryId: id
+				},
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					$(".loadBtn").data("curPage", 1).data("maxPage", data.pages);
+					if (data.pages > 1) {
+						$(".loadBtn").removeClass("hide");
+					}
+					var html = "";
+					for (var i = 0; i < data.records.length; i++) {
+						html += _template.galleryList({
+							data: data.records[i]
+						});
+					}
+					$container.append(html);
+					$container.imagesLoaded(function () {
+						window.$grid = $container.masonry({
+							itemSelector: '.waterfallItem',
+							gutter: 20,
+							isAnimated: true,
+							columnWidth: 222
+						});
+					});
+				}
+
+			})
+
+		}
+		$(window).scroll(function () {
+			if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+				$(".loadBtn").trigger("click");
+			}
+		});
+	</script>
+
+</body>
+
+</html>

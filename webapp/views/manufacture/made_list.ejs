@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'/>
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style type="text/css">
+	#main table{width: 100%;text-align: center;}
+	#main th, #main td{padding-top: 20px;padding-bottom: 20px;border: 1px solid #E0E0E0;}
+</style>
+</head>
+<body>
+
+<%- include ../headerbar.ejs %>
+
+<%- include ../header.ejs %>
+
+<%- include ../headerNav.ejs %>
+<div class="container">
+	<div class="router" id="router">
+		<el-breadcrumb separator-class="el-icon-arrow-right">
+		  	<el-breadcrumb-item><a href="/">首页</a></el-breadcrumb-item>
+		  	<el-breadcrumb-item ><a href="../../manufacture/index">制造间</a></el-breadcrumb-item>
+		  	<el-breadcrumb-item>我的定制</el-breadcrumb-item>
+		</el-breadcrumb>
+	</div>
+</div>
+<div id="main" class="main">
+	<div class="container">
+		<table border="0" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th>名称</th>
+					<th>期望价格区间</th>
+					<th>参考图片</th>
+					<th>需求描述</th>
+					<th>发布时间</th>
+					<th>审核状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(item, index) in records" :key="item.id">
+					<td>{{item.name}}</td>
+					<td>{{item.lowPrice}} - {{item.highPrice}}</td>
+					<td><img :src="item.customsPic[0].picUrl | formatImg" height="80"/></td>
+					<td>{{item.customsDesc}}</td>
+					<td>{{item.createTime}}</td>
+					<td>
+						<!--审核状态1、待审核2、审核通过3、审核未通过-->
+						<template v-if="item.auditState == 1">待审核</template>
+						<template v-if="item.auditState == 2">审核通过</template>
+						<template v-if="item.auditState == 3">审核未通过</template>
+					</td>
+					<td>
+						<button :data-id="item.id" class="btn btn-primary" onclick="contractBtn(this)">编辑</button>
+						<button class="btn btn-waring" @click="delObj(item.id, index)">删除</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="container" style="margin-top: 20px;text-align: right;">
+		<el-pagination background 
+	      @current-change="handleCurrentChange"
+	      :current-page="offset"
+	      :page-size="limit"
+	      layout="total, prev, pager, next, jumper"
+	      :total="total">
+	    </el-pagination>
+    </div>
+</div>
+<%- include made_m.ejs %>
+<%- include ../footer.ejs %>
+<script>
+	var routerVm = new Vue({
+		el: "#router"
+	})
+    window.target = "";
+    var mainVm = new Vue({
+        el: "#main",
+        data: {
+        	records:[],
+			offset: 1,
+			limit: 20,
+			currentPage: 1,
+	        totalPage: 1,
+	        total: 0
+        },
+        mounted: function () {
+        	this.render()
+        },
+        methods: {
+        	render: function(){
+        		var self = this
+	      	 	utils.ajax({
+	      	 		type:'get',
+	 				url:"/api/customs/page/3",
+	 				data:{
+	 					offset: self.offset,
+	 					limit: self.limit
+	 				},
+					success: function(data){
+						if(data.success){
+							self.records=data.data.records;
+							self.total = data.data.total;
+							self.totalPage = data.data.page
+						}else{
+							utils.alert("danger", data.msg);
+						}
+					}          	
+	           	})
+        	},
+        	delObj: function(id, $index){
+        		var self = this;
+        		utils.ajax({
+        			type:'get',
+	 				url:"/api/customs/delete/"+id,
+					success: function(data){
+						if(data.success){
+							self.records.splice($index,1)
+						}else{
+							utils.alert("danger", data.msg);
+						}
+					}          	
+	           	})
+        	},
+        	handleCurrentChange: function(val){
+		        var self = this;
+		        self.offset = val;
+		        this.currentPage = val;
+		        self.render();
+			},
+        	toPrev: function(){
+	        	if(this.offset>1){
+	        		this.offset = this.offset - 1;
+	        		this.currentPage = this.offset;
+	        		this.render();
+	        	}
+	        },
+	        toNext: function(){
+	        	if(this.currentPage < this.totalPage){
+	        		this.offset = this.offset + 1;
+	        		this.currentPage = this.offset;
+	        		this.render();
+	        	}
+	        }
+        },
+        filters: {
+            formatImg: function (str) {
+                return utils.formatImg(str);
+            }
+        }
+    })
+
+
+</script>
+</body>
+</html>

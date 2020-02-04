@@ -1,0 +1,29 @@
+<script src="../../src/js/plugin/jquery-qrcode-master/jquery.qrcode.min.js"></script>
+<style>
+.downLoad .dialog-main {width: 500px;height: 360px;margin-left: -180px;margin-top: -250px;}
+.downLoad .dialog-body{bottom: 0}
+.downLoad .dialog-body>div {padding: 50px 35px 0;font-size: 14px;text-align: center;}
+</style>
+<div class="dialog downLoad" id="downLoad">
+	<div class="mask"></div>
+	<div class="dialog-main">
+		<div class="dialog-header clearfix">
+			<a class="fr dialog-close" style="width: 30px;"><i class="icon icon-close"></i></a>
+			<h3 class="dialog-title">扫码下载APP</h3>
+		</div>
+		<div class="dialog-body">
+			<div>
+				<div id="downloadApp"></div>
+				<p class="tc" style="margin-top: 20px;">Android设备请使用浏览器扫码下载</p>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var url = window.location.href
+	if(url.indexOf('gacjc.com') > -1){
+		$("#downloadApp").qrcode({width: 200,height: 200,text: 'http://app.gacjc.com/app1/downloadApp.html'})
+	}else{
+		$("#downloadApp").qrcode({width: 200,height: 200,text: 'http://219.134.137.178:83/app1/downloadApp.html'})
+	}
+</script>

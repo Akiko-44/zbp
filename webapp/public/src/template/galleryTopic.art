@@ -1,0 +1,38 @@
+<li data-id="<%= data.id %>">
+	<table>
+		<tr>
+			<td class="preImg" width="340">
+				<a class="toDetail">
+					<img src="<%= $imports.formatImg(data.thumbnail) %>">
+				</a>
+			</td>
+			<td width="476" valign="top">
+				<h2 class="topicTitle">
+					<a class="toDetail"><%= data.title %></a>
+				</h2>
+				<p class="topicContent">
+					<%= data.summary %>
+				</p>
+			</td>
+			<td class="authorAvatar" width="120">
+				<a>
+					<% if(typeof data.authorLogo != "undefined"){ %>
+					<img src="<%= $imports.formatImg(data.authorLogo) %>">
+					<% } %>
+				</a>
+			</td>
+			<td class="authorInfo">
+				<h3 class="name">作者：<%= data.authorName %></h3>
+				<p class="intro"><%= data.keyword %></p>
+				<p>
+					<i class="icon icon-like3"></i>
+					<span class="iconlabel"><%= data.praiseNum %></span>
+					&emsp;&emsp;
+					<i class="icon icon-eye"></i>
+					<span class="iconlabel"><%= data.clickNum %></span>
+				</p>
+				<p class="time">发布于 <%= data.publishTime %></p>
+			</td>
+		</tr>
+	</table>
+</li>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<style type="text/css">
+    .jewelry-shoppingCart{background: #F8F8F8;}
+    .all{
+    	padding: 15px 0;
+    	border-bottom: 1px solid #E6E6E6;
+    	position: relative;
+    }
+    .all .empty{
+    	width: 140px;
+    	height: 2px;
+    	background: #C2A374;
+    	position: absolute;
+    	left: 0;
+    	bottom: 0;
+    }
+    .allGood{
+    	display: inline-block;
+    	width: 140px;
+    	font-size: 16px;
+    	color: #C2A374;
+    	font-weight: bolder;
+    }
+    #totalPrice{
+    	color: #FFAF4E;
+    	margin: 0 8px;
+    }
+    .settlement{
+    	border: none;
+    	width: 56px;
+    	height: 24px;
+    	background: #B8B8B8;
+    	color: #FFFFFF;
+    	border-radius: 3px;
+    	-webkit-border-radius: 3px;
+    	-moz-border-radius: 3px;
+    }
+    .settlement:active{
+    	background: #C2A374;
+    }
+    .shop{padding: 10px 22px;}
+    .shop a{
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        border-radius: 3px;
+    	-webkit-border-radius: 3px;
+    	-moz-border-radius: 3px;
+    	overflow: hidden;
+    	vertical-align: middle;
+    	margin-left: 20px;
+    	margin-right: 10px;
+    }
+    .shop span{
+    	margin-top: -30px;
+    	margin-right: 20px;
+    }
+    .shop .check{margin-bottom: -3px;}
+    .check{
+    	display: inline-block;
+    	cursor: pointer;
+    	width: 15px;
+    	height: 15px;
+    	background: #FFFFFF;
+    	border: 1px solid #CCCCCC;
+    }
+    .checked{
+    	background: url(../../src/img/jewelry/checked.png) no-repeat;
+    	background-size: 100% 100%;
+    }
+    .service{
+    	display: inline-block;
+    	width: 20px;
+    	height: 20px;
+    	background: url(../../src/img/jewelry/customer-service.png) center bottom no-repeat;
+    	background-size: 100% auto;
+    }
+    table{width: 100%;}
+    li table{border-top: 2px solid #CCCCCC;}
+    table td{text-align: center;padding: 20px 0;}
+    table tr{
+    	background: #FFFFFF;
+    	border-bottom: 1px solid #E6E6E6;
+    }
+    .goods-info{
+    	width: 265px;
+    	font-size: 14px;
+    	margin-left: 50px;
+    }
+    .goods-info p{
+    	line-height: 30px;
+    }
+    .goodsPrice{
+    	color: #333333;
+    	font-size: 18px;
+    	font-weight: bolder;
+    }
+    .goodsNum span{
+    	display: inline-block;
+    	width: 22px;
+    	height: 22px;
+    	background: #E6E6E6;
+    	text-align: center;
+    	line-height: 22px;
+    	font-size: 16px;
+    	cursor: pointer;
+    }
+    .goodsNum input{
+    	width: 50px;
+    	text-align: center;
+    }
+    .goodsNum2{
+    	border: 1px solid #AAAAAA;
+    }
+    .goodsNum2 input{
+    	border-color: transparent;
+    }
+    .goodsNum2 span:first-child{
+    	border-right: 1px solid #AAAAAA;
+    }
+    .goodsNum2 span:last-child{
+    	border-left: 1px solid #AAAAAA;
+    }
+    .modify{color: #FFAF4E;margin-bottom: 10px;}
+    .thead{
+    	padding: 20px 0;
+    }
+    .thead span{
+    	display: inline-block;
+    	float: left;
+    	text-align: center;
+    }
+    #totalPrice2, #number{
+    	color: #C2A374;
+    	font-size: 16px;
+    	font-weight: bolder;
+    }
+    .total{
+    	height: 60px;
+    	line-height: 60px;
+    	background: #FFFFFF;
+    	padding-left: 22px;
+    	margin-top: 20px;
+    }
+    .summary>span, .summary>a{
+    	display: inline-block;
+    	float: left;
+    }
+    .summary>span{
+    	margin-right: 10px;
+    }
+    .summary>a{
+    	width: 120px;
+    	text-align: center;
+    	font-size: 16px;
+    }
+    #continue{
+    	background-color: #EAEAEA;
+    	color:#9E9E9E;
+    }
+    #continue:hover{
+    	background-color: #C0C0C0;
+    }
+    #settlement{
+    	background-color: #C2A374;
+    	color: #FFFFFF;
+    	opacity: 0.7;
+    }
+    #settlement:hover{
+    	opacity: 1;
+    }
+    .totalOperation span{
+    	margin-right: 20px;
+    }
+    /*弹框*/
+    #wrap{
+    	width: 100%;
+    	height: 100%;
+    	background: rgba(0,0,0,.5);
+    	position: fixed;
+    	top: 0;
+    	left: 0;
+    	display: none;
+    }
+    #txt{
+    	width: 700px;
+    	height: 300px;
+    	padding: 30px;
+    	background-color: #FFFFFF;
+    	position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	margin-top: -150px;
+    	margin-left: -350px;
+    }
+    .close{
+    	position: absolute;
+    	right: 10px;
+    	top: 10px;
+    	cursor: pointer;
+    }
+    .content{
+    	width: 380px;
+    }
+    .content p{
+    	margin-bottom: 15px;
+    }
+    .p1{
+    	font-size: 16px;
+    	font-weight: bolder;
+    }
+    .p2{
+    	color: #999999;
+    }
+    .p2 span span{
+    	font-size: 18px;
+    }
+    .p6 button{
+    	border: none;
+    	width: 100px;
+    	height: 40px;
+    	font-size: 16px;
+    	border: 1px solid #D6C4AE;
+    	border-radius: 6px;
+    	-webkit-border-radius: 6px;
+    	-moz-border-radius: 6px;
+    }
+    .p6 button:first-child{
+    	background: #FFFFFF;
+    	color: #D6C4AE;
+    }
+    .p6 button:hover{
+    	opacity: .7;
+    }
+    .p6 button:last-child{
+    	background: #D6C4AE;
+    	color: #FFFFFF;
+    }
+    .spec{margin-bottom: 10px;}
+    .spec label, .numStrok label{
+	   	line-height: 24px;
+	   	margin-right: 10px;
+    	color: #999999;
+    }
+    .spec span{
+    	display: inline-block;
+    	width: 52px;
+    	height: 24px;
+    	background: #FFFFFF;
+    	cursor: pointer;
+    	text-align: center;
+    	line-height: 22px;
+    	margin-right: 10px;
+    	border: 1px solid #CCCCCC;
+    	position: relative;
+    }
+    .spec span:hover{
+    	border-color: #E6B75B;
+    }
+    .spec span.spec-active{
+    	border-color: #E6B75B;
+    }
+    .spec span i{
+    	display: inline-block;
+    	display: none;
+    	width: 8px;
+    	height: 8px;
+    	background: url(../../src/img/jewelry/default_adress.png) no-repeat;
+    	background-size: 100% auto;
+    	position: absolute;
+    	right: 0;
+    	bottom: 0;
+    }
+    .spec span.spec-active i{
+    	display: block;
+    }
+    .delGoods:hover{
+    	cursor: pointer;
+    	color: #D6C4AE;
+    }
+    #strok{
+    	color: #FFBC57;
+    }
+    #cartNull{
+    	padding-top: 100px;
+    	padding-bottom: 100px;
+    	display: none;
+    }
+    #cartNull h2{
+    	margin-bottom: 10px;
+    }
+    /*
+	渐进动画
+	*/
+	.fadeIn2{
+		-webkit-animation: fadeIn2 .5s ease-in both;
+		animation: fadeIn2 .5s ease-in both
+	}
+	@-webkit-keyframes fadeIn2{
+		0%{opacity:0}
+		100%{opacity:1}
+	}
+	@keyframes fadeIn2{
+		0%{opacity:0}
+		100%{opacity:1}
+	}
+</style>
+</head>
+<body class="jewelry-shoppingCart">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	<div class="container">
+	    <div class="clearfix all">
+	    	<span class="fl allGood tc">全部商品 0</span>
+	    	<p class="fr">
+	    		<span>已选商品</span>
+	    		<span id="totalPrice">0.00</span>
+	    		<button class="settlement" id="settlement1">结算</button>
+	    	</p>
+	    	<p class="empty"></p>
+	    </div>
+	    <div>
+	    	<p class="thead clearfix">
+	    		<span style="width: 59px;" onclick="checkAll(this)"><i class="check" style="margin-right: 5px;margin-bottom: -3px;"></i>全选</span>
+	    		<span style="width: 435px;">商品信息</span>
+	    		<span style="width: 223px;">价格</span>
+	    		<span style="width: 316px;padding-left: 30px;text-align: left;">数量</span>
+	    		<span style="width: 100px;">操作</span>
+	    	</p>
+	    	<ul id="list">
+	    		
+	    	</ul>
+	    	<div id="cartNull" class="tc">
+	    		<h2>小主！您的购物车是空的</h2>
+	    		<a href="goodsList" class="btn btn-warning">赶快去购物吧</a>
+	    	</div>
+	    	<div class="total clearfix">
+	    		<div class="fl totalOperation">
+	    			<span onclick="checkAll(this)"><i class="check" style="margin-right: 5px;margin-bottom: -3px;"></i>全选</span>
+	    		    <!--<span class="delGoods">删除选中商品</span>
+	    		    <span class="delGoods">一键清除商品</span>-->
+	    		</div>
+	    		<div class="fr clearfix summary">
+	    			<span>已选商品<span id="number">0</span>件</span>
+	    			<span>商品总价: <span id="totalPrice2">￥0.00</span></span>
+	    			<span>运费:<span id="freightMoney">0</span></span>
+	    			<a href="goodsList" id="continue">继续购物</a>
+	    			<a id="settlement">结算</a>
+	    		</div>
+	    	</div>
+	    </div>
+	</div>
+	<!--修改-->
+	<div id="wrap" class="fadeIn2" onclick="wrapHide()">
+		<div id="txt" onclick="stopDefault(this)" class="clearfix">
+			<div class="fl" style="margin-right: 20px;">
+				<img src="../../src/img/gallery/gallery1.png" width="240" height="240"/>
+			</div>
+			<div class="fr content">
+				<p class="p1">日月星云电五件套装黄金足金吊坠转运珠</p>
+				<p class="p2">
+					<span>推广价：<span style="color: #FFBC57;">￥5656</span></span>
+					<span style="margin-left: 20px;">吊牌价：<span>￥5656</span></span>
+				</p>
+				<div class="spec clearfix">
+					<label class="fl">金类：</label>
+					<div class="fl">
+						<span onclick="spec(this)">12 <i></i></span>
+					</div>
+				</div>
+				<div class="numStrok clearfix">
+					<label class="fl">金类：</label>
+					<p class="clearfix goodsNum goodsNum2 fl">
+						<span class="fl" onclick="getGoodNum(this,-1)">-</span>
+						<input class="fl" type="number" value="1" />
+						<span class="fl" onclick="getGoodNum(this,1)">+</span>
+					</p>
+					<p class="fl" style="line-height: 24px;margin-left: 20px;">库存<span id="strok">1</span>件</p>
+				</div>
+				<p class="p6">
+					<button onclick="wrapHide()">取消</button>
+					<button>确认</button>
+				</p>
+			</div>
+		    <i class="icon icon-close close" onclick="wrapHide()"></i>
+		</div>
+	</div>
+	<input type="hidden" name="carIds" value="" />
+	<%- include ../footer.ejs %>
+	<script type="text/javascript">
+		$(function(){
+			if (!utils.islogin()){
+				utils.alert('danger','请登录后再进行操作！');
+				setTimeout(function(){
+					window.location = '../login'
+				},300)
+			}
+			getData()
+			$("#settlement, #settlement1").click(function(){
+				var carIds = $('input[name=carIds]').val();
+				if(carIds != ''){
+					window.location = 'checkOrder?source=1&carIds='+carIds;
+				}else{
+					utils.alert('danger',"您还未选中商品！");
+				}
+			})
+		})
+		function getData(){
+			$.ajax({
+				type:"get",
+				url:"/api/order/cart/list",
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(response){
+					if(!response.success) return;
+					var html= '', allNum = 0, res = response.data;
+					if(res == null){
+						$("#cartNull").show();
+						$(".thead").hide();
+						return null;
+					}
+					$.each(res.cartItemList, function(idx,item) {
+						var str = '';
+						if(item.goods.length == 0){
+							$("#cartNull").show();
+							$(".thead").hide();
+							return null;
+						}
+						$.each(item.goods, function(idx1,item1) {
+							if(item1.goodsSource == 1){
+								allNum++;
+								var sr = '';
+								$.each(item1.skuList, function(idx2,item2) {
+									sr += '<p>'+item2.specsName+'：'+item2.attrValue+'</p>';
+								});
+								str += '<tr>'+
+					    					'<td><i class="check goodCheck" onclick="check(this)"></i></td>'+
+					    					'<td style="width: 435px;">'+
+					    						'<a href="details?id='+item1.goodsId+'" class="clearfix" style="color: #333;">'+
+					    							'<img class="fl" src="'+item1.goodsLogo+'" width="120" height="120"/>'+
+					    							'<div class="fl tl goods-info">'+
+					    								'<p>'+item1.goodsName+'</p>'+sr+'</div>'+
+					    						'</a>'+
+					    					'</td>'+
+					    					'<td class="goodsPrice" val="'+item1.skuPrice+'" car="'+item1.goodsSku+'">¥'+item1.skuPrice+'</td>'+
+					    					'<td>'+
+					    						'<p class="clearfix goodsNum">'+
+					    							'<span class="fl" onclick="getGoodNum(this, -1, '+item1.goodsSku+')">-</span>'+
+					    							'<input class="fl" type="number" name="num" value="'+item1.quantity+'" onBlur="blurGoodNum(this,'+item1.goodsSku+')"/>'+
+					    							'<span class="fl"  onclick="getGoodNum(this, 1, '+item1.goodsSku+')">+</span>'+
+					    						'</p>'+
+					    					'</td>'+
+					    					'<td>'+
+					    						//'<p class="modify"><a onclick="wrapShow()">修改</a></p>'+
+					    						'<p><a onclick="del(this,'+item1.goodsSku+')">删除</a></p>'+
+					    					'</td>'+
+					    				'</tr>';
+				    		}
+						});
+						if(str != ''){
+							html += '<li>'+
+						    			'<div class="shop">'+
+						    				'<i class="check" data-freightMoney="'+item.freightMoney+'" onclick="shopCheck(this)"></i>'+
+						    				'<a><img src="../../src/img/gallery/gallery1.png" width="24" height="24"/></a>'+
+						    				'<span>'+item.merchant+'</span>'+
+						    				'<i class="service"></i>'+
+						    			'</div>'+
+						    			'<table cellpadding="0" cellspacing="0"><tbody>'+str+'</tbody></table>'+
+						    		'</li>';
+					    }
+					});
+					$("#list").html(html);
+					$(".allGood").html('全部商品'+allNum);
+				},
+				error:function(error){
+					
+				}
+			});
+		}
+		function wrapShow(){
+			$("#wrap").show()
+		}
+		function wrapHide(){
+			$("#wrap").hide()
+		}
+		function stopDefault(e){   
+		    window.event?window.event.cancelBubble=true:e.stopPropagation();
+            e.preventDefault?e.preventDefault():window.event.returnValue=false;  
+		}
+		/**
+		 * 选中规格
+		 * */
+		function spec(e){
+			var el = e||window.event;
+			if($(el).parent().children(".spec-active")){
+			    $(el).parent().children(".spec-active").removeClass("spec-active");
+			}
+			$(el).addClass("spec-active");
+		}
+		/**
+		 * 购物车内商品删除
+		 * */
+		function del(e,id){
+			var el = e||window.event;
+			$.ajax({
+				type:"post",
+				url:'/api/order/cart/delete/'+id,
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(res){
+					if(res.success){
+						getData();
+						totalPrice();
+					}else{
+						utils.alert('danger',res.msg);
+					}
+				},
+				error:function (error){
+					utils.alert('danger','网络链接超时！请重试');
+				}
+			})
+			
+		}
+		/**
+		 * 输入框失焦改变商品数量
+		 * */
+		function blurGoodNum(e,id){
+			var el = e||window.event;
+			var num = $(el).parent().children("input").val();
+			num1 = num>0?num:1;
+			$.ajax({
+				type:"post",
+				url:'/api/order/cart/update/'+id+'/'+num1,
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(data){
+					if(data.success){
+						totalPrice();
+					}else{
+						utils.alert('danger',res.msg);
+					}
+				},
+				error:function (error){
+					utils.alert('danger',"网络加载超时！");
+				}
+			})
+			
+		}
+		/**
+		 * 添加商品数量
+		 * */
+		function getGoodNum(e,a,id){
+			var el = e||window.event;
+			var num = $(el).parent().children("input").val();
+			a>0?num++:num--;
+			if(num <= 1){
+			   num =1;
+			}
+			$.ajax({
+				type:"post",
+				url:'/api/order/cart/update/'+id+'/'+num,
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(data){
+					if(data.success){
+						$(el).parent().children("input").val(num);
+						totalPrice();
+					}else{
+						utils.alert('danger',res.msg);
+					}
+				}
+			})
+			
+		}
+		/**
+		 * 全选
+		 * */
+		function checkAll(e){
+			var el = e||window.event;
+			if($(el).children('i').hasClass("checked")){
+				$(document).find(".check").removeClass('checked');
+			}else{
+				$(document).find(".check").addClass('checked');
+			}
+			totalPrice()
+		}
+		/**
+		 * 店铺单选
+		 * */
+		function shopCheck(e){
+			var el = e||window.event;
+			if($(el).hasClass("checked")){
+				$(el).parents('li').find('.check').removeClass('checked');
+			}else{
+				$(el).parents('li').find('.check').addClass('checked');
+			}
+			totalPrice()
+		}
+		/**
+		 * 单选
+		 * */
+		function check(e){
+			var el = e||window.event;
+			if($(el).hasClass("checked")){
+				$(el).removeClass('checked');
+			}else{
+				$(el).addClass('checked');
+			}
+			totalPrice()
+		}
+		/**
+		 * 计算选中总价
+		 */
+		function totalPrice(){
+			var num = 0, len = 0, carArr = [], freightMoney = 0;
+			$.each($(".goodCheck"),function(idx,item){
+				if($(item).hasClass("checked")){
+					var carId = $(item).parents('tr').children(".goodsPrice").attr('car');
+					var goodsPrice = $(item).parents('tr').children(".goodsPrice").attr('val');
+					var goodsNum = $(item).parents('tr').find("input[name=num]").val();
+					carArr.push(carId);
+					$("input[name=carIds]").val(carArr.join(","));
+					var s = Number(goodsPrice) * Number(goodsNum);
+					num += s;
+					len += 1;
+				}
+			})
+			$.each($(".shop .checked"), function(idx, item) {
+				freightMoney += $(item).attr('data-freightMoney');
+			});
+			$("#totalPrice2, #totalPrice").html(num.toFixed(2));
+			$("#freightMoney").text(freightMoney);
+		    $("#number").html(len);
+		}
+	</script>
+</body>
+</html>
+

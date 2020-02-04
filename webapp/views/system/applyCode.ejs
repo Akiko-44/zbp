@@ -1,0 +1,89 @@
+<script>
+
+var uuid = utils.uuid();
+//验证码
+$(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+$(".codeUuid").val(uuid);
+$(document).on("click", ".codeImg", function(){
+	uuid = utils.uuid();
+	$(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+	$(".codeUuid").val(uuid);
+});
+var timer
+var submitFlag = false;
+$(document).on("click", ".codeBtn", function(){
+	if(submitFlag){
+		return;
+	}
+	
+	var $phone = $(".mobilePhone");
+	var $verifyCode = $(".verifyCode");
+	$verifyCode.blur()
+	if(!$verifyCode.hasClass("Validform_error")){
+		var phone = $.trim($phone.val());
+		var verifyCode = $.trim($verifyCode.val());
+		submitFlag = true;
+		var json = {
+			mobilePhone: phone,
+			verifyCode: verifyCode,
+			codeUuid: $(".codeUuid").val()
+		}
+		$.ajax({
+			type: 'post',
+			url: "/api/userCenter/smscode",
+			contentType: 'application/json;charset=utf-8',
+	        headers:{   
+	        	'Authorization':utils.getCookie("token")
+	        },
+			data: JSON.stringify(json),
+			success: function(data){
+				if(data.success){
+					$("input[name='msgId']").val(data.data);
+					/*
+					if(flag){
+						var i = 120;
+						var timer = setInterval(function(){
+							i--;
+							$(".codeBtn").text('重发(' + i + ')');
+						}, 1000);
+						setTimeout(function(){
+							clearInterval(timer);
+							$(".codeBtn").text('重发');
+							flag = false;
+							submitFlag = false;
+						}, 120000);
+					}else{
+					*/	
+						var i = 120;
+						timer = setInterval(function(){
+							i--;
+							$(".codeBtn").text('已发送(' + i + ')');
+						}, 1000);
+						setTimeout(function(){
+							clearInterval(timer);
+							$(".codeBtn").text('重发');
+							submitFlag = false;
+						}, 120000);
+							
+						
+					/*}*/
+				}else{
+					submitFlag=false;
+					//$("#errorText2").text(data.msg);
+					utils.alert('danger', data.msg)
+				}
+			},
+			error: function(){
+				submitFlag = false;
+			}
+		})
+	}else{
+		submitFlag = false;
+	}
+}).on('click', '#getCode span', function(){
+	$('.codeImg').click();
+	setTimeout(function(){
+		$('#getCode span').hide()
+	},20)
+})
+</script>

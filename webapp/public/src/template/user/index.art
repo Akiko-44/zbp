@@ -1,0 +1,62 @@
+<div class="userIndexWrap">
+	<div>
+		<table>
+		<tr>
+			<td class="tl" style="border-right: 1px dashed #ebebeb;padding-left: 20px">
+				<span>
+					<% if(!!data.userLogo){ %>
+						<img src="<%= data.userLogo %>" width="100%" height="100%">
+					<% }else{ %>
+						<img src="../../src/img/avatar.jpg" width="100%" height="100%">
+					<% } %>
+				</span>
+				<p><%= data.nickname || '未填写用户名' %></p>
+				<div>
+					<span><%= data.mobilePhone %></span>
+					<a class="blue toEditPhoneBtn">修改</a>
+				</div>
+				
+			</td>
+			
+		</tr>
+		</table>
+	</div>
+	
+	<div class="panel userPanel hide">
+		<div class="panel-header">
+			<div class="panel-control">
+				<a>查看全部订单</a>
+			</div>
+			<div class="panel-title">我的订单(32)</div>
+		</div>
+		<div class="panel-body">
+			<div class="row tc">
+				<div class="col-3">
+					<a>
+						<i class="icon icon-userIndex1"></i>
+						<span>待付款&ensp;<i class="yellow">0</i></span>
+					</a>
+				</div>
+				<div class="col-3">
+					<a>
+						<i class="icon icon-userIndex2"></i>
+						<span>待收货&ensp;<i class="yellow">0</i></span>
+					</a>
+				</div>
+				<div class="col-3">
+					<a>
+						<i class="icon icon-userIndex3"></i>
+						<span>售后订单&ensp;<i class="yellow">0</i></span>
+					</a>
+				</div>
+				<div class="col-3">
+					<a>
+						<i class="icon icon-userIndex4"></i>
+						<span>待评价&ensp;<i class="yellow">0</i></span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>

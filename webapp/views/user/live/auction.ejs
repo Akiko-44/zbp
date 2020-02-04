@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/plugin/Zebra_Datepicker/dist/css/metallic/zebra_datepicker.min.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<style>
+	.liveUploadDialog{
+		
+	}
+	.dialog .dialog-main {
+		width: 900px;
+		height: 380px;
+		top: -5%;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: auto;
+}
+	.dialog .dialog-body{
+		height: auto;
+		position: initial;
+		margin-top: 80px;
+	}
+	.dialog .dialog-body p{
+		color: #1A1A1A;
+		font-size: 48px;
+		text-align: center;
+	}
+	.dialog .dialog-body p .t-icon{
+		display: inline-block;
+		width: 90px;
+		height: 90px;
+		vertical-align: middle;
+		margin-right: 30px;
+		background: url("../../src/img/live/x.png") no-repeat center/contain;
+	}
+	.dialog .dialog-footer{
+		text-align: center;
+		position: initial;
+		margin-top: 78px;
+	}
+	.dialog .dialog-footer .btn{
+		font-size: 30px;
+		width: 140px;
+		height: 66px;
+		border-radius: 20px;
+	}
+	
+	.succ.dialog .dialog-body{
+		padding: 0 50px;
+		margin-top: 61px;
+	}
+	.succ.dialog .dialog-body p .t-icon{
+		background: url("../../src/img/live/succ.png") no-repeat center/contain;
+	}
+	.succ.dialog .dialog-footer{
+		margin-top: 37px;
+	}
+	.dialog .dialog-footer .btn{
+		width: 134px;
+		height: 60px;
+	}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div id="main" class="main user-live liveUpload">
+		<div class="container clearfix ">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="content userRightContent">
+				<h2><span class="head">直播拍卖上传</span><span class="subhead">Live upload</span></h2>
+				<form class="upload-form">
+					<div class="formsub">
+		            	<ul>
+		                	<li>
+		                    	<label><span class="need">*</span> 直播链接：</label>
+		                    	<input type="text" value="" name="name" class="inputxt" datatype="s6-18" nullmsg="请设置密码！" errormsg="昵称至少6个字符,最多18个字符！">
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 直播分类：</label>
+		                    	<select name="province" datatype="*" nullmsg="请选择所在城市！" errormsg="请选择所在城市！">
+		                    		<option value="">直播类型</option>
+		                    		<option value="1">直播拍卖</option>
+		                    	</select>
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 直播商品ID：</label>
+		                    	<input type="password" value="" name="userpassword2" class="inputxt" datatype="*" recheck="userpassword" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！">
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 该商品图片：</label>
+		                    	<img src="../../test/1.jpg">
+		                        <span class="Validform_checktip ">* 该商品图片会自动读取输入的商品ID的第一张图</span>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 推荐商品ID：</label>
+		                    	<input type="password" value="" name="userpassword" class="inputxt" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！">
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 该商品图片：</label>
+		                    	<img src="../../test/1.jpg">
+		                        <span class="Validform_checktip ">* 该商品图片会自动读取输入的商品ID的第一张图</span>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 直播时间段：</label>
+		                    	<select name="province" datatype="*" nullmsg="请选择所在城市！" errormsg="请选择所在城市！">
+		                    		<option value="">直播时间段</option>
+		                    		<option value="1">早上 9：00-11：00</option>
+		                    	</select>
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<input name="shoppingsite2" class="rt2" id="shoppingsite21" type="checkbox" value="1" datatype="*" errormsg="请选择您常去的购物网站！">
+		                    	<label for="shoppingsite21" style="width: 300px;">我已同意《商家直播服务协议》</label>
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                </ul>
+		                <div class="action">
+		                	<a class="btn btn-warning submitBtn">提交</a>
+		                </div>
+		            </div>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+	
+	<div class="dialog liveUploadDialog">
+		<div class="mask dialog-close"></div>
+		<div class="dialog-main">
+			<div class="dialog-body">
+				<p><i class="t-icon"></i><span class="value">请按照提示完成正确信息填入</span></p>
+			</div>
+			
+			<div class="dialog-footer">
+				<button class="btn btn-warning">确定</button>
+			</div>
+			
+		</div>
+	</div>
+	<div class="dialog liveUploadDialog succ">
+		<div class="mask dialog-close"></div>
+		<div class="dialog-main">
+			<div class="dialog-body">
+				<p><i class="t-icon"></i><span class="value">提交成功，可在我发布的信息
+－直播列表查看状态
+</span></p>
+			</div>
+			
+			<div class="dialog-footer">
+				<button class="btn btn-warning">确定</button>
+			</div>
+			
+		</div>
+	</div>
+	<%- include ../userFooter.ejs %>
+	
+
+<script>	
+
+	$(".userLeftNav li li:eq(1)").addClass("cur")
+	$(".upload-form").Validform({
+		tiptype:function(msg,o,cssctl){
+			//msg：提示信息;
+			//o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
+			//cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;
+			if(!o.obj.is("form")){//验证表单元素时o.obj为该表单元素，全部验证通过提交表单时o.obj为该表单对象;
+				var objtip=o.obj.siblings(".Validform_checktip");
+				cssctl(objtip,o.type);
+				objtip.text(msg);
+			}
+		}
+	});
+$(".submitBtn").on("click", function(){
+	if(validform.check(false)){
+		var str = $(".upload-form").serialize();
+		str = utils.str2json(str);
+		console.log(str,"str")
+		/*utils.ajax({
+			url: "/api/userCenter/password/change",
+			data: JSON.stringify(str),
+			success: function(data){
+				if(data.success){
+					utils.alert("success", "修改成功");
+				}else{
+					$("#errorText").text(data.msg);
+				}
+				
+			}
+		})*/
+	}
+
+})
+//显示添加弹出框
+	$(".dialog-footer .btn").on("click", function(){
+		$(".liveUploadDialog").removeClass()("show");
+	})
+</script>
+
+</body>
+</html>
+

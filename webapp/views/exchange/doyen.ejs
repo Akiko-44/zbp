@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+
+<style>
+.Jewellery_doyen{background: #F5F5F5;}
+.container_index{width: 990px;margin: 0 auto;}
+.recoveryHover:hover{
+	-webkit-transition: all .3s;
+	-moz-transition: all .3s;
+	-ms-transition: all .3s;
+	-o-transition: all .3s;
+	transition: all .3s;
+	-webkit-transform: scale(1.3);
+	-moz-transform: scale(1.3);
+	-ms-transform: scale(1.3);
+	-o-transform: scale(1.3);
+	transform: scale(1.3);
+	webkit-box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+.doyen{
+	height: 200px;
+	background: #FFFFFF;
+	padding: 20px 30px;
+}
+.doyen_img{
+	width: 160px;
+	height: 160px;
+	margin-right: 40px;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	overflow: hidden;
+}
+.doyen_img img{
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+}
+.doyen_name{
+	font-size: 24px;
+	font-weight: bolder;
+}
+.authentication{
+	display: inline-block;
+	width: 86px;
+	height: 22px;
+	margin-left: 20px;
+	background: url('../../src/img/exchange/authentication.png') center center no-repeat;
+	background-size: 100% 100%;
+}
+.authentication_ing{
+	display: inline-block;
+	width: 86px;
+	height: 22px;
+	text-align: center;
+	line-height: 22px;
+	margin-left: 20px;
+	background: #C2A374;
+	color: #FFFFFF;
+	border-radius: 11px;
+	-webkit-border-radius: 11px;
+	-moz-border-radius: 11px;
+}
+.exchangeTitle {margin-top: 30px;margin-bottom: 30px;}
+.exchangeTitle strong {color: #1A1A1A;font-size: 16px;}
+.exchangeTitle span {color: #666666;font-size: 16px;margin-left: 5px;}
+.exchangeTitle a {
+	display: inline-block;
+	line-height: 20px;
+	color: #666;
+}
+.goods li{
+	width: 225px;
+	background: #FFFFFF;
+	margin-right: 30px;
+}
+.goods li:last-child{margin-right: 0;}
+.goods .good_img, .goods .goods_img img{display: inline-block;width: 100%;height: 225px}
+.goods .info{padding: 5px;}
+.goods .goods_name{
+	width: 215px;
+	color: #323232;
+	margin-bottom: 8px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.recoveryName{
+	width: 90px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.info_num{color: #999999;text-align: right;}
+.info_num i{
+	display: inline-block;
+	width: 15px;
+	height: 10px;
+	overflow: hidden;
+}
+.info_num .new2{
+	background: url('../../src/img/news/new2.png') center no-repeat;
+	background-size: 10px;
+}
+.info_num .new3{
+	background: url('../../src/img/news/new3.png') center no-repeat;
+	background-size: 10px;
+}
+.info_num .new4{
+	background: url('../../src/img/news/new4.png') center no-repeat;
+	background-size: 15px;
+}
+.goodsrecovery ul{background: #FFF;height: 192px;}
+.goodsrecovery li{width: 165px;padding: 21px 35px;background: #FFF;}
+</style>
+</head>
+<body class="Jewellery_doyen">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+				  	<el-breadcrumb-item :to="{ path: '/' }">我的位置:</el-breadcrumb-item>
+				  	<el-breadcrumb-item :to="{ path: '../../exchange/index' }">互换坊</el-breadcrumb-item>
+				  	<el-breadcrumb-item>
+				  		<span v-if="user.userType !=4 ">珠宝达人</span>
+				  		<span v-else>特色商家</span>
+				  	</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		
+		<div class="container" id="JewelleryDoyen">
+			<div class="doyen clearfix">
+				<a class="doyen_img fl">
+					<img :src="user.userLogo | formatImg" width="160" height="160"/>
+				</a>
+				<div class="fl" style="padding-top: 50px;">
+					<p v-if="user.userType == 4">
+						<span class="doyen_name">{{user.shopName}}</span>
+						<a class="authentication"></a>
+					</p>
+					<p v-if="user.userType != 4">
+						<span class="doyen_name">{{user.userName}}</span>
+						<a class="authentication_ing">实名认证</a>
+					</p>
+					<p style="margin: 20px 0;color: #000;">
+						<span>发布商品：{{user.goodsCount}}件</span>
+					</p>
+				</div>
+			</div>
+			<div class="container_index">
+				<!--物品销售-->
+				<div class="goods goodsale" v-if="data.sale && data.sale.length">
+					<div class="exchangeTitle">
+						<a class="fr" id="sale">更多<i class="el-icon-d-arrow-right"></i></a>
+						<strong>物品销售</strong>
+					</div>
+					<ul class="clearfix">
+						<li class="listShadow fl" :data-id="item.id" v-for="(item, index) in data.sale" :key="item.id" v-if="index<4">
+							<a class="good_img"><img :src="item.imgUrl | formatImg"/></a>
+							<div class="info">
+								<p class="goods_name fs16">{{item.goodsName}}</p>
+								<p class="goods_name fs12">￥{{item.price}}</p>
+								<p class="info_num">
+									<i class="new4"></i>{{item.glanceNum}}
+									<i class="new3"></i>{{item.commentNum}}
+									<i class="new2"></i>{{item.collectNum}}
+								</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--宝贝互换1.0隐藏-->
+				<!--宝贝互换-->
+				<!--<div class="goods goodswap" v-if="data.change && data.change.length">
+					<div class="exchangeTitle">
+						<a class="fr" id="swap">更多<i class="el-icon-d-arrow-right"></i></a>
+						<strong>宝贝互换</strong>
+					</div>
+					<ul class="clearfix">
+						<li class="listShadow fl" :data-id="item.id" v-for="(item, index) in data.change" :key="item.id" v-if="index<4">
+							<a class="good_img"><img :src="item.imgUrl  | formatImg"/></a>
+							<div class="info">
+								<p class="goods_name fs16">{{item.goodsName}}</p>
+								<p class="goods_name fs12">{{item.price}}</p>
+								<p class="info_num">
+									<i class="new4"></i>{{item.glanceNum}}
+									<i class="new3"></i>{{item.commentNum}}
+									<i class="new2"></i>{{item.collectNum}}
+								</p>
+							</div>
+						</li>
+					</ul>
+				</div>-->
+				<!--物品拍卖-->
+				<div class="goods goodauction" v-if="data.auction && data.auction.length">
+					<div class="exchangeTitle">
+						<a class="fr" id="auction">更多<i class="el-icon-d-arrow-right"></i></a>
+						<strong>物品拍卖</strong>
+					</div>
+					<ul class="clearfix">
+						<li class="listShadow fl" :data-id="item.id" v-for="(item, index) in data.auction" :key="item.id" v-if="index<4">
+							<a class="good_img"><img :src="item.imgUrl  | formatImg"/></a>
+							<div class="info">
+								<p class="goods_name fs16">{{item.goodsName}}</p>
+								<p class="goods_name fs12">
+									<span v-if="item.presentPrice == 0">￥{{item.upsetPrice}}</span>
+									<span v-else>￥{{item.presentPrice}}</span>
+								</p>
+								<p class="info_num">
+									<i class="new4"></i>{{item.glanceNum}}
+									<i class="new3"></i>{{item.commentNum}}
+									<i class="new2"></i>{{item.collectNum}}
+								</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--黄金回购-->
+				<!--<div class="goodsrecovery" v-if="data.recycle && data.recycle.length">
+					<div class="exchangeTitle">
+						<a class="fr" id="recovery">更多<i class="el-icon-d-arrow-right"></i></a>
+						<strong>黄金回购</strong>
+					</div>
+					<ul class="clearfix">
+						<li class="recoveryHover fl" :data-id="item.id" v-for="(item, index) in data.recycle" :key="item.id" v-if="index<3">
+							<a class="good_img"><img :src="item.imgUrl  | formatImg" width="95" height="95"/></a>
+							<div class="tc">
+								<p class="fs14" style="margin-bottom: 10px;margin-top: 18px;">{{item.goodsName}}</p>
+							</div>
+						</li>
+					</ul>
+				</div>-->
+			</div>
+		</div>
+
+	</div>
+	
+	<%- include ../footer.ejs %>
+<script>
+var id = utils.getUrlParam('id')
+var routerVm = new Vue({
+	el: "#router",
+	data: {
+		user: {}
+	}
+})
+
+//搜索
+var JewelleryDoyenVm = new Vue({
+	el: "#JewelleryDoyen",
+	data: {
+		data:{},
+		user: {},
+		recoveryUrl: ''
+	},
+	mounted: function(){
+		var self = this
+		this.render()
+		if(utils.islogin()){
+			utils.ajax({
+				url: "/api/goldRecycle/token",
+				type: "get",
+				success: function(data){
+					self.recoveryUrl = data.data
+				}
+			})
+		}
+	},
+	methods: {
+		render(){
+			var self = this
+			utils.ajax({
+				url: "/api/jewelry_talent/detail/"+id,
+				type: "get",
+				success: function(data){
+					self.data = data.data
+					self.user = data.data.user
+					routerVm.user = data.data.user
+				}
+			})
+		}
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	}
+})
+$(function(){
+	$(document).on('click','#sale',function(){
+		location.href = "../../exchange/sale?userid="+JewelleryDoyenVm.user.userid
+	}).on('click','#swap',function(){
+		location.href = "../../exchange/swap?userid="+JewelleryDoyenVm.user.userid
+	}).on('click','#auction',function(){
+		location.href = "../../exchange/auction?userid="+JewelleryDoyenVm.user.userid
+	}).on("click", "#recovery", function(e){
+		if(!utils.islogin()){
+			utils.alert('danger','请登录后再进行操作')
+		}else{
+			location.href = JewelleryDoyenVm.recoveryUrl
+		}
+	}).on("click", ".goodsale li", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		location.href = "../../exchange/sale_detail?id=" + id;
+	}).on("click", ".goodswap li", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		location.href = "../../exchange/swap_detail?id=" + id;
+	}).on("click", ".goodauction li", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		location.href = "../../exchange/auction_detail?id=" + id;
+	}).on("click", ".goodsrecovery li", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		location.href = "../../exchange/recovery_detail?id=" + id;
+	})
+})
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<script src="../../src/js/address.js"></script>
+<style>
+.swapTable thead {border-bottom: 1px dashed #EAEAEA;}
+.swapTable thead th {font-weight: normal;padding: 10px;font-size: 14px;}
+.swapTable thead td {padding: 10px;}
+
+.sendInfo .dialog-main {width: 644px;height: 558px;margin-left: -322px;margin-top: -279px;}
+.sendInfo .dialog-body{bottom: 0}
+.sendInfo .dialog-body>div {padding: 35px;font-size: 14px;position: relative;}
+</style>
+</head>
+<body class="userOrderJewelry">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<!-- <div id="orderSearch">
+					<input type="text" id="datepicker-start" class="searchTime" placeholder="订单时间"> - 
+					<input type="text" id="datepicker-end" class="searchTime" placeholder="订单时间">
+					<div class="input">
+						<input type="text" placeholder="输入商品名称或订单号搜索">
+						<a>搜索</a>
+					</div>
+				</div> -->
+				
+				<div id="orderNav">
+					<ul>
+						<li state="0"><a>全部订单(<span>0</span>)</a></li>
+						<li state="41"><a>待确认(<span>0</span>)</a></li>
+						<li state="42"><a>待付款(<span>0</span>)</a></li>
+						<li state="43"><a>待发货(<span>0</span>)</a></li>
+						<li state="47"><a>待收货(<span>0</span>)</a></li>
+						<li state="50"><a>交易成功</a></li>
+					</ul>
+				</div>
+				
+				<div id="orderList">
+					<ul>
+						
+					</ul>
+					<div id="pagination" class="pagination"></div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+<div class="dialog sendInfo" id="sendInfo">
+	<!--<div class="mask"></div>-->
+	<div class="dialog-main">
+		<div class="dialog-header clearfix">
+			<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+			<h3 class="dialog-title">发货信息</h3>
+		</div>
+		<div class="dialog-body">
+			<div>
+				<form id="sendForm">
+					<table>
+						<tr>
+							<td valign="top" width="100"><b class="red">*</b><label>物流公司</label></td>
+							<td colspan="2">
+								<div>
+									<select name="company" id="expressCompany"
+										datatype="*" 
+										nullmsg="请选择物流公司"
+										errormsg="请选择物流公司">
+									</select>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" width="100"><b class="red">*</b><label>物流编码</label></td>
+							<td colspan="2">
+								<div>
+									<input type="text" name="expressNum" 
+										datatype="expressNum" 
+										nullmsg="请输入物流编码" 
+										maxlength="30" 
+										errormsg="物流编码不能为空" 
+										style="width: 310px;">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" width="100"><label>备注</label></td>
+							<td colspan="2">
+								<div>
+									<input type="text" name="remark" style="width: 310px;">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+					</table>
+				</form>
+				<button class="btn btn-danger" onclick="$('#sendInfo').removeClass('show')">取消</button>
+				<button class="btn btn-primary" onclick="send()">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<%- include ../userFooter.ejs %>
+	
+<%- include exchange_swap_common.ejs %>	
+<script>
+var routerVm = new Vue({
+	el: "#router"
+})
+
+//swapType 互换类型：1换入，2换出
+var swapType = 2;
+
+var expressVm = new Vue({
+	el: "#sendForm",
+	data: {
+		orderNo: '',
+		 swapType: swapType
+	},
+	mounted: function(){
+		this.expressData()
+	},
+	methods:{
+		expressData: function(){
+			utils.ajax({
+				url: "/admin/merchant/order/express",
+				success: function(data){
+					data = data.data;
+					var html = '';
+					$.each(data, function(idx, item) {
+						html += '<option value="'+item+'">'+item+'</option>'
+					});
+					$("[name='company']").html(html);
+				}
+			})
+		}
+	}
+})
+window.validform = $("#sendForm").Validform({
+	tiptype: 2,
+	datatype: {
+		"expressNum" : /^[0-9a-zA-Z]+$/
+	}
+})
+
+
+$(".userLeftNav li[data-target='exchange'] li:eq(5)").addClass("cur");
+$(function(){
+	
+	/* $('#datepicker-start').Zebra_DatePicker({
+	    direction: true,
+	    pair: $('#datepicker-end')
+	});
+	 
+	$('#datepicker-end').Zebra_DatePicker({
+	    direction: 1
+	}); */
+	
+	$(document).on("click", "#orderNav li", function(e){
+		var self = $(e.currentTarget);
+		self.addClass("cur").siblings().removeClass("cur");
+		var val = self.attr("state"); 
+		render(val, 1);
+	}).on("click", ".cancelOrderBtn", function(e){
+		//取消订单
+		var self = $(e.currentTarget)
+		var id = self.attr("orderNumber")
+		cancelOrder(id, swapType, function(){
+			utils.alert("success", "取消成功");
+			$("#orderNav li.cur").trigger("click");
+		})
+		
+	}).on("click", ".agreeNoOrderBtn", function(e){
+		//取消订单
+		var self = $(e.currentTarget)
+		var id = self.attr("orderNumber")
+		cancelOrder(id, swapType, function(){
+			utils.alert("success", "取消成功");
+			$("#orderNav li.cur").trigger("click");
+		})
+		
+	}).on("click", ".sendOrderBtn", function(e){
+		//发货
+		var self = $(e.currentTarget)
+		$("#sendInfo").addClass("show");
+  		expressVm.orderNo =  self.attr("orderNumber");
+	}).on("click", ".receiveOrderBtn", function(e){
+		//确认收货
+		var self = $(e.currentTarget)
+		var id = self.attr("orderNumber");
+		receiveOrder(id, swapType, function(data){
+			utils.alert("success", "操作成功");
+			$("#orderNav li.cur").trigger("click");
+		})
+	}).on("click", ".toOrderDetail", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("orderNumber");
+		window.location.href = "../../user/order/exchange_swap_out_detail?id=" + id;
+	}).on("click", ".toAgreeOrderBtn", function(e){
+		//确定交换
+		var id = $(e.currentTarget).attr("orderNumber");
+		addressOrderDialogVm.id = id;
+		addressOrderDialogVm.swapType = swapType;
+		addressOrderDialogVm.show();
+		
+	})
+	
+	$("#orderNav li:eq(0)").trigger("click");
+	getNum();
+	
+});
+
+
+
+
+function render(state, page){
+	utils.ajax({
+		url: "/api/order/swap/page/" + state + "/" + swapType,
+		type: "get",
+		data: {
+			offset: page,
+			limit: 10
+		},
+		success: function(data){
+			data = data.data;
+			if(data.total == 0){
+				//没有数据
+				$("#orderList ul").html("");
+			}else{
+				var html = "";
+				for(var i = 0; i < data.records.length; i++){
+					html += _template.userOrderSwapOut({
+						data: data.records[i]
+					}) 
+				}
+				$("#orderList ul").html(html);
+			}
+			if(page == 1){
+				if(data.pages > 0){
+					$("#pagination").removeClass("hide");
+					$("#pagination").pagination({
+						pageCount: data.pages,
+					    jump: true,
+					    coping: true,
+					    prevContent: '<',
+					    nextContent: '>',
+					    callback: function (api){
+					        render(state, api.getCurrent());
+					    }
+					});
+				}else{
+					$("#pagination").addClass("hide");
+				}
+			}
+			utils.unreadNumberType(4, 2, function(data){
+				if(data>0){
+					$('[data-warn=exchangeSwapOutWarn]').text(data).removeClass('hide');
+				}else{
+					$('[data-warn=exchangeSwapOutWarn]').text('').addClass('hide');
+				}
+			})
+		}
+		
+	})
+}
+
+function getNum(){
+	utils.ajax({
+		url: "/api/order/swap/out/state/number/list",
+		type: "get",
+		success: function(data){
+			data = data.data;
+			var total = 0;
+			for(var i = 0; i < data.length; i++){
+				total += parseInt(data[i].STATENUM)
+				if($("#orderNav li[state='"+ data[i].STATE +"']").length > 0){
+					$("#orderNav li[state='"+ data[i].STATE +"'] span").text(data[i].STATENUM);
+				}
+			}
+			$("#orderNav li[state='0'] span").text(total);
+		}
+	})
+}
+function send(){
+	if(validform.check(false)){
+		var json = {
+			orderId: expressVm.orderNo,
+			expressCompany: $('#expressCompany option:selected').val(),
+			expressNum: $("input[name=expressNum]").val(),
+			remark: $("input[name=remark]").val()
+		}
+		sendOrder(expressVm.orderNo, expressVm.swapType, json, function(data){
+			$("#sendInfo").removeClass("show");
+			utils.alert("success", "操作成功");
+			$("#orderNav li.cur").trigger("click");
+		})
+	}
+}
+</script>
+
+</body>
+</html>
+

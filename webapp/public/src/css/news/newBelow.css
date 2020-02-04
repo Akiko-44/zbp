@@ -1,0 +1,55 @@
+.more {
+	width: 1300px;
+	height: 120px;
+	background: #fff;
+	display: flex;
+	margin: 0 auto;
+	justify-content: space-between;
+}
+
+.more dl {
+	display: flex;
+}
+
+.more dl dt {
+	width: 221px;
+	height: 112px;
+	margin-top: 8px;
+}
+
+.more dl dd {
+	width: 230px;
+	text-align: center;
+	margin-left: 26px;
+}
+
+.more dl dd h3 {
+	font-size: 16px;
+	font-family: MicrosoftYaHei;
+	font-weight: 400;
+	color: rgba(51, 51, 51, 1);
+	margin-top: 39px;
+}
+
+.more dl dd h4 {
+	margin-top: 19px;
+	font-size: 16px;
+	font-family: MicrosoftYaHei;
+	font-weight: 400;
+	color: rgba(51, 51, 51, 1);
+}
+
+.more a {
+	width: 120px;
+	height: 40px;
+	border: 1px solid rgba(0, 0, 0, 1);
+	display: block;
+	line-height: 40px;
+	text-align: center;
+	font-size: 12px;
+	font-family: MicrosoftYaHei;
+	font-weight: 400;
+	color: rgba(51, 51, 51, 1);
+	margin-top: 44px;
+	margin-right: 31px;
+}

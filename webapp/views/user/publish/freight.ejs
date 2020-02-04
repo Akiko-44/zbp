@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<script src="../../src/js/plugin/tinymce4.7.5/tinymce.min.js"></script>
+<!-- 引入样式 -->
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<style type="text/css">
+		.freight_box{
+			width: 100%;
+			height: 100%;
+		}
+		.freight_button{
+			width: 100%;
+			margin-top: 26px;
+		}
+		.freight_button .btn1{
+			width: 150px;
+			height: 40px;
+			background: rgba(153, 153, 153, 1);
+			color:#FFF;
+			border:0;
+			outline: 0;
+			border-radius: 10px;
+			margin-left: 30px;
+		}
+		.freight_button .btn2{
+			width: 150px;
+			height: 40px;
+			border: 0;
+			background: rgba(22, 155, 213, 1);
+			color: #fff;
+			margin-left: 30px;
+			border-radius: 10px;
+			outline: 0;
+		}
+		.freight_model{
+			width: 970px;
+			float: left;
+			margin-top: 20px;
+			margin-left: 10px;
+		}
+		.el-pagination{
+			margin-left: 60%;
+	    	margin-top: 30px;
+		}
+		.el-table__header{
+			width: 0!important;
+		}
+	</style>
+</head>
+<body class="userPublish">
+  <%- include ../../headerbar.ejs %>
+  
+  <%- include ../../header.ejs %>
+  
+  <%- include ../userHeaderNav.ejs %>
+  	<div class="container">
+	    <div class="router" id="router">
+	      <el-breadcrumb separator-class="el-icon-arrow-right">
+	          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+	          <el-breadcrumb-item>个人中心</el-breadcrumb-item>
+	      </el-breadcrumb>
+	    </div>
+	  </div>
+	  <div id="main" class="main">
+	  	<div class="clearfix container">
+	  		<div class="userLeftNav">
+          <%- include ../userLeftNav.ejs %>
+        </div>
+        <div class="freight_box" id="freight_box">
+				<div class="freight_button">
+					<button class="btn1" @click="Explain()">运费设置说明</button>
+					<button class="btn2" @click="add">添加运费模板</button>
+				</div>
+				<div class="freight_model">
+					<el-table
+					    :data="msglist"
+					    border
+					    style="width: 100%">
+					    <el-table-column
+					      prop="name"
+					      label="模板名称"
+					      width="650"
+					      align="center">
+					    </el-table-column>
+					    <el-table-column label="操作" align="center" fixed="right">
+					      <template slot-scope="scope">
+					      	<el-button
+					          size="mini"
+					          @click="appoint(scope.$index, scope.row)">添加指定地区运费</el-button>
+					        <el-button
+					          size="mini"
+					          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+					          <el-button
+					          @click.native.prevent="handleDelete(scope.$index, scope.row,msglist)"
+					          type="danger"
+					          size="small">删除</el-button>
+					      </template>
+					    </el-table-column>
+					  </el-table>
+					  <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listParams.offset" :page-sizes="[10,20,30,50]" :page-size="listParams.limit" layout="total, sizes, prev, pager, next, jumper" :total="total"> </el-pagination>
+				</div>
+			</div>
+	  	</div>
+	  </div>
+	  <script type="text/javascript">
+		var routerVm = new Vue({
+			el:"#freight_box",
+			data(){
+				return {
+					msglist:[],
+					total:'',
+					listParams: {
+				        offset: 1,
+			        	limit: 10,
+				      },
+				}
+			},
+			created(){
+				this.datalist()
+			},
+			methods:{
+				del(){
+					
+				},
+				Explain(){
+					window.location.href= '../../user/publish/model/explain'
+				},
+				add(){
+					window.location.href= '../../user/publish/model'
+				},
+				appoint(index, row){
+		      	 	 window.location.href= `../../user/publish/list?id=${row.id}`;
+		        },
+		        handleEdit(index, row) {
+		        	console.log(index,row)
+		          window.location.href= `../../user/publish/model2?id=${row.id}`;
+		          //this.$router.push({path: './model2.html',query:{ id:row.id}});
+		        },
+		        handleDelete(index, row, data) {
+		        	var _this = this;
+		        	console.log(row.id)
+		        	$.ajax({
+		        		type:"get",
+		        		url:`/admin/freight/delete/${row.id}`,
+		        		contentType: 'application/json;charset=utf-8',
+			      		headers:{
+			            'Authorization':utils.getCookie("token")
+			          },
+				       success(res){
+				       	data.splice(index, 1);
+				       }
+		        	})
+		        },
+		        handleSizeChange(val) {
+		        	console.log(val)
+				    this.listParams.limit = val
+				    this.datalist()
+			    },
+			    handleCurrentChange(val) {
+			    	console.log(val)
+				    this.listParams.offset = val
+				    this.datalist()
+			    },
+				datalist(){
+					var _this = this;
+					$.ajax({
+						type:"get",
+						url:"/admin/freight/page",
+						contentType: 'application/json;charset=utf-8',
+			      headers:{
+			            'Authorization':utils.getCookie("token")
+			          },
+		        data:_this.listParams,
+		       	 success(res){
+		       		console.log(res)
+			       		_this.msglist = res.data.records;
+			       		_this.total = res.data.total;
+		       	}
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

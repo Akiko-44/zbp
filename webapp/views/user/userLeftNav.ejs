@@ -1,0 +1,129 @@
+<ul class="navLeft">
+  <li class="navLeftItem">
+    <div class="trade">
+      <img class="navMy" src="/src/img/hx_img/trade.png" alt=""><span>我的交易</span>
+    </div>
+    <ul>
+      <li class="document" data-target="order"><a href="/user/order/index">我的订单</a></li>
+      <li class="document" data-target="evaluate"><a href="/user/mine_evaluate">我的评价</a></li>
+      <li class="document" data-target="collect"><a href="/user/collect/1">关注/收藏</a></li>
+    </ul>
+  </li>
+  <li class="navLeftItem">
+    <div class="trade">
+      <img class="navMy" src="/src/img/hx_img/server.png" alt=""><span>服务中心</span>
+    </div>
+    <ul>
+      <li class="document" data-target="refund"><a href="/user/order/refund">退款/售后</a></li>
+      <li class="document"><a href="/user/complaint">我的投诉</a></li>
+      <li class="document xiaoneng" data-target="xiaoneng"><a href="javascript:;">小能客服</a></li>
+      <li class="document" data-target="message"><a href="/user/message">消息中心</a></li>
+    </ul>
+  </li>
+  <li class="navLeftItem">
+    <div class="trade">
+      <img class="navMy" src="/src/img/hx_img/person.png" alt=""><span>账号管理</span>
+    </div>
+    <ul>
+      <li data-target="accUserinfo"><a href="/user/acc_userinfo">账户信息</a></li>
+      <li data-target="accSafety"><a href="/user/acc_safety_setting">安全设置</a></li>
+      <!-- <li data-target="accDetails"><a href="/user/acc_details">账户明细</a></li> -->
+      <li data-target="coupon"><a href="/user/discount_coupon">优惠券</a></li>
+      <li data-target="address"><a href="/user/acc_address">收货地址</a></li>
+      <li data-target="track"><a href="/user/acc_mine_track">我的足迹</a></li>
+    </ul>
+  </li>
+  <li class="navLeftItem enterprise">
+    <div class="trade">
+      <img class="navMy" src="/src/img/hx_img/shopmanger.png" alt=""><span>店铺管理</span>
+    </div>
+    <ul>
+      <li class="itemnav" data-target="intellectual"><a href="/user/intellectual">知识产权保护</a></li>
+      <li class="itemnav" data-target="jewelryMerchant" style="display: none;"><a
+          href="http://admin.gacjc.com/usrManager/jewelry/">珠宝店后台</a>
+      </li>
+      <li class="itemnav" data-target="designMerchant" style="display: none;"><a
+          href="http://admin.gacjc.com/designMerchant.html">设计师后台</a>
+      </li>
+      <li class="itemnav" data-target="makeMerchant" style="display: none;"><a
+          href="http://admin.gacjc.com/makeMerchant.html">制造间后台</a></li>
+    </ul>
+  </li>
+  <li class="navLeftItem shopmanger">
+    <div class="trade">
+      <img class="navMy" src="/src/img/hx_img/enprice.png" alt=""><span>我要开店</span>
+    </div>
+    <ul>
+      <li class="itemnav" data-target="openShop"><a href="/user/openShop">开店入口</a></li>
+      <li class="itemnav" data-target="shopVideo"><a href="/user/shop_video">帮助视频</a></li>
+      <li class="itemnav" data-target="shopDoc"><a href="/user/shop_doc">帮助文档</a></li>
+    </ul>
+  </li>
+</ul>
+<script type="text/javascript">
+  /**
+   * 小能客服
+   * */
+
+  var siteid = utils.getCookie('siteid') || ''
+  var NTKF_PARAM = {
+    siteid: siteid, //企业ID，为固定值，必填
+    settingid: "zd_1000_9999", //接待组ID，为固定值，必填
+    uid: "", //用户ID，支持字母、数字、下划线。未登录可以为空，但不能给null，uid赋予的值在显示到小能客户端上
+    uname: "", //未登录可以为空，但不能给null，uname赋予的值显示到小能客户端上
+  }
+  $(document).on("click", ".xiaoneng", function (e) {
+    $(".userLeftNav li").removeClass("cur");
+    $(".userLeftNav li[data-target='xiaoneng']").addClass("cur");
+    NTKF.im_openInPageChat('zd_1000_9999')
+  })
+</script>
+<script>
+  if (utils.islogin()) {
+    utils.ajax({
+      url: "/api/userCenter/info",
+      type: "get",
+      success: function (res) {
+        if (res.data.userType == 3) {
+          $(".shopmanger").hide()
+        } else {
+          $(".enterprise").hide()
+        }
+        if (res.data.merchantType == 1) {
+          $(".userLeftNav li[data-target='jewelryMerchant']").show();
+        } else if (res.data.merchantType == 2) {
+          $(".userLeftNav li[data-target='designMerchant']").show();
+        } else {
+          $(".userLeftNav li[data-target='makeMerchant']").show();
+        }
+        var host = window.location.host
+        if (host == "219.134.137.178:81" || host == "localhost") {
+          $(".userLeftNav li[data-target='jewelryMerchant']>a").attr('href',
+            'http://219.134.137.178:82/usrManager/jewelry/');
+          $(".userLeftNav li[data-target='designMerchant']>a").attr('href',
+            'http://219.134.137.178:82/designMerchant.html');
+          $(".userLeftNav li[data-target='makeMerchant']>a").attr('href',
+            'http://219.134.137.178:82/makeMerchant.html');
+        }
+      }
+    })
+  }
+  $(".trade").append('<img class="countx" src="/src/img/hx_img/x.png" alt="">');
+  $(document).ready(function () {
+    var trade = $(".navLeftItem").find(".trade");
+    var ul = $(".navLeftItem").find("ul");
+    trade.on("click", function () {
+      $(this).next().toggle(100, "swing", function () {
+        if ($(this).siblings().children().hasClass("countx")) {
+          $(this).siblings().children().eq(2).removeClass("countx").addClass("count").attr
+
+            ("src", "/src/img/hx_img/right.png").show()
+        } else {
+          $(this).siblings().children().eq(2).removeClass("count").addClass("countx").attr
+
+            ("src", "/src/img/hx_img/x.png").show()
+        }
+      });
+    });
+  });
+</script>

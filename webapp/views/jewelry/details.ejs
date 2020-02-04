@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+</head>
+<style>
+  .dialog.show .dialog-main,
+  .mask {
+    z-index: 56;
+  }
+
+  .dialog.show .dialog-main {
+    margin-top: -245px;
+  }
+
+  .dialog .dialog-body {
+    padding: 30px;
+    text-align: left;
+  }
+
+  .dialog .dialog-body .dialog-body-main {
+    padding: 0;
+  }
+
+  .dialog-main .share-content textarea {
+    height: 68px;
+    margin: 10px 0;
+  }
+
+  .dialog-main .dialog-label {
+    line-height: 34px;
+  }
+
+  .dialog-main .img-item {
+    display: inline-block;
+    position: relative;
+    border: 1px solid #aaa;
+  }
+
+  .dialog-main .img-item.checked-img {
+    border: 1px solid #FC8B86;
+  }
+
+  .dialog-main .dialog-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .dialog-main .checked-img-icon {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+  }
+</style>
+
+<body>
+
+  <%- include ../headerbar.ejs %>
+  <%- include ../headerNav.ejs %>
+  <div class="container">
+    <div class="container">
+      <div class="router" id="router">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item><a href="../../">首页</a></el-breadcrumb-item>
+          <el-breadcrumb-item><a href="../../jewelry/index">去哪儿买</a></el-breadcrumb-item>
+          <el-breadcrumb-item>商品详情</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+    </div>
+  </div>
+  <div class="jewelry-details" id="jewelryDetails" v-cloak>
+    <div class="goods-container">
+      <div class="container">
+        <div class="goodsImg">
+          <div class="clearfix">
+            <div class="fl img-box">
+              <div class="slick">
+
+              </div>
+              <div class="small-img">
+                <img :class="{'active': item.active}" :src="item.imgUrl" alt="" v-for="(item,i) in detail.goodsGallerys"
+                  @click="triggerImg(i)">
+              </div>
+              <div class="collect-box">
+                <span class="collect-item" v-if="concerned" @click="concern(0,$event)">
+                  <img src="../../src/img/jewelry/icon_liked.png" alt="">
+                  <span>关注店铺</span>
+                </span>
+                <span class="collect-item" v-if="!concerned" @click="concern(1,$event)">
+                  <img src="../../src/img/jewelry/icon_like.png" alt="">
+                  <span>关注店铺</span>
+                </span>
+                <span class="collect-item" @click="showShare">
+                  <img src="../../src/img/jewelry/icon_share.png" alt="">
+                  <span>分享</span>
+                </span>
+                <span class="collect-item" v-if="liked" @click="collect(0,$event)">
+                  <img src="../../src/img/jewelry/icon_collected.png" alt="">
+                  <span>收藏商品</span>
+                </span>
+                <span class="collect-item" v-if="!liked" @click="collect(1,$event)">
+                  <img src="../../src/img/jewelry/icon_collect.png" alt="">
+                  <span>收藏商品</span>
+                </span>
+              </div>
+            </div>
+            <div class="explain">
+              <p class="goods-name font-overflow">{{ detail.goodsName }}</p>
+              <div class="label-box" v-if="detail.keywords">
+                <span class="label-item" v-for="(item,i) in detail.keywords.split('-')" :key="i">{{item}}</span>
+              </div>
+
+              <div class="price-box">
+                <div class="assemble-list" v-if="isAssemble">
+                  <span class="assemble-titel">拼团</span>
+                  <span class="fr" v-if="detail.groupUserList.length">{{detail.groupSuccessPersonNum}}人已拼团成功</span>
+                </div>
+                <div class="assemble-list promoteSale" v-if="isPromoteSale">
+                  <span class="assemble-titel">参考价</span>￥
+                  <!-- <span class="reference-price" v-if="skuObj.proposePrice">{{skuObj.proposePrice.toFixed(2)}}</span> -->
+                  <span class="reference-price"
+                    v-if="detail.lowProposePrice">{{detail.lowProposePrice.toFixed(2)}}</span>
+                  <span v-if="detail.lowProposePrice !== detail.highProposePrice">
+                    ~
+                    <span class="reference-price"
+                      v-if="detail.highProposePrice">{{detail.highProposePrice.toFixed(2)}}</span>
+                  </span>
+                  <span class="fr">距结束仅剩<span class="count-down">{{countDown}}</span></span>
+                </div>
+                <div class="price-box-main">
+                  <div v-if="!isPromoteSale">
+                    <span class="price-title">参考价</span>￥
+                    <!-- <span class="reference-price" v-if="skuObj.proposePrice">{{skuObj.proposePrice.toFixed(2)}}</span> -->
+                    <span class="reference-price"
+                      v-if="detail.lowProposePrice">{{detail.lowProposePrice.toFixed(2)}}</span>
+                    <span v-if="detail.lowProposePrice !== detail.highProposePrice">
+                      ~
+                      <span class="reference-price"
+                        v-if="detail.highProposePrice">{{detail.highProposePrice.toFixed(2)}}</span>
+                    </span>
+                  </div>
+                  <div v-if="isPromoteSale" class="oringin-price">
+                    <span class="price-title">价格</span>￥
+                    <!-- <span class="reference-price" v-if="skuObj.price">{{skuObj.price.toFixed(2)}}</span> -->
+                    <span class="reference-price"
+                      v-if="detail.lowOriginalPrice">{{detail.lowOriginalPrice.toFixed(2)}}</span>
+                    <span v-if="detail.lowOriginalPrice !== detail.highOriginalPrice">
+                      ~
+                      <span class="reference-price"
+                        v-if="detail.highOriginalPrice">{{detail.highOriginalPrice.toFixed(2)}}</span>
+                    </span>
+
+                  </div>
+                  <div>
+                    <template v-if="!isAssemble && !isPromoteSale">
+                      <span class="price-title">商品价</span>
+                      <span class="sale-price-box" v-if="skuObj.price">￥
+                        <span class="sale-price">{{skuObj.price.toFixed(2)}}</span>
+                      </span>
+                    </template>
+                    <template v-if="isAssemble">
+                      <span class="price-title">活动价</span>
+                      <span class="sale-price-box" v-if="skuObj.groupPrice">￥
+                        <span class="sale-price">{{skuObj.groupPrice.toFixed(2)}}</span>
+                      </span>
+                    </template>
+                    <template v-if="isPromoteSale">
+                      <span class="price-title">促销价</span>
+                      <span class="sale-price-box" v-if="skuObj.promotionPrice">￥
+                        <span class="sale-price">{{skuObj.promotionPrice.toFixed(2)}}</span>
+                      </span>
+                    </template>
+                  </div>
+                  <div class="committee">
+                    <span>行业专委会>></span>
+                    <img src="../../src/img/jewelry/triangle.png" alt="">
+                    <div class="committee-list">
+                      <p class="committee-title">参考价格专委会</p>
+                      <p class="committee-item">黄金/K金及首饰专委会</p>
+                      <p class="committee-item">银饰及首饰专委会</p>
+                      <p class="committee-item">天然钻石及首饰专委会</p>
+                      <p class="committee-item">翡翠专委会</p>
+                      <p class="committee-item">和田玉专委会</p>
+                      <p class="committee-item">彩色宝石专委会</p>
+                      <p class="committee-item">珍珠专委会</p>
+                      <p class="committee-item">水晶专委会</p>
+                      <p class="committee-item">琥珀专委会</p>
+                      <p class="committee-item">黄龙玉专委会</p>
+                      <p class="committee-item">绿松石专委会</p>
+                      <p class="committee-item">玛瑙专委会</p>
+                      <p class="committee-item">印章石专委会</p>
+                      <p class="committee-item">其他玉石及首饰专委会</p>
+                      <p class="committee-item">贵金属（除黄金、K金、白银）首饰专委会</p>
+                      <p class="committee-item">有机宝石（除珍珠、琥珀）专委会</p>
+                      <p class="committee-item">培育钻石及首饰专委会</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="freight-box">
+                <span class="freight-title">发货地</span>
+                <span class="freight-body">
+                  <span>{{detail.provinceName}} {{detail.cityName}}</span>
+                </span>|
+                <span class="freight-title">运费</span>
+                <span v-if="!detail.freightPrice">免运费</span>
+                <span v-if="detail.freightPrice">{{detail.freightPrice.toFixed(2)}}</span>
+              </div>
+
+              <div class="number-box freight-box">
+                <div class="number-item">
+                  <span class="number-title">月销量 </span><span class="num">{{detail.salesCount}}</span>
+                </div>|
+                <div class="number-item">
+                  <span class="number-title">累计评价 </span><span class="num">{{detail.commentNum}}</span>
+                </div>|
+                <div class="number-item">
+                  <span class="number-title">收藏 </span><span class="num">{{detail.collectNum}}</span>
+                </div>
+              </div>
+
+              <div class="good-sku">
+                <div class="sku" v-for="(sku, skuIndex) in detail.goodsSpecs" :key="skuIndex">
+                  <span class="sku-name">{{sku.specsName}}</span>
+                  <ul>
+                    <li :class="{'active': item.active}" v-for="(item, i) in sku.goodsSpecsAttrs" :key="i"
+                      @click="handleNorm(item, skuIndex, i)">
+                      {{item.attrValue}}
+                      <img v-if="item.active" src="../../src/img/jewelry/sku-selected.png" alt="">
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
+
+              <div class="assemble-info" v-if="isAssemble">
+                <img class="user-logo" :src="userLogo" />
+                <span class="unknown">?</span>
+                <span class="assemble-description">二人成团，系统自动组团</span>
+              </div>
+
+              <div class="sale-count-box">
+                <div class="goodsNum">
+                  <el-input-number v-if="isAssemble || isPromoteSale" v-model="num" controls-position="right" :min="1"
+                    :max="skuObj.activityStock">
+                  </el-input-number>
+                  <el-input-number v-else v-model="num" controls-position="right" :min="1" :max="skuObj.stock">
+                  </el-input-number>
+                </div>
+
+                <span class="stock-num" v-if="isAssemble || isPromoteSale">库存{{skuObj.activityStock}}件</span>
+                <span class="stock-num" v-else>库存{{skuObj.stock}}件</span>
+              </div>
+
+              <div class="buy-box">
+                <el-button type="danger" class="add-cart" id="addCart" v-if="!isAssemble && detail.hasMerNo"
+                  @click="addCart($event)">加入购物车
+                </el-button>
+                <el-button type="danger" class="buy" v-if="!isAssemble && !isPromoteSale && detail.hasMerNo"
+                  @click="buy(0)">立即购买
+                </el-button>
+                <el-button type="danger" class="buy" v-if="isPromoteSale && detail.hasMerNo" @click="buy(2)">立即购买
+                </el-button>
+                <el-button type="danger" class="add-cart" v-if="isAssemble && skuObj.groupPrice" @click="buy(1)">发起拼团
+                  ￥{{skuObj.groupPrice.toFixed(2)}}
+                </el-button>
+                <el-button type="danger" class="buy" v-if="isAssemble && skuObj.price" @click="buy(0)">单独购买
+                  ￥{{skuObj.price.toFixed(2)}}
+                </el-button>
+                <el-button type="info" disabled v-if="!detail.hasMerNo">备货中，敬请期待！</el-button>
+              </div>
+
+              <div class="after-sale" v-if="detail.restore">
+                <span class="after-sale-title">售后服务</span>
+                <span class="after-sale-item">支持7天无理由退货</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <!-- <div>
+          <p id="coupons" class="hide"></p>
+        </div> -->
+      </div>
+    </div>
+    <div class="container">
+      <div class="clearfix">
+        <div class="fl" id="browse">
+          <div class="shop" v-if="detail.shopScore">
+            <img v-if="detail.shopScore.backgroundImg" class="shop-background" :src="detail.shopScore.backgroundImg"
+              alt="">
+            <img v-else class="shop-background" src="../../src/img/jewelry/shop_background.png" alt="">
+            <img class="shop-logo" :src="detail.shopScore.logo" alt="">
+            <div class="clearfix shop-content">
+              <div class="shop-name tc">{{ detail.merchantName }}</div>
+              <div class="score-box tc">
+                <span>综合评分 {{detail.shopScore.multipleScore.toFixed(1)}} 分</span>
+                <el-rate class="score-rate" v-model="detail.shopScore.multipleScore" disabled
+                  :colors="['#D57E6A', '#D57E6A', '#D57E6A']"></el-rate>
+              </div>
+              <div class="score-info">
+                <div class="score-item">
+                  <span class="score">{{ detail.shopScore.spmxxfWholeScore.toFixed(1) }}</span>
+                  <span>宝贝描述</span>
+                </div>
+                <div class="line"></div>
+                <div class="score-item">
+                  <span class="score">{{ detail.shopScore.mjfwtdWholeScore.toFixed(1) }}</span>
+                  <span>卖家服务</span>
+                </div>
+                <div class="line"></div>
+                <div class="score-item">
+                  <span class="score">{{ detail.shopScore.wlfhsdWholeScore.toFixed(1) }}</span>
+                  <span>物流服务</span>
+                </div>
+              </div>
+              <div class="btn-box">
+                <el-button type="danger" class="shop-link" @click="linkMerchant">进店逛逛</el-button>
+                <el-button plain class="kefu" @click="contactKefu"><img src="../../src/img/jewelry/icon_ service.png"
+                    alt="">联系客服</el-button>
+              </div>
+            </div>
+          </div>
+          <div class="browse" id="main">
+            <span class="browse-title">热门推荐</span>
+            <ul>
+              <li class="clearfix" v-for="item in jewelryData">
+                <a :data-id="item.id" @click="linkGoods(item.id)">
+                  <img :src="item.imgUrl | formatImg" />
+                  <div class="browse-price">
+                    <p>{{item.goodsName}}</p>
+                    <p class="sale-price">￥ {{item.price.toFixed(2)}}</p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="fr" id="detail">
+          <div class="detail-nav clearfix">
+            <p class="cur">商品描述</p>
+            <p>商品评价（<span class="commentNum"></span>）</p>
+            <p>售后保障</p>
+          </div>
+          <div class="detail-list">
+            <div class="item" id="goodsDesc">
+              <div class="category-attr">
+                <span class="brand category-attr-title" v-if="detail.brandName">品牌名称：{{detail.brandName}}</span>
+                <span class="category-attr-title">产品参数：</span>
+                <span class="category-attr-item" v-for="(item, i) in detail.goodsCategoryAttributesVOS"
+                  v-if="item.subsidiaryAttributesValue" :key="i">{{item.attributesName}}:
+                  {{item.subsidiaryAttributesValue}}</span>
+              </div>
+              <div class="tc">
+                <video src="" id="myvideo" class="hide" style="margin-bottom: 20px;" width="" height="300"
+                  controls="controls">
+                  当前浏览器不支持 video直接播放
+                </video>
+              </div>
+            </div>
+            <div class="item" id="comment">
+              <%- include ../goodsComments.ejs %>
+            </div>
+            <div class="item ue-view" id="afterSale">
+              <h3 class="fs16">权利声明：</h3>
+              <p class="fs14">中宝平珠宝店内所有商品信息、客户评价、商品咨询、网友讨论等内容，是中宝平重要的经营资源，未经许可，禁止非法转载使用。</p>
+              <p class="fs14">注：本站商品信息均来自于合作方，其真实性、准确性和合法性由信息拥有者（合作方）负责。本站不提供任何保证，并不承担任何法律责任。</p>
+              <h3 class="fs16">中宝平承诺</h3>
+              <p class="fs14">中宝协云平台卖家销售并发货的商品，由平台卖家提供发票和相应的售后服务。请您放心购买！</p>
+              <p class="fs14">
+                注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，本司不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若本商城没有及时更新，请大家谅解！
+              </p>
+              <h3 class="fs16">正品行货</h3>
+              <p>中宝平商城向您保证所售商品均为正品行货，由商家开具机打发票或电子发票。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dialog shareDialog" id="shareDialog">
+      <div class="mask"></div>
+      <div class="dialog-main">
+        <div class="dialog-header clearfix">
+          <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+          <h3 class="dialog-title">分享给好友</h3>
+        </div>
+        <div class="dialog-body">
+          <div class="dialog-body-main">
+            <div class="share-to">
+              <span>分享到：</span>
+              <el-checkbox v-model="checkedQQZone" @change="shareQQZone(checkedQQZone)">
+                <img v-if="checkedQQZone" src="../../src/img/jewelry/qqZone.png">
+                <img v-else src="../../src/img/jewelry/qqZone-normal.png">
+              </el-checkbox>
+              <el-checkbox v-model="checkedWeibo" @change="shareWeibo(checkedWeibo)">
+                <img v-if="checkedWeibo" src="../../src/img/jewelry/weibo.png">
+                <img v-else src="../../src/img/jewelry/weibo-normal.png">
+              </el-checkbox>
+              <el-checkbox v-model="checkedQQ" @change="shareQQ(checkedQQ)">
+                <img v-if="checkedQQ" src="../../src/img/jewelry/QQ.png">
+                <img v-else src="../../src/img/jewelry/QQ-normal.png">
+              </el-checkbox>
+            </div>
+            <el-input class="share-content" type="textarea" placeholder="请输入内容" v-model="shareContent" maxlength="100"
+              show-word-limit>
+            </el-input>
+            <p class="dialog-label">选择配图</p>
+            <div class="img-item" :class="{'checked-img': shareImgUrl == item.imgUrl}"
+              v-for="(item,i) in detail.goodsGallerys" :key="i" @click="shareImgUrl = item.imgUrl">
+              <img class="dialog-img" :src="item.imgUrl">
+              <img class="checked-img-icon" src="../../src/img/jewelry/icon_checked.png"
+                v-if="shareImgUrl == item.imgUrl">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" name="goodsId" value="" />
+
+  <%- include ../footer.ejs %>
+
+
+  <script type="text/javascript">
+    var routerVm = new Vue({
+      el: "#router"
+    });
+    var NTKF_PARAM = {}
+    var mainVm = new Vue({
+      el: "#jewelryDetails",
+      data: {
+        // 拼团
+        isAssemble: false,
+        // 促销
+        isPromoteSale: false,
+        id: utils.getUrlParam('id'),
+        liked: false,
+        concerned: false,
+        countDown: '',
+        num: 1,
+        userLogo: 'http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png',
+        jewelryData: [],
+        detail: {},
+        skuObj: {},
+        checkedQQZone: false,
+        checkedWeibo: false,
+        checkedQQ: false,
+        shareUrl: '',
+        shareTitle: '',
+        shareContent: '',
+        shareImgUrl: ''
+      },
+      mounted: function () {
+        this.getInfo()
+        this.jewelryDetail()
+        // $("#shareDialog").addClass("show")
+      },
+      methods: {
+        getInfo() {
+          utils.ajax({
+            url: '/api/marketPage/goodsDetailShow',
+            type: 'get',
+            data: {
+              goodsId: this.id
+            },
+            success: (res) => {
+              this.detail = res.data
+              document.title = this.detail.goodsName
+              this.shareUrl = location.href
+              this.shareTitle = this.detail.goodsName
+              this.shareContent = `我在@中宝平 发现了一个非常不错的商品： ${this.detail.goodsName}。 感觉不错，分享一下`
+              this.shareImgUrl = this.detail.goodsGallerys[0].imgUrl
+              this.detail.goodsGallerys[0].active = true
+              if (this.detail.goodsType === 1) {
+                this.isAssemble = true
+              } else if (this.detail.goodsType === 2) {
+                this.isPromoteSale = true
+                this.getCountDown()
+              }
+              if (utils.islogin() && sessionStorage.getItem('userLogo')) {
+                this.userLogo = sessionStorage.getItem('userLogo')
+                this.checkCollect()
+              }
+              if (this.detail.videoUrl) {
+                $("#myvideo").attr('src', utils.formatImg(res.videoUrl));
+                $("#myvideo").removeClass('hide')
+              }
+              $(".commentNum").text(Number(this.detail.commentNum));
+              $("#commentNum2").text(this.detail.goodsCommentCount.imgNum);
+              $("#commentNum3").text(this.detail.goodsCommentCount.goodNum);
+              $("#commentNum4").text(this.detail.goodsCommentCount.middleNum);
+              $("#commentNum5").text(this.detail.goodsCommentCount.poorNum);
+              $("#goodsDesc").append(this.detail.goodsDesc.replace(/pa95ui71l.bkt.clouddn/g,
+                'image.gacjc'));
+              conmmentRender(1);
+              this.initSlick()
+              this.initKefu(this.detail.id, this.detail.keFuId)
+              var self = this
+              let nameArr = []
+              this.detail.goodsSpecs.forEach(data => {
+                data.goodsSpecsAttrs.forEach((item, index) => {
+                  if (index == 0) {
+                    item.active = true
+                    nameArr.push(item.attrValue)
+                  } else {
+                    item.active = false
+                  }
+                })
+              })
+              this.skuName = nameArr.join('、')
+              this.skuTitle += this.skuName
+              setTimeout(function () {
+                var symbolArr = []
+                self.detail.goodsSpecs.forEach(sub1 => {
+                  sub1.goodsSpecsAttrs.forEach(sub2 => {
+                    if (sub2.active) {
+                      symbolArr.push(String(sub2.symbol))
+                    }
+                  })
+                })
+
+                self.getRepertory(symbolArr)
+              }, 10)
+            }
+          })
+        },
+        jewelryDetail() {
+          var self = this;
+          utils.ajax({
+            url: "/api/marketPage/jewerlyShow",
+            type: "get",
+            success: function (data) {
+              self.jewelryData = data.data;
+            }
+          })
+        },
+        // 加入购物车
+        addCart(e) {
+          if (!utils.islogin()) {
+            utils.alert('danger', '请登录后再进行操作！');
+            setTimeout(function () {
+              window.location = '../login?from=' + encodeURIComponent(location.href)
+            }, 500)
+            return false;
+          }
+          if (!this.skuObj.id) {
+            utils.alert('danger', '请选择完整的商品规格');
+            return false;
+          }
+          let maxNum = (this.isAssemble || this.isPromoteSale) ? this.skuObj.activityStock : this.skuObj.stock
+          if (!maxNum) {
+            utils.alert('danger', '库存不足');
+            return false;
+          }
+          var datas = JSON.stringify({
+            goodsId: this.detail.id,
+            goodsSku: this.skuObj.id,
+            number: this.num,
+            goodsSource: 1,
+          })
+          utils.ajax({
+            url: '/api/order/cart/add',
+            type: 'post',
+            data: datas,
+            el: e.target,
+            success: (res) => {
+              utils.alert('success', "添加成功！");
+              // 更新头部购物车
+              utils.ajax({
+                url: "/api/order/cart/list",
+                type: "get",
+                success: function (data) {
+                  var cartList = data.data.cartItemList;
+                  var len = 0;
+                  var list = cartList || 0;
+                  for (var i = 0; i < list.length; i++) {
+                    len += list[i].goods.length
+                  }
+                  $("#carNum").text(len);
+                  $('#totalPrice').text(data.data.totalPrice);
+                  $('#totalNum').text(len);
+                  var html = '';
+                  var goodsList = [];
+                  var skuList = '';
+                  if (len > 0) {
+                    cartList.forEach(item => {
+                      item.goods.forEach(goodsItem => {
+                        skuList = ''
+                        goodsItem.skuList.forEach(skuItem => {
+                          skuList += '<p>' + skuItem.specsName + '：' + skuItem.attrValue +
+                            '</p>'
+                        })
+                        goodsList.push('<li class="cart-item">',
+                          '<div class="item">',
+                          '<img src="', goodsItem.goodsLogo, '" alt="" />',
+                          '<div class="goods-names-wrap"><h3 class="goods-names">', goodsItem
+                          .goodsName, '</h3>', skuList, '</div>',
+                          '<div class="goods-unit">',
+                          '<p>', goodsItem.goodsPrice, '元 X ', goodsItem.quantity, '</p>',
+                          '<span onclick="del(this, ', goodsItem.goodsSku,
+                          ')" style="cursor:pointer;">删除</span>',
+                          '</div>',
+                          '</div>',
+                          '</li>')
+                      })
+                    })
+                    html = '<div class="my-cart">' +
+                      '<img src="../../src/img/common/icon-shopping.png"/>' +
+                      '我的购物车' +
+                      '<span class="cart-num" id="carNum">' + len + '</span>' +
+                      '</div> ' +
+                      '<div class="cart-list" style="display:none;">' +
+                      '<div class="list hide" id="cartList">' +
+                      '<ul>' +
+                      goodsList.join('') +
+                      '</ul> ' +
+                      '<div class="total"> ' +
+                      '<p class="num">共<span id="totalNum">' + len + '</span>件商品</p> ' +
+                      '<p class="price"><span id="totalPrice">' + data.data.totalPrice +
+                      '</span>元</p> ' +
+                      '<a href="../exchange/cart">去购物车结算</a> ' +
+                      '</div> ' +
+                      '</div> ' +
+                      '</div>'
+                  } else {
+                    html = '<div class="my-cart">' +
+                      '<img src="../../src/img/common/icon-shopping.png"/>' +
+                      '我的购物车' +
+                      '<span class="cart-num" id="carNum">' + len + '</span> ' +
+                      '</div > ' +
+                      '<div class="cart-list" style="display:none;">' +
+                      '<div class="empty"> ' +
+                      '<img src="../../src/img/common/icon-emptycart.png" style="padding-right: 10px;" /> ' +
+                      '您的购物车是空的，赶紧选购吧！' +
+                      '</div> ' +
+                      '</div>'
+                  }
+                  var scroHei = $(window).scrollTop();
+                  if (scroHei > 180) {
+                    $('#myCart').empty()
+                    $('#myCart1').html(html);
+                  } else {
+                    $('#myCart1').empty()
+                    $('#myCart').html(html);
+                  }
+                  if (len > 0) {
+                    $('.cart-list .empty').hide();
+                    $('.cart-list .list').removeClass('hide').show();
+                  } else {
+                    $('.cart-list .empty').show();
+                    $('.cart-list .list').hide();
+                  }
+                }
+              })
+            }
+          })
+        },
+        // 立即购买
+        buy(goodsType = 0) {
+          // console.log(this.skuObj)
+          if (!utils.islogin()) {
+            utils.alert('danger', '请登录后再进行操作！');
+            setTimeout(function () {
+              window.location = '../login?from=' + encodeURIComponent(location.href)
+            }, 500)
+            return false;
+          }
+          if (!this.skuObj.id) {
+            utils.alert('danger', '请选择完整的商品规格');
+            return false;
+          }
+          let maxNum = (this.isAssemble || this.isPromoteSale) ? this.skuObj.activityStock : this.skuObj.stock
+          if (!maxNum) {
+            utils.alert('danger', '库存不足');
+            return false;
+          }
+          window.location = '../../exchange/buy?flag=jewelry&skuid=' + this.skuObj.id + '&source=2&id=' + this
+            .detail.id + '&goodsNumber=' + this.num + '&goodsType=' + goodsType;
+        },
+        // 促销倒计时
+        getCountDown() {
+          let finishTime = +new Date(Date.parse(this.detail.finishTime.replace(/-/g, "/")))
+          // finishTime += 24 * 7 * 60 * 60 * 1000
+          let diferentTime = this.leftTimer(finishTime - new Date())
+          this.countDown = diferentTime
+          this.timeOut = setInterval(() => {
+            let finishTime = +new Date(Date.parse(this.detail.finishTime.replace(/-/g, "/")))
+            // finishTime += 24 * 7 * 60 * 60 * 1000
+            let diferentTime = this.leftTimer(finishTime - new Date())
+            this.countDown = diferentTime
+          }, 1000)
+        },
+        checkCollect() {
+          /* *
+           * 是否已收藏
+           * source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+           * */
+          utils.ajax({
+            type: 'post',
+            url: '/api/userCenter/collect/check/' + this.id + '/1',
+            data: JSON.stringify({
+              merchantId: this.detail.merchantId
+            }),
+            success: (data) => {
+              this.liked = !data.data.goodsCheck
+              this.concerned = !data.data.shopCheck
+            }
+          })
+        },
+        // 收藏商品
+        collect(val, e) {
+          /*
+           * source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+           * */
+
+          if (!utils.islogin()) {
+            utils.alert("danger", "请登录后再进行操作！");
+            return;
+          }
+          if (val == 1) {
+            utils.ajax({
+              type: 'post',
+              url: '/api/userCenter/collect/add/' + this.id + '/1',
+              el: e.target,
+              success: (data) => {
+                if (data.success) {
+                  this.liked = true
+                  this.detail.collectNum++
+                  utils.alert("success", "收藏成功");
+                } else {
+                  utils.alert("danger", data.msg);
+                }
+              }
+            })
+          } else {
+            utils.ajax({
+              type: 'post',
+              url: '/api/userCenter/collect/delete/' + this.id + '/1',
+              el: e.target,
+              success: (data) => {
+                if (data.success) {
+                  this.liked = false
+                  this.detail.collectNum--
+                  utils.alert("success", "您已取消收藏");
+                } else {
+                  utils.alert("danger", data.msg);
+                }
+              }
+            })
+          }
+        },
+        // 关注店铺
+        concern(val, e) {
+          if (!utils.islogin()) {
+            utils.alert("danger", "请登录后再进行操作！");
+            return;
+          }
+          if (val == 1) {
+            utils.ajax({
+              type: 'get',
+              url: '/api/shopConcern/concern',
+              data: {
+                merchantId: this.detail.merchantId
+              },
+              el: e.target,
+              success: (data) => {
+                if (data.success) {
+                  this.concerned = true
+                  utils.alert("success", "关注成功");
+                } else {
+                  utils.alert("danger", data.msg);
+                }
+              }
+            })
+          } else {
+            utils.ajax({
+              type: 'get',
+              url: '/api/shopConcern/remove',
+              data: {
+                merchantId: this.detail.merchantId
+              },
+              el: e.target,
+              success: (data) => {
+                if (data.success) {
+                  this.concerned = false
+                  utils.alert("success", "您已取消关注");
+                } else {
+                  utils.alert("danger", data.msg);
+                }
+              }
+            })
+          }
+        },
+        showShare() {
+          $("#shareDialog").addClass("show")
+        },
+        shareQQZone(checked) {
+          if (checked) {
+            $(this).socialShare("qZone", {
+              url: this.shareUrl,
+              title: this.shareTitle,
+              content: this.shareContent,
+              pic: this.shareImgUrl
+            })
+          }
+        },
+        shareWeibo(checked) {
+          if (checked) {
+            $(this).socialShare("sinaWeibo", {
+              url: this.shareUrl,
+              title: this.shareTitle,
+              content: this.shareContent,
+              pic: this.shareImgUrl
+            })
+          }
+        },
+        shareQQ(checked) {
+          $(this).socialShare("tQQ", {
+            url: this.shareUrl,
+            title: this.shareTitle,
+            content: this.shareContent,
+            pic: this.shareImgUrl
+          })
+        },
+        contactKefu() {
+          NTKF.im_openInPageChat(this.detail.keFuId)
+        },
+        // 初始化客服
+        initKefu(id, keFuId) {
+          var uname = utils.getCookie('nickName') || ""
+          var uid = utils.getCookie('userIdZBX') || ""
+          NTKF_PARAM = {
+            siteid: utils.getCookie('siteid'), //企业ID，为固定值，必填
+            sellerid: 'zd_' + utils.kefuStr(keFuId),
+            settingid: keFuId, //接待组ID，为固定值，必填
+            uid: uid, //用户ID，支持字母、数字、下划线。未登录可以为空，但不能给null，uid赋予的值在显示到小能客户端上
+            uname: uname, //未登录可以为空，但不能给null，uname赋予的值显示到小能客户端上
+            isvip: "0", //是否为vip用户，0代表非会员，1代表会员，取值显示到小能客户端上
+            userlevel: "0", //网站自定义会员级别，0-N，可根据选择判断，取值显示到小能客户端上
+            erpparam: "erp", //erpparam为erp功能的扩展字段，可选，购买erp功能后用于erp功能集成
+            itemid: id, //(必填)商品ID
+            itemparam: '1' //(选填)itemparam为商品接口扩展字段，用于商品接口特殊要求集成
+          }
+        },
+        // 初始化图片放大器
+        initSlick() {
+          var slickImg = ''
+          $.each(this.detail.goodsGallerys, function (idx, item) {
+            slickImg += '<div><img src="' + utils.formatImg(item.imgUrl) +
+              '" width="418px" height="418px"/></div>'
+          });
+          $(".slick").html(slickImg);
+
+          $(".slick").slick({
+            dots: true,
+            arrows: false,
+            swipe: true,
+            infinite: false,
+            fade: true
+          });
+          $(".slick-slide img").each(function (i) {
+            $(this).attr("jqimg", utils.formatImg(this.src));
+          });
+          $(".slick-slide img").parent().addClass("jqzoom")
+          $(".jqzoom").jqueryzoom({
+            xzoom: 400,
+            yzoom: 400,
+            offset: 10,
+            position: "right",
+            preload: 1,
+            lens: 1
+          });
+          $('.jqzoom').hover(function () {
+            $('.img-box').css({
+              'zIndex': 51
+            })
+          }, function () {
+            $('.img-box').css({
+              'zIndex': 49
+            })
+          })
+        },
+        triggerImg(i) {
+          this.detail.goodsGallerys.map(item => {
+            item.active = false
+          })
+          this.detail.goodsGallerys[i].active = true
+          $('.slick-dots li').eq(i).trigger('click')
+          this.$forceUpdate()
+        },
+        linkMerchant() {
+          window.location = "../jewelry/shopSearch?id=" + this.detail.merid
+        },
+        linkGoods(id) {
+          window.location = 'details?id=' + id
+        },
+        getRepertory(symbolArr) {
+          var symbolStr = symbolArr.sort().join(",")
+          this.detail.goodsSkus.forEach((sub, index) => {
+            var arr = sub.attrSymbolPath.split(',').sort().join(',')
+            if (arr == symbolStr) {
+              this.skuObj = sub
+            }
+          })
+        },
+        handleNorm(item, prevIndex, index) {
+          item.active = true
+          this.$forceUpdate()
+          var symbolArr = []
+          var nameArr = []
+          this.detail.goodsSpecs.forEach((sub1, index1) => {
+            sub1.goodsSpecsAttrs.forEach((sub2, index2) => {
+              if (prevIndex == index1) {
+                if (index2 !== index) {
+                  sub2.active = false
+                }
+              }
+              if (sub2.active) {
+                symbolArr.push(String(sub2.symbol))
+                nameArr.push(sub2.attrValue)
+              }
+            })
+          })
+          this.skuName = nameArr.join('、')
+          this.skuTitle = '已选：' + this.skuName
+          this.getRepertory(symbolArr)
+        },
+        leftTimer(leftTime) {
+          var text = "";
+          var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+          var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+          var minutes = parseInt(leftTime / 1000 / 60 % 60, 10); //计算剩余的分钟
+          var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数
+          if (seconds < 0) {
+            this.isPromoteSale = false
+          }
+          days = this.checkTime(days)
+          hours = this.checkTime(hours)
+          minutes = this.checkTime(minutes)
+          seconds = this.checkTime(seconds)
+          if (days >= 0 || hours >= 0 || minutes >= 0 || seconds >= 0) {
+            text = days + "天" + hours + "小时" + minutes + "分" + seconds + "秒"
+          }
+          return text
+        },
+        checkTime(i) { //将0-9的数字前面加上0，例1变为01
+          if (i < 10) {
+            i = "0" + i
+          }
+          return i
+        }
+      },
+      filters: {
+        formatImg: function (str) {
+          return utils.formatImg(str);
+        }
+      }
+    })
+  </script>
+
+  <script type="text/javascript">
+    var id = utils.getUrlParam("id");
+    var contentType = 1;
+    var goodsSkus = [];
+    $(function () {
+      $(".detail-nav p").click(function () {
+        var index = $(this).index();
+        $(this).parent().children(".cur").removeClass("cur");
+        $(this).addClass("cur");
+        $(".detail-list").find(".item").hide();
+        $(".detail-list").find(".item").eq(index).show();
+      })
+      $("#goodsNum").on('blur', function () {
+        var num = Number($(this).val());
+        var maxNum = Number($('input[name=oStock]').val());
+        if (num > maxNum) {
+          $(this).val(maxNum)
+        }
+      })
+
+      var goodsId = utils.getUrlParamVal('id');
+
+      $("input[name=goodsId]").val(goodsId);
+
+      //			goodsComment(1)
+
+      $("input[name=comment1]").click(function () {
+        if ($(this).is(':checked')) {
+          $("#comment").find(".comment").prop("checked", false)
+          //					goodsComment(1)
+        }
+      })
+    })
+    /**
+     * 商品评价
+     * */
+    function goodsComment(page) {
+      var isHaveImg = false,
+        good = false,
+        poor = false,
+        middle = false;
+      var goodsId = $("input[name=goodsId]").val();
+      if ($('input[name="comment1"]').is(":checked")) {
+        isHaveImg = false;
+        good = false;
+        poor = false;
+        middle = false;
+      } else {
+        if ($('input[name="comment2"]').is(":checked")) {
+          isHaveImg = true
+        }
+        if ($('input[name="comment3"]').is(":checked")) {
+          good = true
+        }
+        if ($('input[name="comment4"]').is(":checked")) {
+          poor = true
+        }
+        if ($('input[name="comment5"]').is(":checked")) {
+          middle = true
+        }
+      }
+      utils.ajax({
+        url: '/api/userCenter/userComment/page/' + goodsId + '/1',
+        type: 'get',
+        data: {
+          offset: page,
+          limit: 5,
+          isHaveImg: isHaveImg,
+          good: good,
+          poor: poor,
+          middle: middle
+        },
+        success: function (response) {
+          var res = response.data,
+            html = '';
+          if (!res.total) {
+            $(".nosearch").removeClass("hide");
+            return false;
+          } else {
+            $(".nosearch").addClass("hide");
+          }
+          $("#pagination").pagination({
+            pageCount: res.pages,
+            jump: true,
+            coping: true,
+            current: res.current,
+            prevContent: '<',
+            nextContent: '>',
+            callback: function (api) {
+              goodsComment(api.getCurrent())
+            }
+          });
+          $.each(res.records, function (idx, item) {
+            var str = '';
+            if (item.replayCommentList.length != 0) {
+              $.each(item.replayCommentList, function (idx1, item1) {
+                str += '<p class="substance3">回复：' + item1.content + '</p>'
+              });
+            }
+            var userName = item.userName.substring(3, 7)
+            var userName2 = item.userName.replace(userName, '****')
+            html += '<li>' +
+              '<p class="clearfix substance1">' +
+              '<span class="fl">' + $("#goodsName").text() + '</span>' +
+              '<span class="fr">' + userName2 + '</span>' +
+              '</p>' +
+              '<p class="substance2">' + item.content + '</p>' + str + '</li>';
+          })
+          $("#conmmetList").html(html)
+        },
+        error: function (error) {
+
+        }
+      })
+    }
+
+    function check(e) {
+      var el = e || window.event;
+      $.each($(".comment"), function (idx, item) {
+        if ($(item).is(":checked") && $('input[name="comment1"]').is(":checked")) {
+          $('input[name="comment1"]').prop("checked", false);
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

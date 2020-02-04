@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		body {
+			background: #F5F5F5;
+		}
+
+		.worksList li {
+			float: left;
+			width: 226px;
+			background: #fff;
+			color: #999;
+			margin: 6px;
+		}
+
+		.worksList li .img {
+			position: relative;
+		}
+
+		.worksList li .img span {
+			position: absolute;
+			bottom: 10px;
+			left: 10px;
+			border-radius: 10px;
+			background: rgba(0, 0, 0, 0.4);
+			color: #fff;
+			padding: 0 10px;
+			line-height: 20px;
+		}
+
+		.worksList li .info {
+			margin: 10px;
+		}
+
+		.worksList li .info .price {
+			display: inline-block;
+			padding-top: 10px;
+		}
+
+		.worksList li .info .price strong {
+			font-size: 18px;
+			font-weight: normal;
+		}
+	</style>
+</head>
+
+<body class="">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include ../headerNav.ejs %>
+
+	<div id="main" class="main">
+
+		<div class="container">
+			<div class="router">
+				<a>我的位置：设计室</a>
+				<i>&gt;</i>
+				<span>设计师的所有商品</span>
+			</div>
+		</div>
+
+		<div class="worksList container">
+			<ul class="clearfix" id="list">
+				<template v-for="item in list">
+					<li>
+						<div class="img">
+							<img :src="item.mainPic">
+							<span class="hide">钻石 / 珠宝 / 玉</span>
+						</div>
+						<div class="info">
+							<p>{{item.caseName}}</p>
+							<img :src="item.designerLogo|formatImg" alt="设计师" width="24px" height="24px"
+								style="border-radius: 12px;vertical-align: middle" />
+							<span>{{item.designerName}}</span>
+							<span class="price new-red">￥
+								<strong>{{item.price}}</strong>
+							</span>
+						</div>
+					</li>
+				</template>
+			</ul>
+			<br>
+			<el-pagination background @current-change="handleCurrentChange" :current-page="offset" :page-size="limit"
+				layout="total, prev, pager, next, jumper" :total="total">
+			</el-pagination>
+		</div>
+
+	</div>
+
+	<%- include ../footer.ejs %>
+
+
+	<script>
+		var listVm = new Vue({
+			el: "#list",
+			data: {
+				list: [],
+				total: 0,
+
+				caseStyle: "",
+				fixedPrice: "",
+				category: "",
+				flag: "",
+				priceDesc: "",
+				saleDesc: "",
+				offset: 1,
+				limit: 20,
+			},
+			mounted: function () {
+				this.render();
+			},
+			methods: {
+				render: function () {
+					var self = this;
+					var json = {
+						caseStyle: self.caseStyle,
+						fixedPrice: self.fixedPrice,
+						category: self.category,
+						flag: self.flag,
+						priceDesc: self.priceDesc,
+						saleDesc: self.saleDesc,
+						offset: self.offset,
+						limit: self.limit
+					}
+					utils.ajax({
+						url: "/api/designmanu/designroom/designCasePage",
+						data: JSON.stringify(json),
+						success: function (data) {
+							data = data.data;
+							self.list = data.records;
+							self.total = data.total;
+						}
+					})
+				},
+				handleCurrentChange: function (val) {
+					var self = this;
+					self.offset = val;
+					self.render();
+				}
+			},
+			filters: {
+				formatImg: function (str) {
+					return utils.formatImg(str);
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>

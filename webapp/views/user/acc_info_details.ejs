@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+
+<body class="userAccount">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include userHeaderNav.ejs %>
+
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item>
+					<a href="/">首页</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>
+					<a href="../user/acc_info">个人中心</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>账户信息</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				<div class="userInfoWrap">
+
+					<div class="panel userPanel" id="infoPanel">
+						<div class="panel-header">
+							<div class="panel-title">个人信息</div>
+						</div>
+						<div>
+							<span class="avatar">
+								<img class="userLogo">
+							</span>
+							<span>用户头像</span>
+						</div>
+						<div class="panel-body">
+							<form>
+								<table>
+									<tr>
+										<td>
+											<label>账户名</label>
+										</td>
+										<td class="username"></td>
+									</tr>
+									<tr>
+										<td>
+											<label>用户姓名</label>
+										</td>
+										<td class="realname"></td>
+									</tr>
+									<tr>
+										<td>
+											<label>手机号码</label>
+										</td>
+										<td>
+											<span class="mobilePhone"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>出生年月</label>
+										</td>
+										<td>
+											<span class="birthday"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>是否已婚</label>
+										</td>
+										<td>
+											<span class="marriageState"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>所在城市</label>
+										</td>
+										<td>
+											<span class="region"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>职业</label>
+										</td>
+										<td>
+											<span class="occupation"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>爱好</label>
+										</td>
+										<td>
+											<span class="hobby"></span>
+										</td>
+									</tr>
+									<!--<tr>
+										<td>
+											<label>邮箱</label>
+										</td>
+										<td>
+											<span class="email"></span>
+										</td>
+									</tr>-->
+									<tr>
+										<td>
+											<label>注册时间</label>
+										</td>
+										<td class="createTime"></td>
+									</tr>
+									<!--<tr>
+										<td>
+											<label>商编</label>
+										</td>
+										<td>
+											<span class="signData"></span>
+										</td>
+									</tr>-->
+									<tr>
+										<td colspan="2">
+											<!--<a class="btn btn-warning">保存</a>-->
+											<a class="btn btn-primary toEditPhoneBtn">修改</a>
+										</td>
+									</tr>
+								</table>
+							</form>
+						</div>
+					</div>
+
+					<div class="panel userPanel" id="editPanel" style="display: none">
+						<div class="panel-header">
+							<div class="panel-title">基本资料</div>
+						</div>
+						<div class="panel-body" id="apply">
+							<form id="applyForm">
+								<table>
+									<tr>
+										<td width="100">
+											<label>头像</label>
+										</td>
+										<td colspan="3" width="330">
+											<span class="avatar">
+												<img class="userLogo" width="100%" height="100%">
+											</span>
+											<input type="hidden" name="userLogo">
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<label style="position: relative; top: 8px;">昵称</label>
+										</td>
+										<td colspan="3">
+											<input type="text" class="nickname" name="nickname" maxlength="20" datatype="*1-20"
+												nullmsg="请填写昵称" errormsg="昵称不能超过20个字符">
+											<p class="tip">昵称填写需知，如与店铺名称冲突，将会被收回哦！</p>
+										</td>
+										<td valign="top">
+											<span class="Validform_checktip" style="position: relative; top: 4px;"></span>
+										</td>
+									</tr>
+									<!--<tr>
+										<td>
+											<label>真实姓名</label>
+										</td>
+										<td colspan="3">
+											<input type="text" class="realname" name="realname" maxlength="10" datatype="s1-10" nullmsg="请填写真实姓名" errormsg="真实姓名不能超过10个字符">
+										</td>
+										<td><span class="Validform_checktip"></span></td>
+									</tr>-->
+									<tr>
+										<td>
+											<label>性别</label>
+										</td>
+										<td colspan="3">
+											<label class="radio checked">
+												<span class="radio-input">
+													<span class="radio-input-inner"></span>
+													<input type="radio" class="sex" name="sex" value="0" checked="checked">
+												</span>
+												<span class="radio-label">男</span>
+											</label> &emsp;
+											<label class="radio">
+												<span class="radio-input">
+													<span class="radio-input-inner"></span>
+													<input type="radio" class="sex" name="sex" value="1">
+												</span>
+												<span class="radio-label">女</span>
+											</label>
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>
+											<label>是否已婚</label>
+										</td>
+										<td colspan="3">
+											<label class="radio1 checked">
+												<span class="radio-input">
+													<span class="radio-input-inner"></span>
+													<input type="radio" class="MarriageState" name="MarriageState" value="1" checked="checked">
+												</span>
+												<span class="radio-label">是</span>
+											</label> &emsp;
+											<label class="radio1">
+												<span class="radio-input">
+													<span class="radio-input-inner"></span>
+													<input type="radio" class="MarriageState" name="MarriageState" value="2">
+												</span>
+												<span class="radio-label">否</span>
+											</label>
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<label style="position: relative; top: 8px;">职业</label>
+										</td>
+										<td colspan="3">
+											<select id="occupation" name="occupation">
+												<option :value="item" v-for="item in Occupation">{{item}}</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<label style="position: relative; top: 8px;">爱好</label>
+										</td>
+										<td colspan="3">
+											<input type="text" class="hobby" name="hobby" maxlength="20" datatype="*1-20" nullmsg="请填写爱好"
+												errormsg="爱好不能超过20个字符">
+										</td>
+										<td valign="top">
+											<span class="Validform_checktip" style="position: relative; top: 4px;"></span>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<label style="position: relative; top: 8px;">所在城市</label>
+										</td>
+										<td width="210" valign="top">
+											<div class="w200">
+												<select name="provinceId" datatype="*" v-model="provinceValue" nullmsg="请选择所在地"
+													errormsg="请选择所在地">
+													<option v-for="item in province" :value="item.regionId">{{item.regionName}}</option>
+												</select>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td width="210" valign="top">
+											<div class="w200">
+												<select name="cityId" datatype="*" nullmsg="请选择所在地" v-model="cityValue" errormsg="请选择所在地">
+													<option v-for="item in city" :value="item.regionId">{{item.regionName}}</option>
+												</select>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<!--<td valign="top">
+											<div class="w200">
+												<select name="countryId" datatype="*" 
+												nullmsg="请选择所在区" 
+												errormsg="请选择所在区">
+													<option v-for="item in country" :value="item.regionId">{{item.regionName}}</option>
+												</select>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>-->
+									</tr>
+									<tr>
+										<td>生日</td>
+										<td width="110">
+											<div class="select w100" id="year" target="year">
+												<input type="hidden" name="year" class="year">
+												<div class="select-input">
+													<input type="text" autocomplete="off" placeholder="请选择" readonly="readonly" datatype="*">
+													<i class="show-options iconfont icon-selectDown"></i>
+												</div>
+												<div class="select-inner">
+													<div>
+														<ul>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td width="110">
+											<div class="select w100" id="month" target="month">
+												<input type="hidden" name="month" class="month">
+												<div class="select-input">
+													<input type="text" autocomplete="off" placeholder="请选择" readonly="readonly" datatype="*">
+													<i class="show-options iconfont icon-selectDown"></i>
+												</div>
+												<div class="select-inner">
+													<div>
+														<ul>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td width="110">
+											<div class="select w100" id="day" target="day">
+												<input type="hidden" name="day" class="day">
+												<div class="select-input">
+													<input type="text" autocomplete="off" placeholder="请选择" readonly="readonly" datatype="*">
+													<i class="show-options iconfont icon-selectDown"></i>
+												</div>
+												<div class="select-inner">
+													<div>
+														<ul>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td><span class="tip">（出生年份为保密）</span></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<a class="btn btn-warning" id="submitBtn">提交</a>
+										</td>
+									</tr>
+								</table>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%- include userFooter.ejs %>
+
+	<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+		<input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+	</form>
+	<script>
+		var routerVm = new Vue({
+			el: "#router"
+		})
+		/* ---------------------------------------------*/
+		var applyVm = new Vue({
+			el: "#main",
+			data: {
+				province: [],
+				city: [],
+				country: [],
+				cityValue: 0,
+				provinceValue: 0,
+				Occupation: ["IT", "通信", "电子", "销售", "客服", "技术支撑", "会计", "金融", "银行", "保险", "生产", "营运", "采购", "物流", "生物", "制药",
+					"医疗", "护理", "广告", "市场", "媒体", "艺术", "建筑", "房地产", "人事", "行政", "高级管理", "咨询", "法律", "教育", "科研", "服务业", "演员",
+					"模特", "公务员", "翻译", "其他"
+				]
+			},
+			mounted: function () {
+				var self = this;
+				window.applyValidform = $(".userInfoWrap form").Validform({
+					tiptype: 2
+				})
+				$.Tipmsg.r = "";
+				utils.ajax({
+					url: "/admin/region/list/0",
+					type: "get",
+					success: function (data) {
+						data = data.data;
+						self.province = data;
+						setTimeout(function () {
+							$("[name='provinceId']").trigger("change")
+						}, 100)
+					}
+				})
+
+			},
+
+			filters: {
+
+			}
+		})
+		$(function () {
+			$(document).on("change", "[name='provinceId']", function () {
+				utils.ajax({
+					url: "/admin/region/list/" + applyVm.provinceValue,
+					type: "get",
+					success: function (data) {
+						data = data.data;
+						applyVm.city = data
+						setTimeout(function () {
+							$("[name='cityId']").trigger("change")
+						}, 100)
+					}
+				})
+			})
+
+		})
+		/* ---------------------------------------------*/
+		var validform = $(".userInfoWrap form").Validform({
+			tiptype: 2
+		});
+		$.Tipmsg.r = "";
+
+		var sign = {
+			'00': '签约中',
+			'01': '签约成功',
+			'02': '入网审核中',
+			'03': '入网成功',
+			'04': '入网失败',
+			'99': '其它错误'
+		}
+		$(function () {
+
+			$(".userLeftNav li li:eq(0)").addClass("cur")
+
+			/* 自主签约状态查询 */
+			/*utils.ajax({
+				url: '/admin/merchant/signQuery',
+				data: JSON.stringify({userId:''}),
+				success: function(data){
+					data = data.data
+					if(data.res_code == '0000'){
+						var signData = data.apply_status==''?'暂无': sign[data.apply_status]
+						var mer_no = data.apply_status == '03'? data.mer_no : ''
+						$(".signData").text(signData)
+					}else{
+						$(".signData").text('暂无')
+					}
+				}
+			})*/
+
+			getYear();
+
+			//获取用户信息
+			utils.ajax({
+				url: "/api/userCenter/info",
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					var src = "../../src/img/avatar.jpg";
+					if (data.userLogo) {
+						src = utils.formatImg(data.userLogo)
+					}
+					$(".userLogo").attr("src", src);
+					$("input[name='userLogo']").val(data.userLogo);
+					$("#infoPanel .nickname").text(data.nickname);
+					$(".logined span").html('<a class="link" href="/user/acc_info">' + data.nickname + '<i class="el-icon-arrow-down"></i></a>');
+					$("#infoPanel .mobilePhone").text(data.mobilePhone);
+					$("#infoPanel .username").text(data.nickname)
+					$("#infoPanel .createTime").text(data.createTime);
+					applyVm.provinceValue = data.userProvince
+					applyVm.cityValue = data.userCity
+					$("[name='provinceId']").trigger("change")
+
+					//真实姓名
+					var realname = data.realname
+					if (realname.length <= 0) {
+						$("#infoPanel .realname").text('暂无');
+					} else {
+						$("#infoPanel .realname").text(data.realname);
+					}
+					//邮箱
+					var email = data.email
+					if (email.length <= 0) {
+						$("#infoPanel .email").text('暂无');
+					} else {
+						$("#infoPanel .email").text(data.email);
+					}
+					//职业
+					var occupation = data.occupation
+					if (occupation.length <= 0) {
+						$("#infoPanel .occupation").text('暂无');
+					} else {
+						$("#infoPanel .occupation").text(data.occupation);
+					}
+					//爱好
+					var hobby = data.hobby
+					if (hobby.length <= 0) {
+						$("#infoPanel .hobby").text('暂无');
+					} else {
+						$("#infoPanel .hobby").text(data.hobby);
+					}
+					//地址
+					var region = data.region
+					if (region.length <= 0) {
+						$("#infoPanel .region").text('暂无');
+					} else {
+						$("#infoPanel .region").text(data.region);
+					}
+					//生日
+					var birthday = data.birthday
+					if (birthday.length <= 0) {
+						$("#infoPanel .birthday").text('暂无');
+					} else {
+						$("#infoPanel .birthday").text(data.birthday);
+					}
+					//是否已婚
+					var marriageState = data.marriageState
+					if (marriageState === 1) {
+						$("#infoPanel .marriageState").text('已婚');
+					} else if (marriageState === 2) {
+						$("#infoPanel .marriageState").text('未婚');
+					} else {
+						$("#infoPanel .marriageState").text('暂无');
+					}
+
+					if (data.nickname) {
+						$("#editPanel .nickname").val(data.nickname);
+						utils.setCookie('nickName', data.nickname)
+					}
+					if (data.realname) {
+						$("#editPanel .realname").val(data.realname);
+					}
+					if (data.sex) {
+						$("#editPanel .sex[value='" + data.sex + "']").parents(".radio").trigger("click");
+					}
+					if (data.birthday) {
+						var arr = data.birthday.split("-");
+						$("#year li[data-val='" + arr[0] + "']").trigger("click");
+						$("#month li[data-val='" + arr[1] + "']").trigger("click");
+						$("#day li[data-val='" + arr[2] + "']").trigger("click");
+					}
+					if (data.marriageState) {
+						$("#editPanel .MarriageState[value='" + data.marriageState + "']").parents(".radio1").trigger(
+							"click");
+					}
+					if (data.occupation) {
+						$("#editPanel #occupation").val(data.occupation)
+
+					}
+					if (data.hobby) {
+						$("#editPanel .hobby").val(data.hobby)
+					}
+
+				}
+			})
+
+			$(".toEditPhoneBtn").on("click", function () {
+				//window.location.href = "../user/acc_phone/0";
+				$("#infoPanel").hide();
+				$("#editPanel").show();
+			});
+
+			//提交
+			$("#submitBtn").on("click", function () {
+				if (validform.check(false)) {
+					var str = $(".userInfoWrap form").serialize();
+					str = utils.str2json(str);
+					str.userLogo = $("#editPanel .avatar img").attr('src');
+					str.birthday = $(".year").val() + "-" + $(".month").val() + "-" + $(".day").val();
+					str.marriageState = $("#editPanel .MarriageState[name='MarriageState']:checked").val();
+					str.userProvince = $("[name='provinceId'] option:selected").val();
+					str.userCity = $("[name='cityId'] option:selected").val();
+					//	str.provinceId: ,
+					//str.provinceName= $("[name='provinceId'] option:selected").text(),
+					//str.cityName= $("[name='cityId'] option:selected").text(),
+					//		str.cityId: ,
+					//str.countryName= $("[name='countryId'] option:selected").text(),
+					// countryId: $("[name='countryId'] option:selected").val(),
+					str.region = $("[name='provinceId'] option:selected").text() + $("[name='cityId'] option:selected")
+						.text()
+
+					utils.ajax({
+						url: "/api/userCenter/info/update",
+						data: JSON.stringify(str),
+						success: function (data) {
+							if (data.success) {
+								utils.alert("success", "保存成功");
+								location.reload();
+							} else {
+								utils.alert("danger", data.msg);
+							}
+						}
+					})
+				}
+			});
+
+			$(".year").on("change", function () {
+				getMonth();
+				if ($(".month").val() != "") {
+					var month = parseInt($(".month").val());
+					var year = parseInt($(".year").val());
+					var date = new Date(year, month, 0);
+					getDate(date.getDate());
+				}
+			});
+
+			$(".month").on("change", function (e) {
+				var month = parseInt($(".month").val());
+				var year = parseInt($(".year").val());
+				var date = new Date(year, month, 0);
+				getDate(date.getDate());
+
+			})
+
+			$(document).on("click", "#editPanel .avatar", function (e) {
+				$("#form1 input").trigger("click");
+			})
+
+		})
+
+		//年
+		function getYear() {
+			var nowYear = new Date().getFullYear();
+			var maxYear = nowYear;
+			var minYear = nowYear - 81
+			var html = "";
+			for (var i = minYear; i < maxYear; i++) {
+				html += '<li data-val="' + i + '">' + i + '年</li>'
+			}
+			$("#year ul").html(html);
+		}
+		//月
+		function getMonth() {
+			var html = "";
+			for (var i = 1; i <= 12; i++) {
+				var val = i;
+				if (val < 10) {
+					val = "0" + i;
+				}
+				html += '<li data-val="' + val + '">' + i + '月</li>'
+			}
+			$("#month ul").html(html);
+		}
+		//日
+		function getDate(maxDay) {
+			var html = "";
+			for (var i = 1; i <= maxDay; i++) {
+				var val = i;
+				if (val < 10) {
+					val = "0" + i;
+				}
+				html += '<li data-val="' + val + '">' + i + '日</li>'
+			}
+			$("#day ul").html(html);
+		}
+
+		//商品图片上传
+		function uploadGoodsImg(self) {
+			if (self.files && self.files[0]) {
+				var file = self.files[0]
+				if (file.size > 2 * 1024 * 1024) {
+					utils.alert("info", "图片大小不能超过2M");
+					return;
+				}
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					var data = e.target.result;
+					//加载图片获取图片真实宽度和高度
+					var image = new Image();
+					image.onload = function () {
+						var width = image.width;
+						var height = image.height;
+						if (width / height != 1) {
+							utils.alert("info", "图片分辨率必须为1:1");
+						} else {
+							uploadCallback(self)
+						}
+					};
+					image.src = data;
+				}
+				reader.readAsDataURL(self.files[0]);
+
+			}
+
+		}
+
+		function uploadCallback(self) {
+			var uploadFile = new FormData($("#form1")[0]);
+			$.ajax({
+				url: '../../file/upload',
+				type: 'POST',
+				data: uploadFile,
+				async: false,
+				cache: false,
+				contentType: false, //不设置内容类型
+				processData: false, //不处理数据
+				success: function (data) {
+					$("#editPanel .avatar img").attr('src', data.data);
+					$("#form1 input").val("");
+				},
+				error: function () {
+
+				}
+			})
+		}
+	</script>
+</body>
+
+</html>

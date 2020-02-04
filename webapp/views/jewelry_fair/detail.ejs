@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<link rel="stylesheet" href="../src/css/icon/iconfont.css" />
+		<link rel="stylesheet" href="../src/css/icons/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+		<link rel="stylesheet" type="text/css" href="../src/css/news/newBelow.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-family: "微软雅黑";
+			}
+			
+			.jewelryBox-bd {
+				width: 100%;
+				height: 100%;
+				background: #f8f8f8;
+			}
+			.detail_box{
+				width: 1240px;
+				margin: 0 auto 40px;
+				background: #FFFFFF;
+				padding:20px;
+			}
+			.detail_img{
+				width: 1200px;
+				height: 400px;
+				margin-top: 29px;
+			}
+			.detail_img img{
+				width: 1200px;
+				height: 400px;
+			}
+			.detail_content{
+				width: 1240px;
+			}
+			h1{
+				width:152px;
+				height: 40px;
+				font-size:16px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(255,255,255,1);
+				background: #FF0000;
+				text-align: center;
+				line-height: 40px;
+				margin-top: 30px;
+			}
+			.detail_content p{
+				width: 1220px;
+				margin-top: 21px;
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(102,102,102,1);
+				line-height:24px;
+				padding:0 30px 0 15px;
+			}
+			.detail_content h2{
+				font-size:20px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(51,51,51,1);
+				line-height:24px;
+				margin-top: 28px;
+			}
+			.detail_show ul{
+				display: flex;
+				flex-wrap: wrap;
+			}
+			.detail_show ul li:nth-child(3n-1){
+				margin-left:15px;
+			}
+			.detail_show ul li:nth-child(3n){
+				margin-left:15px;
+			}
+			.detail_show ul li{
+				margin-top: 15px;
+			}
+			.detail_show ul li img{
+				width: 390px;
+				height: 292px;
+			}
+			.detail_aerial ol{
+				width: 1200px;
+				margin-top: 30px;
+				margin-bottom: 30px;
+			}
+			.detail_aerial ol li img{
+				width: 1200px;
+				height: 675px;
+			}
+			.detail_title{
+				width: 1240px;
+				margin-top: 9px;
+			}
+			.detail_title h3{
+				font-size:26px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(51,51,51,1);
+			}
+			.detail_time{
+				margin:30px 0;
+			}
+			.detail_time span{
+				font-size:13px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(102,102,102,1);
+			}
+			.detail_time span:nth-child(2){
+				margin-left: 68px;
+			}
+			.show_time span{
+				width: 1240px;
+				margin-top: 21px;
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(102,102,102,1);
+				line-height:24px;
+				padding:0 15px;
+				display: block;
+			}
+			@media screen and (max-width: 1400px) {
+			    .more{
+			    	width:1030px;
+			    }
+			}
+		</style>
+</head>
+<body class="jewelryBox-bd">
+		<%- include ../headerbar.ejs %>
+
+		<%- include ../header.ejs %>
+
+		<%- include ../headerNav.ejs %>
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item :to="{ path: '/' }">
+						<a href="../../">我的位置：首页</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item>
+						<a href="../../../jewelry_fair/index">珠宝展</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item><span id="routerTitle">{{getTitle}}</span></el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		<div class="detail_box" id="detail_box">
+			<div class="detail_title">
+				<h3 v-text="getList.title"></h3>
+			</div>
+			<div class="detail_img">
+				<img :src="formatImg(getList.showPrint)"/>
+			</div>
+			<div class="detail_content">
+				<h1>展会简介</h1>
+				<p v-text="getList.describe"></p>
+			</div>
+			<div class="show_time">
+				<h1>展会时间</h1>
+				<span>{{getList.startTime}}－{{getList.finishTime}}</span>
+			</div>
+			<div class="show_time">
+				<h1>展会地址</h1>
+				<span>{{getList.detailSite}}</span>
+			</div>
+			<div class="detail_show">
+				<h1 style="margin-bottom: 15px;">展会实景图</h1>
+				<ul>
+					<li v-for="(item,index) in getImg"><img :src="formatImg(item.picturePath)"/></li>
+				</ul>
+			</div>
+			<div class="detail_aerial">
+				<h1>展会全景图</h1>
+				<ol>
+					<li>
+						<iframe :src="getList.overLookPrint" width="1200px" height="600px" style="border:none"></iframe>
+					<!--<img :src="formatImg(getList.overLookPrint)"/>--></li>
+				</ol>
+			</div>
+		</div>
+		<%- include below %>
+		<%- include ../newFooter.ejs %>
+		<script type="text/javascript">
+			var routerVm = new Vue({
+				el: "#router",
+				computed:{
+					getTitle(){
+						let res = location.href.split('/')
+						return unescape(res[res.length-1].split('?')[1].split('=')[1])
+					}
+				},
+				created(){
+					document.getElementsByTagName('title')[0].innerHTML = this.getTitle
+				}
+			})
+			var detailBox = new Vue({
+				el:"#detail_box",
+				data(){
+					return {
+						getList:[],
+						getImg:[]
+					}
+				},
+				created(){
+					this._init()
+					this._Img()
+					//this._imgs()
+				},
+				computed:{
+					getId(){
+						let res = location.href.split('/')
+						return res[res.length-1].split('?')[0]
+					}
+				},
+				methods:{
+					_init(){
+						var _this=this;
+						utils.ajax({
+							url:"/pc/jewelry/exhibition/details?id="+_this.getId,
+							type:'get',
+							success:function(data){
+								_this.getList=data.data;
+							}
+						})
+					},
+					formatImg: utils.formatImg,
+					_Img(){
+						var _this=this;
+						utils.ajax({
+							url:"/pc/jewelry/exhibition/atlasList?id="+_this.getId,
+							type:'get',
+							success(data){
+								_this.getImg = data.data;
+							}
+						})
+					},
+//					_imgs(){
+//						var _this=this;
+//						utils.ajax({
+//							url:"/pc/jewelry/exhibition/IndexJewelryPicture?id="+_this.getId,
+//							type:'get',
+//							success:function(data){
+//								_this.getList=data.data;
+//							}
+//						})
+//					},
+				}
+			})
+
+		</script>
+</body>
+</html>

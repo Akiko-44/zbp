@@ -1,0 +1,131 @@
+<style>
+
+</style>
+<div id="goodsComment" class="goodsComment">
+	<div class="totalWrap">
+		<label class="fs14" style="margin-right: 20px;">用户点评</label>
+		<el-radio v-model="radio" label="1">全部（<span>0</span>）</el-radio>
+  		<el-radio v-model="radio" label="2">嗮图（<span>0</span>）</el-radio>
+  		<el-radio v-model="radio" label="3">好评（<span>0</span>）</el-radio>
+  		<el-radio v-model="radio" label="4">中评（<span>0</span>）</el-radio>
+  		<el-radio v-model="radio" label="5">差评（<span>0</span>）</el-radio>
+	</div>
+	<div class="commentPost hide">
+		<div class="clearfix commentPostHeader">
+			<div class="fr">
+				<em class="inputLength">0</em>
+				<em>/</em>
+				<em>300</em>
+			</div>
+			<div>
+				<strong>评价商品</strong>&ensp;
+				<span>请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。</span>
+			</div>
+		</div>
+		<div class="commentPostInput">
+			<textarea maxlength="300" placeholder="我来说2句" onkeyup="utils.commentInputNum(this)"></textarea>
+			<div class="clearfix">
+				<div class="layer-table">
+					<div>
+						<div>
+							<span class="username"></span>
+						</div>
+						<div class="tr">
+							<span class="red errorText"></span>
+							<label class="checkbox hide">
+								<span class="checkbox-input">
+									<span class="checkbox-input-inner"></span>
+								</span>
+								<span class="checkbox-label">匿名？</span>
+							</label>
+							<a class="btn postBtn">发表评价</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+		<table class="fs14" width="100%">
+			<tbody>
+			<tr v-for="citem in list11" :key="citem.id">
+				<td valign="top" width="135">
+					<img v-if="citem.userLogo" :src="citem.userLogo|formatImg" width="25" height="25">
+					<span>{{citem.userName}}</span>
+				</td>
+				<td valign="top">
+					<div style="margin-bottom: 15px;">
+						<img v-for="on in citem.commentRank" src="../../src/img/exchange/on.png">
+						<img v-for="on in (5-citem.commentRank)" src="../../src/img/exchange/off.png">
+					</div>
+					<p style="margin-bottom: 15px;color: #666">{{citem.content}}</p>
+					<div class="clearfix" v-if="citem.gallerys.length>0" style="margin-bottom: 16px">
+						<a v-for="imgitem in citem.gallerys" class="fl w100 imgitem">
+							<img :src="imgitem|formatImg" width="100%">
+						</a>
+					</div>
+					<div v-if="citem.replayCommentList">
+						<p v-for="child in citem.replayCommentList" style="color:#E6B75B;line-height: 22px;">回复：{{child.content}}</p>
+					</div>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<br><br>
+		<el-pagination background
+             @current-change="handleCurrentChange"
+             :current-page="current"
+             :page-size="size"
+             layout="total, prev, pager, next, jumper"
+             :total="total">
+         </el-pagination>
+         <br><br>
+	</div>
+</div>
+<script>
+var goodsComment = new Vue({
+	el: "#goodsComment",
+	data: function(){
+		return {
+			radio: "1",
+			
+			list11: [],
+			total: 0,
+			
+			current: 1,
+			size: 10,
+			idValue: "",
+			commentType: "1"
+		}
+	},
+	methods: {
+		render: function(){
+			var self = this;
+			utils.ajax({
+				url: "/api/userCenter/userComment/page/"+self.idValue+"/" + self.commentType,
+				data: {
+					offset: self.current,
+					limit: self.size
+				},
+				type: "get",
+				success: function(data){
+					data = data.data;
+					//self.list11 = self.list11.splice(self.list11.length);
+					self.list11 = data.records;
+					self.total = data.total;
+				}
+			})
+		},
+		handleCurrentChange: function (val) {
+            var self = this;
+            self.current = val;
+            self.render();
+        },
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	}
+})
+</script>

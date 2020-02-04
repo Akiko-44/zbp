@@ -1,0 +1,701 @@
+<style type="text/css">
+  .updateExpressNum .dialog-main {
+    width: 644px;
+    height: 558px;
+    margin-left: -322px;
+    margin-top: -279px;
+  }
+
+  .updateExpressNum .dialog-body {
+    bottom: 0
+  }
+
+  .updateExpressNum .dialog-body>div {
+    padding: 35px;
+    font-size: 14px;
+    position: relative;
+  }
+</style>
+<!--物流信息弹出框-->
+<div class="dialog orderExpressDialog">
+  <div class="mask"></div>
+  <div class="dialog-main" style="z-index: 9999;">
+    <div class="dialog-header clearfix">
+      <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+      <h3 class="dialog-title">物流信息</h3>
+    </div>
+    <div class="dialog-body">
+
+      <div id="orderExpress">
+        <template v-if="orderExpressData.message == 'ok'">
+          <table>
+            <tr>
+              <!--<td width="60">
+          							<img src="" width="45" height="45">
+          						</td>-->
+              <td>
+                <p>
+                  <label>物流公司：</label>
+                  <!-- <span id="com">{{orderExpressData.com}}</span> -->
+                  <span id="com"></span>
+                </p>
+                <p>
+                  <label>物流单号：</label>
+                  <span>{{orderExpressData.nu}}</span>
+                </p>
+              </td>
+            </tr>
+          </table>
+          <ul>
+            <li class="clearfix" v-for="(item, index) in orderExpressData.data" :key="index">
+              <span>{{item.time}}</span>
+              <p>{{item.context}}</p>
+            </li>
+          </ul>
+        </template>
+        <div v-else style="height: 100px;line-height: 100px;text-align: center;">
+          {{orderExpressData.message}}
+        </div>
+      </div>
+
+    </div>
+    <div class="dialog-footer">
+      <a class="btn btn-primary dialog-close">确定</a>
+    </div>
+  </div>
+</div>
+
+<!--修改物流-->
+<div class="dialog updateExpressNum" id="updateExpressNum">
+  <div class="mask"></div>
+  <div class="dialog-main">
+    <div class="dialog-header clearfix">
+      <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+      <h3 class="dialog-title">修改物流单号</h3>
+    </div>
+    <div class="dialog-body">
+      <div>
+        <form>
+          <table>
+            <tr>
+              <td valign="top" width="100"><b class="red">*</b><label>物流公司</label></td>
+              <td colspan="2">
+                <div>
+                  <select name="expressCompany" id="expressCompany" datatype="*" nullmsg="请选择物流公司" errormsg="请选择物流公司">
+                  </select>
+                </div>
+                <p class="Validform_checktip"></p>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" width="100"><b class="red">*</b><label>物流编码</label></td>
+              <td colspan="2">
+                <div>
+                  <input type="text" name="expressNum" datatype="*1-30" nullmsg="请输入物流编码" maxlength="30"
+                    errormsg="物流编码不能为空" style="width: 310px;">
+                </div>
+                <p class="Validform_checktip"></p>
+              </td>
+            </tr>
+          </table>
+        </form>
+
+      </div>
+    </div>
+    <div class="dialog-footer">
+      <button class="btn btn-danger" onclick="$('#updateExpressNum').removeClass('show')">取消1</button>
+      <button class="btn btn-primary updateExpressSave">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 评价弹出框 -->
+<div class="dialog orderCommentDialog">
+  <div class="mask"></div>
+  <div class="dialog-main">
+    <div class="dialog-header clearfix">
+      <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+      <h3 class="dialog-title">评价商品</h3>
+    </div>
+    <div class="dialog-body">
+
+      <div>
+        <form>
+          <ul>
+            <li>
+
+            </li>
+          </ul>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- 延迟收货弹出框 -->
+<div class="dialog delayedReceiptDialog" id="delayedReceiptDialog">
+  <div class="mask"></div>
+  <div class="dialog-main">
+    <div class="dialog-header clearfix">
+      <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+      <h3 class="dialog-title">确认延迟收货时间？</h3>
+    </div>
+    <div class="dialog-body">
+      <p style="margin: 40px;">每笔订单可延迟7天收货</p>
+    </div>
+    <div class="dialog-footer">
+      <button class="btn btn-danger" onclick="$('.delayedReceiptDialog').removeClass('show')">取消</button>
+      <button class="btn btn-primary delayedReceiptBtn" id="delayedReceiptBtn">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 确认收货弹出框 -->
+<div class="dialog ensureOrderDialog" id="ensureOrderDialog">
+  <div class="mask"></div>
+  <div class="dialog-main">
+    <div class="dialog-header clearfix">
+      <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+      <h3 class="dialog-title">提示</h3>
+    </div>
+    <div class="dialog-body">
+      <p style="margin: 40px;">是否确认收货？</p>
+    </div>
+    <div class="dialog-footer">
+      <button class="btn btn-danger" onclick="$('.ensureOrderDialog').removeClass('show')">取消</button>
+      <button class="btn btn-primary ensureBtn" id="ensureBtn">确定</button>
+    </div>
+  </div>
+</div>
+
+<!--撤销弹出框-->
+<div class="dialog revokeDialog" id="revokeDialog">
+  <div class="mask"></div>
+  <div class="dialog-main">
+    <div class="dialog-header clearfix">
+      <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+      <h3 class="dialog-title">确认撤销退款申请？</h3>
+    </div>
+    <div class="dialog-body">
+      <p style="margin: 40px;">撤销退款申请后，不可再次发起退款申请</p>
+    </div>
+    <div class="dialog-footer">
+      <button class="btn btn-danger" onclick="$('#revokeDialog').removeClass('show')">取消</button>
+      <button class="btn btn-primary revokeBtn" id="revokeBtn">确定</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .orderCommentDialog table {
+    width: 100%;
+  }
+
+  .orderCommentDialog .dialog-main {
+    width: 990px;
+    margin-left: -495px;
+    height: 410px;
+    margin-top: -205px;
+  }
+
+  .orderCommentDialog .dialog-body {
+    bottom: 0;
+    color: #999;
+  }
+
+  .orderCommentDialog .dialog-body>div {
+    padding: 20px;
+  }
+
+  .orderCommentDialog .goodsItem {
+    margin-bottom: 15px;
+  }
+
+  .orderCommentDialog .goodsInfo {
+    padding-left: 140px;
+    padding-right: 20px;
+  }
+
+  .orderCommentDialog .goodsInfo h3 {
+    color: #666;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 15px 0;
+  }
+
+  .orderCommentDialog td li {
+    margin: 15px 0;
+  }
+
+  .orderCommentDialog td>h3 {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 14px;
+  }
+
+  .orderCommentDialog td textarea {
+    width: 560px;
+    height: 152px;
+  }
+
+  .orderCommentDialog .uploadbox {
+    width: 72px;
+    height: 72px;
+  }
+
+  .orderCommentDialog .uploadbox:before {
+    height: 30px;
+  }
+
+  .orderCommentDialog .uploadbox:after {
+    width: 30px;
+  }
+
+  .orderCommentDialog .imgs a {
+    position: relative;
+    display: block;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 72px;
+    height: 72px
+  }
+
+  .orderCommentDialog .imgs a span {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: red;
+  }
+</style>
+<form id="orderCommentForm" class="hide" method="post" enctype="multipart/form-data">
+  <input type="file" name="cloudfile" accept="image/*" onchange="uploadOrderCommentImg(this)">
+</form>
+<script>
+  window.trIndex = null
+  var delayReceiptId, ensureOrderId, revokeId, revokeRefundType, revokeText
+  var orderExpress = new Vue({
+    el: '#orderExpress',
+    data: function () {
+      return {
+        orderExpressData: {},
+        expressCompany: {},
+        id: ''
+      }
+    },
+    mounted: function () {
+      utils.ajax({
+        url: "/admin/merchant/order/express",
+        success: function (data) {
+          data = data.data;
+          var html = '';
+          $.each(data, function (idx, item) {
+            html += '<option value="' + item + '">' + item + '</option>'
+          });
+          $("[name='company']").html(html);
+        }
+      })
+    }
+  })
+  utils.ajax({
+    url: "/admin/merchant/order/expressMap",
+    type: "get",
+    success: function (data) {
+      orderExpress.expressCompany = data.data;
+    }
+  })
+  $(document).on("click", ".triggerCommentFile", function (e) {
+    var self = $(e.currentTarget);
+    window.trIndex = self.parents('tr').index();
+    $("#orderCommentForm input").trigger("click");
+  }).on("click", ".submitCommentBtn", function () {
+    var str = {}
+    str.orderId = $('input[name=orderId]').val();
+    str.commentType = $('input[name=commentType]').val();
+    str.gcList = []
+    $.each($('.commentList'), function (idx, item) {
+      var json = {
+        content: $(item).find('[name=content]').val(),
+        spmxxfScore: $(item).find('[name=spmxxfScore]').val(),
+        mjfwtdScore: $(item).find('[name=mjfwtdScore]').val(),
+        wlfhsdScore: $(item).find('[name=wlfhsdScore]').val(),
+        goodsId: $(item).find('.goodsItem').attr('goodId'),
+        gallerys: []
+      }
+      $.each($(item).find('.imgs a'), function (idx1, item2) {
+        json.gallerys.push($(item2).attr('data-name'))
+      })
+      if (json.content || Number(json.spmxxfScore) || Number(json.mjfwtdScore) || Number(json.wlfhsdScore) ||
+        json.gallerys.length) {
+        str.gcList.push(json)
+      }
+    })
+    if (str.gcList.length == 0) {
+      utils.alert('danger', '请对商品进行评价')
+      return false
+    }
+    utils.ajax({
+      //url: "/api/userCenter/userComment/saveOrUpdate",
+      url: "/api/userCenter/userComment/orderCommentAdd",
+      data: JSON.stringify(str),
+      success: function (data) {
+        if (data.success) {
+          $(".orderCommentDialog").removeClass("show");
+          utils.alert("success", "评价成功");
+          $("#orderNav li.cur").trigger("click");
+        } else {
+          utils.alert("danger", data.msg)
+        }
+      }
+    })
+  }).on("click", ".orderCommentDialog .star", function (e) {
+    var self = $(e.currentTarget);
+    self.attr("src", "../../src/img/exchange/on.png").attr("value", "1");
+    self.prevAll("img").attr("src", "../../src/img/exchange/on.png").attr("value", "1");
+    self.nextAll("img").attr("src", "../../src/img/exchange/off.png").attr("value", "0");
+    var len = self.parent().find("img[value=1]").length;
+    self.siblings(".yellow").text(len + ".0");
+    self.siblings("input[type='hidden']").val(len);
+  }).on("click", ".expressOrderBtn", function (e) {
+    //查看物流
+    var self = $(e.currentTarget)
+    var id = self.attr("orderId");
+    $(self).css({
+      'color': '#999',
+    });
+    utils.ajax({
+      url: "/api/order/expressInfo/" + id,
+      success: function (data) {
+        $(self).css({
+          'color': '#666'
+        });
+        orderExpress.orderExpressData = JSON.parse(data.data)
+        for (let key in orderExpress.expressCompany) {
+          if (orderExpress.expressCompany[key] == orderExpress.orderExpressData.com) {
+            $("#com").text(key)
+            orderExpress.orderExpressData.com = key
+          }
+        }
+        $(".orderExpressDialog").addClass("show")
+
+      }
+    })
+
+  }).on("click", ".commentOrderBtn", function (e) {
+    //评价订单
+    var self = $(e.currentTarget)
+    var id = self.attr("orderNumber");
+    window.location.href = "../../user/order/comment?id=" + id;
+    // utils.ajax({
+    //   url: "/api/order/info/" + id,
+    //   type: "get",
+    //   success: function (data) {
+    //     data = data.data;
+    //     $(".orderCommentDialog li").html(_template.userOrderComment({
+    //       data: data
+    //     }))
+    //     $(".orderCommentDialog").addClass("show");
+    //   }
+    // })
+  }).on("click", ".serviceOrderBtn", function (e) {
+    //申请售后
+    var orderId = $(e.currentTarget).attr("orderId");
+    var orderNumber = $(e.currentTarget).attr("orderNumber");
+    var refundType = $(e.currentTarget).attr("refundType");
+    window.location.href = "../../user/order/refund_apply?orderId=" + orderId + "&orderNumber=" + orderNumber +
+      "&refundType=" + refundType
+  }).on("click", ".cancelOrderBtn", function (e) {
+    //取消订单
+    //	var orderId = $(e.currentTarget).attr("orderId");
+    var orderNumber = $(e.currentTarget).attr("orderNumber");
+    //	window.location.href = "../../user/order/cancel_apply?orderId=" + orderId + "&orderNumber=" + orderNumber
+    window.location.href = "../../user/order/cancel_apply?orderNumber=" + orderNumber
+  }).on("click", ".revokeCancelBtn", function (e) {
+    // 撤销弹窗
+    var self = $(e.currentTarget)
+    var id = self.attr("orderId")
+    var refundType = self.attr("refundType")
+    revokeId = id;
+    revokeRefundType = refundType;
+    revokeText = revokeRefundType == 0 ? '取消' : '退款/退货'
+    $("#revokeDialog .dialog-title").text('确认撤销' + revokeText + '申请？')
+    $("#revokeDialog .dialog-body p").text('撤销' + revokeText + '申请后，不可再次发起' + revokeText + '申请')
+    $(".revokeDialog").addClass("show");
+  }).on("click", ".revokeBtn", function (e) {
+    // 撤销
+    if (revokeRefundType == 0) {
+      revokeCancel(revokeId, function () {
+        utils.alert("success", "撤销成功");
+        //			$("#orderNav li.cur").trigger("click");
+        location.reload();
+      })
+    } else {
+      revokeRefund(revokeId, function () {
+        utils.alert("success", "撤销成功");
+        //			$("#orderNav li.cur").trigger("click");
+        location.reload();
+      })
+    }
+  }).on("click", ".toPayOrderBtn", function (e) {
+    var id = $(e.currentTarget).attr("orderNumber");
+    utils.ajax({
+      url: "/api/order/payInTime/" + id,
+      type: "get",
+      success: function (data) {
+        window.location.href = "../../exchange/pay?id=" + data.data.id + "&p=" + data.data.payAmount;
+      }
+    })
+
+  }).on('click', '.toPayGallery', function (e) {
+    var id = $(e.currentTarget).attr("orderNumber");
+    utils.ajax({
+      url: "/api/order/payInTime/" + id,
+      type: "get",
+      success: function (data) {
+        window.location.href = '../../gallery/detail/' + data.data.id
+      }
+    })
+  }).on("click", ".removeImg", function (e) {
+    var self = $(e.currentTarget);
+    self.parent("a").remove();
+  }).on("click", ".expressOrderBtn", function (e) {
+    //查看物流
+    var self = $(e.currentTarget)
+    console.log($(self).attr('disabled') == 'disabled')
+    var id = self.attr("orderId");
+    if ($(self).attr('disabled') == 'disabled') {
+      return false
+    }
+    $(self).attr('disabled', true)
+    utils.ajax({
+      url: "/api/order/expressInfo/" + id,
+      success: function (data) {
+        $(self).attr('disabled', false)
+        orderExpress.orderExpressData = JSON.parse(data.data)
+        for (let key in orderExpress.expressCompany) {
+          if (orderExpress.expressCompany[key] == orderExpress.orderExpressData.com) {
+            $("#com").text(key)
+            orderExpress.orderExpressData.com = key
+          }
+        }
+        $(".orderExpressDialog").addClass("show");
+      }
+    })
+
+  }).on("click", ".expressRefundOrderBtn", function (e) {
+    //查看物流
+    var self = $(e.currentTarget)
+    var id = self.attr("orderId");
+    if ($(self).attr('disabled') == 'disabled') {
+      return false
+    }
+    $(self).attr('disabled', true)
+    utils.ajax({
+      url: "/api/refund/express/info/" + id,
+      success: function (data) {
+        $(self).attr('disabled', false)
+        orderExpress.orderExpressData = JSON.parse(data.data)
+        for (let key in orderExpress.expressCompany) {
+          if (orderExpress.expressCompany[key] == orderExpress.orderExpressData.com) {
+            $("#com").text(key)
+            orderExpress.orderExpressData.com = key
+          }
+        }
+        $(".orderExpressDialog").addClass("show");
+      }
+    })
+
+  }).on("click", ".updateExpressBtn", function (e) {
+    //修改物流
+    var self = $(e.currentTarget)
+    var id = self.attr("orderId");
+    orderExpress.id = id
+    utils.ajax({
+      url: "/api/order/expressInfo/" + id,
+      success: function (data) {
+        var orderExpressData = JSON.parse(data.data)
+        $("[name=expressNum]").val(orderExpressData.nu)
+        $("#updateExpressNum").addClass("show");
+      }
+    })
+  }).on("click", ".delayOrderBtn", function (e) {
+    //延迟收货弹窗
+    var self = $(e.currentTarget);
+    var id = self.attr("orderId");
+    $(".delayedReceiptDialog").addClass("show");
+    delayReceiptId = id;
+  }).on("click", ".delayedReceiptBtn", function (e) {
+    //延迟收货
+    var id = delayReceiptId;
+    utils.ajax({
+      url: "/api/order/delayedReceipt/" + id,
+      type: 'get',
+      el: e.target,
+      success: function (data) {
+        //			$("#orderNav li.cur").trigger("click")
+        $(".delayedReceiptDialog").removeClass("show");
+        utils.alert("success", "延迟7天收货成功")
+        location.reload();
+      }
+    })
+  }).on("click", ".ensureOrderBtn", function (e) {
+    // 确认收货弹窗
+    var self = $(e.currentTarget)
+    var id = self.attr("orderNumber");
+    $(".ensureOrderDialog").addClass("show");
+    ensureOrderId = id;
+  }).on("click", ".ensureBtn", function (e) {
+    // 确认收货
+    var self = $(e.currentTarget)
+    var id = ensureOrderId;
+    ensureOrder(id, function (data) {
+      utils.alert("success", "操作成功");
+      $(".ensureOrderDialog").removeClass("show");
+      //		$("#orderNav li.cur").trigger("click");
+      location.reload();
+    }, e)
+  })
+
+
+  // 取消订单
+  function cancelOrder(orderNumber, reasons, callback) {
+    utils.ajax({
+      url: "/api/order/cancel/" + orderNumber + '/' + reasons,
+      success: function (data) {
+        if (data.success) {
+          callback && callback(data);
+        } else {
+          utils.alert("danger", data.msg)
+        }
+      }
+    })
+  }
+
+  // 撤销取消订单
+  function revokeCancel(orderId, callback) {
+    utils.ajax({
+      url: "/api/order/revokeRequest/" + orderId,
+      success: function (data) {
+        if (data.success) {
+          callback && callback(data);
+        } else {
+          utils.alert("danger", data.msg)
+        }
+      }
+    })
+  }
+
+  // 撤销退款退货
+  function revokeRefund(orderId, callback) {
+    utils.ajax({
+      url: "/api/order/refund/cancel/" + orderId,
+      success: function (data) {
+        if (data.success) {
+          callback && callback(data);
+        } else {
+          utils.alert("danger", data.msg)
+        }
+      }
+    })
+  }
+
+  // 申请退款
+  function refundOrder(orderNumber, reasons, callback) {
+    utils.ajax({
+      url: "/api/order/refundAdd/" + orderNumber + '/' + reasons,
+      success: function (data) {
+        if (data.success) {
+          callback && callback(data);
+        } else {
+          utils.alert("danger", data.msg)
+        }
+      }
+    })
+  }
+
+  // 申请仲裁
+  function arbitrationAdd(orderNumber, reasons, callback) {
+    utils.ajax({
+      url: "/api/order/arbitrationAdd/" + orderNumber + '/' + reasons,
+      success: function (data) {
+        if (data.success) {
+          callback && callback(data);
+        } else {
+          utils.alert("danger", data.msg)
+        }
+      }
+    })
+  }
+
+  //手动确认订单完成
+  function ensureOrder(orderNumber, callback, e) {
+    utils.ajax({
+      url: "/api/order/receive/" + orderNumber,
+      el: e.target,
+      success: function (data) {
+        if (data.success) {
+          callback && callback(data);
+        } else {
+          utils.alert("danger", data.msg)
+        }
+
+      }
+    })
+
+  }
+
+  //评论图片上传
+  function uploadOrderCommentImg(self) {
+    var uploadFile = new FormData($("#orderCommentForm")[0]);
+    $.ajax({
+      url: '../../file/upload',
+      type: 'POST',
+      data: uploadFile,
+      async: false,
+      cache: false,
+      contentType: false, //不设置内容类型
+      processData: false, //不处理数据
+      success: function (data) {
+        $(".orderCommentDialog tr").eq(window.trIndex).find('.imgs').append('<a data-name="' + data.name +
+          '"><span class="removeImg iconfont icon-userPublishColse"></span><img width="100%" src="' + data
+          .data + '"></a>');
+        $("#orderCommentForm input").val("");
+      },
+      error: function () {
+
+      }
+    })
+  }
+  /*
+
+  1:待付款
+  2：已支付
+  3：设计中、制造中
+  4：待发货
+  5：待收货
+  6：已收货
+  7：已完成
+  8：已取消
+  9：已关闭
+  10：退款中
+  11：退款成功
+  12：退款失败
+  13：退货中
+  14：退款成功
+  15：已删除
+  16：待评价
+  41：待换出人确认
+  42：待支付
+  43：换入人已支付
+  44：换出人已支付
+  45：待发货
+  46：换入人已发货
+  47：换出人已发货
+  48：待收货
+  49：待换入已收货
+  50：换出人已收货
+  */
+</script>

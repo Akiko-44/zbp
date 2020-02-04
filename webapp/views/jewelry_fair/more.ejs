@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<link rel="stylesheet" href="../../src/css/icon/iconfont.css" />
+		<link rel="stylesheet" href="../../src/css/icons/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-family: "微软雅黑";
+			}
+			
+			.moreBox-bd {
+				width: 100%;
+				height: 100%;
+				background: #f8f8f8;
+			}
+			.more_box{
+				width: 1200px;
+				margin: 0 auto;
+			}
+			.jewelry_dh{
+				width: 1200px;
+				/*margin: 30px 0;*/
+			}
+			.jewelry_dh .jewelry_list{
+				width: 1200px;
+				display: flex;
+				flex-wrap: wrap;
+			}
+			.jewelry_dh .jewelry_list div{
+				width: 400px;
+				margin:10px 0;
+				display:flex;
+				flex-shrink: 0;
+			}
+			.jewelry_dh .jewelry_list dl{
+				background: #fff;
+				padding:20px;
+			}
+			.jewelry_dh .jewelry_list div:nth-child(3n-2) dl{
+				margin-right:auto;
+			}
+			.jewelry_dh .jewelry_list div:nth-child(3n-1) dl{
+				margin:0 auto;
+			}
+			.jewelry_dh .jewelry_list div:nth-child(3n) dl{
+				margin-left:auto;
+			}
+			.jewelry_dh .jewelry_list dl dt div{
+				width: 346px;
+				height: 224px;
+				background-size:cover;
+				background-position:center;
+				background-repeat: no-repeat;
+			}
+			.jewelry_dh .jewelry_list dl dd{
+				margin-top: 11px;
+			}
+			.jewelry_dh .jewelry_list dl dd h6{
+				color: #333;
+    			font-size: 14px;
+				font-family:MicrosoftYaHei;
+				font-weight:600;
+				text-align: center;
+			}
+			.jewelry_dh .jewelry_list dl dd p{
+				font-size: 12px;
+			    font-family: MicrosoftYaHei;
+			    font-weight: 400;
+			    color: #666;
+			    line-height: 15px;
+			    overflow: hidden;
+			    text-overflow: ellipsis;
+			    display: -webkit-box;
+			    -webkit-line-clamp: 2;
+			    -webkit-box-orient: vertical;
+			    margin-top: 12px;
+			}
+			.jewelry_dh .jewelry_list dl dd span{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(51,51,51,1);
+				margin-top: 8px;
+			}
+			.activity_clearfix{
+				width: 1200px;
+				text-align: center;
+				margin: 15px 0;
+			}
+			@media screen and (max-width: 1400px) {
+			    .more{
+			    	width:1030px;
+			    }
+			}
+			.el-pagination.is-background .el-pager li:not(.disabled).active{
+	    	background: #FF0000;
+	    }
+	    .el-pagination.is-background .btn-next.disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-prev.disabled, .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .el-pager li.disabled{
+	    	background: #B0B8B8;
+	    }
+	    .el-icon-arrow-left:before,.el-icon-arrow-right:before{
+	    	color:#FFFFFF;
+	    }
+	    
+	    .el-breadcrumb__separator:before{
+			color:#c0c4cc;
+		}
+		</style>
+</head>
+<body class="moreBox-bd">
+		<%- include ../headerbar.ejs %>
+		<%- include ../header.ejs %>
+		<%- include ../headerNav.ejs %>
+		<div class="container">
+				<div class="router" id="router">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item :to="{ path: '/' }">
+							<a href="../../">我的位置：首页</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item>
+							<a href="../../../jewelry_fair/index">珠宝展</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item><span id="routerTitle">{{getTitle}}</span></el-breadcrumb-item>
+					</el-breadcrumb>
+				</div>
+			</div>
+		<div class="more_box" id="more_box">
+			<div class="jewelry_dh">
+				<div class="jewelry_list">
+					<div v-for="(item,index) in getList">
+						<dl @click="_more(item.id)">
+							<dt>
+								<div :style="{backgroundImage:'url('+formatImg(item.vrpicture)+')'}"></div>
+							</dt>
+							<dd>
+								<h6 v-text="item.title"></h6>
+								<p v-text="item.describe"></p>
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<div class="activity_clearfix">
+				<template>
+					<el-pagination background @current-change="handleCurrentChange" :current-page="offset" :page-size="limit" layout="total, prev, pager, next, jumper" :total="total">
+					</el-pagination>
+				</template>
+			</div>
+			<%- include below %>
+		</div>
+		<%- include ../footernew.ejs %>
+		<script type="text/javascript">
+			var routerVm = new Vue({
+				el: "#router",
+				computed:{
+					getTitle(){
+						let res = location.href.split('/')
+						return unescape(res[res.length-1].split('?')[1].split('=')[1])
+					}
+				},
+			})
+			var more_box = new Vue({
+				el:"#more_box",
+				data(){
+					return{
+						total: 0,
+						offset: 1,
+						limit: 9,
+						getList:[]
+					}
+				},
+				created(){
+					this.init()
+				},
+				computed:{
+					getId(){
+						let res = location.href.split('/')
+						return res[res.length-1].split('?')[0]
+					}
+				},
+				methods:{
+					handleCurrentChange: function(val) {
+						var self = this;
+						self.offset = val
+						self.init()
+					},
+					init(){
+						var _this=this;
+						utils.ajax({
+							url:"/pc/jewelry/vr/VrList?id="+this.getId,
+							data:{
+								offset: _this.offset,
+								limit: _this.limit,
+							},
+							type:"get",
+							success(data){
+								_this.getList = data.data.records
+								_this.total = data.data.total
+							}
+						})
+					},
+					formatImg: utils.formatImg,
+					_more(id){
+						window.location.href='../../jewelry_fair/details/'+id;
+					}
+				}
+			})
+		</script>
+</body>
+</html>

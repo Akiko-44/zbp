@@ -1,0 +1,121 @@
+<!--物流信息弹出框-->
+<div class="dialog orderExpressDialog">
+	<div class="mask"></div>	
+	<div class="dialog-main" style="z-index: 9999;">
+		<div class="dialog-header clearfix">
+			<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+			<h3 class="dialog-title">物流信息</h3>
+		</div>
+		<div class="dialog-body">
+			
+			<div id="orderExpress">
+				<table>
+					<tr>
+						<!--<td width="60">
+							<img src="" width="45" height="45">
+						</td>-->
+						<td>
+							<p>
+								<label>物流公司：</label>
+								<span>{{orderExpressData.com}}</span>
+							</p>
+							<p>
+								<label>物流单号：</label>
+								<span>{{orderExpressData.nu}}</span>
+							</p>
+						</td>
+					</tr>
+				</table>
+				<ul>
+					<li class="clearfix" v-for="(item, index) in orderExpressData.data" :key="index">
+						<span>{{item.time}}</span>
+						<p>{{item.context}}</p>
+					</li>
+				</ul>
+			</div>
+			
+		</div>
+		<div class="dialog-footer tc">
+			<a class="btn btn-warning dialog-close">确定</a>
+		</div>
+	</div>
+</div>
+<style>
+.orderCommentDialog table {width: 100%;}
+.orderCommentDialog .dialog-main{width: 990px;margin-left: -495px;height: 410px;margin-top: -205px;}
+.orderCommentDialog .dialog-body {bottom: 0;color: #999;}
+.orderCommentDialog .dialog-body>div{padding: 0 20px;}
+.orderCommentDialog .goodsItem {margin-bottom: 15px;}
+.orderCommentDialog .goodsInfo {padding-left: 140px;padding-right: 20px;}
+.orderCommentDialog .goodsInfo h3 {color: #666;font-weight: bold;font-size: 14px;line-height: 20px;margin: 15px 0;}
+.orderCommentDialog td li {margin: 15px 0;}
+.orderCommentDialog td>h3 {margin-bottom: 20px;color: #666;font-size: 14px;}
+</style>
+<script>
+var orderExpress = new Vue({
+	el: '#orderExpress',
+	data:function(){
+		return {
+			orderExpressData:{},
+      		expressCompany:{}
+		}
+	}
+})
+utils.ajax({
+  url: "/admin/merchant/order/expressMap",
+  type: "get",
+  success: function(data){
+    orderExpress.expressCompany = data.data;
+  }
+})
+$(document).on("click", ".expressOrderBtn0", function(e){
+	//查看物流
+	var self = $(e.currentTarget)
+	var id = self.attr("orderId");
+	utils.ajax({
+		url: "/api/order/swap/expressInfo/" + id,
+		success: function(data){
+			data = data.data
+			$.each(data, function(idx, item) {
+				if(item.sendType == "换入"){
+					var orderExpressData = JSON.parse(item.expressInfo)
+					if(orderExpressData.message == 'ok'){
+						orderExpress.orderExpressData = orderExpressData
+						$(".orderExpressDialog").addClass("show");
+					}else{
+						utils.alert("danger", orderExpressData.message)
+					}
+				}
+			})
+		}
+	})
+	
+}).on("click", ".expressOrderBtn1", function(e){
+	//查看物流
+	var self = $(e.currentTarget)
+	var id = self.attr("orderId");
+	utils.ajax({
+		url: "/api/order/swap/expressInfo/" + id,
+		success: function(data){
+			data = data.data
+			$.each(data, function(idx, item) {
+				if(item.sendType == "换出"){
+					var orderExpressData = JSON.parse(item.expressInfo)
+					if(orderExpressData.message == 'ok'){
+						orderExpress.orderExpressData = orderExpressData
+						$(".orderExpressDialog").addClass("show");
+						for(let key in orderExpress.expressCompany){
+              if(orderExpress.expressCompany[key] == orderExpress.orderExpressData.com){
+                orderExpress.orderExpressData.com = key
+              }
+            }
+					}else{
+						utils.alert("danger", orderExpressData.message)
+					}
+				}
+			});
+		}
+	})
+	
+})
+</script>

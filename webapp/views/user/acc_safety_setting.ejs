@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+<style>
+	.VerificationCode {
+		margin: 8px 0;
+		display: inline-block;
+	}
+
+	.VerificationCodeInput {
+		width: 200px;
+	}
+
+	.codeImg {
+		width: 112px;
+		height: 30px;
+		margin: 0 15px
+	}
+
+	.update_mobile,
+	.usermobile {
+		font-size: 14px;
+		color: #333;
+	}
+
+	.usermobile {
+		margin-left: 10px;
+	}
+
+	.vertify_phone {
+		border: 1px solid #ddd;
+	}
+
+	.premobile {
+		border: none !important;
+		margin-left: 9px;
+		width: 280px;
+	}
+
+	.line_mobile {
+		margin-bottom: 20px;
+	}
+
+	.vertify_phone {
+		height: 43px;
+		;
+		line-height: 43px;
+	}
+
+	.getcode {
+		background: #DF735A;
+		color: #fff;
+		font-size: 12px;
+		border-radius: 4px;
+		padding: 0px;
+		/* margin-left: 118px; */
+		cursor: pointer;
+		width: 68px;
+		text-align: center;
+		height: 21px;
+		line-height: 21px;
+		float: right;
+		margin-right: 11px;
+		margin-top: 12px;
+	}
+
+	.mobileWrap {
+		margin-bottom: 10px;
+	}
+
+	.comfirm {
+		background: #DF735A;
+		color: #fff;
+		text-align: center;
+		width: 331px;
+		height: 43px;
+		line-height: 43px;
+		margin: 20px auto 0;
+		cursor: pointer;
+	}
+
+	.realname,
+	.idCard {
+		font-size: 14px;
+		color: #323333;
+		margin-bottom: 10px;
+		display: block;
+	}
+
+	/* upload */
+	.avatar-uploader .el-upload {
+		border: 1px dashed #d9d9d9;
+		border-radius: 6px;
+		cursor: pointer;
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* upload */
+	.avatar-uploader .el-upload {
+		border: 1px dashed #d9d9d9;
+		border-radius: 6px;
+		cursor: pointer;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.avatar-uploader .el-upload:hover {
+		border-color: #409EFF;
+	}
+
+	.avatar-uploader-icon {
+		font-size: 28px;
+		color: #8c939d;
+		width: 100px;
+		height: 100px;
+		line-height: 178px;
+		text-align: center;
+	}
+
+	.avatar {
+		width: 100px;
+		height: 100px;
+		display: block;
+	}
+
+	.dfload {
+		width: 100px;
+		height: 100px;
+		line-height: 100px;
+		margin-right: 20px;
+		position: relative;
+		border: 1px solid #eee;
+		z-index: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	.dfload img {
+		width: 20px;
+		height: 20px;
+	}
+
+	.el-upload-list__item {
+		width: 100px;
+		height: 100px;
+		position: relative;
+	}
+
+	.upload {
+		visibility: hidden;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+	}
+
+	.Imgall li {
+		width: 100px;
+		height: 100px;
+		float: left;
+		margin-left: 10px;
+	}
+
+	.Imgall li:nth-child(1) {
+		margin-left: 0
+	}
+
+	.Idcard_item {
+		width: 100%;
+		height: 100%;
+	}
+
+	.uploadImgItem {
+		line-height: 100px;
+	}
+
+	.pictrue {
+		font-size: 14px !important;
+		margin-left: 10px;
+		color: #323333 !important;
+	}
+
+	.uploadImgItem2 {
+		margin-top: 20px;
+	}
+
+	.Certification {
+		width: 191px;
+		height: 42px;
+		line-height: 42px;
+		text-align: center;
+		background: #F3F3F3;
+		margin-top: 40px;
+		cursor: pointer;
+
+	}
+
+	.avatarImgQq {
+		width: 65px;
+		height: 78px;
+	}
+
+	.item_right_arrow {
+		cursor: pointer;
+	}
+
+	.avatarImg {
+		width: 68px;
+		;
+		height: 68px;
+		border-radius: 50%;
+	}
+
+	.comfirmwechat,
+	.back {
+		width: 114px;
+		height: 33px;
+		background: #DF735A;
+		color: #fff;
+		border: none;
+		line-height: 33px;
+		outline: none;
+	}
+
+	.back {
+		background: #fff;
+		color: #000;
+		border: 1px solid #ddd;
+
+	}
+
+	.validatewechat p {
+		text-align: center;
+	}
+
+	.validatewechat .title {
+		font-size: 14px;
+		color: #333;
+		font-weight: bold;
+
+
+	}
+
+	.validatewechat .name {
+		margin: 20px 0;
+
+	}
+
+	.validatewechat .tip {
+		margin-bottom: 20px;
+		width: 245px;
+		margin: 0 auto;
+		line-height: 20px;
+
+	}
+
+	.type_btn {
+		text-align: center;
+		margin-top: 40px;
+	}
+
+	.bindIcon {
+		text-align: center;
+		margin-top: 10px;
+	}
+
+	.type_btn {
+		text-align: center;
+		margin-top: 40px;
+	}
+
+	.avatarImgblog {
+		width: 78px;
+		height: 64px;
+	}
+
+	.avatarImgQq {
+		width: 78px;
+		height: 78px;
+	}
+
+	.handleComfirm {
+		background: #DF735A;
+	}
+
+	.innerImg {
+		width: 100%;
+		height: 100%;
+		border-radius: 4px;
+	}
+
+	.closeImg {
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		right: -8px;
+		top: -7px;
+	}
+
+	.innerItem {
+		width: 100px;
+		;
+		height: 100px;
+		position: absolute;
+	}
+
+	.vfcode {
+		height: 40px;
+		border: none;
+		border: 1px solid #ddd;
+		text-indent: 10px;
+	}
+
+	.newbilewrap {
+		text-align: center;
+	}
+
+	.updatenewmobile {
+		width: 200px;
+		height: 40px!important;
+		margin: 0 auto;
+		
+	}
+
+	.confirmnewmobile {
+		border: none;
+		width: 200px;
+		height: 30px;
+		background: #df735a;
+		color: #fff;
+		margin: 20px;
+	}
+
+	.Newmobile {
+		height: 40px;
+		border: none;
+		border: 1px solid #ddd;
+		text-indent: 10px;
+	}
+</style>
+
+<body class="userAccount">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include userHeaderNav.ejs %>
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item>
+					<a href="/">首页</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>
+					<a href="../user/acc_info">个人中心</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>安全设置</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContentSetting">
+				<div class="userRightTitle">安全设置</div>
+				<div class="userRightItem"></div>
+				<div class="userRightContentItem">
+					<img src="../../src/img/user/icon_user.png" />
+					<span class="item_content">密码修改</span>
+					<el-button class="item_btn" @click="updatePasword = true">修改</el-button>
+				</div>
+				<div class="userRightItem"></div>
+				<div class="userRightContentItem">
+					<img src="../../src/img/user/icon_phone.png" />
+					<span class="item_content">修改手机号</span>
+					<el-button class="item_btn" @click="updatemobile=true">修改</el-button>
+				</div>
+				<div class="userRightItem"></div>
+				<!--<div class="userRightContentItem">
+						<img src="../../src/img/user/icon_lock.png" />
+						<span class="item_content">支付密码</span>
+						<el-button class="item_btn">设置</el-button>
+					</div>
+					<div class="userRightItem"></div>-->
+				<div class="userRightContentItem">
+					<img src="../../src/img/user/icon_real_name.png" />
+					<span class="item_content">实名认证</span>
+					<el-button class="item_btn" @click="Authentication=true" v-if="authState==0">去认证</el-button>
+					<!-- <el-button class="item_btn" v-if="authState==1">认证中</el-button>
+					<el-button class="item_btn" v-if="authState==2">已认证</el-button>
+							  <el-button class="item_btn" v-if="authState==3">认证不通过</el-button> -->
+					<span class="item_btn_state fr" v-if="authState==1">认证中</span>
+					<span class="item_btn_state fr" v-if="authState==2">已认证</span>
+					<el-button class="item_btn" @click="Authentication=true" v-if="authState==3">认证不通过</el-button>
+				</div>
+				<div class="userRightItem" v-if="userInfo.wechatUnionid"></div>
+				<div class="userRightContentItem" v-if="userInfo.wechatUnionid">
+					<img src="../../src/img/user/icon_wechat.png" />
+					<span class="item_content">微信</span>
+					<!-- <span class="item_right_arrow" v-if="!userInfo.wechatUnionid">未绑定</span> -->
+					<span class="item_right_arrow" v-if="userInfo.wechatUnionid" @click="validate(2,'weixin')">已绑定<i
+							class="el-icon-arrow-right"></i></span>
+				</div>
+				<div class="userRightItem" v-if="userInfo.qunionid"></div>
+				<div class="userRightContentItem" v-if="userInfo.qunionid">
+					<img src="../../src/img/user/icon_qq.png" />
+					<span class="item_content">QQ</span>
+					<!-- <span class="item_right_arrow" v-if="!userInfo.qunionid">未绑定</span> -->
+					<span class="item_right_arrow" v-if="userInfo.qunionid" @click="validate(1,'qq')">已绑定<i
+							class="el-icon-arrow-right"></i></span>
+				</div>
+				<div class="userRightItem" v-if="userInfo.weiboUnionid"></div>
+				<div class="userRightContentItem" v-if="userInfo.weiboUnionid">
+					<img src="../../src/img/user/icon_sina.png" />
+					<span class="item_content">微博</span>
+					<!-- <span class="item_right_arrow" v-if="!userInfo.weiboUnionid">未绑定</span> -->
+					<span class="item_right_arrow" v-if="userInfo.weiboUnionid" @click="validate(3,'weibo')">已绑定<i
+							class="el-icon-arrow-right"></i></span>
+				</div>
+			</div>
+			<el-dialog title="修改密码" :visible.sync="updatePasword" width="30%" center>
+				<span class="update_password">原密码</span>
+				<el-input placeholder="请输入原密码" v-model="prepwd" class="prepwd" ref="prepwd" show-password="true"
+					type="password"></el-input>
+				<span class="update_password">新密码</span>
+				<el-input placeholder="请输入新密码" v-model="newpwd" class="newpwd" show-password="true" type="password">
+				</el-input>
+				<span class="update_password"></span>
+				<el-input placeholder="请确认新密码" v-model="comfirmpwd" type="password" class="comfirmpwd"
+					show-password="true" type="pass"></el-input>
+				</el-input>
+				<p class="input_des">密码长度6~20位，仅支持大小写，字母和数字</p>
+				<!-- <span class="VerificationCode">验证码</span>
+          <span class="item_btn_state fr" v-if="authState==1">认证中</span>
+          <span class="item_btn_state fr" v-if="authState==2">已认证</span>
+          <el-button class="item_btn" @click="Authentication=true" v-if="authState==3">认证不通过</el-button>
+        </div>
+        <div class="userRightItem" v-if="userInfo.wechatUnionid"></div>
+        <div class="userRightContentItem" v-if="userInfo.wechatUnionid">
+          <img src="../../src/img/user/icon_wechat.png" />
+          <span class="item_content">微信</span>
+           <span class="item_right_arrow" v-if="!userInfo.wechatUnionid">未绑定</span> -->
+				<!-- <span class="item_right_arrow" v-if="userInfo.wechatUnionid" @click="validate(1,'weixin')">已绑定<i
+              class="el-icon-arrow-right"></i></span>
+        </div>
+        <div class="userRightItem" v-if="userInfo.qunionid"></div>
+        <div class="userRightContentItem" v-if="userInfo.qunionid">
+          <img src="../../src/img/user/icon_qq.png" />
+          <span class="item_content">QQ</span>
+          
+          <span class="item_right_arrow" v-if="userInfo.qunionid" @click="validate(2,'qq')">已绑定<i
+              class="el-icon-arrow-right"></i></span>
+        </div>
+        <div class="userRightItem" v-if="userInfo.weiboUnionid"></div>
+        <div class="userRightContentItem" v-if="userInfo.weiboUnionid">
+          <img src="../../src/img/user/icon_sina.png" />
+          <span class="item_content">微博</span>
+          <span class="item_right_arrow" v-if="!userInfo.weiboUnionid">未绑定</span> 
+          <span class="item_right_arrow" v-if="userInfo.weiboUnionid" @click="validate(3,'weibo')">已绑定<i
+              class="el-icon-arrow-right"></i></span>
+        </div>
+      </div>
+      <el-dialog title="修改密码" :visible.sync="updatePasword" width="30%" center>
+        <span class="update_password">原密码</span>
+        <el-input placeholder="请输入原密码" v-model="prepwd" class="prepwd" ref="prepwd" show-password="true"
+          type="password"></el-input>
+        <span class="update_password">新密码</span>
+        <el-input placeholder="请输入新密码" v-model="newpwd" class="newpwd" show-password="true" type="password">
+        </el-input>
+        <span class="update_password"></span>
+        <el-input placeholder="请确认新密码" v-model="comfirmpwd" class="comfirmpwd" show-password="true" type="password">
+        </el-input>
+        <p class="input_des">密码长度8~16位，数字、字母、字符至少包含两种验证码</p> -->
+				<!-- <span class="VerificationCode">验证码</span>
+				<div class="VerificationCodeIn clearfix">
+					<el-input placeholder="验证码" v-model="input" class="VerificationCodeInput fl"></el-input>
+					<img class="fl codeImg vertifycode" @click="Veriftify()" src="" width="130" height="40">
+					<input type="text" class="codeUuid" style="display: none;">
+				</div> -->
+				<span slot="footer" class="dialog-footer">
+					<el-button type="danger" @click="comfirm" style="width: 114px;" class="handleComfirm($event)">确 定
+					</el-button>
+					<el-button @click="updatePasword = false" style="width: 114px;">取 消</el-button>
+				</span>
+			</el-dialog>
+			<el-dialog title="修改手机号" :visible.sync="updatemobile" width="30%" center>
+				<p class="line_mobile">
+					<span class="update_mobile">原手机号:</span>
+					<span class="usermobile">{{usermobile}}</span>
+				</p>
+				<!-- <span class="VerificationCode">验证码</span> -->
+				<div class="VerificationCodeIn clearfix mobileWrap">
+					<div>
+						<input placeholder="验证码" class="vfcode fl" v-model="input" class="VerificationCodeInput fl"
+							@change="viticital()">
+						<img class="fl codeImg vertifycode" @click="Veriftify()" :src="vertifycode" width="130"
+							height="40">
+					</div>
+					<input type="text" class="codeUuid" style="display: none;">
+				</div>
+				<div class="vertify_phone">
+					<input placeholder="请输入短信验证码" v-model="premobile" class="premobile" ref="premobile">
+					<span @click="smscode" class="getcode">{{count}}<span v-show="minute">秒</span></span>
+				</div>
+				<div @click="mobilecomfirm($event)" class="comfirm">确定</div>
+
+			</el-dialog>
+			<el-dialog title="实名认证" :visible.sync="Authentication" width="43%" left>
+				<p class="line_mobile">
+					<span class="realname">真实姓名</span>
+					<el-input placeholder="请输入真实姓名，与身份证上一致，20字以内；" v-model="realname" @bulr="viticital()"
+						class="realname" ref="realname" show-password="true"></el-input>
+				</p>
+				<p class="line_mobile">
+					<span class="idCard">身份证号码</span>
+					<el-input placeholder="请输入身份证号码，与身份证上一致" v-model="idCard" @bulr="viticital()" class="prepwd"
+						ref="idCard" show-password="true"></el-input>
+				</p>
+				<div class="clearfix uploadImgItem">
+					<!-- <ul class="Imgall fl">
+						<li v-for="(item,index) in Img"><img :src="item" alt="" class="Idcard_item"></li>
+					</ul> -->
+					<div class="dfload fl imgfir" @click="uploadImg">
+						<img v-if="addImg" src="/src/img/hx_img/addImg.png" alt="">
+					</div>
+					<p class="pictrue">身份证照片（党徽面）</p>
+				</div>
+				<input class="upload" value="" type="file"
+					@change="uploadGoodsImg($event,'inputfile','Img'); viticital()" ref="inputfile">
+				</input>
+				<div class="clearfix uploadImgItem uploadImgItem2">
+					<!-- <ul class="Imgall fl">
+						<li v-for="(item,index) in Imgtwo"><img :src="item" alt="" class="Idcard_item"></li>
+					</ul> -->
+					<div class="dfload fl imgsco" @click.stop="uploadImg2">
+						<img v-if="addImg2" src="/src/img/hx_img/addImg.png" alt="">
+					</div>
+					<input class="upload2" value="" type="file" style="visibility: hidden;display: none;"
+						@change="uploadGoodsImg($event,'inputfiletwo','Imgtwo');viticital()" ref="inputfiletwo">
+					</input>
+					<p class="pictrue">身份证照片（正徽面）</p>
+				</div>
+				<div class="Certification" ref="Certification" @click="comfirmed($event)">立即认证</div>
+		</div>
+		<%- include ../footer.ejs %>
+		<el-dialog :visible.sync="validatewechat" width="409" left class="validatewechat">
+			<!-- <p class="title">确认绑定中宝平账号</p> -->
+			<div class="bindIcon">
+				<img src="/src/img/hx_img/wechat_icon.png" class="avatarImgQq" v-if="qq" alt="" ref="avatarImg">
+				<img src="/src/img/hx_img/icon_QQ.png" class="avatarImgWechat" v-if="wechat" alt="" ref="avatarImg">
+				<img src="/src/img/hx_img/blog.png" class="avatarImgblog" v-if="blog" alt="" ref="avatarImg">
+			</div>
+			<p class="name">{{nickName}}</p>
+			<p class="tip">
+				即将解除{{typetext}}账号的绑定，解绑后将无法
+				使用此{{typetext}}账号快速登录中宝平网站。
+			</p>
+			<div class="type_btn">
+				<button class="comfirmwechat" @click="handleComfirm">确认解绑</button>
+				<button class="back" @click="handleBack">返回</button>
+			</div>
+		</el-dialog>
+		<el-dialog title="输入新手机号" :visible.sync="newmobileshow" width="30%" left>
+			<div class="newbilewrap">
+				<span style="margin-left: -40px;">请输入新手机号：</span><input class="updatenewmobile Newmobile"  placeholder="请输入新手机号" v-model="newmobile" value=""
+					type="text" oninput="value=value.replace(/[^\d]/g,'')" maxlength="11">
+				</input>
+				<button class=" comfirm" style="border:none" @click="SendNewInfo">确定</button>
+			</div>
+		</el-dialog>
+</body>
+<script>
+	$(".tipname").val(utils.getCookie('nickName'))
+	function closeImg(i) {
+		if (i == 1) {
+			$(".innerImg1").parent().hide()
+			applyVm.Img = []
+			applyVm.addImg = true
+
+		} else {
+			$(".innerImg2").parent().hide()
+			applyVm.Imgtwo = []
+			applyVm.addImg2 = true
+		}
+	}
+	$(".userLeftNav li[data-target='accSafety']").addClass("cur");
+	var routerVm = new Vue({
+		el: "#router",
+		data: {
+			value1: null,
+			value2: null,
+			colors: ['#99A9BF', '#F7BA2A',
+				'#FF9900'
+			] // 等同于 { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }
+		}
+	})
+	var applyVm = new Vue({
+		el: "#main",
+		data: {
+			updatePasword: false,
+			input: '',
+			prepwd: '',
+			newpwd: '',
+			comfirmpwd: '',
+			vertifycode: '',
+			updatemobile: false,
+			premobile: "",
+			usermobile: '',
+			minute: false,
+			newmobileshow: false,
+			qq: false,
+			nickName: '',
+			wechat: false,
+			blog: false,
+			typetext: '',
+			newmobile: '',
+			show: true,
+			count: '获取验证码',
+			timer: false,
+			Authentication: false,
+			realname: '',
+			idCard: '',
+			condition: false,
+			validatewechat: false,
+			dialogImageUrl: '',
+			dialogVisible: false,
+			Img: [],
+			Imgtwo: [],
+			authState: 0,
+			username: '',
+			numtype: '',
+			userInfo: {},
+			addImg: true,
+			addImg2: true,
+			Verification: false
+		},
+		mounted: function () {
+			this.usermobile = utils.getCookie("phone");
+			this.nickName = utils.getCookie("nickName");
+			uuid = utils.uuid();
+			this.vertifycode = "../api/userCenter/verifyCode/getCode/" + uuid
+			this.code = uuid
+			this.identifyAuth()
+			// this.channelTtpe()
+			this._getUserinfo()
+		},
+		methods: {
+			uploadImg() {
+				$(".upload").click()
+			},
+			uploadImg2() {
+				$(".upload2").click()
+			},
+			Veriftify: function () {
+				uuid = utils.uuid();
+				this.vertifycode = "../api/userCenter/verifyCode/getCode/" + uuid;
+				this.code = uuid
+			},
+			modifyNewMobile() {
+				// var data=this.newmobile;
+				// var that=this;
+				// utils.ajax({
+				// 	url:'',
+				// 	data:JSON.stringify(data),
+				// 	type:'post',
+				// 	success:function(res){
+				// 		if(res.code===200){
+				// 			utils.alert('success','修改成功')
+				// 			that.newmobile=false
+				// 		}
+				// 		else{
+				// 			utils.alert('danger',"修改失败")
+				// 		}
+				// 	}
+				// })
+
+			},
+			comfirm() {
+				var pwdRegex = new RegExp('/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/');
+				if (this.prepwd == "") {
+					$(".prepwd").append("<p style='color:red' class='pretip'>请输入原密码</p>")
+					return
+				} else {
+					$(".pretip").remove()
+				}
+				if (this.newpwd == "") {
+					$(".newpwd").append("<p style='color:red' class='pretip'>请输入新密码</p>")
+					return
+				} else {
+					$(".pretip").remove()
+				}
+				if (this.comfirmpwd == "") {
+					$(".comfirmpwd").append("<p style='color:red' class='pretip'>请输入新密码</p>")
+					return
+				} else {
+					$(".pretip").remove()
+				}
+				if ((!pwdRegex.test(this.newpwd))) {
+					utils.alert("danger", "您的密码复杂度太低（密码中必须包含大小写，字母和数")
+					// alert("您的密码复杂度太低（密码中必须包含字母、数字），请及时修改密码！");
+					return
+				}
+				if (this.comfirmpwd !== this.newpwd) {
+					$(".comfirmpwd").append("<p style='color:red' class='pretip'>密码输入不一致</p>")
+					return
+				} else {
+					$(".pretip").remove()
+				}
+				var data = {
+					oldPassword: this.prepwd,
+					newPassword: this.newpwd,
+					confirmPassword: this.newpwd
+				}
+				var that = this
+				utils.ajax({
+					url: '/api/userCenter/password/change',
+					type: "post",
+					data: JSON.stringify(data),
+					success: function (res) {
+						if (res.code == 200) {
+							utils.alert("success", "成功")
+							that.updatePasword = false
+							that.newmobile = true
+						}
+					}
+				})
+			},
+			SendNewInfo() {
+				var data = {
+					codeUuid: this.code,
+					dynamicVerifyCode: this.premobile,
+					mobilePhone: this.newmobile,
+					msgId: this.msgId,
+					verifyCode: this.input
+				}
+				var that = this
+				utils.ajax({
+					url: '/api/userCenter/mobile-phone/change',
+					type: "post",
+					data: JSON.stringify(data),
+					success: function (res) {
+						if (res.code == 200) {
+							utils.alert("success", "成功")
+							that.newmobileshow = false
+						}
+					}
+				})
+			},
+			smscode() {
+				var that = this
+				if (this.input) {
+					var data = {
+						codeUuid: this.code,
+						mobilePhone: this.usermobile,
+						verifyCode: this.input,
+					}
+					this.count = "发送中"
+					if (!this.timer) {
+						utils.ajax({
+							url: "/api/userCenter/smscode",
+							type: "post",
+							data: JSON.stringify(data),
+							success: function (res) {
+								if (res.code == 200) {
+									that.msgId = res.data
+									that.getCode()
+									// if(res.msg=="超过三次了"){
+									// 	this.Verification=true
+									// }
+								}
+							}
+						})
+					}
+				}
+			},
+			identifyAuth() {
+				var that = this
+				utils.ajax({
+					url: '/api/userCenter/auth/userAuthMes',
+					type: 'get',
+					success: function (res) {
+						if (res.code == 200) {
+							if (JSON.stringify(res.data) !== "{}") {
+								that.identifyAuthType(res.data.user.authState)
+							} else {
+								that.identifyAuthType(0)
+
+							}
+						}
+					}
+				})
+			},
+			identifyAuthType(type) {
+				switch (type) {
+					case 1:
+						this.authState = 1
+						break;
+					case 2:
+						this.authState = 2
+						break;
+					case 3:
+						this.authState = 3
+						break;
+					default:
+						this.authState = 0
+						break;
+				}
+			},
+			channelTtpe(type,e) {
+				var that = this
+				var data = {
+					mobilePhone: this.usermobile,
+					loginType: type
+				}
+				utils.ajax({
+					url: '/api/userCenter/third-unbind',
+					type: 'post',
+          data: JSON.stringify(data),
+          el: e.target,
+					success: function (res) {
+						if (res.code === 200) {
+							// alert(res.msg)
+							utils.alert("success", res.msg);
+							that.validatewechat = false
+						}
+
+					}
+				})
+			},
+			handleComfirm(e) {
+				this.channelTtpe(this.numtype,e)
+			},
+			handleBind(e) {
+				if (!this.realname && !this.idCard && !this.Img[0] && !this.Imgtwo[0]) return false
+				var that = this
+				var data = {
+					id: that.userInfo.id,
+					name: that.realname,
+					idNumber: that.idCard,
+					idPicFront: that.Img[0],
+					idPicBack: that.Imgtwo[0]
+				};
+				utils.ajax({
+					url: '/api/userCenter/auth/save',
+					type: "post",
+          data: JSON.stringify(data),
+          el: e.target,
+					success: function (res) {
+						if (res.code === 200) {
+							utils.alert("success", "验证成功");
+							that.Authentication = false
+							location.reload()
+						}
+					}
+				})
+			},
+			_getUserinfo() {
+				utils.ajax({
+					url: '/api/userCenter/info',
+					type: 'get',
+					success: (res) => {
+						this.userInfo = res.data
+					}
+				})
+			},
+			validate(num, type) {
+				this.validatewechat = true
+				this.typeIcon(num)
+			},
+			typeIcon(num) {
+				console.log('num', num);
+				this.numtype = num
+				switch (num) {
+					case 1:
+						this.qq = true
+						this.typetext = "微信"
+						this.wechat = this.blog = false
+						break;
+					case 2:
+						this.typetext = "QQ"
+						this.wechat = true
+						this.qq = this.blog = false
+						break;
+					case 3:
+						this.blog = true
+						this.typetext = "微博"
+						this.wechat = this.qq = false
+						break;
+					default:
+						break;
+				}
+			},
+			handleBack() {
+				this.validatewechat = false
+			},
+			getCode() {
+				const TIME_COUNT = 60;
+				if (!this.timer) {
+					this.count = TIME_COUNT;
+					this.minute = true;
+					this.timer = setInterval(() => {
+						if (this.count > 0 && this.count <= TIME_COUNT) {
+							this.count--;
+						} else {
+							clearInterval(this.timer);
+							this.timer = null;
+							this.minute = false
+							this.count = "重发"
+						}
+					}, 1000)
+				}
+			},
+			mobilecomfirm(e) {
+				var data = {
+					codeUuid: this.code,
+					dynamicVerifyCode: this.premobile,
+					mobilePhone: this.usermobile,
+					msgId: this.msgId,
+					verifyCode: this.input
+				}
+				utils.ajax({
+					url: "/api/userCenter/mobile-phone/validate",
+					type: "post",
+          data: JSON.stringify(data),
+          el: e.target,
+					success: (res) => {
+						// alert("成功")
+						// utils.alert("success", "操作成功");
+						this.updatemobile = false
+						this.newmobileshow = true
+					}
+				})
+			},
+			_TemplateUploadImgAjax(type, url, data) {
+				var that = this;
+				var params;
+				$.ajax({
+					url: url,
+					data: data,
+					type: type,
+					async: false,
+					cache: false,
+					contentType: false, //不设置内容类型
+					processData: false, //不处理数据
+					success: function (res) {
+						params = res.data.picUrl
+					}
+				})
+				return params
+			},
+			// 格式化图片
+			formatUpLoadImg(_file, _fileSize) {
+				var formFile = new FormData();
+				var file = _file;
+				var fileSize = (file.size / 1024 / 1024).toFixed(0);
+				if (fileSize > _fileSize) {
+					utils.alert("danger", "上传的文件不能超过" + _fileSize + "M")
+					// alert("上传的文件不能超过" + _fileSize + "M")
+					return
+				}
+				formFile.append("file", file); //加入文件对象
+				return formFile
+			},
+			uploadGoodsImg(e, val, dataImg) {
+				let inputfile = this.$refs[val]
+				var formFile = this.formatUpLoadImg(inputfile.files[0], 1)
+				if (formFile && this[dataImg] && this[dataImg].length < 1) {
+					if (dataImg == 'Img') {
+						this.addImg = false
+						$(".imgfir").after('<div class="innerItem innerItem1"><img class="innerImg innerImg1" src="' + this
+							._TemplateUploadImgAjax("post", "/api/pic/upload", formFile) +
+							'"><img  onclick="closeImg(1)" class="closeImg"  src="/src/img/hx_img/closeImg.png"></div>')
+					} else if (dataImg == 'Imgtwo') {
+						this.addImg2 = false
+						$(".imgsco").after('<div class="innerItem innerItem2"><img class="innerImg innerImg2" src="' + this
+							._TemplateUploadImgAjax("post", "/api/pic/upload", formFile) +
+							'"><img onclick="closeImg(2)" class="closeImg"  src="/src/img/hx_img/closeImg.png"></div>')
+					}
+					this[dataImg].push(this._TemplateUploadImgAjax("post", "/api/pic/upload", formFile))
+				}
+			},
+			viticital() {
+				if (this.realname && this.idCard && this.Img.length && this.Imgtwo.length) {
+					this.$refs.Certification.style.background = "#df735a";
+					this.$refs.Certification.style.color = "#fff";
+					this.condition = false
+				} else {
+					this.condition = true
+				}
+			},
+			comfirmed(e) {
+				if (this.condition) {
+					return false
+				} else {
+					this.handleBind(e)
+				}
+			}
+
+
+		}
+	})
+</script>
+
+</html>

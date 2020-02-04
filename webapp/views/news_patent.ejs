@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="stylesheet" type="text/css" href="../../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+	<link rel="stylesheet" href="../../src/css/icon/iconfont.css" />
+	<link rel="stylesheet" href="../../src/css/icons/iconfont.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			font-family: "微软雅黑";
+		}
+
+		.newspatent-bd {
+			width: 100%;
+			height: 100%;
+			background: #f8f8f8;
+		}
+
+		.new_patent {
+			width: 1200px;
+			margin: 0 auto;
+		}
+
+		.patent_banner {
+			width: 1200px;
+			height: 400px;
+			margin-top: 20px;
+		}
+
+		.patent_banner img {
+			width: 1200px;
+			height: 400px;
+		}
+
+		.patent_list {
+			width: 1200px;
+			margin: 0 auto;
+		}
+
+		.patent {
+			width: 1200px;
+			margin-top: 10px;
+		}
+
+		.patent_list .patent_application {
+			width: 1200px;
+			margin-top: 47px;
+			margin-bottom: 20px;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.patent_list .patent_application span {
+			color: rgba(0, 0, 0, 1);
+			font-size: 15px;
+			font-family: MicrosoftYaHei;
+			font-weight: 600;
+			color: rgba(0, 0, 0, 1);
+		}
+
+		.patent_list .patent_application i {
+			position: relative;
+			top: -2px;
+		}
+
+		.patent_list .patent_application a {
+			font-size: 14px;
+			font-family: SimHei;
+			font-weight: 400;
+			color: rgba(102, 102, 102, 1);
+		}
+
+		.new_patentlist {
+			width: 1200px;
+		}
+
+		.new_patentlist dl {
+			width: 176px;
+			height: 335px;
+			background: #fff;
+			margin-top: 30px;
+			display: inline-block;
+			margin-right: 30px;
+		}
+
+		.new_patentlist dl dt {
+			width: 176px;
+			height: 197px;
+		}
+
+		.new_patentlist dl dt div {
+			width: 176px;
+			height: 197px;
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		.new_patentlist dl dd {
+			width: 176px;
+			height: 138px;
+			margin-left: 26px;
+		}
+
+		.new_patentlist dl dd em {
+			width: 16px;
+			height: 16px;
+			background: url(../../../src/img/news/kefu.png) no-repeat;
+			display: block;
+			margin-top: 27px;
+		}
+
+		.new_patentlist dl dd h2 {
+			font-size: 14px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: #666666;
+			margin-top: 6px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			width: 130px;
+			height: 14px;
+		}
+
+		.new_patentlist dl dd>p {
+			font-size: 14px;
+			font-family: MicrosoftYaHei;
+			font-weight: 600;
+			color: #333333;
+			margin-top: 10px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			width: 130px;
+			height: 14px;
+		}
+
+		.new_patentlist dl dd>div {
+			width: 130px;
+			height: 60px;
+			overflow: hidden;
+		}
+
+		.new_patentlist dl dd>div p {
+			font-size: 12px;
+			line-height: 20px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(153, 153, 153, 1);
+			margin-top: 24px;
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			width: 130px;
+			height: 60px;
+		}
+
+		.patent_more {
+			margin-bottom: 50px;
+		}
+
+		.activity_clearfix {
+			margin-top: 19px;
+			display: flex;
+			justify-content: center;
+		}
+
+		.el-pagination.is-background .el-pager li:not(.disabled).active {
+			background: #FF0000;
+		}
+
+		.el-pagination.is-background .btn-next.disabled,
+		.el-pagination.is-background .btn-next:disabled,
+		.el-pagination.is-background .btn-prev.disabled,
+		.el-pagination.is-background .btn-prev:disabled,
+		.el-pagination.is-background .el-pager li.disabled {
+			background: #B0B8B8;
+		}
+
+		.el-icon-arrow-left:before,
+		.el-icon-arrow-right:before {
+			color: #FFFFFF;
+		}
+
+		.el-pagination {
+			margin-bottom: 25px;
+		}
+
+		.li {
+			margin-top: 10px !important;
+			cursor: pointer;
+			position: relative;
+		}
+
+		.li:hover {
+			animation: top ease-in 0.2s;
+			animation-fill-mode: forwards;
+		}
+
+		.el-breadcrumb__separator:before {
+			color: rgb(192, 196, 204) !important;
+		}
+
+		@keyframes top {
+			from {
+				top: 0px;
+			}
+
+			to {
+				top: -4px;
+			}
+		}
+
+		@media screen and (max-width: 1400px) {
+			.more {
+				width: 1030px;
+			}
+		}
+	</style>
+</head>
+
+<body class="newspatent-bd">
+	<%- include headerbar %>
+
+	<%- include header %>
+
+	<%- include headerNav %>
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item :to="{ path: '/' }">
+					<a href="../../">我的位置：首页</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>
+					<a href="../../news/">行业之声</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>
+					<a id="routerTitle" href="0">专利服务</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item v-if="getIdes==1"><span id="routerTitle">专利申请</span></el-breadcrumb-item>
+				<el-breadcrumb-item v-if="getIdes==2"><span id="routerTitle">专利维权</span></el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	<div class="new_patent" id="new_patent">
+		<div class="patent_banner" v-show="patentShow" v-for="item in patnetBan">
+			<div v-html="item.pictureText"></div>
+		</div>
+		<div class="patent_list">
+			<div class="patent">
+				<div class="patent_application">
+					<span>存证服务</span>
+				</div>
+				<div style="width: 100%;">
+					<img src="../../src/img/news/copyright2.png" style="width: 100%;" />
+				</div>
+			</div>
+			<div class="patent">
+				<div class="patent_application">
+					<span>知识产权</span>
+				</div>
+				<div style="width: 100%;">
+					<img src="../../src/img/news/copyright1.png" style="width: 100%;" />
+				</div>
+			</div>
+		</div>
+		<div class="patent_list">
+			<div class="patent" v-if="getIdes!=2">
+				<div class="patent_application" v-if="getIdes==0">
+					<span>专利申请</span>
+					<a href="1">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</div>
+				<div class="new_patentlist">
+					<dl v-for="(item,index) in patentList1" @click="_detailspage(item.id)" class="li">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.logoPath)+')'}"></div>
+						</dt>
+						<dd>
+							<p v-text="item.companyName"></p>
+							<div v-html="item.companyIntroduce"></div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="patent patent_more" v-if="getIdes!=1">
+				<div class="patent_application" v-if="getIdes==0">
+					<span>专利维权</span>
+					<a href="2">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</div>
+				<div class="new_patentlist">
+					<dl v-for="(item,index) in patentList2" @click="_detailspage(item.id)" class="li">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.logoPath)+')'}"></div>
+						</dt>
+						<dd>
+							<p v-text="item.companyName"></p>
+							<div v-html="item.companyIntroduce"></div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+		<div class="activity_clearfix" v-if="getIdes!=0">
+			<template>
+				<el-pagination background @current-change="handleCurrentChange" :current-page="offset" :page-size="limit"
+					layout="total, prev, pager, next, jumper" :total="total">
+				</el-pagination>
+			</template>
+		</div>
+		<%- include new_below %>
+	</div>
+	<%- include newFooter %>
+	<script type="text/javascript">
+		//获取展示类型
+		function getIdes() {
+			var res = location.href.split('/')
+			return res[res.length - 1]
+		}
+		var routerVm = new Vue({
+			el: "#router",
+			computed: {
+				getIdes
+			},
+		})
+		var newPatent = new Vue({
+			el: "#new_patent",
+			data: function () {
+				return {
+					total: 0,
+					offset: 1,
+					limit: 10,
+					patentShow: false,
+					patentList1: "",
+					patentList2: "",
+					patnetBan: [],
+				}
+			},
+			created: function () {
+				this.init(),
+					this._bantentBan()
+			},
+			computed: {
+				getIdes
+			},
+			methods: {
+				// 初始化
+				init: function () {
+					switch (this.getIdes) {
+						case '0':
+							this.patentShow = true
+							this.getList(2).then(data => {
+								this.patentList2 = data.records
+							})
+							this.getList(1).then(data => {
+								this.patentList1 = data.records
+							})
+							break
+						case '1':
+							this.getList(1).then(data => {
+								this.patentList1 = data.records
+							})
+							this.getTotal(1).then(data => {
+								this.total = data
+							})
+							break
+						case '2':
+							this.getList(2).then(data => {
+								this.patentList2 = data.records
+							})
+							this.getTotal(2).then(data => {
+								this.total = data
+							})
+							break
+					}
+				},
+				//获取列表
+				getList: function (type) {
+					return new Promise(function (resolve, reject) {
+						utils.ajax({
+							url: "/pc/industry/patent/list",
+							data: {
+								offset: 1,
+								limit: 10,
+								patentType: type
+							},
+							type: "get",
+							success: function (data) {
+								resolve(data.data)
+							}
+						})
+					})
+				},
+				//获取总条数
+				getTotal: function (type) {
+					return new Promise(function (resolve, reject) {
+						utils.ajax({
+							url: "/pc/industry/patent/listNum",
+							data: {
+								patentType: type
+							},
+							type: "get",
+							success: function (data) {
+								resolve(data.data)
+							}
+						})
+					})
+				},
+				//获取图片url
+				formatImg: utils.formatImg,
+				//页数改变
+				handleCurrentChange: function (val) {
+					var self = this
+					self.offset = val
+					self.init()
+				},
+				_detailspage: function (id) {
+					window.location.href = "../../news/detailspage/" + id;
+				},
+				_bantentBan: function () {
+					var _this = this;
+					utils.ajax({
+						url: "/pc/industry/patent/listBanner",
+						type: "get",
+						success: function (data) {
+							data = data.data
+							$.each(data, function (idx, item) {
+								item.pictureText = item.pictureText.replace(/pa95ui71l.bkt.clouddn/g, 'image.gacjc')
+							});
+							_this.patnetBan = data
+						}
+					})
+				}
+			},
+		})
+	</script>
+</body>
+
+</html>

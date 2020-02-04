@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style type="text/css">
+	.isAuthentication{
+		display: inline-block;
+		width: 56px;
+		height: 22px;
+		vertical-align: middle;
+		margin-left: 30px;
+		background: url('../../src/img/exchange/authentication.png') center no-repeat;
+		background-size: 100% 100%;
+	}
+	.authentication_ing{
+		display: inline-block;
+		width: 56px;
+		height: 22px;
+		line-height: 22px;
+		margin-left: 30px;
+		background: #C2A374;
+		color: #FFFFFF;
+		border-radius: 11px;
+		-webkit-border-radius: 11px;
+		-moz-border-radius: 11px;
+	}
+	.info p{margin-bottom: 20px;}
+	.info p label{display: inline-block;font-size: 16px;color: #000000;width: 130px;}
+	.info p span{font-size: 16px;color: #666666;}
+	.btns{
+		display: inline-block;
+		width: 300px;
+		height: 50px;
+		line-height: 50px;
+		background: #C2A374;
+		color: #FFFFFF;
+		margin-top: 22px;
+		border-radius: 25px;
+		-webkit-border-radius: 25px;
+		-moz-border-radius: 25px;
+	}
+	.uploadbox{
+		overflow: hidden;
+	}
+</style>
+</head>
+<body class="userAccount">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>商家认证编辑</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				<div class="userInfoWrap">
+					<div class="panel userPanel" id="infoPanel">
+						<div class="panel-header">
+							<div class="panel-title">商家认证</div>
+						</div>
+						<div class="panel-body">
+							<form id="infoForm">
+								<input type="hidden" name="id" v-model="data.id"/>
+								<input type="hidden" name="merchantType" value="4" />
+								<table>
+									<tr>
+										<td style="line-height: 30px;" valign="top"><h4>企业名称<span class="red">*</span></h4></td>
+										<td>
+											<div class="w200">
+												<input type="text" name="name" datatype="*1-30" 
+													v-model="data.name"
+													placeholder="30字以内"
+													nullmsg="请输入企业名称 " 
+													errormsg="企业名称30个字符以内">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td style="line-height: 30px;" valign="top"><h4>企业注册号<span class="red">*</span></h4></td>
+										<td>
+											<div class="w200">
+												<input type="text" name="taxNumber" datatype="*1-30" 
+													v-model="data.taxNumber"
+													placeholder="请输入企业注册号：30字以内"
+													nullmsg="请输入企业注册号 " 
+													errormsg="企业注册号30个字符以内 ">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td style="line-height: 30px;" valign="top"><h4>法人姓名<span class="red">*</span></h4></td>
+										<td>
+											<div class="w200">
+												<input type="text" name="userName" datatype="*1-30" 
+													v-model="data.userName"
+													placeholder="请输入正确的法人姓名"
+													nullmsg="请输入法人姓名 " 
+													errormsg="法人姓名30个字符以内">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td style="line-height: 30px;" valign="top"><h4>法人手机号<span class="red">*</span></h4></td>
+										<td>
+											<div class="w200">
+												<input type="text" name="mobilePhone" datatype="*"
+													v-model="data.mobilePhone"
+													maxlength="11"
+													placeholder="请输入正确的法人手机号"
+													nullmsg="请输入法人手机号 " 
+													errormsg="法人姓名12个字符以内">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td style="line-height: 30px;" valign="top"><h4>法人身份证号<span class="red">*</span></h4></td>
+										<td>
+											<div class="w200">
+												<input type="text" name="idNumber" datatype="*16-18" 
+													v-model="data.idNumber"
+													placeholder="请输入正确的身份证号"
+													nullmsg="请输入法人身份证号 " 
+													errormsg="请输入法人身份证号">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td style="line-height: 30px;" valign="top"><h4>店铺名称<span class="red">*</span></h4></td>
+					                    <td>
+					                      <div class="w200">
+					                        <input type="text" name="shopName"
+					                        	v-model="data.shopName"
+					                          placeholder="请输入店铺名称"
+					                          nullmsg="请输入店铺名称 " 
+					                          errormsg="请输入店铺名称">
+					                      </div>
+					                      <p class="Validform_checktip"></p>
+					                    </td>
+									</tr>
+								</table>
+								<table>
+									<tr>
+										<td colspan="3"><h4>所在地<span class="red">*</span></h4></td>
+									</tr>
+									<tr>
+										<td width="210" valign="top">
+											<div class="w200">
+												<select name="provinceId" 
+												datatype="*" 
+												nullmsg="请选择所在地" 
+												errormsg="请选择所在地">
+													<option v-for="item in province" :value="item.regionId">{{item.regionName}}</option>
+												</select>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td width="210" valign="top">
+											<div class="w200">
+												<select name="cityId" datatype="*" 
+												nullmsg="请选择所在市" 
+												errormsg="请选择所在市">
+													<option v-for="item in city" :value="item.regionId">{{item.regionName}}</option>
+												</select>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td valign="top">
+											<div class="w200">
+												<select name="countryId" datatype="*" 
+												nullmsg="请选择所在区" 
+												errormsg="请选择所在区">
+													<option v-for="item in country" :value="item.regionId">{{item.regionName}}</option>
+												</select>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td width="310" valign="top">
+											<div>
+												<input type="text" name="address" maxlength="10" v-model="data.address">
+												<p class="tip">详细地址(10个字以内)</p>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr><td style="line-height: 30px;" valign="top"><h4>身份证正面和反面照片<span class="red">*</span></h4></td></tr>
+									<tr>
+										<td>
+											<div class="clearfix">
+												<div class="uploadbox" data-target="idPicFront">
+													<img :src="data.idPicFront" width="100%">
+												</div>
+												<div class="fl">
+													<p class="tip">&emsp;信息清晰,最大2M</p>
+													<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+												</div>
+											</div>
+											<div>
+												<input type="hidden" name="idPicFront" datatype="*" 
+												v-model="data.idPicFront"
+												nullmsg="请上传 " 
+												errormsg="请上传">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td>
+											<div class="clearfix">
+												<div class="uploadbox" data-target="idPicBack">
+													<img :src="data.idPicBack" width="100%">
+												</div>
+												<div class="fl">
+													<p class="tip">&emsp;信息清晰,最大2M</p>
+													<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+												</div>
+											</div>
+											<div>
+												<input type="hidden" name="idPicBack" datatype="*"
+													v-model="data.idPicBack"
+												nullmsg="请上传 " 
+												errormsg="请上传">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+								</table>
+								<table>
+									<tr>
+										<td style="width: 60px;line-height: 30px;" valign="top"><h4>营业执照<span class="red">*</span></h4></td>
+										<td>
+											<div class="clearfix">
+												<div class="uploadbox" data-target="licenceUrl">
+													<img :src="data.licenceUrl" width="100%">
+												</div>
+												<div class="fl">
+													<p class="tip">&emsp;营业执照信息清晰,最大2M</p>
+													<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+												</div>
+											</div>
+											<div>
+												<input type="hidden" name="licenceUrl" datatype="*" 
+													v-model="data.licenceUrl"
+												nullmsg="请上传 " 
+												errormsg="请上传">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td style="width: 100px;line-height: 30px;" valign="top"><h4>开户许可证<span class="red">*</span></h4></td>
+										<td>
+											<div class="clearfix">
+												<div class="uploadbox" data-target="electronicUrl">
+													<img :src="data.electronicUrl" width="100%">
+												</div>
+												<div class="fl">
+													<p class="tip">&emsp;开户许可证信息清晰,最大2M</p>
+													<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+												</div>
+											</div>
+											<div>
+												<input type="hidden" name="electronicUrl" datatype="*"
+													v-model="data.electronicUrl"
+												nullmsg="请上传 " 
+												errormsg="请上传">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td style="line-height: 30px;" valign="top"><h4>自拍照<span class="red">*</span></h4></td>
+										<td>
+											<div class="clearfix">
+												<div class="uploadbox" data-target="selfie">
+													<img :src="data.selfie" width="100%">
+												</div>
+												<div class="fl">
+													<p class="tip">&emsp;信息清晰,最大2M</p>
+													<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+												</div>
+											</div>
+											<div>
+												<input type="hidden" name="selfie" datatype="*" 
+													v-model="data.selfie"
+												nullmsg="请上传 " 
+												errormsg="请上传">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td style="line-height: 30px;" valign="top"><h4>门头牌照<span class="red">*</span></h4></td>
+										<td>
+											<div class="clearfix">
+												<div class="uploadbox" data-target="doorPhotos">
+													<img :src="data.doorPhotos" width="100%">
+												</div>
+												<div class="fl">
+													<p class="tip">&emsp;信息清晰,最大2M</p>
+													<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+												</div>
+											</div>
+											<div>
+												<input type="hidden" name="doorPhotos" datatype="*" 
+													v-model="data.doorPhotos"
+												nullmsg="请上传 " 
+												errormsg="请上传">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td style="line-height: 30px;" valign="top"><h4>室内照<span class="red">*</span></h4></td>
+										<td>
+											<div class="clearfix">
+												<div class="uploadbox" data-target="idroomPic">
+													<img :src="data.idroomPic" width="100%">
+												</div>
+												<div class="fl">
+													<p class="tip">&emsp;最大2M</p>
+													<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+												</div>
+											</div>
+											<div>
+												<input type="hidden" name="idroomPic" datatype="*" 
+													v-model="data.idroomPic"
+												nullmsg="请上传 " 
+												errormsg="请上传">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2"><h4>纳税人识别号<span class="red">*</span></h4></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<div>
+												<input type="text" name="licenseNo" v-model="data.licenseNo" datatype="*1-50" nullmsg="请输入纳税人识别号" errormsg="请输入纳税人识别号">
+												<p class="tip">请与营业执照保持一致</p>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2"><h4>开户名称<span class="red">*</span></h4></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<div>
+												<input type="text" name="realName" 
+												v-model="data.realName"
+												datatype="realName" 
+												nullmsg="开户名称一般为企业名称" 
+												errormsg="开户行账号为1-30个字符，且不能包含中文括号"
+												placeholder="30个字符以内,开户名称一般为企业名称">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2"><h4>开户银行支行名称<span class="red">*</span></h4></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<div>
+												<input type="text" name="bankName" 
+													v-model="data.bankName"
+													datatype="*1-50" 
+													nullmsg="请输入开户银行" 
+													errormsg="开户行名称为1-50个字符"
+													placeholder="50个字符以内">
+												<p class="tip">请具体到支行</p>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2"><h4>开户行行号<span class="red">*</span></h4></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<div>
+												<input type="text" name="bankNumber"
+													v-model="data.bankNumber"
+													maxlength="12"
+													datatype="*" 
+													nullmsg="请输入开户行行号" 
+													errormsg="请输入开户行行号"
+													placeholder="请输入开户行行号">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2"><h4>开户行账号<span class="red">*</span></h4></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<div>
+												<input type="text" name="bankAccount" 
+													v-model="data.bankAccount"
+												datatype="*1-50" 
+												nullmsg="请输入开户行账号" 
+												errormsg="开户行账号为1-50个字符">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3"><h4>门牌号<span class="red">*</span></h4></td>
+									</tr>
+									<tr>
+										<td colspan="3">
+											<div>
+												<input name="houseNumber" 
+												v-model="data.houseNumber"
+												type="text" 
+												datatype="*1-6" 
+												nullmsg="请输入门牌号"
+												errormsg="6个字以内"
+												maxlength="6"
+												placeholder="请输入门牌号">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3"><h4>邮箱地址<span class="red">*</span></h4></td>
+									</tr>
+									<tr>
+										<td colspan="3">
+											<div>
+												<input type="text" class="email" v-model="data.email" name="email" maxlength="100" datatype="/^\s*$/|e" nullmsg="请输入邮箱地址" errormsg="邮箱格式错误" placeholder="用来接收订单提醒邮件，便于您及时了解订单状态" style="width: 450px;">
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" class="tc">
+											<br>
+											<label class="checkbox">
+												<span class="checkbox-input">
+													<span class="checkbox-input-inner"></span>
+												</span>
+												<span class="checkbox-label">
+													我已阅读和接受
+													<a class="blue" onclick="$('#agreement2').addClass('show')">《中国珠宝云平台开店协议》</a>和
+													<a class="blue" onclick="$('#protocol').addClass('show')">TN自由划付业务合作协议（三方协议）</a>
+												</span>
+											</label>
+										</td>
+									</tr>
+									<tr>
+										<td><a class="btn btn-primary" @click="save">提交</a></td>
+									</tr>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%- include ../system/agreement.ejs %>
+	<%- include ../system/protocol.ejs %>
+	<%- include userFooter.ejs %>	
+<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+ <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+</form>	
+<script>
+$(".userLeftNav li li:eq(2)").addClass("cur")
+var routerVm = new Vue({
+	el: "#router"
+})
+var mainVm = new Vue({
+	el: "#main",
+	data: {
+		data:{},
+		
+		province: [],
+		city: [],
+		country: [],
+		
+	},
+	mounted: function(){
+		var self = this
+		
+		window.infoForm = $("#infoForm").Validform({
+			tiptype: 2,
+			datatype:{
+		        "realName": function(gets,obj,curform,regxp){
+		            //参数gets是获取到的表单元素值，obj为当前表单元素，curform为当前验证的表单，regxp为内置的一些正则表达式的引用;
+		            if ((gets.indexOf('（') === -1 || gets.indexOf('）') === -1) && gets.length <= 30) { return true; }
+		 			return false;
+		            //注意return可以返回true 或 false 或 字符串文字，true表示验证通过，返回字符串表示验证失败，字符串作为错误提示显示，返回false则用errmsg或默认的错误提示;
+		        }
+		    },
+		})
+		
+		utils.ajax({
+			url: "/api/merchant_auth/authMes",
+			type: "get",
+			success: function(data){
+				self.data = data.data
+			}
+		})
+		
+		utils.ajax({
+			url: "/admin/region/list/0",
+			type:"get",
+			success: function(data){
+				data = data.data;
+				self.province = data;
+				setTimeout(function(){
+					$("[name='provinceId']").trigger("change")
+					setTimeout(function(){
+						$("[name='cityId']").trigger("change")
+					},100)
+				}, 100)
+			}
+		})
+	},
+	methods:{
+		toForm: function(){
+			var self = this
+			self.isForm = true
+			setTimeout(function(){
+				window.infoForm = $("#infoForm").Validform({
+					tiptype: 2
+				})
+				$.Tipmsg.r = "";
+			},50)
+		},
+		save:function(){
+			var self = this;
+			if(!$(".checkbox").hasClass("checked")){
+				utils.alert("info", "您未同意中宝协云平台商家用户注册协议");
+				return;
+			}
+			if(window.infoForm.check(false)){
+				var str = $("#infoForm").serialize();
+				str = utils.str2json(str);
+				str.provinceName = $("[name='provinceId'] option:selected").text()
+				str.cityName = $("[name='cityId'] option:selected").text()
+				str.countryName = $("[name='countryId'] option:selected").text()
+				utils.ajax({
+					url: "/api/merchant_auth/saveOrUpdate",
+					data: JSON.stringify(str),
+					success: function(data){
+						utils.alert('success','提交成功!')
+						window.location.href = "acc_BusinessAuthentication"
+						/*utils.ajax({
+							type: 'get',
+							url: '/admin/merchant/agreementSign',
+							success: function(res){
+								window.location.href = res.data.htmlContent
+							}
+						})*/
+					}
+				})
+			}else{
+				utils.alert("info", "请检查资料是否填写完整")
+			}
+		}
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str)
+		}
+	}
+})
+
+$(function(){
+	$(document).on("click", ".uploadbox", function(e){
+		var t = $(e.currentTarget).attr("data-target");
+		$("#form1 input").attr("data-target", t);
+		$("#form1 input").trigger("click");
+	}).on("change", "[name='provinceId']", function(){
+		var val = $(this).val();
+		utils.ajax({
+			url: "/admin/region/list/" + val,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				mainVm.city = data;
+				setTimeout(function(){
+					$("[name='cityId']").trigger("change")
+				},100)
+			}
+		})
+	}).on("change", "[name='cityId']", function(){
+		var val = $(this).val();
+		utils.ajax({
+			url: "/admin/region/list/" + val,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				mainVm.country = data
+			}
+		})
+	})
+})
+
+//商品图片上传
+function uploadGoodsImg(self){
+	var files = self.files[0]
+	var t = $("#form1 input").attr("data-target")
+	if(files.size > 2*1024*1024){
+		utils.alert("info", "图片大小不能超过2M");
+		return;
+	}
+	uploadCallback(self)
+}
+function uploadCallback(self){
+	var uploadFile = new FormData($("#form1")[0]);
+	$.ajax({
+		url:'../../file/upload',
+		type:'POST',
+		data: uploadFile,
+		async: false,  
+		cache: false, 
+		contentType: false, //不设置内容类型
+		processData: false, //不处理数据
+		success:function(data){
+			var t = $("#form1 input").attr("data-target");
+			$(".uploadbox[data-target='"+t+"']").html('<img src="'+data.data+'" width="100%">').addClass("uploaded")
+			$("[name='"+t+"']").val(data.data);
+			mainVm.data[t] = data.data
+			$("#form1 input").val("");
+		}
+	})
+}
+</script>
+</body>
+</html>
+

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<script src="../../src/js/plugin/tinymce4.7.5/tinymce.min.js"></script>
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<!-- 引入组件库 -->
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+	<style type="text/css">
+		.appList {
+			width: 100%;
+			height: 100%;
+			margin-top: 26px;
+			position: relative;
+		}
+
+		.appList .btn1 {
+			width: 150px;
+			height: 40px;
+			background: rgba(22, 155, 213, 1);
+			color: #FFF;
+			border: 0;
+			outline: 0;
+			border-radius: 10px;
+			margin-left: 30px;
+		}
+
+		.appointList {
+			margin-top: 20px;
+			width: 980px;
+			float: left;
+			margin-left: 10px;
+		}
+
+		.el-pagination {
+			margin-left: 65%;
+			margin-top: 30px;
+		}
+
+		.detail {
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, .3);
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 222;
+		}
+
+		.detail .qux {
+			font-size: 30px;
+			color: #fff;
+			position: absolute;
+			top: 10px;
+			right: 20px;
+			cursor: pointer;
+		}
+
+		.details {
+			width: 1000px;
+			height: 100%;
+			position: relative;
+			top: 50%;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			margin: auto;
+			margin-top: -300px;
+		}
+
+		.fh {
+			display: block;
+			width: 80px;
+			background: rgba(22, 155, 213, 1);
+			;
+			color: #fff;
+			text-decoration: none;
+			text-align: center;
+			height: 30px;
+			line-height: 30px;
+			margin: 20px 25px 30px;
+			border-radius: 5px;
+		}
+
+		.named {
+			width: 1000px;
+			height: 600px;
+			border: 1px solid #ccc;
+			background: #fff;
+			margin-left: 10%;
+			margin-top: 40px;
+			position: relative;
+		}
+
+		.named_name {
+			display: flex;
+			align-items: center;
+			border-bottom: 1px solid #ccc;
+			background: rgba(242, 242, 242, 1);
+		}
+
+		.dz {
+			flex: 2;
+		}
+
+		.dz p {
+			display: inline-block;
+			padding: 0 5px;
+		}
+
+		.items span {
+			display: inline-block;
+			padding: 14.5px 24px;
+			color: rgba(22, 155, 213, 1);
+		}
+
+		.weight {
+			margin: 55px 22px;
+		}
+
+		.address1 {
+			border-top: 1px solid #ccc;
+			margin: 10px 0;
+			color: rgba(22, 155, 213, 1);
+		}
+
+		.weights-input {
+			width: 100px;
+			height: 30px;
+			border: 1px solid #ccc;
+			border-radius: 10px;
+			margin: 0 5px;
+		}
+
+		.title {
+			font-size: 16px;
+			margin-left: 25px;
+		}
+
+		.address {
+			width: 620px;
+			height: 380px;
+			border: 1px solid #ccc;
+			position: absolute;
+			top: 10%;
+			left: 50%;
+			margin-left: -315px;
+			background: #FFF;
+			z-index: 33;
+		}
+
+		.address h1 {
+			font-size: 20px;
+			text-align: center;
+			color: #666;
+		}
+
+		.address .region {
+			border-top: 1px solid #ccc;
+		}
+
+		.region p {
+			display: inline-block;
+			padding: 0 24px;
+			font-size: 16px;
+			height: 0px;
+		}
+
+		.address .bottom {
+			width: 100%;
+			height: 50px;
+			background: #ccc;
+			position: absolute;
+			bottom: 0;
+		}
+
+		.bottom .button {
+			float: right;
+			width: 140px;
+			height: 35px;
+			margin: 7.5px 5px 0;
+			border: 0;
+			border-radius: 8px;
+		}
+
+		.success {
+			background: rgba(22, 155, 213, 1);
+			color: #fff;
+		}
+
+		.cancel {
+			background: #fff;
+			color: #333;
+		}
+
+		.btn {
+			width: 150px;
+			height: 35px;
+			border: 0;
+			/*margin: 35px 26px;*/
+			position: absolute;
+			bottom: 33px;
+			right: 33px;
+			color: #fff;
+			border-radius: 5px;
+			background: rgba(22, 155, 213, 1);
+		}
+
+		.el-input--medium {
+			width: 100px;
+		}
+
+		.el-input {
+			width: 100px;
+		}
+
+		.weight span {
+			padding: 0 5px;
+		}
+	</style>
+</head>
+
+<body class="userPublish">
+	<%- include ../../headerbar.ejs %>
+
+	<%- include ../../header.ejs %>
+
+	<%- include ../userHeaderNav.ejs %>
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+				<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="appList" id="bigbox">
+				<button class="btn1" @click="addAppint()">添加指定地区运费</button>
+				<div class="appointList">
+					<el-table :data="tableData" style="width: 100%">
+						<el-table-column prop="region" label="指定地区" width="180">
+						</el-table-column>
+						<el-table-column prop="regionStartWeight" label="单件/重量" width="180">
+						</el-table-column>
+						<el-table-column prop="regionStartPrice" label="单价">
+						</el-table-column>
+						<el-table-column prop="regionRenewWeight" label="增加单间/重量">
+						</el-table-column>
+						<el-table-column prop="regionRenewPrice" label="增加单价">
+						</el-table-column>
+						<el-table-column label="操作" align="center" fixed="right">
+							<template slot-scope="scope">
+								<el-button size="mini" @click="isedit(scope.$index, scope.row)">编辑</el-button>
+								<el-button @click.native.prevent="deletes(scope.$index, scope.row,tableData)" type="danger"
+									size="small">删除</el-button>
+							</template>
+						</el-table-column>
+					</el-table>
+				</div>
+				<div class="detail" v-show="shows">
+					<span @click="qux" class="qux">X</span>
+					<div class="details">
+						<div class="address" v-show="addshow">
+							<h1>选择指定地区</h1>
+							<div class="region">
+								<p v-for="(item,index) in isData"><input type="checkbox" :value="item.regionName"
+										v-model="region" />{{item.regionName}}</p>
+							</div>
+							<div class="bottom">
+								<input class="button success" value="确认" type="button" @click="cg">
+							</div>
+						</div>
+						<div class="named">
+							<div class="named_name">
+								<div class="items">
+									<span @click="edit">添加指定区域运费</span>
+								</div>
+								<div class="dz">
+									<p v-for="item in region">{{item}}</p>
+								</div>
+							</div>
+							<div class="weights weight">
+								<el-input v-model="listQuery.regionStartWeight"></el-input><span>件/g内</span>
+								<el-input v-model="listQuery.regionStartPrice"></el-input><span>元；每增加</span>
+								<el-input v-model="listQuery.regionRenewWeight"></el-input>
+								<span>件/g,运费增加</span>
+								<el-input v-model="listQuery.regionRenewPrice"></el-input><span>元</span>
+							</div>
+							<button class="btn" @click="yes">保存</button>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="detail" v-show="isshows">
+					<span @click="qux" class="qux">X</span>
+					<div class="details">
+						<div class="address" v-show="addshow">
+							<h1>选择指定地区</h1>
+							<div class="region">
+								<p v-for="(item,index) in isData"><input type="checkbox" :value="item.regionName"
+										v-model="region" />{{item.regionName}}</p>
+							</div>
+							<div class="bottom">
+								<input class="button success" value="确认" type="button" @click="cg">
+							</div>
+						</div>
+						<div class="named">
+							<div class="named_name">
+								<div class="items">
+									<span @click="edit">添加指定区域运费</span>
+								</div>
+								<div class="dz">
+									<p v-for="item in region">{{item}}</p>
+								</div>
+							</div>
+							<div class="weights weight">
+								<el-input v-model="listQuery.regionStartWeight"></el-input><span>件/g内</span>
+								<el-input v-model="listQuery.regionStartPrice"></el-input><span>元；每增加</span>
+								<el-input v-model="listQuery.regionRenewWeight"></el-input>
+								<span>件/g,运费增加</span>
+								<el-input v-model="listQuery.regionRenewPrice"></el-input><span>元</span>
+							</div>
+							<button class="btn" @click="baoc">保存</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var routerVm = new Vue({
+		el: '#bigbox',
+		data() {
+			return {
+				shows: false,
+				tableData: [],
+				region: [],
+				isshows: false,
+				isData: '',
+				addshow: false,
+				isShow: false,
+				regionAll: '',
+				isid: '',
+				listQuery: {
+					regionStartWeight: '',
+					regionStartPrice: '',
+					regionRenewWeight: '',
+					regionRenewPrice: ''
+				},
+				isaddress: 0,
+			}
+		},
+		created() {
+			this.listregion()
+		},
+		computed: {
+			getTitle() {
+				let res = location.href.split('/')
+				return unescape(res[res.length - 1].split('?')[1].split('=')[1])
+			}
+		},
+		methods: {
+			isedit(index, row) {
+				var _this = this;
+				this.isshows = true;
+				_this.isid = row.id;
+				$.ajax({
+					type: "get",
+					url: `/admin/freightAppoint/selectAppointFreightById?id=${row.id}`,
+					contentType: 'application/json;charset=utf-8',
+					headers: {
+						'Authorization': utils.getCookie("token")
+					},
+					success(data) {
+						_this.region = data.data.region.split(',');
+						_this.listQuery.regionStartWeight = data.data.regionStartWeight;
+						_this.listQuery.regionStartPrice = data.data.regionStartPrice;
+						_this.listQuery.regionRenewWeight = data.data.regionRenewWeight;
+						_this.listQuery.regionRenewPrice = data.data.regionRenewPrice;
+					}
+				})
+			},
+			deletes(index, row, data) {
+				$.ajax({
+					type: "get",
+					url: `/admin/freightAppoint/delAppointFreightById?id=${row.id}`,
+					contentType: 'application/json;charset=utf-8',
+					headers: {
+						'Authorization': utils.getCookie("token")
+					},
+					success(data) {
+						data.splice(index, 1);
+					}
+				});
+			},
+			addAppint(index) {
+				this.shows = true;
+			},
+			qux() {
+				this.shows = false;
+				this.isshows = false;
+				this.addshow = false;
+				this.listQuery.regionStartWeight = ''
+				this.listQuery.regionStartPrice = ''
+				this.listQuery.regionRenewWeight = ''
+				this.listQuery.regionRenewPrice = ''
+				this.region = [];
+			},
+			edit() {
+				var _this = this;
+				_this.addshow = true;
+			},
+			listregion() {
+				var _this = this;
+				$.ajax({
+					type: 'get',
+					url: '/admin/freight/getRegionById/0',
+					contentType: 'application/json;charset=utf-8',
+					headers: {
+						'Authorization': utils.getCookie("token")
+					},
+					success(res) {
+						_this.isData = res.data;
+					}
+				})
+				$.ajax({
+					type: "get",
+					url: `/admin/freightAppoint/page?id=${_this.getTitle}`,
+					contentType: 'application/json;charset=utf-8',
+					headers: {
+						'Authorization': utils.getCookie("token")
+					},
+					success(data) {
+						_this.tableData = data.data;
+					}
+				});
+			},
+			cg() {
+				var _this = this;
+				if (_this.region == '') {
+					alert('请选择指定地区')
+				} else {
+					_this.addshow = false;
+				}
+			},
+			yes() {
+				this.regionAll = this.region.join(',');
+				var _this = this;
+				$.ajax({
+					type: "post",
+					url: `/admin/freightAppoint/addAppointFreight?region=${this.regionAll}&regionStartWeight=${this.listQuery.regionStartWeight}&regionStartPrice=${this.listQuery.regionStartPrice}&regionRenewWeight=${this.listQuery.regionRenewWeight}&regionRenewPrice=${this.listQuery.regionRenewPrice}&fid=${this.getTitle}`,
+					contentType: 'application/json;charset=utf-8',
+					headers: {
+						'Authorization': utils.getCookie("token")
+					},
+					success(data) {
+						if (_this.listQuery.regionStartWeight == '' || _this.listQuery.regionStartPrice == '' || _this
+							.listQuery.regionRenewWeight == '' || _this.listQuery.regionRenewPrice == '') {
+							alert('输入框不可为空，请全部填写');
+						} else {
+							if (data.msg === '成功') {
+								this.shows = false;
+								this.region = [];
+								//this.$router.go(0);
+								location.reload()
+							} else {
+								alert('提交失败，请重试')
+							}
+						}
+					}
+				});
+			},
+			baoc() {
+				this.regionAll = this.region.join(',');
+				var _this = this;
+				$.ajax({
+					type: "post",
+					url: `/admin/freightAppoint/updateAppointFreight?region=${this.regionAll}&regionStartWeight=${this.listQuery.regionStartWeight}&regionStartPrice=${this.listQuery.regionStartPrice}&regionRenewWeight=${this.listQuery.regionRenewWeight}&regionRenewPrice=${this.listQuery.regionRenewPrice}&id=${this.isid}&fid=${this.getTitle}`,
+					contentType: 'application/json;charset=utf-8',
+					headers: {
+						'Authorization': utils.getCookie("token")
+					},
+					success(data) {
+						if (_this.listQuery.regionStartWeight == '' || _this.listQuery.regionStartPrice == '' || _this
+							.listQuery.regionRenewWeight == '' || _this.listQuery.regionRenewPrice == '') {
+							alert('输入框不可为空，请全部填写');
+						} else {
+							if (data.msg === '成功') {
+								this.isshows = false;
+								//this.$router.go(0);
+								location.reload()
+							} else {
+								alert('提交失败，请重试')
+							}
+						}
+					}
+				});
+			}
+		}
+	})
+</script>
+
+</html>

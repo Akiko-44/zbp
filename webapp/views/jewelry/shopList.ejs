@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style type="text/css">
+		.jewelry-shopList .navWrap {
+			margin: 20px auto;
+			font-size: 0;
+		}
+
+		.jewelry-shopList .navWrap li {
+			display: inline-block;
+			padding: 0 30px;
+			color: #585858;
+			font-size: 14px;
+			line-height: 41px;
+			border: 1px solid #aaaaaa;
+			cursor: pointer;
+		}
+
+		.jewelry-shopList .navWrap li.cur {
+			background: #DF735A;
+			color: #fff;
+			border: 1px solid #DF735A;
+		}
+
+		.jewelry-shopList .shop-list li {
+			display: inline-block;
+			width: 285px;
+			height: 241px;
+			background: #FFFFFF;
+			margin-right: 20px;
+			margin-bottom: 20px;
+			cursor: pointer;
+		}
+
+		.jewelry-shopList .shop-list li:nth-child(4n+0) {
+			margin-right: 0;
+		}
+
+		.jewelry-shopList .shop-list li img {}
+
+		.jewelry-shopList .shop-list .shop-info {
+			padding: 15px;
+			font-size: 12px;
+			color: #999999;
+		}
+
+		.jewelry-shopList .shop-list .merchant-name {
+			font-size: 14px;
+			color: #666666;
+		}
+
+		.jewelry-shopList .shop-list .merchant-cat {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding: 10px 0;
+		}
+
+		.jewelry-shopList .shop-list .addr {
+			overflow: hidden;
+			margin-top: 10px;
+		}
+
+		.jewelry-shopList .shop-list .addr img {
+			vertical-align: text-bottom;
+			margin: 0 5px;
+		}
+
+		.jewelry-shopList .shop-msg {
+			padding-top: 10px;
+			margin-left: 10px;
+		}
+
+		.jewelry-shopList .shop-msg h2 {
+			font-weight: bolder;
+		}
+
+		.jewelry-shopList .shop-msg p {
+			margin-top: 15px;
+		}
+
+		.jewelry-shopList .recommend span {
+			color: #666666;
+			font-size: 16px;
+			padding: 5px;
+		}
+
+		.jewelry-shopList .recommend a {
+			display: inline-block;
+			margin-left: 20px;
+		}
+
+		.jewelry-shopList .exchangeSearch>table span {
+			display: inline-block;
+			padding: 6px 10px;
+			vertical-align: center;
+		}
+
+		.jewelry-shopList .exchangeSearch>table span.curs {
+			cursor: pointer;
+		}
+
+		.exchangeSearch>table td {
+			vertical-align: middle
+		}
+
+		/* .jewelry-shopList .exchangeSearch>table td.down-more {
+			padding-left: 0;
+		}
+
+		.jewelry-shopList .exchangeSearch>table .down-more span {
+			display: inline-block;
+			padding: 0;
+			width: 53px;
+			height: 24px;
+			line-height: 24px;
+			text-align: center;
+			background: #EAEBF0;
+			color: #666666;
+			cursor: pointer;
+		}
+
+		.jewelry-shopList .exchangeSearch>table td.brand-list {
+			padding: 15px 0;
+		}
+
+		.jewelry-shopList .brand-list ul {
+			min-height: 26px;
+			height: 52px;
+			overflow: hidden;
+		}
+
+		.jewelry-shopList .brand-list ul.min-height {
+			height: 52px;
+		}
+
+		.jewelry-shopList .brand-list ul.opened {
+			height: auto;
+		} */
+
+		.jewelry-shopList .brand-list li {
+			display: inline-block;
+			cursor: pointer;
+		}
+
+		.jewelry-shopList .curs.cur,
+		.jewelry-shopList .brand-list li.cur {
+			background: #DF735A;
+			color: white;
+		}
+
+		.jewelry-shopList .sale-sort {
+			display: inline-block;
+			width: 11px;
+			height: 28px;
+			position: relative;
+			vertical-align: text-bottom;
+		}
+
+		.jewelry-shopList .sale-sort a {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-left: 5px solid transparent;
+			border-right: 6px solid transparent;
+			border-radius: 3px;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			position: absolute;
+			left: 5px;
+			top: 17px;
+			cursor: pointer;
+		}
+
+		.jewelry-shopList .sale-sort a.ascendinga {
+			border-bottom-width: 6px;
+			border-bottom-style: solid;
+			border-bottom-color: #999999;
+			top: 12px;
+		}
+
+		.jewelry-shopList .ascendinga-active {
+			border-bottom-color: #FFFFFF !important;
+		}
+
+		/* .jewelry-shopList .sale-sort a.descending{
+	    border-top-width: 6px;
+	    border-top-style: solid;
+	    border-top-color: #999999;
+	    top: 20px;
+	  }
+	  .jewelry-shopList .descending-active{
+	  	border-top-color: #FFFFFF!important;
+	  } */
+		.jewelry-shopList .descending {
+			border-top-width: 6px;
+			border-top-style: solid;
+			border-top-color: #999999;
+			top: 20px;
+		}
+
+		.jewelry-shopList .descending.descending-opposite {
+			transform: rotate(180deg)
+		}
+
+		.cur span a.descending,
+		.cur span a.descending-opposite {
+			border-top-color: #ffffff;
+		}
+
+		.jewelry-shopList .no-result {
+			position: relative;
+			margin: 30px auto;
+		}
+
+		.jewelry-shopList .no-result p {
+			position: absolute;
+			bottom: 40px;
+			margin-left: -60px;
+			left: 50%;
+			font-size: 24px;
+			color: #525252;
+		}
+
+		#search {
+			width: 100%;
+			background: #FFFFFF;
+			font-size: 14px;
+		}
+
+		#search tr {
+			height: 40px;
+			border-top: 1px solid #E5E5E5;
+		}
+
+		#search td {
+			color: #585858;
+			padding: 6px 18px;
+		}
+
+		#search tr td:nth-child(1) {
+			width: 70px;
+			font-weight: bold;
+			text-align: left;
+			border-right: 1px solid #e5e5e5;
+			color: #333;
+		}
+
+		#search tr td:nth-child(2) {
+			background: #FFFFFF;
+		}
+
+		#search ul li {
+			margin-right: 20px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body class="jewelry-shopList">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include ../headerNav.ejs %>
+	<div class="container">
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item><a href="../../">首页</a></el-breadcrumb-item>
+					<el-breadcrumb-item><a href="../../jewelry/index">去哪儿买</a></el-breadcrumb-item>
+					<el-breadcrumb-item>品牌列表</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+	</div>
+	<div class="container" id="main" v-cloak>
+		<div class="container exchangeSearch" id="search">
+			<table style="background: #FFFFFF;">
+				<tr v-if="filterObj.brand && filterObj.brand.length">
+					<td width="70"><label>品牌</label></td>
+					<!-- <td width="90">
+						<span data-id="" class="curs cur" @click="searchByBrand('', $event)">全部</span>
+					</td> -->
+					<td class="brand-list">
+						<ul :class="isOpened?'opened':''">
+							<li :class="form.brandId == '' ? 'cur' : ''" @click="searchByBrand('', $event)">
+								<span>全部</span>
+							</li>
+							<li v-for="item in filterObj.brand" :data-id="item.id" @click="searchByBrand(item.id, $event)"
+								:class="item.id==form.brandId ? 'cur' : ''">
+								<span>{{item.brandName}}</span></li>
+						</ul>
+					</td>
+					<!-- <td class="down-more" id="downMore" width="53"><span @click="open">更多<img
+								src="../../src/img/common/down-more.png" alt="" /></span></td> -->
+				</tr>
+				<tr v-if="filterObj.category && filterObj.category.length">
+					<td width="70"><label>分类</label></td>
+					<!-- <td width="90">
+						<span data-id="" class="curs cur" @click="searchByCategory('', $event)">全部</span>
+					</td> -->
+					<td class="brand-list">
+						<ul :class="isOpened?'opened':''">
+							<li :class="form.categoryId == '' ? 'cur' : ''" @click="searchByCategory('', $event)">
+								<span>全部</span>
+							</li>
+							<li v-for="item in filterObj.category" :data-id="item.id" @click="searchByCategory(item.id, $event)"
+								:class="item.id==form.categoryId ? 'cur' : ''">
+								<span>{{item.catName}}</span></li>
+						</ul>
+					</td>
+					<!-- <td class="down-more" id="downMore" width="53"><span @click="open">更多<img
+								src="../../src/img/common/down-more.png" alt="" /></span></td> -->
+				</tr>
+				<tr v-if="filterObj.region && filterObj.region.length">
+					<td width="70"><label>省份</label></td>
+					<!-- <td width="90">
+						<span data-id="" class="curs cur" @click="searchByProvice('', $event, '', '')">全部</span>
+					</td> -->
+					<td class="brand-list">
+						<ul :class="isOpened?'opened':''">
+							<li :class="form.provice == '' ? 'cur' : ''" @click="searchByProvice('', $event, '', '')">
+								<span>全部</span>
+							</li>
+							<li v-for="item in filterObj.region" :data-id="item.id"
+								@click="searchByProvice(item.regionName, $event, item, item.regionId)"
+								:class="item.regionName==form.provice ? 'cur' : ''">
+								<span>{{item.regionName}}</span></li>
+						</ul>
+					</td>
+					<!-- <td class="down-more" id="downMore" width="53"><span @click="open">更多<img
+								src="../../src/img/common/down-more.png" alt="" /></span></td> -->
+				</tr>
+				<tr v-if="cityList && cityList.length">
+					<td width="70"><label>城市</label></td>
+					<!-- <td width="90">
+						<span data-id="" class="curs cur" @click="searchByCity('', $event)">全部</span>
+					</td> -->
+					<td class="brand-list">
+						<ul :class="isOpened?'opened':''">
+							<li :class="form.city == '' ? 'cur' : ''" @click="searchByCity('', $event)">
+								<span>全部</span>
+							</li>
+							<li v-for="item in cityList" :data-id="item.id" @click="searchByCity(item.regionName, $event)"
+								:class="item.regionName==form.city ? 'cur' : ''">
+								<span>{{item.regionName}}</span></li>
+						</ul>
+					</td>
+					<!-- <td class="down-more" id="downMore" width="53"><span @click="open">更多<img
+								src="../../src/img/common/down-more.png" alt="" /></span></td> -->
+				</tr>
+			</table>
+		</div>
+		<input type="hidden" name="type" value="" />
+		<ul class="navWrap clearfix">
+			<li :class="{'cur': !form.goodsSort}" @click="search('')">
+				<div>综合排序</div>
+			</li>
+			<li :class="{'cur': form.goodsSort}" @click="search(2)">
+				<div>销量
+					<span class="sale-sort">
+						<a class="descending-opposite" :class="{'': form.goodsSort == 1}" title="销量升序排列"></a>
+						<a class="descending" :class="{'descending-opposite': form.goodsSort == 2}" title="销量降序排列"></a>
+						<!-- <a class="ascendinga" :class="form.goodsSort == 1 ? 'ascendinga-active': ''" title="销量升序排列"></a>
+						<a class="descending" :class="form.goodsSort == 2 ? 'descending-active': ''" title="销量降序排列"></a> -->
+					</span>
+				</div>
+			</li>
+		</ul>
+		<ul class="shop-list" v-if="data.records && data.records.length">
+			<li v-for="item in data.records" @click="toMerchantDetail(item.merchantId)">
+				<img :src="item.backgroundImg ? item.backgroundImg :  item.merchantLogo" width="100%" height="140" />
+				<div class="shop-info">
+					<p class="merchant-name">{{item.merchantName}}</p>
+					<p class="merchant-cat">主营：
+						<template v-if="item.merchantCategoryList && item.merchantCategoryList.length">
+							<span v-for="(category, i) in item.merchantCategoryList">
+								{{category}}<template v-if="i < item.merchantCategoryList.length-1">，</template>
+							</span>等
+						</template>
+					</p>
+					<div class="addr">
+						<span class="fl"><img src="../../src/img/common/icon-location.png" width="11" />{{item.merchantAddr}}</span>
+						<span class="fr"><img src="../../src/img/common/icon-sellnum.png" width="16" />{{item.sellingNum}}</span>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div v-else class="tc no-result">
+			<img src="../../src/img/common/no-result.png" alt="" />
+			<p>搜索无结果</p>
+		</div>
+		<div class="tr" style="margin-top: 30px;" v-show="listPages > 1">
+			<div id="pagination" class="pagination"></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var routerVm = new Vue({
+			el: "#router"
+		});
+		var mainVm = new Vue({
+			el: '#main',
+			data: {
+				isGoodsSort: false,
+				isOpened: false,
+				brandList: [],
+				listPages: 0,
+				filterObj: {},
+				cityList: [],
+				form: {
+					offset: 1,
+					limit: 20,
+					goodsSort: '',
+					brandId: '',
+					categoryId: '',
+					provice: '',
+					city: ''
+				},
+				data: {}
+			},
+			mounted: function () {
+				this.render(1)
+				this.getFilterList()
+				window.onload = function () {
+					var ulHeight = $('.jewelry-shopList .brand-list ul').height();
+					if (ulHeight > 52) {
+						$('.jewelry-shopList .brand-list ul').addClass('min-height');
+					} else {
+						$('.down-more').addClass('hidden')
+					}
+				}
+			},
+			methods: {
+				getBrandList() {
+					var self = this;
+					utils.ajax({
+						type: "get",
+						url: "/api/homePage/showBrand/1",
+						success: function (res) {
+							self.brandList = res.data;
+						}
+					});
+				},
+				getFilterList() {
+					var self = this;
+					utils.ajax({
+						type: "get",
+						data: self.form,
+						url: "/app/search/getMerchantFilter",
+						success: function (res) {
+							self.filterObj = res.data;
+						}
+					});
+				},
+				render(page) {
+					var self = this;
+					self.form.offset = page || 1
+					utils.ajax({
+						type: "get",
+						url: "/app/search//jewelryMerchant",
+						data: self.form,
+						success: function (res) {
+							self.data = res.data;
+							self.listPages = res.data.pages
+							if (self.form.offset == 1) {
+								$("#pagination").pagination({
+									pageCount: res.data.pages,
+									jump: true,
+									coping: true,
+									current: res.data.current,
+									prevContent: '上一页',
+									nextContent: '下一页',
+									callback: function (api) {
+										self.render(api.getCurrent())
+									}
+								})
+							}
+						}
+					});
+				},
+				toMerchantDetail(merchantId) {
+					window.location.href = 'shopSearch?id=' + merchantId;
+				},
+				searchByBrand(brandId, e) {
+					if (brandId) {
+						this.form.brandId = brandId
+					} else {
+						this.form.brandId = ''
+					}
+					// $('#search .cur').removeClass('cur');
+					// let $target = e.currentTarget
+					// $target.classList.add("cur")
+					this.getFilterList()
+					this.render(1)
+				},
+				searchByCategory(categoryId, e) {
+					if (categoryId) {
+						this.form.categoryId = categoryId
+					} else {
+						this.form.categoryId = ''
+					}
+					this.getFilterList()
+					this.render(1)
+				},
+				searchByProvice(provice, e, item, proviceId) {
+					if (provice) {
+						this.form.provice = provice
+					} else {
+						this.form.provice = ''
+					}
+					this.filterObj.region.map(item => {
+						if (item.children && item.children.length && item.children[0].parentId == proviceId) {
+							this.cityList = item.children
+						}
+					})
+					this.getFilterList()
+					this.render(1)
+				},
+				searchByCity(city, e) {
+					if (city) {
+						this.form.city = city
+					} else {
+						this.form.city = ''
+					}
+					this.getFilterList()
+					this.render(1)
+				},
+				search(goodsSort) {
+					if (goodsSort) {
+						this.isGoodsSort = !this.isGoodsSort
+						if (this.isGoodsSort) {
+							this.form.goodsSort = goodsSort == 2 ? 2 : 1
+						} else {
+							this.form.goodsSort = goodsSort == 2 ? 1 : 2
+						}
+					} else {
+						this.form.goodsSort = ''
+					}
+					this.getFilterList()
+					this.render(1)
+				},
+				open() {
+					this.isOpened = !this.isOpened
+				}
+			}
+		})
+	</script>
+	<%- include ../footer.ejs %>
+</body>
+
+</html>

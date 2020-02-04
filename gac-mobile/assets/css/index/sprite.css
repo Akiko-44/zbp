@@ -1,0 +1,20 @@
+[class*="icoindex-"] { background: url(~/assets/images/icoindex_sprite.png) no-repeat; background-size: 273px 256px;  display:inline-block;vertical-align:middle;}
+.icoindex-btn-bg { width: 111px; height: 37px; background-position: 0px 0px; }
+.icoindex-design { width: 51px; height: 51px; background-position: 0px -158px; }
+.icoindex-designer { width: 41px; height: 41px; background-position: 0px -216px; }
+.icoindex-doubt { width: 41px; height: 41px; background-position: -232px -142px; }
+.icoindex-exhibit { width: 51px; height: 51px; background-position: 0px -101px; }
+.icoindex-exhibition { width: 41px; height: 41px; background-position: -232px -47px; }
+.icoindex-foundry { width: 41px; height: 41px; background-position: -232px 0px; }
+.icoindex-gold { width: 41px; height: 41px; background-position: -162px -158px; }
+.icoindex-graphic { width: 51px; height: 51px; background-position: -175px -57px; }
+.icoindex-information { width: 41px; height: 41px; background-position: -47px -216px; }
+.icoindex-jewelry { width: 51px; height: 51px; background-position: -57px -158px; }
+.icoindex-live { width: 41px; height: 41px; background-position: -115px -158px; }
+.icoindex-live1 { width: 51px; height: 51px; background-position: -175px 0px; }
+.icoindex-my { width: 51px; height: 51px; background-position: -115px -101px; }
+.icoindex-news { width: 51px; height: 51px; background-position: -57px -101px; }
+.icoindex-prefecture { width: 41px; height: 41px; background-position: -232px -95px; }
+.icoindex-produce { width: 51px; height: 51px; background-position: -117px 0px; }
+.icoindex-service { width: 51px; height: 51px; background-position: -57px -43px; }
+.icoindex-swap { width: 51px; height: 51px; background-position: 0px -43px; }

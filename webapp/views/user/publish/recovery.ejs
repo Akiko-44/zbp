@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<script src="../../src/js/plugin/tinymce4.7.5/tinymce.min.js"></script>
+</head>
+<body class="userPublish">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div class="panel userPanel">
+					<div class="panel-header">
+						<h3 class="panel-title">回收信息发布</h3>
+					</div>
+					<div class="panel-body">
+						<form id="publishForm">
+							<input type="hidden" name="id" v-if="id!=''" :value="id">
+							<table>
+								<tr>
+									<td valign="top" width="100"><b class="red">*</b><label>回收标题</label></td>
+									<td colspan="3">
+										<div>
+											<input type="text" 
+											name="recycleName" 
+											datatype="*1-30" 
+											nullmsg="请输入商品名称" 
+											maxlength="30" 
+											errormsg="商品名称不能为空" 
+											style="width: 310px;" :value="recycleName">
+										</div>
+										<p class="Validform_checktip"></p>
+									</td>
+								</tr>
+								<tr>
+									<td valign="top"><b class="red">*</b><label>标题图片</label></td>
+									<td colspan="3">
+										<div class="clearfix">
+											<div class="fl img2 clearfix">
+												<a v-if="imgUrl!=''" :data-name="imgUrl"><img :src="imgUrl | formatImg"></a>
+											</div>
+											<div class="fl uploadbox triggerFile" data-target="img2">
+												
+											</div>
+										</div>
+										<p class="Validform_checktip">图片建议尺寸600*600，分辨率为1:1，大小不超过2M</p>
+									</td>
+								</tr>
+								<tr>
+									<td valign="top"><b class="red">*</b><label>回收品类</label></td>
+									<td width="155" class="type1">
+										<div>
+											<select name="categoryId1"></select>
+										</div>
+										<p class="Validform_checktip"></p>
+									</td>
+									<td width="155" class="type2">
+										<div>
+											<select name="categoryId2"></select>
+										</div>
+										<p class="Validform_checktip"></p>
+									</td>
+									<td valign="top" class="type3">
+										<div>
+											<select name="categoryId3"></select>
+										</div>
+										<p class="Validform_checktip"></p>
+									</td>
+								</tr>
+								<tr>
+									<td valign="top"><b class="red">*</b><label>所在城市</label></td>
+									<td width="155">
+										<div>
+											<select name="provinceId" 
+											datatype="*" 
+											nullmsg="请选择所在地" 
+											errormsg="请选择所在地">
+												<option v-for="item in province" :value="item.regionId">{{item.regionName}}</option>
+											</select>
+										</div>
+										<p class="Validform_checktip"></p>
+									</td>
+									<td width="155">
+										<div>
+											<select name="cityId" datatype="*" 
+											nullmsg="请选择所在地" 
+											errormsg="请选择所在地">
+												<option v-for="item in city" :value="item.regionId">{{item.regionName}}</option>
+											</select>
+										</div>
+										<p class="Validform_checktip"></p>
+									</td>
+									<td valign="top">
+										
+									</td>
+								</tr>
+								<tr>
+									<td valign="top"><b class="red">*</b><label>回收描述</label></td>
+									<td colspan="3">
+										<div class="tinymce-container editor-container">
+											<div class="editor-custom-btn-container">
+      											<a class="btn btn-primary triggerFile" data-target="tinymce">上传图片</a>
+   											</div>
+											<textarea id="tinymce" class="tinymce-textarea">请具体描述您需要回收的信息内容</textarea>
+										</div>
+										<p class="Validform_checktip"></p>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td colspan="3">
+										<a class="btn btn-warning" id="saveBtn" v-if="id==''" v-on:click="save">立即发布</a>
+										<a class="btn btn-warning" id="editBtn" v-if="id!=''" v-on:click="save">保存</a>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../userFooter.ejs %>
+
+<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+     <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+</form>	
+
+<%- include ../../exchange/commonJs.ejs %>
+<script>
+$(".userLeftNav .userSubNav li:eq(3)").addClass("cur");
+
+var routerVm = new Vue({
+	el: "#router"
+})
+
+window.target = "";
+var publishVm = new Vue({
+	el: "#publishForm",
+	data: {
+		id: "",
+		recycleName: "",
+		imgUrl: "",
+		recycleDesc: "",
+		provinceId: "",
+		cityId: "",
+		categoryId: "",
+		
+		province: [],
+		city: [],
+	},
+	mounted: function(){
+		var self = this;
+		self.initTinymce();
+		
+		self.detail(function(){
+			
+			
+			//类别
+			getCategory(0, function(data){
+				var html ="";
+				for(var i=0;i<data.length;i++){
+					html += '<option value="'+data[i].id+'">'+data[i].catName+'</option>'
+				}
+				$("[name='categoryId1']").html(html);
+				if(!!self.id){
+					
+				}else{
+					setTimeout(function(){
+						$("[name='categoryId1']").trigger("change");
+					},100)
+				}
+			})
+			
+			//地址
+			utils.ajax({
+				url: "/admin/region/list/0",
+				type:"get",
+				async: false,
+				success: function(data){
+					data = data.data;
+					self.province = data;
+					if(!!self.id){
+						$("[name='provinceId']").val(self.provinceId)
+						setTimeout(function(){
+							$("[name='provinceId']").trigger("change")
+							setTimeout(function(){
+								$("[name='cityId']").val(self.cityId)
+							}, 100)
+						}, 100)
+						
+					}else{
+						setTimeout(function(){
+							$("[name='provinceId']").trigger("change")
+						}, 100)
+					}
+					
+				}
+			})
+			
+			window.validform = $("#publishForm").Validform({
+				tiptype: 2
+			})
+			$.Tipmsg.r = "";
+			
+		})
+		
+		
+	},
+	methods: {
+		detail: function(callback){
+			//编辑
+			var self = this;
+			var id = utils.getUrlParam("id");
+			if(!!id){
+				self.id = id;
+				utils.ajax({
+					url: "/api/swap/user/goods/recycle/info/" + id,
+					type: "get",
+					success: function(data){
+						data = data.data;
+						self.recycleName = data.recycleName
+						self.imgUrl = data.imgUrl;
+						self.recycleDesc = data.recycleDesc;
+						self.provinceId = data.provinceId
+						self.cityId = data.cityId
+						self.categoryId = data.categoryId
+						callback && callback();
+					}
+				})
+			}else{
+				callback && callback();
+			}
+		},
+		save: function(){
+			var self = this;
+			if(validform.check(false)){
+				
+				if($(".img2 a").length == 0){
+					utils.alert("info", "请上传图片");
+					return;
+				}
+				
+				var str = $("#publishForm").serialize();
+				str = utils.str2json(str);
+				
+				str.imgUrl = $(".img2 a").attr("data-name");
+				
+				if(!!$("[name='categoryId3']").val()){
+					str.categoryId = $("[name='categoryId3']").val()
+				}else if(!!$("[name='categoryId2']").val()){
+					str.categoryId = $("[name='categoryId2']").val()
+				}else{
+					str.categoryId = $("[name='categoryId1']").val()
+				}
+				
+				str.src = 1;
+				
+				str.provinceName = $("[name='provinceId'] option:selected").text()
+				str.cityName = $("[name='cityId'] option:selected").text()
+				str.recycleDesc = self.getContent();
+				if(str.recycleDesc.length > 10000){
+					utils.alert("info", "描述内容过长");
+					return;
+				}
+				
+				utils.ajax({
+					url: "/api/swap/user/goods/recycle/save",
+					data: JSON.stringify(str),
+					success: function(data){
+						if(data.success){
+							utils.alert("success", "操作成功");
+							setTimeout(function(){
+								location.href = "recovery_list"
+							}, 2000)
+						}else{
+							utils.alert("danger", data.msg);
+						}
+					}
+				})
+				
+			}
+		},
+		initTinymce: function(){
+	    	var _this = this
+		    window.tinymce.init({
+		        language: "zh_CN",
+		        selector: "#tinymce",
+		        height: 500,
+		        body_class: 'ue-view',
+		        content_css: "../../dist/css/all.css",
+		        object_resizing: false,
+		        toolbar: ['bold italic underline strikethrough alignleft aligncenter alignright outdent indent  blockquote undo redo removeformat subscript superscript code codesample', 'hr bullist numlist link image charmap preview anchor pagebreak insertdatetime media table emoticons forecolor backcolor'],
+		        menubar: {
+		        	
+		      	},
+		        plugins: ['advlist anchor autolink autosave code codesample colorpicker colorpicker contextmenu directionality emoticons fullscreen hr image imagetools importcss insertdatetime link lists media nonbreaking noneditable pagebreak paste preview print save searchreplace spellchecker tabfocus table template textcolor textpattern visualblocks visualchars wordcount'],
+		        end_container_on_empty_block: true,
+		        powerpaste_word_import: 'clean',
+		        code_dialog_height: 450,
+		        code_dialog_width: 1000,
+		        advlist_bullet_styles: 'square',
+		        advlist_number_styles: 'default',
+		        imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
+		        default_link_target: '_blank',
+		        link_title: false,
+		        nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
+		        init_instance_callback: editor => {
+		        	
+		        },
+		        setup(editor) {
+		          	editor.on('FullscreenStateChanged', function(e){
+		        	 	_this.fullscreen = e.state
+		          	})
+		        }
+		    })
+		},
+		setContent: function(value){
+		    window.tinymce.activeEditor.setContent(value)
+		},
+		getContent: function(){
+			return window.tinymce.get("tinymce").getContent()
+		},
+		imageSuccessCBK: function(url){
+			window.tinymce.activeEditor.insertContent('<img class="wscnph" src="'+url+'" >')
+		}
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	}
+})
+$(function(){
+	
+	$(document).on("click", ".triggerFile", function(e){
+		var t = $(e.currentTarget).attr("data-target");
+		target = t;
+		$("#form1 input").trigger("click");
+	}).on("change", "[name='categoryId1']", function(e){
+		var id = $(this).val();
+		getCategory(id, function(data){
+			var html ="";
+			for(var i=0;i<data.length;i++){
+				html += '<option value="'+data[i].id+'">'+data[i].catName+'</option>'
+			}
+			$("[name='categoryId2']").html(html);
+		})
+		
+	}).on("change", "[name='categoryId2']", function(e){
+		var id = $(this).val();
+		getCategory(id, function(data){
+			var html ="";
+			for(var i=0;i<data.length;i++){
+				html += '<option value="'+data[i].id+'">'+data[i].catName+'</option>'
+			}
+			$("[name='categoryId3']").html(html);
+		})
+		
+	}).on("change", "[name='provinceId']", function(){
+		var val = $(this).val();
+		utils.ajax({
+			url: "/admin/region/list/" + val,
+			type:"get",
+			async:false,
+			success: function(data){
+				data = data.data;
+				publishVm.city = data
+			}
+		})
+	}).on("click", ".delImgBtn", function(e){
+		var self = $(e.currentTarget);
+		var name = self.parent().parent("div").remove()
+	})
+	
+})
+//商品图片上传
+function uploadGoodsImg(self){
+	if(self.files && self.files[0]){
+		var file = self.files[0]
+		if(file.size > 2*1024*1024){
+			utils.alert("info", "图片大小不能超过2M");
+			return;
+		}
+		if(target=="img2"){
+			var reader = new FileReader();
+	      	reader.onload = function(e) {
+	      		var data = e.target.result;
+	      		//加载图片获取图片真实宽度和高度
+	      		var image = new Image();
+	      		image.onload=function(){
+		      		var width = image.width;
+		      		var height = image.height;
+		      		if(width/height != 1){
+		      			utils.alert("info", "图片分辨率必须为1:1");
+		      		}else{
+		      			uploadCallback(self)
+		      		}
+	      		};
+	      		image.src = data;
+	      	}
+	      	reader.readAsDataURL(self.files[0]);
+		}else{
+			uploadCallback(self)
+		}
+		
+	}
+	
+}
+
+function uploadCallback(self){
+	var uploadFile = new FormData($("#form1")[0]);
+	$.ajax({
+		url:'../../file/upload',
+		type:'POST',
+		data:	uploadFile,
+		async: false,  
+		cache: false, 
+		contentType: false, //不设置内容类型
+		processData: false, //不处理数据
+		success:function(data){
+			if(target=="img2"){
+				$(".img2").html('<a data-name="'+data.name+'"><img src="'+data.data+'"></a>');
+			}else if(target=="tinymce"){
+				publishVm.imageSuccessCBK(data.data);
+			}
+			
+			$("#form1 input").val("");
+		},
+		error:function(){
+			
+		}
+	})
+}
+</script>
+</body>
+</html>
+

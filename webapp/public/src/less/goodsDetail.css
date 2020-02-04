@@ -1,0 +1,856 @@
+.font-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.jewelry-details {
+  background: #F2F2F2;
+  border-top: 1px solid #E5E5E5;
+  /*���*/
+  /*����*/
+  /*������Ʒ*/
+  /*jqzoom*/
+}
+.jewelry-details .goods-container {
+  overflow: hidden;
+  margin-bottom: 20px;
+  padding-top: 40px;
+  width: 100%;
+  background: #fff;
+}
+.jewelry-details .goods-container .goodsImg {
+  min-height: 590px;
+}
+.jewelry-details .goods-container .img-box {
+  position: relative;
+  width: 418px;
+  z-index: 49;
+}
+.jewelry-details .goods-container .img-box:hover {
+  z-index: 51;
+}
+.jewelry-details .goods-container .small-img {
+  padding: 20px 0 33px 20px;
+}
+.jewelry-details .goods-container .small-img img {
+  margin-right: 19px;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+.jewelry-details .goods-container .small-img img.active {
+  border: 2px solid #FB746E;
+}
+.jewelry-details .goods-container .collect-box {
+  padding-left: 3px;
+}
+.jewelry-details .goods-container .collect-box .collect-item {
+  margin-right: 34px;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+}
+.jewelry-details .goods-container .collect-box .collect-item img {
+  margin-right: 5px;
+  width: 14px;
+  height: 14px;
+}
+.jewelry-details .goods-container .explain {
+  z-index: 50;
+  position: relative;
+  margin-left: 448px;
+  height: 100%;
+}
+.jewelry-details .goods-container .explain .goods-name {
+  line-height: 44px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+.jewelry-details .goods-container .explain .label-item {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 0 6px;
+  line-height: 20px;
+  color: #fff;
+  background: #F4B1A4;
+}
+.jewelry-details .goods-container .explain .price-box {
+  margin-top: 20px;
+  color: #999;
+  font-size: 12px;
+  background: #F2F2F2;
+}
+.jewelry-details .goods-container .explain .price-box .assemble-list {
+  padding: 0 20px 0 16px;
+  line-height: 40px;
+  color: #fff;
+  background: #FB746E;
+}
+.jewelry-details .goods-container .explain .price-box .assemble-list.promoteSale {
+  font-size: 14px;
+}
+.jewelry-details .goods-container .explain .price-box .assemble-list.promoteSale .assemble-titel {
+  display: inline-block;
+  width: 64px;
+  font-size: 12px;
+}
+.jewelry-details .goods-container .explain .price-box .assemble-list.promoteSale .reference-price {
+  font-size: 16px;
+}
+.jewelry-details .goods-container .explain .price-box .assemble-list.promoteSale .count-down {
+  margin-left: 16px;
+}
+.jewelry-details .goods-container .explain .price-box .assemble-list .assemble-titel {
+  font-size: 16px;
+}
+.jewelry-details .goods-container .explain .price-box .price-box-main {
+  position: relative;
+  padding: 10px 15px;
+  line-height: 35px;
+}
+.jewelry-details .goods-container .explain .price-box .oringin-price {
+  text-decoration: line-through;
+}
+.jewelry-details .goods-container .explain .price-box .price-title {
+  display: inline-block;
+  width: 64px;
+}
+.jewelry-details .goods-container .explain .price-box .reference-price {
+  font-size: 14px;
+}
+.jewelry-details .goods-container .explain .price-box .sale-price-box {
+  color: #FB746E;
+  font-size: 18px;
+  font-weight: bold;
+}
+.jewelry-details .goods-container .explain .price-box .sale-price-box .sale-price {
+  font-size: 24px;
+}
+.jewelry-details .goods-container .explain .price-box .committee {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  line-height: 12px;
+  color: #DF735A;
+  font-size: 14px;
+}
+.jewelry-details .goods-container .explain .price-box .committee span {
+  display: inline-block;
+  width: 110px;
+  height: 30px;
+  text-align: right;
+  cursor: pointer;
+}
+.jewelry-details .goods-container .explain .price-box .committee:hover .committee-list,
+.jewelry-details .goods-container .explain .price-box .committee:hover img {
+  display: block;
+}
+.jewelry-details .goods-container .explain .price-box .committee img {
+  display: none;
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  margin-left: -12px;
+  z-index: 1;
+}
+.jewelry-details .goods-container .explain .price-box .committee .committee-list {
+  display: none;
+  position: absolute;
+  overflow-y: scroll;
+  top: 20px;
+  left: 50%;
+  margin-left: -291px;
+  padding: 4px 20px 20px;
+  width: 582px;
+  height: 406px;
+  line-height: 60px;
+  color: #999;
+  border: 2px solid #fb746e;
+  background: #fff;
+}
+.jewelry-details .goods-container .explain .price-box .committee .committee-list .committee-title {
+  color: #333;
+  font-size: 16px;
+}
+.jewelry-details .goods-container .explain .price-box .committee .committee-list .committee-item {
+  border-bottom: 1px solid #e5e5e5;
+}
+.jewelry-details .goods-container .explain .freight-box {
+  line-height: 52px;
+  color: #666;
+  font-size: 14px;
+  border-bottom: 1px solid #E5E5E5;
+}
+.jewelry-details .goods-container .explain .freight-box .freight-title {
+  display: inline-block;
+  padding-left: 15px;
+  width: 80px;
+}
+.jewelry-details .goods-container .explain .freight-box .freight-body {
+  margin-right: 15px;
+}
+.jewelry-details .goods-container .explain .number-box {
+  text-align: center;
+}
+.jewelry-details .goods-container .explain .number-box .number-item {
+  display: inline-block;
+  width: 32%;
+}
+.jewelry-details .goods-container .explain .number-box .num {
+  color: #FB746E;
+}
+.jewelry-details .goods-container .explain .good-sku {
+  padding: 20px 15px;
+  line-height: 38px;
+  color: #666;
+}
+.jewelry-details .goods-container .explain .good-sku .sku-name {
+  display: inline-block;
+  width: 78px;
+  font-size: 14px;
+}
+.jewelry-details .goods-container .explain .good-sku .sku {
+  padding-bottom: 10px;
+}
+.jewelry-details .goods-container .explain .good-sku .sku ul {
+  /*display: flex;*/
+  display: inline-block;
+  width: 640px;
+  vertical-align: top;
+}
+.jewelry-details .goods-container .explain .good-sku .sku ul li {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 4px;
+  padding: 0 12px;
+  min-width: 50px;
+  line-height: 38px;
+  color: #999;
+  border: 1px solid #aaa;
+  text-align: center;
+  cursor: pointer;
+}
+.jewelry-details .goods-container .explain .good-sku .sku ul li.active {
+  border: 2px solid #df735a;
+}
+.jewelry-details .goods-container .explain .good-sku .sku ul img {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+}
+.jewelry-details .goods-container .explain .assemble-info {
+  margin-left: 6px;
+  padding-left: 9px;
+  width: 213px;
+  line-height: 36px;
+  color: #FB746E;
+  border: 1px solid #fb746e;
+}
+.jewelry-details .goods-container .explain .assemble-info .user-logo {
+  position: relative;
+  z-index: 2;
+  margin-top: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  vertical-align: top;
+}
+.jewelry-details .goods-container .explain .assemble-info .unknown {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+  margin-left: -10px;
+  margin-top: 4px;
+  width: 27px;
+  text-align: center;
+  vertical-align: top;
+  font-size: 16px;
+  color: #959595;
+  line-height: 27px;
+  background: #fff;
+  border: 1px dashed #F4B1A4;
+  border-radius: 50%;
+}
+.jewelry-details .goods-container .explain .assemble-info .assemble-description {
+  margin-left: 5px;
+}
+.jewelry-details .goods-container .explain .sale-count-box {
+  padding: 10px 6px 20px;
+}
+.jewelry-details .goods-container .explain .sale-count-box .goodsNum {
+  position: relative;
+  display: inline-block;
+  width: 85px;
+  height: 50px;
+}
+.jewelry-details .goods-container .explain .sale-count-box .goodsNum .el-input-number {
+  width: 85px;
+}
+.jewelry-details .goods-container .explain .sale-count-box .goodsNum .el-input-number__decrease,
+.jewelry-details .goods-container .explain .sale-count-box .goodsNum .el-input-number__increase {
+  width: 22px;
+  height: 25px;
+}
+.jewelry-details .goods-container .explain .sale-count-box .goodsNum input {
+  width: 85px;
+  height: 50px;
+}
+.jewelry-details .goods-container .explain .sale-count-box .stock-num {
+  margin-left: 20px;
+  line-height: 30px;
+  vertical-align: bottom;
+  font-size: 14px;
+  color: #666;
+}
+.jewelry-details .goods-container .explain .buy-box {
+  padding-left: 6px;
+}
+.jewelry-details .goods-container .explain .buy-box button {
+  width: 190px;
+  height: 50px;
+  font-size: 16px;
+  border-radius: 0;
+}
+.jewelry-details .goods-container .explain .buy-box button.add-cart {
+  background: #df735a;
+}
+.jewelry-details .goods-container .explain .buy-box button.buy {
+  background: #fb746e;
+}
+.jewelry-details .goods-container .explain .after-sale {
+  padding: 20px 6px 48px;
+  font-size: 14px;
+}
+.jewelry-details .goods-container .explain .after-sale .after-sale-title {
+  display: inline-block;
+  width: 76px;
+  color: #333;
+}
+.jewelry-details .goods-container .explain .after-sale .after-sale-item {
+  display: inline-block;
+  margin-right: 20px;
+  color: #666;
+}
+.jewelry-details #browse {
+  width: 260px;
+}
+.jewelry-details #browse .shop {
+  position: relative;
+  background: #fff;
+}
+.jewelry-details #browse .shop .shop-background {
+  width: 100%;
+  height: 128px;
+}
+.jewelry-details #browse .shop .shop-logo {
+  position: absolute;
+  top: 88px;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+.jewelry-details #browse .shop .shop-content {
+  padding-top: 45px;
+  color: #666;
+  font-size: 14px;
+}
+.jewelry-details #browse .shop .shop-content .shop-name {
+  font-size: 16px;
+  color: #333;
+}
+.jewelry-details #browse .shop .shop-content .score-box {
+  line-height: 32px;
+}
+.jewelry-details #browse .shop .shop-content .score-box .score-rate {
+  display: inline-block;
+  margin-left: 10px;
+}
+.jewelry-details #browse .shop .shop-content .score-box .el-rate__icon {
+  margin-right: 3px;
+  font-size: 14px;
+}
+.jewelry-details #browse .shop .shop-content .score-info {
+  padding-top: 30px;
+}
+.jewelry-details #browse .shop .shop-content .score-info .score-item {
+  display: inline-block;
+  width: 30%;
+  text-align: center;
+  vertical-align: top;
+}
+.jewelry-details #browse .shop .shop-content .score-info .score-item .score {
+  display: inline-block;
+  margin-bottom: 13px;
+  width: 100%;
+  font-size: 18px;
+}
+.jewelry-details #browse .shop .shop-content .score-info .line {
+  display: inline-block;
+  width: 1px;
+  height: 42px;
+  border-left: 1px solid #ddd;
+}
+.jewelry-details #browse .shop .shop-content .btn-box {
+  padding: 22px 21px;
+}
+.jewelry-details #browse .shop .shop-content .btn-box .el-button {
+  padding: 0;
+  height: 35px;
+  border-radius: 3px;
+}
+.jewelry-details #browse .shop .shop-content .btn-box .el-button.shop-link {
+  width: 96px;
+  background: #df735a;
+}
+.jewelry-details #browse .shop .shop-content .btn-box .el-button.kefu {
+  width: 105px;
+  color: #666;
+  border-color: #aaa;
+}
+.jewelry-details #browse .shop .shop-content .btn-box .el-button.kefu img {
+  margin-right: 4px;
+}
+.jewelry-details #browse .browse {
+  position: relative;
+  margin-top: 25px;
+  margin-bottom: 50px;
+  border-top: 1px dashed #aaa;
+}
+.jewelry-details #browse .browse .browse-title {
+  background: #f2f2f2;
+  padding: 0 7px;
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  text-align: center;
+  transform: translateX(-50%);
+}
+.jewelry-details #browse .browse ul {
+  padding-top: 25px;
+}
+.jewelry-details #browse .browse ul li {
+  background: #fff;
+}
+.jewelry-details #browse .browse ul a {
+  width: 100%;
+}
+.jewelry-details #browse .browse ul img {
+  width: 100%;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.jewelry-details #browse .browse ul .browse-price {
+  padding: 10px 15px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.jewelry-details #browse .browse ul .browse-price .sale-price {
+  padding: 12px 0;
+  font-size: 16px;
+  color: #FB746E;
+}
+.jewelry-details #detail {
+  width: 920px;
+  color: #666;
+}
+.jewelry-details #detail .detail-nav {
+  background: #fff;
+  border-bottom: 1px solid #df735a;
+}
+.jewelry-details #detail .detail-nav p {
+  padding: 0 30px;
+  min-width: 132px;
+  height: 48px;
+  cursor: pointer;
+  line-height: 48px;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+}
+.jewelry-details #detail .detail-nav p.cur {
+  color: #fff;
+  background: #DF735A;
+}
+.jewelry-details #detail .detail-list .category-attr {
+  margin-bottom: 20px;
+  padding: 20px 30px;
+  line-height: 20px;
+  background: #fff;
+}
+.jewelry-details #detail .detail-list .category-attr .category-attr-title {
+  display: inline-block;
+  width: 100%;
+}
+.jewelry-details #detail .detail-list .category-attr .category-attr-item {
+  display: inline-block;
+  width: 33%;
+}
+.jewelry-details #detail .detail-list #goodsDesc {
+  margin-bottom: 50px;
+}
+.jewelry-details #detail .detail-list .ue-view {
+  background: #fff;
+}
+.jewelry-details #detail .detail-list .comment-list {
+  min-height: 325px;
+  background: #fff;
+  padding: 0 40px;
+}
+.jewelry-details #detail .detail-list #comment li {
+  font-size: 14px;
+  border-bottom: 1px solid #CCCCCC;
+  padding: 20px 20px 45px;
+}
+.jewelry-details #detail .detail-list .goodsComment tr:last-child {
+  border-bottom: 0;
+}
+.jewelry-details #detail .detail-list .goodsComment td {
+  padding: 20px 0;
+}
+.jewelry-details #detail .detail-list .goodsComment .imgitem {
+  width: 65px;
+  height: 65px;
+  margin-right: 12px;
+  margin-bottom: 0;
+  border: 1px solid #e2e2e2;
+}
+.jewelry-details .detail-list .item {
+  display: none;
+}
+.jewelry-details .detail-list .item:nth-child(1) {
+  display: block;
+}
+.jewelry-details .idea_design {
+  text-align: left;
+  max-height: 200px;
+  margin-bottom: 10px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  line-height: 20px;
+}
+.jewelry-details .idea_design::-webkit-scrollbar {
+  display: none;
+}
+.jewelry-details #coupons {
+  padding: 20px;
+  border: 1px dashed #CCCCCC;
+  margin-bottom: 20px;
+}
+.jewelry-details #coupons button {
+  border: none;
+  padding: 5px;
+  margin: 0 10px;
+  color: #FFFFFF;
+  background: #E6B75B;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+.jewelry-details #coupons button.poor {
+  background: #CCCCCC;
+}
+.jewelry-details #coupons button:hover {
+  opacity: 0.7;
+}
+.jewelry-details .option {
+  padding: 24px 0;
+}
+.jewelry-details .option > div {
+  margin-right: 50px;
+}
+.jewelry-details .option > div:last-child {
+  margin-right: 0;
+}
+.jewelry-details #spec {
+  width: 480px;
+}
+.jewelry-details .spec {
+  padding-top: 3px;
+}
+.jewelry-details .spec .specDiv {
+  width: 430px;
+}
+.jewelry-details .spec label {
+  line-height: 24px;
+  margin-right: 10px;
+}
+.jewelry-details .spec p {
+  position: relative;
+}
+.jewelry-details .spec span {
+  display: inline-block;
+  padding: 0 5px;
+  height: 24px;
+  background: #FFFFFF;
+  cursor: pointer;
+  text-align: center;
+  line-height: 22px;
+  margin-right: 10px;
+  border: 1px solid #CCCCCC;
+  position: relative;
+  margin-bottom: 5px;
+}
+.jewelry-details .spec span:hover {
+  border-color: #E6B75B;
+}
+.jewelry-details .spec span.spec-active {
+  border-color: #E6B75B;
+}
+.jewelry-details .spec span i {
+  display: inline-block;
+  display: none;
+  width: 8px;
+  height: 8px;
+  background: url(../../src/img/jewelry/default_adress.png) no-repeat;
+  background-size: 100% auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.jewelry-details .spec span.spec-active i {
+  display: block;
+}
+.jewelry-details .oStock {
+  margin-left: 20px;
+  padding-top: 15px;
+}
+.jewelry-details .buy {
+  margin-left: 10px;
+}
+.jewelry-details .buy button {
+  border: none;
+  padding: 5px 10px;
+  height: 32px;
+  font-size: 16px;
+  margin-right: 10px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+}
+.jewelry-details #buy,
+.jewelry-details #buy2 {
+  border: 1px solid #C2A374;
+  background: #FFF7E5;
+  color: #C2A374;
+  opacity: 0.8;
+}
+.jewelry-details #waiting {
+  color: #FFFFFF;
+  opacity: 0.8;
+  background: #aaaaab;
+  cursor: not-allowed;
+}
+.jewelry-details #buy:hover {
+  opacity: 1;
+}
+.jewelry-details #buy2:hover {
+  opacity: 1;
+}
+.jewelry-details #addCart:hover {
+  opacity: 1;
+}
+.jewelry-details #addCart:before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 14px;
+  margin-right: 3px;
+  margin-bottom: -2px;
+  background: url(../../src/img/jewelry/icon_Shopping.png) no-repeat;
+  background-size: 100% 100%;
+}
+.jewelry-details #waiting:hover {
+  opacity: 1;
+}
+.jewelry-details .code {
+  display: inline-block;
+  margin-right: 20px;
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  background: url(../../src/img/jewelry/icon_QR_code.png) no-repeat;
+  background-size: 100% 100%;
+}
+.jewelry-details .prompt {
+  position: relative;
+  cursor: pointer;
+}
+.jewelry-details .prompt .prompt1 {
+  width: 160px;
+  padding: 10px;
+  background: #FFFFFF;
+  line-height: 20px;
+  color: #999999;
+  box-shadow: 0 0 2px #C0C0C0;
+  position: absolute;
+  top: 30px;
+  left: -30px;
+  z-index: 999;
+  display: none;
+}
+.jewelry-details .prompt:hover .prompt1 {
+  display: block;
+}
+.jewelry-details .prompt span {
+  line-height: 30px;
+}
+.jewelry-details .prompt span:after {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: url(../../src/img/jewelry/icon_Notice2.png) no-repeat;
+  background-size: 100% auto;
+  margin-left: 5px;
+}
+.jewelry-details #correlation .correlation {
+  font-size: 16px;
+  padding: 20px;
+  background: #F5F5F5;
+}
+.jewelry-details #correlation .colligate p {
+  margin-bottom: 10px;
+}
+.jewelry-details #correlation .colligate_slider {
+  width: 720px;
+  overflow: hidden;
+}
+.jewelry-details #correlation .colligate_item {
+  padding: 0 45px;
+}
+.jewelry-details #correlation .colligate_goodsName {
+  font-size: 14px;
+  line-height: 16px;
+  height: 32px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.jewelry-details #correlation .colligate_price {
+  font-size: 16px;
+  color: #890E1C;
+}
+.jewelry-details #correlation .colligate_desc {
+  margin: 10px 0;
+}
+.jewelry-details #correlation .colligate_desc span {
+  display: inline-block;
+  max-width: 136px;
+  color: #C2A374;
+  border: 1px solid #C2A374;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.jewelry-details .critique {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 40px;
+  color: #333333;
+  background: #F5F5F5;
+}
+.jewelry-details .critique span {
+  font-size: 16px;
+  margin-right: 38px;
+}
+.jewelry-details .critique label {
+  margin-right: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.jewelry-details .critique input {
+  margin-right: 8px;
+  margin-top: -2px;
+}
+.jewelry-details #goodsAttrs {
+  font-size: 16px;
+}
+.jewelry-details #goodsAttrs table {
+  width: 100%;
+  text-align: center;
+}
+.jewelry-details #goodsAttrs table,
+.jewelry-details #goodsAttrs tr,
+.jewelry-details #goodsAttrs td {
+  border-color: #E0E0E0 !important;
+}
+.jewelry-details #goodsAttrs td {
+  padding: 10px 0;
+}
+.jewelry-details #afterSale {
+  font-size: 16px;
+  padding: 20px;
+}
+.jewelry-details #coupons_select {
+  display: inline-block;
+  width: 100px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  border: 1px solid #C2A347;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  background: #f5dab1;
+  color: #e6a23c;
+  -webkit-transform: translateY(4px);
+  -moz-transform: translateY(4px);
+  -ms-transform: translateY(4px);
+  -o-transform: translateY(4px);
+  transform: translateY(4px);
+  margin-right: 10px;
+  cursor: pointer;
+}
+.jewelry-details .zoomdiv {
+  z-index: 100;
+  position: absolute;
+  top: 0px;
+  left: 446px;
+  width: 418px;
+  height: 418px;
+  border: 1px solid #e4e4e4;
+  display: block !important;
+  text-align: center;
+  overflow: hidden;
+}
+.jewelry-details .bigimg {
+  min-width: 1200px;
+  height: 1200px;
+  width: 1200px;
+}
+.jewelry-details .jqZoomPup {
+  z-index: 60;
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 139px !important;
+  height: 139px !important;
+  border: 1px solid #aaa;
+  background: #F5F5F5 50% top no-repeat;
+  opacity: 0.5;
+  -moz-opacity: 0.5;
+  -khtml-opacity: 0.5;
+  filter: alpha(opacity=50);
+  cursor: move;
+}
+.jewelry-details .slick-list.draggable {
+  overflow: initial;
+}
+.jewelry-details .slick-dots li {
+  display: none;
+}
+.jewelry-details .slick-dotted.slick-slider {
+  margin-bottom: 0;
+}
+.jewelry-details .slick-slide img {
+  border: 1px solid #ddd;
+}

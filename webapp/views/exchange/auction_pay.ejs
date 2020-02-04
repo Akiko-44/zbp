@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<script src="../../src/js/plugin/jquery-qrcode-master/jquery.qrcode.min.js"></script>
+<style>
+body {background: #FAFAFA;}
+#auctionPay {background: #fff;border: 1px solid #E6E6E6;}
+#auctionPay .top {padding: 20px;background: #C2A374;color: #fff;}
+#auctionPay .top p:first-child {margin-bottom: 20px;}
+#auctionPay .opt {padding: 20px;}
+#auctionPay .opt .btn {width: 160px;line-height: 44px;font-size: 18px;}
+#auctionPay .opt p {margin-top: 12px;}
+
+.contract .dialog-main {width: 500px;height: 400px;margin-left: -250px;margin-top: -200px;}
+.contract .dialog-body{bottom: 0; padding-top: 35px;}
+
+.auction .dialog-main {width: 644px;height: 520px;margin-left: -322px;margin-top: -260px;}
+.auction .dialog-body{bottom: 0; padding-top: 35px;}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+            <el-breadcrumb-item><a href="../../exchange/index">互换坊</a></el-breadcrumb-item>
+            <el-breadcrumb-item>物品拍卖</el-breadcrumb-item>
+        </el-breadcrumb>
+			</div>
+		</div>
+		
+		<div class="container" id="auctionPay">
+			<div class="top fs18">
+				<p>
+					<label>标的物名称 ：</label>
+					<b>{{ goodsName }}</b>
+				</p>
+				<p>
+					<label>需缴纳保证金：</label>
+					<b class="new-red">{{deposit}}</b>
+				</p>
+			</div>
+			<div class="opt">
+				<p style="margin-bottom: 15px;">
+					<label class="checkbox">
+						<span class="checkbox-input">
+							<span class="checkbox-input-inner"></span>
+						</span>
+						&emsp;我已阅读并同意<a class="blue" onclick="$('#auction').addClass('show')">《竞拍协议》</a>
+					</label>
+				</p>
+				<a class="btn btn-warning" v-on:click="toPay">确认并缴纳保证金</a>
+			</div>
+		</div>
+		
+
+	</div>
+	
+	<div class="dialog contract" id="contract">
+		<div class="mask"></div>
+		<div class="dialog-main">
+			<div class="dialog-header clearfix">
+				<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+				<h3 class="dialog-title">支付</h3>
+			</div>
+			<div class="dialog-body tc">
+				<div id="qrcode"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="dialog auction" id="auction">
+		<div class="mask"></div>
+		<div class="dialog-main">
+			<div class="dialog-header clearfix">
+				<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+				<h3 class="dialog-title">竞拍协议</h3>
+			</div>
+			<div class="dialog-body tc">
+				<div>
+					<img src="../../src/img/exchange/auction.jpg"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+<script>
+
+var routerVm = new Vue({
+	el: "#router"
+})
+
+var id = utils.getUrlParam("id");
+
+var detailVm = new Vue({
+	el: "#auctionPay",
+	data: function(){
+		return {
+			goodsName: "",
+			deposit: 0,
+			
+			id: '',
+			isPayQrcode: false
+		}
+	},
+	mounted: function(){
+		var self = this;
+		utils.ajax({
+			url: "/api/swap/portal/goods/swap_goods_auction/join_auction_goods_info/" + id,
+			type: "get",
+			success: function(data){
+				data = data.data;
+				self.goodsName = data.goodsName;
+				self.deposit = data.deposit;
+				
+			}
+		})
+	},
+	methods: {
+		toPay: function(){
+			var self = this;
+			if(!$(".checkbox").hasClass("checked")){
+				utils.alert("info", "您未同意合约服务协议");
+				return false;
+			}
+			if(self.isPayQrcode){
+				$("#contract").addClass("show")
+				return false
+			}
+			utils.ajax({
+				url: "/api/swap/portal/goods/swap_goods_auction/join_auction",
+				type: "get",
+				data: {
+					goodsId: id
+				},
+				success: function(data){
+					if(data.success){
+						self.isPayQrcode = true
+						self.id = data.data.id
+						var id = data.data.id
+						utils.ajax({
+							url: "/api/pay/pay_bill/swapAuctionPay/"+id,
+							type: "get",
+							success: function(res){
+								var qrCodeUrl = res.data.qrCodeUrl
+								$("#qrcode").qrcode({width: 200,height: 200,text: qrCodeUrl});
+								$("#contract").addClass("show")
+							}
+						})
+					}else{
+						utils.alert("danger", data.msg);
+					}
+				}
+				
+			})
+		},
+		showDialog: function(){
+			this.$confirm('是否已完成支付？', '确认信息', {
+          		distinguishCancelAndClose: true,
+          		confirmButtonText: '已完成支付',
+          		cancelButtonText: '支付遇到问题'
+	        })
+          	.then(() => {
+      			window.location = "../../exchange/auction_detail?id=" + id
+          	})
+          	.catch(action => {
+          		
+          	})
+		}
+	}
+})
+var timer = setInterval(function(){
+	utils.ajax({
+		url: "/api/pay/pay_bill/payQuery/" + detailVm.id,
+		type: "get",
+		success: function(data){
+			if(data.data.payStatus == 3){
+				detailVm.showDialog()
+				clearInterval(timer)
+			}
+		}
+	})
+}, 3000)
+</script>
+
+</body>
+</html>
+

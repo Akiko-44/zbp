@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<script src="../../src/js/plugin/tinymce4.7.5/tinymce.min.js"></script>
+</head>
+<body class="userPublish">
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item :to="{ path: '../../user/message' }">消息中心</el-breadcrumb-item>
+			  	<el-breadcrumb-item>意见反馈</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	<div class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="feedback userRightContent">
+				<div class="panel userPanel">
+					<div class="panel-header">
+						<h3 class="panel-title">意见反馈</h3>
+					</div>
+					<div class="panel-body">
+						<form id="publishForm">
+							<table>
+								<tr>
+									<td valign="top" width="100"><b class="red">*</b><label>反馈标题</label></td>
+									<td colspan="2">
+										<div>
+											<input type="text" name="title" 
+											datatype="*1-300" 
+											nullmsg="请输入标题" 
+											maxlength="300" 
+											errormsg="标题不能为空" 
+											style="width: 310px;" 
+											:value="title">
+										</div>
+										<p class="Validform_checktip"></p>
+									</td>
+								</tr>
+								<tr>
+									<td valign="top"><b class="red">*</b><label>问题描述</label></td>
+									<td colspan="2">
+										<div class="tinymce-container editor-container">
+											<div class="editor-custom-btn-container">
+      											<a class="blue triggerFile" data-target="tinymce">上传图片</a>
+   											</div>
+											<textarea id="tinymce" class="tinymce-textarea">请具体描述您需要反馈的内容</textarea>
+										</div>
+										<p class="Validform_checktip"></p>
+									</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td colspan="2">
+										<a class="btn btn-warning" id="saveBtn" v-on:click="save">提交</a>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../userFooter.ejs %>
+
+<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+     <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+</form>
+<script>
+$(".userLeftNav .userSubNav li:eq(2)").addClass("cur");
+var routerVm = new Vue({
+	el: "#router"
+})
+
+window.target = "";
+
+var publishVm = new Vue({
+	el: "#publishForm",
+	data: {
+		title: ""
+	},
+	mounted: function(){
+		var self = this;
+		self.initTinymce();
+		window.validform = $("#publishForm").Validform({
+			tiptype: 2
+		})
+		$.Tipmsg.r = "";
+	},
+	methods: {
+		save: function(){
+			var self = this;
+			if(validform.check(false)){
+				var str = $("#publishForm").serialize();
+				str = utils.str2json(str);
+				str.content = self.getContent();
+				if(str.content.length > 10000){
+					utils.alert("info", "描述内容过长");
+					return;
+				}
+				utils.ajax({
+					url: "/pc/portal/message/addFeedBack",
+					data: JSON.stringify(str),
+					success: function(data){
+						if(data.success){
+							utils.alert("success", "操作成功");
+							setTimeout(function(){
+								window.location.reload();
+							}, 2000)
+						}else{
+							utils.alert("danger", data.msg);
+						}
+					}
+				})
+
+			}
+		},
+		initTinymce: function(){
+	    	var _this = this
+		    window.tinymce.init({
+		        language: "zh_CN",
+		        selector: "#tinymce",
+		        height: 500,
+		        body_class: 'ue-view',
+		        content_css: "../../dist/css/all.css",
+		        object_resizing: false,
+		        toolbar: ['bold italic underline strikethrough alignleft aligncenter alignright outdent indent  blockquote undo redo removeformat subscript superscript code codesample', 'hr bullist numlist link image charmap preview anchor pagebreak insertdatetime media table emoticons forecolor backcolor'],
+		        menubar: {
+
+		      	},
+		        plugins: ['advlist anchor autolink autosave code codesample colorpicker colorpicker contextmenu directionality emoticons fullscreen hr image imagetools importcss insertdatetime link lists media nonbreaking noneditable pagebreak paste preview print save searchreplace spellchecker tabfocus table template textcolor textpattern visualblocks visualchars wordcount'],
+		        end_container_on_empty_block: true,
+		        powerpaste_word_import: 'clean',
+		        code_dialog_height: 450,
+		        code_dialog_width: 1000,
+		        advlist_bullet_styles: 'square',
+		        advlist_number_styles: 'default',
+		        imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
+		        default_link_target: '_blank',
+		        link_title: false,
+		        nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
+		        init_instance_callback: editor => {
+
+		        },
+		        setup(editor) {
+		          	editor.on('FullscreenStateChanged', function(e){
+		        	 	_this.fullscreen = e.state
+		          	})
+		        }
+		    })
+		},
+		setContent: function(value){
+		    window.tinymce.activeEditor.setContent(value)
+		},
+		getContent: function(){
+			return window.tinymce.get("tinymce").getContent()
+		},
+		imageSuccessCBK: function(url){
+			window.tinymce.activeEditor.insertContent('<img class="wscnph" src="'+url+'" >')
+		}
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	}
+})
+$(function(){
+	
+	$(document).on("click", ".triggerFile", function(e){
+		var t = $(e.currentTarget).attr("data-target");
+		target = t;
+		$("#form1 input").trigger("click");
+	}).on("change", "[name='categoryId1']", function(e){
+		var id = $(this).val();
+		getCategory(id, function(data){
+			var html ="";
+			for(var i=0;i<data.length;i++){
+				html += '<option value="'+data[i].id+'">'+data[i].catName+'</option>'
+			}
+			$("[name='categoryId2']").html(html);
+		})
+		
+	}).on("click", ".delImgBtn", function(e){
+		var self = $(e.currentTarget);
+		var name = self.parent().parent("div").remove()
+	})
+	
+	
+})
+//商品图片上传
+function uploadGoodsImg(self){
+	if(self.files && self.files[0]){
+		var file = self.files[0]
+		if(file.size > 2*1024*1024){
+			utils.alert("info", "图片大小不能超过2M");
+			return;
+		}
+		if(target=="img"){
+			if($(".img>div").length > 3){
+				utils.alert("info", "图片上传不能超过4张");
+				return;
+			}
+			var reader = new FileReader();
+	      	reader.onload = function(e) {
+	      		var data = e.target.result;
+	      		//加载图片获取图片真实宽度和高度
+	      		var image = new Image();
+	      		image.onload=function(){
+		      		var width = image.width;
+		      		var height = image.height;
+		      		if(width/height != 1){
+		      			utils.alert("info", "图片分辨率必须为1:1");
+		      		}else{
+		      			uploadCallback(self)
+		      		}
+	      		};
+	      		image.src = data;
+	      	}
+	      	reader.readAsDataURL(self.files[0]);
+		}else{
+			uploadCallback(self)
+		}
+	}
+	
+}
+
+function uploadCallback(self){
+	var uploadFile = new FormData($("#form1")[0]);
+	$.ajax({
+		url:'../../file/upload',
+		type:'POST',
+		data:	uploadFile,
+		async: false,  
+		cache: false, 
+		contentType: false, //不设置内容类型
+		processData: false, //不处理数据
+		success:function(data){
+			if(target=="img"){
+				$("." + target).append('<div data-name="'+data.name+'"><img src="'+data.data+'"/><div><a class="hide">设为封面</a>&ensp;<a class="delImgBtn">删除</a></div></div>');
+			}else if(target=="img2"){
+				$("." + target).html('<a data-name="'+data.name+'"><img src="'+data.data+'"/></a>');
+			}else if(target=="tinymce"){
+				publishVm.imageSuccessCBK(data.data);
+			}
+			$("#form1 input").val("");
+		},
+		error:function(){
+			
+		}
+	})
+}
+</script>
+</body>
+</html>
+

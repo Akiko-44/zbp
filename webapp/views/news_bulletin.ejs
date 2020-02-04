@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="stylesheet" type="text/css" href="../../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+	<link rel="stylesheet" href="../../src/css/icon/iconfont.css" />
+	<link rel="stylesheet" href="../../src/css/icons/iconfont.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			font-family: "微软雅黑";
+		}
+
+		.newsbulletin-bd {
+			width: 100%;
+			height: 100%;
+			background: #f8f8f8;
+		}
+
+		.news_bulletin {
+			width: 1200px;
+			margin: 20px auto;
+		}
+
+		.activity_clearfix {
+			width: 1200px;
+			text-align: center;
+			margin-top: 30px;
+		}
+
+		.activity_list {
+			width: 1200px;
+			margin-top: 10px;
+			cursor: pointer;
+		}
+
+		.activity_list:hover {
+			box-shadow: 5px 5px 5px #eeeeee;
+		}
+
+		.activity_list dt {
+			width: 340px;
+			height: 255px;
+			float: left;
+		}
+
+		.activity_list dt img {
+			width: 340px;
+			height: 255px;
+		}
+
+		.activity_list dd {
+			width: 920px;
+			float: left;
+			margin-left: 23px;
+		}
+
+		.activity_list dd .activity_browse {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 16px;
+		}
+
+		.activity_list dd .activity_browse span {
+			font-size: 14px !important;
+		}
+
+		.activity_list dd .browse_time span {
+			height: 19px;
+			font-size: 16px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(153, 153, 153, 1);
+			line-height: 21px;
+		}
+
+		.activity_list dd .browse_time span:nth-child(2) {
+			margin-left: 21px;
+		}
+
+		.activity_list dd .browse_borw p {
+			display: inline-block;
+		}
+
+		.activity_list dd .browse_borw p~p {
+			cursor: pointer;
+		}
+
+		.activity_list dd .browse_borw p span {
+			font-size: 16px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(153, 153, 153, 1);
+			margin-left: 6px;
+		}
+
+		.activity_list dd .browse_borw p:nth-child(1) em {
+			background: url(../../../src/img/galleryNew/yanjing.png) no-repeat;
+			background-size: 100% 100%;
+			display: inline-block;
+			width: 18px;
+			height: 12px;
+		}
+
+		.activity_list dd .browse_borw p:nth-child(2) em {
+			background: url(../../../src/img/galleryNew/dianzan.png) no-repeat;
+			background-size: 100% 100%;
+			display: inline-block;
+			width: 14px;
+			height: 14px;
+			margin-left: 24px;
+		}
+
+		.activity_list dd .activity_content {
+			width: 767px;
+		}
+
+		.activity_list dd .activity_content h2 {
+			font-size: 20px;
+			font-family: MicrosoftYaHei;
+			font-weight: 900;
+			color: rgba(51, 51, 51, 1);
+			margin: 24px 0 16px;
+		}
+
+		.activity_list dd .activity_content p {
+			font-size: 14px;
+			height: 64px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(102, 102, 102, 1);
+			width: 880px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			line-height: 21px;
+		}
+
+		.activity_list .activity_line {
+			width: 1200px;
+			height: 1px;
+			display: inline-block;
+		}
+
+		.activity_clearfix {
+			margin-top: 19px;
+			display: flex;
+			justify-content: center;
+		}
+
+		.datails_content img {
+			display: none;
+		}
+
+		.activity_content {
+			margin-right: 0;
+		}
+
+		.el-pagination.is-background .el-pager li:not(.disabled).active {
+			background: #FF0000;
+		}
+
+		.el-pagination.is-background .btn-next.disabled,
+		.el-pagination.is-background .btn-next:disabled,
+		.el-pagination.is-background .btn-prev.disabled,
+		.el-pagination.is-background .btn-prev:disabled,
+		.el-pagination.is-background .el-pager li.disabled {
+			background: #B0B8B8;
+		}
+
+		.el-icon-arrow-left:before,
+		.el-icon-arrow-right:before {
+			color: #FFFFFF;
+		}
+
+		.el-breadcrumb__separator:before {
+			color: #c0c4cc;
+		}
+
+		.activity_list dt {
+			width: 240px;
+			height: 167px;
+		}
+
+		.activity_list dd {
+			height: 120px;
+		}
+
+		.activity_list dt div {
+			width: 240px;
+			height: 167px;
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		.content>p {
+			font-size: 14px !important;
+		}
+
+		.activity_list {
+			height: 167px !important;
+			background: #fff;
+		}
+	</style>
+</head>
+
+<body class="newsbulletin-bd">
+	<%- include headerbar %>
+
+	<%- include header %>
+
+	<%- include headerNav %>
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item :to="{ path: '/' }">
+					<a href="../../">我的位置：首页</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>
+					<a href="../../news/">行业之声</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item><span id="routerTitle">公示公告</span></el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	<div class="news_bulletin" id="new_lists">
+		<div class="new_banner">
+			<img src="../../src/img/news/gonggao.png" />
+		</div>
+		<dl class="activity_list" v-for="(item,index) in newList" @click="_newsBulletin(item.id)" :id="item.id"
+			:text="item.title" :key="index">
+			<dt>
+				<div :style="{backgroundImage:'url('+formatImg(item.path)+')'}"></div>
+			</dt>
+			<dd>
+				<div class="activity_content">
+					<h2 v-text="item.title"></h2>
+					<p class="content" v-html="item.summary"></p>
+				</div>
+				<div class="activity_browse">
+					<div v-text="item.create_time"></div>
+					<div class="browse_borw">
+						<p><em></em><span class="browseNum" v-text="item.lookNum"></span></p>
+					</div>
+				</div>
+			</dd>
+			<div class="activity_line"></div>
+		</dl>
+		<div class="activity_clearfix">
+			<template>
+				<el-pagination background @current-change="handleCurrentChange" :current-page="offset" :page-size="limit"
+					layout="total, prev, pager, next, jumper" :total="total">
+				</el-pagination>
+			</template>
+		</div>
+	</div>
+	<%- include footer %>
+	<script type="text/javascript">
+		var routerVm = new Vue({
+			el: "#router"
+		})
+		var newsBulletin = new Vue({
+			el: "#new_lists",
+			data() {
+				return {
+					newList: [],
+					total: 0,
+					offset: 1,
+					limit: 10
+				}
+			},
+			mounted: function () {
+				this.list();
+			},
+			methods: {
+				list: function () {
+					var self = this;
+					utils.ajax({
+						url: "/pc/industry/notice/list",
+						type: "get",
+						data: {
+							offset: this.offset,
+							limit: this.limit
+						},
+						success: function (data) {
+							self.newList = data.data.records;
+							if (!self.total) {
+								self.total = data.data.total;
+							}
+						}
+					})
+				},
+				handleCurrentChange: function (val) {
+					var self = this;
+					self.offset = val;
+					self.list();
+				},
+				formatImg: utils.formatImg,
+				_newsBulletin(id) {
+					window.location.href = "../../news/public/" + id;
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>

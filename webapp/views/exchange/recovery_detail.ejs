@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+body {background: #FAFAFA;}
+.detail1 {background: #fff;padding: 20px;margin-bottom: 20px;}
+.detail1 h2 {font-size: 18px;color: #000;margin-bottom: 10px;}
+.detail1 .line {margin: 20px 0;border-top: 1px dashed #CCCCCC;}
+.detail1 p {font-size: 14px;color: #999;}
+.detail1 .btn {line-height: 38px;width: 120px;}
+
+.detail2 {background: #fff;padding: 20px;}
+.detail2 .dtitle {font-size: 18px;color: #000;}
+.detail2 .line {margin: 20px 0;border-top: 1px dashed #CCCCCC;}
+.detail2 .dcontent {font-size: 14px;color: #666;line-height: 24px;}
+
+.authentication{
+	display: inline-block;
+	width: 86px;
+	height: 22px;
+	background: url('../../src/img/exchange/authentication.png') center center no-repeat;
+	background-size: 100% 100%;
+}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+				  	<el-breadcrumb-item :to="{ path: '/' }">我的位置：互换坊</el-breadcrumb-item>
+				  	<el-breadcrumb-item>金银回收</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		
+		<div class="container clearfix">
+			<div class="exchangeDetailRight fr">
+					<div style="height: 40px;">
+						<%- include ../share_baidu.ejs %>
+					</div>
+					<div class="businessInfo" id="businessInfo">
+						
+						<h3>卖家信息</h3>
+						<div style="padding: 0 10px 20px 10px;">
+							<table>
+								<tr>
+									<td width="80">
+										<img id="user_logo" src="../../src/img/avatar.jpg" width="60" height="60">
+									</td>
+									<td>
+										<strong id="hsMarkUrl"></strong>
+										<p v-if="userType != 4">已实名认证<span class="tag">证</span></p>
+										<p v-if="userType == 4"><a class="authentication"></a></p>
+									</td>
+								</tr>
+								<tr>
+									<td><label>认证时间</label></td>
+									<td id="authTime"></td>
+								</tr>
+								<tr>
+									<td><label>发布商品</label></td>
+									<td><span id="goodsCount"></span>件</td>
+								</tr>
+								<tr>
+									<td><label>联系电话</label></td>
+									<td id="mobilePhone"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				<div class="other">
+					<h3>卖家其它回收</h3>
+					<ul>
+						
+					</ul>
+				</div>
+				<!--  
+				<div class="recommend">
+					<h3>同类商品推荐</h3>
+					<ul>
+						<li>
+							<div class="img">
+								<a><img src="" width="100%"></a>
+							</div>
+							<div class="info">
+								<div class="clearfix">
+									<strong class="red">￥49.90</strong>
+								</div>
+								<div class="intro">
+									<p>周大福珠宝首饰双心足金黄金戒指计价F156901</p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				-->
+			</div>
+			
+			<div class="exchangeDetailLeft fl">
+				
+			</div>
+			
+		</div>
+		
+
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+<script>
+var id = utils.getUrlParam("id")
+var routerVm = new Vue({
+	el: "#router",
+	data:{
+		recoveryUrl:''
+	},
+	mounted(){
+		var self = this
+		if(utils.islogin()){
+			utils.ajax({
+				url: "/api/goldRecycle/token",
+				type: "get",
+				success: function(data){
+					self.recoveryUrl = data.data
+				}
+			})
+		}
+	}
+})
+var businessInfo = new Vue({
+	el: "#businessInfo",
+	data:{
+		userType: ''
+	}
+})
+$(function(){
+	
+	getDetail();
+	
+	$(document).on("click", ".toCheck", function(){
+		location.href = routerVm.recoveryUrl
+	})
+	
+});
+
+//详情
+function getDetail(){
+	utils.ajax({
+		url: "/api/swap/portal/goods/swap_recycle/info/" + id,
+		type: "get",
+		success: function(data){
+			data = data.data;
+			var html = _template.exchangeRecoveryDetail({
+				data: data
+			});
+			$(".exchangeDetailLeft").html(html);
+			businessInfo.userType = data.userType;
+			getOther(data.userId);
+			
+			getBusiness(data.userId)
+		}
+	})
+	
+}
+
+//其他
+function getOther(userId){
+	utils.ajax({
+		url: "/api/swap/portal/goods/swap_recycle/user_goods_list",
+		type: "get",
+		data: {
+			userId: userId
+		},
+		success: function(data){
+			data = data.data;
+			var html = "";
+			for(var i = 0; i < data.length; i++){
+				data[i].goodsName = data[i].recycleName;
+				html += _template.exchangeDetailOther({
+					data: data[i]
+				});
+			}
+			$(".other ul").html(html);
+		}
+	})
+	
+}
+
+//商家信息
+function getBusiness(userId){
+	utils.ajax({
+		url: "/api/swap/portal/common/sale_user/info/" + userId,
+		type: "get",
+		success: function(data){
+			data = data.data;
+			var mobilePhone = utils.phoneHide(data.mobilePhone)
+			$("#hsMarkUrl").html(data.hsMarkUrl);
+			$("#authTime").html(new Date(data.authTime).format("yyyy-MM-dd"));
+			$("#mobilePhone").html(mobilePhone);
+			$("#goodsCount").html(data.goodsCount);
+			
+			if(data.user_logo){
+				$("#user_logo").attr("src", data.user_logo);
+			}
+		}
+	})
+}
+</script>
+
+</body>
+</html>
+

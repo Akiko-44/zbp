@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <script src="../../dist/js/template.js"></script>
+</head>
+
+<body>
+  <div id="headerNav" class="headerNav normal-layer">
+    <div class="container" style="position: relative;">
+      <div class="logo">
+        <a href="/"><img src="../../src/img/common/logo.png" alt="" height="106" /></a>
+      </div>
+      <div class="right-container">
+        <div class="navSerch navSerch1 clearfix">
+          <input class="fl search" type="text" placeholder="请输入关键字" style="color: #000000;">
+          <span>
+            <!-- <i class="icon icon-search2"></i> -->
+            <img class="icon" src="../../src/img/common/icon-search2.png" alt="" width="16">
+          </span>
+          <button class="toSearch">搜索</button>
+        </div>
+        <div id="myCart"></div>
+        <ul class="hot-classify" style="height: 20px;">
+          <!-- <li><span>钻石</span></li>
+					<li><span>裸钻</span></li>
+					<li><span>戒指</span></li>
+					<li><span>链坠 </span></li>
+					<li><span>耳饰</span></li>
+					<li><span>手链</span></li>
+					<li><span>黄金</span></li>
+					<li><span>铂金</span></li> -->
+        </ul>
+        <ul class="clearfix headerNavList">
+          <!-- <li>
+            <a class="navItem <% if(headerIndex == 0){ %>cur<% } %>" href="../../">首页</a>
+            <div>
+
+            </div>
+          </li>
+          <li>
+            <a class="navItem <% if(headerIndex == 1){ %>cur<% } %>" href="../../jewelry/index">去哪儿买</a>
+            <div>
+
+            </div>
+          </li>
+          <li class="hide">
+            <a class="navItem <% if(headerIndex == 2){ %>cur<% } %>" href="../../exchange/index">互换坊</a>
+            <div>
+
+            </div>
+          </li>
+          <li>
+            <a class="navItem <% if(headerIndex == 3){ %>cur<% } %>" href="../../design/index">找设计师</a>
+            <div>
+
+            </div>
+          </li>
+          <li id="manufacture" class="hide">
+            <a class="navItem <% if(headerIndex == 4){ %>cur<% } %>" href="../../manufacture/index">寻代工</a>
+            <div>
+
+            </div>
+          </li>
+          <li>
+            <a class="navItem <% if(headerIndex == 5){ %>cur<% } %>" href="../../jewelryCircle/index">珠宝圈</a>
+            <div>
+
+            </div>
+          </li>
+          <li class="hide">
+            <a class="navItem <% if(headerIndex == 6){ %>cur<% } %>" href="../../news/">行业之声</a>
+            <div>
+
+            </div>
+          </li>
+          <li>
+            <a class="navItem <% if(headerIndex == 7){ %>cur<% } %>" href="../../jewelry_fair/index">珠宝展</a>
+            <div>
+
+            </div>
+          </li>
+          <li class="hide">
+            <a class="navItem <% if(headerIndex == 8){ %>cur<% } %>" href="http://zhibo.gacjc.com">直播厅</a>
+            <div>
+
+            </div>
+          </li>
+          <li class="hide">
+            <a class="navItem <% if(headerIndex == 9){ %>cur<% } %>" href="../../up_and_down/index">上下游服务</a>
+            <div>
+
+            </div>
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+<script charset="UTF-8" type="text/template" id="menuTemplate">
+
+</script>
+<script type="text/javascript">
+  $(function () {
+    getBackground()
+    $(document).on('click', '.toSearch', function () {
+      var search;
+      for (var i = 0; i < $('.search').length; i++) {
+        if ($('.search').eq(i).val().trim()) {
+          search = $('.search').eq(i).val().trim()
+        }
+      }
+      if (!search) {
+        location.href = "../../jewelry/goodsList";
+      } else {
+        location.href = "../../jewelry/goodsList?keyWord=" + search;
+      }
+    }).on('click', '.logo', function () {
+
+    }).on('mouseenter', '.my-cart,.cart-list', function () {
+      $('.my-cart').css({
+        'border-color': '#df735a'
+      })
+      $('.cart-list').show()
+    }).on('mouseleave', '.my-cart,.cart-list', function () {
+      $('.my-cart').css({
+        'border-color': '#e5e5e5'
+      })
+      $('.cart-list').hide()
+    })
+
+    /* document.onkeydown = function (e) {
+    	if (!e) e = window.event;
+    	if ((e.keyCode || e.which) == 13) {
+    		stopDefault(e)
+    		$('.toSearch').click()
+    	}
+    } */
+
+  })
+
+  function getBackground() {
+    utils.ajax({
+      type: 'get',
+      url: '/api/backgroundImg/getbackgroundImg',
+      data: {
+        backgroundImgType: 1
+      },
+      success: (res) => {
+        // navigation = res.data.pcNavigations
+        // bindHTML(res.data.pcNavigations)
+        var result
+        if (!res.data) {
+          result = _template.headerNavDefault({
+            headerIndex: '<%= headerIndex %>'
+          })
+        } else {
+          result = _template.headerNav({
+            data: res.data.pcNavigations,
+            headerIndex: '<%= headerIndex %>'
+          })
+        }
+        $('.headerNavList').html(result)
+        if (location.pathname == '/') {
+          if (res.data.pcDefaultWholeColor) {
+            $('.navItem').css('color', res.data.pcDefaultWholeColor)
+          }
+          if (res.data.pcCheckWholeColor) {
+            $('.navItem.cur').css('color', res.data.pcCheckWholeColor)
+          }
+        }
+      }
+    })
+  }
+
+  // function bindHTML(data) {
+  //   //->首先把页面中模板的innerHTML获取到
+  //   var str = $("#menuTemplate").html();
+
+  //   //->然后把str和data交给EJS解析处理，得到我们最终想要的字符串
+  //   var result = ejs.render(str, {
+  //     data: data
+  //   });
+
+  //   //->最后把获取的HTML放入到MENU中
+  //   $('.headerNavList').html(result)
+  // }
+
+  function stopDefault(e) {
+    if (e.preventDefault) {
+      e.preventDefault();
+    } else {
+      window.event.returnValue == false;
+    }
+  }
+
+  function del(e, goodsSku) {
+    utils.ajax({
+      url: "/api/order/cart/delete/" + goodsSku,
+      success: function (data) {
+        location.reload()
+        document.body.scrollIntoView()
+      }
+    })
+  }
+
+  function getCart() {
+    var _t = utils.getCookie("token");
+    if (!!_t) {
+      utils.ajax({
+        url: "/api/order/cart/list",
+        type: "get",
+        success: function (data) {
+          var cartList = data.data.cartItemList;
+          var len = 0;
+          var list = cartList || 0;
+          for (var i = 0; i < list.length; i++) {
+            len += list[i].goods.length
+          }
+          $("#carNum").text(len);
+          $('#totalPrice').text(data.data.totalPrice);
+          $('#totalNum').text(len);
+          var html = '';
+          var goodsList = [];
+          var skuList = '';
+          if (len > 0) {
+            cartList.forEach(item => {
+              item.goods.forEach(goodsItem => {
+                skuList = ''
+                goodsItem.skuList.forEach(skuItem => {
+                  skuList += '<p>' + skuItem.specsName + '：' + skuItem.attrValue + '</p>'
+                })
+                goodsList.push('<li class="cart-item">',
+                  '<div class="item">',
+                  '<img src="', goodsItem.goodsLogo, '" alt="" />',
+                  '<div class="goods-names-wrap"><h3 class="goods-names">', goodsItem.goodsName,
+                  '</h3>', skuList, '</div>',
+                  '<div class="goods-unit">',
+                  '<p>', goodsItem.goodsPrice, '元 X ', goodsItem.quantity, '</p>',
+                  '<span onclick="del(this, ', goodsItem.goodsSku,
+                  ')" style="cursor:pointer;">删除</span>',
+                  '</div>',
+                  '</div>',
+                  '</li>')
+              })
+            })
+            html = '<div class="my-cart">' +
+              '<img src="../../src/img/common/icon-shopping.png"/>' +
+              '我的购物车' +
+              '<span class="cart-num" id="carNum">' + len + '</span>' +
+              '</div> ' +
+              '<div class="cart-list" style="display:none;">' +
+              '<div class="list hide" id="cartList">' +
+              '<ul>' +
+              goodsList.join('') +
+              '</ul> ' +
+              '<div class="total"> ' +
+              '<p class="num">共<span id="totalNum">' + len + '</span>件商品</p> ' +
+              '<p class="price"><span id="totalPrice">' + data.data.totalPrice + '</span>元</p> ' +
+              '<a href="../exchange/cart">去购物车结算</a> ' +
+              '</div> ' +
+              '</div> ' +
+              '</div>'
+          } else {
+            html = '<div class="my-cart">' +
+              '<img src="../../src/img/common/icon-shopping.png"/>' +
+              '我的购物车' +
+              '<span class="cart-num" id="carNum">' + len + '</span> ' +
+              '</div > ' +
+              '<div class="cart-list" style="display:none;">' +
+              '<div class="empty"> ' +
+              '<img src="../../src/img/common/icon-emptycart.png" style="padding-right: 10px;" /> ' +
+              '您的购物车是空的，赶紧选购吧！' +
+              '</div> ' +
+              '</div>'
+          }
+          var scroHei = $(window).scrollTop();
+          if (scroHei > 180) {
+            $('#myCart').empty()
+            $('#myCart1').html(html);
+          } else {
+            $('#myCart1').empty()
+            $('#myCart').html(html);
+          }
+          if (len > 0) {
+            $('.cart-list .empty').hide();
+            $('.cart-list .list').removeClass('hide').show();
+          } else {
+            $('.cart-list .empty').show();
+            $('.cart-list .list').hide();
+          }
+        }
+      })
+    } else {
+      var html = '<div class="my-cart">' +
+        '<img src="../../src/img/common/icon-shopping.png"/>' +
+        '我的购物车' +
+        '<span class="cart-num" id="carNum">0</span> ' +
+        '</div > ' +
+        '<div class="cart-list" style="display:none;">' +
+        '<div class="empty"> ' +
+        '<img src="../../src/img/common/icon-emptycart.png" style="padding-right: 10px;" /> ' +
+        '您的购物车是空的，赶紧选购吧！' +
+        '</div> ' +
+        '</div>';
+      var scroHei = $(window).scrollTop();
+      if (scroHei > 180) {
+        $('#myCart').empty()
+        $('#myCart1').html(html);
+      } else {
+        $('#myCart1').empty()
+        $('#myCart').html(html);
+      }
+    }
+  }
+
+  $(function () {
+    getCart()
+  })
+</script>
+
+</html>

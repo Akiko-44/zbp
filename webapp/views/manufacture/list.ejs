@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+body {background: #F5F5F5;}
+.mlist li {padding: 20px 25px;background: #fff;margin: 20px 0;}
+.mlist .img {width: 160px;height: 160px;background: #f9f9f9;float: left;}
+.mlist .info {padding-left:175px;position:relative;}
+.mlist .info .opt {position:absolute;top: 15px;right: 20px;}
+.mlist .info .opt .btn {background: #E6B85C;width: 126px;margin-bottom: 10px;}
+.mlist .name {font-size: 24px;color: #000;}
+.mlist .taginfo {margin: 18px 0;font-size: 12px;color:#000;}
+.mlist label {color: #666;}
+.mlist .taginfo strong{font-size: 24px;color:#E6B85C;}
+.mlist .mcontent {line-height: 18px;}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+	
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+					<el-breadcrumb-item><a href="../../manufacture/index">制造间</a></el-breadcrumb-item>
+					<el-breadcrumb-item>所有制造商</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		
+		<div class="container exchangeSearch" id="search">
+			<table>
+				<tr  class="search-cate">
+					<td width="90"><label>分类：</label></td>
+					<td>
+						<a class="cur">全部</a>
+						<template v-for="item in listCate">
+							<a>{{item}}</a>
+						</template>
+					</td>
+					<td></td>
+				</tr>
+				<tr class="search-city">
+					<td><label>所在地：</label></td>
+					<td>
+						<a class="cur">全部</a>
+						<template v-for="item in listCity">
+							<a :data-id="item.regionName">{{item.regionName}}</a>
+						</template>
+						<a>其他城市</a>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+			<div class="clearfix">
+				<div class="fr">
+					<div class="searchPage fr">
+						<a><i class="iconfont icon-exchangePageLeft"></i></a>
+						<span>1/100</span>
+						<a><i class="iconfont icon-userAccountRight"></i></a>
+					</div>
+				</div>
+				<div class="clearfix">
+					<div class="fl searchType">
+						<a class="btn btn-warning">综合排序</a>
+					</div>
+					<div class=" fl">
+						<span>签单数</span>
+						<a class="saleSort" value="asc"><i class="iconfont icon-exchangePriceUp"></i></a>
+						<a class="saleSort" value="desc"><i class="iconfont icon-exchangePriceDown"></i></a>
+					</div>
+					<div class="fl searchComment">
+						<span>评论数</span>
+						<a class="saleSort" value="asc"><i class="iconfont icon-exchangePriceUp"></i></a>
+						<a class="saleSort" value="desc"><i class="iconfont icon-exchangePriceDown"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="mlist container" id="list">
+			<ul>
+				<template v-for="item in records">
+					<li class="clearfix">
+						<div class="img">
+							<img :src="item.logo" alt="制造商logo"/>
+						</div>
+						<div class="info">
+							<div class="opt tc">
+								<p><button class="btn btn-warning">查看详情</button></p>
+								<a>联系TA</a>
+							</div>
+							<div>
+								<h3 class="name">
+									<span>{{item.userName}}</span>
+									<img src="">
+								</h3>
+								<p class="taginfo">
+									<label>分类</label>
+									<span>{{item.categoryName1}}/ {{item.categoryName2}}</span>
+									&emsp;&emsp;
+									<label>设计室</label>
+									<span>蓝天设计室</span>
+									&emsp;&emsp;
+									<label>{{item.orderNumber}}</label><!--签单数-->
+									<strong class="yellow">{{item.commentNumber}}</strong>
+								</p>
+								<p class="mcontent">
+									<label>行业资历：</label>
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proingravida dolor sit amet lacusaccumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nasceturridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.
+								</p>
+							</div>
+						</div>
+				</li>
+				</template>      
+			</ul>
+		</div>
+	
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+
+<script>
+var routerVm = new Vue({
+	el: "#router"
+})
+   var searchVm = new Vue({
+   	el:"#search",
+   	data:{
+   		listCate:[],
+		listCity:[]
+   	},
+   	mounted:function(){
+   		this.render();
+   	},
+   	methods:{
+		render: function () {
+			var self = this;
+			utils.ajax({
+				url: "/api/designmanu/menufact/category/list",
+				type: "get",
+				success: function (data) {
+					self.listCate = data.data;
+				}
+			});
+			utils.ajax({
+				url: " /admin/region//list/1",
+				type: "get",
+				success: function (data) {
+					self.listCity = data.data;
+				}
+			});
+
+		}
+   		
+   	}
+   });
+   
+   var listVm = new Vue({
+   	el:"#list",
+   	data:{
+   		total:2,
+   		size:15,
+   		current:1,
+   		records:[],
+   		pages:1,
+   
+   		city:"",
+   		category:"",
+   		commentNumDesc:1,
+   		orderNumDesc:1,
+   		offset:1,
+   		limit:30
+   	},
+   	mounted:function(){
+   		this.render();
+   	},
+   	methods:{
+   		render:function(){
+   			var sel = this;
+   			var json ={
+   					city:this.city,
+   					category:this.category,
+   					commentNumDesc:this.commentNumDesc,
+   		    		orderNumDesc:this.orderNumDesc,
+   		    		offset:this.offset,
+   		    		limit:this.limit
+   			}
+   			utils.ajax({
+   				url:"/api/designmanu/menufact/manufactPage",
+   				data:JSON.stringify(json),
+   				success:function(data){
+   					sel.records=data.data.records;
+   					sel.total = data.data.total;
+   				}
+   			});
+   		}
+   	}
+   });
+$(function(){
+
+	$(document).on("click", ".search-city a", function(e){
+		var self = $(e.currentTarget);
+		self.addClass("cur").siblings().removeClass("cur");
+
+		var val = self.attr("data-id");
+
+		listVm.offset = 1;
+		listVm.city = val;
+		listVm.render();
+	}).on("click", ".search-cate a", function(e){
+		var self = $(e.currentTarget);
+		self.addClass("cur").siblings().removeClass("cur");
+
+		var val = self.attr("data-id");
+
+		listVm.offset = 1;
+		listVm.category = val;
+		listVm.render();
+
+	})
+
+})
+
+</script>
+</body>
+</html>
+

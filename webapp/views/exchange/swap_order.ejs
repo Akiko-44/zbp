@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<script src="../../src/js/address.js"></script>
+<style>
+.exchange-bbanner {line-height: 60px;color: #333;}
+.exchange-bbanner h2 {font-size: 24px;}
+.exchange-btitle {border-bottom: 2px solid #E0E0E0;margin-top: 20px;margin-bottom: 10px;padding:0 45px 6px 45px;font-size: 12px;}
+.exchange-btitle strong {font-size: 14px}
+
+.addr-container ul {height: 142px;overflow: hidden}
+.addr-container ul.show {height: auto;}
+.addr-container li {cursor: pointer;float: left;width: 276px;margin: 10px;border: 4px solid #CCCCCC;padding: 15px;background: #fff;font-size: 14px;}
+.addr-container .locale {margin:10px 0; line-height: 18px;height: 36px;overflow: hidden; font-size: 12px;}
+.addr-container .btn{width: 90px;line-height: 22px;background:#CCCCCC;font-size: 12px;color: #fff;}
+.addr-container li.cur {border-color:#D6C4AE}
+
+.in-container table {width: 100%;border: 1px solid #E0E0E0;}
+.in-container table thead{background:#F0F0F0;line-height: 20px;text-align: center;color: #666;}
+.in-container table td {padding: 10px;}
+.in-container table h3 {line-height: 20px;}
+.in-container table p {line-height: 20px;color: #666;margin-top: 10px;}
+
+.out-container table {width: 100%;border: 1px solid #E0E0E0;}
+.out-container table thead{background:#F0F0F0;line-height: 20px;text-align: center;color: #666;}
+.out-container table td {padding: 10px;}
+.out-container table h3 {line-height: 20px;}
+.out-container table p {line-height: 20px;color: #666;margin-top: 10px;}
+
+.total-container {background: #FAFAFA;border: 1px solid #CCCCCC;}
+.total-container li {padding: 10px 20px;border-top: 1px solid #ccc;line-height: 20px;font-size: 14px;}
+.total-container li:first-child{border-top: 0;}
+</style>
+</head>
+<body class="exchangeBuy">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<div id="main" class="main">
+		<div class="exchange-bbanner container clearfix">
+			<h2 class="fl"><strong>填写并核对订单信息</strong></h2>
+			<img class="fr" src="../../src/img/exchange/buy_progress.png">
+		</div>
+		
+		<div class="addr-container container" id="address">
+			<h3 class="clearfix exchange-btitle">
+				<a class="fr red" id="showAddDialog">新增收货地址</a>
+				<strong>确认您的收货地址</strong>
+			</h3>
+			<div>
+				<ul class="clearfix">
+					<template v-for="item in list">
+						<li :data-id="item.id"
+						v-bind:consignee="item.consignee" 
+						v-bind:province="item.province" 
+						v-bind:city="item.city"
+						v-bind:area="item.area" 
+						v-bind:street="item.street" 
+						v-bind:detail="item.detail"
+						>
+							<div class="clearfix">
+								<!-- <a class="gray fr">编辑</a>
+								<a class="fr">设为默认</a> -->
+								<span>{{ item.consignee }}</span>
+							</div>
+							<div class="locale">
+								<p>{{ item.province }}{{ item.city }}{{ item.area }}{{ item.street }}{{ item.detail }}</p>
+							</div>
+							<div class="clearfix">
+								<a class="blue fr" v-on:click="showDel($event)" :data-id="item.id">删除</a>
+								<span>{{ item.mobile }}</span>
+							</div>
+						</li>
+					</template>
+				</ul>
+				<div v-if="list.length > 4 && !isShowAll">
+					<a class="btn" v-on:click="toggle">显示全部地址</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="in-container container">
+			<h3 class="exchange-btitle">
+				<strong>确认您换人的商品</strong>
+			</h3>
+			<div>
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2">交换商品信息</th>
+							<th width="320">单价</th>
+							<th width="320">交换数量</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td width="140">
+								<img :src="imgUrl | formatImg" width="120" height="120">
+							</td>
+							<td>
+								<h3 class="fs14">{{ goodsName }}</h3>
+								<p class="fs14">交换需求：{{swapRemark}}</p>
+								<p class="fs14">卖家：{{userName}}</p>
+							</td>
+							<td class="tc">
+								<span class="new-red fs20">￥{{price}}</span>
+							</td>
+							<td class="tc">X{{goodsNum}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+		<div class="out-container container">
+			<h3 class="exchange-btitle">
+				<strong>请选择您用于交换的商品</strong>
+				<span class="gray">(交换商品只可从您已发布并审核通过的商品中选择)</span>
+			</h3>
+			<div>
+				<div class="clearfix hide">
+					<span class="fr">已选<span class="red">{{selected.length}}</span>件交换商品</span>
+					<select name="cateList">
+						
+					</select>
+					单价
+					<div class="input">
+						<input type="text">
+					</div>
+					-
+					<div class="input">
+						<input type="text">
+					</div>
+					<a class="btn btn-warning selectedGoods">筛选</a>
+				</div>
+				<br>
+				<table>
+					<thead>
+						<tr>
+							<th width="30"></th>
+							<th colspan="2">交换商品信息</th>
+							<th width="320">单价</th>
+							<th width="320">交换数量</th>
+						</tr>
+					</thead>
+					<template v-if="total==0&&page==1">
+						<tbody>
+							<tr>
+								<td colspan="5">
+									<div class="nodata">
+										<p class="fs24">您还没有已上架的商品，赶紧去发布吧&emsp;<a class="red" href="../../user/publish/swap" target="_blank">发布商品</a></p>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</template>
+					<template v-else-if="total==0&&page>1">
+						<tbody>
+							<tr>
+								<td colspan="5">
+									<div class="nodata">
+										<p class="fs24">很抱歉，没有查询到符合您筛选条件的商品，换个筛选条件试试看！</p>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</template>
+					<template v-else>
+						<tbody>
+							<template v-for="item in list">
+								<tr v-if="item.stockNum>0">
+									<td>
+										<input type="checkbox" name="isChecked" @click="select($event)" :data-id="item.id" :price="item.price" :skuId="item.goodsSku.id">
+									</td>
+									<td width="140">
+										<img :src="item.imgUrl | formatImg" width="120" height="120">
+									</td>
+									<td>
+										<h3 class="fs14">{{ item.goodsName }}</h3>
+									</td>
+									<td class="tc">
+										<span class="red fs24">￥{{ item.price }}</span>
+									</td>
+									<td class="tc">X1</td>
+								</tr>
+							</template>
+						</tbody>
+					</template>
+					
+				</table>
+			</div>
+		</div>
+		
+		<br><br>
+		<div class="container total-container">
+			<ul>
+				<li class="clearfix">
+					<span class="fl">换入商品汇总</span>
+					<div class="fr">
+						换入商品件数<strong class="new-red" id="inTotalGoodsType">1</strong>&emsp;&emsp;
+						换入商品数量<strong class="new-red" id="inTotalGoodsNum">1</strong>&emsp;&emsp;
+						换入合计<strong class="new-red">￥<span id="inTotalPrice"></span></strong>
+					</div>
+				</li>
+				<li class="clearfix">
+					<span class="fl">换出商品汇总</span>
+					<div class="fr">
+						换出商品件数<strong class="new-red" id="outTotalGoodsType">0</strong>&emsp;&emsp;
+						换出商品数量<strong class="new-red" id="outTotalGoodsNum">0</strong>&emsp;&emsp;
+						换出合计<strong class="new-red">￥<span id="outTotalPrice">0</span></strong>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<br>
+		<div class="container">
+			<a class="btn btn-warning" id="submitBtn">发起订单</a>
+		</div>
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+<%- include ../user/address_common.ejs %>
+<script>
+var flag = utils.getUrlParam("flag");
+var source = utils.getUrlParam("source");
+
+var addressVm = new Vue({
+	el: "#address",
+	data: {
+		list: [],
+		isShowAll: false,
+		 
+		addressId: ""
+	},
+	mounted: function(){
+		this.render()
+		
+	},
+	methods: {
+		render: function(){
+			var self = this;
+			utils.ajax({
+				url: "/api/userCenter/addr/page",
+				type: "get",
+				success: function(data){
+					data = data.data;
+					self.list = data.records;
+					setTimeout(function(){
+						$("#address li:eq(0)").trigger("click");
+					}, 100)
+				}
+			})
+		},
+		showDel: function(event){
+			var id = event.currentTarget.getAttribute("data-id");
+			showDelAddress(id);
+		},
+		toggle: function(){
+			$("#address ul").addClass("show");
+			self.isShowAll = true;
+		}
+	}
+})
+
+var inVm = new Vue({
+	el: ".in-container",
+	data: {
+		goodsName: "",
+		imgUrl: "",
+		price: 0,
+		swapRemark: "",
+		userName: "",
+		goodsSku: {},
+		goodsNum: 1
+	},
+	mounted: function(){
+		var id = utils.getUrlParam("id");
+		var self = this;
+		utils.ajax({
+			url: "/api/swap/portal/goods/sale_goods/info/" + id,
+			type: "get",
+			success: function(data){
+				data = data.data;
+				self.goodsName = data.goodsName;
+				self.imgUrl = data.imgUrl;
+				self.price = data.price
+				self.swapRemark = data.swapRemark;
+				self.userName = data.userName;
+				self.goodsSku = data.goodsSku;
+				$("#inTotalPrice").text(data.price)
+				$("#inTotalGoodsNum").text("1");
+				$("#inTotalGoodsType").text("1");
+			}
+		})
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	}
+})
+
+var outVm = new Vue({
+	el: ".out-container",
+	data: {
+		list: [],
+		total: 100,
+		page: 1,
+		
+		selected: []
+	},
+	mounted: function(){
+		var self = this;
+		utils.ajax({
+			url: "/api/swap/portal/common/swapCategorys/0/3",
+			type: "get",
+			success: function(data){
+				data = data.data;
+				var html = '';
+				$.each(data, function(index, item) {
+					html += '<option value="'+item.id+'">'+item.catName+'</option>'
+				});
+				$("[name='cateList']").html(html)
+			}
+		})
+		utils.ajax({
+			url: "/api/swap/user/goods/sale_goods/list",
+			data: {
+				swapble: 1,
+				current: 1,
+				size: 1000,
+				goodsStatus: 2
+			},
+			type: "get",
+			success: function(data){
+				data = data.data;
+				self.list = data.records;
+				self.total = data.total;
+			}
+		})
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	},
+	methods: {
+		select: function(event){
+			var self = this
+			var e = event.currentTarget;
+			var id = e.getAttribute("data-id");
+			var price = parseFloat(e.getAttribute("price"));
+			var skuId = e.getAttribute("skuId");
+			if(event.currentTarget.checked){
+				self.selected.push({
+					id: id,
+					price: price,
+					skuId: skuId
+				})
+			}else{
+				self.selected = _.remove(self.selected, function(n){
+					return n.id != id
+				})
+			}
+			var total = 0;
+			_.forEach(self.selected, function(value) {
+				total += parseFloat(value.price);
+			});
+			$("#outTotalPrice").text(total)
+			$("#outTotalGoodsNum").text(self.selected.length);
+			$("#outTotalGoodsType").text(self.selected.length);
+			
+		}
+		
+	}
+})
+
+$(document).on("click", "#submitBtn", function(){
+	if(!addressVm.addressId){
+		utils.alert("danger", "请选择收货地址")
+		return;
+	}
+	var swapOutDTOList = [];
+	_.forEach(outVm.selected, function(item) {
+		swapOutDTOList.push({
+			skuId: item.skuId,
+			number: 1
+		})
+	});
+	if(swapOutDTOList.length == 0){
+		utils.alert("danger", "请选择您用于交换的商品")
+		return;
+	}
+	var json = {
+		addrId: addressVm.addressId,
+		payType: 4,
+		swapInDTO: {
+			skuId: inVm.goodsSku.id, 
+			number: 1
+		},
+		swapOutDTOList: swapOutDTOList
+	}
+	
+	utils.ajax({
+		url: "/api/order/swap/add",
+		data: JSON.stringify(json),
+		success: function(data){
+			if(data.success){
+				location.href = "../../exchange/swap_order_detail?orderId=" + data.data;
+			}else{
+				utils.alert("danger", data.msg)
+			}
+		}
+	})
+})
+
+
+$(document).on("click", "#delBtn", function(e){
+	var id = $(e.currentTarget).data("id");
+	delAddress(id, function(){
+		addressVm.list = _.remove(addressVm.list, function(n) {
+			  return n.id != id;
+		});;
+	})
+}).on("click", "#address li", function(e){
+	var self = $(e.currentTarget);
+	var id = self.attr("data-id");
+	self.addClass("cur").siblings().removeClass("cur");
+	
+	addressVm.addressId = id
+}).on("click", "#showAddDialog", function(){
+	//显示添加弹出框
+	showAddDialog();
+}).on("click", "#addBtn", function(){
+	addAddress(function(data){
+		if(data.success){
+			$(".addAddressDialog").removeClass("show");
+			addressVm.render();
+		}else{
+			utils.alert("danger", data.msg);
+		}
+	})
+})
+</script>
+
+</body>
+</html>
+

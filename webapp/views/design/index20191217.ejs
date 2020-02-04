@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="集合国内外顶尖珠宝设计师，以及中国玉雕大师。专业的一对一定制，倾听灵感需求，定制你的专属珠宝。">
+  <meta name="keywords" content="珠宝个性定制、私人订制、婚戒定制、设计珠宝、原创珠宝、求婚钻戒、对戒、钻戒品牌排行榜、设计工作室、珠宝设计师、国家级玉雕大师、设计室、项链定制">
+  <title>珠宝首饰设计室_珠宝定制_婚戒定制</title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    body {
+      background: #eee;
+    }
+
+    .slick-dots li button:before {
+      border-radius: 50%;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .designIndex {
+      width: 852px;
+      margin: 0 auto;
+    }
+
+    .slideritem a {
+      display: block;
+      height: 400px
+    }
+
+    .exchangeTitle {
+      margin-top: 50px;
+      margin-bottom: 30px;
+    }
+
+    .exchangeTitle strong {
+      color: #1A1A1A;
+      font-size: 16px;
+    }
+
+    .exchangeTitle span {
+      color: #666666;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+
+    .exchangeTitle a {
+      display: inline-block;
+      line-height: 20px;
+      /*border: 1px solid #999999;*/
+      color: #666;
+      border-radius: 11px;
+      text-align: center;
+    }
+
+    .jewelryDesigner ul {
+      padding: 0 32px;
+    }
+
+    .jewelryDesigner li {
+      float: left;
+      width: 168px;
+      height: 265px;
+      margin-left: 32px;
+      text-align: center;
+      position: relative;
+    }
+
+    .jewelryDesigner li:first-child {
+      margin: 0;
+    }
+
+    .jewelryDesigner .img-box {
+      height: 100%;
+      line-height: 265px;
+      position: relative;
+      background: #f9f9f9;
+      overflow: hidden;
+    }
+
+    .jewelryDesigner li .info {
+      padding: 8px 10px;
+      background: #FF0000;
+      opacity: .8;
+      display: none;
+      color: #fff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .jewelryDesigner li .info .designerName {
+      margin-top: 56px;
+    }
+
+    .jewelryDesigner li:hover .info {
+      display: block;
+
+    }
+
+    .jewelryDesigner li .info .cateThree,
+    .jewelryDesigner li .info .price {
+      margin-top: 20px;
+    }
+
+    .jewelryDesigner li .intro {
+      color: #fff;
+      line-height: 16px;
+      height: 32px;
+      line-height: 32px;
+      border: 1px solid #fff;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 20px;
+      width: 100px;
+      margin: 0 auto;
+    }
+
+
+
+    .slider.adverts {
+      height: 140px;
+      margin-top: 48px;
+      overflow: hidden;
+    }
+
+    .foreignDesigner ul li {
+      width: 265px;
+      height: 178px;
+      margin-left: 28.5px;
+      background-color: #fff;
+      float: left;
+      position: relative;
+    }
+
+    .foreignDesigner li:first-child,
+    .outstandWorks li:first-child {
+      margin: 0;
+    }
+
+    .outstandWorks ul li {
+      width: 265px;
+      height: 208px;
+      margin-left: 28.5px;
+      background-color: #fff;
+      float: left;
+      position: relative;
+    }
+
+    .outstandWorks ul li .info {
+      height: 57px;
+      line-height: 57px;
+      padding: 0 21px;
+      background: #fff;
+    }
+
+    .outstandWorks ul li .info .name {
+      height: 57px;
+      line-height: 57px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .outstandWorks ul li .info span,
+    .outstandWorks ul li .info i {
+      vertical-align: middle;
+    }
+
+    .outstandWorks ul li .info .look {
+      float: right;
+    }
+
+    .outstandWorks ul li .info .look i {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+      background: url(../../src/img/exchange/look.png) no-repeat center/16px 10px;
+    }
+
+    .foreignDesigner1 li {
+      cursor: pointer;
+    }
+
+    .foreignDesigner1 ul li .info {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: rgba(255, 0, 0, .7);
+    }
+
+    .foreignDesigner1 ul li .info .designerName {
+      padding-top: 50px;
+      margin-bottom: 10px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .foreignDesigner1 ul li .info .cateThree {
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .foreignDesigner1 ul li .info .intro {
+      color: #fff;
+      height: 32px;
+      line-height: 32px;
+      border: 1px solid #fff;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 20px;
+      width: 100px;
+      margin: 0 auto;
+    }
+
+    .foreignDesigner1 ul li:hover .info {
+      display: block;
+    }
+
+    .bottom-activity {
+      margin-top: 120px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .bottom-activity img {
+      width: 100%;
+    }
+
+    .bottom-activity span {
+      display: inline-block;
+      width: 84px;
+      height: 30px;
+      line-height: 28px;
+      text-align: center;
+      color: #FFFFFF;
+      border: 1px solid #FFFFFF;
+      position: absolute;
+      top: 50%;
+      right: 108px;
+      margin-top: -15px;
+    }
+
+    .statusWrap {
+      width: 80px;
+      height: 30px;
+      line-height: 30px;
+      color: #FFFFFF;
+      background: rgba(107, 183, 74, .5);
+      border-bottom-right-radius: 15px;
+      border-top-right-radius: 15px;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../header.ejs %>
+
+  <%- include ../headerNav.ejs %>
+
+  <div id="main" class="main">
+
+    <div class="designBanner galleryBanner" id="banner">
+      <div class="slider">
+        <template v-if="dmBannerDTOList.length>0" v-for="item in dmBannerDTOList">
+          <div class="slideritem">
+            <a v-if="item.bannerUrl" :href="item.bannerUrl|formatUrl" target="_blank">
+              <img :src="item.pcUrl | formatImg" width="100%" height="100%">
+            </a>
+            <a v-else target="_blank">
+              <img :src="item.pcUrl | formatImg" width="100%" height="100%">
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="galleryHeader" id="navWrap">
+      <div class="galleryNavBox">
+        <div class="galleryNav">
+          <ul>
+            <li>
+              <h3 style="color: #333333;font-weight: bolder;">商品分类</h3>
+            </li>
+            <li v-for="item in dcvoList">
+              <h3 class="subThree" :data-name="item.name" :data-id="item.id">{{item.name}}</h3>
+              <div class="clearfix gallerySub">
+                <div v-if="item.children && item.children.length" v-for="subitem in item.children">
+                  <p :data-name="subitem.name" :data-id="subitem.id" class="subThree">{{subitem.name}}</p>
+                  <div v-if="subitem.children&&subitem.children.length>0">
+                    <template v-for="citem in subitem.children">
+                      <a :data-name="citem.name" :data-id="citem.id" class="subThree">{{citem.name}}</a>
+                    </template>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="gallerySubNav">
+          <div>
+            <ul>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--设计室类型 1 首饰设计师 2 玉雕设计师 3国外设计师 4设计爱好者-->
+    <div id="content">
+      <div class="designIndex jewelryDesigner">
+        <div class="exchangeTitle">
+          <a class="fr" href="../../design/designer?designerSource=1">更多<i class="el-icon-d-arrow-right"></i></a>
+          <strong>首饰设计师</strong>
+        </div>
+        <div>
+          <ul class="clearfix">
+            <template v-for="(item,index) in edrvoList" :key="item.id" v-if="item.source == 1" v-if="index < 4">
+              <li class="listShadow gripper" :data-id="item.designerId" @click="toDesignerDetail($event)">
+                <div class="img-box">
+                  <img :src="item.thumbnail | formatImg" width="168" height="265">
+                </div>
+                <div class="info">
+                  <p class="designerName fs14">{{item.userName}}</p>
+                  <p class="cateThree fs14">{{item.province}} {{item.city}}</p>
+                  <div class="intro">
+                    详情
+                  </div>
+                </div>
+              </li>
+            </template>
+          </ul>
+        </div>
+      </div>
+
+      <div class="designIndex jewelryDesigner">
+        <div class="exchangeTitle">
+          <a class="fr" href="../../design/designer?designerSource=2">更多<i class="el-icon-d-arrow-right"></i></a>
+          <strong>玉雕大师</strong>
+        </div>
+        <div>
+          <ul class="clearfix">
+            <template v-if="item.source == 2" v-for="(item,index) in edrvoList" :key="item.id" v-if="index < 4">
+              <li class="listShadow gripper" :data-id="item.designerId" @click="toDesignerDetail($event)">
+                <div class="img-box">
+                  <img :src="item.thumbnail | formatImg" width="168" height="265">
+                </div>
+                <div class="info">
+                  <p class="designerName fs14">{{item.userName}}</p>
+                  <p class="cateThree fs14">{{item.province}} {{item.city}}</p>
+                  <div class="intro">
+                    详情
+                  </div>
+                </div>
+              </li>
+            </template>
+          </ul>
+        </div>
+      </div>
+
+      <div class="designIndex" style="margin-top: 50px;margin-bottom: 50px;">
+        <a href="../activity?supType=3" style="display: inline-block;width: 100%;"><img
+            src="../../src/img/jewelry/active.jpg" style="width: 100%;" /></a>
+      </div>
+
+      <div class="designIndex foreignDesigner foreignDesigner1">
+        <div class="exchangeTitle">
+          <a class="fr" href="../../design/designer?designerSource=3">更多<i class="el-icon-d-arrow-right"></i></a>
+          <strong>国际设计师</strong>
+        </div>
+        <ul class="clearfix">
+          <li class="listShadow" :data-id="item.designerId" @click="toDesignerDetail($event)" v-if="item.source == 3"
+            v-for="(item,index) in edrvoList" :key="index" v-if="index < 3">
+            <a>
+              <img :src="item.thumbnail | formatImg" width="265" height="178">
+            </a>
+            <div class="info">
+              <p class="designerName">{{item.userName}}</p>
+              <p class="cateThree">国外</p>
+              <div class="intro">
+                详情
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="designIndex foreignDesigner foreignDesigner1">
+        <div class="exchangeTitle">
+          <a class="fr" href="../../design/designer?designerSource=4">更多<i class="el-icon-d-arrow-right"></i></a>
+          <strong>设计爱好者</strong>
+        </div>
+        <ul class="clearfix">
+          <li class="listShadow" :data-id="item.designerId" @click="toDesignerDetail($event)" v-if="item.source == 4"
+            v-for="(item,index) in edrvoList" :key="index" v-if="index < 3">
+            <a>
+              <img :src="item.thumbnail | formatImg" width="100%" height="100%">
+            </a>
+            <div class="info">
+              <p class="designerName">{{item.userName}}</p>
+              <p class="cateThree">{{item.province}} {{item.city}}</p>
+              <div class="intro">
+                详情
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="designIndex outstandWorks">
+        <div class="exchangeTitle">
+          <a class="fr" href="../../design/product">更多<i class="el-icon-d-arrow-right"></i></a>
+          <strong>优秀作品</strong>
+        </div>
+        <ul class="clearfix">
+          <li :data-id="item.caseId" @click="toProductDetail($event)" v-for="(item,index) in ecvoList" :key="index"
+            v-if="index<3">
+            <a class="imgHover">
+              <img :src="item.thumbnail | formatImg" width="100%" height="100%">
+            </a>
+            <div class="info ellipsis clearfix">
+              <span class="name">{{item.caseName}}</span>
+              <!--<span class="look"><i></i><span class="num"></span></span>-->
+              <span class="look new-red fs16">￥{{item.price}}</span>
+            </div>
+            <span class="statusWrap tc" v-if="item.caseType == 2">
+              定制商品
+            </span>
+          </li>
+
+        </ul>
+      </div>
+      <div class="container bottom-activity" onclick="window.location='./designer'">
+        <img src="../../src/img/design/pic_down.jpg" />
+        <span>定制</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <%- include ../footer.ejs %>
+
+  <script>
+    var $slider = null;
+    //乱序排列
+    function shuffle(arr) {
+      let i = arr.length;
+      while (i) {
+        let j = Math.floor(Math.random() * i--);
+        [arr[j], arr[i]] = [arr[i], arr[j]];
+      }
+      return arr;
+    }
+    var mainVm = new Vue({
+      el: "#main",
+      data: {
+        dmBannerDTOList: [],
+        edrvoList: [],
+        dcvoList: [],
+        ecvoList: []
+      },
+      mounted: function () {
+        var self = this;
+        utils.ajax({
+          type: "get",
+          url: "/api/designmanu/designroom/categoryList/0",
+          data: {
+            flag: 2
+          },
+          success: function (res) {
+            self.dcvoList = res.data
+          }
+        });
+        utils.ajax({
+          url: "/api/designmanu/designroom/indexPage",
+          type: "get",
+          success: function (data) {
+            data = data.data;
+            if (data.dmBannerVOList.length == 0) {
+              data.dmBannerVOList.push({
+                bannerUrl: "../../design/index",
+                pcUrl: "../../src/img/banner.jpg"
+              })
+            }
+            self.dmBannerDTOList = data.dmBannerVOList;
+            self.ecvoList = shuffle(data.ecvoList)
+            self.edrvoList = shuffle(data.edrvoList)
+
+            setTimeout(function () {
+              $slider = $(".designBanner .slider");
+              $slider.slick({
+                dots: true,
+                arrows: false,
+                swipe: true,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 5000
+              });
+              $sliderAD = $(".slider.adverts");
+              $sliderAD.slick({
+                dots: true,
+                arrows: false,
+                swipe: true,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 5000
+              });
+            }, 100)
+          }
+        })
+
+      },
+      methods: {
+        toDesignerDetail: function (event) {
+          var id = event.currentTarget.getAttribute("data-id");
+          location.href = "../../design/designer_detail?id=" + id;
+        },
+        toProductDetail: function (event) {
+          var id = event.currentTarget.getAttribute("data-id");
+          location.href = "../../design/product_detail?id=" + id;
+        }
+      },
+      filters: {
+        formatImg: function (str) {
+          return utils.formatImg(str);
+        },
+        formatUrl: function (str) {
+          return utils.formatUrl(str);
+        }
+      }
+    })
+    $(function () {
+      $(document).on('click', '.subThree', function (e) {
+        var self = $(e.currentTarget);
+        var id = self.attr('data-id');
+        var val = self.attr('data-name');
+        window.location = 'product?searchId=' + id + '&searchWord=' + val
+      })
+    })
+  </script>
+</body>
+
+</html>

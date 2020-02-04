@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/cropper.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/ImgCropping.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    .userContent {
+      padding-top: 30px;
+      width: 680px;
+      margin: 0 auto;
+    }
+
+    .userContent.success-container {
+      padding-top: 50px;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .success-container p {
+      margin: 50px 0;
+    }
+
+    .success-container .link {
+      color: #2d69c3;
+      cursor: pointer;
+    }
+
+    .title {
+      line-height: 70px;
+      font-size: 18px;
+      color: #333;
+      border-bottom: 1px solid #EAEBF0;
+    }
+
+    .tip {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 12px;
+      color: #AAAAAA;
+    }
+
+    .tip p {
+      line-height: 20px;
+    }
+
+    .uploadbox {
+      overflow: hidden;
+      position: relative;
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+    }
+
+    .uploadbox img {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      -webkit-transform: translateY(-50%) -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+
+    .verify-btn {
+      margin-right: 5px;
+      font-size: 12px;
+      color: #2D69C3;
+      cursor: pointer;
+    }
+
+    .save-btn {
+      width: 176px;
+      height: 40px;
+      background: #DF735A;
+    }
+
+    .el-select-dropdown__item.selected {
+      color: #DF735A !important;
+    }
+
+    .important {
+      line-height: 20px;
+      font-size: 13px;
+      color: red;
+    }
+  </style>
+</head>
+
+<body class="userShop">
+
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../header.ejs %>
+
+  <!-- <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/user/account' }">个人中心</el-breadcrumb-item>
+        <el-breadcrumb-item>中宝协会员入驻专属通道</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div> -->
+
+  <div id="main" class="main">
+    <div class="clearfix container">
+      <h3 class="title">中宝协会员入驻专属通道</h3>
+      <div class="userContent" v-if="!success">
+        <el-form id="form" ref="form" :model="form" :rules="rules" label-width="150px">
+          <el-form-item label="企业名称：" prop="companyName">
+            <el-input :maxlength="30" v-model="form.companyName" placeholder="请输入企业名称，30字以内"></el-input>
+          </el-form-item>
+
+          <el-form-item label="中宝协会员等级：">
+            <el-select v-model="form.merchantLevel" placeholder="请选择中宝协会员的等级" style="width:100%;">
+              <el-option v-for="item in memberList" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="店铺名称：" prop="name">
+            <el-input :maxlength="30" v-model="form.name" placeholder="请输入店铺名称，30字以内"></el-input>
+          </el-form-item>
+
+          <el-form-item label="店铺类型：" prop="merchantType">
+            <el-select v-model="form.merchantType" placeholder="请选择店铺类型" style="width:100%;">
+              <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="店铺LOGO：" prop="logo">
+            <div class="uploadbox" data-target="logo">
+              <img v-if="form.logo" :src="form.logo | formatImg" width="100%" />
+            </div>
+            <div class="tip">
+              <p>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，</p>
+              <p>尺寸500*500px（正方形图片）</p>
+            </div>
+          </el-form-item>
+
+          <el-form-item label="店铺背景：" prop="backgroundImg">
+            <div class="uploadbox" data-target="backgroundImg">
+              <img v-if="form.backgroundImg" :src="form.backgroundImg | formatImg" width="100%" />
+            </div>
+            <div class="tip">
+              <p>5兆（M）以内，1张，格式支持jpg\jpeg\png，</p>
+              <p>尺寸710*350px（长方形图片），可使用系统裁剪器进行裁剪</p>
+            </div>
+          </el-form-item>
+
+          <el-form-item label="手机号码：" prop="mobilePhone">
+            <el-input :maxlength="11" v-model="form.mobilePhone" placeholder="请输入手机号码">
+              <span slot="suffix" class="verify-btn codeBtn">获取验证码</span>
+            </el-input>
+            <input type="hidden" name="mobilePhone" class="mobilePhone" v-model="form.mobilePhone">
+            <input type="hidden" name="msgId" value="" />
+          </el-form-item>
+
+          <el-form-item label="短信验证码：" prop="dynamicVerifyCode">
+            <el-input :maxlength="6" v-model="form.dynamicVerifyCode" placeholder="请输入6位数字验证码"></el-input>
+          </el-form-item>
+
+          <el-form-item label="密码设置：" prop="passWord">
+            <el-input :maxlength="16" v-model="form.passWord" placeholder=" 6-16位，由数字或大小写字母组成">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="danger" class="save-btn" :loading="loading" @click="save">提交</el-button>
+          </el-form-item>
+
+          <el-form-item>
+            <div class="important">
+              <p>*温馨提示：专属入驻通道截止时间为2019年12月20日。</p>
+              <p>注：本平台为开放平台，不做商品审核，如发布了违法违规商品，责任由商家自行承担。</p>
+            </div>
+          </el-form-item>
+        </el-form>
+
+      </div>
+      <div class="userContent success-container" v-if="success">
+        <img src="../../src/img/user/success.png" alt="">
+        <p>恭喜您成功入驻中宝平，进入<span class="link" @click="link">商家后台</span>看看吧</p>
+      </div>
+    </div>
+  </div>
+
+  <!--图片裁剪框 start-->
+  <div style="display: none" class="tailoring-container">
+    <div class="black-cloth" onclick="closeTailor(this)"></div>
+    <div class="tailoring-content">
+      <div class="tailoring-content-one">
+        <label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+          <input type="file" accept="image/jpg,image/jpeg,image/png" name="bgfile" id="chooseImg" class="hidden"
+            onchange="selectImg(this)">
+          选择图片
+        </label>
+        <div class="close-tailoring" onclick="closeTailor(this)">×</div>
+      </div>
+      <div class="tailoring-content-two">
+        <div class="tailoring-box-parcel">
+          <img id="tailoringImg">
+        </div>
+        <div class="preview-box-parcel">
+          <p>图片比例：710*350</p>
+        </div>
+      </div>
+      <div class="tailoring-content-three">
+        <button class="l-btn sureCut" id="sureCut">确定</button>
+      </div>
+    </div>
+  </div>
+  <!--图片裁剪框 end-->
+
+  <%- include ../footer.ejs %>
+  <%- include ../system/applyCode.ejs %>
+  <form id="form1" class="hide" method="post" enctype="multipart/form-data">
+    <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+  </form>
+
+  <script>
+    // $(".userLeftNav .userSubNav li:eq(0)").addClass("cur");
+
+    var routerVm = new Vue({
+      el: "#router",
+    })
+
+    var mainVm = new Vue({
+      el: "#main",
+      data: {
+        loading: false,
+        success: false,
+        passwordType: 'password',
+        form: {
+          name: '',
+          companyName: '',
+          merchantType: undefined,
+          merchantLevel: undefined,
+          logo: '',
+          backgroundImg: '',
+          mobilePhone: '',
+          dynamicVerifyCode: '',
+          msgId: '',
+          passWord: ''
+        },
+        memberList: [{
+          label: '副会长单位',
+          value: 1
+        },
+        {
+          label: '常务理事单位',
+          value: 2
+        },
+        {
+          label: '理事单位',
+          value: 3
+        },
+        {
+          label: '普通单位会员',
+          value: 4
+        },
+        {
+          label: '无',
+          value: 5
+        }
+        ],
+        typeList: [{
+          label: '珠宝店',
+          value: 1
+        },
+        {
+          label: '设计师',
+          value: 2
+        },
+        {
+          label: '制造间',
+          value: 3
+        }
+        ],
+        rules: {
+          name: [{
+            required: true,
+            message: '请输入店铺名称',
+            trigger: 'blur'
+          }],
+          logo: [{
+            required: true,
+            message: '请选择店铺LOGO',
+            trigger: 'blur'
+          }],
+          backgroundImg: [{
+            required: true,
+            message: '请选择店铺背景',
+            trigger: 'blur'
+          }],
+          companyName: [{
+            required: true,
+            message: '请输入企业名称',
+            trigger: 'blur'
+          }],
+          merchantType: [{
+            required: true,
+            message: '请选择店铺类型',
+            trigger: 'change'
+          }],
+          mobilePhone: [{
+            required: true,
+            pattern: /^\d{11}$/,
+            message: '请输入正确的手机号码',
+            trigger: 'blur'
+          }],
+          dynamicVerifyCode: [{
+            required: true,
+            pattern: /^\d{6}$/,
+            message: '请输入正确的短信验证码',
+            trigger: 'blur'
+          }],
+          msgId: [{
+            required: true,
+            message: '短信验证码有误'
+          }],
+          passWord: [{
+            required: true,
+            pattern: /^[0-9a-zA-Z]{6,16}$/,
+            message: '请输入密码，6-16位，由数字或大小写字母组成',
+            trigger: 'blur'
+          }]
+        }
+      },
+      methods: {
+        save() {
+          this.form.msgId = $("input[name='msgId']").val() || '123456'
+          this.$refs.form.validate(valid => {
+            if (valid) {
+              this.loading = true
+              utils.ajax({
+                url: "/api/userCenter/merchantInfo/simpleSave",
+                data: JSON.stringify(this.form),
+                success: (data) => {
+                  this.loading = false
+                  this.success = true
+                },
+                fail: (data) => {
+                  this.loading = false
+                },
+                error: (data) => {
+                  this.loading = false
+                }
+              })
+            } else {
+              this.$notify({
+                title: '警告',
+                message: '请务必填写必选项',
+                type: 'warning'
+              })
+              return false
+            }
+          })
+        },
+        link() {
+          location.href = "http://admin.gacjc.com/usrManager/jewelry/"
+        },
+        showPwd() {
+          if (this.passwordType === 'password') {
+            this.passwordType = ''
+          } else {
+            this.passwordType = 'password'
+          }
+        }
+      },
+      filters: {
+        formatImg: utils.formatImg()
+      }
+
+    })
+    $(function () {
+      $(document).on("click", "#main .uploadbox", function (e) {
+        var t = $(e.currentTarget).attr("data-target");
+        if (t != 'backgroundImg') {
+          $("#form1 input").attr("data-target", t);
+          $("#form1 input").trigger("click");
+        } else {
+          $(".tailoring-container").toggle();
+          $('body').css('overflow', 'hidden')
+        }
+      })
+    })
+    //弹出框水平垂直居中
+    var win_height = $(window).height();
+    var win_width = $(window).width();
+    if (win_width <= 768) {
+      $(".tailoring-content").css({
+        "top": (win_height - $(".tailoring-content").outerHeight()) / 2,
+        "left": 0
+      });
+    } else {
+      $(".tailoring-content").css({
+        "top": (win_height - $(".tailoring-content").outerHeight()) / 2,
+        "left": (win_width - $(".tailoring-content").outerWidth()) / 2
+      });
+    }
+    //图像上传
+    function selectImg(file) {
+      if (!file.files || !file.files[0]) {
+        return;
+      }
+      if (!/image\/\w+/.test(file.files[0].type)) {
+        utils.alert("info", "请上传图片文件")
+        return false
+      }
+      var reader = new FileReader();
+      reader.onload = function (evt) {
+        var replaceSrc = evt.target.result;
+        //更换cropper的图片
+        $('#tailoringImg').cropper('replace', replaceSrc, false); //默认false，适应高度，不失真
+      }
+      reader.readAsDataURL(file.files[0]);
+    }
+    //cropper图片裁剪
+    $('#tailoringImg').cropper({
+      aspectRatio: 710 / 350, //默认比例
+      preview: '.previewImg', //预览视图
+      guides: false, //裁剪框的虚线(九宫格)
+      autoCropArea: 0.5, //0-1之间的数值，定义自动剪裁区域的大小，默认0.8
+      movable: false, //是否允许移动图片
+      dragCrop: true, //是否允许移除当前的剪裁框，并通过拖动来新建一个剪裁框区域
+      movable: true, //是否允许移动剪裁框
+      resizable: true, //是否允许改变裁剪框的大小
+      zoomable: false, //是否允许缩放图片大小
+      mouseWheelZoom: false, //是否允许通过鼠标滚轮来缩放图片
+      touchDragZoom: true, //是否允许通过触摸移动来缩放图片
+      rotatable: true, //是否允许旋转图片
+      crop: function (e) {
+        // 输出结果数据裁剪图像。
+      }
+    });
+
+    //裁剪后的处理
+    $("#sureCut").on("click", function () {
+      if ($("#tailoringImg").attr("src") == null) {
+        return false;
+      } else {
+        var cas = $('#tailoringImg').cropper('getCroppedCanvas'); //获取被裁剪后的canvas
+        var base64url = cas.toDataURL('image/png'); //转换为base64地址形式
+        $("#finalImg").prop("src", base64url); //显示为图片的形式
+        $('[data-target="backgroundImg"]').html('<img src="' + base64url + '" />');
+        var formData = new FormData();
+        formData.append('cloudfile', convertBase64UrlToBlob(base64url), '.png')
+        $.ajax({
+          url: '../../file/upload',
+          type: 'POST',
+          data: formData,
+          async: false,
+          cache: false,
+          contentType: false, //不设置内容类型
+          processData: false, //不处理数据
+          success: function (data) {
+            $('[data-target="backgroundImg"]').html('<img src="' + data.data + '" width="100%" />')
+              .addClass(
+                "uploaded");
+            // $("[name='backgroundImg']").val(data.data);
+            mainVm.form['backgroundImg'] = data.data
+
+          },
+          error: function () {
+
+          }
+        })
+        //关闭裁剪框
+        closeTailor();
+      }
+    });
+    //关闭裁剪框
+    function closeTailor() {
+      $('body').css('overflow', 'auto')
+      $(".tailoring-container").toggle();
+    }
+
+    function convertBase64UrlToBlob(urlData) {
+      var bytes = window.atob(urlData.split(',')[1]); //去掉url的头，并转换为byte        
+      var ab = new ArrayBuffer(bytes.length);
+      var ia = new Uint8Array(ab);
+      for (var i = 0; i < bytes.length; i++) {
+        ia[i] = bytes.charCodeAt(i);
+      }
+      return new Blob([ab], {
+        type: 'image/png'
+      });
+    }
+    //商品图片上传
+    function uploadGoodsImg(self) {
+      var files = self.files[0]
+      var t = $("#form1 input").attr("data-target")
+      if (files.size > 1.5 * 1024 * 1024) {
+        utils.alert("info", "图片大小不能超过1.5M");
+        return;
+      }
+      if (t == 'logo') {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var data = e.target.result;
+          //加载图片获取图片真实宽度和高度
+          var image = new Image();
+          image.onload = function () {
+            var width = image.width;
+            var height = image.height;
+            if (width / height != 1) {
+              utils.alert("info", "图片分辨率必须为1:1");
+            } else {
+              uploadCallback(self)
+            }
+          }
+          image.src = data;
+        }
+        reader.readAsDataURL(self.files[0]);
+      } else {
+        uploadCallback(self)
+      }
+    }
+
+    function uploadCallback(self) {
+      var uploadFile = new FormData($("#form1")[0]);
+      $.ajax({
+        url: '../../file/upload',
+        type: 'POST',
+        data: uploadFile,
+        async: false,
+        cache: false,
+        contentType: false, //不设置内容类型
+        processData: false, //不处理数据
+        success: function (data) {
+          var t = $("#form1 input").attr("data-target");
+          $(".uploadbox[data-target='" + t + "']").html('<img src="' + data.data + '" width="100%">')
+            .addClass(
+              "uploaded")
+          // $("[name='" + t + "']").val(data.data);
+          mainVm.form[t] = data.data
+          $("#form1 input").val("");
+        },
+        error: function () {
+
+        }
+      })
+    }
+  </script>
+
+</body>
+
+</html>

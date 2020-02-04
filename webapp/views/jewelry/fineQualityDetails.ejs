@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<style type="text/css">
+    .jewelry-fineQualityDetails{background: #F8F8F8;}
+    .icon-like-active{
+    	background-image: url(../../src/img/jewelry/icon_Fabulous.png);
+		background-position: 0px 0px;
+		width: 12px;
+		height: 10px;
+    }
+    .fineQualityDetails{
+    	padding: 30px 85px 0;
+    }
+    .fineQualityDetails h1{
+    	font-weight: bolder;
+    	margin-bottom: 20px;
+    }
+    .fineQualityDetails p a{
+    	display: inline-block;
+    	width: 48px;
+    	height: 48px;
+    	overflow: hidden;
+    	border-radius: 50%;
+    	-webkit-border-radius: 50%;
+    	-moz-border-radius: 50%;
+    }
+    .fineQualityDetails img{
+    	width: 100%;
+    	height: 100%;
+    	vertical-align: middle;
+    }
+    .fineQualityDetails p span{
+    	line-height: 48px;
+    	margin-left: 12px;
+    	color: #0F0F0F;
+    	font-size: 14px;
+    }
+    .details{
+    	padding: 20px;
+    }
+    .details>p>span{
+    	text-indent: 2em;
+    	color: #000000;
+    	line-height: 16px;
+    }
+    .details>p>img{
+    	max-width: 100%;
+    }
+    .goods a{
+    	display: inline-block;
+    	width: 100%;
+    }
+    .goods a img{
+    	width: 100%;
+    }
+    .goods-msg{
+    	background: #F8F8F8;
+    	padding: 5px 10px;
+    }
+    .goods-info p:first-child{
+    	color: #333333;
+    	font-size: 18px;
+    	margin-bottom: 5px;
+    }
+    .goods-info p:last-child{
+    	color: #999999;
+    }
+    .goods-price{padding-top: 5px;}
+    .goods-price span:first-child{
+    	display: inline-block;
+    	width:60px;
+        height:24px;
+        text-align: center;
+        line-height: 24px;
+        color: #FFFFFF;
+        background: #FF395A;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+    }
+    .goods-price span:last-child{
+        color: #C2A374;
+        font-size: 24px;
+    }
+    .comment-head{
+    	border-top: 4px solid #C2A374;
+    	position: relative;
+    	padding: 10px;
+    	font-size: 16px;
+    }
+    #num{
+    	color: #C2A374;
+    }
+    .comment-head>a{
+    	color: #FF395A;
+    	position: absolute;
+    	right: 50px;
+    	top: 10px;
+    }
+    .comment-head>a:hover{
+    	color: #FF0000;
+    }
+    .comment-list li{
+    	color: #8A8A8A;
+    	border-top: 1px solid #E6E6E6;
+    }
+    .commentator{
+    	width: 160px;
+    	color: #666666;
+    	padding-top: 20px;
+    }
+    .commentator a{
+    	display: inline-block;
+    	width: 60px;
+    	height: 60px;
+    	margin-bottom: 10px;
+    	border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        overflow: hidden;
+    }
+    .commentator img{width: 100%;}
+    .comment-content {
+    	width: 1030px;
+    	padding: 30px 20px 8px;
+    	border-left: 1px solid #E6E6E6;
+    }
+    .comment-content p:nth-child(1){
+    	height: 30px;
+    	line-height: 15px;
+    	font-size: 14px;
+    	display: box;
+    	display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+    }
+    .comment-content p:nth-child(2){
+    	margin-top: 18px;
+    	margin-bottom: 8px;
+    }
+    .comment-content p:nth-child(3) i{
+    	margin-right: 5px;
+    	margin-top: -3px;
+    }
+    /*弹框*/
+    #wrap{
+    	width: 100%;
+    	height: 100%;
+    	background: rgba(0,0,0,.5);
+    	position: fixed;
+    	top: 0;
+    	left: 0;
+    	display: none;
+    }
+    #txt{
+    	width: 404px;
+    	height: 244px;
+    	padding: 10px;
+    	position: absolute;
+    	left: 50%;
+    	top: 50%;
+    	margin-left: -202px;
+    	margin-top: -122px;
+    	background: #FFFFFF;
+    	border: 6px solid #C2A374;
+    	border-radius: 6px;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        overflow: hidden;
+    }
+    #txt p:first-child{
+    	border-bottom: 1px solid #CCCCCC;
+    }
+    #txt button{
+    	border: none;
+    	width: 70px;
+    	height: 30px;
+    	margin-top: 16px;
+    	border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+    	background: #C2A374;
+    	color: #FFFFFF;
+    }
+    #txt button:hover{
+    	opacity: .7;
+    }
+    #txt textarea{
+    	border: none;
+    	width: 100%;
+    	height: 150px;
+    }
+    /*
+	渐进动画
+	*/
+	.fadeIn2{
+		-webkit-animation: fadeIn2 .5s ease-in both;
+		animation: fadeIn2 .5s ease-in both
+	}
+	@-webkit-keyframes fadeIn2{
+		0%{opacity:0}
+		100%{opacity:1}
+	}
+	@keyframes fadeIn2{
+		0%{opacity:0}
+		100%{opacity:1}
+	}
+</style>
+</head>
+<body class="jewelry-fineQualityDetails">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	<div class="container" style="background-color: #FFFFFF;">
+	    <div class="fineQualityDetails">
+	    	<h1 id="name">...</h1>
+	    	<p class="clearfix">
+	    		<a class="fl"><img src="" id="authorPic"/></a>
+	    		<span class="fl" id="author">...</span>
+	    		<span class="fl" id="createTime"></span>
+	    	</p>
+	    </div>
+	    <div class="details">
+	    	
+	    </div>
+	    <!--评论-->
+	    <div class="comment">
+	    	<div class="comment-head tc">
+	    		<span>评论<span id="num"> ( 0 ) </span></span>
+	    		<a onclick="txt()">
+	    			<img src="../../src/img/jewelry/icon_msg.png"/>
+	    			写留言
+	    		</a>
+	    	</div>
+	    	<div class="comment-list">
+	    		<ul id="commentList">
+	    			
+	    		</ul>
+	    		<div class="tr container" style="margin-top: 30px;">
+					<div id="pagination" class="pagination"></div>
+				</div>
+	    	</div>
+	    </div>
+	</div>
+	<input type="hidden" name="goodsId" value="" />
+	<!--输入评论-->
+	<div id="wrap" class="fadeIn2" onclick="$(this).hide()">
+		<div id="txt" onclick="stopDefault(this)">
+			<p>
+				<textarea id="commentContent">请输入评论内容，字数限制150个字以内</textarea>
+			</p>
+			<p class="tc"><button onclick="userComment()">提交</button></p>
+		</div>
+	</div>
+	<%- include ../footer.ejs %>
+	<script type="text/javascript">
+		window.onload = function(){
+			/**
+			 * 获取商品详情
+			 * */
+			$.each($('.goods'), function(idx,item) {
+				var id = $(item).attr('val');
+				$.ajax({
+			        url:'/api/marketPage/goodsDetailShow',
+			        type:'get',
+			        data:{goodsId:Number(id)},
+			        success:function(response){
+			        	if (!response.success) return;
+			        	var res = response.data, html = '';
+			        	var goodsGallery = res.goodsGallerys;
+			        	html += '<a href="/jewelry/details?id='+res.id+'">'+
+					    			'<img src="'+goodsGallery[0].imgOriginal+'"/>'+
+					    			'<div class="clearfix goods-msg">'+
+					    				'<div class="fl goods-info">'+
+					    					'<p>'+res.goodsName+'</p>'+
+					    					'<p>型号: '+res.goodsSn+'</p>'+
+					    				'</div>'+
+					    				'<div class="fr clearfix goods-price">'+
+					    					'<span class="fl">销售价</span>'+
+					    					'<span class="fl">￥'+res.price+'</span>'+
+					    				'</div>'+
+					    			'</div>'+
+						       	'</a>';
+						$(item).html(html)
+			        },
+			        error:function(error){
+			        	
+			        }
+			    })
+			});
+			goodsComment(1)
+		}
+		$(function(){
+			var id = Number(utils.getUrlParamVal('id'));
+			$("input[name=goodsId]").val(id);
+			$.ajax({
+				type:"get",
+				url:"/api/marketPage/shoppingDetailShow",
+				data:{shoppingId:id},
+				success:function(response){
+					if (!response.success) return;
+					var res = response.data;
+					var article = JSON.parse(res.article);
+					$("#name").text(res.name);
+					$("#author").text(res.author);
+					$("#authorPic").attr("src",res.authorPic);
+					$("#createTime").text(res.createTime);
+					var articleHtml = '';
+					$.each(article,function(idx,item){
+						if(item.id == 1){
+							articleHtml += '<p><span>'+item.article+'</span></p>';
+						}else if(item.id == 2){
+							articleHtml += '<p class="tc"><img src="'+item.articlePic+'"/></p>';
+						}else if(item.id == 3){
+							articleHtml += '<div class="goods" val="'+item.goodId+'"></div>';
+						}
+					})
+					$(".details").html(articleHtml)
+				},
+				error:function(error){
+					
+				}
+			});
+		})
+		function txt(){
+			$("#wrap").show()
+		}
+		function stopDefault(e){   
+		    window.event?window.event.cancelBubble=true:e.stopPropagation();
+            e.preventDefault?e.preventDefault():window.event.returnValue=false;  
+		}
+		/**
+		 * 获取评价列表
+		 * */
+		function goodsComment(page){
+		    var goodsId = $("input[name=goodsId]").val();
+	        $.ajax({
+		        url:'/api/marketPage/goodsCommentPageShow/'+goodsId+'/2',
+		        type:'get',
+		        data:{
+		        	offset:page,
+		        	limit:5
+		        },
+		        success:function(response){
+		        	if (!response.success) return;
+		        	var res = response.data, html = '';
+		        	$("#pagination").pagination({
+						pageCount: res.pages,
+					    jump: true,
+					    coping: true,
+					    current:res.current,
+					    prevContent: '<',
+					    nextContent: '>',
+					    callback: function (api){
+					        goodsComment(api.getCurrent())
+					    }
+					});
+					$("#num").text(' ( '+res.total+' ) ')
+					$.each(res.records,function(idx,item){
+						html += '<li class="clearfix">'+
+				    				'<div class="fl commentator tc">'+
+				    					'<a><img src="'+item.userLogo+'"/></a>'+
+				    					'<p>'+item.userName+'</p>'+
+				    				'</div>'+
+				    				'<div class="fl comment-content">'+
+				    					'<p>'+item.content+'</p>'+
+				    					'<p>'+item.createTime+'</p>'+
+				    					'<p class="tr"><span val="true" onclick="commentRank(this,'+item.id+')" style="cursor: pointer;">'+
+				    						'<i class="icon icon-like2"></i>'+item.commentRank+'</span>'+
+				    					'</p>'+
+				    				'</div>'+
+				    			'</li>';
+					})
+					$("#commentList").html(html);
+		        },
+		        error: function(error){
+		            
+		        }
+		    })
+        }
+		/* *
+		 * 评论
+		 * */
+		function userComment(){
+			if (!utils.islogin()){
+				utils.alert('danger','您未登录，请登录后再进行操作！');
+				setTimeout(function(){
+					//window.location = '../login'
+				},1000)
+				return false;
+			};
+			var datas = JSON.stringify({
+					commentType:2,
+					idValue:utils.getUrlParamVal('id'),
+					content:$("#commentContent").val().trim()
+				})
+			$.ajax({
+				type:'post',
+				url:'/api/userCenter/userComment/saveOrUpdate',
+				contentType: 'application/json;charset=utf-8',
+				data:datas,
+				headers:{
+			        	'Authorization':utils.getCookie("token")
+			        },
+				success:function(res){
+					if(res.success){
+						utils.alert('success','评价成功！');
+					}else if(res.success){
+						utils.alert('danger',res.msg);
+					}
+					$("#wrap").hide();
+				},
+				error:function(error){
+					$("#wrap").hide();
+				}
+			})
+		}
+		/**
+		 * 点赞
+		 * */
+		function commentRank(e,id){
+			var el = e||window.event;
+			var flug = $(el).attr("val");
+			var isFlug = flug=='true'?'false':'true';
+			$.ajax({
+				type:'post',
+				url:'/api/user/userComment/addCommend/'+id+'/'+flug,
+				contentType: 'application/json;charset=utf-8',
+				success:function(res){
+					if(res.success){
+						if(flug == 'true'){
+							$(el).find(".icon").removeClass("icon-like2").addClass("icon-like-active");
+						}else{
+							$(el).find(".icon").removeClass("icon-like-active").addClass("icon-like");
+						}
+						$(el).attr('val',isFlug);
+						utils.alert('success','点赞成功！');
+					}else if(res.success){
+						utils.alert('danger',res.msg);
+					}
+				},
+				error:function(error){
+					
+				}
+			})
+		}
+	</script>
+</body>
+</html>
+

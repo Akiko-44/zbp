@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+</head>
+<body class="userPublish">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div id="menuWrap">
+					<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+						<el-menu-item index="2">上架中（{{data["2"] || 0}}）</el-menu-item>
+						<el-menu-item index="1">审核中（{{data["1"] || 0}}）</el-menu-item>
+						<el-menu-item index="0">待上架（{{data["0"] || 0}}）</el-menu-item>
+						<el-menu-item index="3">审核失败（{{data["3"] || 0}}）</el-menu-item>
+					</el-menu>
+				</div>
+				
+				<br>
+				<div id="listWrap">
+					<el-table :data="tableData" style="width: 100%">
+				    	<el-table-column prop="date" label="商品名称">
+				    		<template slot-scope="scope">
+				    			<div class="clearfix">
+				    				<div class="fl">
+				    					<img :src="scope.row.imgUrl | formatImg" width="65" height="65">
+				    				</div>
+				    				<div style="padding-left: 75px">
+				    					<b>{{scope.row.goodsName}}</b>
+				    				</div>
+				    			</div>
+     						</template>
+				    	</el-table-column>
+				    	<el-table-column prop="categoryName" label="分类" width="100"></el-table-column>
+				    	<el-table-column prop="brandName" label="品牌" width="100"></el-table-column>
+				    	<el-table-column prop="deprecition" label="新旧程度" width="100"></el-table-column>
+				    	<el-table-column prop="price" label="期望价格" width="100">
+				    		<template slot-scope="scope">
+				    			￥{{scope.row.price}}
+				    		</template>
+				    	</el-table-column>
+				    	<el-table-column prop="swapRemark" label="互换需求" width="140" v-if="goodsStatus!=3"></el-table-column>
+				    	<el-table-column prop="checkDesc" label="失败原因" width="140" v-if="goodsStatus==3"></el-table-column>
+				    	<el-table-column prop="date" label="操作" width="120">
+				    		<template slot-scope="scope">
+     							<a class="downBtn blue" v-if="scope.row.goodsStatus==2" @click="down($event)" :data-id="scope.row.id">下架</a>
+     							<a class="upBtn blue" v-if="scope.row.goodsStatus==0" @click="up($event)" :data-id="scope.row.id">上架</a>
+     							<a class="resendBtn blue" v-if="scope.row.goodsStatus==3" @click="resend($event)" :data-id="scope.row.id">重新发布</a>
+     							<a class="editBtn blue" @click="edit($event)" :data-id="scope.row.id">编辑</a>
+     							<a class="delBtn blue" @click="del($event)" :data-id="scope.row.id">删除</a>
+     						</template>
+				    	</el-table-column>
+				  </el-table>
+				  
+				  <br>
+				  <el-pagination
+				  	  background 
+				      @current-change="handleCurrentChange"
+				      :current-page="current"
+				      :page-size="size"
+				      layout="total, prev, pager, next, jumper"
+				      :total="total">
+				   </el-pagination>
+				  
+				</div>
+				
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../userFooter.ejs %>
+
+
+<%- include ../../exchange/commonJs.ejs %>
+<script>
+$(".userLeftNav .userSubNav li:eq(4)").addClass("cur");
+
+
+var routerVm = new Vue({
+	el: "#router"
+})
+
+var menuVm = new Vue({
+	el: "#menuWrap",
+	data: {
+		activeIndex: '2',
+		data: {
+			"0": "0",
+			"1": "0",
+			"2": "0",
+			"3": "0"
+		}
+    },
+    methods: {
+      	handleSelect:function(key, keyPath) {
+      		listVm.current = 1;
+      		listVm.goodsStatus = key;
+      		listVm.render();
+      		this.statusCount()
+      	},
+      	statusCount:function(){
+      		var self = this;
+			utils.ajax({
+				url: "/api/swap/user/goods/sale_goods/status_count?swapble=1",
+				type: "get",
+				success: function(data){
+					data = data.data;
+					self.data = data
+				}
+			})
+      	}
+    },
+    mounted: function(){
+    	this.statusCount()
+    }
+})
+
+var listVm = new Vue({
+	el: "#listWrap",
+	data: {
+		tableData: [],
+		
+		current: 1,
+		size: 10,
+		goodsStatus:  2,
+		swapble: 1,
+		
+		total: 0,
+	},
+	mounted: function(){
+		this.render();
+	},
+	methods: {
+		render: function(){
+			var self = this;
+			utils.ajax({
+				url: "/api/swap/user/goods/sale_goods/list",
+				type: "get",
+				data: {
+					current: self.current,
+					size: self.size,
+					goodsStatus: self.goodsStatus,
+					swapble: self.swapble
+				},
+				success: function(data){
+					data = data.data;
+					self.tableData = self.tableData.splice(self.tableData.length)
+					self.tableData = data.records;
+					self.total = data.total;
+				}
+			})
+		},
+		handleCurrentChange(val) {
+	        console.log(`当前页: ${val}`);
+	        var self = this;
+	        self.current = val;
+	        self.render();
+      	},
+      	down: function(event){
+      		var self = this;
+			var id = event.currentTarget.getAttribute("data-id");
+			utils.ajax({
+      			url: "/api/swap/user/goods/sale_goods/off_sell/" + id,
+      			type:"get",
+      			success: function(data){
+      				self.$message({
+      		          	showClose: true,
+      		          	message: '操作成功',
+      		          	type: 'success'
+      		        });
+      				self.render();
+      				menuVm.statusCount()
+      			}
+      		})
+      	},
+		up: function(event){
+			var self = this;
+			var id = event.currentTarget.getAttribute("data-id");
+			utils.ajax({
+      			url: "/api/swap/user/goods/sale_goods/on_sell/" + id,
+      			type:"get",
+      			success: function(data){
+      				self.$message({
+      		          	showClose: true,
+      		          	message: '操作成功',
+      		          	type: 'success'
+      		        });
+      				self.render();
+      				menuVm.statusCount()
+      			}
+      		})
+      	},
+		resend: function(event){
+			var self = this;
+			var id = event.currentTarget.getAttribute("data-id");
+			location.href = "/user/publish/swap?id="+id;
+      	},
+		edit: function(event){
+			var self = this;
+			var id = event.currentTarget.getAttribute("data-id");
+			location.href = "/user/publish/swap?id="+id;
+      	},
+		del: function(event){
+			var self = this;
+			var id = event.currentTarget.getAttribute("data-id");
+      		utils.ajax({
+      			url: "/api/swap/user/goods/sale_goods/del/" + id,
+      			type:"get",
+      			success: function(data){
+      				self.$message({
+      		          	showClose: true,
+      		          	message: '操作成功',
+      		          	type: 'success'
+      		        });
+      				self.render();
+      			}
+      		})
+      	}
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	}
+})
+
+
+</script>
+</body>
+</html>
+

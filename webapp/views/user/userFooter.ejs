@@ -1,0 +1,62 @@
+<div id="footer" class="footer">
+	<div class="container">
+		<div class="footerNav">
+			<ul class="clearfix">
+				<li>
+					<a href="../agreement/about_we">关于我们</a>
+				</li>
+				<li>
+					<a href="../agreement/touch_we">联系我们</a>
+				</li>
+				<li>
+					<a href="../agreement/user_protocol/sign_in_rules">用户协议</a>
+				</li>
+				<li>
+					<a href="../agreement/disclaimer">免责声明</a>
+				</li>
+				<li>
+					<a>网站地图</a>
+				</li>
+				<!--<li>
+					<a href="/user/msg/feedback">意见反馈</a>
+				</li>-->
+				<li>
+					<a href="/user/help">帮助中心</a>
+				</li>
+			</ul>
+		</div>
+		<div>
+			<div>
+				<!--<div class="clearfix" style="padding: 15px 0;">
+					<a class="btn" style="background: #666; color: #fff; line-height: 26px; width: 82px;margin-right: 38px">友情链接</a>
+				</div>-->
+				<div>
+					<div class="links" style="text-align: center;margin:35px 0px  0px">
+					
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="copyright tc">
+			
+			<p>版权所有   中宝协（北京）珠宝文化有限公司   保留所有版权 京ICP备18003055号-1 &nbsp;&nbsp;京网文  [ 2018 ]  11190-1028 号</p>
+			<p>Copyright@2017-2018 www.gacjc.com,All Rights Reserved</p>
+		</div>
+	</div>
+</div>
+
+<script>
+utils.ajax({
+	url: "/admin/portal/friendship/link/list",
+	type: "get",
+	success: function(data){
+		data = data.data;
+		var html = "";
+		for(var i = 0; i < data.length; i++){
+			html += '<a href="'+data[i].link+'" target="_blank">'+data[i].keyword+'</a>'
+		}
+		$("#footer .links").html(html)
+	}
+})
+</script>

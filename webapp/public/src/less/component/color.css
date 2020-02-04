@@ -1,0 +1,60 @@
+/*
+	文字颜色
+*/
+.lightblue {
+  color: #58B7FF;
+}
+.blue {
+  color: #6A9FD5;
+}
+.darkblue {
+  color: #1D8CE0;
+}
+.green {
+  color: #39975A;
+}
+.orange {
+  color: #F7BA2A;
+}
+.red {
+  color: #FB746E;
+}
+.black {
+  color: #1F2D3D;
+}
+.lightblack {
+  color: #324057;
+}
+.extra-light-black {
+  color: #475669;
+}
+.silver {
+  color: #8492A6;
+}
+.lightsilver {
+  color: #99A9BF;
+}
+.extra-light-silver {
+  color: #C0CCDA;
+}
+.gray {
+  color: #CCCCCC;
+}
+.lightgray {
+  color: #E5E9F2;
+}
+.darkwhite {
+  color: #F9FAFC;
+}
+.extra-light-gray {
+  color: #EFF2F7;
+}
+.white {
+  color: #FFFFFF;
+}
+.yellow {
+  color: #C2A374;
+}
+/*
+	背景颜色
+*/

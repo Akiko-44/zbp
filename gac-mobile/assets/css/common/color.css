@@ -1,0 +1,23 @@
+.gray {
+  color: var(--gray);
+}
+
+.dark-gray {
+  color: var(--dark-gray);
+}
+
+.brown {
+  color: var(--brown);
+}
+
+.red {
+  color: var(--red);
+}
+
+.blue {
+  color: var(--blue);
+}
+
+.theme {
+  color: var(--theme);
+}

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="互换坊是一个闲置珠宝交易市场，支持线上担保交易，安全放心，另外还有珠宝拍卖，在线黄金回收等业务，让你轻松自在买卖闲置珠宝！">
+<meta name="keywords" content="珠宝互换坊、珠宝闲置、首饰闲置、珠宝交换、闲置交易、互换坊、玉石闲置、玉石交换">
+<title>珠宝玉石闲置共享_闲置珠宝共享平台</title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+body {background: #F5F5F5;}
+body .slick-dots li button:before{
+	overflow: hidden;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+}
+.ellipsis{
+	height: 18px;
+	overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;}
+.slideritem a {display: block;height: 400px}
+.exchangeTitle {margin-top: 50px;margin-bottom: 30px;}
+.exchangeTitle strong {color: #1A1A1A;font-size: 16px;}
+.exchangeTitle span {color: #666666;font-size: 16px;margin-left: 5px;}
+.exchangeTitle a {
+	display: inline-block;
+	line-height: 20px;
+	color: #666;
+	border-radius: 11px;
+	text-align: center;}
+
+.exchangeRecommend ul {
+	
+}
+.exchangeRecommend li {
+	float: left;
+	width: 176px;
+	margin-left: 30px;
+	text-align: center;
+	position: relative;
+}
+.exchangeRecommend li:first-child{
+	margin-left: 0;
+}
+.exchangeRecommend .listShadow .goodsName{
+	height: 55px;
+	line-height: 55px;
+	background-color: #fff;
+}
+.exchangeRecommend .img {height: 193px;line-height: 193px;position: relative;background: #f9f9f9;overflow: hidden}
+
+.exchangeRecommend li .info ,.exchangeExpert li .info{padding: 8px 10px;background: #FF0000;
+	opacity: .8;
+	display: none;
+	color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.exchangeRecommend li .info .categoryName,.exchangeExpert li .info .categoryName{
+	margin-top: 56px;
+}
+.exchangeRecommend li:hover .info,.exchangeExpert li:hover .info{
+	display: block;
+}
+.exchangeRecommend li .info .brandName,.exchangeRecommend li .info .price,.exchangeExpert li .info .price{
+	margin-top: 20px;
+}
+.exchangeRecommend li .info .intro,.exchangeExpert li .info .intro {
+	color: #fff;
+	line-height: 16px;
+	height: 32px;
+	line-height: 32px;
+	border: 1px solid #fff;
+	position: absolute;
+    left: 0;
+    right: 0;
+	bottom: 20px;
+	width: 100px;
+	margin: 0 auto;
+}
+
+
+
+.exchangeGoods ul {
+	
+}
+.exchangeGoods ul li,.exchangeAuction ul li,.exchangeBaby ul li{
+	width: 227.5px;
+	margin-left: 30px;
+	background-color: #fff;
+	float: left;
+}
+.exchangeGoods ul li:first-child,.exchangeAuction ul li:first-child,.exchangeBaby ul li:first-child,.exchangeExpert ul li:first-child{
+	margin: initial;
+}
+.exchangeGoods li a,.exchangeAuction li a,.exchangeBaby li a,.exchangeExpert li a {display: block;overflow: hidden;width: 100%;height: 100%;position: relative;}
+.exchangeGoods li a span,.exchangeAuction li a span,.exchangeBaby li a span,.exchangeExpert li a span{position: absolute;bottom: 15px;left: 15px;background:rgba(0, 0, 0, 0.35);color:#fff;line-height: 26px;border-radius: 10px;padding: 0 20px;}
+.exchangeGoods li .info,.exchangeAuction li .info,.exchangeBaby li .info{
+	height: 75px;
+	padding: 13px 15px;
+}
+.exchangeGoods li .info .name,.exchangeAuction li .info .name,.exchangeBaby li .info .name{
+	font-size: 16px;
+	font-weight: bold;
+}
+.exchangeGoods li .info .describe,.exchangeAuction li .info .describe,.exchangeBaby li .info .describe{
+	height: 19px;
+}
+
+.exchangeGoods li .info .state-num .num,.exchangeAuction li .info .state-num .num,.exchangeBaby li .info .state-num .num{
+	vertical-align: middle;
+}
+.exchangeGoods li .info .state-num i,.exchangeAuction li .info .state-num i,.exchangeBaby li .info .state-num i{
+		vertical-align: middle;
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+}
+.exchangeGoods li .info .state-num .look,.exchangeAuction li .info .state-num .look,.exchangeBaby li .info .state-num .look{
+		background: url(../../src/img/exchange/look.png) no-repeat center/16px 10px;
+}
+.exchangeGoods li .info .state-num .comment,.exchangeAuction li .info .state-num .comment,.exchangeBaby li .info .state-num .comment{
+		background: url(../../src/img/exchange/comment.png) no-repeat center/14px 14px;
+}
+.exchangeGoods li .info .state-num .collect,.exchangeAuction li .info .state-num .collect,.exchangeBaby li .info .state-num .collect{
+		background: url(../../src/img/exchange/collect-heart.png) no-repeat center/14px 14px;
+}
+
+
+.exchangeRecovery .listShadow {
+	background-color: #fff;
+	height: 192px;
+	
+}
+.exchangeRecovery .divHover {
+	background-color: #fff;
+	height: 192px;
+	text-align: center;
+	padding: 10px;
+	transition: all 0.35s ease;
+}
+.exchangeRecovery .divHover:hover{
+	transform: scale(1.1)
+}
+.exchangeRecovery .info{
+	font-size: 14px;
+	line-height: 2;
+	
+}
+.exchangeFlow ul {border-bottom:1px solid #ccc;margin-top: 35px;}
+.exchangeFlow li{padding-bottom: 10px;float: left;width: 135px;text-align: center;font-weight: bold;font-size: 24px;color: #999;}
+.exchangeFlow li.cur{color: #333;}
+
+.exchangeExpert ul li{
+	width: 227.5px;
+	height: 300px;
+	margin-left: 30px;
+	background-color: #fff;
+	float: left;
+	position: relative;
+	text-align: center;
+	cursor: pointer;
+}
+.brandName2{
+	display:inline-block;
+	margin-top: 20px;
+	padding: 2px 3px;
+	width: 65px !important;
+}
+.describe{
+	width: 195px;
+	line-height: 20px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+.statusWrap{
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	color: #FFFFFF;
+	opacity: .7;
+	border-bottom-right-radius: 15px;
+	border-top-right-radius: 15px;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.statusWrap span{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+.statusWrap1{background: #6bb74a;}
+.statusWrap2{background: #890F1C;}
+.statusWrap3{background: #CCCCCC;}
+
+.adverts a{
+	display: inline-block;
+	width: 100%;
+	margin-top: 72px;
+}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+		
+		<div class="galleryBanner" id="banner" style="position: relative;">
+			<div class="slider">
+				
+			</div>
+		</div>
+		<div class="galleryHeader" id="navWrap">
+			<div class="galleryNavBox">
+				<div class="galleryNav">
+					<ul>
+						<li>
+							<h3 style="color: #333333;font-weight: bolder;">商品分类</h3>
+						</li>
+						<li v-for="item in data">
+							<h3 class="subThree" :data-name="item.name" :data-id="item.id">{{item.name}}</h3>
+							<div class="clearfix gallerySub">
+								<div v-if="item.children && item.children.length"  v-for="subitem in item.children">
+									<p :data-name="subitem.name" :data-id="subitem.id" class="subThree">{{subitem.name}}</p>
+									<div v-if="subitem.children&&subitem.children.length>0">
+										<template  v-for="citem in subitem.children">
+											<a :data-name="citem.name" :data-id="citem.id" class="subThree">{{citem.name}}</a>
+										</template>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="gallerySubNav">
+					<div>
+						<ul>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="content">
+		
+			<div class="containerIndex exchangeRecommend">
+				<div class="exchangeTitle">
+					<strong>精品推荐</strong>
+				</div>
+				<div>
+					<ul class="clearfix" v-if="pick.length>0">
+						<template v-for="(item,index) in pick" :key="index" v-if="index<5">
+							<li class="listShadow gripper" :data-id="item.goodsId" :data-type="item.goodsType">
+								<div class="img">
+									<a><img :src="item.imgUrl | formatImg" width="176px" height="176px"></a>
+								</div>
+								<div class="goodsName ellipsis">
+									{{item.goodsName}}
+								</div>
+								<div class="info" v-if="item.entity">
+									<p class="categoryName">{{item.goodsName}}</p>
+									<p class="brandName">{{item.entity.brandName}}</p>
+									<p class="price">￥{{ item.entity.price }}</p>
+									
+									<div class="intro">
+										详情
+									</div>
+								</div>
+							</li>
+						</template>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="containerIndex exchangeGoods">
+				<div class="exchangeTitle">
+					<a class="fr" href="../../exchange/sale">更多<i class="el-icon-d-arrow-right"></i></a>
+					<strong>物品销售</strong>
+				</div>
+				<ul class="clearfix">
+					<li :data-id="item.goodsId" v-for="(item,index) in sale" :key="index" v-if="index<4">
+						<a class="imgHover">
+							<img :src="item.imgUrl | formatImg" width="100%" height="227.5px">
+						</a>
+						<div class="info">
+							<p class="name ellipsis" style="width: 198px;cursor:pointer">{{item.goodsName}}</p>
+							<p class="describe"></p>
+							<p class="state-num clearfix" >
+								<span class="fl new-red fs16" style="margin-right: 10px;">￥ {{item.entity.price}}</span>
+								<span class="fl">{{item.entity.deprecition | formatDep}}</span>
+								<span class="fr">
+									<i class="collect"></i><span class="num">{{item.entity.collectNum}}</span>
+								</span>
+								<span class="fr">
+									<i class="comment"></i><span class="num">{{item.entity.commentNum}}</span>
+								</span>
+								<span class="fr">
+									<i class="look"></i><span class="num">{{item.entity.lookConut}}</span>
+								</span>
+							</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="containerIndex adverts">
+				<a href="../../exchange/jewellery_doyen?userType=4">
+					<img src="../../src/img/exchange/exchangeBanner.jpg" width="100%"/>
+				</a>
+			</div>
+			
+			<!--宝贝互换1.0隐藏-->
+			<!--<div class="containerIndex exchangeBaby">
+				<div class="exchangeTitle">
+					<a class="fr" href="../../exchange/swap">更多<i class="el-icon-d-arrow-right"></i></a>
+					<strong>宝贝互换</strong>
+				</div>
+				<ul class="clearfix">
+					<li :data-id="item.goodsId" :targetUrl="item.targetUrl" v-for="(item,index) in swap" :key="index" v-if="index<4">
+						<a class="imgHover">
+							<img :src="item.imgUrl | formatImg" width="100%" height="227.5px">
+						</a>
+						<div class="info">
+							<p class="name ellipsis" style="width: 198px;cursor:pointer">{{item.goodsName}}</p>
+							<p class="describe">交换需求:&emsp;{{item.entity.swapRemark}}</p>
+							<p class="state-num clearfix">
+								<span class="fr new-red">
+									<i class="collect"></i><span class="num">{{item.collectNum}}</span>
+								</span>
+								<span class="fr">
+									<i class="comment"></i><span class="num">{{item.commentNum}}</span>
+								</span>
+								<span class="fr">
+									<i class="look"></i><span class="num">{{item.glanceNum}}</span>
+								</span>
+							</p>
+						</div>
+					</li>
+				</ul>
+			</div>-->
+			
+			
+			
+			<div class="containerIndex exchangeAuction">
+				<div class="exchangeTitle">
+					<a class="fr" href="../../exchange/auction">更多<i class="el-icon-d-arrow-right"></i></a>
+					<strong>物品拍卖</strong>
+				</div>
+				<ul class="clearfix">
+					<li :data-id="item.goodsId" :targetUrl="item.targetUrl" 
+						v-for="(item,index) in auction" :key="index" v-if="index<4"
+						style="position: relative;">
+						<a class="imgHover">
+							<img :src="item.imgUrl | formatImg" width="100%" height="227.5px">
+						</a>
+						<div class="info">
+							<p class="name ellipsis" style="cursor:pointer">{{item.goodsName}}</p>
+							<p class="describe"></p>
+							<p class="state-num clearfix">
+								<span class="fl">
+									<a class="new-red fs16" v-if="item.entity.presentPrice == 0">¥{{item.entity.upsetPrice}}</a>
+									<a class="new-red fs16" v-else>¥{{item.entity.presentPrice}}</a>
+								</span>
+								<span class="fr">
+									<i class="collect"></i><span class="num">{{item.entity.collectNum}}</span>
+								</span>
+								<span class="fr">
+									<i class="comment"></i><span class="num">{{item.entity.commentNum}}</span>
+								</span>
+								<span class="fr">
+									<i class="look"></i><span class="num">{{item.entity.lookConut}}</span>
+								</span>
+							</p>
+						</div>
+						<div class="statusWrap tc">
+							<template v-if="item.entity.goodsStatus==10">
+								<span class="statusWrap1">正在进行</span>
+							</template>
+							<template v-if="item.entity.goodsStatus==2">
+								<span class="statusWrap2">即将开始</span>
+							</template>
+							<template v-if="item.entity.goodsStatus==11||item.entity.goodsStatus==12">
+								<span class="statusWrap3">已结束</span>
+							</template>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="containerIndex exchangeRecovery">
+				<div class="exchangeTitle">
+					<a class="fr goodsRecoveryMore">更多<i class="el-icon-d-arrow-right"></i></a>
+					<strong>黄金回购</strong>
+				</div>
+				<div class="goodsRecoveryMore" style="cursor: pointer;"><img src="../../src/img/exchange/recovery.jpg" width="100%"/></div>
+				<!--<div>
+					<el-row type="flex" class="row-bg" justify="space-between">
+					  <el-col :span="4" class="divHover" v-for="item in recycle" :key="item.goodsId">
+					  	<div class="goodsRecovery" :data-id="item.goodsId">
+					  		<div class="img">
+								<a><img :src="item.imgUrl | formatImg" width="100%" height="100%"></a>
+							</div>
+							<div class="info">
+								<div class="intro">
+									<p>{{ item.goodsName }}</p>
+								</div>
+								<div class="price">
+									{{ item.goodsName }}
+								</div>
+							</div>
+					  	</div>
+					  </el-col>
+					</el-row>
+				</div>-->
+			</div>
+			
+			<div class="containerIndex exchangeExpert">
+				<div class="exchangeTitle">
+					<a class="fr" href="../../exchange/jewellery_doyen?userType=1">更多<i class="el-icon-d-arrow-right"></i></a>
+					<strong>珠宝达人</strong>
+				</div>
+				<ul class="clearfix">
+					<li style="overflow: hidden;" :data-id="item.userId" :targetUrl="item.targetUrl" v-for="(item,index) in jewelry" :key="index" v-if="index<4">
+						<div class="imgHover">
+							<img :src="item.thumbnail | formatImg" width="100%" height="100%">
+						</div>
+						<div class="info">
+							<p class="categoryName">{{item.nickname}}</p>
+							<p class="brandName2" v-if="item.userType == 4">
+								<img src="../../src/img/exchange/doyen4.png" style="width: 30px;margin-right: 3px;"/>商家
+							</p>
+							<p class="brandName2" v-if="item.userType != 4">
+								<img src="../../src/img/exchange/doyen.png" style="width: 30px;margin-right: 3px;"/>个人
+							</p>
+							<div class="intro">
+								详情
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="container" style="margin: 50px auto 50px;">
+				<a href="../activity?supType=5" width="100%"><img src="../../src/img/jewelry/active.jpg" width="100%"/></a>
+			</div>
+			<!-- <div class="containerIndex exchangeFlow">
+				<ul class="clearfix">
+					<li class="cur"><a>互换流程</a></li>
+					<li><a>销售流程</a></li>
+					<li><a>拍卖流程</a></li>
+					<li><a>回收流程</a></li>
+				</ul>
+				<div style="padding: 25px;">
+					<img src="../../src/img/exchange/flow1.png">
+				</div>
+			</div> -->
+		</div>
+
+	</div>
+	
+	<%- include ../footer.ejs %>
+
+<script>
+$slider = $(".galleryBanner .slider");
+console.log('slidedr0',$slider);
+
+//乱序排列
+function shuffle(arr) {
+  let i = arr.length;
+  while (i) {
+    let j = Math.floor(Math.random() * i--);
+    [arr[j], arr[i]] = [arr[i], arr[j]];
+  }
+  return arr;
+}
+$(function(){
+	$(document).on("click", ".exchangeRecommend li", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		var type = self.attr("data-type");
+		//1互换商品;2:仅销售;3:拍卖;4:回收
+		if(type == '1'){
+			location.href = "../../exchange/swap_detail?id=" + id;
+		}else if(type == '2'){
+			location.href = "../../exchange/sale_detail?id=" + id;
+		}else if(type == '3'){
+			location.href = "../../exchange/auction_detail?id=" + id;
+		}else if(type == '4'){
+			location.href = "../../exchange/recovery_detail?id=" + id;
+		}
+		
+	}).on("click", ".exchangeGoods li", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		location.href = "../../exchange/sale_detail?id=" + id;
+	}).on("click", ".exchangeBaby li", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		location.href = "../../exchange/swap_detail?id=" + id;
+	}).on("click", ".exchangeAuction li", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		location.href = "../../exchange/auction_detail?id=" + id;
+	}).on("click", ".goodsRecovery", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		location.href = "../../exchange/recovery_detail?id=" + id;
+	}).on("click", ".exchangeExpert li", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		location.href = "doyen?id=" + id;
+	}).on("click", ".goodsRecoveryMore", function(e){
+		if(!utils.islogin()){
+			utils.alert('danger','请登录后再进行操作')
+		}else{
+			location.href = indexVm.recoveryUrl
+		}
+	})
+	
+});
+
+var navVm = new Vue({
+	el: "#navWrap",
+	data: {
+		data: []
+	},
+	mounted: function(){
+		var self = this
+		utils.ajax({
+      type: "get",
+      url: "/api/designmanu/designroom/categoryList/3",
+      success: function(res) {
+        self.data = res.data
+      }
+    });
+	}
+})
+
+var indexVm = new Vue({
+	el: "#content",
+	data: {
+		pick: [],
+		auction: [],
+		recycle: [],
+		sale: [],
+		swap: [],
+		banners: [],
+		jewelry: [],
+		recoveryUrl: ''
+	},
+	mounted: function(){
+		var self = this;
+		if(utils.islogin()){
+			utils.ajax({
+				url: "/api/goldRecycle/token",
+				type: "get",
+				success: function(data){
+					self.recoveryUrl = data.data
+				}
+			})
+		}
+		utils.ajax({
+			url: "/api/swap/portal/goods/swap_recommend/",
+			type: "get",
+			success: function(data){
+				data = data.data;
+				self.pick = shuffle(data.pick);
+				self.auction = shuffle(data.auction);
+				self.recycle = data.recycle;
+				self.sale = shuffle(data.sale);
+				self.swap = shuffle(data.swap);
+				self.banners = data.banners
+				self.jewelry = shuffle(data.jewelry);
+				var html = "";
+				for(var i = 0; i < data.banners.length; i++){
+					if(data.banners[i].bannerUrl){
+						html += '<div class="slideritem"><a href="'+utils.formatUrl(data.banners[i].bannerUrl)+'" target="_blank"><img src="'+utils.formatImg(data.banners[i].pcUrl)+'" height="400"></a></div>'
+					}else{
+						html += '<div class="slideritem"><a target="_blank"><img src="'+utils.formatImg(data.banners[i].pcUrl)+'" height="400"></a></div>'
+					}
+				}
+				$("#banner .slider").html(html)
+				$slider.slick({
+					dots: true,
+					arrows: false,
+					swipe: true,
+					slidesToScroll: 1,
+				  	autoplay: true,
+				  	autoplaySpeed: 5000
+				});
+			}
+		})
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		},
+		formatAuctionTime: function(data){
+			var start = new Date(data.auctionStartTime).getTime();
+			var end = new Date(data.auctionEndTime).getTime();
+			var text = "";
+			if(data.goodsStatus == 2){
+				text = "距离结束" + new Date(end - start).format("dd天hh时mm分ss秒");
+			}else if(data.goodsStatus == 1){
+				text = "即将开始"
+			}else if(data.goodsStatus == 3){
+				text = "已成交"
+			}else if(data.goodsStatus == 4){
+				text = "已流拍"
+			}
+			return text;
+		},
+		formatDep: function(data){
+			return utils.formatDep(data)
+		}
+	},
+	methods: {
+		formatUrl: function(str){
+			return utils.formatUrl(str)
+		}
+	}
+})
+
+$(document).on("click", ".toDetail", function(e){
+	var id = $(e.currentTarget).attr("data-id");
+	if(!!id){
+		window.location.href = "../../exchange/sale?categoryId=" + categoryId;
+	}
+}).on('click','.subThree',function(e){
+	var self = $(e.currentTarget);
+	var id  = self.attr('data-id');
+	var val  = self.attr('data-name');
+	window.location = 'sale?searchId='+id+'&searchWord='+val
+})
+</script>
+
+</body>
+</html>
+

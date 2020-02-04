@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>中宝平_知识产权服务</title> 
+<meta name="Keywords" content="版银知服、软件著作权、作品登记、商标注册、国内商标、国际商标、商标驳回复审、专利申请">
+<meta content="版银知服知识产权服务平台， 专业代理版权登记、商标注册、专利申请等服务" name="description">
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+<script src="../../dist/js/lib.js"></script>
+<style type="text/css">
+html{background: #FFFFFF;}
+#main .copyright{
+	width: 100%;
+	background: #FFFFFF;
+	color: #666666;
+	font-size: 14px;
+	padding: 10px 0;
+	border-bottom: 1px solid rgb(230, 230, 230);
+}
+#main li{margin-right: 20px;}
+.jump{
+	line-height: 100px;
+	font-size: 16px;
+}
+.jump a{
+	color: #000000;
+	font-weight: bolder;
+}
+</style>
+</head> 
+<body> 
+	<%- include headerbar %>
+	
+	<%- include header %>
+	
+	<%- include headerNav %>
+	<div id="main">
+		<header class="copyright">
+			<ul class="container clearfix" style="padding-left: 20px;line-height: 32px;">
+				<li class="fl">
+					<a style="font-weight: bold;color: #000000;">客服电话：010-84187120</a>
+				</li>
+				<li class="fl">
+					<a href="tel:010-84187120" style="font-weight: bold;color: #000000;">服务时间：周一到周五 9:00-17:30</a>
+				</li>
+				<li class="fl btn btn-info" style="margin-left: 30px;"><a class="jumpToPage1">知识产权服务</a></li>
+				<li class="fl btn btn-info" style="margin-left: 30px;"><a class="jumpToPage2">存证服务</a></li>
+			</ul>
+		</header>
+		<p class="tc hide load" style="padding-top: 50px;">
+			<img src="../../src/img/loading.gif" width="100"/>
+		</p>
+		<p class="tc jump" style="line-height: 100px;">请选择&emsp;<a class="jumpToPage1">知识产权服务</a>&emsp;或&emsp;<a class="jumpToPage2">存证服务</a></p>
+		<form id="JumpForm" name="JumpForm" method="post" target="" action="" style="display: none;">
+			<input type="hidden" name="_GlobalSessionID_" id="_GlobalSessionID_" value="">
+			<input type="hidden" name="_MemberID_" id="_MemberID_" value="">
+			<input type="hidden" name="RandomStr" id="RandomStr" value="">
+		</form>
+		<div style="width:100%; text-align: center">
+			<iframe name="CunnarFrame" width="100%" height="500px" frameborder="0">		
+			</iframe>
+		</div>
+	</div>
+	<%- include user/userFooter %>
+<script type="text/javascript">
+var _MemberID_ = utils.getCookie("phone") || ''
+var jumpObj = {
+	jumpToPage1: '',
+	jumpToPage2: ''
+}
+if(location.href.indexOf('gacjc.com') > -1){
+	jumpObj.jumpToPage1 = 'http://jewellery.cbips.cn/index.jsp'
+	jumpObj.jumpToPage2 = 'http://jewellery.cbips.cn/WebPublish/service/ServiceOrderList.html'
+}else{
+	jumpObj.jumpToPage1 = 'http://jewellerytest.cbips.cn/index.jsp'
+	jumpObj.jumpToPage2 = 'http://jewellerytest.cbips.cn/WebPublish/service/ServiceOrderList.html'
+}
+$(function(){
+	$(document).on('click', '.jumpToPage1', function(){
+		$('.load').removeClass('hide')
+		utils.ajax({
+			type: 'get',
+			url: '/api/userCenter/memberLogin',
+			success: function(data){
+				if(data.success){
+					data = data.data
+					$('#JumpForm').attr('action', jumpObj.jumpToPage1)
+					$('#JumpForm').attr('target', '_self')
+					$("#_GlobalSessionID_").val(data.globalSessionID)
+					$("#_MemberID_").val(_MemberID_)
+					$("#RandomStr").val(data.randomStr)
+					setTimeout(function(){
+						$('#JumpForm').submit()
+						$('.load').addClass('hide')
+						$(".jump").addClass('hide')
+					},50)
+				}
+			}
+		})
+	}).on('click', '.jumpToPage2', function(){
+		$('.load').removeClass('hide')
+		utils.ajax({
+			type: 'get',
+			url: '/api/userCenter/memberLogin',
+			success: function(data){
+				if(data.success){
+					data = data.data
+					$('#JumpForm').attr('action', jumpObj.jumpToPage2)
+					$('#JumpForm').attr('target', 'CunnarFrame')
+					$("#_GlobalSessionID_").val(data.globalSessionID)
+					$("#_MemberID_").val(_MemberID_)
+					$("#RandomStr").val(data.randomStr)
+					setTimeout(function(){
+						$('#JumpForm').submit()
+						$('.load').addClass('hide')
+						$(".jump").addClass('hide')
+					},50)
+				}
+			}
+		})
+	})
+})
+	
+</script>
+</html>

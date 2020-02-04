@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.title-container h3{font-size: 16px;padding-bottom: 10px;border-bottom: 1px solid #efefef;}
+.app-toolbar {margin: 20px 0;}
+</style>
+</head>
+<body class="userAccount">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item>首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div class="fund-container" id="detail">
+					<div class="title-container">
+						<h3>
+							<span>银行卡管理</span>
+						</h3>
+					</div>
+					<div class="app-toolbar clearfix">
+						<div class="fr">
+							<el-button type="warning" size="mini" @click="showAdd">添加银行卡</el-button>
+						</div>
+						<p style="color:#666">您已绑定的银行卡</p>
+					</div>
+					<div>
+						<div>
+							<el-table :data="tableData" style="width: 100%">
+								<el-table-column prop="accountName" label="开户姓名"></el-table-column>
+						    	<el-table-column prop="bankName" label="开户银行"></el-table-column>
+						    	<el-table-column prop="accountNo" label="银行账号">
+						    	</el-table-column>
+						    	<el-table-column prop="accountBankName" label="开户地址"></el-table-column>
+						    	<el-table-column prop="id" label="操作">
+						    		<template slot-scope="scope">
+						    			<a class="gray hide" :data="scope.row" @click="showEdit($event)">编辑</a>
+						    			<a class="gray" :data-id="scope.row.id" @click="del($event)">删除</a>
+						    		</template>
+						    	</el-table-column>
+					  		</el-table>
+						</div>
+					    <br>
+					</div>
+					
+					<el-dialog title="银行卡管理" :visible.sync="dialogVisible" width="30%">
+				  		<div>
+				  			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
+							  	<div class="hide">
+							  		<el-form-item label="id" prop="id">
+								    	<el-input v-model="ruleForm.id"></el-input>
+								  	</el-form-item>
+							  	</div>
+							  	<el-form-item label="开户姓名" prop="accountName">
+							    	<el-input v-model="ruleForm.accountName"></el-input>
+							  	</el-form-item>
+							   	<el-form-item label="开户银行" prop="bankName">
+							    	<el-input v-model="ruleForm.bankName"></el-input>
+							 	</el-form-item>
+							   	<el-form-item label="银行账号" prop="accountNo">
+							    	<el-input v-model="ruleForm.accountNo"></el-input>
+							  	</el-form-item>
+							  	<el-form-item label="账户类型" prop="accountType">
+							    	<el-radio-group v-model="ruleForm.accountType">
+							      		<el-radio label="0">对公</el-radio>
+							      		<el-radio label="1">对私</el-radio>
+							    	</el-radio-group>
+						  		</el-form-item>
+							</el-form>
+				  		</div>
+				  		<span slot="footer" class="dialog-footer">
+				    		<el-button @click="dialogVisible = false" size="small">取 消</el-button>
+				    		<el-button type="primary" @click="add" size="small">添加</el-button>
+				  		</span>
+					</el-dialog>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../userFooter.ejs %>
+	
+<script>
+var routerVm = new Vue({
+	el: "#router"
+})
+$(".userLeftNav li li[data-target='fund']").addClass("cur")
+
+var detailVm = new Vue({
+	el: "#detail",
+	data: {
+		tableData: [],
+		dialogVisible: false,
+		
+		ruleForm: {
+			id: "",
+			accountName: '',
+			accountNo: '',
+			accountType: '',
+			bankName: ''
+        },
+        rules: {
+        	accountName: [
+                { required: true, message: '请输入开户姓名', trigger: 'change' }
+            ],
+            accountNo: [
+                { required: true, message: '请输入银行账号', trigger: 'change' }
+            ],
+            bankName: [
+                { required: true, message: '请输入开户银行', trigger: 'change' }
+            ],
+            accountType: [
+                { required: true, message: '请选择账户类型', trigger: 'change' }
+            ],
+        }
+	},
+	mounted: function(){
+		this.render();
+	},
+	methods: {
+		render: function(){
+			var self = this;
+			utils.ajax({
+				url: "/api/pay/user_account/bank_card/list",
+				type: "get",
+				success: function(data){
+					data = data.data;
+					self.tableData = data;
+				}
+			})
+		},
+		showAdd: function(){
+			var self = this;
+			this.dialogVisible = true;
+			setTimeout(function(){
+				self.$refs["ruleForm"].resetFields();
+			},100)
+		},
+		add: function(){
+			var self = this;
+			this.$refs["ruleForm"].validate(function(valid){
+				if(valid){
+					var json = {
+						id: self.ruleForm.id,
+						accountName: self.ruleForm.accountName,
+						accountNo: self.ruleForm.accountNo,
+						accountType: self.ruleForm.accountType,
+						bankName: self.ruleForm.bankName
+					}
+					utils.ajax({
+						url: "/api/pay/user_account/bank_card/save",
+						data: JSON.stringify(json),
+						success: function(data){
+							utils.alert("success", "操作成功")
+							self.render();
+							self.dialogVisible = false;
+							
+						}
+					})
+				}
+			});
+		},
+		del: function(event){
+			var self = this;
+			var id = event.currentTarget.getAttribute("data-id");
+			self.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+		        confirmButtonText: '确定',
+		        cancelButtonText: '取消',
+		        type: 'warning'
+	        }).then(function(){
+	        	utils.ajax({
+	        		url: "/api/pay/user_account/bank_card/del/" + id,
+	        		type: "get",
+	        		success: function(data){
+	        			utils.alert("success", "操作成功")
+						self.render();
+	        		}
+	        	})
+	        }).catch(function(){
+	        	
+	        });
+		},
+		
+		showEdit: function(event){
+			var self = this;
+			var data = event.currentTarget.getAttribute("data");
+			data = JSON.parse(data);
+		}
+	}
+})
+
+
+
+</script>
+</body>
+</html>
+

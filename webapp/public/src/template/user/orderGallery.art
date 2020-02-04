@@ -1,0 +1,144 @@
+<li class="orderListItem">
+	<div class="topinfo clearfix">
+		<b><%=data.createTime%></b>
+		&emsp;&emsp;
+		<span>订单编号：<%= data.orderNumber %></span>
+		&emsp;&emsp;
+		<i class="iconfont icon-orderShop"></i>
+		<span><%= data.sellUserName %></span>
+	</div>
+	<div>
+		<table>
+			<tr>
+				<td>
+					<ul class="goodsList">
+						<li>
+							<table>
+								<tr>
+									<td width="115">
+										<img src="<%= $imports.formatImg(data.orderGoodVOList[0].skuMainPic) %>" width="100" height="100">
+									</td>
+									<td>
+										<h2 class="goodsName"><%= data.orderGoodVOList[0].skuName %></h2>
+									</td>
+									<td width="70">
+										X<%= data.orderGoodVOList[0].goodsNumber %>
+									</td>
+									<td width="90" class="tc">
+										<span class="fs14 yellow">￥<%= data.payMoney %></span>
+										<p class="payWay hide">(<%= $imports.formatPayType(data.payType) %>)</p>
+									</td>
+								</tr>
+							</table>
+						</li>
+					</ul>
+				</td>
+				<td width="160" class="tc border">
+					<b>￥<%= data.payMoney %></b>
+					
+					<% if(data.state == 1 || data.state == 100){ %>
+						<p class="red">待付款</p>
+					<% }else if(data.state == 2){ %>
+						<p>已付款</p>
+					<% }else if(data.state == 3){ %>
+						<p>设计中&制造中</p>
+					<% }else if(data.state == 4){ %>
+						<p>待发货</p>
+					<% }else if(data.state == 5){ %>
+						<p>待收货</p>
+					<% }else if(data.state == 6){ %>
+						<p>交易成功</p>
+					<% }else if(data.state == 7){%>
+						<p>已完成</p>
+					<% }else if(data.state == 8){%>
+						<p>已取消</p>
+					<% }else if(data.state == 9){%>
+						<p>已关闭</p>
+					<% }else if(data.state == 10){%>
+						<p>退款中</p>
+					<% }else if(data.state == 11){%>
+						<p>退款成功</p>
+					<% }else if(data.state == 12){%>
+						<p>退款失败</p>
+					<% }else if(data.state == 13){%>
+						<p>退货中</p>
+					<% }else if(data.state == 14){%>
+						<p>退货成功</p>
+					<% }else if(data.state == 15){%>
+						<p>已删除</p>
+					<% }else if(data.state == 16){%>
+						<p>待评价</p>
+					<% }else if(data.state == 41){%>
+						<p>待换出人支付</p>
+					<% }else if(data.state == 42){%>
+						<p>待换出人发货</p>
+					<% }else if(data.state == 43){%>
+						<p>待换入人收货</p>
+					<% }else if(data.state == 44){%>
+						<p>待换出人收货</p>
+					<% } %>
+				</td>
+				<td width="210" class="tc border">
+					<% if(data.state == 1 || data.state == 100){ %>
+						<p class="hide">待付款</p>
+						<div>
+							<a class="btn btn-warning toPayGallery" orderNumber="<%=data.orderNumber%>">去付款</a>
+						</div>
+						<div>
+							<a class="cancelOrderBtn" orderNumber="<%=data.orderNumber%>">取消订单</a>
+						</div>
+					<% }else if(data.state == 2){ %>
+						<p class="hide">已付款</p>
+						<div>
+							<a class="newUpDown" orderNumber="<%=data.orderGoodVOList[0].goodId%>">重新下载</a>
+						</div>
+					<% }else if(data.state == 3){ %>
+						<p class="hide">设计中&制造中</p>
+						
+					<% }else if(data.state == 4){ %>
+						<p class="hide">待发货</p>
+						<div class="red">
+							等待卖家发货
+						</div>
+						<br>
+					<% }else if(data.state == 5){ %>
+						<p class="hide">待收货</p>
+					<% }else if(data.state == 6){ %>
+						<p class="hide">交易成功</p>
+					<% }else if(data.state == 7){%>
+						<p class="hide">已完成</p>
+						<div>
+							<a class="newUpDown" orderNumber="<%=data.orderNumber%>">重新下载</a>
+						</div>
+					<% }else if(data.state == 8){%>
+						<p class="hide">已取消</p>
+					<% }else if(data.state == 9){%>
+						<p class="hide">已关闭</p>
+					<% }else if(data.state == 10){%>
+						<p class="hide">退款中</p>
+					<% }else if(data.state == 11){%>
+						<p class="hide">退款成功</p>
+					<% }else if(data.state == 12){%>
+						<p class="hide">退款失败</p>
+					<% }else if(data.state == 13){%>
+						<p class="hide">退货中</p>
+					<% }else if(data.state == 14){%>
+						<p class="hide">退货成功</p>
+					<% }else if(data.state == 15){%>
+						<p class="hide">已删除</p>
+					<% }else if(data.state == 16){%>
+						//待评价
+					<% }else if(data.state == 41){%>
+						<p class="hide">待换出人支付</p>
+					<% }else if(data.state == 42){%>
+						<p class="hide">待换出人发货</p>
+					<% }else if(data.state == 43){%>
+						<p class="hide">待换入人收货</p>
+					<% }else if(data.state == 44){%>
+						<p class="hide">待换出人收货</p>
+					<% } %>
+				</td>
+			</tr>
+		</table>
+	</div>
+</li>

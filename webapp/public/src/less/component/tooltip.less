@@ -1,0 +1,102 @@
+.tooltip {
+	background: #1f2d3d;
+    color: #fff;
+    position: absolute;
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 2000;
+    font-size: 12px;
+    line-height: 1.2
+}
+.tooltip .tooltip-arrow, .tooltip .tooltip-arrow:after {
+	position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+}
+.tooltip .tooltip-arrow:after {
+	content: " ";
+    border-width: 5px;
+}
+.tooltip .tooltip-arrow {
+	border-width: 6px;
+}
+
+/*
+	上
+*/
+.tooltip.tooltip-top {
+	margin-bottom: 12px
+}
+.tooltip.tooltip-top .tooltip-arrow {
+	bottom: -6px;
+    border-top-color: #1f2d3d;
+    border-bottom-width: 0;
+    left: 24px;
+}
+.tooltip.tooltip-top .tooltip-arrow:after {
+	bottom: 1px;
+    margin-left: -5px;
+    border-top-color: #1f2d3d;
+    border-bottom-width: 0
+}
+
+/*
+	下
+*/
+.tooltip.tooltip-bottom {
+	margin-top: 12px
+}
+.tooltip.tooltip-bottom .tooltip-arrow {
+	top: -6px;
+    border-top-width: 0;
+    border-bottom-color: #1f2d3d;
+    left: 24px;
+}
+.tooltip.tooltip-bottom .tooltip-arrow:after {
+	top: 1px;
+    margin-left: -5px;
+    border-top-width: 0;
+    border-bottom-color: #1f2d3d
+}
+
+/*
+	左
+*/
+.tooltip.tooltip-left {
+	margin-right: 12px
+}
+.tooltip.tooltip-left .tooltip-arrow {
+	right: -6px;
+    border-right-width: 0;
+    border-left-color: #1f2d3d;
+    top: 11px;
+}
+.tooltip.tooltip-left .tooltip-arrow:after {
+	right: 1px;
+    bottom: -5px;
+    margin-left: -5px;
+    border-right-width: 0;
+    border-left-color: #1f2d3d
+}
+
+/*
+	右
+*/
+.tooltip.tooltip-right {
+	margin-left: 12px
+}
+.tooltip.tooltip-right .tooltip-arrow {
+	left: -6px;
+    border-right-color: #1f2d3d;
+    border-left-width: 0;
+    top: 11px;
+}
+.tooltip.tooltip-right .tooltip-arrow:after {
+	bottom: -5px;
+    left: 1px;
+    border-right-color: #1f2d3d;
+    border-left-width: 0
+}

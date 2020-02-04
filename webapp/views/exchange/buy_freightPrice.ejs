@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<script src="../../src/js/address.js"></script>
+	<style>
+		.exchange-bbanner {
+			line-height: 60px;
+			color: #333;
+		}
+
+		.exchange-bbanner h2 {
+			font-size: 24px;
+		}
+
+		.exchange-btitle {
+			border-bottom: 2px solid #E0E0E0;
+			margin-top: 20px;
+			margin-bottom: 10px;
+			padding: 0 45px 6px 45px;
+			font-size: 12px;
+		}
+
+		.exchange-btitle strong {
+			font-size: 14px
+		}
+
+		.exchange-baddress ul {
+			height: 142px;
+			overflow: hidden
+		}
+
+		.exchange-baddress ul.show {
+			height: auto;
+		}
+
+		.exchange-baddress li {
+			cursor: pointer;
+			float: left;
+			width: 276px;
+			margin: 10px;
+			border: 4px solid #CCCCCC;
+			padding: 15px;
+			background: #fff;
+			font-size: 14px;
+		}
+
+		.exchange-baddress .locale {
+			margin: 10px 0;
+			line-height: 18px;
+			height: 36px;
+			overflow: hidden;
+			font-size: 12px;
+		}
+
+		.exchange-baddress .btn {
+			width: 90px;
+			line-height: 22px;
+			background: #CCCCCC;
+			font-size: 12px;
+			color: #fff;
+		}
+
+		.exchange-baddress li.cur {
+			border-color: #D6C4AE
+		}
+
+		.exchange-bpay ul {
+			padding: 10px 0;
+		}
+
+		.exchange-bpay li {
+			float: left;
+			width: 152px;
+			border: 2px solid #D6C4AE;
+			padding: 10px;
+			margin-right: 40px;
+			font-size: 18px;
+			color: #595959;
+		}
+
+		.exchange-bpay li * {
+			vertical-align: middle;
+			display: inline-block;
+		}
+
+		.exchange-blist li {
+			border-bottom: 1px solid #E0E0E0;
+			padding: 10px 40px;
+			background: #FAFAFA;
+			margin: 10px 0;
+		}
+
+		.exchange-blist .li_div {
+			font-size: 14px;
+			position: relative;
+		}
+
+		.exchange-blist .li_div:after {
+			left: 210px;
+			height: auto;
+			content: "";
+			position: absolute;
+			width: 0;
+			top: 40px;
+			bottom: 40px;
+		}
+
+		.exchange-blist .sendinfo {
+			width: 210px;
+		}
+
+		.exchange-blist .sendinfo p {
+			margin: 15px 0;
+		}
+
+		.exchange-blist .sendinfo strong {
+			font-size: 18px;
+		}
+
+		.exchange-blist h3 {
+			font-size: 12px;
+			color: #666;
+		}
+
+		.exchange-blist h3 img {
+			width: 24px;
+			height: 24px;
+			background: #f9f9f9;
+			margin-right: 10px;
+		}
+
+		.exchange-blist table {
+			width: 100%;
+		}
+
+		.exchange-blist td {
+			padding: 10px 0;
+		}
+
+		.exchange-blist tr {
+			border-top: 1px dashed #ccc;
+		}
+
+		.exchange-blist tr:first-child {
+			border-top: 0;
+		}
+
+		.exchange-blist td p {
+			line-height: 20px;
+			width: 280px;
+		}
+
+		.exchange-blist .li_div>div>div {
+			vertical-align: middle;
+		}
+
+		.exchange-ball .info {
+			width: 400px;
+			border: 1px solid #E6B85C;
+			padding: 5px 15px;
+		}
+
+		.exchange-ball .info p {
+			margin: 10px 0;
+			text-align: right;
+		}
+
+		.exchange-ball .info .yellow {
+			color: #E6B85C
+		}
+
+		.exchange-ball .btn-warning {
+			background: #E6B85C;
+			border-radius: 0;
+			width: 180px;
+			line-height: 38px;
+			border-color: #E6B85C;
+		}
+
+		.addDialog .dialog-main {
+			width: 500px;
+			margin-left: -250px;
+			height: 380px;
+			margin-top: -190px;
+		}
+
+		.addDialog table {
+			width: 100%;
+		}
+
+		.addDialog td {
+			padding: 0 5px;
+		}
+
+		.addDialog label {
+			line-height: 28px;
+			float: right;
+		}
+
+		.addDialog .numPre {
+			display: inline-block;
+			background: #F4F4F4;
+			width: 53px;
+			line-height: 28px;
+			text-align: center;
+		}
+
+		.addDialog .numPre+input {
+			width: 232px;
+		}
+
+		.addDialog .dialog-body {
+			bottom: 0;
+		}
+
+		/*优惠券*/
+		.voucher .voucher_item {
+			width: 150px;
+			height: 75px;
+			border-radius: 8px;
+			margin-right: 10px;
+			position: relative;
+			box-shadow: 0 3px 3px #CCCCCC;
+			cursor: pointer;
+		}
+
+		.voucher_item:before {
+			display: inline-block;
+			content: '';
+			position: absolute;
+			left: -1px;
+			top: -1px;
+			width: 0;
+			height: 0;
+			border-width: 20px;
+			border-style: solid;
+			border-color: #C3A475 transparent transparent #C3A475;
+		}
+
+		.voucher_item span {
+			position: absolute;
+			left: 3px;
+			top: 3px;
+			color: #FFFFFF;
+		}
+
+		.voucher_money1 {
+			width: 40%;
+			line-height: 75px;
+			font-size: 24px;
+			font-weight: bolder;
+		}
+
+		.voucher_money2 {
+			width: 60%;
+			line-height: 16px;
+			padding-top: 21px;
+		}
+
+		.merchantVoucher {
+			color: #C3A475;
+		}
+
+		.merchantVoucher .voucher_item {
+			background: #F1E3D1;
+			border: 1px solid #F1E3D1;
+		}
+
+		.merchantVoucher .activeVoucher {
+			border: 1px solid #FF0000;
+		}
+
+		.voucher0 {
+			color: #C3A475;
+		}
+
+		.voucher0 .voucher_item {
+			background: #FFFFFF;
+			border: 1px solid #F1E3D1;
+		}
+
+		.voucher0 .activeVoucher {
+			border: 1px solid #FF0000;
+		}
+
+		.pV {
+			line-height: 30px;
+		}
+
+		.sku {
+			color: #C3A475;
+			margin-top: 10px;
+		}
+
+		.receipt p {
+			margin-right: 20px;
+		}
+
+		.receipt input {
+			width: 250px;
+		}
+
+		.receipt_g {
+			display: inline-block;
+			width: 66px;
+			height: 30px;
+			color: #FFFFFF;
+			text-align: center;
+			line-height: 30px;
+			background: #999;
+			margin-right: 20px;
+			border-radius: 15px;
+			-webkit-border-radius: 15px;
+			-moz-border-radius: 15px;
+		}
+
+		.receipt_g.active {
+			background: #C2A374;
+		}
+
+		.code_msg {
+			width: 250px;
+			position: absolute;
+			top: 35px;
+			left: 0;
+		}
+	</style>
+</head>
+
+<body class="exchangeBuy">
+
+	<%- include ../headerbar.ejs %>
+
+
+
+	<div id="main" class="main" style="margin-top: 30px;">
+
+		<div class="exchange-bbanner container clearfix">
+			<h2 class="fl"><strong>填写并核对订单信息</strong></h2>
+			<img class="fr" src="../../src/img/exchange/buy_progress.png">
+		</div>
+
+
+
+		<div class="exchange-baddress container" id="address">
+			<h3 class="clearfix exchange-btitle">
+				<a class="fr red" id="showAddDialog">新增收货地址</a>
+				<strong>确认您的收货地址</strong>
+			</h3>
+			<div>
+				<ul class="clearfix">
+					<template v-for="item in list">
+						<li :data-id="item.id" v-bind:consignee="item.consignee" v-bind:province="item.province"
+							v-bind:city="item.city" v-bind:area="item.area" v-bind:street="item.street" v-bind:detail="item.detail">
+							<div class="clearfix">
+								<a class="gray fr showEditBtn" :data-id="item.id">编辑</a>
+								<!-- <a class="fr setBtn" :data-id="item.id">设为默认</a> -->
+								<span>{{ item.consignee }}</span>
+							</div>
+							<div class="locale">
+								<p>{{ item.province }}{{ item.city }}{{ item.area }}{{ item.street }}{{ item.detail }}</p>
+							</div>
+							<div class="clearfix">
+								<a class="blue fr" v-on:click="showDel($event)" :data-id="item.id">删除</a>
+								<span>{{ item.mobile }}</span>
+							</div>
+						</li>
+					</template>
+				</ul>
+				<div v-if="list.length > 4 && !isShowAll">
+					<a class="btn" v-on:click="toggle">显示全部地址</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="exchange-bpay container">
+			<h3 class="exchange-btitle">
+				<strong>支付方式</strong>
+			</h3>
+			<div>
+				<ul class="clearfix">
+					<li>
+						<label>
+							<input type="radio" name="payType" value="3" checked="checked">
+							<img src="../../src/img/exchange/buy3.png">
+							<span>在线支付</span>
+						</label>
+					</li>
+					<!--<li>
+						<label>
+							<input type="radio" name="payType" value="1">
+							<img src="../../src/img/exchange/buy1.png">
+							<span>支付宝</span>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="radio" name="payType" value="2">
+							<img src="../../src/img/exchange/buy2.png">
+							<span>微信</span>
+						</label>
+					</li> 
+					<li>
+						<label>
+							<input type="radio" name="payType" value="3" checked="checked">
+							<img src="../../src/img/exchange/buy3.png">
+							<span>银联</span>
+						</label>
+					</li>
+					<li>
+						<label>
+							<input type="radio" name="payType" value="4">
+							<img src="../../src/img/exchange/buy3.png">
+							<span>通联支付</span>
+						</label>
+					</li> -->
+				</ul>
+			</div>
+		</div>
+		<div id="detail">
+			<div id="receipt" class="container">
+				<h3 class="exchange-btitle">
+					<strong>发票信息</strong>
+				</h3>
+				<div style="padding: 0 40px;">
+					<ul class="clearfix">
+						<li class="fl" style="margin-right: 20px;">
+							<label>
+								<input type="radio" name="invoiceType" value="0" checked="checked">
+								<span>不开票</span>
+							</label>
+						</li>
+						<li class="fl">
+							<label>
+								<input type="radio" name="invoiceType" value="1">
+								<span>开票</span>
+							</label>
+						</li>
+					</ul>
+					<div class="clearfix receipt hide" style="margin-top: 20px;">
+						<p class="fl"><a class="receipt_g active" val="2">个人</a><a class="receipt_g" val="1">企业</a></p>
+						<div class="fl clearfix hide" id="company">
+							<p class="fl"><input type="text" name="companyName" placeholder="请输入抬头名称" /></p>
+							<p class="fl" style="position: relative;">
+								<input type="text" name="code" placeholder="纳税人识别号" onfocus="$('.code_msg').show()" />
+								<img src="../../src/img/exchange/message.png" class="code_msg" />
+							</p>
+						</div>
+						<div class="fl clearfix" id="personal">
+							<p class="fl"><input type="text" name="companyName" placeholder="请输入名称" /></p>
+							<p class="fl">
+								<input type="text" name="code" placeholder="请输入手机号" />
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="container exchange-blist">
+				<h3 class="exchange-btitle">
+					<strong>送货清单</strong>
+				</h3>
+				<div>
+					<ul>
+						<template v-for="item in goodsList">
+							<li>
+								<div class="clearfix layer-table li_div">
+									<div>
+										<div class="sendinfo">
+											<p>配送方式：快递</p>
+											<p>运费：<strong class="red">￥{{item.freightMoney}}</strong></p>
+										</div>
+										<div class="goodslist">
+											<div>
+												<h3>
+													<span>{{ item.userName }}</span>
+												</h3>
+												<table>
+													<tr v-for="goodsitem in item.goods">
+														<td width="120">
+															<img :src="goodsitem.goodsLogo | formatImg" width="100" height="100">
+														</td>
+														<td valign="top">
+															<p>{{ goodsitem.goodsName }}</p>
+															<div class="sku" v-if="goodsitem.skuList && goodsitem.skuList.length">
+																<p v-for="sku in goodsitem.skuList">{{sku.specsName}}:&emsp;{{sku.attrValue}}</p>
+															</div>
+														</td>
+														<td width="260">
+															<strong class="red fs18">¥{{ goodsitem.skuPrice }}</strong>
+														</td>
+														<td width="100">
+															<span class="fs18">X{{ goodsitem.quantity }}</span>
+														</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div>
+									<h3 class="exchange-btitle">
+										<strong>留言</strong>
+									</h3>
+									<textarea style="width: 100%;" v-model="item.message">{{item.message}}</textarea>
+								</div>
+								<div v-if="item.coupons && item.coupons.length">
+									<p class="pV">商家优惠券</p>
+									<div class="clearfix voucher merchantVoucher">
+										<div class="fl voucher_item" v-for="citem in item.coupons" :key="citem.id" :data-id="citem.id"
+											:data-price="citem.couponsPrice" onclick="activeVoucher(this)">
+											<div class="clearfix tc">
+												<div class="fl voucher_money1">{{citem.couponsPrice}}</div>
+												<div class="fl voucher_money2">
+													<p class="fs16">优惠券</p>
+													<p>满{{citem.couponsScale}}使用</p>
+												</div>
+											</div>
+											<span>券</span>
+										</div>
+									</div>
+								</div>
+							</li>
+						</template>
+					</ul>
+				</div>
+			</div>
+
+			<div class="container" v-if="coupons0 && coupons0.length"
+				style="padding: 10px 0;border-bottom: 1px solid #E0E0E0;">
+				<p class="pV">平台优惠券（不可与商家优惠券同时使用）</p>
+				<div class="clearfix voucher voucher0" v-if="coupons0 && coupons0.length">
+					<div class="fl voucher_item" v-for="citem in coupons0" :key="citem.id" :data-id="citem.id"
+						:data-price="citem.couponsPrice" onclick="activeVoucher(this)">
+						<div class="clearfix tc">
+							<div class="fl voucher_money1">{{citem.couponsPrice}}</div>
+							<div class="fl voucher_money2">
+								<p class="fs16">优惠券</p>
+								<p>满{{citem.couponsScale}}使用</p>
+							</div>
+						</div>
+						<span>券</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="exchange-ball container clearfix" style="margin-top: 10px;">
+				<div class="fr">
+					<div class="info">
+						<p class="gray">
+							<span>{{ totalGoodsNum }}</span>件商品，
+							总金额为：<span>￥{{ totalGoodsPrice }}</span>&emsp;
+							运费：<span>￥{{ expressPrice }}</span>
+						</p>
+						<p>
+							<b>总金额为：</b>
+							<strong
+								class="fs24 yellow">￥{{ utils.keepTwoDecimalFull(Number(totalGoodsPrice)+Number(expressPrice)) }}</strong>
+						</p>
+						<p>
+							<b>寄送至：</b>
+							<span>{{ province }}{{ city }}{{ area }}{{ street }}{{ detail }}</span>
+						</p>
+						<p>
+							<b>收货人：</b>
+							<span>{{ consignee }} {{ mobile }}</span>
+						</p>
+					</div>
+					<div class="tr">
+						<a class="btn btn-warning" v-on:click="create">提交订单</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+	<%- include ../footer.ejs %>
+
+	<%- include ../user/address_common.ejs %>
+	<script>
+		var flag = utils.getUrlParam("flag");
+		var source = utils.getUrlParam("source");
+		var addressVm = new Vue({
+			el: "#address",
+			data: {
+				list: [],
+				isShowAll: false
+			},
+			mounted: function () {
+				this.render();
+			},
+			methods: {
+				showDel: function (event) {
+					var id = event.currentTarget.getAttribute("data-id");
+					showDelAddress(id);
+				},
+				toggle: function () {
+					$("#address ul").addClass("show");
+					self.isShowAll = true;
+				},
+				render: function () {
+					var self = this;
+					utils.ajax({
+						url: "/api/userCenter/addr/page",
+						type: "get",
+						success: function (data) {
+							data = data.data;
+							self.list = data.records;
+							setTimeout(function () {
+								$("#address li:eq(0)").trigger("click");
+							}, 100)
+						}
+					})
+				}
+			},
+		})
+
+		$(document).on("click", ".showDelBtn", function (e) {
+			//删除
+			var self = $(e.currentTarget);
+			var id = self.attr("data-id");
+			showDelAddress(id);
+		}).on("click", "#delBtn", function (e) {
+			var id = $(e.currentTarget).data("id");
+			delAddress(id, function () {
+				addressVm.list = _.remove(addressVm.list, function (n) {
+					return n.id != id;
+				});;
+			})
+		}).on("click", ".setBtn", function (e) {
+			var self = $(e.currentTarget);
+			var id = self.attr("data-id");
+			setDefault(id, function (data) {
+				addressVm.render();
+			})
+
+		}).on("click", ".showEditBtn", function (e) {
+			var self = $(e.currentTarget);
+			var id = self.attr("data-id");
+			showEditAddress(id, function (data) {
+
+			})
+		}).on("click", "#showAddDialog", function () {
+			//显示添加弹出框
+			showAddDialog();
+		}).on("click", "#addBtn", function () {
+			addAddress(function (data) {
+				if (data.success) {
+					$(".addAddressDialog").removeClass("show");
+					addressVm.render();
+				} else {
+					utils.alert("danger", data.msg);
+				}
+			})
+		}).on("click", 'input[name=invoiceType]', function (e) {
+			var self = $(e.currentTarget);
+			var val = self.val();
+			if (val == '1') {
+				$('.receipt').removeClass('hide')
+			} else {
+				$('.receipt').addClass('hide')
+			}
+		}).on("click", ".receipt_g", function (e) {
+			var self = $(e.currentTarget);
+			var val = self.attr('val')
+			$(document).find('.receipt_g').removeClass('active')
+			self.addClass('active')
+			if (val == '2') {
+				$("#company").addClass('hide')
+				$("#personal").removeClass('hide')
+			} else {
+				$("#company").removeClass('hide')
+				$("#personal").addClass('hide')
+			}
+		}).on("click", '.code_msg', function () {
+			$(this).hide()
+		})
+
+		var detailVm = new Vue({
+			el: "#detail",
+			data: {
+				goodsList: [],
+				coupons0: [], //平台优惠券
+				totalGoodsPrice: 0,
+				expressPrice: 0,
+				totalGoodsNum: 0,
+
+				consignee: "",
+				province: "",
+				city: "",
+				area: "",
+				street: "",
+				detail: "",
+				mobile: "",
+				addressId: "1006"
+			},
+			mounted: function () {
+
+				var self = this;
+
+				if (source == 2) {
+					//立即购买
+					var id = utils.getUrlParam("id");
+					var goodsNumber = utils.getUrlParam("goodsNumber") || 1
+					var skuid = utils.getUrlParam("skuid")
+					var province = this.province;
+					if (flag == "design" || flag == "manufacture") {
+						utils.ajax({
+							//url: "/api/designmanu/designroom/case/info/"+id,
+							url: "/api/designmanu/designroom/settlement?caseId=" + id + "&num=" + goodsNumber + "&province=" +
+								province,
+							type: "get",
+							success: function (data) {
+								data = data.data;
+								var freightPrice = data.freightPrice;
+								/*
+								if(data.price*parseInt(goodsNumber) >= 88){
+									freightPrice = 0;
+								}
+								*/
+								var skuPrice = getPrice(skuid, data.goodsSkus)
+								var skuArr = getSpecVal(skuid, data.goodsSkus, data.goodsSpecs)
+								self.goodsList.push({
+									goods: [{
+										goodsName: data.caseName,
+										goodsLogo: (data.picList[0] || ""),
+										skuPrice: skuPrice,
+										goodsSku: skuid,
+										skuList: skuArr,
+										goodsSource: data.goodsSource,
+										quantity: goodsNumber,
+										selected: true
+									}],
+									merchantId: data.merchantId,
+									userName: data.merchantName,
+									freightMoney: freightPrice,
+									coupons: [],
+									message: ''
+								})
+								setTimeout(function () {
+									//获取优惠券
+									self.getConpons();
+									self.totalGoodsPrice = countTotalGoodsPrice();
+									self.expressPrice = countExpressPrice();
+									self.totalGoodsNum = countGoodsNum();
+								}, 100)
+							}
+						})
+					} else if (flag == 'jewelry') {
+						/*珠宝店立即购买*/
+						utils.ajax({
+							url: "/api/marketPage/goodsDetailShowTwo",
+							type: "get",
+							data: {
+								goodsId: id,
+								num: goodsNumber,
+								province: province
+							},
+							success: function (data) {
+								data = data.data;
+								var freightPrice = data.freightPrice;
+								/*
+								if(data.price*parseInt(goodsNumber) >= 88){
+									freightPrice = 0;
+								}
+								*/
+								var skuPrice = getPrice(skuid, data.goodsSkus)
+								self.goodsList.push({
+									goods: [{
+										goodsName: data.goodsName,
+										goodsLogo: (data.goodsGallerys[0].imgUrl || ""),
+										skuPrice: skuPrice,
+										goodsSku: skuid,
+										goodsSource: data.goodsSource,
+										quantity: goodsNumber,
+										selected: true
+									}],
+									merchantId: data.merchantId,
+									userName: data.merchantName,
+									freightMoney: freightPrice,
+									coupons: [],
+									'message': ''
+								})
+								setTimeout(function () {
+									self.totalGoodsPrice = countTotalGoodsPrice();
+									self.expressPrice = countExpressPrice();
+									self.totalGoodsNum = countGoodsNum();
+									//获取优惠券
+									self.getConpons()
+								}, 100)
+							}
+						})
+					} else if (flag == 'skuGoods') {
+						/**
+						 * 关联商品立即购买
+						 * */
+						var obj = JSON.parse(utils.getUrlParam('obj'));
+						var goods = [];
+						var freightPrice = obj.freightPrice;
+						/*
+						if(parseInt(Number(obj.totalPrice)) >= 88){
+							freightPrice = 0;
+						}
+						*/
+						$.each(obj.arr, function (idx, item) {
+							goods.push({
+								goodsName: item.goodsName,
+								goodsLogo: item.mainPic,
+								skuPrice: item.price,
+								goodsSku: item.skuId,
+								goodsSource: 2,
+								quantity: item.goodsNum,
+								selected: true
+							})
+						})
+						self.goodsList.push({
+							goods: goods,
+							userName: obj.merchantName,
+							freightMoney: freightPrice,
+							coupons: [],
+							message: ''
+						})
+						setTimeout(function () {
+							self.totalGoodsPrice = countTotalGoodsPrice();
+							self.expressPrice = countExpressPrice();
+							self.totalGoodsNum = countGoodsNum();
+							//获取优惠券
+							self.getConpons()
+						}, 100)
+					} else if (flag == 'auction') {
+						utils.ajax({
+							url: "/api/swap/portal/goods/swap_goods_auction/info/" + id,
+							type: 'get',
+							success: function (data) {
+								data = data.data;
+								var freightPrice = data.freightPrice;
+								/*
+								if(parseInt(freightPrice) >= 88){
+									freightPrice = 0;
+								}
+								*/
+								var price = data.dealPrice - data.deposit
+								self.goodsList.push({
+									goods: [{
+										goodsName: data.goodsName,
+										goodsLogo: (data.imgUrl || ""),
+										skuPrice: price,
+										goodsSku: data.goodsSku.id,
+										goodsSource: data.goodsSource,
+										quantity: 1,
+										selected: true,
+										goodsSource: '3'
+									}],
+									merchantId: data.merchantId || "",
+									userName: data.merchantName || "",
+									freightMoney: freightPrice,
+									coupons: [],
+									message: ''
+								})
+								setTimeout(function () {
+									self.totalGoodsPrice = countTotalGoodsPrice();
+									self.expressPrice = countExpressPrice();
+									self.totalGoodsNum = countGoodsNum();
+								}, 100)
+							}
+						})
+					} else {
+						utils.ajax({
+							url: "/api/swap/portal/goods/sale_goods/settlement?id=" + id + "&num=" + goodsNumber +
+								"&province=" + province,
+							type: "get",
+							success: function (data) {
+								data = data.data;
+								var freightPrice = data.freightPrice;
+								/*
+								if(data.price >= 88){
+									freightPrice = 0;
+								}
+								*/
+								if (data.swapble == "1") {
+									var skuPrice = data.price
+									var skuArr = []
+									skuid = data.goodsSku.id
+								} else {
+									var skuPrice = getPrice(skuid, data.goodsSkus)
+									var skuArr = getSpecVal(skuid, data.goodsSkus, data.goodsSpecs)
+								}
+								self.goodsList.push({
+									goods: [{
+										goodsName: data.goodsName,
+										goodsLogo: data.imgUrl,
+										skuPrice: skuPrice,
+										skuList: skuArr,
+										goodsSku: skuid,
+										goodsSource: 2,
+										quantity: goodsNumber,
+										selected: true
+									}],
+									merchantId: data.merchantId,
+									userName: data.userName,
+									freightMoney: freightPrice,
+									coupons: [],
+									message: ""
+								})
+								setTimeout(function () {
+									self.totalGoodsPrice = countTotalGoodsPrice();
+									self.expressPrice = countExpressPrice();
+									self.totalGoodsNum = countGoodsNum();
+									//获取优惠券
+									self.getConpons()
+								}, 100)
+							}
+						})
+					}
+
+
+				} else if (source == 1) {
+					//购物车购买
+					var cart = JSON.parse(localStorage.getItem("cart"));
+					for (var i = 0; i < cart.length; i++) {
+						var goodsItem = cart[i].goods;
+						var freightMoney = 0;
+						var merchantId = null;
+						for (var o = 0; o < goodsItem.length; o++) {
+							freightMoney += goodsItem[o].freightPrice
+							merchantId = goodsItem[o].merchantId
+						}
+						self.goodsList.push({
+							goods: goodsItem,
+							merchantId: merchantId,
+							userName: cart[i].goods[0].merchantName,
+							freightMoney: freightMoney,
+							coupons: [],
+							message: ''
+						})
+					}
+					setTimeout(function () {
+						self.totalGoodsPrice = countTotalGoodsPrice();
+						self.expressPrice = countExpressPrice();
+						self.totalGoodsNum = countGoodsNum();
+						//获取优惠券
+						self.getConpons()
+					}, 100)
+				}
+
+			},
+			methods: {
+				getConpons: function () {
+					var self = this;
+					var buySkuDTOList = [];
+					for (var i = 0; i < self.goodsList.length; i++) {
+						for (var j = 0; j < self.goodsList[i].goods.length; j++) {
+							buySkuDTOList.push(
+								self.goodsList[i].goods[j].goodsSku
+							)
+						}
+					}
+					utils.ajax({
+						url: "/api/order/goodsCoupons",
+						data: JSON.stringify(buySkuDTOList),
+						success: function (data) {
+							var res = data.data;
+							for (key in res) {
+								$.each(self.goodsList, function (idx, item) {
+									if (String(item.merchantId) == String(key)) {
+										self.goodsList[idx].coupons = res[key]
+									} else if (key == 0) {
+										self.coupons0 = res[key]
+									}
+								});
+							}
+						}
+					})
+				},
+				create: function () {
+					var self = this;
+					if ($(".exchange-baddress li.cur").length == 0) {
+						utils.alert("warning", "请选择收货地址");
+						return;
+					}
+					var buySkuDTOList = [],
+						couponsArr = [];
+					for (var i = 0; i < self.goodsList.length; i++) {
+						for (var j = 0; j < self.goodsList[i].goods.length; j++) {
+							buySkuDTOList.push({
+								skuId: self.goodsList[i].goods[j].goodsSku,
+								source: self.goodsList[i].goods[j].goodsSource,
+								goodsNumber: self.goodsList[i].goods[j].quantity,
+								message: self.goodsList[i].message
+							})
+						}
+					}
+					if ($(".activeVoucher").length) {
+						$.each($(".activeVoucher"), function (idx, item) {
+							var val = $(item).attr('data-id');
+							couponsArr.push(val)
+						});
+					}
+					var invoiceType = $("input[name=invoiceType]:checked").val();
+					var companyName = '',
+						code = '';
+					if (invoiceType != '0') {
+						invoiceType = $('.receipt .active').attr('val')
+					}
+					if (invoiceType == '1') {
+						companyName = $("#company").find('input[name=companyName]').val().trim();
+						code = $("#company").find('input[name=code]').val().trim()
+					} else {
+						companyName = $("#personal").find('input[name=companyName]').val().trim();
+						code = $("#personal").find('input[name=code]').val().trim()
+					}
+					if (invoiceType != '0') {
+						if (companyName == '' || code == '') {
+							utils.alert('info', '请填写完整发票信息')
+							return false;
+						}
+					}
+					var json = {
+						addrId: self.addressId,
+						payType: $("input[name='payType']:checked").val(),
+						buySkuDTOList: buySkuDTOList,
+						source: source,
+						couponIds: couponsArr,
+						invoiceType: Number(invoiceType),
+						companyName: companyName,
+						code: code
+					}
+					//buySkuDTOList[i].source   1珠宝店,2互换销售订单,3拍卖订单, 5设计室, 6制造间, 7图文馆
+
+					utils.ajax({
+						url: "/api/order/payOrder/add",
+						data: JSON.stringify(json),
+						success: function (data) {
+							if (data.success) {
+								location.href = "../../exchange/pay?from=" + flag + "&id=" + data.data.id + "&p=" + data.data
+									.payAmount + "&tradeId=" + data.data.tradeId;
+							} else {
+								utils.alert("danger", data.msg)
+							}
+						}
+					})
+				}
+			},
+			filters: {
+				formatImg: function (str) {
+					return utils.formatImg(str);
+				}
+			}
+		})
+
+
+
+		$(document).on("click", "#address li", function (e) {
+			var self = $(e.currentTarget);
+			var id = self.attr("data-id");
+			self.addClass("cur").siblings("li").removeClass("cur");
+
+			var consignee = self.attr("consignee");
+			var province = self.attr("province");
+			var city = self.attr("city");
+			var area = self.attr("area");
+			var street = self.attr("street");
+			var detail = self.attr("detail");
+			var mobile = self.attr("mobile");
+			detailVm.consignee = consignee
+			detailVm.province = province
+			detailVm.city = city
+			detailVm.area = area
+			detailVm.street = street
+			detailVm.detail = detail
+			detailVm.mobile = mobile
+			detailVm.addressId = id
+		})
+
+		function activeVoucher(e) {
+			var self = e || window.event;
+			var id = $(self).attr("data-id");
+			if ($(self).parent().hasClass('voucher0')) {
+				$(".merchantVoucher").find('.activeVoucher').removeClass('activeVoucher');
+				$('.voucher0').find('.activeVoucher').removeClass('activeVoucher');
+				$(self).addClass('activeVoucher')
+			} else if ($(self).parent().hasClass('merchantVoucher')) {
+				$('.voucher0').find('.activeVoucher').removeClass('activeVoucher');
+				$(self).parent().find('.activeVoucher').removeClass('activeVoucher');
+				$(self).addClass('activeVoucher')
+			}
+			detailVm.totalGoodsPrice = countTotalGoodsPrice()
+		}
+
+
+		function countTotalGoodsPrice() {
+			var totalGoodsPrice = 0;
+			for (var i = 0; i < detailVm.goodsList.length; i++) {
+				for (var j = 0; j < detailVm.goodsList[i].goods.length; j++) {
+					if (detailVm.goodsList[i].goods[j]) {
+						totalGoodsPrice += Number(detailVm.goodsList[i].goods[j].quantity) * Number(detailVm.goodsList[i].goods[j]
+							.skuPrice)
+					}
+				}
+			}
+			var num = getCouponsPrice()
+			totalGoodsPrice -= num
+			totalGoodsPrice = totalGoodsPrice >= 0 ? totalGoodsPrice : 0
+			return utils.keepTwoDecimalFull(totalGoodsPrice);
+		}
+
+		function countGoodsNum() {
+			var totalGoodsNum = 0;
+			for (var i = 0; i < detailVm.goodsList.length; i++) {
+				for (var j = 0; j < detailVm.goodsList[i].goods.length; j++) {
+					if (detailVm.goodsList[i].goods[j].selected) {
+						totalGoodsNum += Number(detailVm.goodsList[i].goods[j].quantity)
+					}
+				}
+			}
+			return totalGoodsNum
+		}
+
+		function countExpressPrice() {
+			var len = 0;
+			for (var i = 0; i < detailVm.goodsList.length; i++) {
+				var hasSelected = false;
+				for (var j = 0; j < detailVm.goodsList[i].goods.length; j++) {
+					if (detailVm.goodsList[i].goods[j].selected) {
+						hasSelected = true;
+						break;
+					}
+				}
+				var total = 0;
+				for (var j = 0; j < detailVm.goodsList[i].goods.length; j++) {
+					if (detailVm.goodsList[i].goods[j].selected) {
+						total += Number(detailVm.goodsList[i].goods[j].skuPrice) * parseInt(detailVm.goodsList[i].goods[j].quantity)
+					}
+				}
+				/*
+				if(hasSelected && total < 88){
+					len += Number(detailVm.goodsList[i].freightMoney);
+				}
+				*/
+				len += Number(detailVm.goodsList[i].freightMoney);
+			}
+			return len;
+		}
+		//获取使用的优惠券
+		function getCouponsPrice() {
+			var s = 0
+			if ($(".activeVoucher").length) {
+				$.each($(".activeVoucher"), function (idx, item) {
+					var val = $(item).attr('data-price');
+					s += Number(val)
+				});
+			}
+			return s;
+		}
+		//Sku获取价钱
+		function getPrice(skuid, arr) {
+			var price = 0
+			$.each(arr, function (idx, item) {
+				if (item.id == skuid) {
+					price = item.price
+				}
+			});
+			return price;
+		}
+		//SkuID获取规格值
+		function getSpecVal(id, goodsSkus, goodsSpecs) {
+			var arr = []
+			goodsSkus.forEach(function (data) {
+				if (String(data.id) == String(id)) {
+					arr = data.attrSymbolPath.split(',')
+				}
+			})
+			var arr2 = []
+			arr.forEach(function (data) {
+				goodsSpecs.forEach(function (data1) {
+					data1.goodsSpecsAttrs.forEach(function (data2) {
+						if (String(data) == data2.symbol) {
+							arr2.push({
+								'specsName': data1.specsName,
+								'attrValue': data2.attrValue
+							})
+						}
+					})
+				})
+			})
+			return arr2;
+		}
+	</script>
+
+</body>
+
+</html>

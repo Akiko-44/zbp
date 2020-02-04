@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+
+<body class="integrity_enterprise">
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include ../headerNav.ejs %>
+	<div id="main" class="main">
+		<div class="container">
+			<div class="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item :to="{ path: '/' }">
+						<a href="/">首页</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item>
+						<a href="/home/fidelity_index">打假保真</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item>诚信企业</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+			<div class="content">
+				<div class="enterprise-type clearfix">
+					<div class="fl tc general" @click="getListById('')">总榜</div>
+					<div class="fl type-list">
+						<i class="icon icon-normal" @click="slickNext" style="z-index: 99;"></i>
+						<div class="slider tc">
+							<div class="slideritem" :data-categoryid="item.categoryId" v-for="(item, i) in goodsCategory"
+								@click="getListById(item.categoryId)">
+								{{item.categoryName}}
+							</div>
+						</div>
+						<i class="icon icon-normal-hover" @click="slickPrev" style="z-index: 99;"></i>
+					</div>
+					<span class="fr tc search-enterprise" @click="searchEnterpriseBtn">查找企业</span>
+					<div class="search-input fr clearfix">
+						<i class="icon icon-search2 fl" style="margin-top: 7px;"></i>
+						<input class="fl" type="text" v-model="form.businessName" class="businessName" placeholder="请输入企业名称" />
+						<i class="icon icon-close2 fr" style="margin-top: 10px;" @click="searchEnterpriseBtnHide"></i>
+					</div>
+				</div>
+				<div v-if="integrityEnterprise.length == 0" class="no-content">
+					<img src="../../src/img/common/no-content.png">
+					<p>暂无内容</p>
+				</div>
+				<div class="list" v-else>
+					<a class="list-item clearfix" v-for="item in integrityEnterprise"
+						@click="toStoreDetails(item.type, item.merchantId)">
+						<div class="clearfix fl">
+							<div class="enterprise-img fl">
+								<img :src="item.merchantPicUrl" />
+							</div>
+							<div class="fl">
+								<p class="name">
+									<span class="enterprise-name">{{item.merchantName}}</span>
+									<span class="n tc">销量 {{item.merchantSellNum}}</span>
+									<span class="n tc">产品数 {{item.merchantOnSellgoodsNum}}</span>
+								</p>
+								<p class="management">主营范围：
+									<span v-for="(subItem,subIndex) in item.classifyName" :key="subIndex">
+										{{subItem}}
+										<span v-if="subIndex !== item.classifyName.length-1">、 </span>
+									</span>
+								</p>
+								<p class="mark">
+									诚信度：<span>{{item.honestDegree}}</span> 获奖数：
+									<span>{{item.rewardNumber}}</span> 投诉数量：
+									<span>{{item.complaintNumber}}</span>
+								</p>
+							</div>
+						</div>
+						<div class="fr">
+							<img v-if="item.sortNum==1" src="../src/img/home/vip1.png" />
+							<img v-else-if="item.sortNum==2" src="../src/img/home/vip2.png" />
+							<img v-else-if="item.sortNum==3" src="../src/img/home/vip3.png" />
+							<span v-else class="vip">
+								<!-- <img src="../src/img/home/vip4.png" /> -->
+								<span class="vip_count">{{item.sortNum}}</span>
+							</span>
+						</div>
+					</a>
+					<!--<div style="background:#E5E5E5;height:0.1px;width: 100%;"></div>-->
+				</div>
+			</div>
+		</div>
+		<div class="tr container" style="margin-top: 30px;" v-show="listPages > 1">
+			<div id="pagination" class="pagination"></div>
+		</div>
+	</div>
+	<%- include ../footer.ejs %>
+</body>
+
+<script type="text/javascript">
+	var mainVm = new Vue({
+		el: '#main',
+		data: {
+			goodsCategory: [{
+				categoryId: '',
+				categoryName: ''
+			}],
+			form: {
+				id: '',
+				businessName: '',
+				offset: 1,
+				limit: 20,
+			},
+			listPages: 0,
+			activeIndex: undefined,
+			integrityEnterprise: []
+			/* integrityEnterprise: {
+				current: '',
+				pages: '',
+				size: '',
+				total: '',
+				records: [{
+					classifyId: '',
+					complaintNumber: '',
+					honestDegree: '',
+					id: '',
+					merchantId: '',
+					merchantName: '',
+					merchantOnSellgoodsNum: '',
+					merchantPicUrl: '',
+					merchantSellNum: '',
+					rewardNumber: '',
+					sortNum: '',
+					type: '',
+					classifyName: []
+				}]
+			} */
+		},
+		mounted: function () {
+			//头部分类数据
+			utils.ajax({
+				type: "get",
+				url: "/app/search/jewelryGoodsCat",
+				success: (res) => {
+					this.goodsCategory = res.data.goodsCategory
+					setTimeout(() => {
+						$('.slider').slick({
+							slidesToShow: 11,
+							arrows: false,
+							infinite: false
+						})
+					}, 100)
+
+				}
+			});
+			this.render(1)
+
+		},
+		methods: {
+			render(page) {
+				let self = this
+				self.form.offset = page || 1
+				//获取总榜数据
+				utils.ajax({
+					type: "get",
+					url: "/api/portal/honestEnterprises/searchAllByClassify",
+					data: self.form,
+					success: (res) => {
+						// this.integrityEnterprise = res.data
+						let resData = res.data
+						self.integrityEnterprise = resData.records
+						self.listPages = resData.pages
+						console.log(self.listPages)
+						if (self.form.offset == 1) {
+							$("#pagination").pagination({
+								pageCount: resData.pages,
+								jump: true,
+								coping: true,
+								current: resData.current,
+								prevContent: '上一页',
+								nextContent: '下一页',
+								callback: function (api) {
+									self.render(api.getCurrent())
+								}
+							})
+						}
+					}
+				})
+			},
+			getListById(id) {
+				this.form.id = id
+				this.render(1)
+				if (id) {
+					$('[data-categoryid=' + id + ']').closest('.slick-slide').addClass('cur').siblings().removeClass('cur')
+				} else {
+					$('.slick-slide').removeClass('cur')
+				}
+			},
+			slickPrev: function () {
+				$('.slider').slick('slickPrev')
+			},
+			slickNext: function () {
+				$('.slider').slick('slickNext')
+			},
+			searchEnterpriseBtn: function () {
+				$('.search-enterprise').addClass('search-enterprise-active')
+				$('.type-list').addClass('type-list-none')
+				setTimeout(function () {
+					$('.search-input').addClass('search-input-show')
+				}, 300)
+				if ($('.search-input-show')) {
+					this.render(1)
+				}
+			},
+			searchEnterpriseBtnHide: function () {
+				this.form.businessName = ''
+				this.render(1)
+				$('.search-enterprise').removeClass('search-enterprise-active')
+				$('.search-input').removeClass('search-input-show')
+				setTimeout(function () {
+					$('.type-list').removeClass('type-list-none')
+				}, 300)
+			},
+			toStoreDetails: function (type, id) {
+				if (type == 1) {
+					location.href = "../jewelry/shopSearch?id=" + id;
+				} else {
+					utils.alert('danger', '该企业暂无更多信息')
+				}
+			}
+		}
+	})
+	$(document).on('click', 'div, i, input', function () {
+		var str = $(this).attr('class')
+	})
+</script>
+
+</html>

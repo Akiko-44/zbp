@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<link rel="stylesheet" href="../src/css/icon/iconfont.css" />
+		<link rel="stylesheet" href="../src/css/icons/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+		<link rel="stylesheet" type="text/css" href="../src/css/news/newBelow.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-family: "微软雅黑";
+			}
+			
+			.jewelryBox-bd {
+				width: 100%;
+				height: 100%;
+				background: #f8f8f8;
+			}
+			.jewelry_box{
+				width: 1200px;
+				margin:0 auto;
+			}
+			.jewelry_nav{
+				width: 1200px;
+				background: #fff;
+				padding:14px 0;
+			}
+			.jewelry_nav .nav1{
+				width: 1200px;
+				display: flex;
+				padding-left: 19px;
+			}
+			.jewelry_nav .nav1 h6{
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(102,102,102,1);
+				line-height: 25px;
+			}
+			.jewelry_nav .nav1 ul{
+				display: flex;
+				flex-wrap: wrap;
+			}
+			.jewelry_nav .nav1 ul li{
+				line-height: 25px;
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(102,102,102,1);
+				margin-left: 15px;
+				flex-shrink: 0;
+			}
+			.jewelry_nav .nav1 ul li{
+				 cursor:pointer;
+			}
+			.jewelry_nav .nav1 ul li:hover{
+				color:#ff0000;
+			}
+			.nav2,.nav3{
+				padding-top: 14px;
+			}
+			.nav2 h5{
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(102,102,102,1);
+				margin-left: 15px;
+				line-height: 25px;
+			}
+			.el-range-editor.el-input__inner{
+				border:0;
+				margin-top:-7px;
+			}
+			.el-range-editor.el-input__inner i{
+				display: none;
+			}
+			.el-date-editor .el-range-input{
+				display: block;
+				width: 100px;
+				height: 22px;
+				border:1px solid rgba(102,102,102,1);
+			}
+			.nav1 span{
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(102,102,102,1);
+				margin-left: 15px;
+			}
+			.jewelry_dh{
+				width: 1200px;
+			}
+			.jewelry_dh .jewelry_list{
+				width: 1200px;
+				display: flex;
+				flex-wrap: wrap;
+			}
+			.jewelry_dh .jewelry_list div{
+				width: 400px;
+				margin:10px 0;
+				display:flex;
+				flex-shrink: 0;
+			}
+			.jewelry_dh .jewelry_list dl{
+				background: #fff;
+				padding:20px;
+			}
+			.jewelry_dh .jewelry_list div:nth-child(3n-2) dl{
+				margin-right:auto;
+			}
+			.jewelry_dh .jewelry_list div:nth-child(3n-1) dl{
+				margin:0 auto;
+			}
+			.jewelry_dh .jewelry_list div:nth-child(3n) dl{
+				margin-left:auto;
+			}
+			.jewelry_dh .jewelry_list dl dt img{
+				width: 346px;
+				height: 224px;
+			}
+			.jewelry_dh .jewelry_list dl dd{
+				margin-top: 11px;
+			}
+			.jewelry_dh .jewelry_list dl dd h6{
+				font-size:16px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(51,51,51,1);
+			}
+			.jewelry_dh .jewelry_list dl dd p{
+				width: 306px;
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(51,51,51,1);
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				margin-top: 7px;
+				line-height: 20px;
+			}
+			.jewelry_dh .jewelry_list dl dd span{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(51,51,51,1);
+				margin-top: 8px;
+			}
+			.activity_clearfix{
+				width: 1200px;
+				text-align: center;
+				margin: 15px 0;
+			}
+			.avtive{
+				color:#ff0000 !important;
+			}
+			.el-breadcrumb{
+				width: 1200px;
+				margin: 0 auto 20px;
+			}
+			@media screen and (max-width: 1400px) {
+			    .more{
+			    	width:1030px;
+			    }
+			}
+			.el-pagination.is-background .el-pager li:not(.disabled).active{
+	    	background: #FF0000;
+	    }
+	    .el-pagination.is-background .btn-next.disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-prev.disabled, .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .el-pager li.disabled{
+	    	background: #B0B8B8;
+	    }
+	    .el-icon-arrow-left:before,.el-icon-arrow-right:before{
+	    	color:#FFFFFF;
+	    }
+	    
+	    .el-breadcrumb__separator:before{
+			color:#c0c4cc;
+		}
+		.nav4 h6{
+			width: 61px !important;
+		}
+		</style>
+	</head>
+
+	<body class="jewelryBox-bd">
+		<%- include ../headerbar.ejs %>
+		<%- include ../header.ejs %>
+		<%- include ../headerNav.ejs %>
+		<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item :to="{ path: '/' }">
+						<a href="../../">我的位置：首页</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item>
+						<a href="../../../jewelry_fair/index">珠宝展</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item><span id="routerTitle">{{getTitle}}</span></el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		<div class="jewelry_box" id="jewelry_box">
+			<div class="jewelry_nav">
+				<div class="nav4 nav1 ">
+					<h6>展会地址:</h6>
+					<ul v-if="getId==2">
+						<li :class="{avtive:!regionId}" @click="regionId = null" v-text="'全部'"></li>
+						<li v-for="(dir,index) in dirs" :class="{avtive:regionId == dir.regionId}" @click="regionId = dir.regionId">{{dir.regionName}}</li>
+					</ul>
+					<ul v-else>
+						<li v-text="'国外'"></li>
+					</ul>
+				</div>
+				<div class="nav2 nav1">
+					<h6>展会时间:</h6>
+					<ul>
+						<li :class="{avtive:type==1}" @click="setTime(1)">一个月以来</li>
+						<li :class="{avtive:type==2}" @click="setTime(2)">三个月以来</li>
+						<li :class="{avtive:type==3}" @click="setTime(3)">六个月以来</li>
+					</ul>
+					<h5>自定义</h5>
+				    <el-date-picker
+				      class="el_date"
+				      v-model="value6"
+				      type="datetimerange"
+				      @change="setTime(4)"
+				      value-format="yyyyMMddhhmmss"
+				      :default-time="['00:00:00']">
+				    </el-date-picker>
+				</div>
+				<div class="nav1 nav3">
+					<h6>展会品牌:</h6>
+					<ul>
+						<li :class="{avtive:!brandId}" @click="brandId = null">全部</li>
+						<li v-for="(brand,index) in brands" :class="{avtive:brandId == brand.id}" @click="brandId = brand.id">{{brand.brandName}}</li>
+					</ul>
+				</div>
+			</div>
+			<div class="jewelry_dh">
+				<div class="jewelry_list">
+					<div v-for="(item,index) in list">
+						<dl @click="_more(item.id)">
+							<dt>
+								<img :src="formatImg(item.showPrint)"/>
+							</dt>
+							<dd>
+								<h6 v-text="item.title"></h6>
+								<p>时间：{{item.startTime}}－{{item.finishTime}}</p>
+								<span>地址：{{item.detailSite}}</span>
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<div class="activity_clearfix">
+				<template>
+					<el-pagination background @current-change="handleCurrentChange" :current-page="offset" :page-size="limit" layout="total, prev, pager, next, jumper" :total="total">
+					</el-pagination>
+				</template>
+			</div>
+			<%- include below %>
+		</div>
+
+		<%- include ../footernew.ejs %>
+		<script type="text/javascript">
+			var routerVm = new Vue({
+				el: "#router",
+				computed:{
+					getTitle(){
+						let res = location.href.split('/')
+						return unescape(res[res.length-1].split('?')[1].split('=')[1])
+					}
+				},
+			})
+			var jewelryBox = new Vue({
+				el:"#jewelry_box",
+				data(){
+					return{
+						type:null,
+						regionId:null,
+						brandId:null,
+						value6: '',
+						total: 0,
+						offset: 1,
+						limit: 9,
+						dirs:[],
+						brands:[],
+						list:[],
+						startTime:null,
+						finishTime:null
+					}
+				},
+				computed:{
+					getId(){
+						let res = location.href.split('/')
+						return res[res.length-1].split('?')[0]
+					}
+				},
+				created(){
+					this.init()
+				},
+				watch:{
+					regionId(){
+						this.offset = 1
+						this.getList().then(data=>{
+							this.list = data.records
+							this.total = data.total
+						})
+					},
+					brandId(){
+						this.offset = 1
+						this.getList().then(data=>{
+							this.list = data.records
+							this.total = data.total
+						})
+					},
+					value6(data){
+						if(!data){
+							this.offset = 1
+							this.startTime = null
+							this.finishTime = null
+							this.getList().then(data=>{
+								this.list = data.records
+								this.total = data.total
+							})
+						}
+					}
+				},
+				methods:{
+					handleCurrentChange: function(val) {
+						var self = this;
+						self.offset = val
+						self.init()
+					},
+					setTime(type){
+							if(type<4 && type && type==this.type){
+								this.type = null
+								this.startTime = null
+								this.finishTime = null
+								this.offset = 1
+								this.getList().then(data=>{
+									this.list = data.records
+									this.total = data.total
+								})
+							}else{
+								this.type = type
+								if(type!=4) this.value6 = null
+								switch(this.type){
+									case 1:
+										this.startTime = this.getNowFormatDate(1).split(' ').join('')
+										this.finishTime = this.getNowFormatDate(0).split(' ').join('')
+										break
+									case 2:
+										this.startTime = this.getNowFormatDate(3).split(' ').join('')
+										this.finishTime = this.getNowFormatDate(0).split(' ').join('')
+										break
+									case 3:
+										this.startTime = this.getNowFormatDate(6).split(' ').join('')
+										this.finishTime = this.getNowFormatDate(0).split(' ').join('')
+										break
+									case 4:
+										this.startTime = this.value6[0]
+										this.finishTime = this.value6[1]
+										break
+								}
+								
+
+								this.offset = 1
+								this.getList().then(data=>{
+									this.list = data.records
+									this.total = data.total
+								})
+							}
+					},
+					getNowFormatDate(m) {						
+						var dt = new Date();
+						dt.setMonth( dt.getMonth()-m )
+						var mm = dt.getMonth() + 1 + ''
+						if(mm.length<2){
+							mm = '0' + mm
+						}
+						var tt = dt.getDate() + ''
+						if(tt.length<2){
+							tt = '0' + tt
+						}
+						return [dt.getFullYear(),mm,tt].join('')+' 000000'
+				   	},
+					init(){
+						this.getList().then(data=>{
+							this.list = data.records
+							this.total = data.total
+						})
+						this.getDir().then(data=>{
+							this.dirs = data
+						})
+						this.getBrand().then(data=>{
+							this.brands = data
+						})
+					},
+					getList(){
+						let data = {
+							regionId:this.regionId,
+							brandId:this.brandId,
+							offset: this.offset,
+							limit: this.limit,
+						}
+						if(this.startTime || this.finishTime){
+							data.startTime = this.startTime
+							data.finishTime = this.finishTime
+						}
+						if(this.regionId || this.brandId || this.startTime || this.finishTime){
+							return new Promise((resolve,reject)=>{
+								utils.ajax({
+									url:"/pc/jewelry/exhibition/exhibitionList?exhibition_type="+this.getId,
+									data:data,
+									type:"get",
+									success:res1=>{
+										utils.ajax({
+											url:"/pc/jewelry/exhibition/exhibitionListNum?exhibition_type="+this.getId,
+											data:data,
+											type:"get",
+											success(res2){
+												resolve({records:res1.data,total:res2.data})
+											}
+										})
+									}
+								})
+							})
+						}else{
+							return new Promise((resolve,reject)=>{
+								utils.ajax({
+									url:"/pc/jewelry/exhibition/list?exhibition_type="+this.getId,
+									data:data,
+									type:"get",
+									success(res){
+										resolve(res.data)
+									}
+								})
+							})
+						}
+					},
+					getDir(){
+						return new Promise((resolve,reject)=>{
+							utils.ajax({
+								url:" /pc/jewelry/exhibition/regionList",
+								type:"get",
+								success(res){
+									resolve(res.data)
+								}
+							})
+						})
+					},
+					getBrand(){
+						return new Promise((resolve,reject)=>{
+							utils.ajax({
+								url:"/pc/jewelry/exhibition/brandList",
+								type:"get",
+								success(res){
+									resolve(res.data)
+								}
+							})
+						})
+					},
+					formatImg: utils.formatImg,
+					_more(id){
+						window.location.href='../../jewelry_fair/detail/'+id;
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

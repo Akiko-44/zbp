@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+</head>
+<body class="userOrderJewelry">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div id="orderDetail">
+					
+					<div id="orderProgress">
+						<ul class="clearfix">
+							<li>
+								<h4>待付款</h4>
+								<span>1</span>
+							</li>
+							<li>
+								<h4>待发货</h4>
+								<span>2</span>
+							</li>
+							<li>
+								<h4>待收货</h4>
+								<span>3</span>
+							</li>
+							<li>
+								<h4>待评价</h4>
+								<span>4</span>
+							</li>
+							<li>
+								<h4>交易完成</h4>
+								<span>5</span>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="orderInfo">
+						<div class="panel userPanel">
+							<div class="panel-header">
+								<h3 class="panel-title">
+									<b style="margin-right: 20px">{{data.createTime}}</b>
+									<span>
+										订单编号：{{data.orderNumber}}
+									</span>
+								</h3>
+							</div>
+							<div class="panel-body">
+								<table>
+									<tr>
+										<td width="330" valign="top" style="padding-right: 20px;">
+											<h3>收货人信息</h3>
+											<p>
+												<label>收件人：</label>
+												<span v-if="data.userInfoVO">{{data.buyUserName}}</span>
+											</p>
+										</td>
+										<td valign="top" style="border-left: 1px dashed #eaeaea;padding: 0 30px;">
+											<h3>订单状态：
+											<template v-if="data.state == 1 || data.state==100">
+												待付款
+											</template>
+											<template v-else-if="data.state == 2">
+												已付款
+											</template>
+											<template v-else-if="data.state == 3">
+												设计中&制造中
+											</template>
+											<template v-else-if="data.state == 4">
+												待发货
+											</template>
+											<template v-else-if="data.state == 5">
+												待收货
+											</template>
+											<template v-else-if="data.state == 6">
+												交易成功
+											</template>
+											<template v-else-if="data.state == 7">
+												已完成
+											</template>
+											<template v-else-if="data.state == 8">
+												已取消
+											</template>
+											<template v-else-if="data.state == 9">
+												已关闭
+											</template>
+											<template v-else-if="data.state == 10">
+												退款中
+											</template>
+											<template v-else-if="data.state == 11">
+												退款成功
+											</template>
+											<template v-else-if="data.state == 12">
+												退款失败
+											</template>
+											<template v-else-if="data.state == 13">
+												退货中
+											</template>
+											<template v-else-if="data.state == 14">
+												退货成功
+											</template>
+											<template v-else-if="data.state == 15">
+												已删除
+											</template>
+											<template v-else-if="data.state == 16">
+												待评价
+											</template>
+											<template v-else-if="data.state == 41">
+												待换出人支付
+											</template>
+											<template v-else-if="data.state == 42">
+												待换出人发货
+											</template>
+											<template v-else-if="data.state == 43">
+												待换入人收货
+											</template>
+											<template v-else-if="data.state == 44">
+												待换出人收货
+											</template>
+											</h3>
+											<p>
+												<label>商品合计：</label>
+												<span>{{data.goodsTotalMoney}}</span>
+											</p>
+											<div class="clearfix">
+												<p class="fr">
+													<label>应付总额：</label>
+													<b class="red fs24">￥{{data.payMoney}}</b>
+												</p>
+												<p class="fl">
+													<label>订单优惠：{{data.goodsTotalMoney - data.payMoney}}</label>
+												</p>
+											</div>
+											<div>
+												<template v-if="data.state==1 || data.state==100">
+													<a class="btn btn-warning toPayOrderBtn" :orderNumber="data.orderNumber">立即支付</a>&emsp;&emsp;
+													<a class="blue cancelOrderBtn" :orderNumber="data.orderNumber">取消订单</a>
+												</template>
+												<template v-else-if="data.state==2">
+													<a class="blue cancelOrderBtn" :orderNumber="data.orderNumber">取消订单</a>
+												</template>
+												<template v-else-if="data.state==3">
+													
+												</template>
+												<template v-else-if="data.state==4">
+													
+												</template>
+												<template v-else-if="data.state==5">
+													<a class="btn btn-warning ensureOrderBtn" :orderNumber="data.orderNumber">确认收货</a>
+												</template>
+												<template v-else-if="data.state==6">
+													<a class="btn btn-warning commentOrderBtn" :orderNumber="data.orderNumber">去评价</a>
+												</template>
+												<template v-else-if="data.state==7">
+													<a class="blue serviceOrderBtn" :orderNumber="data.orderNumber" :orderId="data.id">申请售后</a>
+												</template>
+												
+												<template v-else-if="data.state==8">
+												
+												</template>
+												<template v-else-if="data.state==9">
+												
+												</template>
+												<template v-else-if="data.state==10">
+												
+												</template>
+												<template v-else-if="data.state==11">
+												
+												</template>
+												<template v-else-if="data.state==12">
+												
+												</template>
+												<template v-else-if="data.state==13">
+												
+												</template>
+												<template v-else-if="data.state==14">
+												
+												</template>
+												<template v-else-if="data.state==15">
+												
+												</template>
+												<template v-else-if="data.state==16">
+													<a class="btn btn-warning commentOrderBtn" :orderNumber="data.orderNumber">去评价</a>
+												</template>
+												<template v-else-if="data.state==41">
+												
+												</template>
+												<template v-else-if="data.state==42">
+												
+												</template>
+												<template v-else-if="data.state==43">
+												
+												</template>
+												<template v-else-if="data.state==44">
+												
+												</template>
+												<template v-else>
+												
+												</template>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="payInfo">
+						<div class="panel userPanel">
+							<div class="panel-header">
+								<h3 class="panel-title"><b>支付信息</b></h3>
+							</div>
+							<div class="panel-body">
+								<table>
+									<tr>
+										<td width="45%">
+											<label>支付方式：</label>
+											<span>{{g_const.payType[data.payType]}}</span>
+										</td>
+										<td>
+											<label>支付渠道：</label>
+											<span></span>
+										</td>
+									</tr>
+									<tr>
+										<!--<td width="45%">
+											<label>支付流水号：</label>
+											<span></span>
+										</td>-->
+										<td>
+											<label>支付时间：</label>
+											<span>2018-11-11</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<template v-if="data.state != 1 && data.state != 2 && data.state != 3 && data.state != 4">
+					<div class="expressInfo">
+						<div class="panel userPanel">
+							<div class="panel-header">
+								<div class="panel-control">
+									<a class="blue">查看物流</a>
+								</div>
+								<h3 class="panel-title"><b>物流信息</b></h3>
+							</div>
+							<div class="panel-body">
+								<table>
+									<tr>
+										<td width="33%">
+											<label>快递公司：</label>
+											<span v-if="data.logisticsVO">{{data.logisticsVO.logistics_cpy}}</span>
+										</td>
+										<td width="33%">
+											<label>快递单号：</label>
+											<span v-if="data.logisticsVO">{{data.logisticsVO.logisticCode}}</span>
+										</td>
+										<td>
+											<label>时间：</label>
+											<span v-if="data.logisticsVO">{{data.logisticsVO.expressTime}}</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					</template>
+					
+					<div class="ticketInfo">
+						<div class="panel userPanel">
+							<div class="panel-header">
+								<div class="panel-control">
+									<a class="blue">查看发票详情</a>
+								</div>
+								<h3 class="panel-title"><b>发票类型</b></h3>
+							</div>
+							<div class="panel-body">
+								<table>
+									<tr>
+										<td width="33%">
+											<label>发票类型：</label>
+											<span v-if="data.orderInvoiceVO">{{data.orderInvoiceVO.invoiceType}}</span>
+										</td>
+										<td width="33%">
+											<label>发票抬头：</label>
+											<span v-if="data.orderInvoiceVO">{{data.orderInvoiceVO.invoiceTitle}}</span>
+										</td>
+										<td>
+											<label>发票内容：</label>
+											<span v-if="data.orderInvoiceVO">{{data.orderInvoiceVO.remark}}</span>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="goodsList">
+						<div class="panel userPanel">
+							<div class="panel-header">
+								<h3 class="panel-title"><b>我的商品</b></h3>
+							</div>
+							<div class="panel-body">
+								<table>
+									<thead>
+										<tr class="tc">
+											<th colspan="2">商品</th>
+											<th>单价</th>
+											<th>数量</th>
+											<th>实付</th>
+											<th>状态</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="item in data.orderGoodVOList">
+											<td width="120">
+												<img :src="item.skuMainPic | formatImg" width="100" height="100">
+											</td>
+											<td>
+												<h3>{{item.skuName}}</h3>
+												<p>{{item.skuExplain}}</p>
+											</td>
+											<td class="tc">￥{{item.unitPrice}}</td>
+											<td class="tc">{{item.goodsNumber}}</td>
+											<td class="tc">￥{{item.goodsNumber*item.unitPrice}}</td>
+											<td class="tc">交易完成</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../userFooter.ejs %>
+	
+<%- include commonJs.ejs %>	
+<script>
+$(".userLeftNav li[data-target='gallery']").addClass("cur");
+
+var routerVm = new Vue({
+	el: "#router"
+})
+
+var id = utils.getUrlParam("id");
+
+var detailVm = new Vue({
+	el: "#orderDetail",
+	data: {
+		data: {}
+	},
+	mounted: function(){
+		var self = this;
+		utils.ajax({
+			url: "/api/order/info/"+id,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				self.data = data;
+				if(data.state == 1 || data.state==100){
+					$("#orderProgress li:eq(1)").prevAll().addClass("cur")
+				}else if(data.state == 2 || data.state == 3 || data.state == 4){
+					$("#orderProgress li:eq(2)").prevAll().addClass("cur")
+				}else if(data.state == 5){
+					$("#orderProgress li:eq(3)").prevAll().addClass("cur")
+				}else if(data.state == 16){
+					$("#orderProgress li:eq(4)").prevAll().addClass("cur")
+				}else if(data.state == 7){
+					$("#orderProgress li:eq(5)").prevAll().addClass("cur")
+				}
+			}
+		})
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	}
+})
+
+$(document).on("click", ".cancelOrderBtn", function(e){
+	//取消订单
+	var self = $(e.currentTarget)
+	var id = self.attr("orderNumber")
+	cancelOrder(id, function(){
+		utils.alert("success", "取消成功");
+		setTimeout(function(){
+			location.reload();
+		}, 1500)
+	})
+}).on("click", ".ensureOrderBtn", function(e){
+	//手动确认订单完成
+	var self = $(e.currentTarget)
+	var id = self.attr("orderNumber");
+	ensureOrder(id, function(data){
+		utils.alert("success", "操作成功");
+		setTimeout(function(){
+			location.reload();
+		}, 1500)
+	})
+})
+</script>
+
+</body>
+</html>
+

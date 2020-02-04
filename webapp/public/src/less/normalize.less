@@ -1,0 +1,213 @@
+@red: #890F1C;
+@headerGray: #9D9D9D;
+@darkYellow: #C7A87A;
+@gray: #999;
+@borderColor: #EBEBEB;
+
+@radius: 3px;
+
+* {
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+iframe {
+    display: block;
+}
+html {
+    height: 100%;
+}
+body {
+	margin: 0;
+	font-size: 12px;
+    line-height: 1;
+    min-width: 1200px;
+//  overflow-x: hidden;
+    /* height: 100%; */
+    font-family: "Microsoft Yahei", Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    /* font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif; */
+    color: #333;
+//  background: #fff;
+    background: #F2F2F2;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+audio, progress, canvas, video {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+audio:not([controls]) {
+	display: none; 
+	height: 0;
+}
+template {
+	display: none;
+}
+svg:not(:root) {
+	overflow: hidden;
+}
+/*
+	列表
+*/
+ul, ol, li, dl, dd { 
+	margin: 0; 
+	padding: 0; 
+}
+ol, ul {
+    list-style: none;
+}
+/*
+	链接
+*/
+a {
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    /*	Remove the gray background on active links in IE 10.  */
+    /* background-color: transparent; */
+}
+a:link {
+    /*color: #0099FF;*/
+}
+a:hover {
+    text-decoration: none;
+}
+/*
+	图片
+*/
+img {
+    border: 0;
+    vertical-align: middle;
+    max-width: 100%;
+}
+/*
+	表格
+*/
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+td, th {
+	padding: 0;
+	word-wrap: break-word;
+  	word-break: break-all;
+}
+/*
+	form表单
+*/
+fieldset {
+  	border: 1px solid #c0c0c0;
+  	margin: 0 2px;
+  	padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  	border: 0;
+  	padding: 0;
+}
+optgroup {
+  	font-weight: bold;
+}
+input, select, textarea, button {
+    outline: none;
+    font-size: 100%;
+    color: inherit;
+    margin: 0;
+    font-family: inherit;
+    vertical-align: middle;
+}
+textarea {
+	resize: none;
+	border: 1px solid #ddd;
+}
+[type="text"], [type="password"] {
+	border: 1px solid #ddd;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+	-webkit-appearance: button;
+  	cursor: pointer; 
+}
+[type="checkbox"],
+[type="radio"] {
+	padding: 0;
+}
+input[disabled], textarea[disabled], button[disabled] {
+    background-color: #eef1f6;
+    border-color: #d1dbe5;
+    color: #bbb;
+    cursor: not-allowed;
+}
+select {
+    height: 30px;
+    border: 1px solid rgba(0,0,0,.09);
+    border-radius: 3px;
+    width: 150px;
+    color: #999;
+}
+/*
+	段落文字
+*/
+h1, h2, h3, h4, h5, h6, p, figure, form, blockquote { 
+	margin: 0; 
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+p {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+strong, b {
+    font-weight: bold;
+}
+em, i {
+	
+}
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+sup {
+    top: -0.5em;
+}
+sub {
+    bottom: -0.25em;
+}
+pre {
+	overflow: auto; 
+	white-space: pre; 
+	white-space: pre-wrap; 
+	word-wrap: break-word; 
+}
+code, kbd, pre, samp {
+	font-family: monospace, monospace; 
+}
+/*
+	引用
+*/
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+/*
+	选中背景色
+*/
+::selection {
+    background-color: #FB746E;
+    color: #fff
+}
+::-moz-selection {
+    background-color: #FB746E;
+    color: #fff
+}

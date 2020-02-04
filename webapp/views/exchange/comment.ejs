@@ -1,0 +1,180 @@
+<div>
+	
+	<h2 class="exchange-mt">
+		商品评价
+	</h2>
+	
+	<div class="exchange-minfo">
+		<table>
+			<tr>
+				<td width="110" class="tc">
+					<h3>好评率</h3>
+					<p><strong class="yellow">48%</strong></p>
+				</td>
+				<td>
+					<p class="tip">大家对TA的印象</p>
+					<div class="clearfix">
+						<div class="fl">
+							<span>好评(1598)</span>
+							<div class="progress">
+								<div style="width: 55%;" class="progress-bar progress-bar-warning"></div>
+							</div>
+						</div>
+						<div class="fl">
+							<span>中评(1598)</span>
+							<div class="progress">
+								<div style="width: 55%;" class="progress-bar progress-bar-warning"></div>
+							</div>
+						</div>
+						<div class="fl">
+							<span>差评(1598)</span>
+							<div class="progress">
+								<div style="width: 55%;" class="progress-bar progress-bar-warning"></div>
+							</div>
+						</div>
+					</div>
+				</td>
+				<td width="140">
+					<a class="btn btn-warning">评价商品</a>
+				</td>
+			</tr>
+		</table>
+		<div>
+			
+		</div>
+	</div>
+	
+	<div class="exchange-mlist">
+		<ul>
+			
+		</ul>
+		<div id="pagination" class="pagination"></div>
+	</div>
+	
+</div>
+<script>
+$(function(){
+	renderExchangeComment(1);
+})
+function renderExchangeComment(page){
+	utils.ajax({
+		url: "/api/userCenter/userComment/page/"+utils.getUrlParam("id")+"/1",
+		type: "get",
+		data: {
+			offset: page,
+			limit: 10
+		},
+		success: function(data){
+			data = data.data;
+			if(data.total == 0){
+				//没有数据
+				$(".exchange-mlist ul").prepend('<li>' + utils.dom.nodata + '</li>');
+			}else{
+				var html = "";
+				for(var i = 0; i < data.records.length; i++){
+					html += _template.exchangeCommentItem({
+						data: data.records[i]
+					}) 
+				}
+				$(".exchange-mlist ul").html(html);
+				
+				if(page == 1 && data.pages > 1){
+					$("#pagination").pagination({
+						pageCount: data.pages,
+					    jump: true,
+					    coping: true,
+					    prevContent: '<',
+					    nextContent: '>',
+					    callback: function (api){
+					    	renderExchangeComment(api.getCurrent());
+					    }
+					});
+				}
+				
+			}
+		}
+		
+	})
+}
+</script>
+<style>
+.exchange-mt {
+    background-color: #f7f7f7;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin: 15px 0;
+    font-size: 16px;
+}
+.exchange-minfo {
+	border: 1px solid #EFEFEF;
+	margin-bottom: 30px;
+}
+.exchange-minfo table {
+	width: 100%
+}
+.exchange-minfo td {
+	padding: 20px
+}
+.exchange-minfo .btn {
+	background: #E6B85C;
+	border-color: #E6B85C;
+	width: 100px;
+	line-height: 34px;
+	height: 36px;
+	border-radius: 0;
+}
+.exchange-minfo .yellow {
+	color: #E6B85C;
+}
+.exchange-minfo td strong {
+	font-size: 30px;
+}
+.exchange-minfo td h3 {
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+.exchange-minfo td .tip {
+	color: #999;
+	margin-bottom: 20px;
+}
+.exchange-minfo .progress {
+	display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+    height: 18px;
+    margin-bottom: 0;
+    margin-right: 15px;
+}
+.exchange-mlist li {
+	padding: 20px;
+	overflow: hidden;
+	border-bottom: 1px solid #efefef;
+}
+.exchange-mlist .ml-left {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background: #f9f9f9;
+	float: left;
+}
+.exchange-mlist .ml-right {
+	padding-left: 20px;
+	overflow: hidden;
+}
+.exchange-mlist .exchange-mc {
+	margin-top: 10px;
+	line-height: 18px;
+	color: #666;
+	font-size: 12px;
+}
+.exchange-mlist .exchange-mimg {
+	margin-top: 10px;
+}
+.exchange-mlist .exchange-mimg a {
+	display: inline-block;
+	width: 60px;
+	height: 60px;
+	margin-right: 15px;
+	background: #f9f9f9;
+}
+</style>

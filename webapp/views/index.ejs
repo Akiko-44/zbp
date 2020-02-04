@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+	<meta name="keywords"
+		content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+	<title>中宝平 中国珠宝行业权威平台中宝平，带你到源头买真品！</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		body {
+			background: #eee;
+		}
+
+		body .slick-dots li button:before {
+			overflow: hidden;
+			border-radius: 50%;
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;
+		}
+
+		.main {
+			padding-bottom: 50px;
+		}
+
+		.slideritem a {
+			display: block;
+			height: 460px
+		}
+
+		.exchangeTitle {
+			margin-top: 50px;
+			margin-bottom: 10px;
+		}
+
+		.exchangeTitle strong {
+			color: #333333;
+			font-size: 16px;
+		}
+
+		.exchangeTitle span {
+			color: #666666;
+			font-size: 16px;
+			margin-left: 5px;
+		}
+
+		.exchangeTitle a {
+			display: inline-block;
+			line-height: 20px;
+			color: #666;
+			border-radius: 11px;
+			text-align: center;
+		}
+
+		.brandMarketers li {
+			float: left;
+			width: 176px;
+			background-color: #fff;
+			margin-left: 30px;
+			margin-bottom: 30px;
+			text-align: center;
+			position: relative;
+		}
+
+		.brandMarketers li:hover .img-box {
+			border: 1px solid #E0E0E0;
+		}
+
+		.containerJewelyIndex {
+			width: 1210px;
+			margin: 0 auto;
+		}
+
+		.containerJewelyIndex li:first-child,
+		li.first {
+			margin-left: 0 !important;
+		}
+
+		.brandMarketers .img-box {
+			height: 162px;
+			position: relative;
+			background: #f9f9f9;
+			overflow: hidden;
+		}
+
+		.hotSale .img-box {
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+
+		.hotSale img {
+			width: 100%;
+			height: auto;
+			position: absolute;
+			top: 50%;
+			left: 0;
+			margin-top: -113.5px;
+		}
+
+		.brandMarketers img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.brandMarketers li .name {
+			height: 30px;
+			line-height: 30px;
+			overflow: hidden;
+			border-top: 1px solid #D7D7D7;
+		}
+
+		.platformMarketers,
+		.flagshipStore {
+			width: 485px;
+		}
+
+		.platformMarketers .img-box,
+		.flagshipStore .img-box {
+			height: 162px;
+			background: #FFFFFF;
+		}
+
+		.patent .content {
+			height: 529px;
+			padding: 30px;
+			background-color: #fff;
+		}
+
+		.patent .slider-for {
+			width: 100%;
+			height: 321px;
+		}
+
+		.patent .slider-for .info {
+			width: 500px;
+		}
+
+		.patent .slider-for .slideritem a {
+			height: 321px;
+			line-height: 321px;
+		}
+
+		.patent .slider-for .slideritem a img {
+			display: inline-block;
+		}
+
+		.patent .slider-nav {
+			padding: 10px 30px;
+		}
+
+		.patent .slider-nav .slick-slide>div {
+			margin: 25px;
+		}
+
+		.patent .slider-nav .slick-current>div {
+			border: 1px solid #FF0000;
+		}
+
+		.slider-brandshop .slick-slide>div {
+			margin: auto;
+			width: 176px;
+		}
+
+		.slider-brandshop .slick-current li {
+			webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+			box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+			transform: translate3d(0, -2px, 0)
+		}
+
+		.patent .slider-nav .slideritem img {
+			width: 100%;
+		}
+
+		.patent .info {
+			height: 321px;
+			margin-left: 45px;
+		}
+
+		.patent .info p {
+			margin-top: 30px;
+		}
+
+		.patent .info .brandName {
+			font-size: 20px;
+			margin-top: 80px;
+		}
+
+		.patent .info .describe {
+			font-size: 18px;
+		}
+
+		.patent .info .model {
+			font-size: 14px;
+			color: #FF0000;
+		}
+
+		.patent .info .price,
+		.todayNew .info .price {
+			font-weight: 600;
+		}
+
+		.hotSale ul {
+			padding: 30px;
+			background: #fff;
+		}
+
+		.hotSale li {
+			float: left;
+			width: 227px;
+			height: 315px;
+			margin-left: 8px;
+			margin-bottom: 5px;
+			text-align: center;
+			position: relative;
+		}
+
+		.hotSale li .img-box {
+			height: 100%;
+			position: relative;
+		}
+
+		.hotSale li .info {
+			padding: 8px 10px;
+			background: #FF0000;
+			opacity: .8;
+			display: none;
+			color: #fff;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.hotSale li .info .designerName {
+			margin-top: 56px;
+		}
+
+		.hotSale li:hover .info {
+			display: block;
+		}
+
+		.hotSale li .info .cateThree,
+		.hotSale li .info .price {
+			margin-top: 20px;
+		}
+
+		.hotSale li .intro {
+			color: #fff;
+			line-height: 16px;
+			height: 32px;
+			line-height: 32px;
+			border: 1px solid #fff;
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 82px;
+			width: 100px;
+			margin: 0 auto;
+		}
+
+		.todayNew ul {
+			text-align: center;
+		}
+
+		.todayNew ul li {
+			width: 288px;
+			height: 435px;
+			margin-left: 16px;
+			background-color: #fff;
+			float: left;
+			position: relative;
+			margin-top: 10px;
+			transition: all 0.25s ease;
+		}
+
+		.todayNew ul li .img-box {
+			height: 288px;
+		}
+
+		.todayNew ul li .info .name {
+			font-size: 16px;
+			margin-top: 10px;
+		}
+
+		.todayNew ul li .info .describe {
+			font-size: 12px;
+			margin-top: 10px;
+		}
+
+		.todayNew ul li .info .price {
+			margin-top: 27px;
+			font-weight: 600;
+		}
+
+		.todayNew ul li .addCar {
+			height: 50px;
+			line-height: 50px;
+			background-color: #FF0000;
+			color: #fff;
+			display: none;
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+		}
+
+		.todayNew ul li:hover {
+			transform: scale(1.05, 1.05);
+			box-shadow: 1px -3px 10px 4px #cec0c0ad;
+		}
+
+		.hotStyle {
+			margin-top: 30px;
+			margin-bottom: 50px;
+		}
+
+		.brandJewelry {
+			width: 320px;
+			height: 401px;
+			border-left: 20px solid #F5F5F5;
+			padding: 23px 30px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 999;
+			background: #FFFFFF;
+		}
+
+		.brandJewelry>a {
+			display: inline-block;
+			width: 100px;
+			border: 1px solid #D9D9D9;
+			margin-bottom: 15px;
+		}
+
+		.brandJewelry>a:nth-child(odd) {
+			margin-right: 30px;
+		}
+
+		.brandJewelry p {
+			line-height: 16px;
+			font-size: 12px;
+			color: #333;
+			border-top: 1px solid #D9D9D9;
+		}
+
+		/* hx-2019-11-8 */
+		.gallerybtgTransparent {
+			background: rgba(0, 0, 0, .7);
+			height: 100%;
+			/* opacity: 0.9; */
+			z-index: 998;
+			position: absolute;
+			width: 100%;
+		}
+
+
+
+		.catname {
+			float: left;
+			margin-left: 30px;
+			width: 200px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+
+		.linehide {
+			display: none;
+		}
+
+		.galleryNav {
+			color: #000;
+			background: rgba(102, 102, 102, .6);
+		}
+
+		.galleryNav li h3 {
+			font-size: 14px;
+			color: #fff;
+			position: relative;
+			width: 220px;
+			text-align: left;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.subThreesecond {
+			font-weight: bold;
+		}
+
+		.galleryNav li .gallerySub {
+			left: 240px;
+			height: 460px;
+			border: 1px solid #DF735A;
+		}
+
+		.rightarrowsub {
+			background: url(/src/img/hx_img/rightarrow.png) no-repeat;
+			background-size: 100% 100%;
+			width: 30px;
+			height: 30px;
+			margin-top: 5px;
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.tip {
+			width: 100%;
+		}
+
+		.marquee {
+			width: 100%;
+			height: 50px;
+			align-items: center;
+			color: #3A3A3A;
+			background-color: aqua;
+			display: flex;
+			box-sizing: border-box;
+		}
+
+		.marquee_title {
+			padding: 0 20px;
+			height: 30px;
+			/*关键样式*/
+			font-size: 14px;
+			border-right: 1px solid #d8d8d8;
+			align-items: center;
+		}
+
+		.marquee_box {
+			display: block;
+			position: relative;
+			width: 60%;
+			height: 30px;
+			/*关键样式*/
+			overflow: hidden;
+		}
+
+		.marquee_list {
+			display: block;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			left: 4px;
+		}
+
+		.marquee_top {
+			transition: top 0.5s;
+			width: 100%;
+		}
+
+		/*关键样式*/
+		.marquee_list li {
+			height: 30px;
+			/*关键样式*/
+			line-height: 36px;
+			/*关键样式*/
+			font-size: 14px;
+			padding-left: 20px;
+			background-color: #fff;
+		}
+
+		.marquee_list li span {
+			padding: 0 2px;
+			font-size: 14px;
+			color: #666;
+			cursor: pointer;
+		}
+
+		.red {
+			color: #FF0101;
+		}
+
+		.tipnotice {
+			position: absolute;
+			left: 0px;
+			z-index: 9;
+			width: 20px;
+			height: 20px;
+			top: 50%;
+			transform: translate(0, -50%)
+		}
+
+		.detail {
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform: translate(0, -50%);
+			color: #666;
+			font-size: 12px;
+
+		}
+
+		.import {
+			color: #fee900 !important;
+			font-size: 16px;
+			font-weight: bold;
+		}
+
+		.team-img img {
+			width: 188px;
+			height: 200px;
+			border-radius: 50%;
+			transition: all 1.2s;
+			-moz-transition: all 1.2s;
+			-webkit-transition: all 1.2s;
+			-o-transition: all 1.2s;
+		}
+
+		.team-img img:hover {
+			transform: scale(1.2);
+			-moz-transform: scale(1.2);
+			-webkit-transform: scale(1.2);
+			-o-transform: scale(1.2);
+			-ms-transform: scale(1.2);
+		}
+
+		.textaLeft {
+			text-align: left;
+		}
+
+		.reference {
+			color: #999999;
+			font-size: 14px;
+		}
+
+		.fs16 {
+			color: #e54941;
+			font-size: 18px;
+		}
+
+		.iconmerchantPic {
+			width: 32px;
+			height: 32px;
+			;
+			border-radius: 50%;
+			margin-right: 10px;
+		}
+
+		.merchantPic {
+			text-align: left;
+			line-height: 32px;
+		}
+
+		.merchantPic span {
+			color: #666;
+		}
+
+		.galleryNav a {
+			color: #666 !important;
+		}
+
+		.galleryNav li:first-child {
+			font-weight: 500;
+		}
+
+		.newcategorySub {
+			height: 42px !important;
+			line-height: 42px !important;
+		}
+
+		.galleryBanner {
+			height: 460px;
+		}
+
+		.slideritem a {
+			display: block;
+			height: 460px;
+		}
+
+		.slick-slide img {
+			height: 100%;
+		}
+
+		.galleryHeader {
+			max-width: 1200px;
+		}
+
+		.galleryNavBox {
+			width: 240px;
+			height: 460px;
+			border-right: 0;
+			color: #9c9c92;
+			position: absolute;
+			top: -460px;
+			left: 0;
+			z-index: 4;
+		}
+
+		.noticetip {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.descbotice {
+			cursor: pointer;
+		}
+
+		/* suspend悬浮层 */
+		.suspend {
+			height: 52px;
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 1000;
+			background: #fff !important;
+		}
+
+		.suspend .container {
+			padding-top: 6px;
+		}
+
+		.suspend .logo {
+			width: 149px;
+		}
+
+		/* 轮播图左右箭头 */
+		.galleryBanner .el-carousel__arrow,
+		.galleryBanner .el-carousel__arrow:hover {
+			background: #584f4f !important;
+		}
+
+		.galleryBanner .el-carousel__arrow i {
+			font-size: 30px !important;
+			font-weight: bold !important;
+		}
+
+		.top-box {
+			margin-top: -2px;
+		}
+
+		.banner-box {
+			width: 100%;
+			background: #ffffff;
+		}
+	</style>
+</head>
+
+<body class="jewelryIndex">
+
+	<%- include ./headerbar.ejs %>
+
+	<div id="main" class="main" v-cloak>
+		<div class="top-box" id="topBox">
+			<%- include ./headerNav.ejs %>
+			<div id="headerNav" class="headerNav userHeaderNav suspend" style="display: none;">
+				<div class="container">
+					<div class="logo">
+						<a href="/"><img src="../../src/img/common/logo-suspend.png" alt="" /></a>
+					</div>
+					<div class="right-container">
+						<div class="navSerch navSerch1 clearfix">
+							<input class="fl search" type="text" placeholder="请输入关键字" style="color: #000000;">
+							<span>
+								<i class="icon icon-search2"></i>
+							</span>
+							<button class="toSearch">搜索</button>
+						</div>
+						<div id="myCart1"></div>
+						<!-- <div class="my-cart">
+              <img src="../../src/img/common/icon-shopping.png" />
+              我的购物车
+              <span class="cart-num" id="carNum">0</span>
+            </div>
+            <div class="cart-list" style="display: none;">
+              <div class="empty">
+                <img src="../../src/img/common/icon-emptycart.png" style="padding-right: 10px;" />
+                您的购物车是空的，赶紧选购吧！
+              </div>
+              <div class="list hide" id="cartList">
+                <ul></ul>
+                <div class="total">
+                  <p class="num">共<span id="totalNum"></span>件商品</p>
+                  <p class="price"><span id="totalPrice"></span>元</p>
+                  <a href="../exchange/cart">去购物车结算</a>
+                </div>
+              </div>
+            </div> -->
+					</div>
+				</div>
+			</div>
+			<div class="banner-box">
+				<div class="designBanner galleryBanner" id="banner" style="position: relative;">
+					<div class="slider">
+						<el-carousel trigger="click" height="460px" loop :interval="4000">
+							<el-carousel-item v-for="(item,i) in dmBannerDTOList" :key="i">
+								<a :href="item.pcUrl ? item.pcUrl : '#'">
+									<img :src="item.pcPicture" />
+								</a>
+							</el-carousel-item>
+						</el-carousel>
+						<!-- <template v-if="dmBannerDTOList.length>0" v-for="item in dmBannerDTOList">
+                <div class="slideritem">
+                  <a v-if="item.pcUrl" :href="item.pcUrl|formatUrl" target="_blank">
+                    <img :src="item.pcPicture | formatImg" height="400" width="100%">
+                  </a>
+                  <a v-else>
+                    <img :src="item.pcPicture | formatImg" height="400" width="100%">
+                  </a>
+                </div>
+              </template> -->
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="galleryHeader" id="navWrap">
+			<div class="galleryNavBox">
+				<div class="gallerybtgTransparent"></div>
+				<div class="galleryNav ">
+					<ul>
+						<!-- <li>
+								<h3 style="color: #333333;font-weight: bolder;">商品分类</h3>
+							</li> -->
+						<li class="categorySub newcategorySub clearfix" v-for="item in categoryShow">
+							<h3 class="subThree" :data-name="item.catName" :data-id="item.id"><span
+									class="catname">{{item.catName}}</span><i class="rightarrow"></i></h3>
+							<div class="clearfix gallerySub" style="width: 960px;overflow-y: hidden;">
+								<div style="height: 361px;overflow-x: hidden;overflow-y: auto;">
+									<div style="border-bottom:1px solid #eee" v-if="item.children && item.children.length"
+										v-for="subitem in item.children">
+										<span :data-name="subitem.catName" :data-id="subitem.id" class="subThree subThreesecond"
+											style="display: inline-block;">
+											{{subitem.catName}}</span><i class=" rightarrowsub"></i>
+										<div v-if="subitem.children&&subitem.children.length>0" style="display: inline-block">
+											<template v-for="(citem,idx) in subitem.children">
+												<a :data-name="citem.catName" :data-id="citem.id" class="subThree">{{citem.catName}} <span
+														:class="idx === subitem.children.length-1?'linehide':'lineshow'">&nbsp;&nbsp;|</span>
+												</a>
+											</template>
+										</div>
+									</div>
+								</div>
+								<div class="brandJewelry clearfix" v-else>
+									<p style="line-height: 100px;">暂无品牌推荐</p>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div id="content">
+			<div class="tip">
+				<div class="content">
+					<img class="tipnotice" src="../src/img/hx_img/notice.png" alt="">
+					<ul class="marquee_list" :style="{ top: -num + 'px'}" :class="{marquee_top:num}">
+						<!-- 当显示最后一条的时候（num=0转换布尔类型为false）去掉过渡效果-->
+						<li v-for="(item, index) in notice">
+							<p style="width: 100%;" class="noticetip">
+								<span @click="noticedesc(item.id)">{{item.noticeName}}<span style="padding-left: 5px;"><i
+											class="el-icon-d-arrow-right"></i></span></span>
+								<!-- <span class="descbotice fr" @click="noticedesc(item.id)">详情>></span> -->
+							</p>
+						</li>
+					</ul>
+
+				</div>
+			</div>
+			<!-- channel -->
+			<div class="clearfix container" style="width: 100%;background: #fff;padding-bottom: 20px;">
+				<div style="padding-bottom: 20px;background: #ffffff;    width: 1200px;
+			margin: 0 auto;">
+					<div class="Pricefluctuation">
+						<p>
+							<span class="import">今日指导价</span>
+							<span>{{systemDate}}</span>
+							<span class="import" style="float: right;"><a href="/Goldprice" style="color: #fee900;">更多</a> </span>
+						</p>
+						<div v-for="(item,index) in SearchSeven.slice(0,2)">
+							<p>{{item.name}} </p>
+							<p>零售价：<span class="import">{{item.minPrice}}</span>{{item.priceUnit}}</p>
+						</div>
+					</div>
+					<a href="/home/query_id_card">
+						<div class="channelsimple" style="background: url(../src/img/hx_img/channel1.png)no-repeat;">
+							<p class="channeltext">查珠宝身份证</p>
+							<img class="channelCom" src="../src/img/hx_img/idea.png" alt="" style="width: 54px;">
+						</div>
+					</a>
+					<a href="/home/query_jewelry_price">
+						<div class="channelsimple" style="background: url(../src/img/hx_img/channel2.png)no-repeat;">
+							<p class="channeltext">查珠宝价格</p>
+							<img class="channelCom" src="../src/img/hx_img/gitly.png" alt="">
+						</div>
+					</a>
+					<a href="/home/fidelity_index">
+						<div class="channelsimple" style="background: url(../src/img/hx_img/channel3.png)no-repeat;">
+							<p class="channeltext">打假保真</p>
+							<img class="channelCom" src="../src/img/hx_img/bg1.png" alt="">
+						</div>
+					</a>
+				</div>
+			</div>
+			<!-- shoppingTogether -->
+			<div class="containerJewelyIndex todayNew">
+				<div class="exchangeTitle" style="margin-top: 30px;">
+					<a class="fr" href="/jewelry/goodsList">更多商品<i class="el-icon-d-arrow-right"></i></a>
+					<strong>拼团1折起</strong>
+				</div>
+				<ul class="clearfix">
+					<li class="gripper" :class="{first: index == 0 || index == 4}" v-for="(item,index) in newGoods" :key="index">
+						<div class="discount">{{item.discount}}折</div>
+						<div class="img-box" :data-id="item.id" @click="toDetail(item)">
+							<img :src="item.goodsPic | formatImg" width="100%" height="100%">
+						</div>
+						<div class="info clearfix" style="padding: 0 20px">
+							<p class="name ellipsis textaLeft">{{item.goodsName}}</p>
+							<p class="price new-red fs16 textaLeft">
+								<span>￥{{item.groupLowPrice}}</span>
+								<span v-if="item.groupLowPrice !== item.groupHightPrice">~{{item.groupHightPrice}}</span>
+							</p>
+							<p class="describe ellipsis textaLeft  reference">参考价：
+								<span>￥{{item.navLowPrice}}</span>
+								<span v-if="item.navLowPrice !== item.navHightPrice">~{{item.navHightPrice}}</span>
+							</p>
+							<div class="merchantPic"><img class="iconmerchantPic" :src="item.merchantPic"
+									alt=""><span>{{item.merchantName}}</span></div>
+						</div>
+						<div class="addCar" @click="toAddCar(item.id, item.skuId)">
+							加入购物车
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!-- b2企业入口 -->
+			<!-- <div class="containerJewelyIndex hotStyle">
+				<div @click="btUrl">
+					<img src="../../src/img/jewelry/b2b.jpg" style="width: 100%;" />
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<%- include ./footer.ejs %>
+	<script>
+		var $slider = null;
+
+		var mainVm = new Vue({
+			el: "#main",
+			data: {
+				dmBannerDTOList: [],
+				categoryShow: [],
+				brand: [],
+				admin: [],
+				flagShip: [],
+				hotSellGoods: [],
+				patentGoods: [],
+				newGoods: [],
+				burstGoods: [],
+				cateBrand: [],
+				cateBrandRow: [],
+				num: 0,
+				notice: [],
+				SearchSeven: [],
+				systemDate: '',
+				background: {}
+			},
+			created() {
+
+			},
+
+			mounted: function () {
+				this.getBackground()
+				this._getNotice()
+				var self = this
+				this.showMarquee(this.num);
+				this.bannerShow();
+				this.getSearchSeven()
+				this.getCateBrand()
+				this.getActivitiesShow()
+				this.CurrentTime()
+				setTimeout(function () {
+					self.getCategoryShow()
+				}, 500)
+
+			},
+			methods: {
+				// 背景图配置
+				getBackground() {
+					utils.ajax({
+						type: 'get',
+						url: '/api/backgroundImg/getbackgroundImg',
+						data: { backgroundImgType: 1 },
+						success: (res) => {
+							this.background = res.data
+							if (this.background.wholeType === 1 && this.background.wholeColor) {
+								$('#topBox').css('background', this.background.wholeColor)
+							} else if (this.background.wholeType === 2 && this.background.wholeImg) {
+								$('.headerNav').css('background', 'transparent')
+								$('.banner-box').css('background', 'transparent')
+								$('#topBox').css('background', 'url(' + this.background.wholeImg + ') no-repeat')
+								$('#topBox').css('background-size', '100% 100%')
+							}
+							if (this.background.pcLogoImg) {
+								$('.normal-layer .logo img').attr('src', this.background.pcLogoImg)
+							}
+							if (this.background.pcSearchIcon) {
+								$('.normal-layer img.icon').attr('src', this.background.pcSearchIcon)
+							}
+							if (this.background.pcDefaultSearchColor) {
+								$('.normal-layer .navSerch input::-webkit-input-placeholder').css('color', '#ff0000')
+							}
+							if (this.background.pcCheckedSearchColor) {
+								$('.normal-layer .navSerch input').css('color', this.background.pcCheckedSearchColor)
+							}
+							// if (this.background.pcDefaultWholeColor) {
+							//   $('.navItem').css('color', this.background.pcDefaultWholeColor)
+							// }
+							// if (this.background.pcCheckWholeColor) {
+							//   $('.navItem.cur').css('color', this.background.pcCheckWholeColor)
+							// }
+						}
+					})
+				},
+				btUrl: function () {
+					var _t = utils.getCookie("token");
+					if (!!_t) {
+						utils.ajax({
+							type: 'get',
+							url: '/api/userCenter/getUserInfo',
+							success: function (res) {
+								let data = res.data;
+								let url = escape(JSON.stringify(data))
+								window.location.href = " https://www.wanbaoooo.com?gac=" + url
+							}
+						})
+					} else {
+						window.location.href = 'https://www.wanbaoooo.com'
+					}
+				},
+				CurrentTime() {
+					nowDate = new Date();
+					let date = {
+						year: nowDate.getFullYear(),
+						month: nowDate.getMonth() + 1,
+						date: nowDate.getDate(),
+					}
+					this.systemDate = date.year + '-' + date.month + '-' + date.date;
+				},
+				_getNotice() {
+					var data = {
+						offset: 1,
+						limit: 3
+					}
+					this.notice = this._TemplateAjax("get", '/api/portal/platformNotice/searchAll', data);
+
+				},
+				noticedesc(id) {
+					window.location.href = "/home/notice/?id=" + id
+				},
+				_TemplateAjax(type, url, data) {
+					var that = this;
+					var params;
+					utils.ajax({
+						url: url,
+						async: false,
+						data: data,
+						type: type,
+						success: function (res) {
+							params = res.data.records
+						}
+					})
+					return params
+				},
+				showMarquee: function (num) {
+					var max = this.notice.length;
+					var that = this;
+					marqueetimer = setInterval(function () {
+						num++;
+						if (num >= max) {
+							num = 0;
+						}
+						that.num = num * 30;
+					}, 2000);
+				},
+				getSearchSeven: function () {
+					var self = this;
+					utils.ajax({
+						type: "get",
+						url: '/api/portal/GuidedPrice/searchSeven',
+						data: {
+							offset: 1,
+							limit: 10
+						},
+						success: function (res) {
+							self.SearchSeven = res.data
+
+						}
+					})
+				},
+				shuffle: function (arr) {
+					let i = arr.length;
+					while (i) {
+						let j = Math.floor(Math.random() * i--);
+						[arr[j], arr[i]] = [arr[i], arr[j]];
+					}
+					return arr;
+				},
+				bannerShow: function () {
+					var self = this
+					utils.ajax({
+						type: "get",
+						url: "/api/homePage/bannerShow/1",
+						success: function (res) {
+							if (!res.success) return;
+							self.dmBannerDTOList = res.data;
+
+							setTimeout(function () {
+								$slider = $(".galleryBanner .slider");
+								$slider.slick({
+									dots: true,
+									arrows: false,
+									swipe: true,
+									slidesToScroll: 1,
+									autoplay: true,
+									autoplaySpeed: 5000
+								});
+							}, 100)
+						}
+					});
+				},
+				getCateBrand: function () {
+					var self = this
+					utils.ajax({
+						type: "get",
+						url: "/api/homePage/showBrand/1",
+						success: function (res) {
+							self.cateBrand = res.data
+						}
+					});
+				},
+				getCategoryShow: function () {
+					var self = this
+					utils.ajax({
+						type: "get",
+						url: "/api/homePage/categoryShow",
+						data: {
+							flag: 1
+						},
+						success: function (res) {
+							var list = []
+							for (var i = 0; i < res.data.length; i++) {
+								var val = self.getCateBrandRow()
+								res.data[i].cateBrandRow = val
+								list.push(res.data[i])
+							}
+
+							setTimeout(function () {
+								self.categoryShow = list
+							}, 1000)
+						}
+					});
+				},
+				getCateBrandRow: function () {
+					var self = this
+					self.cateBrandRow = []
+					var len = self.cateBrand.length
+					var num = 10 >= len ? len : 10
+					var idxArr = random(num, 0, len)
+					for (var i = 0; i < idxArr.length; i++) {
+						var index = idxArr[i]
+						self.cateBrandRow.push(self.cateBrand[index])
+					}
+					return self.cateBrandRow
+				},
+				getActivitiesShow: function () {
+					var self = this
+					$.ajax({
+
+						type: "get",
+						url: "/app/homePage/groupGoods",
+						data: {
+							offset: 1,
+							limit: 20
+						},
+						success: function (res) {
+							if (!res.success) return;
+							self.newGoods = res.data.records;
+
+							//self.burstGoods = res.data.burstGoods;
+							setTimeout(function () {
+								$('.patent .slider-for').slick({
+									slidesToShow: 1,
+									slidesToScroll: 1,
+									arrows: false,
+									fade: true,
+									asNavFor: '.patent .slider-nav',
+									slidesToScroll: 1,
+									autoplay: true,
+									autoplaySpeed: 3000,
+									pauseOnHover: false
+								});
+								$('.patent .slider-nav').slick({
+									slidesToShow: 5,
+									slidesToScroll: 1,
+									asNavFor: '.patent .slider-for',
+									dots: false,
+									centerMode: true,
+									focusOnSelect: true
+								});
+								/*$('.slider-brandshop').slick({
+									centerMode: true,
+									infinite: true,
+									centerPadding: '0',
+									slidesToShow: 5,
+									autoplay: true,
+									autoplaySpeed: 3000
+								});*/
+							}, 20)
+						}
+					});
+				},
+				toDetail: function (item) {
+					// var id = event.currentTarget.getAttribute("data-id");
+					window.location = "/jewelry/details?id=" + item.goodsId
+				},
+				toAddCar: function (id, skuid) {
+					if (!utils.islogin()) {
+						utils.alert('danger', '请登录后再进行操作！');
+						setTimeout(function () {
+							window.location = '../login?from=' + encodeURIComponent(location.href)
+						}, 500)
+						return false;
+					} else {
+						var datas = JSON.stringify({
+							goodsId: Number(id),
+							goodsSku: Number(skuid),
+							number: 1,
+							goodsSource: 1
+						})
+						utils.ajax({
+							url: '/api/order/cart/add',
+							data: datas,
+							success: function (res) {
+								utils.alert('success', "添加成功！");
+							}
+						})
+					}
+
+				}
+			},
+			filters: {
+				formatImg: function (str) {
+					return utils.formatImg(str);
+				},
+				formatUrl: function (str) {
+					return utils.formatUrl(str);
+				}
+			}
+		})
+
+		$(function () {
+			$(document).on('click', '.subThree', function (e) {
+				var self = $(e.currentTarget);
+				var id = self.attr('data-id');
+				var val = self.attr('data-name');
+				window.location = '../jewelry/goodsList?goodsType=3&categoryId=' + id + '&searchWord=' + val
+			}).on('click', '.brandShop', function (e) {
+				var self = $(e.currentTarget);
+				var val = self.attr('data-id');
+				setTimeout(function () {
+					window.location = 'shopSearch?id=' + val
+				}, 50)
+			}).on('click', '.brandJewelry a', function (e) {
+				var self = $(e.currentTarget);
+				var val = self.attr('data-id');
+				window.location = '../jewelry/goodsList?brandId=' + val
+			})
+		})
+
+		function random(len, start, end) {
+			var arr = [];
+
+			function _inner(start, end) {
+				var span = end - start;
+				return parseInt(Math.random() * span + start)
+			}
+			while (arr.length < len) {
+				var num = _inner(start, end);
+				if (arr.indexOf(num) == -1) {
+					arr.push(num);
+				}
+			}
+			return arr;
+		}
+		$('.slider').on('mouseenter', '.slick-slide', function () {
+			$(this).trigger('click');
+		})
+		$(window).scroll(function () {
+			suspend()
+			getCart()
+		});
+		suspend()
+		function suspend() {
+			var scroHei = $(window).scrollTop();
+			if (scroHei > 180) {
+				$('.suspend').fadeIn();
+			} else {
+				$('.suspend').fadeOut();
+			}
+		}
+	</script>
+</body>
+
+</html>

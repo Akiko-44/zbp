@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.filter-label {
+  font-size: 14px;
+  color: #909399;
+  font-weight: normal;
+}
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409EFF;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
+.img2 img, .img img {
+	width: 100px;
+	margin-right: 20px;
+}
+</style>
+</head>
+<body class="userOrderRefund">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div id="orderList">
+					
+				  <div class="filter-container">
+				    <el-input placeholder="订单编号" @keyup.enter.native="handleFilter" style="width: 210px;margin: 0 20px 20px 0;" v-model="listParams.search"> </el-input>
+				    <el-button type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+				  </div>
+				
+				  <el-table :key='tableKey' :data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
+				
+				    <el-table-column width="100px" align="center" label="退款编号">
+				      <template slot-scope="{ row }">
+				        <span>{{row.id}}</span>
+				      </template>
+				    </el-table-column>
+				
+				    <el-table-column width="170px" align="center" label="订单编号">
+				      <template slot-scope="{ row }">
+				        <span @click="$router.push({ name: detailRouteName, query: { id: row.id } })">{{row.orderNumber}}</span>
+				      </template>
+				    </el-table-column>
+				    
+				    <el-table-column width="140px" align="center" label="购买人手机号">
+				      <template slot-scope="{ row }">
+				        <span>{{row.buyUserMobile}}</span>
+				      </template>
+				    </el-table-column>
+				    
+				    <el-table-column width="100px" align="center" label="收货人">
+				      <template slot-scope="{ row }">
+				        <span>{{row.consignee}}</span>
+				      </template>
+				    </el-table-column>
+				    
+				    <el-table-column width="140px" align="center" label="收货人手机号">
+				      <template slot-scope="{ row }">
+				        <span>{{row.consigneeMobile}}</span>
+				      </template>
+				    </el-table-column>
+				    
+				    <el-table-column width="100px" align="center" label="运费">
+				      <template slot-scope="{ row }">
+				        <span>{{row.freightMoney}}</span>
+				      </template>
+				    </el-table-column>
+				    
+				    <el-table-column width="100px" align="center" label="退款金额">
+				      <template slot-scope="{ row }">
+				        <span>{{row.refundAmount}}</span>
+				      </template>
+				    </el-table-column>
+				    
+				    <el-table-column width="180px" align="center" label="支付时间">
+				      <template slot-scope="{ row }">
+				        <span>{{row.payTime}}</span>
+				      </template>
+				    </el-table-column>
+				
+				    <el-table-column width="180px" align="center" label="退款申请时间">
+				      <template slot-scope="{ row }">
+				        <span>{{row.createTime}}</span>
+				      </template>
+				    </el-table-column>
+				    
+				     <el-table-column width="100px" align="center" label="订单状态">
+				      <template slot-scope="{ row }">
+				        <span>{{refundState[row.refundType]}}</span>
+				      </template>
+				    </el-table-column> 
+				
+				    <el-table-column width="100px" align="center" label="退货状态">
+				      <template slot-scope="{ row }">
+				        <span>{{auditState[row.auditState]}}</span>
+				      </template>
+				    </el-table-column>
+				
+				    <el-table-column width="300px" fixed="right" align="left" label="操作">
+				      <template slot-scope="{ row, $index }">
+				        <el-button
+				        	style="margin-bottom: 5px;"
+				          type="primary"
+				          size="small"
+				          :data-id="row.id"
+				          class="toDetail"
+				        >
+				          详情
+				        </el-button>
+				        <el-button
+				        	type="success"
+				          size="small"
+				          @click="agreeReturn(row, 1, $index, 1)"
+				          v-if="row.auditState === 0 && row.refundType === 1"
+				        >
+				          同意退款
+				        </el-button>
+				        <el-button
+				        	type="danger"
+				          size="small"
+				          @click="audit(row, 2, $index)"
+				          v-if="row.auditState === 0 && row.refundType === 1"
+				        >
+				          拒绝退款
+				        </el-button>
+				       </el-button>
+				        <el-button
+				        	type="success"
+				          size="small"
+				          @click="agreeReturn(row, 1, $index, 2)"
+				          v-if="row.auditState === 0 && row.refundType === 2"
+				        >
+				          同意退货
+				        </el-button>
+				        <el-button
+				        	type="danger"
+				          size="small"
+				          @click="audit(row, 2, $index)"
+				          v-if="row.auditState === 0 && row.refundType === 2"
+				        >
+				          拒绝退货
+				        </el-button>
+				        <el-button
+				        	type="warning"
+				          size="small"
+				          @click="applyArbitrate(row.id)"
+				          v-if="row.auditState === 6 || row.auditState === 2"
+				        >
+				          申请仲裁
+				        </el-button>
+				        <el-button
+				        	v-if="row.auditState == 2"
+				          type="primary"
+				          size="small"
+				          @click="delayedReceipt(row.id)"
+				        >
+				          延迟收货
+				        </el-button>
+				        <el-button
+				        	v-if="row.auditState == 2"
+				          type="success"
+				          size="small"
+				          @click="refunAmount(row.id)"
+				        >
+				          确认收货
+				        </el-button>
+				        <el-button
+				        	v-if="row.auditState == 2"
+				          type="danger"
+				          size="small"
+				          @click="audit(row, 4, $index)"
+				        >
+				          拒绝收货
+				        </el-button>
+				        <el-button
+				        	v-if="row.auditState == 2"
+				        	type="primary"
+				          size="small"
+				          @click="expressLook(row.orderId)"
+				        >
+				          查看物流
+				        </el-button>
+				        <!--<el-dropdown @command="handleCommand" v-if="row.auditState == 0">
+				          <span class="el-dropdown-link">
+				            审核操作<i class="el-icon-arrow-down el-icon--right"></i>
+				          </span>
+				          <el-dropdown-menu slot="dropdown">
+				            <el-dropdown-item :command="{row, state: 2, $index}">审核通过</el-dropdown-item>
+				            <el-dropdown-item :command="{row, state: 3, $index}">审核拒绝</el-dropdown-item>
+				          </el-dropdown-menu>
+				        </el-dropdown>-->
+				      </template>
+				    </el-table-column>
+				
+				  </el-table>
+				  <div v-show="!listLoading" class="pagination-container">
+				    <el-pagination @current-change="handleCurrentChange"  :current-page.sync="listParams.offset" :page-size="listParams.limit" layout="total, prev, pager, next, jumper" :total="total"> </el-pagination>
+				  </div>
+				  
+				  <el-dialog title="审核操作" :visible.sync="dialogFormVisible">
+				    <el-form :model="form" :rules="rules" ref="form" label-width="100px">
+				      <el-form-item label="审核意见" prop="opinion">
+				        <el-input v-model="form.opinion"></el-input>
+				      </el-form-item>
+				    </el-form>
+				    <div class="clearfix">
+				    	<p style="margin: 0 0 20px 30px;">上传凭证：</p>
+              <div class="fl img2 clearfix">
+                <template v-if="form.picUrlList.length > 0" v-for="item in form.picUrlList">
+                  <div :data-name="item">
+                    <img :src="item | formatImg"/>
+                    <div>
+                      <a class="delImgBtn">删除</a>
+                    </div>
+                  </div>
+                </template>
+              </div>
+              
+              <div class="fl uploadbox triggerFile" data-target="img2">
+                
+              </div>
+            </div>
+				    <div slot="footer" class="dialog-footer">
+				      <el-button @click="cancel('form')">取 消</el-button>
+				      <el-button type="primary" :loading="loading" @click="update('form')">确 定</el-button>
+				    </div>
+				  </el-dialog>
+				  
+					<el-dialog title="申请仲裁" :visible.sync="arbitrateDialogVisible">
+				    <el-form :model="arbitrateForm" :rules="rules" ref="arbitrateForm" label-width="100px">
+				      <el-form-item label="仲裁原因" prop="comments">
+				        <el-input v-model="arbitrateForm.comments"></el-input>
+				      </el-form-item>
+				    </el-form>
+				    <div class="clearfix">
+				    	<p style="margin: 0 0 20px 30px;">上传凭证：</p>
+              <div class="fl img clearfix">
+                <template v-if="arbitrateForm.picUrlList.length > 0" v-for="item in arbitrateForm.picUrlList">
+                  <div :data-name="item">
+                    <img :src="item | formatImg"/>
+                    <div>
+                      <a class="delImgBtn">删除</a>
+                    </div>
+                  </div>
+                </template>
+              </div>
+              
+              <div class="fl uploadbox triggerFile" data-target="img">
+                
+              </div>
+            </div>
+				    <div slot="footer" class="dialog-footer">
+				      <el-button @click="arbitrateCancel('arbitrateForm')">取 消</el-button>
+				      <el-button type="primary" :loading="arbitrateLoading" @click="arbitrateUpdate('arbitrateForm')">确 定</el-button>
+				    </div>
+				  </el-dialog>
+				
+					<el-dialog title="物流详情" :visible.sync="dialogExpressVisible">
+					    <p>物流公司：{{orderExpressData.com}}</p>
+					    <p>物流单号：{{orderExpressData.nu}}</p>
+					    <el-table :data="orderExpressData.data" border>
+					      <el-table-column align="center" label="时间" width="200px">
+					          <template slot-scope="{ row }">
+					              <span>{{row.time}}</span>
+					          </template>
+					      </el-table-column>
+					      <el-table-column label="物流信息">
+					          <template slot-scope="{ row }">
+					              <span>{{row.context}}</span>
+					          </template>
+					      </el-table-column>
+					    </el-table>
+					</el-dialog>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+	<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+	     <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+	</form> 
+	<%- include ../userFooter.ejs %>
+	<%- include commonJs.ejs %>	
+<script>
+$(".userLeftNav li[data-target='exchange'] li:eq(8)").addClass("cur");
+var routerVm = new Vue({
+	el: "#router"
+})
+var listVm = new Vue({
+	el: "#orderList",
+	data: {
+		loading: false,
+		arbitrateLoading: false,
+		dialogFormVisible: false,
+		arbitrateDialogVisible: false,
+		dialogExpressVisible: false,
+		orderExpressData: {},
+		form: {
+			refundId: undefined,
+	    auditState: undefined,
+	    opinion: undefined,
+	    picUrlList: []
+		},
+		arbitrateForm: {
+			comments: '',
+	    refundOrderId: '',
+	    arbitrationType: 2,
+	    picList: []
+		},
+		rules: {
+	    opinion: [
+	      { required: true, message: '请输入审核意见', trigger: 'blur' },
+	      { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+	    ],
+	    comments: [
+	      { required: true, message: '请输入仲裁原因', trigger: 'blur' },
+	      { min: 2, max: 30, message: '长度在 2 到 30 个字符', trigger: 'blur' }
+	    ]
+	 	},
+	  list: null,
+	  total: null,
+	  listLoading: true,
+	  listParams: {
+	  	search: undefined,
+	    offset: 1,
+	    limit: 20
+	  },
+	  tableKey: 0,
+	  orderState: {
+	  	  1: '待支付',
+				  2: '已支付',
+				  3: '设计中&制造中',
+				  4: '待发货',
+				  5: '待收货',
+				  6: '已收货',
+				  7: '已完成',
+				  8: '已取消',
+				  9: '已关闭',
+				  10: '退款中',
+				  11: '退款成功',
+				  12: '退款失败',
+				  13: '退货中',
+				  14: '退货成功',
+				  15: '已删除',
+				  16: '待评价',
+				  17: '申请取消订单中',
+				  18: '卖家拒绝收货',
+				  100: '支付中'
+	  },
+	  payType: {
+		  	1: '支付宝', 2: '微信', 3: '银联', 4: '通联支付'
+	  	},
+	  auditState: {
+	    0: '审核中',
+	    1: '待买家退货 ',
+	    2: '买家已退货',
+	    3: '退款成功',
+	    4: '退款失败',
+	    5: '用户取消',
+	    6: '审核拒绝',
+	    7: '仲裁中',
+	    8: '仲裁通过',
+	    9: '仲裁拒绝',
+	    10: '仲裁退回'
+	  },
+	  refundState: {
+	  	1: '待收货',
+	  	2: '已收货'
+	  },
+	  isAddr: false
+	},
+	mounted: function(){
+		this.getList()
+		this.isRefundAddr()
+	},
+	computed: {
+	    orderStatus: function() {
+	      return Object.keys(this.orderState).map(key => {
+	        return { value: key, label: this.orderState[key] }
+	      })
+	    }
+	},
+	methods: {
+		getList: function() {
+			var self = this
+	    this.listLoading = true
+	    utils.ajax({
+      	url: '/admin/order/refund/merchant/page',
+      	data: JSON.stringify(this.listParams),
+      	success: function(data){
+      		self.list = data.data.records
+	        self.total = data.data.total
+	        self.listLoading = false
+      	}
+	    })
+    },
+     // 收货地址暂不明确之后加上跳转
+    isRefundAddr(){
+    	let _this = this
+    	utils.ajax({
+	      	url: '/admin/order/refund/getAddr',
+	      	type: 'post',
+	      	success: function(data){
+	      		_this.isAddr = true
+	      		_this.getList()
+	      	}
+      })     
+    	setTimeout(()=>{
+    		if(!_this.isAddr){
+    			window.location = '../../user/acc_refundAddr'
+    		}  		
+    	},1000)
+    },
+    handleFilter: function() {
+      this.getList()
+    },
+    handleCurrentChange: function(val) {
+      this.listParams.offset = val
+      this.getList()
+    },
+    audit: function(row, state, index) {
+    	this.dialogFormVisible = true
+    	this.form.auditState = state
+    	this.form.refundId = row.id
+    },
+    cancel() {
+      this.dialogFormVisible = false
+      this.resetForm('form')
+    },
+    update(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.loading = true
+          var picUrlList = []
+          $(".img2>div").each(function(i){
+	          picUrlList.push($(this).attr("data-name"))
+	        })
+          this.form.picUrlList = picUrlList
+          utils.ajax({
+		    		url: '/admin/order/refund/audit',
+		    		data: JSON.stringify(this.form),
+		    		success: function(data){
+		    			this.loading = false
+		    			utils.alert('success', '审核成功')
+		    			setTimeout(function(){
+		    				window.location.reload()
+		    			},1000)
+		    		}
+		    	})
+        } else {
+          return false
+        }
+      })
+    },
+    agreeReturn(row, state, $index, type){
+    	let id = row.id
+    	let data = {
+    		refundId: id,
+    		auditState: state
+    	}
+    	let tip = type === 1 ? '同意退款后,退款金额将原路返回' : '确认同意退货?'
+    	this.$confirm(tip, '提示', {
+	      confirmButtonText: '确定',
+	      cancelButtonText: '取消',
+	    }).then(() => {
+					utils.ajax({
+		    		url: '/admin/order/refund/audit',
+		    		data: JSON.stringify(data),
+		    		success: function(data){
+		    			this.loading = false
+		    			utils.alert('success', '审核成功')
+		    			setTimeout(function(){
+		    				window.location.reload()
+		    			},1000)
+		    		}
+		    	})
+	    }).catch(() => {})
+    },
+    applyArbitrate(id) {
+    	this.arbitrateDialogVisible = true
+    	this.arbitrateForm.refundOrderId = id
+    },
+    arbitrateCancel() {
+      this.arbitrateDialogVisible = false
+      this.resetForm('arbitrateForm')
+    },
+    arbitrateUpdate(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.arbitrateLoading = true
+          var picList = []
+          $(".img>div").each(function (i) {
+	          picList.push($(this).attr("data-name"))
+	        })
+          this.arbitrateForm.picList = picList
+          utils.ajax({
+		    		url: '/api/order/arbitrationAdd',
+		    		data: JSON.stringify(this.arbitrateForm),
+		    		success: function(data){
+		    			this.arbitrateLoading = false
+		    			utils.alert('success', '审核成功')
+		    			setTimeout(function(){
+		    				window.location.reload()
+		    			},200)
+		    		}
+		    	})
+        } else {
+          return false
+        }
+      })
+    },
+    expressLook(orderId) {
+    	let _this = this
+    	utils.ajax({
+			url: "/api/order/expressInfo/" + orderId,
+			success: function(data){
+				let res = JSON.parse(data.data)
+	    		if(res.message == 'ok'){
+	    			_this.orderExpressData = res
+	    			_this.dialogExpressVisible = true
+	    			_this.expressToChinese(res.com)
+	    		}else{
+	    			_this.$notify.error({
+			          title: '错误',
+			          message: res.message
+			        })
+	    		}
+				
+			}
+		})
+    },
+    expressToChinese(val){
+    	let _this = this
+    	utils.ajax({
+				type: 'get',
+				url: "/admin/merchant/order/expressMap",
+				success: function(data){
+					data = data.data
+					for (item in data) {
+						if (val === data[item]) {
+							_this.orderExpressData.com = item
+						}
+					}
+				}
+			})
+    },
+    handleCommand: function({ row, state, $index }) {
+      this.audit(row, state, $index)
+    },
+    refunAmount: function(id){
+//  	let id = row.id
+//  	let data = {
+//  		refundId: id,
+//  		auditState: state
+//  	}
+    	this.$confirm('确认收货?', '提示', {
+	      confirmButtonText: '确定',
+	      cancelButtonText: '取消',
+	    }).then(() => {
+					utils.ajax({
+						type: 'get',
+		    		url: '/admin/order/refund/refundAmount/' + id,
+		    		success: function(data){
+		    			utils.alert('success', '操作成功')
+		    			setTimeout(function(){
+		    				window.location.reload()
+		    			},200)
+		    		}
+		    	})
+	    }).catch(() => {})
+    	
+//  	utils.ajax({
+//  		type: 'get',
+//  		url: '/admin/order/refund/refundAmount/' + id,
+//  		success: function(data){
+//  			utils.alert('success', '操作成功')
+//  			setTimeout(function(){
+//  				window.location.reload()
+//  			},1000)
+//  		}
+//  	})
+    },
+    resetForm(formName, cb) {
+      this.$nextTick(() => {
+        this.$refs[formName].resetFields()
+//      this.form.refundId = undefined
+        setTimeout(() => { cb && cb() })
+      })
+    },
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	}
+})
+$(function(){
+	$(document).on("click", ".toDetail", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr('data-id');
+		window.location = '../../user/order/orderRefund_detail?id=' + id
+	}).on("click", ".triggerFile", function(e){
+    var t = $(e.currentTarget).attr("data-target");
+    target = t;
+    $("#form1 input").trigger("click");
+  }).on("click", ".delImgBtn", function(e){
+    var self = $(e.currentTarget);
+    var name = self.parent().parent("div").remove();
+  })
+})
+//图片上传
+function uploadGoodsImg(self){
+  if(self.files && self.files[0]){
+    var file = self.files[0]
+    if(file.size > 2*1024*1024){
+      utils.alert("info", "图片大小不能超过2M");
+      return;
+    }
+    if(target=="img"){
+      if($(".img>div").length > 3){
+        utils.alert("info", "图片上传不能超过4张");
+        return;
+      }
+      var reader = new FileReader();
+          reader.onload = function(e) {
+            var data = e.target.result;
+            //加载图片获取图片真实宽度和高度
+            var image = new Image();
+            image.onload=function(){
+//            var width = image.width;
+//            var height = image.height;
+//            if(width/height != 1){
+//              utils.alert("info", "图片分辨率必须为1:1");
+//            }else{
+                uploadCallback(self)
+//            }
+            };
+            image.src = data;
+          }
+          reader.readAsDataURL(self.files[0]);
+    }else{
+      if($(".img2>div").length > 3){
+        utils.alert("info", "图片上传不能超过4张");
+        return;
+      }
+      var reader = new FileReader();
+          reader.onload = function(e) {
+            var data = e.target.result;
+            //加载图片获取图片真实宽度和高度
+            var image = new Image();
+            image.onload=function(){
+//            var width = image.width;
+//            var height = image.height;
+//            if(width/height != 1){
+//              utils.alert("info", "图片分辨率必须为1:1");
+//            }else{
+                uploadCallback(self)
+//            }
+            };
+            image.src = data;
+          }
+          reader.readAsDataURL(self.files[0]);
+    }
+    /*}else{
+      uploadCallback(self)
+    }*/
+  }
+  
+}
+
+function uploadCallback(self){
+  var uploadFile = new FormData($("#form1")[0]);
+  $.ajax({
+    url:'../../file/upload',
+    type:'POST',
+    data: uploadFile,
+    async: false,  
+    cache: false, 
+    contentType: false, //不设置内容类型
+    processData: false, //不处理数据
+    success:function(data){
+    	if(target=="img"){
+        $("." + target).append('<div data-name="'+data.name+'"><img src="'+data.data+'"/><div><a class="delImgBtn">删除</a></div></div>');
+     }else if(target=="img2"){
+        $("." + target).append('<div data-name="'+data.name+'"><img src="'+data.data+'"/><div><a class="delImgBtn">删除</a></div></div>');
+     }
+      $("#form1 input").val("");
+    },
+    error:function(){
+      
+    }
+  })
+}
+</script>
+</body>
+</html>
+

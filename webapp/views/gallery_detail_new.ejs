@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+<script src="../../src/js/plugin/jquery-qrcode-master/jquery.qrcode.min.js"></script>
+<style>
+.previewitem {width:100%;height: 100%;}
+.previewitem a{
+	display: inline-block;
+	position: relative;
+}
+.watermark{
+	color: #999;
+	font-size: 20px;
+	letter-spacing: 2px;
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+}
+.icon-collect{
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	margin-bottom: -3px;
+	background: url(../../src/img/exchange/collect.png) center center no-repeat;
+	background-size: 100% 100%;
+}
+.icon-collected{
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	margin-bottom: -3px;
+	background: url(../../src/img/exchange/collected.png) center center no-repeat;
+	background-size: 100% 100%;
+}
+.liked .icon-praise{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url(../../src/img/gallery/icon_praised.png) center center no-repeat;
+  background-size: 22px 22px;
+}
+/*二维码*/
+.code .dialog-main {width: 444px;height: 358px;margin-left: -322px;margin-top: -279px;}
+.code .dialog-body{bottom: 0}
+.code .dialog-body>div {padding: 35px;}
+
+
+</style>
+</head>
+<body class="galleryDetail-bd">
+	
+	<%- include headerbar %>
+	
+	<%- include header %>
+	
+	<%- include headerNav %>
+	
+	<input type="hidden" id="id" value="<%= data.id %>">
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }"><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+			  	<el-breadcrumb-item><a href="../../gallery/index">图文馆</a></el-breadcrumb-item>
+			  	<el-breadcrumb-item><span id="categoryName">图集详情</span></el-breadcrumb-item>
+			  	<el-breadcrumb-item v-for="item in routers">{{item}}</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix">
+			
+			<div class="galleryDetailAside fr">
+				<div>
+							
+				</div>
+			</div>
+			
+			<div class="galleryDetailImgs">
+				<div class="previewWrap">
+					<div class="">
+					
+					</div>
+				</div>
+				<div class="sliderWrap">
+					<div>
+					
+					</div>
+				</div>
+			</div>
+					
+		</div>	
+	</div>
+	<div class="dialog code">
+		<div class="mask"></div>
+		<div class="dialog-main">
+			<div class="dialog-header clearfix">
+				<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+				<h3 class="dialog-title">付款</h3>
+			</div>
+			<div class="dialog-body tc">
+				<div>
+					<p style="margin-bottom: 10px;font-size: 20px;">请扫二维码完成支付</p>
+					<div id="qrcode"></div>
+					<p style="color: #8A0E1A;margin-top: 10px;">下载该图集需支付￥<span id="payAmount"></span>哟</p>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="payId" value="000" />
+	</div>
+<script>
+
+var id = $("#id").val();
+
+var routers = [];
+if(utils.getUrlParam("routers")){
+	routers = utils.getUrlParam("routers").split(",")
+}
+var routerVm = new Vue({
+	el: "#router",
+	data: {
+		routers: routers
+	}
+})
+var slider1 = $(".previewWrap>div");
+var slider2 = $(".sliderWrap>div");
+
+$(function(){
+	
+	document.oncontextmenu = function(e){
+	　　return false;
+	}
+	$(document).on("click",".info2_more",function(){
+		if($(".info2").hasClass("clamp")){
+			$(".info2").removeClass("clamp");
+			$(this).text("收起")
+		}else{
+			$(".info2").addClass("clamp");
+			$(this).text("更多")
+		}
+	})
+	utils.ajax({
+		url: '/pc/gallery/atlas/detail/' + id,
+		type: "get",
+		success: function(data){
+			(function(data){
+				data = data.data.pics;
+				if(!!data){
+					var html = "";
+					for(var i = 0; i < data.length; i++){
+						html += '<div><a data-index="'+i+'" onclick="slider2To(this)"><img src="' + utils.formatImg(data[i].url) + '" width="100%"><span class="atlasNum">'+(i+1)+'/'+data.length+'</span></a></div>';
+					}
+					slider2.html(html);
+					slider2.css("width", 12*80);
+					
+					slider2.slick({
+						dots: false,
+						arrows: true,
+						swipe: false,
+						slidesToShow: 1,
+						centerMode: true,
+						infinite: false,
+						variableWidth: true
+					});
+					slider1.on('afterChange',function(e,index){
+						var index = slider1.slick('slickCurrentSlide');
+						slider2.find(".cur").removeClass("cur");
+						slider2.find("a").eq(index).addClass("cur");
+					})
+					slider2.find("a").eq(0).addClass("cur");
+					
+				}
+			})(data)
+			
+			data = data.data;
+			$(".galleryDetailAside>div").html(_template.galleryDetailAside({
+				data: data
+			}));
+			if(!!data.pics){
+				var html = "";
+				for(var i = 0; i < data.pics.length; i++){
+					html += '<div class="previewitem"><a>'+
+								'<img src="' + utils.formatImg(data.pics[i].url) + '" width="100%" class="picsImg">'+
+								'<span class="watermark">中宝云平台</span>'+
+							'</a></div>';
+				}
+				slider1.html(html);
+				slider1.slick({
+					dots: false,
+					arrows: true,
+					infinite: false,
+					swipe: false
+				});
+				
+			}
+			
+			/* *
+			 * 是否已收藏
+			 * source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+			 * */
+			utils.checkCollect(id, 7, function(){
+				$('#collect').attr("val","1");
+				$('#collect').children("i").attr("class",'icon-collected')
+			})
+			
+			$(".galleryDetailAside>div").overlayScrollbars({
+				overflowBehavior: {
+					x: "hidden",
+					y: "scroll"
+				}
+			});
+			
+			//$("#categoryName").text(data.categoryName)
+			
+			$("#download").click(function(){
+				if (!utils.islogin()){
+					utils.alert('danger','请登录后再进行操作！');
+					return false;
+				}
+				if($("#qrcode").children('canvas').length){
+					$('.code').addClass('show');
+					return false;
+				}
+				//生成付款二维码
+				utils.ajax({
+					url: '/pc/gallery/atlas/orderatlas/'+id+'/3',
+					type: "post",
+					success: function(data){
+						if(data.success){
+							if(data.data == ''){
+								packageImages()
+							}else{
+								$("#payId").val(data.data.id);
+								utils.ajax({
+									url: "/api/pay/pay_bill/pay/" + data.data.id,
+									type: "get",
+									success: function(res){
+										$("#payAmount").text(res.data.payAmount)
+										$("#qrcode").qrcode({width: 200,height: 200,text: res.data.qrCodeUrl});
+										setTimeout(function(){
+											$('.code').addClass('show')
+										},50)
+									}
+								})
+							}
+						}
+					}
+				})
+			})
+			
+			getComment();
+			
+		}
+	})
+	
+})
+
+
+
+
+function slider2To(e){
+	var self = e||window.event
+	var len = $(self).attr('data-index');
+	slider2.find(".cur").removeClass("cur");
+	$(self).addClass("cur");
+	slider1.slick('slickGoTo', len)
+	
+};
+
+
+//评论列表
+function getComment(){
+	utils.ajax({
+		url: "/pc/gallery/atlas/comment/list/" + id,
+		type: "get",
+		data: {
+			atlasId: id,
+			offset: 1,
+			limit: 10
+		},
+		success: function(data){
+			data = data.data;
+			var html = "";
+			for(var i = 0; i < data.records.length; i++){
+				html += getCommentItem(data.records[i]);
+			}
+			$(".comment ul").html(html);
+			
+		}
+	})
+}
+
+function getCommentItem(data){
+	var name = utils.phoneHide(data.commentUserName)
+	return '<li><img src="'+data.commentUserLogo+'" class="avatar"><span class="name">'+name+'：</span><span class="comment">'+data.content+'</span></li>';
+}
+
+
+$(document).on("click", "#commentBtn", function(){
+	//发表评论
+	var content = $.trim($("#commentInput").val());
+	var json = {
+		atlasId: id,
+		content: content
+	}
+	utils.ajax({
+		url: "/pc/gallery/atlas/comment",
+		data: JSON.stringify(json),
+		success: function(data){
+			data = data.data;
+			var html = getCommentItem(data);
+			$(".comment ul").prepend(html);
+			$("#commentInput").val("");
+		}
+	})
+}).on("click", "#toDownload", function(){
+	//下载
+	utils.download("/pc/gallery/atlas/download/" + id);
+}).on("click", "#toShare", function(){
+	//分享次数+1
+	utils.ajax({
+		url: "/pc/gallery/atlas/share/" + id,
+		success: function(data){
+			
+		}
+	})
+}).on("click", "#toLike", function(e){
+	//点赞、取消点赞
+	var self = $(e.currentTarget);
+	var isLiked = self.hasClass("liked");
+	var type = isLiked ? 2 : 1;
+	utils.ajax({
+		url: "/pc/gallery/atlas/praise/" + id + "/" + type,
+		type: "post",
+		success: function(data){
+			var count = parseInt(self.find("p").text());
+			if(isLiked){
+				self.find("p").text(count - 1);
+				self.removeClass("liked");
+			}else{
+				self.addClass("liked");
+				self.find("p").text(count + 1);
+				self.addClass("liked");
+			}
+		}
+	});
+}).on("click", "#collect", function(){
+	if(!utils.islogin()){
+		utils.alert("danger","请登录后再进行操作！");
+		return;
+	}
+	var val = $(this).attr("val");
+	var collectNum = Number($("#collectNum").text())
+	//source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+	if(val == '0'){
+		//收藏
+		utils.ajax({
+			url: "/api/userCenter/collect/add/" + id+'/7',
+			success: function(data){
+				if(data.success){
+					collectNum++
+					utils.alert("success", "收藏成功");
+					$('#collect').attr("val","1");
+					$('#collect').children("i").attr("class",'icon-collected');
+					$("#collectNum").text(collectNum)
+				}else{
+					utils.alert("danger", data.msg);
+				}
+			}
+		})
+	}else{
+		//删除
+		utils.ajax({
+			url: "/api/userCenter/collect/delete/" + id+'/7',
+			success: function(data){
+				if(data.success){
+					collectNum--
+					utils.alert("success", "您已取消收藏！");
+					$('#collect').attr("val","0")
+					$('#collect').children("i").attr("class",'icon-collect')
+					$("#collectNum").text(collectNum)
+				}else{
+					utils.alert("danger", data.msg);
+				}
+			}
+		})
+	}
+})
+
+/**
+ * 把图片压缩成zip下载
+ * */
+function packageImages(){
+    //$('#status').text('处理中。。。。。');
+    var imgs = $('.picsImg');
+    var imgsSrc = [];
+    var imgBase64 = [];
+    var imageSuffix = [];//图片后缀
+    var zip = new JSZip();
+    zip.file("readme.txt", "案件详情资料\n");
+    var img = zip.folder("images");
+     
+    for(var i=0;i<imgs.length;i++){
+        var src = imgs[i].getAttribute("src");
+        var suffix = src.substring(src.lastIndexOf("."));
+        imageSuffix.push(suffix);
+         
+        getBase64(imgs[i].getAttribute("src"))
+	        .then(function(base64){
+	            imgBase64.push(base64.substring(22));
+	              
+	              //console.log(base64);//处理成功打印在控制台
+	        },function(err){
+	              console.log(err);//打印异常信息
+	        }); 
+            
+    }
+    function tt(){
+        setTimeout(function(){
+	        if(imgs.length == imgBase64.length){
+	            for(var i=0;i<imgs.length;i++){
+	                img.file(i+imageSuffix[i], imgBase64[i], {base64: true});
+	            }
+	            zip.generateAsync({type:"blob"}).then(function(content) {
+	                // see FileSaver.js
+	                saveAs(content, "images.zip");
+	            });
+	            //$('#status').text('处理完成');
+	            $(".code").removeClass("show");
+	            utils.alert('success', '下载成功')
+	        }else{
+	            //console.log('imgs.length:'+imgs.length+',imgBase64.length:'+imgBase64.length);
+	            //$('#status').text('已完成：'+imgBase64.length+'/'+imgs.length);
+	            tt();
+	        }
+        },100);
+         
+    }
+    tt();
+     
+}
+  
+    //传入图片路径，返回base64
+function getBase64(img){
+    function getBase64Image(img,width,height) {//width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+      var canvas = document.createElement("canvas");
+          canvas.width = width ? width : img.width;
+          canvas.height = height ? height : img.height;
+  
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      var dataURL = canvas.toDataURL();
+      return dataURL;
+    }
+    var image = new Image();
+    image.crossOrigin = 'Anonymous';
+    image.src = img;
+    var deferred=$.Deferred();
+    if(img){
+      image.onload =function (){
+        deferred.resolve(getBase64Image(image));//将base64传给done上传处理
+      }
+      return deferred.promise();//问题要让onload完成后再return sessionStorage['imgTest']
+    }
+}
+
+
+/**
+ * 监视订单完成状态
+ */
+var timer = setInterval(function(){
+	var payId = $("#payId").val();
+	if($("#payId").val() === '000'){
+		return false;
+	}
+	utils.ajax({
+		url: "/api/pay/pay_bill/payQuery/" + payId,
+		type: "get",
+		success: function(data){
+			if(data.data.payStatus == 3){
+				clearInterval(timer)
+				packageImages()
+			}
+		}
+	})
+}, 3000)
+</script>
+
+</body>
+</html>
+

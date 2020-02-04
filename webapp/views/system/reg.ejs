@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=O7kdWyQPFw75yiA0Car96hQA"></script>
+  <style>
+    #drag {
+      position: relative;
+      margin-bottom: 20px;
+      background-color: #E1E1E1;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+    }
+
+    #drag .handler {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 68px;
+      height: 40px;
+      border: 1px solid #E1E1E1;
+      cursor: move;
+    }
+
+    .handler_bg {
+      background: #fff url(../../src/img/signin/slider.png) no-repeat center;
+    }
+
+    .handler_ok_bg {
+      background: #fff url(../../src/img/signin/verification-by.png) no-repeat center;
+    }
+
+    #drag .drag_bg {
+      background-color: #7AC23C;
+      height: 40px;
+      width: 0px;
+    }
+
+    #drag .drag_text {
+      position: absolute;
+      top: 0px;
+      width: 100%;
+      color: #9c9c9c;
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+      -o-user-select: none;
+      -ms-user-select: none;
+    }
+
+    .registSuccessDialog .dialog-main {
+      width: 864px;
+      height: 420px;
+      padding: 100px 280px 150px;
+      margin-left: -432px;
+      margin-top: -210px;
+    }
+
+    .registSuccessDialog .dialog-main .dialog-body {
+      position: static;
+      text-align: center;
+      font-size: 14px;
+      color: #999999;
+    }
+
+    .registSuccessDialog .dialog-main .dialog-body .title {
+      margin: 50px 0 10px;
+      color: #585858;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body class="reg-bd">
+
+  <%- include loginHeader %>
+
+  <div class="regPanel">
+    <div class="fl">
+      <img src="../../src/img/signin/login-bg.png" width="626" height="513" />
+    </div>
+    <div class="regist-form">
+      <form id="regForm">
+        <input type="hidden" class="codeUuid" name="codeUuid">
+        <input type="hidden" class="msgId" name="msgId" value="">
+        <!--<h2>账号注册</h2>-->
+        <table>
+          <tr>
+            <td colspan="2">
+              <div>
+                <input type="text" name="mobilePhone" placeholder="请输入手机号码" maxlength="11" datatype="/^1\d{10}$/"
+                  nullmsg="请输入手机号" errormsg="手机号码格式错误">
+              </div>
+              <p class="Validform_checktip"></p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div id="wrapper" style="position: relative;">
+                <div id="drag">
+                  <div class="drag_bg"></div>
+                  <div class="drag_text slidetounlock" onselectstart="return false;" unselectable="on">
+                    请按住滑块，拖动到最右边
+                  </div>
+                  <div class="handler handler_bg"></div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="hide" id="verifyCode">
+            <td width="166">
+              <div>
+                <input type="text" name="verifyCode" class="code" datatype="s1-6" nullmsg="请输入验证码" errormsg="请输入验证码">
+                <p style="color: #666;margin-top: 3px;">按右图填写 不区分大小写</p>
+              </div>
+              <p class="Validform_checktip"></p>
+            </td>
+            <td>
+              <img class="codeImg" width="74" height="30">
+            </td>
+          </tr>
+          <tr class="validate-drag hide">
+            <td>
+              <div>
+                <input type="text" name="dynamicVerifyCode" placeholder="请输入验证码" class="dcode" maxlength="6"
+                  datatype="s1-6" nullmsg="请输入动态验证码" errormsg="请输入动态验证码" autocomplete="off">
+              </div>
+              <p class="Validform_checktip"></p>
+            </td>
+            <td>
+              <a class="btn btn-danger codeBtn">获取验证码</a>
+            </td>
+          </tr>
+          <tr class="validate-drag hide">
+            <td colspan="2">
+              <div>
+                <input type="text" name="password" placeholder="请设置密码" datatype="passwordVerify" nullmsg="请输入密码"
+                  errormsg="密码为6至20位字符,仅支持大小写字母和数字" maxlength="20" minlength="6" autocomplete="off">
+              </div>
+              <p class="Validform_checktip"></p>
+            </td>
+          </tr>
+          <!--<tr class="validate-drag hide">
+	          <td width="100">
+	            <label>确认密码：</label>
+	          </td>
+	          <td colspan="2">
+	            <div>
+	              <input type="text" onfocus="this.type='password'" name="confirmPassword" placeholder="请确认密码"
+	                datatype="passwordVerify" recheck="password" nullmsg="请重新输入密码" errormsg="两次输入密码不一致！" autocomplete="off">
+	            </div>
+	            <p class="Validform_checktip"></p>
+	          </td>
+	        </tr>-->
+          <tr>
+            <td colspan="3" class="tc">
+              <p style="text-align: right;">已有账号，<a href="login" style="color: #DF735A;">登录&rsaquo;</a></p>
+              <a class="btn btn-danger regBtn">立即注册</a>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <label class="checkbox">
+                <span class="checkbox-input">
+                  <span class="checkbox-input-inner"></span>
+                </span>
+                <span class="checkbox-label">
+                  我已阅读和接受
+                  <a class="link" onclick="showAgreement()" style="color: #666666;">《中宝协云平台用户注册协议》</a>
+                </span>
+              </label>
+            </td>
+          </tr>
+        </table>
+      </form>
+      <!--<div class="tc">
+      	<div class="otherway">您也可以使用社交帐号注册</div>
+      	<div>
+          <a class="loginQqBtn" target="_blank"></a>
+        	<a class="loginWxBtn" target="_blank"></a>
+          <a class="loginWbBtn" target="_blank"></a>
+        </div>
+      </div>-->
+    </div>
+  </div>
+  <div id="allmap"></div>
+  <div class="dialog registSuccessDialog">
+    <div class="mask"></div>
+    <div class="dialog-main">
+      <div class="dialog-body">
+        <img src="../../src/img/signin/regist-success.png" />
+        <p class="title">恭喜你！注册成功</p>
+        <p><span class="second">3</span>S后自动跳转到登录页，若未跳转，可 <a href="/" style="color: #DF735A;">点击跳转</a></p>
+      </div>
+    </div>
+  </div>
+  <%- include agreement %>
+  <%- include ../footer.ejs %>
+  <script>
+    var uuid = utils.uuid();
+    var cityName = ''
+    var verify = 1
+
+    function showAgreement() {
+      $('#agreement1').addClass('show');
+      $('html, body').css({
+        'overflow': 'hidden'
+      })
+    }
+    $(function () {
+      //定位当前城市
+      var map = new BMap.Map("allmap");
+      var point = new BMap.Point(116.331398, 39.897445);
+      map.centerAndZoom(point, 12);
+      var myCity = new BMap.LocalCity();
+      myCity.get(function (result) {
+        cityName = result.name;
+      })
+
+
+      //验证码
+      $(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+      $(".codeUuid").val(uuid);
+      $(".codeImg").on("click", function () {
+        uuid = utils.uuid();
+        $(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+        $(".codeUuid").val(uuid);
+      });
+      // 背景图配置
+      utils.ajax({
+        type: 'get',
+        url: '/api/backgroundImg/getbackgroundImg',
+        data: {
+          backgroundImgType: 3
+        },
+        success: (res) => {
+          this.background = res.data
+          if (this.background.wholeType === 1 && this.background.wholeColor) {
+            $('#main').css('background', this.background.wholeColor)
+          } else if (this.background.wholeType === 2 && this.background.wholeImg) {
+            $('.regPanel img').attr('src', this.background.wholeImg)
+            // $('#main').css('background-size', '100% 100%')
+          }
+        }
+      })
+    })
+    var pattern = /^[a-zA-Z0-9]{6,20}$/;
+    window.validform = $("#regForm").Validform({
+      tiptype: 2,
+      datatype: {
+        'passwordVerify': function (gets, obj, curform, regxp) {
+          if (pattern.test(gets)) {
+
+            return true;
+          }
+          return false;
+        }
+      }
+    })
+    $.Tipmsg.r = "";
+
+    //注册按钮点击
+    $(".regBtn").on("click", function () {
+      if (!$("input[name='msgId']").val() && $("#loginForm2 input[name='dynamicVerifyCode']").val() != '190326') {
+        utils.alert('danger', '请输入正确的验证码')
+        return false
+      }
+      if (verify == 1) {
+        $("[name=verifyCode]").val('123456')
+      }
+      if (validform.check(false)) {
+        if (!$(".checkbox").hasClass("checked")) {
+          utils.alert("info", "您未接受平台使用协议和服务条款");
+          return;
+        }
+        var str = $("#regForm").serialize();
+        str = utils.str2json(str);
+        str.verify = verify
+        $.ajax({
+          type: 'post',
+          url: "/api/userCenter/register",
+          data: JSON.stringify(str),
+          contentType: 'application/json;charset=UTF-8',
+          beforeSend: function (request) {
+            var _t = utils.getCookie("token");
+            if (!!_t) {
+              request.setRequestHeader("Authorization", _t);
+            }
+          },
+          success: function (data) {
+            if (data.success) {
+              utils.setCookie("token", data.data.accessToken, 3);
+              utils.setCookie("nickName", data.data.nickName, 3);
+              utils.setCookie("phone", str.mobilePhone, 3);
+
+              utils.baiduStatisticsReg({
+                'mobilePhone': str.mobilePhone,
+                'address': cityName,
+                'time': data.data.time
+              })
+
+              $('.registSuccessDialog').addClass('show');
+              var i = 3;
+              var timer = setInterval(function () {
+                i--;
+                $(".second").text(i);
+              }, 1000);
+              setTimeout(function () {
+                clearInterval(timer);
+                $('.registSuccessDialog').removeClass('show');
+                window.location.href = "/";
+              }, 3000);
+            } else {
+              g_const.verifyNum++
+              if (g_const.verifyNum >= 5) {
+                $("[name=verifyCode]").val('')
+                $("#verifyCode").removeClass('hide')
+                verify = 0
+              }
+              utils.alert("danger", data.msg);
+            }
+          }
+        })
+
+      }
+    });
+
+    var flag = false;
+    var submitFlag = false;
+    $(".codeBtn").on("click", function () {
+      if (submitFlag) {
+        return;
+      }
+      if (verify == 1) {
+        $("[name=verifyCode]").val('123456')
+      }
+      var $phone = $("input[name='mobilePhone']");
+      var $verifyCode = $("input[name='verifyCode']");
+      $phone.blur();
+      $verifyCode.blur();
+      if (!$phone.hasClass("Validform_error") && !$verifyCode.hasClass("Validform_error")) {
+
+        var phone = $.trim($phone.val());
+        var verifyCode = $.trim($verifyCode.val());
+
+        submitFlag = true;
+        var json = {
+          mobilePhone: phone,
+          verifyCode: verifyCode,
+          verify: verify,
+          codeUuid: $(".codeUuid").val()
+        }
+        $.ajax({
+          type: 'post',
+          url: "/api/userCenter/smscode",
+          data: JSON.stringify(json),
+          contentType: 'application/json;charset=utf-8',
+          headers: {
+            'Authorization': utils.getCookie("token")
+          },
+          success: function (data) {
+            if (data.success) {
+              $("input[name='msgId']").val(data.data);
+              var i = 120;
+              var timer = setInterval(function () {
+                i--;
+                $(".codeBtn").text('已发送(' + i + ')');
+              }, 1000);
+              setTimeout(function () {
+                clearInterval(timer);
+                $(".codeBtn").text('重发');
+                flag = true;
+                submitFlag = false;
+              }, 120000);
+            } else {
+              submitFlag = false;
+              utils.alert('danger', data.msg)
+            }
+          },
+          error: function () {
+            submitFlag = false;
+          }
+        })
+      } else {
+        submitFlag = false;
+      }
+
+
+    })
+    /**
+     * Created by shuai_wy on 2017/3/14.
+     */
+    $.fn.drag = function (options) {
+      var x, drag = this,
+        isMove = false,
+        defaults = {};
+      var options = $.extend(defaults, options);
+      var handler = drag.find('.handler');
+      var drag_bg = drag.find('.drag_bg');
+      var text = drag.find('.drag_text');
+      var maxWidth = drag.width() - handler.width(); //能滑动的最大间距
+
+      //鼠标按下时候的x轴的位置
+      handler.mousedown(function (e) {
+        isMove = true;
+        x = e.pageX - parseInt(handler.css('left'), 10);
+      });
+
+      //鼠标指针在上下文移动时，移动距离大于0小于最大间距，滑块x轴位置等于鼠标移动距离
+      $(document).mousemove(function (e) {
+        var _x = e.pageX - x;
+        if (isMove) {
+          if (_x > 0 && _x <= maxWidth) {
+            handler.css({
+              'left': _x
+            });
+            drag_bg.css({
+              'width': _x
+            });
+          } else if (_x > maxWidth) { //鼠标指针移动距离达到最大时清空事件
+            dragOk();
+          }
+        }
+      }).mouseup(function (e) {
+        isMove = false;
+        var _x = e.pageX - x;
+        if (_x < maxWidth) { //鼠标松开时，如果没有达到最大距离位置，滑块就返回初始位置
+          handler.css({
+            'left': 0
+          });
+          drag_bg.css({
+            'width': 0
+          });
+        }
+      });
+
+      //清空事件
+      function dragOk() {
+        handler.removeClass('handler_bg').addClass('handler_ok_bg');
+        text.removeClass('slidetounlock').text('验证通过').css({
+          'color': '#fff'
+        });
+        handler.css({
+          'left': maxWidth
+        });
+        drag_bg.css({
+          'width': maxWidth
+        });
+
+        handler.unbind('mousedown');
+        $(document).unbind('mousemove');
+        $(document).unbind('mouseup');
+
+        $('.validate-drag').removeClass('hide')
+      }
+    }
+
+    $('#drag').drag();
+  </script>
+</body>
+
+</html>

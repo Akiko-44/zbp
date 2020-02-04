@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<script src="../../src/js/address.js"></script>
+	<style type="text/css">
+		.refundAddr .dialog-main {
+			width: 644px;
+			height: 558px;
+			margin-left: -322px;
+			margin-top: -279px;
+		}
+
+		.refundAddr .dialog-body {
+			bottom: 0
+		}
+
+		.refundAddr .dialog-body>div {
+			padding: 0 35px;
+			font-size: 12px;
+		}
+
+		.refundAddr table {
+			width: 100%;
+			margin-top: 40px;
+		}
+
+		.refundAddr label {
+			position: relative;
+			top: 5px;
+			color: #666666;
+			font-size: 14px;
+		}
+
+		.refundAddr textarea {
+			width: 470px;
+			height: 78px;
+		}
+
+		.refundAddr .consignee {
+			width: 204px;
+		}
+
+		.refundAddr .mobileNum {
+			width: 214px;
+		}
+
+		.refundAddr .btn {
+			width: 90px;
+		}
+
+		.delDialog .btn {
+			width: 96px;
+		}
+	</style>
+</head>
+
+<body class="userAccount">
+	<%- include ../../headerbar.ejs %>
+
+	<%- include ../../header.ejs %>
+
+	<%- include ../userHeaderNav.ejs %>
+
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+				<el-breadcrumb-item>退货地址</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent" id="list">
+				<div class="panel userPanel" style="border: none;">
+
+					<div class="filter-container" v-if="!list.length" style="margin-bottom: 15px;">
+						<el-button type="primary" @click="addAddr">新增退货地址</el-button>
+					</div>
+					<el-table :data="list" border fit highlight-current-row style="width: 100%">
+
+						<el-table-column width="260px" align="left" label="收货地址">
+							<template slot-scope="{ row }">
+								<span>{{row.addr}}</span>
+							</template>
+						</el-table-column>
+
+						<el-table-column width="180px" align="center" label="收件人">
+							<template slot-scope="{ row }">
+								<span>{{row.consignee}}</span>
+							</template>
+						</el-table-column>
+
+						<el-table-column width="150px" align="center" label="收件人号码">
+							<template slot-scope="{ row }">
+								<span>{{row.mobileNum}}</span>
+							</template>
+						</el-table-column>
+
+						<el-table-column width="110px" align="center" label="操作">
+							<template slot-scope="{ row }">
+								<el-button type="primary" @click="edit">编辑</el-button>
+							</template>
+						</el-table-column>
+
+					</el-table>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%- include ../userFooter.ejs %>
+
+	<!--退货地址出框-->
+	<div class="dialog refundAddr" id="refundAddr">
+		<div class="mask"></div>
+		<div class="dialog-main">
+			<div class="dialog-header clearfix">
+				<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+				<h3 class="dialog-title">退货地址</h3>
+			</div>
+			<div class="dialog-body">
+
+				<div>
+					<form>
+						<input type="hidden" name="id" class="id">
+						<table>
+							<tr>
+								<td valign="top" width="92"><label>所在地区：</label></td>
+								<td valign="top" width="152">
+									<div>
+										<select id="cmbProvince" class="province" name="province" datatype="select" nullmsg="请选择所在省/市！"
+											errormsg="请选择所在省/市！"></select>
+									</div>
+									<p class="Validform_checktip provinceErrormsg" style="color: #f00;"></p>
+								</td>
+								<td width="152">
+									<div>
+										<select id="cmbCity" class="city" name="city" datatype="select" nullmsg="请选择所在市/区！"
+											errormsg="请选择所在市/区！"></select>
+									</div>
+									<p class="Validform_checktip cityErrormsg"></p>
+								</td>
+								<td width="152">
+									<div>
+										<select id="cmbArea" class="area" name="area" datatype="select" nullmsg="请选择所在区/县！"
+											errormsg="请选择所在区/县！"></select>
+									</div>
+									<p class="Validform_checktip areaErrormsg"></p>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top"><label>详细地址：</label></td>
+								<td colspan="3" valign="top">
+									<div>
+										<textarea class="detail" name="detail" maxlength="300" datatype="*1-300" nullmsg="请输入详细地址"
+											errormsg="详细地址不能超过300个字符" placeholder="请填写您的详细收货地址，例如街道名称，门牌号码，楼层和房间号等信息"></textarea>
+									</div>
+									<p class="Validform_checktip"></p>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top"><label>收货人：</label></td>
+								<td colspan="3" valign="top">
+									<div>
+										<input type="text" class="consignee" name="consignee" maxlength="25" datatype="s1-25"
+											nullmsg="请输入收货人" errormsg="收货人不能超过25个字符" placeholder="长度不能超过25个字符">
+									</div>
+									<p class="Validform_checktip"></p>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top"><label>收件人号码：</label></td>
+								<td valign="top" colspan="3">
+									<div>
+										<input type="text" class="mobileNum" name="mobileNum" maxlength="11" datatype="/^1\d{10}$/"
+											ignore="ignore" nullmsg="收件人号码" errormsg="手机号码格式错误" placeholder="收件人号码">
+									</div>
+									<p class="Validform_checktip"></p>
+								</td>
+							</tr>
+						</table>
+					</form>
+				</div>
+
+			</div>
+			<div class="dialog-footer tc">
+				<a class="btn btn-warning close">取消</a>
+				<a class="btn btn-primary save">确定</a>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(".userLeftNav li[data-target='acc_refundAddr']").addClass("cur");
+		var routerVm = new Vue({
+			el: "#router"
+		})
+
+		var validform = $(".refundAddr form").Validform({
+			tiptype: 2,
+			datatype: {
+				"select": function (gets, obj, curform, regxp) {
+					if (gets != "" && gets.indexOf("请选择") == -1) {
+						return true;
+					}
+					return false;
+				}
+			}
+		});
+		$.Tipmsg.r = "";
+
+		setTimeout(function () {
+			addressInit('cmbProvince', 'cmbCity', 'cmbArea');
+		}, 100)
+		var listVm = new Vue({
+			el: "#main",
+			data: {
+				list: []
+			},
+			created: function () {
+				this.getList()
+			},
+			methods: {
+				addAddr: function () {
+					$("#refundAddr").addClass('show')
+				},
+				edit: function () {
+					$("[name=consignee]").val(listVm.list[0].consignee);
+					$("[name=mobileNum]").val(listVm.list[0].mobileNum);
+					setTimeout(function () {
+						$("#refundAddr").addClass('show')
+					}, 200)
+				},
+				getList: function () {
+					var self = this
+					utils.ajax({
+						url: '/admin/order/refund/getAddr',
+						success: function (data) {
+							self.list = []
+							var listObj = data.data
+							$("#id").val(listObj.id)
+							self.list.push(listObj)
+						}
+					})
+				}
+			}
+		})
+		$(function () {
+			$(document).on('click', '.close', function () {
+				$('#refundAddr').removeClass("show")
+			}).on('click', '.save', function () {
+				if (validform.check(false)) {
+					var provinceVal = $('.province').val()
+					if (provinceVal == "请选择省份") {
+						$('.provinceErrormsg').text("请选择所在地区")
+					} else {
+						var str = $("#refundAddr form").serialize();
+						str = utils.str2json(str);
+						str.addr = str.province + str.city + str.detail
+						utils.ajax({
+							url: '/admin/order/refund/addAddr',
+							data: JSON.stringify(str),
+							success: function (data) {
+								utils.alert('success', '操作成功')
+								$('#refundAddr').removeClass("show")
+								listVm.getList()
+								//				  		setTimeout(function(){
+								//				  			window.location.reload()
+								//				  		},100)
+							}
+						})
+					}
+				}
+
+			})
+		})
+		$("select").blur(function () {
+			$('.provinceErrormsg').text("")
+		});
+	</script>
+</body>
+
+</html>

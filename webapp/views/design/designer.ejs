@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    body {
+      background: #F5F5F5;
+    }
+
+    .deslist>ul li {
+      height: 200px;
+      padding: 20px 25px;
+      background: #fff;
+      margin: 20px 0;
+    }
+
+    .deslist .img {
+      width: 160px;
+      height: 160px;
+      background: #f9f9f9;
+      float: left;
+    }
+
+    .deslist .info {
+      padding-left: 175px;
+      position: relative;
+    }
+
+    .deslist .info .opt {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+    }
+
+    .deslist .info .opt .btn {
+      background: #000;
+      width: 126px;
+      margin-bottom: 10px;
+    }
+
+    .deslist .name {
+      font-size: 24px;
+      color: #000;
+    }
+
+    .deslist .taginfo {
+      margin: 10px 0;
+      font-size: 12px;
+      color: #000;
+    }
+
+    .deslist label {
+      color: #666;
+    }
+
+    .deslist .taginfo strong {
+      font-size: 24px;
+      color: #000;
+    }
+
+    .deslist .mcontent {
+      line-height: 18px;
+      color: #1A1A1A;
+    }
+
+    .deslist .tag {
+      width: 56px;
+      height: 22px;
+      line-height: 20px;
+      text-align: center;
+      background: #C2A374;
+      color: #fff;
+      border-radius: 11px;
+      padding-left: 10px;
+      position: relative;
+    }
+
+    label.tag_name {
+      color: rgba(26, 26, 26, 1);
+    }
+
+    .category-container {
+      position: relative;
+    }
+
+    .first-category {
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .second-category {
+      display: none;
+      width: 100%;
+      background: #EEEEEE;
+    }
+
+    .second-city {
+      width: 100%;
+      padding: 10px;
+      background: #EEEEEE;
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../header.ejs %>
+
+  <%- include ../headerNav.ejs %>
+
+  <div id="main" class="main">
+
+    <div class="container">
+      <div class="router" id="router">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+          <el-breadcrumb-item><a href="../../design/index">设计室</a></el-breadcrumb-item>
+          <el-breadcrumb-item>
+            <span v-if="designerTxt != ''">{{designerTxt}}</span>
+            <span v-else>所有设计师</span>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+    </div>
+
+    <div class="container exchangeSearch" id="search">
+      <table v-if="!merchantId">
+        <tr>
+          <td width="90"><label>分类：</label></td>
+          <td class="category-container">
+            <a class="cur">全部</a>
+            <template v-for="item in cateList">
+              <a :data-id="item.id" :data-name="item.name">{{item.name}}</a>
+            </template>
+            <template v-for="item in cateList">
+              <div class="second-category" :data-id="item.id" v-if="item.children && item.children.length">
+                <a :data-id="item.id" :data-pid="item.parentId" :data-name="item.name">不限</a>
+                <a v-for="citem in item.children" :data-id="citem.id" :data-pid="citem.parentId"
+                  :data-name="citem.name">{{citem.name}}</a>
+              </div>
+            </template>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><label>所在地：</label></td>
+          <td class="address-container">
+            <a class="cur provice" data-id="" data-name="">全部</a>
+            <a class="provice" v-for="item in cityList" :data-id="item.regionId"
+              :data-name="item.regionName">{{item.regionName}}</a>
+            <div class="second-city" v-if="cityChildren && cityChildren.length">
+              <a class="city" data-id="" data-name="">不限</a>
+              <a class="city" v-for="citem in cityChildren" :data-id="citem.regionId"
+                :data-name="citem.regionName">{{citem.regionName}}</a>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      </table>
+      <div class="clearfix">
+        <div class="fr clearfix">
+          <div class="searchPage fr">
+            <a @click="toPrev()"><i class="iconfont icon-exchangePageLeft"></i></a>
+            <span>{{currentPage}}/{{totalPage}}</span>
+            <a @click="toNext()"><i class="iconfont icon-userAccountRight"></i></a>
+          </div>
+        </div>
+        <ul>
+          <li class="cur">
+            <a>综合排序</a>
+          </li>
+          <li class="searchByOrderNum">
+            <a>签单数</a>
+            <span class="caret-wrapper">
+              <i class="sort-caret ascending"></i>
+              <i class="sort-caret descending"></i>
+            </span>
+          </li>
+          <li class="searchByCommentNum">
+            <a>评论数</a>
+            <span class="caret-wrapper">
+              <i class="sort-caret ascending"></i>
+              <i class="sort-caret descending"></i>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="deslist container" id="list">
+      <ul class="clearfix">
+        <template v-for="item in list">
+          <li class="listShadow">
+            <div class="img">
+              <img :src="item.userLogo | formatImg" width="100%" height="100%" @click="toDetail($event)"
+                :data-id="item.id">
+            </div>
+            <div class="info">
+              <div class="opt tc">
+                <p>
+                  <button class="btn btn-warning" @click="toDetail($event)" :data-id="item.id">找TA设计</button>
+                </p>
+              </div>
+              <div>
+                <h3 class="name">
+                  <a @click="toDetail($event)" :data-id="item.id">{{item.userName}}</a>
+                  <a class="tag tag-warning">认证</a>
+                </h3>
+
+                <p class="taginfo">
+                  <label class="tag_name hide">{{item.cateFirst}}</label>
+                  <label class="tag_name hide">{{item.cateSecond}}</label>
+                  <label class="tag_name">{{item.cateThree}}</label>
+
+                  <label>区域：</label>
+                  <span>{{item.province}}</span>
+                  <label style="margin-left:20px">签单数：</label>
+                  <strong class="yellow">{{item.orderNumber}}</strong>
+                </p>
+
+                <p class="taginfo">
+                  <label>设计年限：</label>
+                  <span>{{item.ageLimit}}</span>
+                  <label style="margin-left:20px">设计室 ：</label>
+                  <span>{{item.merchantName}}</span>
+                  <label style="margin-left:20px">评价数：</label>
+                  <span>{{item.commentNumber}}</span>
+                </p>
+
+                <p class="mcontent">
+                  <label>行业资历：</label>
+                  {{item.experience}}
+                </p>
+              </div>
+            </div>
+          </li>
+        </template>
+      </ul>
+
+      <el-pagination background @current-change="handleCurrentChange" :current-page="offset" :page-size="limit"
+        layout="total, prev, pager, next, jumper" :total="total">
+      </el-pagination>
+    </div>
+
+  </div>
+
+  <%- include ../footer.ejs %>
+
+  <script>
+    /*设计室类型 1 首饰设计师 2 玉雕大师 3国外设计师 4设计爱好者*/
+    var merchantId = utils.getUrlParam("merchantId") || ""
+    var designerSource = utils.getUrlParam("designerSource") || ""
+    //路由导航
+    var routerVm = new Vue({
+      el: "#router",
+      data: {
+        designerTxt: ''
+      },
+      mounted: function () {
+        if (designerSource == '1') {
+          this.designerTxt = '首饰设计师'
+        } else if (designerSource == '2') {
+          this.designerTxt = '玉雕大师'
+        } else if (designerSource == '3') {
+          this.designerTxt = '国外设计师'
+        } else if (designerSource == '4') {
+          this.designerTxt = '设计爱好者'
+        }
+      }
+    })
+
+    //搜索
+    var searchVm = new Vue({
+      el: "#search",
+      data: {
+        cateList: [],
+        cityList: [],
+        cityChildren: [],
+
+        currentPage: 1,
+        totalPage: 1
+      },
+      mounted: function () {
+        this.render();
+
+      },
+      methods: {
+        render: function () {
+          var self = this;
+          var data = {
+            flag: 0
+          }
+          utils.ajax({
+            url: "/api/designmanu/designroom/list",
+            type: "post",
+            data: JSON.stringify(data),
+            success: function (data) {
+              self.cateList = data.data;
+              setTimeout(function () {
+                $.each($('.category-container>a'), function (idx,
+                  item) {
+                  var name = $(item).attr("data-name")
+                  if (routerVm.designerTxt == name) {
+                    $(item).click();
+                    return false;
+                  }
+                });
+              }, 20)
+            }
+          });
+          utils.ajax({
+            url: " /admin/region/getRegion",
+            type: "get",
+            success: function (data) {
+              self.cityList = self.cityList.splice(self.cityList.length);
+              self.cityList = data.data;
+            }
+          })
+        },
+        toPrev: function () {
+          if (listVm.offset > 1) {
+            listVm.offset = listVm.offset - 1;
+            listVm.render();
+          }
+
+        },
+        toNext: function () {
+          if (this.currentPage < this.totalPage) {
+            listVm.offset = listVm.offset + 1;
+            listVm.render();
+          }
+        }
+      }
+    });
+    $(document).on("click", ".searchByOrderNum", function (e) {
+      var self = $(e.currentTarget);
+      if (!self.hasClass("descending")) {
+        self.addClass("descending").removeClass("ascending")
+        listVm.orderNumDesc = 0;
+      } else {
+        self.removeClass("descending").addClass("ascending")
+        listVm.orderNumDesc = 1;
+      }
+      $(".searchByCommentNum").removeClass("descending").removeClass("ascending")
+      listVm.commentNumDesc = ""
+      listVm.offset = 1;
+      listVm.render()
+    }).on("click", ".searchByCommentNum", function (e) {
+      var self = $(e.currentTarget);
+      if (!self.hasClass("descending")) {
+        self.addClass("descending").removeClass("ascending")
+        listVm.commentNumDesc = 0
+      } else {
+        self.removeClass("descending").addClass("ascending")
+        listVm.commentNumDesc = 1
+      }
+      $(".searchByOrderNum").removeClass("descending").removeClass("ascending")
+      listVm.orderNumDesc = "";
+      listVm.offset = 1;
+      listVm.render()
+    }).on("click", ".category-container a", function (e) {
+      var self = $(e.currentTarget);
+      var val = self.attr("data-name");
+      var dataId = self.data('id');
+      var dataPid = self.data('pid');
+      if (dataPid) {
+        $('.second-category a').removeClass('cur');
+        self.addClass('cur');
+        $('[data-pid="' + dataPid + '"]').show();
+      }
+      if ($('[data-id="' + dataId + '"]').length >= 1) {
+        $('.second-category').fadeOut();
+        $('[data-id="' + dataId + '"]').fadeIn();
+      }
+
+      self.addClass("cur").siblings().removeClass("cur");
+
+      listVm.offset = 1;
+      listVm.category = val;
+      listVm.render();
+    }).on("click", ".provice", function (e) {
+      var self = $(e.currentTarget);
+      self.addClass("cur").siblings().removeClass("cur");
+      self.addClass("activeCur").siblings().removeClass("activeCur");
+      var val = self.attr("data-id");
+      var name = self.attr("data-name");
+
+      if (name == '') {
+        searchVm.cityChildren = []
+        listVm.offset = 1;
+        listVm.provice = name;
+        listVm.city = '';
+        listVm.render();
+        return false;
+      }
+      $.each(searchVm.cityList, function (idx, item) {
+        if (item.regionId == val) {
+          searchVm.cityChildren = item.children
+          setTimeout(function () {
+            $('.second-city').find(".cur").removeClass('cur')
+            $('.second-city').find("a").eq(0).addClass('cur')
+          }, 20)
+
+          listVm.offset = 1;
+          listVm.provice = name;
+          listVm.city = '';
+          listVm.render();
+          return false;
+        }
+      });
+
+    }).on("click", ".city", function (e) {
+      var self = $(e.currentTarget);
+      self.addClass("cur").siblings().removeClass("cur");
+      var val = self.attr("data-name");
+      var val0 = self.parents('td').find(".activeCur").attr("data-name")
+      listVm.offset = 1;
+      listVm.provice = val0;
+      listVm.city = val;
+      listVm.render();
+
+    })
+
+    //列表
+    var listVm = new Vue({
+      el: "#list",
+      data: {
+        list: [],
+        total: 0,
+
+        merchantId: merchantId,
+        provice: '',
+        city: "",
+        category: routerVm.designerTxt,
+        commentNumDesc: "",
+        orderNumDesc: "",
+
+        offset: 1,
+        limit: 15
+      },
+      mounted: function () {
+        this.render()
+      },
+      methods: {
+        render: function () {
+          var self = this;
+          var json = {
+            merchantId: self.merchantId,
+            provice: self.provice,
+            city: self.city,
+            category: self.category,
+            commentNumDesc: self.commentNumDesc,
+            orderNumDesc: self.orderNumDesc,
+          };
+          utils.ajax({
+            url: "/api/designmanu/designroom/designerPage?offset=" + self.offset +
+              "&limit=" + self.limit,
+            data: JSON.stringify(json),
+            success: function (data) {
+              data = data.data;
+              self.list = self.list.splice(self.list.length)
+              self.list = data.records;
+              self.total = data.total;
+              searchVm.currentPage = data.current;
+              searchVm.totalPage = data.pages
+            }
+          })
+        },
+        handleCurrentChange: function (val) {
+          var self = this;
+          self.offset = val;
+          self.render();
+        },
+        toDetail: function (event) {
+          var id = event.currentTarget.getAttribute("data-id");
+          location.href = "../../design/designer_detail?id=" + id
+        }
+      },
+      filters: {
+        formatImg: function (str) {
+          return utils.formatImg(str);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title><%= title %></title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/plugin/jquery-qrcode-master/jquery.qrcode.min.js"></script>
+		<style type="text/css">
+			#main{min-height: 380px;}
+			.ngtc{
+				padding: 50px 0;
+				height: 400px;
+				background: #FAFCFF;
+			}
+			h2{
+				margin-bottom: 52px;
+				font-weight: bold;
+			}
+			#formsub{padding-left: 95px;padding-right: 116px;}
+			#formsub input{
+				width: 354px;
+			}
+			#formsub table td{
+				text-align: left;
+				padding-bottom: 12px;
+			}
+			.btn-primary{
+				width: 100%;
+				background: #00B0D9;
+			}
+			.statement p{color: #999999;margin-bottom: 20px;}
+			
+			.result .dialog-main {width: 360px;height: 220px;margin-left: -180px;margin-top: -110px;}
+			.result .dialog-body{bottom: 0}
+			.result .dialog-body>div {padding: 10px;font-size: 14px;text-align: center;}
+			.result .dialog-body p{margin-bottom: 30px;}
+			
+			.qrcode-container{
+				width: 251px;
+				height: 251px;
+				padding: 20px;
+				background: #FFFFFF;
+				border-radius: 10px;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				margin: 0 auto;
+			}
+			.qrcode{
+				width: 211px;
+				height: 211px;
+				padding: 20px;
+				border-radius: 10px;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border: 5px solid #8b0f1a;
+				position: relative;
+			}
+			.qrcode a{
+				display: inline-block;
+				width: 31px;
+				height: 31px;
+				background: #FFFFFF;
+				position: absolute;
+				left: 90px;
+				top: 90px;
+			}
+			.qrcode img{
+				width: 100%;
+			}
+			.codeBtn{
+				width: 150px;
+				height: 30px;
+				margin: 0 auto;
+				line-height: 30px;
+				background: #941616;
+				border-radius: 15px;
+				-webkit-border-radius: 15px;
+				-moz-border-radius: 15px;
+				color: #FFFFFF;
+			}
+		</style>
+	</head>
+	<body class="galleryActivity-bd">
+		<%- include ../headerbar %>
+
+		<%- include ../header %>
+
+		<%- include ../headerNav %>
+
+		<div id="main">
+			<div class="container">
+				<div class="router" id="router">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item :to="{ path: '/' }">
+							<a href="../../">我的位置：首页</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item>行业之声</el-breadcrumb-item>
+						<el-breadcrumb-item>溯源查询</el-breadcrumb-item>
+					</el-breadcrumb>
+				</div>
+			</div>
+			<div class="ngtc container clearfix">
+				<div class="fl tc">
+					<h2>华津国检</h2>
+					<form id="formsub">
+						<table>
+							<tr>
+								<td><label>证书编号：</label><p class="Validform_checktip"></p></td>
+								<td>
+									<div><input type="text" name="testNo" datatype="*" nullmsg="请输入证书编号"/></div>
+									<p class="Validform_checktip"></p>
+								</td>
+							</tr>
+							<tr>
+								<td><label>查询码：</label><p class="Validform_checktip"></p></td>
+								<td>
+									<div><input type="text" name="queryCode" datatype="*" nullmsg="请输入查询码"/></div>
+									<p class="Validform_checktip"></p>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<a class="btn btn-primary inquiry">查询</a>
+								</td>
+								<td></td>
+							</tr>
+						</table>
+					</form>
+				</div>
+				<div class="fl">
+					<div style="height: 300px;border-left: 1px solid #E5E5E5;padding-left: 60px;">
+						<div class="tc">
+							<div class="qrcode-container">
+								<div class="qrcode">
+									<a><img src="../../src/img/ngtc/pic_hjtc.png"/></a>
+									<div id="diplomasQrcode">
+										
+									</div>
+								</div>
+							</div>
+							<p class="codeBtn">或扫描二维码查询</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="dialog result" id="result">
+			<div class="mask"></div>
+			<div class="dialog-main">
+				<div class="dialog-body">
+					<div>
+						<p>没有检测结果哦！</p>
+						<p>请确认证书编号和查询码是否正确</p>
+						<button class="btn btn-info" onclick="$('#result').removeClass('show')">我知道了</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<%- include ../user/userFooter %>
+		<script type="text/javascript">
+			var routerVm = new Vue({
+				el: "#router"
+			})
+			window.validform = $("#formsub").Validform({
+				tiptype: 2
+			})
+			$.Tipmsg.r = "";
+			$("#diplomasQrcode").qrcode({width: 161,height: 161,text: 'http://app.gacjc.com/ngtc/hjtc/'});
+			$(function(){
+				$(document).on('click', '.inquiry', function(){
+					if(validform.check(false)){
+						var str = $("#formsub").serialize();
+						str = utils.str2json(str);
+						utils.ajax({
+							url: '/api/serv/portal/searchCredential',
+							data: JSON.stringify(str),
+							success: function(data){
+								data = JSON.parse(data.data)
+								if(data.success){
+									window.location.href = data.data.orderInfo.HtmlUrl
+								}else{
+									$("#result").addClass('show')
+								}
+							}
+						})
+					}
+				})
+			})
+			
+			
+		</script>
+	</body>
+
+</html>

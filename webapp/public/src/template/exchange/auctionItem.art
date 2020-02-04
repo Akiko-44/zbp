@@ -1,0 +1,34 @@
+<li data-id="<%=data.id%>" class="listShadow" style="position: relative;">
+	<div class="img toDetail">
+		<a><img src="<%= $imports.formatImg(data.imgUrl) %>" width="100%" height="100%"></a>
+		<p><%= $imports.formatAuctionTime(data) %></p>
+	</div>
+	<div class="info">
+		<div class="intro">
+			<p class="toDetail"><%= data.goodsName %></p>
+		</div>
+		<div class="clearfix">
+			<% if(data.goodsStatus == 10){ %>
+			<a class="btn btn-danger fr"><%= data.offerConut %>次出价</a>
+			<% }else if(data.goodsStatus == 2){ %>
+			<a class="btn btn-warning fr"><%= data.lookConut %>次围观</a>
+			<% } %>
+			<span class="new-red fl">￥
+				<% if(data.presentPrice == 0){ %>
+				<strong class="fs20"><%= data.upsetPrice %></strong>
+				<% }else{ %>
+				<strong class="fs20"><%= data.presentPrice %></strong>
+				<% } %>
+			</span>
+		</div>
+	</div>
+	<div class="statusWrap tc">
+		<% if(data.goodsStatus==10){ %>
+			<span class="statusWrap1">正在进行</span>
+		<% }else if(data.goodsStatus==2){ %>
+			<span class="statusWrap2">即将开始</span>
+		<% }else if(data.goodsStatus==11||data.goodsStatus==12){ %>
+			<span class="statusWrap3">已结束</span>
+		<% } %>
+	</div>
+</li>

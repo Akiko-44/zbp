@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/plugin/Zebra_Datepicker/dist/css/metallic/zebra_datepicker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<style>
+			.liveUploadDialog {}
+			
+			.dialog .dialog-main {
+				width: 900px;
+				height: 380px;
+				top: -5%;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+			}
+			
+			.dialog .dialog-body {
+				height: auto;
+				position: initial;
+				margin-top: 80px;
+			}
+			
+			.dialog .dialog-body p {
+				color: #1A1A1A;
+				font-size: 48px;
+				text-align: center;
+			}
+			
+			.dialog .dialog-body p .t-icon {
+				display: inline-block;
+				width: 90px;
+				height: 90px;
+				vertical-align: middle;
+				margin-right: 30px;
+				background: url("../../src/img/live/x.png") no-repeat center/contain;
+			}
+			
+			.dialog .dialog-footer {
+				text-align: center;
+				position: initial;
+				margin-top: 78px;
+			}
+			
+			.dialog .dialog-footer .btn {
+				font-size: 30px;
+				width: 140px;
+				height: 66px;
+				border-radius: 20px;
+			}
+			
+			.succ.dialog .dialog-body {
+				padding: 0 50px;
+				margin-top: 61px;
+			}
+			
+			.succ.dialog .dialog-body p .t-icon {
+				background: url("../../src/img/live/succ.png") no-repeat center/contain;
+			}
+			
+			.succ.dialog .dialog-footer {
+				margin-top: 37px;
+			}
+			
+			.dialog .dialog-footer .btn {
+				width: 134px;
+				height: 60px;
+			}
+		</style>
+	</head>
+
+	<body class="">
+
+		<%- include ../../headerbar.ejs %>
+
+		<%- include ../../header.ejs %>
+
+		<%- include ../userHeaderNav.ejs %>
+
+		<div id="main" class="main user-live liveUpload">
+			<div class="container clearfix ">
+				<div class="userLeftNav">
+					<%- include ../userLeftNav.ejs %>
+				</div>
+				<div class="content userRightContent">
+					<h2><span class="head">直播上传</span><span class="subhead">Live upload</span></h2>
+					<!--<form class="upload-form">
+					<div class="formsub">
+		            	<ul>
+		                	<li>
+		                    	<label><span class="need">*</span> 直播链接：</label>
+		                    	<input type="text" value="" name="liveUrl" class="inputxt" datatype="s6-18" nullmsg="请设置直播链接！" errormsg="昵称至少6个字符,最多18个字符！">
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 直播分类：</label>
+		                    	<select name="catId" datatype="*" nullmsg="请选择直播类型！" errormsg="请选择直播类型！" placeholder="请选择直播类型">
+		                    		<option :value="item.id" v-for="item in typeList" v-if="item.isShow == 0">{{item.catName}}</option>
+		                    	</select>
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 直播标题：</label>
+		                    	<input type="text" value="" name="liveTitle" class="inputxt" datatype="s6-18" nullmsg="请设置直播标题！" errormsg="昵称至少6个字符,最多18个字符！">
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 直播logo：</label>
+		                    	<input type="text" value="" name="liveLogo" class="inputxt" datatype="*" recheck="userpassword" nullmsg="请再输入一次密码！" errormsg="您两次输入的账号密码不一致！">
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 店铺链接：</label>
+		                    	<input type="text" value="" name="storeUrl" class="inputxt" datatype="*" recheck="userpassword" nullmsg="请设置店铺链接！" errormsg="请设置店铺链接！">
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 直播时间段：</label>
+		                    	<select name="livTime" datatype="*" nullmsg="请选择直播时间段！" errormsg="请选择直播时间段！" placeholder="请选择直播时间段">
+		                    		<option value="1">9:00-11:00</option>
+		                    		<option value="2">11:30-14:00</option>
+		                    		<option value="3">14:00-18:00</option>
+		                    		<option value="4">18:00-24:00</option>
+		                    	</select>
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 推荐商品ID：</label>
+		                    	<input type="password" value="" name="userpassword" class="inputxt" datatype="*6-16" nullmsg="请设置密码！" errormsg="密码范围在6~16位之间！">
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                    <li>
+		                    	<label><span class="need">*</span> 该商品图片：</label>
+		                    	<img src="../../test/1.jpg" v-for="item in goodsList">
+		                        <span class="Validform_checktip ">* 该商品图片会自动读取输入的商品ID的第一张图</span>
+		                    </li>
+		                    <li>
+		                    	<input name="shoppingsite2" class="rt2" id="shoppingsite21" type="checkbox" value="1" datatype="*" errormsg="">
+		                    	<label for="shoppingsite21" style="width: 300px;">我已同意《商家直播服务协议》</label>
+		                        <div class="Validform_checktip"></div>
+		                    </li>
+		                </ul>
+		                <div class="action">
+		                	<a class="btn btn-warning submitBtn" @click="handleSubmit">提交</a>
+		                </div>
+		            </div>
+				</form>-->
+					<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
+						<el-form-item label="直播链接" prop="liveUrl">
+							<el-input v-model="ruleForm.liveUrl"></el-input>
+						</el-form-item>
+						<el-form-item label="直播分类" prop="cat">
+							<el-select v-model="ruleForm.catId" placeholder="请选择直播类型" @change="changeCat">
+								<el-option :label="item.catName" :value="item.id" v-for="item in typeList" v-if="item.isShow == 0"></el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item label="直播标题" prop="liveTitle">
+							<el-input v-model="ruleForm.liveTitle"></el-input>
+						</el-form-item>
+						<el-form-item label="直播logo" prop="liveLogo" class="demo-block demo-box demo-zh-CN demo-upload">
+							<div class="avatar-uploader">
+								<img :src="ruleForm.liveLogo" v-if="ruleForm.liveLogo"/>
+								
+								<div tabindex="0" class="el-upload el-upload--text" v-else>
+									<i class="el-icon-plus avatar-uploader-icon" @click="handleUpload"></i>
+									
+								</div>
+								<button class="btn" @click="handleUpload" v-if="ruleForm.liveLogo">重新上传</button>
+							</div>
+						</el-form-item>
+						<el-form-item label="店铺链接" prop="storeUrl">
+							<el-input v-model="ruleForm.storeUrl"></el-input>
+						</el-form-item>
+						<el-form-item label="直播时间段" prop="livTime">
+							<el-select v-model="ruleForm.livTime" placeholder="请选择直播类型">
+								<el-option :label="item.name" :value="item.id" v-for="item in livTimeList"></el-option>
+							</el-select>
+						</el-form-item>
+						<el-form-item label="推荐商品ID" prop="goodsId">
+							<el-select v-model="ruleForm.goodsId" multiple placeholder="请选择" @click.native="handleGoods">
+							</el-select>
+						</el-form-item>
+						<el-form-item label="推荐商品图片">
+							<img :src="item.goodsImg | formatImg" v-for="item in goodsList"/>
+						</el-form-item>
+						
+						<el-form-item label="" prop="isAgree">
+							 <el-checkbox-group v-model="ruleForm.isAgree">
+								<el-checkbox label="我已同意《商家直播服务协议》" name="isAgree"></el-checkbox>
+							</el-checkbox-group>
+						</el-form-item>
+
+						<el-form-item>
+							<el-button type="primary" @click="handleSubmit('ruleForm')" style="background:#C2A374;border-color:#C2A374;">立即创建</el-button>
+						</el-form-item>
+					</el-form>
+					 
+				</div>
+			</div>
+			<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+		     <input type="file" name="cloudfile" accept="image/*"
+		     	class="el-upload__input liveLogoInput" @change="uploadGoodsImg">
+			</form>	
+		</div>
+
+		<div class="dialog liveUploadDialog">
+			<div class="mask dialog-close"></div>
+			<div class="dialog-main">
+				<div class="dialog-body">
+					<p><i class="t-icon"></i><span class="value">请按照提示完成正确信息填入</span></p>
+				</div>
+
+				<div class="dialog-footer">
+					<button class="btn btn-warning">确定</button>
+				</div>
+
+			</div>
+		</div>
+		<div class="dialog liveUploadDialog succ">
+			<div class="mask dialog-close"></div>
+			<div class="dialog-main">
+				<div class="dialog-body">
+					<p><i class="t-icon"></i><span class="value">提交成功，可在我发布的信息
+－直播列表查看状态
+</span></p>
+				</div>
+
+				<div class="dialog-footer">
+					<button class="btn btn-warning">确定</button>
+				</div>
+
+			</div>
+			
+		</div>
+		
+		<%- include ../userFooter.ejs %>
+
+		<script>
+			$(".userLeftNav li li:eq(1)").addClass("cur")
+			$(".upload-form").Validform({
+				tiptype: function(msg, o, cssctl) {
+					//msg：提示信息;
+					//o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
+					//cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;
+					if(!o.obj.is("form")) { //验证表单元素时o.obj为该表单元素，全部验证通过提交表单时o.obj为该表单对象;
+						var objtip = o.obj.siblings(".Validform_checktip");
+						cssctl(objtip, o.type);
+						objtip.text(msg);
+					}
+				}
+			});
+			$(".submitBtn").on("click", function() {
+
+			})
+			//显示添加弹出框
+			$(".dialog-footer .btn").on("click", function() {
+				$(".liveUploadDialog").removeClass()("show");
+			})
+
+			var vm1 = new Vue({
+				el: "#main",
+				data: function() {
+					return {
+						typeList: [/*{
+							"catName": "hahahhaha",
+							"grade": 1,
+							"id": "1002",
+							"isShow": 0,
+							"liveCount": 0
+						}, {
+							"catName": "hahahhaha",
+							"grade": 1,
+							"id": "1005",
+							"isShow": 0,
+							"liveCount": 0
+						}, {
+							"catName": "hahahhaha",
+							"grade": 1,
+							"id": "1004",
+							"isShow": 0,
+							"liveCount": 0
+						}, {
+							"catName": "hahahhaha",
+							"grade": 1,
+							"id": "1003",
+							"isShow": 0,
+							"liveCount": 0
+						}*/],
+						goodsList: [],
+						livTimeList: [{
+							name: "9:00-11:00",
+							id: 1
+						}, {
+							name: "11:30-14:00",
+							id: 2
+						}, {
+							name: "14:00-18:00",
+							id: 3
+						}, {
+							name: "18:00-24:00",
+							id: 4
+						}],
+						ruleForm: {
+							liveUrl: '',
+							cat: '',
+							catName: '',
+							catId: '',
+							liveTitle: '',
+							liveLogo: '',
+							storeUrl: '',
+							livTime: '',
+							goodsId: [],
+							isAgree: [],
+						},
+						rules: {
+							liveUrl: [{
+									required: true,
+									message: '请输入直播链接',
+									trigger: 'blur'
+							}],
+							cat: [{
+								required: true,
+								message: '请选择直播类型',
+								trigger: 'change'
+							}],
+							liveTitle: [{
+								required: true,
+								message: '请输入直播标题',
+								trigger: 'blur'
+							}],
+							liveLogo: [{
+								required: true,
+								message: '请输入直播logo',
+								trigger: 'change'
+							}],
+							storeUrl: [{
+								required: true,
+								message: '请输入店铺链接',
+								trigger: 'blur'
+							}],
+							livTime: [{
+								required: true,
+								message: '请选择直播时间段',
+								trigger: 'change'
+							}],
+							goodsId: [{
+								required: true,
+								message: '请填写推荐商品ID',
+								trigger: 'blur'
+							}],
+							isAgree: [{
+								type: 'array',
+								required: true,
+								message: '请确认',
+								trigger: 'change'
+							}]
+						},
+						
+					}
+				},
+				filters: {
+					formatImg: function(str) {
+						return utils.formatImg(str);
+					},
+				},
+				mounted: function() {
+					this.getLiveCategory()
+					 
+				},
+				methods: {
+					getLiveCategory() {
+						var self = this
+						utils.ajax({
+							url: "/api/extend/liveCategory/list",
+							type: "get",
+							success: function(data) {
+								var data = data.data;
+								self.typeList = data
+							}
+						})
+					},
+					getGoods(id) {
+						var self = this
+//						self.ruleForm.goodsId.push(id)
+//						console.log(this.ruleForm.goodsId)
+						utils.ajax({
+							url: "/api/extend/liveInfo/findGoods",
+							type: "get",
+							data: {
+								goodsId: id
+							},
+							success: function(data) {
+								if(data.success){
+									var data = data.data;
+									if(data.goodsName){
+										self.ruleForm.goodsId.push(id)
+										data.goodsId = id
+										self.goodsList.push(data)
+										
+									}else{
+										self.$message({
+								            type: 'warning',
+								            message: '该ID的商品信息为空'
+								          });
+									}
+									
+								}else{
+									self.$message({
+							            type: 'warning',
+							            message: '没有查到该ID的商品'
+							          });
+								}
+								
+							}
+						})
+					},
+					handleSubmit(formName) {
+						this.$refs[formName].validate((valid) => {
+							if (valid) {
+								
+								var opt={
+									liveUrl: this.ruleForm.liveUrl,
+									catId: this.ruleForm.catId,
+									catName: this.ruleForm.cat.catName,
+									liveTitle: this.ruleForm.liveTitle,
+									liveLogo: this.ruleForm.liveLogo,
+									storeUrl: this.ruleForm.storeUrl,
+									livTime: this.ruleForm.livTime,
+									goodsList: this.goodsList,
+								}
+								
+					            utils.ajax({
+									url: "/api/extend/liveInfo/saveOrUpdate",
+									type:'POST',
+									data: JSON.stringify(opt),
+									withCredential: true,
+									success: function(data) {
+										if(data.success) {
+											utils.alert("success", "创建成功");
+											location.href="/user/live/index"
+										} else {
+											$("#errorText").text(data.msg);
+										}
+	
+									}
+								})
+					        } else {
+					            console.log('error submit!!');
+					            return false;
+					        }
+						});
+						
+					},
+					handleUpload(){
+						$(".liveLogoInput").trigger("click");
+					},
+					uploadGoodsImg(){
+						var self = this
+						var uploadFile = new FormData($("#form1")[0]);
+						$.ajax({
+							url:'../../../file/upload',
+							type:'POST',
+							data:	uploadFile,
+							async: false,  
+							cache: false, 
+							contentType: false, //不设置内容类型
+							processData: false, //不处理数据
+							success:function(data){
+								self.ruleForm.liveLogo = data.data
+								$(".liveLogoInput").val("")
+							},
+							error:function(){
+								
+							}
+						})
+					},
+					handleGoods(){
+						var self = this
+						this.$prompt('只能为数字', '请输入商品ID', {
+				          confirmButtonText: '确定',
+				          cancelButtonText: '取消',
+				          inputPattern: /^[0-9]*$/,
+				          inputErrorMessage: '商品ID格式不正确'
+				        }).then(({ value }) => {
+				        	self.getGoods(value)
+				          
+				          
+				        }).catch(() => {
+				                 
+				        });	
+					},
+					changeCat(id){
+						this.typeList.forEach((sub,index)=>{
+							if(sub.id == id){
+								this.ruleForm.cat = sub
+							}
+						})
+						
+					}
+				}
+			})
+		</script>
+
+	</body>
+
+</html>

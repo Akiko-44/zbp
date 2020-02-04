@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/plugin/Zebra_Datepicker/dist/css/metallic/zebra_datepicker.min.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<style>
+			body {
+				background: #f5f5f5;
+			}
+		</style>
+	</head>
+
+	<body class="">
+
+		<%- include ../../headerbar.ejs %>
+
+		<%- include ../../header.ejs %>
+
+		<%- include ../userHeaderNav.ejs %>
+
+		<div id="main" class="main provider business-introduction">
+			<div class="container clearfix ">
+				<div class="userLeftNav">
+					<%- include ../userLeftNav.ejs %>
+				</div>
+				<div class="content userRightContent">
+					<!--<h2><span class="head">业务介绍</span><span class="subhead"></span></h2>-->
+					<form class="upload-form">
+						<div class="formsub">
+							<ul>
+								<li>
+									<label><span class="need">*</span><span class="name">服务费</span></label>
+									<div class="input-box">
+									<input type="text" value="" name="serviceFee" class="inputxt" datatype="/\d/" nullmsg="请输入服务费！" errormsg="请填写正确的金额！">
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+								<li>
+									<label><span class="need">*</span><span class="name">提供的服务</span></label>
+									<div class="input-box">
+									<select name="serviceId1" datatype="*" nullmsg="请选择服务！" errormsg="请选择服务！" @change="categorysListChange">
+										<option :value="item.id" v-for="(item,index) in categorysList" :key="index">{{item.name}}</option>
+									</select>类
+
+									<select name="serviceId2" datatype="*" nullmsg="请选择服务！" errormsg="请选择服务！" @change="oncCtegoryServicesChange">
+										<option :value="item.category.id" v-for="(item,index) in categoryServices" :key="index">{{item.category.name}}{{item}}</option>
+									</select>
+
+									<select name="serviceId3" datatype="*" nullmsg="请选择服务！" errormsg="请选择服务！">
+										<option :value="item.id" v-for="(item,index) in servicesList" :key="index">{{item.name}}</option>
+									</select>
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+								<li>
+									<div class="clearfix uploadBox1">
+										<label class="fl"><span class="need">*</span><span class="name">业务介绍图</span></label>
+										<div class="fl uploadbox triggerFile" data-target="uploadImg"></div>
+									<!--<img class="" src="../../test/1.jpg">-->
+									</div>	
+									<div class="Validform_checktip">请确保业务介绍图清晰最大2M</div>
+								</li>
+								<li>
+									<label><span class="need">*</span><span class="name">服务时间介绍</span></label>
+									<div class="input-box">
+									<textarea value="" name="serviceTimeDesc" class="inputxt" datatype="*" nullmsg="请设置服务时间介绍！" errormsg=""></textarea>
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+								<li>
+									<label><span class="need">*</span><span class="name">服务需要资料</span></label>
+									<div class="input-box">
+									<textarea value="" name="serviceDatum" class="inputxt" datatype="*" nullmsg="请设置服务需要资料！" errormsg=""></textarea>
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+							</ul>
+
+						</div>
+						<div class="action">
+							<a class="btn btn-warning submitBtn" @click="handleSubmit">提交</a>
+						</div>
+					</form>
+					<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+						<input type="file" name="cloudfile" accept="image/*" @change="uploadGoodsImg">
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<%- include ../userFooter.ejs %>
+
+		<script>
+			$(".userLeftNav li li:eq(2)").addClass("cur")
+			window.target = "";
+			$(document).on("click", ".triggerFile", function(e) {
+				var t = $(e.currentTarget);
+				target = t;
+				$("#form1 input").trigger("click");
+			})
+			
+			var vm = new Vue({
+				el: "#main",
+				data: function() {
+					return {
+						servProvider: {},
+						businessValidform:null,
+						categorysList: [],
+						categoryServices: [],
+						servicesList: [],
+					}
+				},
+				mounted: function() {
+					this.businessValidform = $(".upload-form").Validform({
+						tiptype: 2
+					})
+					this.getCategorys()
+				},
+				methods: {
+					getCategorys() { //栏目列表
+						var self = this
+						utils.ajax({
+							url: "/api/serv/portal/categorys/0",
+							type: "get",
+							success: function(succ) {
+								var data = succ.data.categorys;
+								self.categorysList = data
+							}
+						})
+					},
+					categorysListChange(e){
+						let id = $(e.target).val()
+						this.getCategoryServices(id)
+					},
+					getCategoryServices(pid) { //下子栏目与服务列表
+						var self = this
+						utils.ajax({
+							url: "/api/serv/portal/category_services/" + pid,
+							type: "get",
+							success: function(succ) {
+								var data = succ.data;
+								self.categoryServices = data
+//								console.log(self.categoryServices,"self.categoryServices")
+//								self.servicesList = data[0].services
+							}
+						})
+					},
+					oncCtegoryServicesChange(e) {
+
+						let id = $(e.target).val(),
+							arrList = [];
+						this.categoryServices.forEach((sub, index) => {
+							if(sub.category.id == id) {
+								arrList = sub.services
+							}
+						})
+						this.servicesList = arrList
+					},
+					getInfo() { 
+						var self = this
+						var json = {
+							current: 1,
+							size: 100
+						}
+
+						utils.ajax({
+							url: "/api/serv/user/provider/info",
+							data: json,
+							type: "get",
+							success: function(succ) {
+								if(succ.success) {
+									var data = succ.data;
+									self.servProvider = data
+								} else {
+						
+								}
+
+							}
+						})
+					},
+					uploadGoodsImg(self){
+						var uploadFile = new FormData($("#form1")[0]);
+						$.ajax({
+							url: '../../file/upload',
+							type: 'POST',
+							data: uploadFile,
+							async: false,
+							cache: false,
+							contentType: false, //不设置内容类型
+							processData: false, //不处理数据
+							success: function(data) {
+								$(target).parent().append('<img src="' + data.data + '">');
+								$(target).remove()
+								$("#form1 input").val("");
+							},
+							error: function() {
+		
+							}
+						})
+					},
+					handleSubmit(){
+						let businessValidform = this.businessValidform
+						if(businessValidform.check(false)) {
+							var str = $(".order-form").serialize()
+							var strJson = utils.str2json(str);
+							console.log(strJson, 5646544)
+							var serviceImg = $(".uploadBox1 img").attr("src");
+							var opt = {
+								id: [strJson.serviceId3],
+								companyDesc: this.applyService.serviceId,
+								serviceImg: serviceImg,
+								serviceTimeDesc: strJson.serviceTimeDesc,
+								serviceDatum: strJson.serviceDatum,
+								serviceFee: strJson.serviceFee,
+							}
+							
+							utils.ajax({
+								url: "/api/serv/portal/save_order",
+								type: 'POST',
+								data: JSON.stringify(opt),
+								withCredential: true,
+								success: function(data) {
+									if(data.success) {
+										utils.alert("success", "服务订单申请成功");
+										$(".applyDialog1").removeClass("show")
+									} else {
+										$("#errorText").text(data.msg);
+									}
+
+								}
+							})
+						} else {
+							utils.alert("info", "请检查资料是否填写完整")
+						}
+					}
+				}
+			})
+		</script>
+
+	</body>
+
+</html>

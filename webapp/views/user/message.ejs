@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    .userRightContent {
+      background: #f3f3f3;
+      font-size: 14px;
+    }
+
+    .message-head {
+      padding-left: 20px;
+      line-height: 80px;
+      height: 80px;
+      font-size: 14px;
+      color: #aaa;
+      background: #fff;
+    }
+
+    .message-head span {
+      margin-right: 40px;
+      cursor: pointer;
+    }
+
+    .message-head .active-head {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .message-body {
+      margin-top: 10px;
+    }
+
+    .message-body-title {
+      background: rgba(223, 115, 90, .05);
+      line-height: 48px;
+      color: #666;
+    }
+
+    .message-body-main {
+      padding: 20px;
+      background: #fff;
+    }
+
+    .message-body-main .main-item {
+      position: relative;
+      padding: 30px 20px;
+      margin-bottom: 20px;
+      background: #f3f3f3;
+      cursor: pointer;
+    }
+
+    .message-body-main .main-item .time {
+      margin-top: 16px;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .message-body-main .main-item .delete {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .message-body-main .main-item .more {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #2D69C3;
+      cursor: pointer;
+    }
+
+    .order-message .main-item {
+      padding: 14px 20px;
+    }
+
+    .message-body-main .main-item .no-read {
+      display: inline-block;
+      margin-right: 6px;
+      width: 6px;
+      height: 6px;
+      vertical-align: middle;
+      background: #DF735A;
+      border-radius: 50%;
+    }
+
+    .message-body-main .main-item .goods {
+      margin-top: 10px;
+    }
+
+    .message-body-main .main-item .goods-img {
+      margin-right: 30px;
+      width: 100px;
+      height: 100px;
+      border: 1px solid #DF735A;
+    }
+
+    .message-body-main .main-item .goods-info {
+      display: inline-block;
+
+      vertical-align: top;
+    }
+
+    .message-body-main .main-item .goods-name {
+      margin-bottom: 12px;
+      color: #666;
+    }
+
+    .message-body-main .main-item .goods-account {
+      margin-bottom: 20px;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .message-body-main .goods-account span {
+      margin-right: 30px;
+    }
+
+    .message-body-main .main-item .more-btn {
+      display: inline-block;
+      width: 92px;
+      height: 28px;
+      text-align: center;
+      line-height: 28px;
+      color: #DF735A;
+      border: 1px solid #DF735A;
+      cursor: pointer;
+    }
+
+    .message-body-main .main-item .order-time {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #999;
+      font-size: 12px;
+    }
+
+    .page-pagination {
+      padding: 40px 0 80px;
+    }
+  </style>
+</head>
+
+<body class="userMessage">
+
+  <%- include ../headerbar.ejs %>
+  <%- include userHeaderNav.ejs %>
+
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>
+          <a href="/">首页</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <a href="/user/acc_info">个人中心</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>消息中心</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+
+  <div id="main" class="main" v-cloak>
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include userLeftNav.ejs %>
+      </div>
+      <div class="userRightContent">
+        <div class="message">
+          <div class="message-head">
+            <span :class="!showOrder ? 'active-head': ''" @click="showOrder = !showOrder">系统消息</span>
+            <span :class="showOrder ? 'active-head': ''" @click="showOrder = !showOrder">订单消息</span>
+          </div>
+          <div class="message-body order-message" v-if="showOrder">
+            <div class="message-body-title tc">订单消息</div>
+            <div class="message-body-main">
+              <div class="main-item" v-for="(item,i) in orderRecords" :key="i" @click="toOrderDetail(item)">
+                <p class="status"><i class="no-read" v-if="!item.buyUserRead"></i>{{ item.orderMessage }}</p>
+                <div class="goods">
+                  <img class="goods-img" :src="item.goodsPic" alt="" v-if="item.goodsPic">
+                  <div class="goods-info">
+                    <p class="goods-name">{{ item.goodsName }}</p>
+                    <p class="goods-account">
+                      <span>共{{ item.goodsNum }}件商品</span>
+                      <span v-if="item.totalPrice">合计￥{{ item.totalPrice.toFixed(2) }}</span>
+                    </p>
+                    <span class="more-btn">更多详情</span>
+                  </div>
+                </div>
+                <p class="order-time">{{ item.createTime }}</p>
+              </div>
+            </div>
+            <div class="page-pagination" v-if="orderPages>1">
+              <el-pagination class="tc list-pagination" background @current-change="handleOrderCurrentChange"
+                :current-page="ordeParams.offset" :page-size="ordeParams.limit" layout="prev, pager, next, jumper"
+                :total="orderTotal">
+              </el-pagination>
+            </div>
+          </div>
+          <div class="message-body system-message" v-else>
+            <div class="message-body-title tc">系统消息</div>
+            <div class="message-body-main">
+              <div class="main-item" v-for="(item,i) in records" :key="i" @click="toDetail(item)">
+                <p class="desc"><i class="no-read" v-if="!item.isRead"></i>{{ item.title }}</p>
+                <p class="time">{{ item.sendTime }}</p>
+                <!-- <img class="delete" src="/src/img/user/icon_delete.png" alt=""> -->
+                <span class="more">更多详情></span>
+              </div>
+            </div>
+            <div class="page-pagination" v-if="pages>1">
+              <el-pagination class="tc list-pagination" background @current-change="handleCurrentChange"
+                :current-page="params.offset" :page-size="params.limit" layout="prev, pager, next, jumper"
+                :total="total">
+              </el-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include ../footer.ejs %>
+
+  <script>
+    $(".userLeftNav li[data-target='message']").addClass("cur");
+    var routerVm = new Vue({
+      el: "#router"
+    })
+    var applyVm = new Vue({
+      el: '#main',
+      data: {
+        showOrder: false,
+        total: 0,
+        orderTotal: 0,
+        params: {
+          limit: 10,
+          offset: 1
+        },
+        ordeParams: {
+          limit: 10,
+          offset: 1
+        },
+        records: [],
+        orderRecords: [],
+        pages: 0,
+        orderPages: 0
+      },
+      mounted() {
+        this.getSystemList()
+        this.getOrderList()
+      },
+      methods: {
+        getSystemList() {
+          utils.ajax({
+            type: 'get',
+            url: '/app/jewelry/message/page',
+            data: this.params,
+            success: res => {
+              this.records = res.data.records
+              this.total = res.data.total
+              this.pages = res.data.pages
+            }
+          })
+        },
+        getOrderList() {
+          utils.ajax({
+            type: 'get',
+            url: '/api/order/message/page',
+            data: this.ordeParams,
+            success: res => {
+              console.log(res)
+              this.orderRecords = res.data.records
+              this.orderTotal = res.data.total
+              this.orderPages = res.data.pages
+            }
+          })
+        },
+        toDetail(item) {
+          location.href = '/user/message_detail?detail=' + JSON.stringify(item)
+        },
+        toOrderDetail(item) {
+          const normalOrderStateList = [1, 2, 5, 6, 8]
+          if (normalOrderStateList.includes(item.orderState)) {
+            location.href = '/user/order/detail?id=' + item.orderNumber
+          } else {
+            location.href = '/user/order/refund_detail?id=' + item.refundOrderId
+          }
+        },
+        handleCurrentChange(val) {
+          this.params.offset = val
+          this.getSystemList()
+        },
+        handleOrderCurrentChange(val) {
+          this.ordeParams.offset = val
+          this.getOrderList()
+        }
+      }
+    })
+    $(function () {
+      //消息数量
+      /*
+      utils.ajax({
+      	url: "/pc/portal/message/unReadNum",
+      	type: "get",
+      	success: function(data){
+      		$("#unreadNum").html(data.data);
+      	}
+      });
+      */
+    })
+  </script>
+</body>
+
+</html>

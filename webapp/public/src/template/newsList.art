@@ -1,0 +1,36 @@
+<li class="listitem clearfix" data-id="<%= data.id %>"> 
+	<div class="imgWrap">
+		<a>
+			<span><%= data.keyword %></span>
+			<img src="<%= $imports.formatImg(data.thumbnail) %>" width="100%" height="100%">
+		</a>
+	</div>
+	<div class="infoWrap">
+		<h2><a class="toDetail" title="<%= data.title %>"><%= data.title %></a></h2>
+		<div class="contentWrap">
+			<p><%= data.summary %></p>
+		</div>
+		<div class="clearfix">
+			<div class="fr">
+				<span>
+					<i class="iconfont icon-newsEye fs20"></i>
+					<span class="iconlabel"><%= data.readNum %></span>
+				</span>
+				&emsp;&emsp;&emsp;
+				<a>
+					<i class="iconfont icon-newsZan fs20"></i>
+					<span class="iconlabel"><%= data.praiseNum %></span>
+				</a>
+				&emsp;&emsp;&emsp;
+				<span>
+					<i class="iconfont icon-newsComment fs20"></i>
+					<span class="iconlabel"><%= data.commentNum %></span>
+				</span>
+			</div>
+			<div>
+				<span><%= data.authorName %></span>&ensp;
+				<span><%= data.publishTime %></span>
+			</div>
+		</div>
+	</div>
+</li>

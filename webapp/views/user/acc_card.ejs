@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.userCertificationWrap>p {font-size: 14px;color: #666;margin-bottom: 10px;}
+.userCertificationWrap>h3 {font-weight: bold;margin-bottom: 10px;margin-top: 15px;color: #666;}
+.userCertificationWrap .red {color: #FF0000;}
+.userCertificationWrap .userPanel {margin-top: 10px;}
+.userCertificationWrap .userPanel table {text-align: center;}
+.userCertificationWrap .userPanel thead {border-bottom: 1px dashed #EAEAEA;}
+.userCertificationWrap .userPanel th {padding: 15px 10px;color: #666;font-weight: normal;}
+.userCertificationWrap .userPanel td {padding: 40px 10px;}
+
+</style>
+</head>
+<body class="userAccount">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent" id="detail">
+				
+				<div class="userCertificationWrap">
+					<p>为防止诈骗行为，中国珠宝云平台部分业务需要实名认证！</p>
+					<p>（<span class="red">中国珠宝云平台承诺承诺所传身份证明，不作他途使用，其他任何人均无法查看。</span>）</p>
+					<h3>实名认证的规则：</h3>
+					<p>部分业务需要注册人的真实姓名及身份证号码，具体请以使用相关业务时的提示为准。</p>
+					<div class="panel userPanel">
+						<div class="panel-header">	
+							<div class="panel-control">
+				    			<a class="showAddDialogBtn">添加</a>
+				    		</div>
+							<div class="panel-title">已保存的实名认证</div>
+						</div>
+						<div class="panel-body">
+							<table class="userTable">
+								<thead>
+									<tr>
+										<th>姓名</th>
+										<th>身份证号</th>
+										<th>身份证照片</th>
+										<th>审核状态</th>
+										<th v-if="authType != 2">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include userFooter.ejs %>
+	
+	<%- include ../system/cardDialog.ejs %>
+	
+	
+<script>
+var routerVm = new Vue({
+	el: "#router"
+})
+$(".userLeftNav li li:eq(1)").addClass("cur");
+
+
+var detailVm = new Vue({
+	el: "#detail",
+	data: {
+		tableData: [],
+		authType: 0
+	},
+	mounted: function(){
+		
+	}
+})
+
+var authState = {
+	1: '认证中',
+	2: '认证通过',
+	3: '认证未通过'
+}
+render();
+
+function render(){
+	utils.ajax({
+		url: "/api/userCenter/auth/list",
+		type: "get",
+		success: function(data){
+			data = data.data;
+			detailVm.tableData = data
+			if(data.length != 0){
+				var html = "";
+				for(var i = 0; i < data.length; i++){
+					var isUpload = data[i].idPicUpload ? "已上传" : "未上传";
+					detailVm.authType = data[i].authState;
+					html += '<tr data-id="' + data[i].id + '"><td>' + data[i].name + '</td>'+
+							'<td>' + data[i].idNumber + '</td>'+
+							'<td>' + isUpload + '</td>'+
+							'<td>' + authState[data[i].authState] + '</td>';
+							if(detailVm.authType != 2){
+								html += '<td><a class="blue uploadBtn">修改</a>&ensp;<a class="blue delBtn">删除</a></td></tr>';
+							}else{
+								html += '<td></td>';
+							}
+				}
+				$(".userTable tbody").html(html);
+				$('.showAddDialogBtn').hide();
+			}else{
+				$('.showAddDialogBtn').show();
+				$(".userTable tbody").html('<tr><td colspan="4">' + utils.dom.nodata + '</td></tr>');
+			}
+			
+		}
+	})
+}
+
+
+$(document).on("click", ".delBtn", function(e){
+	//删除
+	var self = $(e.currentTarget);
+	var id = self.parents("tr").attr("data-id");
+	utils.ajax({
+		url: "/api/userCenter/auth/delete/" + id,
+		type: "post",
+		success: function(data){
+			render();
+			$('.showAddDialogBtn').show();
+		}
+	})
+}).on("click", ".showAddDialogBtn", function(){
+	if(detailVm.tableData.length>0){
+		utils.alert("danger", "只能上传一条实名认证信息");
+		return;
+	}
+	$(".addCardDialog").addClass("show");
+	resetDialog();
+	
+})
+
+
+
+
+
+</script>
+</body>
+</html>
+

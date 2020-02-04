@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+input[type="password"] {
+    width: 240px;
+    height: 32px;
+}
+</style>
+</head>
+<body class="find-bd">
+	
+	<%- include loginHeader.ejs %>
+	
+	<div class="regPanel findpwd">
+		<div class="title"><span>找回密码</span></div>
+		<div class="stepWrap">
+			<ul class="clearfix">
+				<li class="cur">
+					<span class="step-circle"></span>
+					<p>验证身份</p>
+				</li>
+				<li class="cur">
+					<span class="step-circle"></span>
+					<span class="step-line"></span>
+					<p>设置新密码</p>
+				</li>
+				<li>
+					<span class="step-circle"></span>
+					<span class="step-line"></span>
+					<p>设置成功</p>
+				</li>
+			</ul>
+		</div>
+		
+		<form id="findForm">
+			<input type="hidden" name="uuid" value="<%= data.data %>">
+			<table>
+				<tr>
+					<td colspan="2">
+						<div>
+							<input type="password" name="password" placeholder="请输入新密码" datatype="*6-20" nullmsg="请输入新密码" errormsg="密码为6至20位字符">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div>
+							<input type="password" name="confirmPassword" placeholder="请再次输入新密码" datatype="*" recheck="password" nullmsg="请重新输入新密码" errormsg="两次输入密码不一致！">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+          <td colspan="2" class="tc">
+          	<a class="btn btn-danger regBtn">下一步</a>
+          </td>
+        </tr>
+			</table>
+		</form>
+	</div>
+	
+
+<script>
+
+window.validform = $("#findForm").Validform({
+	tiptype: 2
+})
+$.Tipmsg.r = "";
+
+$(".regBtn").on("click", function(){
+	if(validform.check(false)){
+		if(validform.check(false)){
+			var str = $("#findForm").serialize();
+			str = utils.str2json(str);
+			utils.ajax({
+				url: "/api/userCenter/reset-password",
+				data: JSON.stringify(str),
+				success: function(data){
+					if(data.success){
+						window.location.href = "../../find_success";
+					}else{
+						utils.alert("danger", data.msg);
+					}
+				}
+			})
+			
+		}
+		
+	}
+})
+</script>
+</body>
+</html>
+

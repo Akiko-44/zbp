@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+body {background: #F5F5F5;}
+.worksList .listitem {
+    float: left;
+    width: 226px;
+    background: #fff;
+    color: #999;
+    margin: 6px;
+}
+.worksList .listitem .img {
+    position: relative;
+    height: 226px;
+    overflow: hidden;
+}
+.worksList .listitem .img img{
+	min-height: 226px
+}
+.worksList .listitem .img span {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    padding: 0 10px;
+    line-height: 20px;
+}
+.worksList .listitem .info {
+    margin: 10px;
+}
+.worksList .listitem .info .price {
+    display: inline-block;
+    padding-top: 10px;
+}
+.worksList .listitem .info .price strong {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.designListItem>div.bottom {height: 80px;}
+.cateItem{
+	width: 100%;
+	padding-left: 50px;
+	border-top: 1px dashed #E0E0E0;
+}
+.cateItemChildren{
+	width: 1000px;
+	background: #FFFFFF;
+	padding: 10px 30px;
+	margin-left: 50px;
+	background: #FFFFFF;
+	border: 1px solid #E0E0E0;
+	border-radius: 3px;
+}
+.curs{color: #C2A374 !important;}
+.designListItem{position: relative;}
+.statusWrap{
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	color: #FFFFFF;
+	background: rgba(107, 183, 74, .5);
+	border-bottom-right-radius: 15px;
+	border-top-right-radius: 15px;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 99;
+}
+</style>
+</head>
+<body class="">
+
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+	
+	    <div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+					<el-breadcrumb-item><a href="../../manufacture/index">制造间</a></el-breadcrumb-item>
+					<el-breadcrumb-item>{{txt}}</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+	    </div>
+	
+	    <div class="container exchangeSearch" id="search">
+			<table>
+				<tr>
+					<td width="90"><label>价格：</label></td>
+					<td class="price-container">
+						<a data-id="" class="cur">全部</a>
+						<a data-id="0-499">0-499</a>
+						<a data-id="500-999">500-999</a>
+						<a data-id="1000-4999">1000-4999</a>
+						<a data-id="5000-9999">5000-9999</a>
+						<a data-id="10000-50000">1万-5万</a>
+						<a data-id="50000-100000">5万-10万</a>
+						<a data-id="100000-500000">10万-50万</a>
+						<a data-id="500000-1000000">50万-100万</a>
+						<a data-id="1000000-100000000000">100万以上</a>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td width="90"><label>分类：</label></td>
+					<td class="category-container"  style="position: relative;">
+						<a data-id="" class="category1 curs">全部</a>
+						<template v-for="item in cateList">
+							<a :data-id="item.id" class="category1">{{item.name}}</a>
+						</template>
+						<div class="cateItem" v-if="cateItemArr && cateItemArr.length">
+							<a data-id="" id="category2" class="category2 curs">不限</a>
+							<template v-for="citem in cateItemArr">
+								<a :data-id="citem.id" class="category2">{{citem.name}}</a>
+							</template>
+						</div>
+						<div class="cateItemChildren" v-if="cateItemChildrenArr && cateItemChildrenArr.length">
+							<a data-id="" id="category3" class="category3 curs">不限</a>
+							<a :data-id="ccitem.id" class="category3" v-for="ccitem in cateItemChildrenArr">{{ccitem.name}}</a>
+						</div>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+			
+			<div class="clearfix term" v-if="termData && termData.length">
+				<h3 class="fl">搜索条件:</h3>
+				<a v-if="termData[0].categoryName">
+					<span>{{termData[0].categoryName}}</span>
+					<i class="term-close" @click="termDel('categoryId', 0)">x</i>
+				</a>
+				<a v-if="termData[1].priceName">
+					<span>{{termData[1].priceName}}</span>
+					<i class="term-close" @click="termDel('fixedPrice', 1)">x</i>
+				</a>
+				<!--<a v-if="termData[2].searchWord">
+					<span>{{termData[2].searchWordName}}</span>
+					<i class="term-close" @click="termDel('searchWord', 2)">x</i>
+				</a>-->
+			</div>
+			
+			<div class="clearfix">
+				<div class="fr clearfix">
+					<div class="searchPage fr">
+                        <a @click="toPrev()"><i class="iconfont icon-exchangePageLeft"></i></a>
+                        <span>{{currentPage}}/{{totalPage}}</span>
+                        <a @click="toNext()"><i class="iconfont icon-userAccountRight"></i></a>
+                    </div>
+				</div>
+				<ul>
+					<li class="cur">
+						<a>综合排序</a>
+					</li>
+					<li class="sortBySale">
+						<a>销量</a>
+						<span class="caret-wrapper">
+							<i class="sort-caret ascending"></i>
+							<i class="sort-caret descending"></i>
+						</span>
+					</li>
+					<li class="sortByPrice">
+						<a>价格</a>
+						<span class="caret-wrapper">
+							<i class="sort-caret ascending"></i>
+							<i class="sort-caret descending"></i>
+						</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	
+	    <div class="worksList container" id="list">
+	    	<div v-if="list.length == 0">
+	        	<p class="nosearch" style="margin-right: 0;">很遗憾，未搜索到相关的商品，换个搜索试试吧</p>
+	        </div>
+	        <ul class="clearfix listUl" v-if="list && list.length">
+	        	<template v-for="item in list">
+	        		<li class="designListItem listShadow" :data-id="item.id">
+	        			<span class="statusWrap tc" v-if="item.caseType == 2">
+							定制商品
+						</span>
+	                	<div class="img" @click="toProductDetail($event)" :data-id="item.caseId">
+	                    	<img :src="item.mainPic |formatImg">
+	                    	<span class="tip">{{item.merchantName}}</span>
+	                	</div>
+	                	<div class="bottom">
+	                		<h2 class="goodsName"></h2>
+	                		<div class="intro" @click="toProductDetail($event)" :data-id="item.caseId">
+	                			<p class="ellipsis"><a>{{item.caseName}}</a></p>
+	                		</div>
+	                		<div>
+	                			<table>
+	                				<tr>
+	                					<td>
+	                						<a @click="toMerchantDetail($event)" :data-id="item.merid">
+												<img class="img-circle" :src="item.merchantLogo | formatImg" alt="设计师" width="24" height="24" />
+												<span>{{item.merchantName}}</span>
+											</a>
+	                					</td>
+	                					<td>
+	                						 <span class="price new-red">￥
+					                             <strong class="fs16">{{item.price}}</strong>
+					                        </span>
+	                					</td>
+	                				</tr>
+	                			</table>
+	                		</div>
+	                	</div>
+	            	</li>
+	        	</template>
+	        </ul>
+	        
+	        <el-pagination background 
+		      @current-change="handleCurrentChange"
+		      :current-page="offset"
+		      :page-size="limit"
+		      layout="total, prev, pager, next, jumper"
+		      :total="total">
+		    </el-pagination>
+	    </div>
+	
+	</div>
+	
+	<%- include ../footer.ejs %>
+
+
+<script>
+var designerId = utils.getUrlParam("designerId") || ""
+var merchantId = utils.getUrlParam("merchantId") || ""
+var categoryId = utils.getUrlParam("searchId") || ""
+var searchWord = utils.getUrlParam("searchWord") || ""
+var caseType = utils.getUrlParam("caseType") || ""
+var search = "";
+var temp = {}
+var cateListWrap = []
+var routerVm = new Vue({
+	el: "#router",
+	data:{
+        txt:'所有商品'
+	},
+	mounted:function(){
+		var self = this
+		if(merchantId != ''){
+			self.txt = 'TA的商品'
+		}
+	}
+})
+
+
+if(!!utils.getUrlParam("search")){
+	search = decodeURIComponent(utils.getUrlParam("search"));
+	$(".searchType li[data-val='6']").addClass("cur").siblings().removeClass("cur")
+	$(".search").val(search)
+}
+var searchVm = new Vue({
+	el:"#search",
+	data:{
+		cateList:[],
+		cateItemArr: [],
+		cateItemChildrenArr:[],
+		
+		currentPage: 1,
+        totalPage: 1,
+        txt:'所有商品',
+        
+        termData: [{
+			categoryId:'',
+			categoryName:''
+		},{
+			fixedPrice: '',
+			priceName:''
+		}/*,{
+			searchWord: searchWord,
+			searchWordName:searchWord
+		}*/]
+	},
+	mounted:function(){
+		var self = this
+		if(merchantId != ''){
+			self.txt = 'TA的商品'
+		}
+		this.render();
+		
+		if(!!utils.getUrlParam("search")){
+			this.termData = []
+		}
+	},
+	
+	methods:{
+		render: function(){
+			var self = this;
+			utils.ajax({
+				url: "/api/designmanu/designroom/categoryList/1",
+				type: 'get',
+				success: function(data){
+					self.cateList=data.data
+					cateListWrap = self.cateList
+          getNode(self.cateList,categoryId);
+				}
+			})
+		},
+        toPrev: function(){
+        	if(listVm.offset>1){
+        		listVm.offset = listVm.offset - 1;
+        		listVm.render();
+        	}
+        	
+        },
+        toNext: function(){
+        	if(this.currentPage < this.totalPage){
+        		listVm.offset = listVm.offset + 1;
+        		listVm.render();
+        	}
+        },
+        termDel: function(str,index){
+			if(index == 0){
+        		this.termData[0].categoryId = ""
+				this.termData[0].categoryName = ""
+        	}else if(index == 1){
+        		this.termData[1].fixedPrice = ""
+				this.termData[1].priceName = ""
+        	}/*else if(index == 2){
+        		this.termData[2].searchWord = ""
+				this.termData[2].searchWordName = ""
+        	}*/
+        	listVm[str] = ""
+        	listVm.render(1)
+        }
+		
+	},
+	filtes: {
+		
+	}
+})
+setTimeout(function(){
+  if(categoryId != ''){
+    var self = $('.category1[data-id="'+temp.id+'"]');
+    var val = self.attr("data-id");
+    self.addClass("curs").siblings().removeClass("curs");
+    
+    searchVm.termData[0].categoryId = val
+    searchVm.termData[0].categoryName = self.text()
+    
+    self.addClass("curs").siblings().removeClass("curs");
+    $(document).find('.category2').removeClass("curs");
+    $(document).find('.category3').removeClass("curs")
+    if(val == ''){
+      searchVm.cateItemArr = [];
+      searchVm.cateItemChildrenArr = [];
+    }else{
+      $.each(searchVm.cateList, function(idx, data) {
+        if(String(data.id) == val){
+          searchVm.cateItemArr = data.children
+          setTimeout(function(){
+            $("#category2").attr("data-id", val)
+          },20)
+        }
+      })
+    }
+    listVm.categoryId = val;
+    listVm.offset = 1;
+    listVm.render()
+  }
+},1000)
+$(document).on("click", ".price-container a", function(e){
+	var self = $(e.currentTarget);
+	self.addClass("cur").siblings().removeClass("cur");
+	
+	var val = self.attr("data-id");
+	
+	searchVm.termData[1].fixedPrice = val
+	searchVm.termData[1].priceName = val
+	
+	listVm.offset = 1;
+	listVm.fixedPrice = val;
+	listVm.render();
+}).on("click", ".sortBySale", function(e){
+	var self = $(e.currentTarget);
+	if(!self.hasClass("descending")){
+		self.addClass("descending").removeClass("ascending")
+		listVm.saleDesc = 0;
+	}else{
+		self.removeClass("descending").addClass("ascending")
+		listVm.saleDesc = 1;
+	}
+	$(".sortByPrice").removeClass("descending").removeClass("ascending")
+	listVm.priceDesc = ""
+	listVm.offset = 1;
+	listVm.render()
+}).on("click", ".sortByPrice", function(e){
+	var self = $(e.currentTarget);
+	if(!self.hasClass("descending")){
+		self.addClass("descending").removeClass("ascending")
+		listVm.priceDesc = 0
+	}else{
+		self.removeClass("descending").addClass("ascending")
+		listVm.priceDesc = 1
+	}
+	$(".sortBySale").removeClass("descending").removeClass("ascending")
+	listVm.saleDesc = "";
+	listVm.offset = 1;
+	listVm.render()
+}).on('click', '.category1', function(e){
+	var self = $(e.currentTarget);
+	var val = self.attr("data-id");
+	
+	searchVm.termData[0].categoryId = val
+	searchVm.termData[0].categoryName = self.text()
+	
+	self.addClass("curs").siblings().removeClass("curs");
+	$(document).find('.category2').removeClass("curs");
+	$(document).find('.category3').removeClass("curs")
+	if(val == ''){
+		searchVm.cateItemArr = [];
+		searchVm.cateItemChildrenArr = [];
+	}else{
+		$.each(searchVm.cateList, function(idx, data) {
+			if(String(data.id) == val){
+				searchVm.cateItemArr = data.children
+				setTimeout(function(){
+					$("#category2").attr("data-id", val)
+				},20)
+			}
+		})
+	}
+	listVm.categoryId = val;
+	listVm.offset = 1;
+	listVm.render()
+}).on('click', '.category2', function(e){
+	var self = $(e.currentTarget);
+	var val = self.attr("data-id");
+	self.addClass("curs").siblings().removeClass("curs");
+	$(document).find('.category3').removeClass("curs")
+	$.each(searchVm.cateItemArr, function(idx, data) {
+		if(String(data.id) == val){
+			searchVm.cateItemChildrenArr = data.children
+			setTimeout(function(){
+				$("#category3").attr("data-id", val)
+			},20)
+		}
+	});
+	listVm.categoryId = val;
+	listVm.offset = 1;
+	listVm.render()
+}).on('click', '.category3', function(e){
+	var self = $(e.currentTarget);
+	var val = self.attr("data-id");
+	self.addClass("curs").siblings().removeClass("curs");
+	listVm.categoryId = val;
+	listVm.offset = 1;
+	listVm.render()
+})
+
+var listVm = new Vue({
+	el: "#list",
+	data: {
+		list: [],
+		total: 0,
+
+		designerId: designerId,
+		merchantId: merchantId,
+		fixedPrice: "",
+		categoryId: categoryId,
+		goodsSource: 6,
+		priceDesc: "",
+		saleDesc: "",
+		search: search,
+		caseType: caseType,
+		offset: 1,
+		limit: 45
+	},
+	mounted: function(){
+		this.render();
+	},
+	methods: {
+		render: function(){
+			var self = this;
+			var json = {
+				designerId:self.designerId,
+				merchantId: self.merchantId,
+				fixedPrice: self.fixedPrice,
+				categoryId: self.categoryId,
+				goodsSource: self.goodsSource,
+				priceDesc: self.priceDesc,
+				saleDesc: self.saleDesc,
+				search: self.search,
+				caseType: self.caseType/*,
+				searchWord: searchWord*/
+			}
+			utils.ajax({
+				url: "/api/designmanu/designroom/designCasePage?offset=" + self.offset + "&limit=" + self.limit,
+				data: JSON.stringify(json),
+				success: function(data){
+					data = data.data;
+					self.list = self.list.splice(self.list.length)
+					self.list = data.records;
+					self.total = data.total;
+					searchVm.currentPage = data.current;
+                    searchVm.totalPage = data.pages
+				}
+			})
+		},
+		handleCurrentChange: function(val){
+	        var self = this;
+	        self.offset = val;
+	        self.render();
+		},
+		toMerchantDetail: function(event){
+			var id = event.currentTarget.getAttribute("data-id");
+			location.href = "../../manufacture/business_detail?id="+id;
+		},
+		toProductDetail: function(event){
+			var id = event.currentTarget.getAttribute("data-id");
+			location.href = "../../manufacture/product_detail?id="+id;
+		}
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str);
+		}
+	}
+})
+
+var parentNode = null;
+var node = null;
+var pId = null;
+function getNode(json, nodeId) {
+    //1.第一层 root 深度遍历整个JSON
+    for (var i = 0; i < json.length; i++) {
+        if (node && node.parentId == 0) {
+            break;
+        }
+        var obj = json[i];
+        //没有就下一个
+        if (!obj || !obj.id) {
+            continue;
+        }
+        //2.有节点就开始找，一直递归下去
+        if (obj.id == nodeId) {
+            //找到了与nodeId匹配的节点，结束递归
+            node = obj;
+            pId = obj.parentId;
+            if(pId != 0){
+              familyTree(cateListWrap, pId);
+            }
+            break;
+        } else {
+            //3.如果有子节点就开始找
+            if (obj.children) {
+                //4.递归前，记录当前节点，作为parent 父亲
+                parentNode = obj;
+                //递归往下找
+                getNode(obj.children, nodeId);
+            } else {
+                //跳出当前递归，返回上层递归
+                continue;
+            }
+        }
+    }
+    if(node && node.parentId == 0){
+      temp=node;
+      listVm.categoryId = temp.id
+      searchVm.termData[0].categoryId = temp.id
+      return temp;
+    }
+    //5.如果木有找到父节点，置为null，因为没有父亲  
+    if (!node) {
+        parentNode = null;
+    }
+    //6.返回结果obj
+    /*return {
+        parentNode: parentNode,
+        node: node
+    };*/
+}
+function familyTree(arr, pid) {
+  var forFn = function(arr, pid) {
+    for (var i = 0; i < arr.length; i++) {
+      var item = arr[i];
+      if (item.id == pid && item.parentId == 0) {
+        temp=item;
+        listVm.categoryId = temp.id
+        searchVm.termData[0].categoryId = temp.id
+        return temp;
+      }
+    }
+  };
+  forFn(arr, pid);
+}
+</script>
+</body>
+</html>
+

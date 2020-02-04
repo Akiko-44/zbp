@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+
+<body class="find-bd">
+
+	<%- include loginHeader %>
+
+	<div class="regPanel findpwd">
+		<div class="title"><span>找回密码</span></div>
+		<div class="stepWrap">
+			<ul class="clearfix">
+				<li class="cur">
+					<span class="step-circle"></span>
+					<p>验证身份</p>
+				</li>
+				<li>
+					<span class="step-circle"></span>
+					<span class="step-line"></span>
+					<p>设置新密码</p>
+				</li>
+				<li>
+					<span class="step-circle"></span>
+					<span class="step-line"></span>
+					<p>设置成功</p>
+				</li>
+			</ul>
+		</div>
+
+		<form id="findForm">
+			<input type="hidden" class="codeUuid" name="codeUuid">
+			<input type="hidden" class="msgId" name="msgId" value="">
+			<table>
+				<tr>
+					<td colspan="2">
+						<div>
+							<input type="text" name="mobilePhone" placeholder="请输入手机号码" maxlength="11" datatype="/^1\d{10}$/"
+								nullmsg="请输入手机号" errormsg="手机号码格式错误">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr class="hide" id="verifyCode1">
+					<td>
+						<div>
+							<input type="text" name="verifyCode" placeholder="请输入图形验证码" class="code" maxlength="6" datatype="s1-6"
+								nullmsg="请输入图形验证码" errormsg="请输入验证码">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+					<td>
+						<img class="codeImg" width="130" height="40">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div>
+							<input type="text" name="dynamicVerifyCode" placeholder="请输入验证码" class="dcode" maxlength="6"
+								datatype="s1-6" nullmsg="请输入短信验证码" errormsg="请输入短信验证码">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+					<td>
+						<a class="btn btn-danger codeBtn">获取验证码</a>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="tc">
+						<a class="btn btn-danger regBtn">下一步</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<%- include ../footer.ejs %>
+	<script>
+		var uuid = utils.uuid();
+		var verify = 1;
+		var verifyNum = 0;
+		$(function () {
+
+			//验证码
+			$(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+			$(".codeUuid").val(uuid);
+			$(".codeImg").on("click", function () {
+				uuid = utils.uuid();
+				$(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+				$(".codeUuid").val(uuid);
+			});
+		})
+
+		window.validform = $("#findForm").Validform({
+			tiptype: 2
+		})
+		$.Tipmsg.r = "";
+
+		$(".regBtn").on("click", function () {
+			if (verify == 1) {
+				$("#verifyCode1 [name=verifyCode]").val('123456')
+			}
+			if (validform.check(false)) {
+				var str = $("#findForm").serialize();
+				str = utils.str2json(str);
+				$.ajax({
+					type: 'post',
+					url: "/api/userCenter/reset-password-pre",
+					data: JSON.stringify(str),
+					contentType: 'application/json;charset=UTF-8',
+					beforeSend: function (request) {
+						var _t = utils.getCookie("token");
+						if (!!_t) {
+							request.setRequestHeader("Authorization", _t);
+						}
+					},
+					success: function (data) {
+						if (data.success) {
+							window.location.href = "../find_next/" + data.data;
+						} else {
+							verifyNum++
+							if (verifyNum >= 3) {
+								verify = 0
+								$("#verifyCode1 [name=verifyCode]").val('')
+								$("#verifyCode1").removeClass('hide')
+							}
+							utils.alert("danger", data.msg);
+						}
+					}
+				})
+
+			}
+		});
+
+		var flag = false;
+		var submitFlag = false;
+		$(".codeBtn").on("click", function () {
+			if (submitFlag) {
+				return;
+			}
+			if (verify == 1) {
+				$("[name=verifyCode]").val('123456')
+			}
+			var $phone = $("input[name='mobilePhone']");
+			var $verifyCode = $("input[name='verifyCode']");
+			$phone.blur();
+			$verifyCode.blur();
+			if (!$phone.hasClass("Validform_error") && !$verifyCode.hasClass("Validform_error")) {
+
+				var phone = $.trim($phone.val());
+				var verifyCode = $.trim($verifyCode.val());
+
+				submitFlag = true;
+				var json = {
+					mobilePhone: phone,
+					verifyCode: verifyCode,
+					codeUuid: $(".codeUuid").val()
+				}
+				utils.ajax({
+					url: "/api/userCenter/smscode",
+					data: JSON.stringify(json),
+					success: function (data) {
+						if (data.success) {
+							$("input[name='msgId']").val(data.data);
+							var i = 120;
+							var timer = setInterval(function () {
+								i--;
+								$(".codeBtn").text('已发送(' + i + ')');
+							}, 1000);
+							setTimeout(function () {
+								clearInterval(timer);
+								$(".codeBtn").text('重发');
+								flag = true;
+								submitFlag = false;
+							}, 120000);
+						} else {
+							submitFlag = false;
+							$("#errorText2").text(data.msg);
+						}
+					},
+					error: function () {
+						submitFlag = false;
+					}
+				})
+			} else {
+				submitFlag = false;
+			}
+
+
+		})
+	</script>
+</body>
+
+</html>

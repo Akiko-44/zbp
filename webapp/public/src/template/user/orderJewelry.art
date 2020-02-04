@@ -1,0 +1,259 @@
+<li class="orderListItem">
+	<div class="topinfo clearfix">
+		<a class="blue fr toOrderDetail" orderNumber="<%=data.orderNumber%>">查看订单</a>
+		<b><%=data.createTime%></b>
+		&emsp;&emsp;
+		<span>订单编号：<%= data.orderNumber %></span>
+		&emsp;&emsp;
+		<i class="iconfont icon-orderShop"></i>
+		<% if(data.orderType == 2){ %>
+			<span><%= data.shopName %></span>
+		<% }else{ %>
+			<span><%= data.sellUserName %></span>
+		<% } %>
+		&emsp;&emsp;
+		<% if(data.state != 1 && data.state != 100 && data.state != 8 && data.state != 15){ %>
+			<span><%= data.buyUserName %></span>
+		<% } %>
+	</div>
+	<div>
+		<table>
+			<tr>
+				<td>
+					<ul class="goodsList">
+						<% for(var i=0;i<data.orderGoodVOList.length;i++){ %>
+						<li class="cursor" skuId="<%= data.orderGoodVOList[i].skuId %>" onclick="toGoodsDetail(<%= data.orderGoodVOList[i].goodId %>)">
+							<table>
+								<tr>
+									<td width="115">
+										<img src="<%= $imports.formatImg(data.orderGoodVOList[i].skuMainPic) %>" width="100" height="100">
+									</td>
+									<td>
+										<h2 class="goodsName"><%= data.orderGoodVOList[i].skuName %></h2>
+										<% for(var j=0;j<data.orderGoodVOList[i].skuExplain.length;j++){ %>
+											<span class="goodsIntro"><%= data.orderGoodVOList[i].skuExplain[j].specsName %></span>
+											<span class="goodsIntro">:</span>
+											<span class="goodsIntro"><%= data.orderGoodVOList[i].skuExplain[j].attrValue %>&nbsp;&nbsp;</span>
+										<% } %>
+									</td>
+									<td width="70">
+										X<%= data.orderGoodVOList[i].goodsNumber %>
+									</td>
+									<td width="90" class="tc">
+										<span class="fs14 yellow">￥<%= data.orderGoodVOList[i].unitPrice %></span>
+										<p class="payWay hide">(<%= $imports.formatPayType(data.payType) %>)</p>
+									</td>
+								</tr>
+							</table>
+						</li>
+						<% } %>
+					</ul>
+				</td>
+				<td width="160" class="tc border">
+					<b>￥<%= data.payMoney %></b>
+					<p>(含运费:￥<%= data.freightMoney %>)</p>
+					
+					<% if(data.state == 1 || data.state == 100){ %>
+						<p class="red">待付款</p>
+					<% }else if(data.state == 2){ %>
+						<p>待发货</p>
+					<% }else if(data.state == 3){ %>
+						<p>设计中&制造中</p>
+					<% }else if(data.state == 4){ %>
+						<p>待发货</p>
+					<% }else if(data.state == 5){ %>
+						<p>待收货</p>
+					<% }else if(data.state == 6){ %>
+						<% if(data.isCommented == 1){ %>
+							<p>待评价</p>
+						<% }else{ %>
+							<p>已评价</p>
+						<% } %>
+					<% }else if(data.state == 7){%>
+						<p>已完成</p>
+					<% }else if(data.state == 8){%>
+						<p>已取消</p>
+					<% }else if(data.state == 9){%>
+						<p>已关闭</p>
+					<% }else if(data.state == 10){%>
+						<p>退款申请中</p>
+					<% }else if(data.state == 11){%>
+						<p>退款成功</p>
+					<% }else if(data.state == 12){%>
+						<p>退款失败</p>
+					<% }else if(data.state == 13){%>
+						<p>退货申请中</p>
+					<% }else if(data.state == 14){%>
+						<p>退货成功</p>
+					<% }else if(data.state == 15){%>
+						<p>已删除</p>
+					<% }else if(data.state == 17){%>
+						<p>取消中</p>
+					<% }else if(data.state == 18){%>
+						<p>退货失败</p>
+					<% }else if(data.state == 19){%>
+						<p>同意退货</p>
+					<% }else if(data.state == 20){%>
+						<p>商家待收货</p>
+					<% }else if(data.state == 21){%>
+						<p>退款仲裁中</p>
+					<% }else if(data.state == 22){%>
+						<p>退货仲裁中</p>
+					<% }else if(data.state == 41){%>
+						<p>待换出人支付</p>
+					<% }else if(data.state == 42){%>
+						<p>待换出人发货</p>
+					<% }else if(data.state == 43){%>
+						<p>待换入人收货</p>
+					<% }else if(data.state == 44){%>
+						<p>待换出人收货</p>
+					<% } %>
+				</td>
+				<td width="210" class="tc border">
+					<% if(data.state == 1 || data.state == 100){ %>
+						<p class="hide">待付款</p>
+						<div>
+							<a class="btn btn-warning toPayOrderBtn" orderNumber="<%=data.orderNumber%>">去付款</a>
+						</div>
+						<% if(data.revokeState != 1){ %>
+							<p>
+								<a class="cancelOrderBtn" orderNumber="<%=data.orderNumber%>">取消订单</a>
+							</p>
+						<% } %>
+					<% }else if(data.state == 2){ %>
+						<p class="hide">待发货</p>
+						<% if(data.revokeState != 1){ %>
+							<p>
+								<a class="cancelOrderBtn" orderNumber="<%=data.orderNumber%>">取消订单</a>
+							</p>
+						<% } %>
+					<% }else if(data.state == 3){ %>
+						<p class="hide">设计中&制造中</p>
+						
+					<% }else if(data.state == 4){ %>
+						<p class="hide">待发货</p>
+						<div class="red">
+							等待卖家发货
+						</div>
+						<% if(data.revokeState != 1){ %>
+							<p>
+							  <a class="cancelOrderBtn" orderNumber="<%=data.orderNumber%>">取消订单</a>
+							</p>
+						<% } %>
+						<br>
+					<% }else if(data.state == 5){ %>
+						<p class="hide">待收货</p>
+						<% if(data.revokeState != 3 && data.revokeState != 4){ %>
+							<p>
+							  <a class="serviceOrderBtn btn btn-warning" orderNumber="<%=data.orderNumber%>" orderId="<%=data.id%>" refundType="1">申请退款</a>
+							</p>
+						<% } %>
+						<p>
+							<a class="expressOrderBtn btn btn-warning" orderId="<%=data.id%>" orderNumber="<%=data.orderNumber%>">查看物流</a>
+						</p>
+						<% if(data.delayedReceipt == 0){ %>
+							<p>
+								<a class="delayOrderBtn btn btn-warning" orderId="<%=data.id%>" orderNumber="<%=data.orderNumber%>">延迟收货</a>
+							</p>
+						<% } %>
+						<p>
+							<a class="btn btn-warning ensureOrderBtn" orderNumber="<%=data.orderNumber%>">确认收货</a>
+						</p>						
+					<% }else if(data.state == 6){ %>
+						<p class="hide">待评价、已评价</p>
+						<% if(data.orderType != 3){ %>
+							<% if(data.isCommented != 2){ %>
+								<p>
+									<a class="btn btn-warning commentOrderBtn" orderNumber="<%=data.orderNumber%>">去评价</a>
+								</p>
+							<% } %>
+							<p>
+								<a class="expressOrderBtn btn btn-warning" orderId="<%=data.id%>" orderNumber="<%=data.orderNumber%>">查看物流</a>
+							<p>
+							<% if(data.revokeState != 5 && data.revokeState != 6){ %>
+								<p>
+									<a class="serviceOrderBtn btn btn-warning" refundType="2" orderNumber="<%=data.orderNumber%>" orderId="<%=data.id%>">申请退货</a>
+								</p>
+							<% } %>
+						<% } %>
+					<% }else if(data.state == 7){%>
+						<p class="hide">已完成</p>
+					<% }else if(data.state == 8){%>
+						<p class="hide">已取消</p>
+					<% }else if(data.state == 9){%>
+						<p class="hide">已关闭</p>
+					<% }else if(data.state == 10){%>
+						<p class="hide">退款中</p>
+						<% if(data.revokeState != 3 && data.revokeState != 4){ %>
+							<p>
+								<a class="revokeCancelBtn" refundType="1" orderId="<%=data.orderRefundId%>">撤销退款</a>
+							</p>
+						<% } %>
+					<% }else if(data.state == 11){%>
+						<p class="hide">退款成功</p>
+					<% }else if(data.state == 12){%>
+						<p class="hide">退款失败</p>
+						<p>
+							<a class="expressOrderBtn btn btn-warning" orderId="<%=data.id%>" orderNumber="<%=data.orderNumber%>">查看物流</a>
+						<p>
+					<% }else if(data.state == 13){%>
+						<p class="hide">退货中</p>
+						<% if(data.revokeState != 5 && data.revokeState != 6){ %>
+							<p>
+								<a class="revokeCancelBtn" refundType="1" orderId="<%=data.orderRefundId%>">撤销退货</a>
+							</p>
+						<% } %>
+					<% }else if(data.state == 14){%>
+						<p class="hide">退货成功</p>
+					<% }else if(data.state == 15){%>
+						<p class="hide">已删除</p>
+					<% }else if(data.state == 16){%>
+						<p class="hide">待评价</p>
+						<div>
+							<a class="btn btn-warning commentOrderBtn" orderNumber="<%=data.orderNumber%>">去评价</a>
+						</div>
+						<% if(data.revokeState != 5 && data.revokeState != 6){ %>
+							<p> 
+								<a class="serviceOrderBtn btn btn-warning" refundType="2" orderNumber="<%=data.orderNumber%>" orderId="<%=data.id%>">申请退货</a>
+							</p>
+						<% } %>
+					<% }else if(data.state == 17){%>
+						<p class="hide">取消中</p>
+						<% if(data.revokeState != 1){ %>
+							<p>
+								<a class="revokeCancelBtn" refundType="0" orderId="<%=data.id%>">撤销取消申请</a>
+							</p>
+						<% } %>
+					<% }else if(data.state == 18){%>
+						<p class="hide">退货失败</p>
+						<p>
+							<a class="revokeCancelBtn" refundType="1" orderId="<%=data.orderRefundId%>">撤销退货</a>
+						</p>
+						<p> 
+							<a class="serviceOrderBtn btn btn-warning" refundType="2" orderNumber="<%=data.orderNumber%>" orderId="<%=data.id%>">申请退货</a>
+						</p>
+						<p>
+							<a class="expressOrderBtn btn btn-warning" orderId="<%=data.id%>" orderNumber="<%=data.orderNumber%>">查看物流</a>
+						<p>	
+					<% }else if(data.state == 19){%>
+						<p class="hide">同意退货</p>
+					<% }else if(data.state == 20){%>
+						<p class="hide">商家待收货</p>
+					<% }else if(data.state == 21){%>
+						<p class="hide">退款仲裁中</p>
+					<% }else if(data.state == 22){%>
+						<p class="hide">退货仲裁中</p>
+					<% }else if(data.state == 41){%>
+						<p class="hide">待换出人支付</p>
+					<% }else if(data.state == 42){%>
+						<p class="hide">待换出人发货</p>
+					<% }else if(data.state == 43){%>
+						<p class="hide">待换入人收货</p>
+					<% }else if(data.state == 44){%>
+						<p class="hide">待换出人收货</p>
+					<% } %>
+				</td>
+			</tr>
+		</table>
+	</div>
+</li>

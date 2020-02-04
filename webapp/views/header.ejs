@@ -1,0 +1,64 @@
+<div id="header" class="header hide">
+  <div class="container">
+    <div class="headerInfo">
+      <div>
+        <div class="logoWrap">
+          <a class="fl" href="../../">
+            <i class="icon icon-logo"></i>
+          </a>
+        </div>
+        <div>
+          <div class="searchWrap">
+            <div class="searchType">
+              <ul class="clearfix">
+                <li class="cur" data-val="1">
+                  <a>珠宝店</a>
+                </li>
+                <li data-val="2" class="hide">
+                  <a>互换坊</a>
+                </li>
+                <li data-val="5">
+                  <a>设计室</a>
+                </li>
+                <li data-val="6">
+                  <a>制造间</a>
+                </li>
+              </ul>
+            </div>
+            <div class="searchBar">
+              <input type="text" placeholder="珠宝店/设计室/制作间">
+              <span>
+                <i class="icon icon-search"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <i class="icon icon-header fr"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  $(function () {
+    $(document).on("click", ".searchType li", function (e) {
+      var self = $(e.currentTarget);
+      self.addClass("cur").siblings().removeClass("cur");
+    }).on("click", ".searchBar span", function () {
+      var val = $(".searchType li.cur").attr("data-val");
+      var search = $.trim($(".searchBar input").val());
+      search = encodeURIComponent(search);
+      if (val == "1") {
+        location.href = "../../jewelry/goodsList?keyWord=" + search;
+      } else if (val == "2") {
+        location.href = "../../exchange/sale?search=" + search;
+      } else if (val == "5") {
+        location.href = "../../design/product?search=" + search;
+      } else if (val == "6") {
+        location.href = "../../manufacture/product?search=" + search;
+      }
+    })
+  })
+</script>

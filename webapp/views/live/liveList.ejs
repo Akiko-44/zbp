@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+		<meta name=renderer content=webkit>
+		<meta name=author content=Avanmemety/>
+		<meta name=apple-mobile-web-app-capable content=yes/>
+		<meta name=apple-mobile-web-app-status-bar-style content=blank/>
+		<meta name=format-detection content="telephone=no" />
+		<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>热门直播</title>
+		<link rel="stylesheet/less" type="text/css" href="../zbxpc/less/index.less" />
+		<script src="http://wap.hongdoujiao.com/CDN/less.min.js"></script>
+
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<!--[if lt IE 9]>
+    <script src="http://wap.hongdoujiao.com/CDN/html5shiv.min.js"></script>
+    <script src="http://wap.hongdoujiao.com/CDN/respond.min.js"></script>
+    <script src="http://wap.hongdoujiao.com/CDN/html5media.min.js"></script>
+    <![endif]-->
+    <style>
+    	 .el-icon-arrow-left:before,.el-icon-arrow-right:before{
+	    	color:#606266;
+	    }
+	    .jewelryBox-bd{
+				background: #f8f8f8;
+			}
+	    .router {
+   	 		margin: 5px 0 25px 0;
+    		color: #666;
+    	}
+    </style>
+	</head>
+	<body class="jewelryBox-bd">
+		<%- include ../headerbar %>
+
+		<%- include ../header %>
+
+		<%- include ../headerNav %>	
+		<div class="container" id="container">
+				<div class="router" id="router">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item :to="{ path: '/' }">
+							<a href="../../">我的位置：首页</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item>
+							<a href="./story">直播厅</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item><span id="routerTitle">热门直播</span></el-breadcrumb-item>
+					</el-breadcrumb>
+				</div>
+		</div>
+		<div class="living-list">
+			<div class="header" id="nav">
+				<div class="left"><img src="../zbxpc/image/living_img.png" alt=""></div>
+				<div class="center"></div>
+			</div>
+			<div class="box">
+				<ul class="list"></ul>
+				<div class="loading">
+					<div class="load-2">
+						<div class="k-line k-line6b-1"></div>
+						<div class="k-line k-line6b-2"></div>
+						<div class="k-line k-line6b-3"></div>
+						<div class="k-line k-line6b-4"></div>
+						<div class="k-line k-line6b-5"></div>
+					</div>
+				</div>
+			</div>
+			<div id="pagination"></div>
+			<div class="toast"></div>
+		</div>
+		<%- include ../footer.ejs %>
+		<script src="http://wap.hongdoujiao.com/CDN/jquery.min.js"></script>
+		<script charset="utf-8" src="../zbxpc/js/pagination.min.js"></script>
+		<script src="../zbxpc/js/global.js"></script>
+		<script charset="utf-8" src="../zbxpc/js/liveList.js"></script>
+		<script>
+			let container = new Vue({
+				el: "#container",
+			})
+		</script>
+	</body>
+</html>

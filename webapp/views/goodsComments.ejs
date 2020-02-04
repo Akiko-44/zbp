@@ -1,0 +1,181 @@
+<div id="goodsComment" class="goodsComment">
+  <div class="totalWrap hide">
+    <label class="fs14" style="margin-right: 20px;">用户点评</label>
+    <el-radio label="1">全部（<span>0</span>）</el-radio>
+    <el-radio label="2">嗮图（<span>0</span>）</el-radio>
+    <el-radio label="3">好评（<span>0</span>）</el-radio>
+    <el-radio label="4">中评（<span>0</span>）</el-radio>
+    <el-radio label="5">差评（<span>0</span>）</el-radio>
+  </div>
+  <div class="commentPost hide">
+    <div class="clearfix commentPostHeader">
+      <div class="fr">
+        <em class="inputLength">0</em>
+        <em>/</em>
+        <em>300</em>
+      </div>
+      <div>
+        <strong>评价商品</strong>&ensp;
+        <span>请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。</span>
+      </div>
+    </div>
+    <div class="commentPostInput">
+      <textarea maxlength="300" placeholder="我来说2句" onkeyup="utils.commentInputNum(this)"></textarea>
+      <div class="clearfix">
+        <div class="layer-table">
+          <div>
+            <div>
+              <span class="username"></span>
+            </div>
+            <div class="tr">
+              <span class="red errorText"></span>
+              <label class="checkbox hide">
+                <span class="checkbox-input">
+                  <span class="checkbox-input-inner"></span>
+                </span>
+                <span class="checkbox-label">匿名？</span>
+              </label>
+              <a class="btn postBtn">发表评价</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="comment-list">
+      <table class="fs14" width="100%">
+        <tbody id="listTbody">
+          <tr class="nosearch hide">
+            <td>暂无评论哦，快来评论一下吧！</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br><br>
+    <div id="pagination" class="pagination"></div>
+    <br><br>
+  </div>
+</div>
+<script>
+  window.params = {
+    offset: 1,
+    limit: 5
+  }
+  /*
+   * contentType:1、评论的是商品；2、评论的是文章
+   * */
+  function conmmentRender(page) {
+    params.offset = page
+    utils.ajax({
+      url: "/api/userCenter/userComment/page/" + utils.getUrlParam("id") + "/" + contentType,
+      type: "get",
+      data: params,
+      success: function (data) {
+        data = data.data;
+        $("#commentTotal").html(data.total)
+        if (data.total == 0) {
+          //没有数据
+          $(".nosearch").removeClass("hide");
+        } else {
+          $(".nosearch").addClass("hide");
+          var html = "";
+          for (var i = 0; i < data.records.length; i++) {
+            var item = data.records[i];
+            var replayCommentList = '',
+              gallerys = '',
+              commentRankOn = '';
+            if (item.replayCommentList.length) {
+              $.each(item.replayCommentList, function (idx, replay) {
+                replayCommentList +=
+                  '<p style="color:#DF735A;line-height: 22px;font-weight:bold;">商家回复</p>' +
+                  '<p style="color:#DF735A;line-height: 22px;text-indent:2em">' + replay.content +
+                  '</p>' +
+                  '<p style="font-size: 12px;color: #999">' + replay.createTime + '</p>'
+              });
+            }
+            if (item.gallerys.length) {
+              $.each(item.gallerys, function (idx, gallery) {
+                var imgitem = utils.formatImg(gallery)
+                gallerys += '<a class="fl imgitem"><img src="' + imgitem + '" width="100%"></a>';
+              });
+            }
+            if (item.commentRank > 0) {
+              for (var ii = 0; ii < item.commentRank; ii++) {
+                commentRankOn += '<img src="../../src/img/exchange/on.png">'
+              }
+            }
+            if (5 - item.commentRank > 0) {
+              var s = 5 - item.commentRank;
+              for (var ii = 0; ii < s; ii++) {
+                commentRankOn += '<img src="../../src/img/exchange/off.png">'
+              }
+            }
+            var userName = item.userName.substring(3, 7)
+            var userName2 = item.userName.replace(userName, '****')
+            var userLogo = item.userLogo.includes('http') ? item.userLogo : 'http://image.gacjc.com/' + item
+              .userLogo
+            html += '<tr>' +
+              '<td valign="top" width="159">' +
+              '<img src="' + userLogo + '" width="32" height="32" style="margin-right:10px;border-radius:50%">' +
+              '<span>' + userName2 + '</span>' +
+              '</td>' +
+              '<td valign="top">' +
+              // '<div style="margin-bottom: 15px;">' + commentRankOn + '</div>' +
+              '<p style="margin-bottom: 14px;color: #666">' + item.content + '</p>' +
+              '<div class="clearfix" style="margin-bottom: 25px;position:relative;">' + gallerys +
+              '</div>' +
+              '<div class="bigImg" style="display:none;margin-bottom:30px;"><img src="http://image.gacjc.com/1558755464068_d29456a4aa319.jpg" height="400" style="border: 1px solid #eee;max-width: 100%;"></div>' +
+              '<p style="font-size: 12px;color: #999">' + item.createTime +
+              '<span class="fr">' + commentRankOn + '<span>'
+            '</p>' +
+            '</td>' +
+            '</tr>'
+
+
+            if (item.replayCommentList && item.replayCommentList.length) {
+              html += '<tr>' +
+                '<td valign="top" width="159">' +
+                '</td>' +
+                '<td valign="top">' +
+                '<div>' + replayCommentList + '</div>' +
+                '</td>' +
+                '</tr>'
+            }
+          }
+          $("#listTbody").html(html);
+          $("#listTbody").on('click', '.imgitem', function () {
+            $(this).toggleClass('curimg').siblings().removeClass('curimg');
+            var src = $(this).closest('div').find('.curimg img').attr('src');
+            // console.log($(this).find('img').attr('src'))
+            // var src = $(this).find('img').attr('src')
+            if (src == '' || src == undefined) {
+              // console.log(176)
+              // $('#picDialog').removeClass("show");
+              $(this).parent().siblings('.bigImg').hide().html('')
+            } else {
+              // console.log(180)
+              // $('#picDialog').addClass("show");
+              $(this).parent().siblings('.bigImg').show().html('<img src="' + src +
+                '" height="400"  style="border: 1px solid #eee;max-width: 100%;">')
+            }
+          })
+          if (params.offset == 1 && data.pages > 1) {
+            $("#pagination").pagination({
+              pageCount: data.pages,
+              current: params.offset,
+              jump: true,
+              coping: true,
+              prevContent: '上一页',
+              nextContent: '下一页',
+              callback: function (api) {
+                conmmentRender(api.getCurrent());
+              }
+            });
+          }
+
+        }
+      }
+    })
+  }
+</script>

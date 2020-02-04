@@ -1,0 +1,39 @@
+<li class="clearfix" data-id="<%= data.id %>">
+	<div class="ml-left">
+		<a><img src="<%= data.userLogo %>" width="100%"></a>
+		<p><%= data.userName %></p>
+	</div>
+	<div class="ml-right">
+		<div class="clearfix">
+			<a class="blue fr">举报</a>
+			<div class="fl">
+				<% for(var k=0;k<data.commentRank;k++){ %>
+					<a>
+						<img src="../../src/img/exchange/on.png">
+					</a>
+				<% } %>
+				<% for(var k=0;k<5-data.commentRank;k++){ %>
+					<a>
+						<img src="../../src/img/exchange/off.png">
+					</a>
+				<% } %>
+				&emsp;&emsp;
+				<i class="icon icon-like"></i>
+				<span class="iconlabel">196</span>
+				&emsp;&emsp;
+				<i class="icon icon-comment"></i>
+				<span class="iconlabel">46</span>
+			</div>
+		</div>
+		<div class="exchange-mc">
+			<p><%= data.content %></p>
+		</div>
+		<% if(data.gallerys.length > 0){ %>
+		<div class="exchange-mimg">
+			<% for(var i = 0; i < data.gallerys.length; i++){ %>
+				<a class="imgItem"><img src="<%= data.gallerys[i] %>"></a>
+			<% } %>
+		</div>
+		<% } %>
+	</div>
+</li>

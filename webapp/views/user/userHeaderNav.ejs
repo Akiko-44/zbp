@@ -1,0 +1,244 @@
+<div id="headerNav" class="headerNav userHeaderNav">
+	<div class="container">
+		<div class="logo">
+			<a href="/"><img src="../../src/img/common/logo-user.png" alt="" /></a>
+		</div>
+		<div class="right-container">
+			<div class="navSerch navSerch1 clearfix">
+				<input class="fl search" type="text" placeholder="请输入关键字" style="color: #000000;">
+				<span>
+					<i class="icon icon-search2"></i>
+				</span>
+				<button class="toSearch">搜索</button>
+			</div>
+			<div id="myCart2"></div>
+			<!-- <div class="my-cart">
+				<img src="../../src/img/common/icon-shopping.png" />
+				我的购物车
+				<span class="cart-num" id="carNum">0</span>
+			</div>
+			<div class="cart-list" style="display: none;">
+				<div class="empty">
+					<img src="../../src/img/common/icon-emptycart.png" style="padding-right: 10px;" />
+					您的购物车是空的，赶紧选购吧！
+				</div>
+				<div class="list hide" id="cartList">
+					<ul></ul>
+					<div class="total">
+						<p class="num">共<span id="totalNum"></span>件商品</p>
+						<p class="price"><span id="totalPrice"></span>元</p>
+						<a href="/exchange/cart">去购物车结算</a>
+					</div>
+				</div>
+			</div> -->
+		</div>
+		<!-- <ul class="clearfix">
+			<li>
+				<a class="navItem" href="/">首页</a>
+			</li>
+			<li>
+				<a class="navItem <% if(userHeaderIndex == 0){ %>cur<% } %>" href="/user/account">个人中心</a>
+			</li>
+			<li>
+				<a class="navItem <% if(userHeaderIndex == 1){ %>cur<% } %>" href="/user/order/jewelry">我的订单</a>
+			</li>
+			<li class="hide">
+				<a class="navItem <% if(userHeaderIndex == 2){ %>cur<% } %>" href="/user/publish/sale">互换坊信息发布</a>
+			</li>
+			<li>
+				<a class="navItem <% if(userHeaderIndex == 3){ %>cur<% } %>" href="/user/comment/1">我的评价</a>
+			</li>
+			<li>
+				<a class="navItem <% if(userHeaderIndex == 4){ %>cur<% } %>" href="/user/collect/1">我的收藏</a>
+			</li>
+			<li>
+				<a class="navItem <% if(userHeaderIndex == 6){ %>cur<% } %>" href="/user/openShop">我要开店</a>
+			</li>
+			<li>
+				<a class="navItem <% if(userHeaderIndex == 5){ %>cur<% } %>" href="/user/message">消息中心</a>
+			</li>
+		</ul> -->
+	</div>
+</div>
+<script type="text/javascript">
+	$(function () {
+		$(document).on('click', '.toSearch', function () {
+			var search = $('.search').val().trim()
+			location.href = "../../jewelry/goodsList?keyWord=" + search;
+		}).on('click', '.logo', function () {
+
+		}).on('mouseenter', '.my-cart,.cart-list', function () {
+			$('.my-cart').css({
+				'border-color': '#df735a'
+			})
+			$('.cart-list').show()
+			if ($('#cartList li').length > 0) {
+				// getCart2()
+			}
+		}).on('mouseleave', '.my-cart,.cart-list', function () {
+			$('.my-cart').css({
+				'border-color': '#e5e5e5'
+			})
+			$('.cart-list').hide()
+		})
+		getCart2()
+		function getCart2() {
+			var _t = utils.getCookie("token");
+			if (!!_t) {
+				utils.ajax({
+					url: "/api/order/cart/list",
+					type: "get",
+					success: function (data) {
+						var cartList = data.data.cartItemList;
+						var len = 0;
+						var list = cartList || 0;
+						for (var i = 0; i < list.length; i++) {
+							len += list[i].goods.length
+						}
+						$("#carNum").text(len);
+						$('#totalPrice').text(data.data.totalPrice);
+						$('#totalNum').text(len);
+						var html = '';
+						var goodsList = [];
+						var skuList = '';
+						if (len > 0) {
+							cartList.forEach(item => {
+								item.goods.forEach(goodsItem => {
+									skuList = ''
+									goodsItem.skuList.forEach(skuItem => {
+										skuList += '<p>' + skuItem.specsName + '：' + skuItem.attrValue + '</p>'
+									})
+									goodsList.push('<li class="cart-item">',
+										'<div class="item">',
+										'<img src="', goodsItem.goodsLogo, '" alt="" />',
+										'<div class="goods-names-wrap"><h3 class="goods-names">', goodsItem.goodsName, '</h3>', skuList, '</div>',
+										'<div class="goods-unit">',
+										'<p>', goodsItem.goodsPrice, '元 X ', goodsItem.quantity, '</p>',
+										'<span onclick="del(this, ', goodsItem.goodsSku,
+										')" style="cursor:pointer;">删除</span>',
+										'</div>',
+										'</div>',
+										'</li>')
+								})
+							})
+							html = '<div class="my-cart">' +
+								'<img src="../../src/img/common/icon-shopping.png"/>' +
+								'我的购物车' +
+								'<span class="cart-num" id="carNum">' + len + '</span>' +
+								'</div> ' +
+								'<div class="cart-list" style="display:none;">' +
+								'<div class="list hide" id="cartList">' +
+								'<ul>' +
+								goodsList.join('') +
+								'</ul> ' +
+								'<div class="total"> ' +
+								'<p class="num">共<span id="totalNum">' + len + '</span>件商品</p> ' +
+								'<p class="price"><span id="totalPrice">' + data.data.totalPrice + '</span>元</p> ' +
+								'<a href="/exchange/cart">去购物车结算</a> ' +
+								'</div> ' +
+								'</div> ' +
+								'</div>'
+						} else {
+							html = '<div class="my-cart">' +
+								'<img src="../../src/img/common/icon-shopping.png"/>' +
+								'我的购物车' +
+								'<span class="cart-num" id="carNum">' + len + '</span> ' +
+								'</div > ' +
+								'<div class="cart-list" style="display:none;">' +
+								'<div class="empty"> ' +
+								'<img src="../../src/img/common/icon-emptycart.png" style="padding-right: 10px;" /> ' +
+								'您的购物车是空的，赶紧选购吧！' +
+								'</div> ' +
+								'</div>'
+						}
+						$('#myCart2').html(html);
+						if (len > 0) {
+							$('.cart-list .empty').hide();
+							$('.cart-list .list').removeClass('hide').show();
+						} else {
+							$('.cart-list .empty').show();
+							$('.cart-list .list').hide();
+						}
+					}
+				})
+			}
+		}
+
+		/* document.onkeydown = function (e) {
+			if (!e) e = window.event;
+			if ((e.keyCode || e.which) == 13) {
+				stopDefault(e)
+				$('.toSearch').click()
+			}
+		} */
+
+	})
+
+	function stopDefault(e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			window.event.returnValue == false;
+		}
+	}
+
+	function del(e, goodsSku) {
+		utils.ajax({
+			url: "/api/order/cart/delete/" + goodsSku,
+			success: function (data) {
+				location.reload()
+			}
+		})
+	}
+
+	function getCart() {
+		var _t = utils.getCookie("token");
+		if (!!_t) {
+			utils.ajax({
+				url: "/api/order/cart/list",
+				type: "get",
+				success: function (data) {
+					var cartList = data.data.cartItemList;
+					var len = 0;
+					var list = cartList || 0;
+					for (var i = 0; i < list.length; i++) {
+						len += list[i].goods.length
+					}
+					$("#carNum").text(len);
+					$('#totalPrice').text(data.data.totalPrice);
+					$('#totalNum').text(len);
+					var goodsList = [];
+					if (len > 0) {
+						cartList.forEach(item => {
+							item.goods.forEach(goodsItem => {
+								goodsList.push('<li class="cart-item">',
+									'<div class="item">',
+									'<img src="', goodsItem.goodsLogo, '" alt="" />',
+									'<div class="goods-name">', goodsItem.goodsName, '</div>',
+									'<div class="goods-unit">',
+									'<p>', goodsItem.goodsPrice, '元 X ', goodsItem.quantity, '</p>',
+									'<span onclick="del(this, ', goodsItem.goodsSku,
+									')" style="cursor:pointer;">删除</span>',
+									'</div>',
+									'</div>',
+									'</li>')
+							})
+						})
+					}
+					$('#cartList ul').html(goodsList.join(''));
+					if (len > 0) {
+						$('.cart-list .empty').hide();
+						$('.cart-list .list').removeClass('hide').show();
+					} else {
+						$('.cart-list .empty').show();
+						$('.cart-list .list').hide();
+					}
+				}
+			})
+		}
+	}
+
+	$(function () {
+		// getCart()
+	})
+</script>

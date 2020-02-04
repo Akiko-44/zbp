@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<link rel="stylesheet" href="../src/css/icon/iconfont.css" />
+		<link rel="stylesheet" href="../src/css/icons/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+		<link rel="stylesheet" type="text/css" href="../src/css/news/newBelow.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+		<script src="../../src/js/js/jquery.qrcode.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-family: "微软雅黑";
+			}
+			
+			.jewelryBox-bd {
+				width: 100%;
+				height: 100%;
+				background: #f8f8f8;
+			}
+			.from_box{
+				width: 1000px;
+				margin:0 auto;
+				background: #fff;
+			}
+			.from_box .from1{
+				display: flex;
+				justify-content: center;
+			}
+			.from_box h1{
+				font-size:20px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:#333;
+				width: 212px;
+				height: 50px;
+				text-align: center;
+				line-height:50px;
+				margin: 22px 0;
+			}
+			.from_list{
+				display:flex;
+				margin-bottom: 20px;
+			}
+			.el-form{
+				margin:0 auto;
+			}
+			.el-input{
+				width: 242px;
+			}
+			.el-form-item{
+				margin-top: 17px;
+			}
+			.el-form-item__content{
+				margin: 0px !important;
+			}
+			.el-checkbox-group{
+				width: 600px;
+			}
+			.button{
+				width:164px;
+				height: 48px;
+				line-height: 48px;
+				background: #ff0000;
+				font-size:16px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(255,255,255,1);
+				margin: 32px auto;
+				text-align: center;
+				cursor: pointer;
+			}
+			.gud{
+				position: fixed;
+				top:0;
+				bottom:0;
+				left:0;
+				right:0;
+				z-index:10000;
+				display:flex;
+				background:rgba(0,0,0,0.4)
+			}
+			.gud>div{
+				margin:auto;
+				width:577px;
+				height:800px;
+				background:url('../../src/img/jewelry/backimg.png');
+				display:flex;
+				flex-direction: column;
+				position: relative;
+			}
+			.gud>div>img{
+				position: absolute;
+			    top: 17px;
+			    right: 15px;
+			    width: 17px;
+			}
+			@media screen and (max-width: 1300px) {
+			    .more{
+			    	width:1030px;
+			    }
+			}
+		</style>
+	</head>
+
+	<body class="jewelryBox-bd">
+
+		<%- include ../headerbar.ejs %>
+
+		<%- include ../header.ejs %>
+
+		<%- include ../headerNav.ejs %>
+			<div class="from_box" id="from_box">
+				<div class="from1">
+					<h1>填写预约信息</h1>
+				</div>
+				<div class="from_list">
+					<el-form  label-width="150px" :model="formLabelAlign">
+					  <el-form-item label="姓名:">
+					    <el-input v-model="formLabelAlign.name"></el-input>
+					  </el-form-item>
+					  <el-form-item label="手机号:">
+					    <el-input v-model="formLabelAlign.phone"></el-input>
+					  </el-form-item>
+					  <el-form-item label="身份证号:">
+					    <el-input v-model="formLabelAlign.idNum"></el-input>
+					  </el-form-item>
+					  <el-form-item label="性别:">
+					      	<el-radio v-model="form.sextype" label="1">先生</el-radio>
+  							<el-radio v-model="form.sextype" label="2">女士</el-radio>
+					    <el-form-item label="邮箱:">
+					    <el-input v-model="formLabelAlign.email"></el-input>
+					  </el-form-item>
+					  <el-form-item label="关注珠宝种类:">
+					    <el-input v-model="formLabelAlign.kind"></el-input>
+					  </el-form-item>
+					  <el-form-item label="获得展会信息途径:">
+					    <el-checkbox-group v-model="form.infotype">
+					      <el-checkbox label="请帖" name="type"></el-checkbox>
+					      <el-checkbox label="云平台网站" name="type"></el-checkbox>
+					      <el-checkbox label="中宝协" name="type"></el-checkbox>
+					      <el-checkbox label="杂志" name="type"></el-checkbox>
+					      <el-checkbox label="其他" name="type"></el-checkbox>
+					    </el-checkbox-group>
+					    <el-form-item label="个人地址(选填):">
+					    <el-input v-model="formLabelAlign.address"></el-input>
+					  </el-form-item>
+					  <el-form-item label="所在地邮编(选填):">
+					    <el-input v-model="formLabelAlign.zipcode"></el-input>
+					  </el-form-item>
+					  <el-form-item label="是否预约车位(选填):">
+					      <el-radio v-model="form.car" label="1">是</el-radio>
+  						  <el-radio v-model="form.car" label="2">否</el-radio>
+					    <div class="button" @click="_from">预约</div>
+					</el-form>
+				</div>
+				<div class="gud" v-show="show" style="display:none">
+					<div>
+						<img src="../../src/img/jewelry/cha.png" @click="_hide()"/>
+						<div id="code"></div>
+						<p v-text="'姓名: '+formLabelAlign.name"></p>
+						<p v-text="'日期: '+unescape(getPar('time'))"></p>
+						<p v-text="'地址: '+unescape(getPar('dir'))"></p>
+					</div>
+				</div>
+			</div>
+			<%- include below %>
+		</div>
+
+		<%- include ../footer.ejs %>
+		<script type="text/javascript">
+			var jewelryBox = new Vue({
+				el:"#from_box",
+				data(){
+					return{
+						show:false,
+						code:null,
+						formLabelAlign: {
+				          name: '',
+				          phone:'',
+				          idNum:'',
+				          email:'',
+				          kind:'',
+				          address:'',
+				          zipcode: ''
+				        },
+				        form: {
+				          sextype: [],
+				          infotype:[],
+				          car: []
+				        }
+					}
+				},
+				created(){
+
+				},
+				computed:{
+					getId(){
+						let res = location.href.split('/')
+						return res[res.length-1].split('?')[0]
+					}
+				},
+				methods:{
+					getPar(name){
+						let res = location.href.split('?')[1].split('&')
+						let obj = {}
+						res.forEach(item=>{
+							obj[item.split('=')[0]] = item.split('=')[1]
+						})
+						return obj[name]
+					},
+					_from(){
+							var _this = this
+							var regPhone = /^1[3456789]\d{9}$/
+							var regEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+							if(this.formLabelAlign.name == ''|| this.formLabelAlign.phone =='' || this.formLabelAlign.idNum=='' || this.form.sextype==''||this.formLabelAlign.email==''||this.formLabelAlign.kind==''||this.form.infotype== ''){
+								alert('请填写未标注选填的内容')
+							}else if(!regPhone.test(this.formLabelAlign.phone)){
+								alert('请输入正确的手机号')
+							}else if(!regEmail.test(this.formLabelAlign.email)){
+								alert('请输入正确的邮箱地址')
+							}else{
+								utils.ajax({
+									url:"/pc/jewelry/subscribe/subscribeMessage",
+									data:{
+										reName:this.formLabelAlign.name,//姓名
+										rePhone:this.formLabelAlign.phone,//手机号
+										reIdcard:this.formLabelAlign.idNum,//身份证号
+										reSex:this.form.sextype,//性别
+										reEmail:this.formLabelAlign.email,//邮箱
+										reFollow:this.formLabelAlign.kind,//珠宝种类
+										reInfo:this.form.infotype.join(','),//展会信息
+										reAdress:this.formLabelAlign.address,//地址
+										reZipcode:this.formLabelAlign.zipcode,//邮编
+										reCar:this.form.car,//预约车位
+										reExhibition:this.getId
+									},
+									type:"get",
+									success:function(res){
+										_this.show = true
+										_this.code = res.data
+										$("#code").qrcode({ 
+										    render: res.data,
+										    width: 260, 
+										    height:260,
+										    text: res.data
+										});
+									}
+								})
+							}
+					},
+					_hide(){
+						this.show = false
+						window.location.href="../../jewelry_fair/index";
+					}
+				}
+			})
+		</script>
+		<style type="text/css">
+			#code{
+				margin:0 auto;
+				margin-top:90px;
+			}
+			.gud p{
+				text-align: center;
+				color:#fff;
+				font-size:22px;
+				margin-top:20px;
+			}
+			.gud p:first-of-type{
+				margin-top:100px;	
+			}
+		</style>
+	</body>
+
+</html>

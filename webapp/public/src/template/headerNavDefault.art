@@ -1,0 +1,60 @@
+<li>
+    <a class="navItem <% if(headerIndex == 0){ %>cur<% } %>" href="../../">首页</a>
+    <div>
+
+    </div>
+  </li>
+  <li>
+    <a class="navItem <% if(headerIndex == 1){ %>cur<% } %>" href="../../jewelry/index">去哪儿买</a>
+    <div>
+
+    </div>
+  </li>
+  <li class="hide">
+    <a class="navItem <% if(headerIndex == 2){ %>cur<% } %>" href="../../exchange/index">互换坊</a>
+    <div>
+
+    </div>
+  </li>
+  <li>
+    <a class="navItem <% if(headerIndex == 3){ %>cur<% } %>" href="../../design/index">找设计师</a>
+    <div>
+
+    </div>
+  </li>
+  <li id="manufacture" class="hide">
+    <a class="navItem <% if(headerIndex == 4){ %>cur<% } %>" href="../../manufacture/index">寻代工</a>
+    <div>
+
+    </div>
+  </li>
+  <li>
+    <a class="navItem <% if(headerIndex == 5){ %>cur<% } %>" href="../../jewelryCircle/index">珠宝圈</a>
+    <div>
+
+    </div>
+  </li>
+  <li class="hide">
+    <a class="navItem <% if(headerIndex == 6){ %>cur<% } %>" href="../../news/">行业之声</a>
+    <div>
+
+    </div>
+  </li>
+  <li>
+    <a class="navItem <% if(headerIndex == 7){ %>cur<% } %>" href="../../jewelry_fair/index">珠宝展</a>
+    <div>
+
+    </div>
+  </li>
+  <li class="hide">
+    <a class="navItem <% if(headerIndex == 8){ %>cur<% } %>" href="http://zhibo.gacjc.com">直播厅</a>
+    <div>
+
+    </div>
+  </li>
+  <li class="hide">
+    <a class="navItem <% if(headerIndex == 9){ %>cur<% } %>" href="../../up_and_down/index">上下游服务</a>
+    <div>
+
+    </div>
+  </li>

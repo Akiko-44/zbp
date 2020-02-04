@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		.galleryBanner .slider a {
+			display: block;
+			height: 480px;
+		}
+
+		.galleryBanner .slider img {
+			max-width: none;
+		}
+	</style>
+</head>
+
+<body class="gallery-bd">
+
+	<%- include headerbar %>
+
+	<%- include header %>
+
+	<%- include headerNav %>
+
+	<div id="main" class="main">
+
+		<div class="galleryBanner">
+			<div class="slider">
+
+			</div>
+		</div>
+		<div class="galleryHeader container">
+			<div class="galleryNavBox">
+				<div class="galleryNav">
+					<ul>
+
+					</ul>
+				</div>
+				<div class="gallerySubNav">
+					<div>
+						<ul></ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="galleryBannerOps clearfix hide">
+				<div class="opgroup fr">
+					<div class="layer-table">
+						<div>
+							<div>
+								<p>
+									<span class="curIndex">1</span>
+									<span>/</span>
+									<span>4</span>
+								</p>
+							</div>
+							<div>
+								<a id="toPrev"><i class="icon icon-arrowLeft"></i></a>
+							</div>
+							<div>
+								<a id="toNext"><i class="icon icon-arrowRight"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<ul class="introWrap">
+					<li class="show">
+						<h2>感受爱的温暖与沉稳1</h2>
+						<p>在设计者一笔一划的着墨之时，将居住者朴实、追求自然的内在，藏于字里行间的细腻表现。</p>
+					</li>
+					<li>
+						<h2>感受爱的温暖与沉稳2</h2>
+						<p>在设计者一笔一划的着墨之时，将居住者朴实、追求自然的内在，藏于字里行间的细腻表现。</p>
+					</li>
+					<li>
+						<h2>感受爱的温暖与沉稳3</h2>
+						<p>在设计者一笔一划的着墨之时，将居住者朴实、追求自然的内在，藏于字里行间的细腻表现。</p>
+					</li>
+					<li>
+						<h2>感受爱的温暖与沉稳4</h2>
+						<p>在设计者一笔一划的着墨之时，将居住者朴实、追求自然的内在，藏于字里行间的细腻表现。</p>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<div class="container galleryTopicType">
+			<ul class="clearfix">
+				<li @click="toTopic($event)" type="1" text="精品专题">
+					<img src="../../src/img/gallery/gallery1.jpg">
+					<div>
+						<h2>精品专题</h2>
+					</div>
+				</li>
+				<li @click="toTopic($event)" type="2" text="玉雕臻选">
+					<img src="../../src/img/gallery/gallery2.jpg">
+					<div>
+						<h2>玉雕臻选</h2>
+					</div>
+				</li>
+				<li @click="toTopic($event)" type="3" text="流行风尚">
+					<img src="../../src/img/gallery/gallery3.jpg">
+					<div>
+						<h2>流行风尚</h2>
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<div class="container">
+			<div class="galleryListWrap waterfallWrap">
+
+			</div>
+			<div class="tc">
+				<a class="btn btn-danger loadBtn hide">查看更多...</a>
+			</div>
+		</div>
+
+	</div>
+
+	<%- include footer %>
+
+
+	<script>
+		$container = $(".galleryListWrap");
+		$slider = $(".galleryBanner .slider");
+
+		var loading = false;
+		var curPage = 1;
+		$(function () {
+
+			document.oncontextmenu = function (e) {
+				return false;
+			}
+			utils.ajax({
+				url: "/pc/gallery/banner/list",
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					var html = "";
+					for (var i = 0; i < data.length; i++) {
+						html += '<div class="slideritem"><a href="' + utils.formatUrl(data[i].bannerUrl) +
+							'" target="_blank"><img src="' + utils.formatImg(data[i].pcUrl) + '" height="480"></a></div>'
+					}
+					$(".galleryBanner .slider").html(html);
+					$(".galleryBanner .slider").slick({
+						dots: true,
+						arrows: false,
+						swipe: true,
+						slidesToScroll: 1,
+						autoplay: true,
+						autoplaySpeed: 5000
+					});
+				}
+			})
+
+			$(".loadBtn").on("click", function (e) {
+				var self = $(e.currentTarget);
+				if (loading) {
+					return;
+				}
+				loading = true;
+				utils.ajax({
+					url: "/pc/gallery/atlas/page",
+					data: {
+						offset: (curPage + 1),
+						limit: 10
+					},
+					type: "get",
+					success: function (data) {
+						data = data.data;
+						loading = false;
+						if (data.records.length > 0) {
+							curPage++
+							var html = "";
+							for (var i = 0; i < data.records.length; i++) {
+								var item = _template.galleryList({
+									data: data.records[i]
+								});
+								html += item;
+
+							}
+							$html = $(html);
+							$(html).imagesLoaded(function () {
+								$grid.append($html).masonry('appended', $html);
+							});
+
+						} else {
+							self.addClass("hide");
+						}
+
+					},
+					error: function () {
+						loading = false;
+					}
+
+				})
+			})
+
+			getCategory();
+
+			getWaterfull();
+
+		})
+
+		var topicType = new Vue({
+			el: ".galleryTopicType",
+			methods: {
+				toTopic: function (event) {
+					var type = event.currentTarget.getAttribute("type");
+					var text = event.currentTarget.getAttribute("text");
+					window.location.href = "../gallery/topic?type=" + type + "&routers=" + text;
+				}
+			}
+		})
+
+		//获取分类
+		function getCategory() {
+
+			utils.ajax({
+				url: "/pc/gallery/category",
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					var html = "";
+					for (var i = 0; i < data.length; i++) {
+						html += _template.galleryNav({
+							data: data[i]
+						})
+					}
+					$(".galleryNav ul").html(html);
+				}
+			});
+
+		}
+
+		$(document).on("click.showNav", ".galleryNav a", function (e) {
+			e.stopPropagation();
+			var self = $(e.currentTarget);
+			var categoryId = self.attr("data-id");
+			var name = self.text();
+			if ($(".gallerySubNav").hasClass("show")) {
+				$(".gallerySubNav").removeClass("show")
+			}
+			utils.ajax({
+				url: "/pc/gallery/prop/" + categoryId,
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					if (data.length == 0) {
+						window.location.href = "../../gallery/list/" + categoryId + "?routers=" + name;
+					} else {
+						var html = '';
+						for (var i = 0; i < data.length; i++) {
+							html += _template.gallerySubList({
+								data: data[i]
+							});
+						}
+						$(".gallerySubNav ul").html(html);
+						$(".gallerySubNav").addClass("show")
+					}
+
+				}
+			});
+		}).on("click.showNav", function () {
+			$(".gallerySubNav").removeClass("show");
+		}).on("click", ".toDetail", function (e) {
+			var id = $(e.currentTarget).attr("data-id");
+			var name = $(e.currentTarget).find("p").text();
+			if (!!id) {
+				window.location.href = "../../gallery/detail/" + id + "?routers=" + name;
+			}
+		})
+
+
+		//瀑布流列表
+		function getWaterfull() {
+			utils.ajax({
+				url: "/pc/gallery/atlas/page",
+				data: {
+					offset: 1,
+					limit: 10
+				},
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					$(".loadBtn").data("curPage", 1).data("maxPage", data.pages);
+					var html = "";
+					for (var i = 0; i < data.records.length; i++) {
+						html += _template.galleryList({
+							data: data.records[i]
+						});
+					}
+					$container.append(html);
+					$container.imagesLoaded(function () {
+						window.$grid = $container.masonry({
+							itemSelector: '.waterfallItem',
+							gutter: 20,
+							isAnimated: true,
+							columnWidth: 222
+						});
+					});
+				}
+
+			})
+
+		}
+
+		$(window).scroll(function () {
+			if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+				$(".loadBtn").trigger("click");
+			}
+		});
+
+		$("#toNext").on("click", function () {
+			var i = $slider.slick("slickCurrentSlide");
+			if ((i + 1) == $(".introWrap li").length) {
+				$(".galleryBannerOps .curIndex").text("1");
+				$(".introWrap li:eq(0)").addClass("show").siblings().removeClass("show");
+			} else {
+				$(".galleryBannerOps .curIndex").text(i + 2);
+				$(".introWrap li:eq(" + (i + 1) + ")").addClass("show").siblings().removeClass("show");
+			}
+			$slider.slick("slickNext");
+
+		})
+
+		$("#toPrev").on("click", function () {
+			var i = $slider.slick("slickCurrentSlide");
+			if (i == 0) {
+				$(".galleryBannerOps .curIndex").text("4");
+				$(".introWrap li:eq(3)").addClass("show").siblings().removeClass("show");
+			} else {
+				$(".galleryBannerOps .curIndex").text(i);
+				$(".introWrap li:eq(" + (i - 1) + ")").addClass("show").siblings().removeClass("show");
+			}
+			$slider.slick("slickPrev");
+		});
+	</script>
+
+</body>
+
+</html>

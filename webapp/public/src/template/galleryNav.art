@@ -1,0 +1,10 @@
+<li data-id="<%= data.id %>">
+	<h3><%= data.name %></h3>
+	<% if(data.children.length>0){ %>
+	<p class="clearfix">
+		<% for(var i=0;i<data.children.length;i++){ %>
+			<a data-id="<%= data.children[i].id %>"><%= data.children[i].name %></a>
+		<% } %>
+	</p>
+	<% } %>
+</li>

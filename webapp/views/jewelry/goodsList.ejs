@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="shortcut icon" type="image/x-icon" href="../dist/img/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="../dist/img/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../dist/js/template.js"></script>
+	<script src="../dist/js/lib.js"></script>
+	<script src="../dist/js/v.js"></script>
+	<style>
+		.jewelrySearch {
+			position: relative;
+			margin: 20px auto;
+		}
+
+		.tariff {
+			padding: 2px 10px;
+		}
+
+		.tariff>div {
+			width: 100px;
+			height: 36px;
+			line-height: 36px;
+			position: relative;
+			font-size: 14px;
+			border: 1px solid #999999;
+		}
+
+		.tariff input {
+			border: 0;
+			padding: 0;
+			padding-left: 20px;
+			width: 100%;
+			height: 34px;
+			background: transparent;
+			vertical-align: text-bottom;
+		}
+
+		.tariff span {
+			color: #808080;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+
+		.tariff-confirm {
+			display: inline-block;
+			width: 50px;
+			height: 36px;
+			line-height: 36px;
+			text-align: center;
+			margin: 2px 10px;
+			background: #DF735A;
+			color: #ffffff;
+		}
+
+		.search-num {
+			line-height: 36px;
+			font-size: 14px;
+			color: #585858;
+		}
+
+		.search-num>span {
+			font-weight: bold;
+		}
+
+		.searchAll {
+			width: 100px;
+			height: 40px;
+			line-height: 40px;
+			background: #DF735A;
+			font-size: 14px;
+			color: #FFFFFF;
+			cursor: pointer;
+		}
+
+		.sort {
+			height: 40px;
+			line-height: 40px;
+			padding: 0 22px;
+			color: #585858;
+			font-size: 14px;
+			border: 1px solid #AAAAAA;
+			border-left: 0;
+			cursor: pointer;
+		}
+
+		.sort:first-child {
+			border-left: 1px solid #AAAAAA;
+		}
+
+		.sort.cur {
+			color: #FFFFFF;
+			background: #DF735A;
+			border: 1px solid #DF735A;
+		}
+
+		.sort i {
+			display: inline-block;
+			height: 40px;
+			line-height: 40px;
+		}
+
+		.sort span {
+			display: inline-block;
+			width: 22px;
+			height: 40px;
+			padding: 0 5px;
+			position: relative;
+		}
+
+		.sort span a {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			border-left: 5px solid transparent;
+			border-right: 6px solid transparent;
+			border-radius: 3px;
+			-webkit-border-radius: 3px;
+			-moz-border-radius: 3px;
+			position: absolute;
+			left: 5px;
+			top: 17px;
+			cursor: pointer;
+		}
+
+		/* .ascendinga {
+			border-bottom-width: 6px;
+			border-bottom-style: solid;
+			border-bottom-color: #999999;
+			top: 12px;
+		}
+
+		.ascendinga-active {
+			border-bottom-color: #DF735A !important;
+		} */
+
+		.descending {
+			border-top-width: 6px;
+			border-top-style: solid;
+			border-top-color: #999999;
+			top: 20px;
+		}
+
+		.descending.descending-opposite {
+			transform: rotate(180deg)
+		}
+
+		/* .descending-active {
+			border-top-color: #DF735A !important;
+		} */
+
+		.sort.cur span a.descending,
+		.sort.cur span a.descending-opposite {
+			border-top-color: #ffffff;
+		}
+
+		#list li {
+			position: relative;
+			width: 288px;
+			margin-right: 16px;
+			background: #FFFFFF;
+			margin-bottom: 18px;
+			transition: all 0.3s;
+			-webkit-transition: all .3s;
+			-moz-transition: all .3s;
+			-ms-transition: all .3s;
+			-o-transition: all .3s;
+			transition: all .3s;
+		}
+
+		#list li .goods-discount {
+			background: url(../src/img/common/discount.png) no-repeat;
+			background-size: 100% 100%;
+			text-align: center;
+			line-height: 32px;
+			width: 85px;
+			height: 38px;
+			color: #fff;
+			font-size: 18px;
+			position: absolute;
+			top: 20px;
+			left: -6px;
+		}
+
+		#list li a {
+			color: #666666;
+		}
+
+		#list li:nth-child(4n) {
+			margin-right: 0 !important;
+		}
+
+		.goods-img {
+			width: 100%;
+			height: 288px;
+			overflow: hidden;
+		}
+
+		.goods-msg {
+			padding: 9px 12px;
+		}
+
+		.goods-name {
+			font-size: 18px;
+			color: #666666;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+
+		.goods-price {
+			margin: 10px 0;
+		}
+
+		.goods-price span i {
+			font-size: 12px !important;
+		}
+
+		/* .goods-price span:nth-child(2) {
+			color: #737373;
+			line-height: 18px;
+		} */
+
+		.goods-brand {
+			line-height: 32px;
+			color: #999999;
+		}
+
+		.goods-brand img {
+			margin-right: 4px;
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			vertical-align: middle;
+		}
+
+		.nav-price {
+			margin-bottom: 12px;
+			color: #999999;
+		}
+
+		#search {
+			width: 100%;
+			background: #FFFFFF;
+			font-size: 14px;
+		}
+
+		#search tr {
+			height: 40px;
+			border-top: 1px solid #E5E5E5;
+		}
+
+		#search td {
+			color: #585858;
+			padding: 6px 18px;
+		}
+
+		#search tr td:nth-child(1) {
+			width: 130px;
+			font-weight: bold;
+			text-align: left;
+			border-right: 1px solid #e5e5e5;
+			color: #333;
+		}
+
+		#search tr td:nth-child(2) {
+			background: #FFFFFF;
+		}
+
+		#search ul li {
+			margin-right: 20px;
+			cursor: pointer;
+		}
+
+		#search ul li:hover {
+			color: #DF735A;
+		}
+
+		.called {
+			color: #DF735A;
+		}
+
+		.cateItem {
+			width: 100%;
+			padding-left: 50px;
+			border-top: 1px dashed #E0E0E0;
+		}
+
+		.cateItemChildren {
+			width: 1000px;
+			background: #FFFFFF;
+			padding: 10px 30px;
+			margin-left: 50px;
+			background: #FFFFFF;
+			border: 1px solid #E5E5E5;
+			border-radius: 3px;
+		}
+
+		.curs {
+			color: #DF735A !important;
+		}
+
+		.category1:hover {
+			color: #DF735A
+		}
+
+		.category2:hover {
+			color: #DF735A
+		}
+
+		.category3:hover {
+			color: #DF735A
+		}
+
+		.search-result {
+			height: 50px;
+			line-height: 50px;
+			font-size: 14px;
+			color: #666;
+		}
+
+		#search.advanced {
+			width: 100%;
+			position: relative;
+			height: 40px;
+			margin-top: 4px;
+		}
+
+		.sku-item {
+			display: inline-block;
+			margin-right: 10px;
+		}
+
+		.sku-name {
+			text-align: center;
+			display: inline-block;
+			width: 100%;
+			line-height: 24px;
+			border: 1px solid #dddddd;
+			padding: 0 5px;
+			color: #666;
+			/* z-index: 2; */
+			position: relative;
+			cursor: pointer;
+		}
+
+		.sku-name>i {
+			margin-left: 4px;
+		}
+
+		.cur .sku-name {
+			line-height: 22px;
+			border: 1px solid #585858;
+			border-bottom: 3px solid #ffffff;
+		}
+
+		.sku-value {
+			display: none;
+			position: absolute;
+			width: 1200px;
+			background: #ffffff;
+			left: 0;
+			top: 32px;
+			color: #666;
+			border: 1px solid #585858;
+			z-index: 2;
+		}
+
+		.sku-value>span {
+			display: inline-block;
+			line-height: 30px;
+			margin: 0 20px;
+			cursor: pointer;
+		}
+
+		.orange-color {
+			color: #DF735A;
+		}
+
+		.search-result .el-icon-error {
+			margin-left: 4px;
+			cursor: pointer;
+		}
+
+		.no-goods {
+			position: relative;
+			margin: 30px auto;
+		}
+
+		.no-goods>p {
+			position: absolute;
+			bottom: 40px;
+			margin-left: -60px;
+			left: 50%;
+			font-size: 24px;
+			color: #525252;
+		}
+
+		.tab-region.hover {
+			background: #ffffff;
+		}
+
+		/* .tab-region.hover::after {
+			content: '';
+			display: block;
+			width: 110px;
+			height: 3px;
+			background: #fff;
+			position: absolute;
+			left: 226px;
+			top: 35px;
+			z-index: 2;
+		} */
+
+		.region {
+			display: none;
+			position: absolute;
+			padding: 20px 0;
+			background: #ffffff;
+			border: 1px solid #585858;
+			width: 100%;
+			left: 0;
+			top: 36px;
+			z-index: 1;
+		}
+
+		.region p {
+			margin: 0 20px;
+			line-height: 1;
+		}
+
+		.region li {
+			display: inline-block;
+			margin: 10px 20px;
+			line-height: 30px;
+		}
+
+		.region li.cur {
+			color: #DF735A;
+		}
+
+		.categorybar {
+			height: 50px;
+			line-height: 50px;
+			background: #F2F2F2;
+		}
+
+		.categorybar li {
+			display: inline-block;
+			font-size: 14px;
+			color: #585858;
+			margin-right: 32px;
+			height: 40px;
+			vertical-align: top;
+			cursor: pointer;
+		}
+
+		.categorybar li.cur {
+			color: #DF735A !important;
+			padding-bottom: 4px;
+			border-bottom: 2px solid #DF735A;
+		}
+	</style>
+</head>
+
+<body class="">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include ../headerNav.ejs %>
+
+	<div id="main" v-cloak>
+		<div class="categorybar" v-if="goodsType">
+			<div class="container">
+				<ul class="clearfix">
+					<li @click="goto(0,'')" :class="{'cur': curCategory == 0}">推荐</li>
+					<li @click="goto(1,'')" :class="{'cur': curCategory == 1}">拼团</li>
+					<li @click="goto(2,'')" :class="{'cur': curCategory == 2}">促销</li>
+					<li v-for="(item,index) in categoryList" @click="goto(3,item.id)" :class="{'cur': curCategory == item.id}">
+						{{item.catName}}</li>
+				</ul>
+			</div>
+		</div>
+		<div class="container" v-if="goodsType != 1 && goodsType != 2">
+			<div class="search-result">
+				全部结果
+				<span v-if="form.gram"><i class="el-icon-arrow-right"></i>克重：<span class="orange-color">{{form.gram}}<i
+							class="el-icon-error" @click="removeAdvanced('gram')"></i></span></span>
+				<span v-if="form.chainLength"><i class="el-icon-arrow-right"></i>链长：<span
+						class="orange-color">{{form.chainLength}}<i class="el-icon-error"
+							@click="removeAdvanced('chainLength')"></i></span></span>
+				<span v-if="form.circle"><i class="el-icon-arrow-right"></i>圈口：<span class="orange-color">{{form.circle}}<i
+							class="el-icon-error" @click="removeAdvanced('circle')"></i></span></span>
+				<span v-if="form.diameter"><i class="el-icon-arrow-right"></i>直径：<span class="orange-color">{{form.diameter}}<i
+							class="el-icon-error" @click="removeAdvanced('diameter')"></i></span></span>
+				<span v-if="form.weight"><i class="el-icon-arrow-right"></i>重量：<span class="orange-color">{{form.weight}}<i
+							class="el-icon-error" @click="removeAdvanced('weight')"></i></span></span>
+				<span v-if="form.provice"><i class="el-icon-arrow-right"></i>省份：<span class="orange-color">{{form.provice}}<i
+							class="el-icon-error" @click="removeAdvanced('provice')"></i></span></span>
+				<span v-if="form.city"><i class="el-icon-arrow-right"></i>城市：<span class="orange-color">{{form.city}}<i
+							class="el-icon-error" @click="removeAdvanced('city')"></i></span></span>
+				<span v-if="form.brandId"><i class="el-icon-arrow-right"></i>品牌：<span class="orange-color">{{form.brandName}}<i
+							class="el-icon-error" @click="removeAdvanced('brandId')"></i></span></span>
+				<span v-if="form.categoryId && goodsType != 3"><i class="el-icon-arrow-right"></i>分类：<span
+						class="orange-color">{{form.categoryName}}<i class="el-icon-error"
+							@click="removeAdvanced('categoryId')"></i></span></span>
+				<span v-if="form.styleId"><i class="el-icon-arrow-right"></i>款式：<span class="orange-color">{{form.styleName}}<i
+							class="el-icon-error" @click="removeAdvanced('styleId')"></i></span></span>
+			</div>
+		</div>
+
+		<div class="container" v-if="goodsType != 1 && goodsType != 2">
+			<table id="search" border="0" cellspacing="0" cellpadding="0">
+				<tr v-if="data.brand && data.brand.length">
+					<td><span>品牌</span></td>
+					<td>
+						<ul class="clearfix">
+							<li :class="{fl:true, called:form.brandId == item.id}" @click="selectBrand(item.id, item.brandName)"
+								v-for="item in data.brand">
+								<a :title="item.brandName">{{item.brandName}}</a>
+							</li>
+						</ul>
+					</td>
+					<td>
+						<!--<span>更多<img src="../../src/img/common/down-more.png" alt="" /></span>-->
+					</td>
+				</tr>
+				<tr v-if="data.category && data.category.length" v-for="item in data.category">
+					<td><span>{{item.catName}}</span></td>
+					<td>
+						<ul class="clearfix">
+							<li :class="{fl: true, called: secondItem.id == form.categoryId}"
+								v-if="item.children && item.children.length" @click="selectCategory(secondItem.id, secondItem.catName)"
+								v-for="secondItem in item.children">
+								<a :title="secondItem.catName">{{secondItem.catName}}</a>
+							</li>
+						</ul>
+					</td>
+					<td></td>
+				</tr>
+				<tr v-if="data.style && data.style.length">
+					<td><span>款式</span></td>
+					<td>
+						<ul class="clearfix">
+							<li :class="{fl:true, called:form.styleId == item.id}" @click="selectStyle(item.id, item.styleName)"
+								v-for="item in data.style">
+								<a :title="item.styleName">{{item.styleName}}</a>
+							</li>
+						</ul>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+			<table class="advanced" id="search" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td><span>高级选项</span></td>
+					<td>
+						<div class="sku-item" v-if="data.gram && data.gram.length">
+							<span class="sku-name">克重<i class="el-icon-arrow-down"></i></span>
+							<div class="sku-value">
+								<span v-for="item in data.gram" @click="selectAdvanced($event, item, 'gram')"
+									:class="form.gram === item ? 'orange-color' : ''">{{item}}</span>
+							</div>
+						</div>
+						<div class="sku-item" v-if="data.chainLength && data.chainLength.length">
+							<span class="sku-name">链长<i class="el-icon-arrow-down"></i></span>
+							<div class="sku-value">
+								<span v-for="item in data.chainLength" @click="selectAdvanced($event, item, 'chainLength')"
+									:class="form.chainLength === item ? 'orange-color' : ''">{{item}}</span>
+							</div>
+						</div>
+						<div class="sku-item" v-if="data.circle && data.circle.length">
+							<span class="sku-name">圈口<i class="el-icon-arrow-down"></i></span>
+							<div class="sku-value">
+								<span v-for="item in data.circle" @click="selectAdvanced($event, item, 'circle')"
+									:class="form.circle === item ? 'orange-color' : ''">{{item}}</span>
+							</div>
+						</div>
+						<div class="sku-item" v-if="data.diameter && data.diameter.length">
+							<span class="sku-name">直径<i class="el-icon-arrow-down"></i></span>
+							<div class="sku-value">
+								<span v-for="item in data.diameter" @click="selectAdvanced($event, item, 'diameter')"
+									:class="form.diameter === item ? 'orange-color' : ''">{{item}}</span>
+							</div>
+						</div>
+						<div class="sku-item" v-if="data.weight && data.weight.length">
+							<span class="sku-name">重量<i class="el-icon-arrow-down"></i></span>
+							<div class="sku-value">
+								<span v-for="item in data.weight" @click="selectAdvanced($event, item, 'weight')"
+									:class="form.weight === item ? 'orange-color' : ''">{{item}}</span>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="container jewelrySearch" v-if="goodsType != 1 && goodsType != 2">
+			<div class="clearfix">
+				<div :class="{'cur': form.goodsSort == 0}" @click="searchBy('')" class="fl sort">
+					综合排序
+				</div>
+				<div :class="{'cur': (form.goodsSort == 1 || form.goodsSort == 2)}" @click="searchBy('isBySalesCount')"
+					class="fl sort">
+					<div class="clearfix">
+						<i class="fl">销量优先</i>
+						<span class="fl">
+							<a class="descending-opposite" :class="{'': form.goodsSort == 1}" title="销量升序排列"></a>
+							<a class="descending" :class="{'descending-opposite': form.goodsSort == 2}" title="销量降序排列"></a>
+						</span>
+					</div>
+				</div>
+				<div class="fl sort tab-region">
+					<div class="clearfix">
+						<i class="fl">发货地</i>
+						<span class="fl" data="isBySalesCount">
+							<a class="descending"></a>
+						</span>
+						</span>
+					</div>
+					<div class="region" v-if="data.region && data.region.length">
+						<div>
+							<p>省份：</p>
+							<ul>
+								<li v-for="provice in data.region" :class="{cur: form.provice == provice.regionName}"
+									@click="selectProvice(provice.regionId, provice.regionName)">
+									{{provice.regionName}}</li>
+							</ul>
+							<p>城市：</p>
+							<ul v-if="cityData && cityData.length">
+								<li v-for="city in cityData" :class="{cur: form.city == city.regionName}"
+									@click="selectCity(city.regionName)">{{city.regionName}}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div :class="{'cur': (form.goodsSort == 3 || form.goodsSort == 4)}" @click="searchBy('isByPrice')"
+					class="fl sort">
+					<div class="clearfix">
+						<i class="fl">价格</i>
+						<span class="fl">
+							<a class="descending-opposite" :class="{'': form.goodsSort == 4}" title="价格降序排列"></a>
+							<a class="descending" :class="{'descending-opposite': form.goodsSort == 3}" title="价格升序排列"></a>
+						</span>
+					</div>
+				</div>
+				<div class="fl tariff clearfix">
+					<div class="fl">
+						<input type="text" id="lowPrice" v-model="form.lowPrice">
+						<span>￥</span>
+					</div>
+					<em class="fl" style="margin: 10px;">-</em>
+					<div class="fl">
+						<input type="text" id="hightPrice" v-model="form.hightPrice">
+						<span>￥</span>
+					</div>
+				</div>
+				<a class="tariff-confirm" @click="searchBy">确定</a>
+				<div class="fr search-num">搜索结果：共<span id="total">0</span>件商品</div>
+			</div>
+		</div>
+		<div class="container jewelryGoods">
+			<div class="tc no-goods" v-if="goodsList.length == 0">
+				<img src="../../src/img/common/no-goods.png" />
+				<p>暂无商品</p>
+			</div>
+			<ul id="list" class="clearfix" v-else>
+				<li class="fl listShadow" v-for="item in goodsList">
+					<a @click="toDetail(item.goodsId)">
+						<span v-if="item.discount" class="goods-discount">{{item.discount}}折</span>
+						<div class="goods-img"><img :src="item.goodsPic | formatImg" alt="" width="288" height="288" /></div>
+						<div class="goods-msg">
+							<p class="goods-name">{{item.goodsName}}</p>
+							<p class="clearfix goods-price">
+								<span class="fl new-red fs18">
+									<i>￥</i>
+									<span>{{item.lowPrice}}</span>
+									<span v-if="item.lowPrice !== item.hightPrice">~{{item.hightPrice}}</span>
+								</span>
+							</p>
+							<p class="clearfix nav-price">
+								<span class="fl fs14">参考价：<i>￥</i>{{item.navLowPrice}}<span
+										v-if="item.navLowPrice !== item.navHightPrice">~{{item.navHightPrice}}</span></span>
+							</p>
+							<p class="goods-brand"><img :src="item.merchantPic | formatImg" />{{item.merchantName}}</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="tr container" style="margin-top: 30px;" v-show="listPages > 1">
+			<div id="pagination" class="pagination"></div>
+		</div>
+	</div>
+	<%- include ../footer.ejs %>
+
+	<script>
+		$(document).on('mouseenter', '.sku-item', function () {
+			$(this).addClass('cur').siblings().removeClass('cur');
+			$(this).find('.sku-value').show();
+			$(this).find('.el-icon-arrow-down').addClass('el-icon-arrow-up');
+		}).on('mouseleave', '.sku-item', function () {
+			$(this).removeClass('cur');
+			$(this).find('.sku-value').hide();
+			$(this).find('.el-icon-arrow-down').removeClass('el-icon-arrow-up');
+		}).on('mouseenter', '.tab-region', function () {
+			$(this).addClass('hover');
+			$(this).find('.region').show();
+			$(this).find('.el-icon-arrow-down').addClass('el-icon-arrow-up');
+		}).on('mouseleave', '.tab-region', function () {
+			$(this).removeClass('hover');
+			$(this).find('.region').hide();
+			$(this).find('.el-icon-arrow-down').removeClass('el-icon-arrow-up');
+		})
+
+		var keyWords = utils.getUrlParamVal('keyWord') || ""
+		var entrance = utils.getUrlParamVal('entrance') || ""
+		var catIds = utils.getUrlParamVal('catIds') || ""
+
+		if (keyWords == 'undefined') {
+			$('.search').val('')
+		} else {
+			$('.search').val(keyWords)
+		}
+
+		var mainVm = new Vue({
+			el: '#main',
+			data: {
+				form: {
+					offset: 1,
+					limit: 16,
+					goodsSort: 0,
+					lowPrice: undefined,
+					hightPrice: undefined,
+					brandId: undefined,
+					styleId: undefined,
+					categoryId: undefined,
+					searchWord: keyWords,
+					provice: undefined,
+					city: undefined,
+					entrance: 1
+				},
+				bySale: false,
+				byPrice: false,
+				data: {},
+				goodsList: [],
+				listPages: 0,
+				categoryList: [],
+				curCategory: undefined,
+				cityData: undefined,
+				goodsType: undefined
+			},
+			mounted() {
+				this.getCategoryList()
+				this.goodsType = utils.getUrlParamVal('goodsType')
+				this.curCategory = this.goodsType
+				if (this.goodsType == 3) {
+					this.form.categoryId = utils.getUrlParamVal('categoryId')
+					this.curCategory = utils.getUrlParamVal('categoryId')
+				}
+				if (entrance == 2) {
+					this.form.entrance = 2
+					this.form.categoryId = catIds
+				}
+				this.render(1)
+			},
+			methods: {
+				getCategoryList() {
+					utils.ajax({
+						url: '/app/homePage/secondCategory',
+						type: 'get',
+						success: (response) => {
+							this.categoryList = response.data
+						}
+					})
+				},
+				goto(goodsType, categoryId) {
+					if (goodsType == 0) {
+						window.location.href = '/jewelry/index'
+					} else {
+						window.location.href = 'goodsList?goodsType=' + goodsType + '&categoryId=' + categoryId
+					}
+				},
+				toDetail(id) {
+					window.location.href = 'details?id=' + id
+				},
+				selectProvice(proviceId, proviceName) {
+					this.form.provice = proviceName
+					this.data.region.map(item => {
+						if (item.children && item.children.length && item.children[0].parentId == proviceId) {
+							this.cityData = item.children
+						}
+					})
+					this.render(1)
+				},
+				selectCity(cityName) {
+					this.form.city = cityName
+					this.render(1)
+				},
+				selectBrand(brandId, brandName) {
+					if (!this.form.brandId) {
+						this.form.brandId = brandId
+						this.form.brandName = brandName
+					} else {
+						this.form.brandId = undefined
+						this.form.brandName = undefined
+					}
+					this.render(1)
+				},
+				selectStyle(styleId, styleName) {
+					if (!this.form.styleId) {
+						this.form.styleId = styleId
+						this.form.styleName = styleName
+					} else {
+						this.form.styleId = undefined
+						this.form.styleName = undefined
+					}
+					this.render(1)
+				},
+				selectCategory(categoryId, categoryName) {
+					if (categoryId != utils.getUrlParamVal('categoryId')) {
+						if (!this.form.categoryId) {
+							this.form.categoryId = categoryId
+							this.form.categoryName = categoryName
+						} else {
+							this.form.categoryId = undefined
+							this.form.categoryName = undefined
+						}
+					}
+					this.render(1)
+				},
+				selectAdvanced(e, advancedVal, advanced) {
+					if (advanced == 'gram') {
+						this.form.gram = advancedVal
+					} else if (advanced == 'chainLength') {
+						this.form.chainLength = advancedVal
+					} else if (advanced == 'circle') {
+						this.form.circle = advancedVal
+					} else if (advanced == 'diameter') {
+						this.form.diameter = advancedVal
+					} else {
+						this.form.weight = advancedVal
+					}
+					this.render(1)
+				},
+				removeAdvanced(advanced) {
+					if (advanced == 'gram') {
+						this.form.gram = ''
+					} else if (advanced == 'chainLength') {
+						this.form.chainLength = ''
+					} else if (advanced == 'circle') {
+						this.form.circle = ''
+					} else if (advanced == 'diameter') {
+						this.form.diameter = ''
+					} else if (advanced == 'weight') {
+						this.form.weight = ''
+					} else if (advanced == 'brandId') {
+						this.form.brandId = ''
+						this.form.brandName = ''
+					} else if (advanced == 'categoryId') {
+						this.form.categoryId = ''
+						this.form.categoryName = ''
+					} else if (advanced == 'styleId') {
+						this.form.styleId = ''
+						this.form.styleName = ''
+					} else if (advanced == 'provice') {
+						this.form.provice = ''
+						this.form.city = ''
+					} else if (advanced == 'city') {
+						this.form.city = ''
+					}
+					this.render(1)
+				},
+				searchBy(type) {
+					if (!type) {
+						this.form.goodsSort = 0
+					}
+					if (type == 'isBySalesCount') {
+						this.bySale = !this.bySale
+						if (this.bySale) {
+							this.form.goodsSort = 2
+						} else {
+							this.form.goodsSort = 1
+						}
+					} else if (type == 'isByPrice') {
+						this.byPrice = !this.byPrice
+						if (this.byPrice) {
+							this.form.goodsSort = 3
+						} else {
+							this.form.goodsSort = 4
+						}
+					}
+					this.render(1)
+				},
+				render(page) {
+					const self = this
+					let url = ''
+					if (this.goodsType == 1) {
+						url = '/app/homePage/groupGoods'
+					} else if (this.goodsType == 2) {
+						url = '/app/homePage/promotionGoods'
+					} else {
+						url = '/app/search/jewelryGoodsNew'
+					}
+					self.form.offset = page || 1
+					utils.ajax({
+						url: '/app/search/getFilter',
+						type: 'get',
+						data: self.form,
+						success: function (response) {
+							self.data = response.data
+						}
+					});
+					utils.ajax({
+						url: url,
+						type: 'get',
+						data: self.form,
+						success: function (response) {
+							let resData = response.data
+							self.goodsList = resData.records
+							self.listPages = resData.pages
+							$("#total").html(resData.total);
+							if (self.form.offset == 1) {
+								$("#pagination").pagination({
+									pageCount: resData.pages,
+									jump: true,
+									coping: true,
+									current: resData.current,
+									prevContent: '上一页',
+									nextContent: '下一页',
+									callback: function (api) {
+										self.render(api.getCurrent())
+									}
+								})
+							}
+						}
+					});
+				}
+			},
+			filtes: {
+				formatImg: function (str) {
+					return utils.formatImg(str)
+				}
+			}
+		})
+	</script>
+
+</body>
+
+</html>

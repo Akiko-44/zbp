@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.img_type{color: #999;}
+.contentWrap {
+	width: 960px;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+.uploadbox {
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+	position: relative;
+}
+.uploadbox img{
+	position: absolute;
+	top: 50%;
+	left: 0;
+	-webkit-transform: translateY(-50%)
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+</style>
+</head>
+<body class="business-bd">
+	
+	<%- include loginHeader %>
+	
+	<div class="contentWrap" id="apply">
+		<h3 class="tc" style="font-size: 26px;font-weight: bolder;margin-bottom: 20px;">补充资料</h3>
+		<form id="applyForm">
+			<table>
+				<tr>
+					<td colspan="3"><h4>门牌号<span class="red">*</span></h4></td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<div>
+							<input name="houseNumber" 
+							type="text" 
+							datatype="*1-6" 
+							nullmsg="请输入门牌号"
+							errormsg="6个字以内"
+							maxlength="6"
+							placeholder="请输入门牌号">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3"><h4>邮箱地址<span class="red">*</span></h4></td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<div>
+							<input type="text" class="email" name="email" maxlength="100" datatype="/^\s*$/|e" nullmsg="请输入邮箱地址" errormsg="邮箱格式错误" placeholder="用来接收订单提醒邮件，便于您及时了解订单状态">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3"><h4>所在地<span class="red">*</span></h4></td>
+				</tr>
+				<tr>
+					<td width="210" valign="top">
+						<div class="w200">
+							<select name="provinceId" 
+							datatype="*" 
+							nullmsg="请选择所在地" 
+							errormsg="请选择所在地">
+								<option v-for="item in province" :value="item.regionId">{{item.regionName}}</option>
+							</select>
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+					<td width="210" valign="top">
+						<div class="w200">
+							<select name="cityId" datatype="*" 
+							nullmsg="请选择所在地" 
+							errormsg="请选择所在地">
+								<option v-for="item in city" :value="item.regionId">{{item.regionName}}</option>
+							</select>
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+					<td valign="top">
+						<div class="w200">
+							<select name="countryId" datatype="*" 
+							nullmsg="请选择所在区" 
+							errormsg="请选择所在区">
+								<option v-for="item in country" :value="item.regionId">{{item.regionName}}</option>
+							</select>
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<div class="w200">
+							<input type="text" class="address" name="address" datatype="*" nullmsg="请输入详细地址" placeholder="请输入详细地址">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><h4>开户银行支行名称<span class="red">*</span></h4></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div>
+							<input type="text" name="bankName" 
+								datatype="*1-50" 
+								nullmsg="请输入开户银行" 
+								errormsg="开户行名称为1-50个字符"
+								placeholder="50个字符以内">
+							<p class="tip">请具体到支行</p>
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><h4>开户行行号<span class="red">*</span></h4></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div>
+							<input type="text" name="bankNumber" 
+								maxlength="12"
+								datatype="*" 
+								nullmsg="请输入开户行行号" 
+								errormsg="请输入开户行行号"
+								placeholder="请输入开户行行号">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><h4>开户行账号<span class="red">*</span></h4></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div>
+							<input type="text" name="bankAccount" 
+							datatype="s1-50" 
+							nullmsg="请输入开户行账号" 
+							errormsg="开户行账号为1-50个字符">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td width="120"><h4>自拍照<span class="red">*</span></h4></td>
+					<td width="120"><h4>辅助材料图片<span class="red">*</span></h4></td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<div class="clearfix">
+							<div class="uploadbox" data-target="selfie">
+							</div>
+						</div>
+						<p class="img_type">支持格式：jpg\jpeg\png</p>
+						<div>
+							<input type="hidden" name="selfie" datatype="*" 
+							nullmsg="请上传 " 
+							errormsg="请上传">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+					<td valign="top">
+						<div class="clearfix">
+							<div class="uploadbox" data-target="material">
+							
+							</div>
+						</div>
+						<p class="img_type">支持格式：jpg\jpeg\png</p>
+						<div>
+							<input type="hidden" name="material" datatype="*" 
+							nullmsg="请上传 " 
+							errormsg="请上传">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td width="120"><h4>门头拍照<span class="red">*</span></h4></td>
+					<td><h4>室内照片<span class="red">*</span></h4></td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<div class="clearfix">
+							<div class="uploadbox" data-target="doorPhotos">
+							
+							</div>
+						</div>
+						<p class="img_type">支持格式：jpg\jpeg\png</p>
+						<div>
+							<input type="hidden" name="doorPhotos" datatype="*" 
+							nullmsg="请上传 " 
+							errormsg="请上传">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+					<td>
+						<div class="clearfix">
+							<div class="uploadbox" data-target="idroomPic">
+							</div>
+							<div class="fl">
+								<p class="tip">&emsp;最大2M</p>
+								<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+							</div>
+						</div>
+						<div>
+							<input type="hidden" name="idroomPic" datatype="*" 
+							nullmsg="请上传 " 
+							errormsg="请上传">
+						</div>
+						<p class="Validform_checktip"></p>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="tc">
+						<br>
+						<label class="checkbox">
+							<span class="checkbox-input">
+								<span class="checkbox-input-inner"></span>
+							</span>
+							<span class="checkbox-label">
+								我已阅读和接受
+								<a class="blue" onclick="$('#agreement2').addClass('show')">《中国珠宝云平台开店协议》</a>和
+								<a class="blue" onclick="$('#protocol').addClass('show')">TN自由划付业务合作协议（三方协议）</a>
+							</span>
+						</label>
+						<br />
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a class="btn btn-danger submitBtn w200" style="margin-bottom: 100px;" @click="save">提交</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<%- include agreement.ejs %>
+	<%- include protocol.ejs %>
+<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+     <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+</form>	
+<script>
+var applyVm = new Vue({
+	el: "#apply",
+	data: {
+		province: [],
+		city: [],
+		country: [],
+	},
+	mounted: function(){
+		var self = this;
+		window.applyValidform = $("#apply form").Validform({
+			tiptype: 2
+		})
+		$.Tipmsg.r = "";
+		
+		utils.ajax({
+			url: "/admin/region/list/0",
+			type:"get",
+			success: function(data){
+				data = data.data;
+				self.province = data;
+				setTimeout(function(){
+					$("[name='provinceId']").trigger("change")
+					setTimeout(function(){
+						$("[name='cityId']").trigger("change")
+					}, 100)
+				}, 100)
+			}
+		})
+		
+	},
+	methods: {
+		save (){
+			var self = this
+			if(!$(".checkbox").hasClass("checked")){
+				utils.alert("info", "您未同意中国珠宝云平台开店协议");
+				return;
+			}
+			if(applyValidform.check(false)){
+				var str = {
+					houseNumber: $.trim($('[name=houseNumber]').val()),
+					email: $.trim($('[name=email]').val()),
+					address: $.trim($('[name=address]').val()),
+					bankName: $.trim($('[name=bankName]').val()),
+					bankNumber: $.trim($('[name=bankNumber]').val()),
+					bankAccount: $.trim($('[name=bankAccount]').val()),
+					selfie: $('[name=selfie]').val(),
+					material: $('[name=material]').val(),
+					doorPhotos: $('[name=doorPhotos]').val(),
+					idroomPic: $('[name=idroomPic]').val(),
+					provinceId: $("[name='provinceId'] option:selected").val(),
+					provinceName: $("[name='provinceId'] option:selected").text(),
+					cityName: $("[name='cityId'] option:selected").text(),
+					cityId: $("[name='cityId'] option:selected").val(),
+					countryName: $("[name='countryId'] option:selected").text(),
+					countryId: $("[name='countryId'] option:selected").val(),
+				}
+				utils.ajax({
+					url: "/api/userCenter/addData",
+					data: JSON.stringify(str),
+					success: function(data){
+						
+					}
+				})
+			}
+		}
+	},
+	filters: {
+		
+	}
+})
+$(function(){
+	
+	$(document).on("click", "#applyForm .uploadbox", function(e){
+		var t = $(e.currentTarget).attr("data-target");
+		$("#form1 input").attr("data-target", t);
+		$("#form1 input").trigger("click");
+	}).on("change", "[name='provinceId']", function(){
+		var val = $(this).val();
+		utils.ajax({
+			url: "/admin/region/list/" + val,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				applyVm.city = data
+				setTimeout(function(){
+					$("[name='cityId']").trigger("change")
+				},100)
+			}
+		})
+	}).on("change", "[name='cityId']", function(){
+		var val = $(this).val();
+		utils.ajax({
+			url: "/admin/region/list/" + val,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				applyVm.country = data
+			}
+		})
+	})
+	
+})
+
+
+//商品图片上传
+function uploadGoodsImg(self){
+	var files = self.files[0]
+	var t = $("#form1 input").attr("data-target")
+	if(files.size > 2*1024*1024){
+		utils.alert("info", "图片大小不能超过2M");
+		return;
+	}
+	uploadCallback(self)
+}
+function uploadCallback(self){
+	var uploadFile = new FormData($("#form1")[0]);
+	$.ajax({
+		url:'../../file/upload',
+		type:'POST',
+		data:	uploadFile,
+		async: false,  
+		cache: false,
+		contentType: false, //不设置内容类型
+		processData: false, //不处理数据
+		success:function(data){
+			var t = $("#form1 input").attr("data-target");
+			$(".uploadbox[data-target='"+t+"']").html('<img src="'+data.data+'" width="100%">').addClass("uploaded")
+			$("[name='"+t+"']").val(data.data);
+			$("#form1 input").val("");
+		},
+		error:function(){
+			
+		}
+	})
+}
+</script>
+</body>
+</html>
+

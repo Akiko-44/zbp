@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../dist/css/all.css"/>
+<script src="../dist/js/template.js"></script>
+<script src="../dist/js/lib.js"></script>
+<style type="text/css">
+    .jewelry-fineQuality{background: #F8F8F8;}
+	.navWrap {
+		border: 1px solid #CCCCCC;
+		background-color: #FFFFFF;
+		margin-top: 22px;
+		margin-bottom: 22px;
+	}
+	.navWrap li {
+		float: left;
+	}
+	.navWrap li:hover a{
+		background: #C2A374;
+		color: #fff;
+	}
+	.navWrap a {
+		display: block;
+		padding: 0 30px;
+		color: #808080;
+		font-size: 14px;
+		line-height: 34px;
+	}
+	.navWrap li.cur a {
+		background: #C2A374;
+		color: #fff;
+	}
+	#list li{
+		height: 160px;
+	    background: #FFFFFF;
+	    margin-bottom: 20px;
+	    border-top: 1px solid #CCCCCC;
+	    padding-left: 240px;
+	    position: relative;
+	}
+	#list li .head-img{
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	}
+	.info{
+	    padding: 8px 15px;
+	}
+	.info p:nth-child(1){
+	    font-weight: bolder;
+	    font-size: 18px;
+	    color: #333333;
+	    margin-bottom: 8px;
+	}
+	.info p:nth-child(2){
+	    color: #000000;
+	    margin-bottom: 18px;
+	}
+	.info p:nth-child(3){
+		max-height: 36px;
+	    color: #666666;
+	    line-height: 18px;
+	    margin-bottom: 20px;
+	    display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		overflow: hidden;
+	}
+	.info p:nth-child(4){
+	    color: #666666;
+	    font-size: 14px;
+	}
+</style>
+</head>
+<body class="jewelry-fineQuality">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	<div class="container">
+	    <ul class="navWrap clearfix">
+			
+		</ul>
+		<ul id="list">
+		    
+		</ul>
+	</div>
+	<div class="tc container" style="margin-top: 30px;">
+		<div id="pagination" class="pagination"></div>
+	</div>
+	<%- include ../footer.ejs %>
+</body>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+        url:'/api/marketPage/guidecategoryShow',
+        type:'get',
+        success:function(res){
+	        if(!res.success) return;
+            var cat = '<li class="cur" val="" onclick="curData(this)"><a>全部</a></li>';
+            $.each(res.data, function(idx,item) {
+	            if(item.categoryType == 1){
+	            	cat += '<li val="'+item.id+'" onclick="curData(this)"><a>'+item.categoryName+'</a></li>';
+	            }
+            });
+            $(".navWrap").html(cat);
+            $(".cur").click()
+        },
+        error:function(error){
+            
+        }
+   })
+})
+function getData(page,id){
+    $.ajax({
+        url:'/api/marketPage/shoppingGuideShow',
+        type:'get',
+        data:{
+            offset:page,
+            limit:25,
+            categoryId:id
+        },
+        success:function(res){
+	        if(!res.success) return;
+            var html = '', articalHtml = '';
+            $.each(res.data.records, function(idx,item) {
+            	var artical = JSON.parse(item.artical);
+            	$.each(artical, function(idx1,item1) {
+            		if(item1.id == 1){
+            			articalHtml = item1.article;
+            			return false;
+            		}
+            	})
+            	html += '<li>'+
+					        '<a href="fineQualityDetails?id='+item.id+'" class="head-img"><img src="'+item.listPic+'" alt="" width="240" height="160"/></a>'+
+					        '<div class="info">'+
+					            '<p>'+item.name+'</p>'+
+					            '<p>'+item.createTime+'</p>'+
+					            '<p>'+articalHtml+'</p>'+
+					            '<p class="tr">作者：'+item.author+'</p>'+
+					        '</div>'+
+					    '</li>';
+            });
+            $("#list").html(html)
+        },
+        error: function(error){
+            
+        }
+    })
+}
+function page(id){
+	$.ajax({
+        url:'/api/marketPage/shoppingGuideShow',
+        type:'get',
+        data:{
+            offset:1,
+            limit:25,
+            categoryId:id
+        },
+        success:function(res){
+	        if(!res.success) return;
+            $("#pagination").pagination({
+				pageCount: res.data.pages,
+			    jump: true,
+			    coping: true,
+			    prevContent: '<',
+			    nextContent: '>',
+			    callback: function (api){
+			    	var id = $(".cur").attr("val");
+			        getData(api.getCurrent(),id);
+			    }
+			});
+        },
+        error: function(error){
+            
+        }
+    })
+}
+function curData(e){
+	var el = e||window.event;
+	var id = $(el).attr("val");
+	$(el).parent().children(".cur").removeClass("cur");
+	$(el).addClass("cur");
+	page(id)
+	getData(1,id)
+}
+</script>
+</html>
+

@@ -1,0 +1,7 @@
+<div class="waterfallItem normal toDetail" data-id="<%= data.id%>">
+	<div>
+		<span class="tip"><%= data.picNum %>图</span>
+		<img src="<%= $imports.formatImg(data.coverPic) %>" width="100%">
+		<p><%= data.title %></p>
+	</div>
+</div>

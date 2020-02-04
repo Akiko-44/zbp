@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <script src="../dist/js/lib.js"></script>
+  <style type="text/css">
+    .about-we {
+      min-height: auto;
+    }
+
+    .about-we h3 {
+      font-size: 20px;
+      font-weight: bolder;
+      letter-spacing: 5px;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .about-we p {
+      font-size: 16px;
+      line-height: 30px;
+      text-indent: 2em;
+      color: #000000;
+    }
+
+    .about-we .contact-box {
+      padding: 35px 0;
+    }
+
+    .about-we .contact {
+      color: #000000;
+      font-size: 16px;
+      display: block;
+      text-indent: 2em;
+      line-height: 35px;
+    }
+  </style>
+</head>
+
+<body class="userAccount">
+
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../headerNav.ejs %>
+
+  <div class="main container about-we" id="main">
+    <h3>关于我们</h3>
+    <p>中宝协云平台是中宝协（北京）珠宝文化有限公司在中国珠宝玉石首饰行业协会主导下，致力打造的服务企业、规范行业、发展产业的全产业链公共性服务平台</p>
+    <p>中宝协云平台将依靠行业组织资源整合力、社会公信力，发挥珠宝行业龙头、品牌企业领军优势，助力塑造行业新生态，建设市场新秩序，引领珠宝新消费，实现共享与分享经济趋势下的创新型供给和增长性需求。</p>
+    <p>
+      中宝协云平台，以创新、协调、绿色、开放、共享为发展理念，以共商、共建、共进、共赢为组织原则，以云量产品、资讯和消费群体为核心竞争力，以激活民间藏量、盘活企业存量、满足消费需求为战略目标，打造全球珠宝文化经济一体化中最具凝聚力和影响力的专业性服务平台。
+    </p>
+    <!-- <span class="contact" style="margin-top: 30px;">联系方式：</span> -->
+    <div class="contact-box">
+      <span class="contact">微信服务号：zbxyptfwh</span>
+      <span class="contact">联系电话：010-84277500（分机转807/808）</span>
+    </div>
+  </div>
+
+  <%- include ../footer.ejs %>
+</body>
+
+</html>

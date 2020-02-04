@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <script src="../../dist/js/lib.js"></script>
+  <style type="text/css">
+    #main {
+      margin-top: 30px;
+    }
+
+    #infoPanel {
+      padding: 0 35px;
+    }
+
+    .refundable h3 {
+      font-size: 20px;
+      font-weight: bolder;
+      letter-spacing: 5px;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .refundable h1 {
+      font-size: 20px;
+      font-weight: bolder;
+      margin: 30px 0;
+    }
+
+    .refundable p {
+      font-size: 16px;
+      line-height: 30px;
+      color: #000000;
+    }
+
+    .head-middle p {
+      color: #d2d2d2;
+    }
+
+    .userRightContent {
+      margin-bottom: 50px;
+    }
+
+    .userInfoWrap {
+      padding: 30px;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+  </style>
+</head>
+
+<body class="userAccount">
+  <%- include ../../headerbar.ejs %>
+
+  <%- include ../../headerNav.ejs %>
+  <div id="main" class="main refundable">
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include ../agreement_left.ejs %>
+      </div>
+      <div class="userRightContent">
+        <div class="userInfoWrap">
+
+          <p align="center"><b>附件3：</b><b>中宝平</b><b>运费问题纠纷处理</b></p>
+          <p align="center"><b>&nbsp;</b></p>
+          <p>适用范围：本规则适用于中宝平：指入驻中宝平，使用中宝平开放平台及其包含的各板块提供的服务项目。</p>
+          <p><b>&nbsp;</b></p>
+          <p><b>一、运费问题处理规则</b></p>
+          <p>交易中的运费纠纷，根据&ldquo;谁过错，谁承担&rdquo;的原则处理，但买卖双方协商一致的除外。</p>
+          <p>（一）发货、签收运费纠纷：</p>
+          <p>1、如果卖家违反中宝平规则或未按约定时间内发货，导致买家未收到货、拒绝签收商品或者签收后退回商品的，买家可以申请退货、退款，运费需要由卖家承担。</p>
+          <p>2、卖家按照约定发货后，收货人有收货的义务。买家拒绝签收商品后，运费的承担方式如下：</p>
+          <p>&nbsp;</p>
+          <table>
+            <tbody>
+              <tr>
+                <td valign="center" width="155">
+                  <p align="center"><b>订单签收后</b></p>
+                </td>
+                <td valign="center" width="192">
+                  <p align="center"><b>商品问题类型</b></p>
+                </td>
+                <td valign="center" width="169">
+                  <p align="center"><b>商品包邮情况</b></p>
+                </td>
+                <td valign="center" width="171">
+                  <p align="center"><b>邮费支付情况</b></p>
+                </td>
+                <td valign="center" width="283">
+                  <p align="center"><b>处理规则</b></p>
+                </td>
+                <td valign="center" width="182">
+                  <p align="center"><b>备注</b></p>
+                </td>
+              </tr>
+              <tr>
+                <td rowspan="6" valign="center" width="155">
+                  <p align="center">七天内</p>
+                </td>
+                <td rowspan="3" valign="center" width="192">
+                  <p align="center">支持&ldquo;七天无理由退货&rdquo;服务的商品，买家申请&ldquo;七天无理由退货&rdquo;服务</p>
+                </td>
+                <td valign="center" width="169">
+                  <p align="center">包邮</p>
+                </td>
+                <td valign="center" width="171">
+                  <p align="center">先付</p>
+                </td>
+                <td valign="center" width="283">
+                  <p>买家承担商品退回时产生的运费</p>
+                </td>
+                <td rowspan="6" valign="center" width="182">
+                  <ul>
+                    <li align="center">若买家对卖家的发货运费价格有异议，卖家需要配合提供相关运费证明（如带有价格的发货底单等有效收费证明）。</li>
+                    <li align="center">运费包括基础运费和保价费，不包邮商品保价费需由买家承担。</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td rowspan="2" valign="center" width="169">
+                  <p align="center">不包邮</p>
+                </td>
+                <td valign="center" width="171">
+                  <p align="center">先付</p>
+                </td>
+                <td rowspan="2" valign="center" width="283">
+                  <p align="center">买家承担商品来回运费</p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="center" width="171">
+                  <p align="center">到付</p>
+                </td>
+              </tr>
+              <tr>
+                <td rowspan="3" valign="center" width="192">
+                  <p align="center">非买家原因（如商品质量问题、物流损坏、缺少件或商品描述与网站不符等）要求退换货</p>
+                </td>
+                <td valign="center" width="169">
+                  <p align="center">包邮</p>
+                </td>
+                <td valign="center" width="171">
+                  <p align="center">先付</p>
+                </td>
+                <td valign="center" width="283">
+                  <p align="center">卖家承担商品来回运费</p>
+                </td>
+              </tr>
+              <tr>
+                <td rowspan="2" valign="center" width="169">
+                  <p align="center">不包邮</p>
+                </td>
+                <td valign="center" width="171">
+                  <p align="center">先付</p>
+                </td>
+                <td rowspan="2" valign="center" width="283">
+                  <p align="center">卖家承担商品来回运费</p>
+                </td>
+              </tr>
+              <tr>
+                <td valign="center" width="171">
+                  <p align="center">到付</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>&nbsp;</p>
+          <p>3、收货人无正当理由拒绝签收商品的，相关运费应按照以上内容由买家承担，非货到付款订单运费将在买家支付的货款中扣除；货到付款订单，买家应在拒收后的15日内向卖家支付运费。</p>
+          <p>4、若因买家填写的收货地址和（或）收货人信息不准确，或者未经卖家同意自行要求变更收货地址或收货人信息，导致卖家发货后无法送达的，相关发货运费及商品退回运费由买家承担。</p>
+          <p>（二）退换货运费纠纷：</p>
+          <p>买家根据退换货服务单审核结果或中宝平介入后的处理结果操作退货时，建议买家（不限于）使用与卖家发货时相同的运输方式发货。未得到卖家的明确同意，建议买家不要使用货到付款方式支付运费。</p>
+          <p>（三）物流运费纠纷</p>
+          <p>未经买家明确同意，若卖家未按照与买家约定的方式发货，买家有权拒绝签收商品，发货及退货运费由卖家承担。</p>
+          <p>（四）约定运费纠纷</p>
+          <p>1、运费由买家承担的，卖家向买家收取运费不得高于承运人的收费标准。</p>
+          <p>2、商品描述中对运费做出两个以上的不同描述，或者实际发生的运费与商品描述的运费不一致的，以有利于买家运费描述为准。</p>
+          <p><b>二、&nbsp;运费问题的举证</b></p>
+          <p>买卖双方申请中宝平介入处理运费纠纷后，中宝平有权要求买卖双方就相关纠纷问题提供举证信息，用以核实纠纷问题。</p>
+          <p><b>三、&nbsp;提示</b></p>
+          <p>为减少运费纠纷，买家应在购物前认真阅读商品详情页介绍，或在购买前联系卖家咨询，进一步确认商品的详细信息，以避免产生不必要的纠纷。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include ../../footer.ejs %>
+  <script type="text/javascript">
+    $("#rightBar").hide()
+    $(".userLeftNav li li:eq(4)").addClass("cur")
+  </script>
+</body>
+
+</html>

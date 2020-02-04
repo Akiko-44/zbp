@@ -1,0 +1,26 @@
+<li class="clearfix" data-id="<%= data.id %>">
+	<div class="avatar fl">
+		<% if(!!data.commentUserLogo){ %>
+			<img src="<%= data.commentUserLogo %>" width="100%" height="100%">
+		<% }else{ %>
+			<img src="../../src/img/avatar.jpg" width="100%" height="100%">
+		<% } %>
+	</div>
+	<div style="padding-left: 90px">
+		<div>
+			<span class="name"><%= data.commentUserName %></span>
+			<% if(data.createTime){ %>
+			<span class="time"><%= data.createTime %></span>
+			<% } %>
+		</div>
+		<p><%= data.content %></p>
+		<div>
+			<!--
+			<a>
+				<i class="icon icon-like2"></i>
+				<span class="iconlabel">556</span>
+			</a>
+			-->
+		</div>
+	</div>
+</li>

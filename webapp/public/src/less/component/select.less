@@ -1,0 +1,161 @@
+/*
+	
+*/
+.select {
+	display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+.select.disabled .select-input input {
+	background-color: #eef1f6;
+    border-color: #d1dbe5;
+    color: #bbb;
+    cursor: not-allowed;
+}
+.select .select-input {
+	vertical-align: middle;
+    box-shadow: none;
+    display: inline-block;
+    position: relative;
+}
+.select .select-input input {
+	display: block;
+    padding-right: 28px;
+}
+.select .select-input>i {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: all .35s ease;
+    color: #999;
+    font-size: 12px;
+}
+.select.focused .show-options {
+	transform: rotate(180deg);
+	top: 8px;
+}
+.select .select-inner {
+	position: absolute;
+	height: 192px;
+	overflow: hidden;
+	border: 1px solid #d1dbe5;
+	box-shadow: 0 2px 4px rgba(0,0,0,.12), 0 0 6px rgba(0,0,0,.04);
+	width: 100%;
+	background: #fff;
+    top: 44px;
+    padding: 5px 0;
+    transition: all 0.35s ease;
+    visibility: hidden;
+    opacity: 0;
+    transform: translate(0, -10px);
+}
+.select.focused .select-inner {
+	opacity: 1;
+	visibility: visible;
+	transform: translate(0, 0);
+	z-index: 1;
+}
+.select .select-inner > div {
+	margin-right: -17px;
+	height: 100%;
+	overflow-y: auto;
+}
+.select .select-inner li {
+	font-size: 14px;
+    padding: 8px 10px;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #48576a;
+    height: 36px;
+    line-height: 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.select .select-inner li:hover {
+	background: #E4E8F1;
+}
+.select .select-inner li.selected, .select .select-inner li.selected:hover {
+	color: #fff;
+	background: #20a0ff;
+}
+.select .select-inner li.disabled {
+	color: #bfcbd9;
+    cursor: not-allowed;
+}
+.select .select-inner li.disabled:hover {
+	background: #fff;
+}
+/*
+	清空按钮
+*/
+.select .clear-select {
+	opacity: 0;
+}
+.select .mousein .clear-select {
+	opacity: 1;
+}
+.select .mousein .clear-select + i {
+	opacity: 0;
+}
+/*
+	分组样式
+*/
+.select .select-inner li.select-group {
+	padding-left: 10px;
+    font-size: 12px;
+    color: #999;
+}
+.select .select-inner li.select-group:hover {
+	background: #fff;
+}
+
+/*
+	多选
+*/
+.select.multiselect .select-inner li.selected {
+	background: #fff;
+	color: #20a0ff;
+}
+.select.multiselect .select-inner li.selected:after {
+	position: absolute;
+    right: 10px;
+    font-family: element-icons;
+    content: "\E608";
+    font-size: 11px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.select.multiselect .select-tags {
+	background: #fff;
+	position: absolute;
+    line-height: normal;
+    white-space: normal;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+	left: 1px;
+}
+.select.multiselect .select-tags .select-tags-item {
+    box-sizing: border-box;
+    margin: 3px 0 3px 6px;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 5px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    background-color: rgba(32,160,255,.1);
+    border-color: rgba(32,160,255,.2);
+    color: #20a0ff;
+    height: 24px;
+    line-height: 24px;
+}
+.select.multiselect .select-tags .select-tags-item i {
+	font-size: 14px;
+	cursor: pointer;
+}

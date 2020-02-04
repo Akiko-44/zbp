@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style type="text/css">
+	th, td{text-align: center;padding: 5px;}
+</style>
+</head>
+<body class="userAccount">
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent" id="detail">
+				<div class="panel userPanel">
+					<div class="panel-header">
+						<div class="panel-title">商家编号</div>
+					</div>
+					<div class="panel-body">
+						<div  v-if="data == ''">
+							<p class="tc" style="line-height: 100px;font-size: 30px;">您暂无商编</p>
+						</div>
+						<table v-if="data != ''">
+							<tr>
+								<th>商户编号</th>
+								<th>终端号</th>
+								<th>更新时间</th>
+							</tr>
+							<tr>
+								<td>{{data.userId}}</td>
+								<td>{{data.midNum}}</td>
+								<td>{{data.updateTime}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<script>
+$(".userLeftNav li li:eq(8)").addClass("cur");
+var routerVm = new Vue({
+	el: "#router"
+})
+
+var detailVm = new Vue({
+	el: "#main",
+	data: {
+		data: {}
+	},
+	mounted: function(){
+		this.getList()
+	},
+	methods: {
+		getList: function(){
+			var self = this
+			utils.ajax({
+				type: 'get',
+				url: '/admin/mid/getMid',
+				success: function(data){
+					self.data = data.data
+				}
+			})
+		}
+	}
+})
+
+
+</script>
+</body>
+</html>
+

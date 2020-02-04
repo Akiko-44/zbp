@@ -1,0 +1,169 @@
+<li class="orderListItem">
+	<div class="topinfo clearfix">
+		<a class="blue fr toOrderDetail" orderNumber="<%=data.orderNumber%>">查看订单</a>
+		<b><%=data.createTime%></b>
+		&emsp;&emsp;
+		<span>订单编号：<%= data.orderNumber %></span>
+		&emsp;&emsp;
+		<span>交换人：<%= data.swapOutUserName %></span>
+	</div>
+	<div style="padding: 10px;">
+		<table class="swapTable fs14">
+			<thead class="tc">
+				<tr>
+					<th width="280">我的商品</th>
+					<th width="280">交换商品</th>
+					<th>需支付保证金</th>
+					<th>交易状态</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<ul class="goodsList">
+							<li skuId="<%= data.swapIn.skuId %>">
+								<table>
+									<tr>
+										<td width="100">
+											<img src="<%= $imports.formatImg(data.swapIn.skuMainPic) %>" width="90" height="90">
+										</td>
+										<td valign="top">
+											<h2 class="goodsName"><%= data.swapIn.skuName %></h2>
+											<p style="margin: 8px 0 10px 0">
+												单价： ￥<%= data.swapIn.unitPrice %>&emsp;
+												数量：<%= data.swapIn.goodsNumber %>
+											</p>
+											<p>合计金额：
+												<span class="yellow"><%= data.swapIn.totalPrice %></span>
+											</p>
+										</td>
+									</tr>
+								</table>
+							</li>
+						</ul>
+						
+					</td>
+					<td>
+						<ul class="goodsList">
+							<% for(var i=0;i<data.swapOutList.length;i++){ %>
+							<li skuId="<%= data.swapOutList[i].skuId %>">
+								<table>
+									<tr>
+										<td width="100">
+											<img src="<%= $imports.formatImg(data.swapOutList[i].skuMainPic) %>" width="90" height="90">
+										</td>
+										<td valign="top">
+											<h2 class="goodsName"><%= data.swapOutList[i].skuName %></h2>
+											<p style="margin: 8px 0 10px 0">
+												单价： ￥<%= data.swapOutList[i].unitPrice %>&emsp;
+												数量：<%= data.swapOutList[i].goodsNumber %>
+											</p>
+											<p>合计金额：
+												<span class="yellow"><%= data.swapOutList[i].totalPrice %></span>
+											</p>
+										</td>
+									</tr>
+								</table>
+							</li>
+							<% } %>
+						</ul>
+						
+					</td>
+					<td class="tc">
+						￥ <%= data.swapoutCautionMoney %>
+					</td>
+					<td class="tc">
+						<% if(data.state == 1){ %>
+						<% }else if(data.state == 2){ %>
+						<% }else if(data.state == 3){ %>
+						<% }else if(data.state == 4){ %>
+						<% }else if(data.state == 5){ %>
+						<% }else if(data.state == 6){ %>
+						<% }else if(data.state == 7){ %>
+							<p class="red">已完成</p>
+						<% }else if(data.state == 8){ %>
+							<p class="red">已取消</p>
+						<% }else if(data.state == 9){ %>
+							<p class="red">已关闭</p>
+						<% }else if(data.state == 10){ %>
+						<% }else if(data.state == 11){ %>
+						<% }else if(data.state == 12){ %>
+						<% }else if(data.state == 13){ %>
+						<% }else if(data.state == 14){ %>
+						<% }else if(data.state == 15){ %>
+						<% }else if(data.state == 16){ %>
+						<% } %>
+						
+						<% if(data.swapoutState == 41){%>
+							
+						<% }else if(data.swapoutState == 42){%>
+							<p class="gray">我方未支付保证金</p>
+						<% }else if(data.swapoutState == 43){%>
+							
+						<% }else if(data.swapoutState == 44){%>
+							<p class="gray">我方已支付保证金</p>
+						<% }else if(data.swapoutState == 45){%>
+							<p class="gray">我方待发货</p>
+						<% }else if(data.swapoutState == 46){%>
+							
+						<% }else if(data.swapoutState == 47){%>
+							<p class="gray">我方已发货</p>
+						<% }else if(data.swapoutState == 48){%>
+							<p class="gray">我方待收货</p>
+						<% }else if(data.swapoutState == 49){%>
+							
+						<% }else if(data.swapoutState == 50){%>
+							<p class="gray">我方已收货</p>
+						<% } %>
+						
+						<% if(data.swapinState == 41){%>
+							
+						<% }else if(data.swapinState == 42){%>
+							<p class="gray">对方未支付保证金</p>
+						<% }else if(data.swapinState == 43){%>
+							<p class="gray">对方已支付保证金</p>
+						<% }else if(data.swapinState == 44){%>
+							
+						<% }else if(data.swapinState == 45){%>
+							<p class="gray">对方待发货</p>
+						<% }else if(data.swapinState == 46){%>
+							<p class="gray">对方已发货</p>
+						<% }else if(data.swapinState == 47){%>
+							
+						<% }else if(data.swapinState == 48){%>
+							<p class="gray">对方待收货</p>
+						<% }else if(data.swapinState == 49){%>
+							<p class="gray">对方已收货</p>
+						<% }else if(data.swapinState == 50){%>
+							
+						<% } %>
+						
+					</td>
+					<td class="tc">
+						<% if(data.state != 8 && data.swapoutState < 47){ %>
+							<% if(data.swapinState == 42 || data.swapinState == 43 || data.swapinState == 45){ %>
+								<p>
+									<a class="blue cancelOrderBtn" orderNumber="<%= data.orderNumber %>">取消订单</a>
+								</p>
+							<% } %>
+						<% } %>
+						<% if(data.state != 8 && data.swapoutState == 41){ %>
+							<a class="btn btn-warning toAgreeOrderBtn" orderNumber="<%= data.orderNumber %>">确认交换</a>
+							<a class="btn btn-danger agreeNoOrderBtn" orderNumber="<%= data.orderNumber %>">不同意交换</a>
+						<% } %>
+						<% if(data.state != 8 && data.swapoutState == 42){ %>
+							<a class="btn btn-warning toPayOrderBtn" from="swapOut" orderNumber="<%= data.orderNumber %>">支付保证金</a>
+						<% } %>
+						<% if(data.state != 8 && data.swapinState >= 43 && data.swapoutState == 44){ %>
+							<a class="btn btn-warning sendOrderBtn" orderNumber="<%= data.orderNumber %>">发货</a>
+						<% } %>
+						<% if(data.swapinState >= 46 && data.swapoutState == 47){ %>
+							<a class="btn btn-warning receiveOrderBtn" orderNumber="<%= data.orderNumber %>">确认收货</a>
+						<% } %>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</li>

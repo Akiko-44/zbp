@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+</head>
+<style>
+  .Tobuy .buynav {
+    width: 1200px;
+    height: 50px;
+    margin: 0 auto;
+
+  }
+
+  .Tobuy {
+    background: #F2F2F2;
+    width: 1200px;
+    margin: 0 auto;
+  }
+
+  .Tobuy ul {
+    /* line-height: 50px; */
+  }
+
+  .Tobuy ul li {
+    font-size: 14px;
+    color: #585858;
+    float: left;
+    margin-left: 32px;
+    cursor: pointer;
+    height: 40px;
+  }
+
+  .cur {
+    color: #DF735A !important;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #DF735A;
+  }
+
+  .buy_banner {
+    height: 460px;
+    background: #FFFFFF;
+  }
+
+  .buy_banner img {
+    width: 100%;
+    height: 100%;
+  }
+
+  strong {
+    font-size: 24px;
+    color: #333;
+  }
+
+  .el-icon-d-arrow-right {
+    font-size: 14px;
+    color: #737373;
+  }
+
+  .slideritem a {
+    display: block;
+    height: 460px
+  }
+
+  .exchangeTitle {
+    margin-top: 50px;
+    margin-bottom: 30px;
+  }
+
+  .exchangeTitle strong {
+    color: #1A1A1A;
+    font-size: 16px;
+  }
+
+  .exchangeTitle span {
+    color: #333333;
+    font-size: 24px;
+  }
+
+  .exchangeTitle a {
+    display: inline-block;
+    line-height: 20px;
+    color: #666;
+    border-radius: 11px;
+    text-align: center;
+  }
+
+  .subTitle {
+    height: 90px;
+    line-height: 90px;
+    background: #FFFFFF;
+  }
+
+  .subTitle span {
+    font-size: 24px;
+  }
+
+  .subTitle a {
+    color: #737373;
+  }
+
+  .brandMarketers li {
+    float: left;
+    width: 176px;
+    background-color: #fff;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+  }
+
+  .brandMarketers li:hover .img-box {
+    border: 1px solid #E0E0E0;
+  }
+
+  .containerJewelyIndex {
+    width: 1210px;
+    /*padding-right: 100px;
+				padding-left: 100px;*/
+    margin: 0 auto;
+  }
+
+  .containerJewelyIndex li:first-child,
+  li.first {
+    margin-left: 0 !important;
+  }
+
+  .brandMarketers .img-box {
+    height: 162px;
+    position: relative;
+    background: #f9f9f9;
+    overflow: hidden;
+  }
+
+  .hotSale .img-box {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .hotSale img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: -113.5px;
+  }
+
+  .brandMarketers img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .brandMarketers li .name {
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    border-top: 1px solid #D7D7D7;
+  }
+
+  .platformMarketers,
+  .flagshipStore {
+    width: 485px;
+  }
+
+  .platformMarketers .img-box,
+  .flagshipStore .img-box {
+    height: 162px;
+    background: #FFFFFF;
+  }
+
+  .patent .content {
+    height: 529px;
+    padding: 30px;
+    background-color: #fff;
+  }
+
+  .patent .slider-for {
+    width: 100%;
+    height: 321px;
+  }
+
+  /* .patent .slider-for .infodata.banner[0] pcPicture {
+    width: 500px;
+  } */
+
+  .patent .slider-for .slideritem a {
+    height: 321px;
+    line-height: 321px;
+  }
+
+  .patent .slider-for .slideritem a img {
+    display: inline-block;
+  }
+
+  .patent .slider-nav {
+    padding: 10px 30px;
+  }
+
+  .patent .slider-nav .slick-slide>div {
+    margin: 25px;
+  }
+
+  .patent .slider-nav .slick-current>div {
+    border: 1px solid #FF0000;
+  }
+
+  .slider-brandshop .slick-slide>div {
+    margin: auto;
+    width: 176px;
+  }
+
+  .slider-brandshop .slick-current li {
+    webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+    transform: translate3d(0, -2px, 0)
+  }
+
+  .patent .slider-nav .slideritem img {
+    width: 100%;
+  }
+
+  .hotSale ul {
+    padding: 30px;
+    background: #fff;
+  }
+
+  .hotSale li {
+    float: left;
+    width: 227px;
+    height: 315px;
+    margin-left: 8px;
+    margin-bottom: 5px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hotSale li .img-box {
+    height: 100%;
+    position: relative;
+  }
+
+  .hotSale li .intro {
+    color: #fff;
+    line-height: 16px;
+    height: 32px;
+    line-height: 32px;
+    border: 1px solid #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 82px;
+    width: 100px;
+    margin: 0 auto;
+  }
+
+  .todayNew ul {
+    text-align: center;
+  }
+
+  .todayNew ul li {
+    width: 288px;
+    height: 435px;
+    margin-left: 16px;
+    background-color: #fff;
+    float: left;
+    position: relative;
+    margin-top: 10px;
+    transition: all 0.25s ease;
+  }
+
+  .todayNew ul li .img-box {
+    height: 288px;
+  }
+
+  .todayNew ul li .addCar {
+    height: 50px;
+    line-height: 50px;
+    background-color: #FF0000;
+    color: #fff;
+    display: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .todayNew ul li:hover {
+    transform: scale(1.05, 1.05);
+    box-shadow: 1px -3px 10px 4px #cec0c0ad;
+  }
+
+  .hotStyle {
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
+
+  .brandJewelry {
+    width: 320px;
+    height: 401px;
+    border-left: 20px solid #F5F5F5;
+    padding: 23px 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999;
+    background: #FFFFFF;
+  }
+
+  .brandJewelry>a {
+    display: inline-block;
+    width: 100px;
+    border: 1px solid #D9D9D9;
+    margin-bottom: 15px;
+  }
+
+  .brandJewelry>a:nth-child(odd) {
+    margin-right: 30px;
+  }
+
+  .brandJewelry p {
+    line-height: 16px;
+    font-size: 12px;
+    color: #333;
+    border-top: 1px solid #D9D9D9;
+  }
+
+  /* hx-2019-11-8 */
+  .gallerybtgTransparent {
+    background: #000000;
+    height: 100%;
+    opacity: 0.9;
+    z-index: 998;
+    position: absolute;
+    width: 100%;
+  }
+
+
+
+  .catname {
+    float: left;
+    margin-left: 10px;
+    width: 96px;
+  }
+
+  .linehide {
+    display: none;
+  }
+
+  .galleryNav h3 {
+    font-size: 13px;
+    color: #ddd;
+    position: relative;
+    width: 150px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+
+  .subThreesecond {
+    font-weight: bold;
+  }
+
+  .rightarrowsub {
+    background: url(/src/img/hx_img/rightarrow.png) no-repeat;
+    background-size: 100% 100%;
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    display: block;
+
+  }
+
+  .tip {
+    width: 100%;
+  }
+
+  .marquee {
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    color: #3A3A3A;
+    background-color: aqua;
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  .marquee_title {
+    padding: 0 20px;
+    height: 30px;
+    /*关键样式*/
+    font-size: 14px;
+    border-right: 1px solid #d8d8d8;
+    align-items: center;
+  }
+
+  .marquee_box {
+    display: block;
+    position: relative;
+    width: 60%;
+    height: 30px;
+    /*关键样式*/
+    overflow: hidden;
+  }
+
+  .marquee_list {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 4px;
+  }
+
+  .marquee_top {
+    transition: top 0.5s;
+  }
+
+  /*关键样式*/
+  .marquee_list li {
+    height: 30px;
+    /*关键样式*/
+    line-height: 36px;
+    /*关键样式*/
+    font-size: 14px;
+    padding-left: 20px;
+    background-color: #fff;
+  }
+
+  .marquee_list li span {
+    padding: 0 2px;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .red {
+    color: #FF0101;
+  }
+
+  .tipnotice {
+    position: absolute;
+    left: 0px;
+    z-index: 9;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    transform: translate(0, -50%)
+  }
+
+  .detail {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    color: #666;
+    font-size: 12px;
+
+  }
+
+  .import {
+    color: #fee900;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .team-img img {
+    width: 188px;
+    height: 200px;
+    border-radius: 50%;
+    transition: all 1.2s;
+    -moz-transition: all 1.2s;
+    -webkit-transition: all 1.2s;
+    -o-transition: all 1.2s;
+  }
+
+  .team-img img:hover {
+    transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+  }
+
+  .textaLeft {
+    text-align: left;
+  }
+
+  .reference {
+    color: #999999;
+    font-size: 14px;
+  }
+
+  .fs16 {
+    color: #e54941;
+    font-size: 18px;
+    ;
+  }
+
+  .iconmerchantPic {
+    width: 32px;
+    height: 32px;
+    ;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .merchantPic {
+    text-align: left;
+    line-height: 32px;
+  }
+
+  .merchantPic span {
+    color: #666;
+  }
+
+  .hotitem {
+    width: 389px;
+    height: 212px;
+  }
+
+  .bugwrap {
+    /* height: 340px; */
+  }
+
+  .bugwrap p {
+    margin-left: 10px;
+    color: #AAAAAB;
+    font-size: 14px;
+
+  }
+
+  .bugwrap li {
+    background: #fff;
+    height: 290px !important;
+    margin-right: 16px !important;
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+
+  .bugwrap li:nth-child(3n) {
+    margin-right: 0 !important;
+  }
+
+  .bugwrap p:nth-child(2) {
+    margin-right: 82px;
+
+  }
+
+  .bugwrap .title {
+    margin: 18px 22px;
+    color: #585858;
+    font-size: 16px;
+  }
+
+  /* .infodata.banner[0] {
+    pcPicture width: 100%;
+  } */
+
+  .brand-info {
+    padding: 0 22px;
+  }
+
+  .map {
+    background: url(/src/img/hx_img/map.png)no-repeat;
+    display: block;
+    width: 16px;
+    height: 17px;
+    background-size: 100% 100%;
+    margin-right: 6px;
+    /* margin: -2px 10px 0 22px; */
+  }
+
+  .buynav li {
+    line-height: 50px;
+  }
+
+  .crdata {
+    background: url(/src/img/hx_img/see.png)no-repeat;
+    display: block;
+    width: 16px;
+    height: 17px;
+    background-size: 100% 100%;
+    margin-top: -4px;
+    margin-right: 10px;
+  }
+
+  .container_content {
+    width: 1200px;
+    margin: 0 auto;
+  }
+
+  #tobuy {
+    margin: 0 0 100px 0;
+  }
+
+  [v-cloak] {
+    display: none;
+  }
+
+  .promotion-box .name {
+    padding: 16px 0;
+  }
+
+  .promotion-box .reference {
+    padding: 10px 0 14px;
+  }
+
+
+  /* 轮播图左右箭头 */
+  .buy_banner .el-carousel__arrow,
+  .buy_banner .el-carousel__arrow:hover {
+    background: #584f4f !important;
+  }
+
+  .buy_banner .el-carousel__arrow i {
+    font-size: 30px !important;
+    font-weight: bold !important;
+  }
+</style>
+
+<body>
+  <%- include ../headerbar.ejs %>
+  <%- include ../headerNav.ejs %>
+  <div id="tobuy" v-cloak>
+    <div class="Tobuy">
+      <div class="buynav">
+        <ul class="clearfix">
+          <li class="cur">推荐</li>
+          <li @click="goto(1,'')">拼团</li>
+          <li @click="goto(2,'')">促销</li>
+          <li v-for="(item,index) in list" @click="goto(3,item.id)">{{item.catName}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="buy_banner">
+      <!-- <a href="#" v-for="(item,index) in info.banner"><img :src="item.pcPicture" alt=""></a> -->
+      <div class="container">
+        <el-carousel trigger="click" height="460px" loop :interval="4000">
+          <el-carousel-item v-for="(item,i) in info.banner" :key="i">
+            <img :src="item.pcPicture" @click="toLink(item.pcUrl)" style="cursor: pointer;" />
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+    </div>
+    <div class="subTitle">
+      <div class="container">
+        <a class="fr" href="/jewelry/goodsList?goodsType=2">更多商品<i class="el-icon-d-arrow-right"></i></a>
+        <span>限时促销</span>
+      </div>
+    </div>
+    <div class="container_content promotion-box" v-if="info.promotion && info.promotion.length">
+      <div class="containerJewelyIndex todayNew">
+        <div class="hot">
+          <ul class="clearfix">
+            <li class="gripper" v-for="(item,index) in info.promotion" @click="goGoodsDetail(item.goodsId)">
+              <!-- <div class="discount">{{item.discount}}折</div> -->
+              <div class="img-box">
+                <img :src="item.goodsPic" width="100%" height="100%">
+              </div>
+              <div class="info clearfix" style="padding: 0 20px">
+                <p class="name ellipsis textaLeft">{{item.goodsName}}</p>
+                <p class="price new-red fs16 textaLeft">
+                  <span>￥{{item.lowPrice}}</span>
+                  <span v-if="item.lowPrice !== item.hightPrice">~{{item.hightPrice}}</span>
+                </p>
+                <p class="describe ellipsis textaLeft  reference">
+                  <span>参考价：{{item.referLowPrice}}</span>
+                  <span v-if="item.referLowPrice !== item.referHighPrice">~{{item.referHighPrice}}</span>
+                </p>
+                <div class="merchantPic"><img class="iconmerchantPic" :src="item.merchantPic"
+                    alt=""><span>{{item.merchantName}}</span></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container_content" v-if="info.brand && info.brand.length">
+      <div class="exchangeTitle" style="margin-top: 30px;">
+        <a class="fr" href="/jewelry/shopList">热门品牌<i class="el-icon-d-arrow-right"></i></a>
+        <span class="fs24">热门品牌</span>
+      </div>
+      <div class="containerJewelyIndex">
+        <div class="hot">
+          <ul class="bugwrap clearfix">
+            <li class="fl" v-for="(item,index) in info.brand" @click="goMerchantDetail(item.merchantId)">
+              <img v-if="item.backgroundImg" class="hotitem" :src="item.backgroundImg" alt="">
+              <img v-else class="hotitem" :src="item.merchantPic" alt="">
+              <!-- <img v-else class="hotitem" src="/src/img/hx_img/merchant-bg.png" alt=""> -->
+              <p class="title textaLeft">{{item.merchantName}}</p>
+              <div class="brand-info clearfix">
+                <span class="fl address"><i class="map fl"></i><span>{{item.province}}&nbsp;&nbsp;
+                    {{item.city}}</span></span>
+                <span class="fr num"><i class="crdata fl"></i><span>{{item.saleCount}}</span></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include ../footer.ejs %>
+  <script>
+    new Vue({
+      el: "#tobuy",
+      data: {
+        newGoods: [],
+        list: [],
+        info: '',
+        vbv: [{}]
+      },
+      mounted() {
+        this.list = this._TemplateAjax("get", '/app/homePage/secondCategory', {});
+        this.info = this._TemplateAjax("get", '/app/homePage/whereBuy', {});
+
+      },
+      methods: {
+        goGoodsDetail(id) {
+          window.location = '/jewelry/details?id=' + id
+        },
+        goMerchantDetail(id) {
+          window.location = '/jewelry/shopSearch?id=' + id
+        },
+        _TemplateAjax(type, url, data) {
+          var that = this;
+          var params;
+          utils.ajax({
+            url: url,
+            async: false,
+            data: data,
+            type: type,
+            success: function (res) {
+              params = res.data
+            }
+          })
+          return params
+        },
+        goto(goodsType, categoryId) {
+          window.location.href = 'goodsList?goodsType=' + goodsType + '&categoryId=' + categoryId
+        },
+        toLink(url) {
+          if (url) {
+            location.href = url
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

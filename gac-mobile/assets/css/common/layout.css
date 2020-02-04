@@ -1,0 +1,148 @@
+/* 页面公共布局样式 */
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* fixed布局下的input虚拟键盘光标消失解决：*/
+body.fixed {
+  position: fixed;
+  width: 100%;
+}
+
+body.noscroll {
+  position: relative;
+  overflow: hidden;
+}
+
+html,
+body,
+#__nuxt,
+#__layout {
+  min-height: 100vh;
+}
+
+#__layout {
+  position: relative;
+  margin: 0 auto;
+  max-width: 750px;
+  /*no*/
+  font-size: 16px;
+  /*no*/
+  color: var(--black);
+  background-color: var(--light-gray);
+}
+
+/* 懒加载图片样式 */
+.lazy-img-box {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.lazy-img-box[lazy="loaded"],
+img[lazy="loaded"] {
+  opacity: 0;
+  animation-name: fadein;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+  animation-timing-function: ease-out;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* 重写vant组件样式 */
+body {
+  background-color: #f8f8f8;
+
+  & .van-nav-bar {
+    & .van-icon {
+      color: var(--black);
+    }
+  }
+
+  & .app-nav-bar-span {
+    height: 46px;
+  }
+
+  & .van-tab {
+    & span {
+      font-size: 13px;
+      color: #666;
+    }
+
+    &.van-tab--active span {
+      color: var(--theme);
+    }
+  }
+
+  & .van-tabs__line {
+    background-color: var(--theme);
+  }
+
+  & .van-address-list__add .van-icon-add,
+  & .van-goods-action .van-icon-like,
+  & .van-dialog__confirm,
+  & .van-dialog__confirm:active,
+  & .van-tree-select__item--active,
+  & .van-radio .van-icon-checked {
+    color: var(--theme);
+  }
+
+  & .van-tabbar-item--active {
+    color: white;
+  }
+
+  & .van-swipe__indicator--active {
+    background-color: white;
+  }
+
+  & .van-swipe__indicator {
+    display: block;
+  }
+
+  & .van-loading.app-loading {
+    padding: 10px;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 999;
+  }
+
+  & .van-checkbox__icon--checked .van-icon {
+    border-color: var(--theme) !important;
+    background-color: var(--theme) !important;
+  }
+
+  /*& .van-checkbox__icon,
+  & .van-checkbox__label {
+    line-height: 18px !important;
+  }*/
+
+  & .van-picker__toolbar {
+    font-size: 16px;
+  }
+
+  /*& .van-cell:not(:last-child)::after {
+    border-bottom-width: 3px;
+  }*/
+}
+
+.crop-handle {
+  top: 0 !important;
+  background: rgba(0, 0, 0, .5) !important;
+}

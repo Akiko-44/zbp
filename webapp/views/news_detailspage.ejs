@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="stylesheet" type="text/css" href="../../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+		<link rel="stylesheet" href="../../src/css/icon/iconfont.css" />
+		<link rel="stylesheet" href="../../src/css/icons/iconfont.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-family: "微软雅黑";
+			}
+			
+			.newsdetails-bd {
+				width: 100%;
+				height: 100%;
+				background: #f8f8f8;
+			}
+			.news_details{
+				width: 1200px;
+				margin: 0 auto;
+			}
+			.news_tops{
+				width: 1200px;
+			}
+			.news_tops dl{
+				width: 1200px;
+				display: flex;
+				background: #FFFFFF;
+			}
+			.news_tops dl dt{
+				width: 571px;
+				height:354px;
+			}
+			.news_tops dl dt div{
+				width: 571px;
+				height:354px;
+				background-size:cover;
+				background-position:center;
+				background-repeat: no-repeat;
+			}
+			.news_tops dl dd{
+				width: 630px;
+				height:354px;
+			}
+			.news_tops dl dd .new_bigbox{
+				margin:40px 31px 0 31px;
+			}
+			.news_tops dl dd .new_bigbox p{
+				line-height: 80px;
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(51,51,51,1);
+			}
+			.news_content{
+				width: 1200px;
+				margin-bottom: 25px;
+			}
+			.news_content .news_service{
+				margin-top: 15px;
+				width: 1200px;
+			}
+			.news_content .news_service h1{
+				line-height: 40px;
+				font-size:16px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(51,51,51,1);
+				border-bottom:1px solid #dddddd;
+			}
+			.news_content .news_service p{
+				line-height: 18px;
+				margin-top: 10px;
+			}
+			.new_bigbox p~p{
+				line-height: 45px !important;
+			}
+			.new_bigbox p:first-child{
+				font-size: 18px !important;
+				font-weight: bold !important;
+			}
+			@media screen and (max-width: 1400px) {
+			    .more{
+			    	width:1030px;
+			    }
+			}
+		</style>
+</head>
+<body class="newsdetails-bd">
+	    <%- include headerbar %>
+
+		<%- include header %>
+
+		<%- include headerNav %>
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item :to="{ path: '/' }">
+						<a href="../../">我的位置：首页</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item>
+						<a href="../../news/">行业之声</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item><a href="../../news/patent/0">专业服务</a></el-breadcrumb-item>
+					<el-breadcrumb-item><span id="routerTitle">专利维权</span></el-breadcrumb-item>
+					<el-breadcrumb-item><span id="routerTitle" v-text="name"></span></el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		<div class="news_details" id="news_details">
+			<div class="news_tops">
+				<dl>
+					<dt>
+						<div :style="{backgroundImage:'url('+formatImg(logoPath)+')'}"></div>
+					</dt>
+					<dd>
+						<div class="new_bigbox">
+							<p v-text="companyName"></p>
+							<p>服务价格 :&nbsp;<span v-text="servePrice"></span></p>
+							<p>联系电话 :&nbsp;<span v-text="phone"></span></p>
+							<p>公司地址 :&nbsp;<span v-text="companyPath"></p>
+						</div>
+					</dd>
+				</dl>
+			</div>
+			<div class="news_content">
+				<div class="news_service">
+					<h1>公司介绍</h1>
+					<p v-html="companyIntroduce"></p>
+				</div>
+				<div class="news_service">
+					<h1>服务内容</h1>
+					<p v-html="serveContent"></p>
+				</div>
+			</div>
+			<%- include new_below %>
+		</div>
+		<%- include footer %>
+		<script type="text/javascript">
+			var routerVm = new Vue({
+				el: "#router",
+				data:function (){
+					return {
+						name:null
+					}
+				}
+			})
+			var newPatent = new Vue({
+				el:"#news_details",
+				data:function (){
+					return {
+						companyIntroduce:null,
+						companyName:null,
+						companyPath:null,
+						id:null,
+						logoPath:null,
+						phone:null,
+						serveContent:null,
+						serveName:null,
+						servePrice:null,
+						state:null,
+					}
+				},
+				created:function (){
+					this.init()
+				},
+				computed:{ 
+					getIdes(){
+						var res = location.href.split('/')
+						return res[res.length-1]
+					}
+				},
+				methods:{
+					// 初始化
+					init:function (){
+						this.getDate().then(data=>{
+							Object.keys(data).forEach(key=>{
+								this[key] = data[key]
+							})
+							routerVm.name = this.companyName
+						})
+					},
+					//获取数据
+					getDate:function (){
+						return new Promise((resolve, reject)=>{
+							utils.ajax({
+								url:"/pc/industry/patent/detail/" + this.getIdes,
+								type:"get",
+								success:function(data){
+									resolve(data.data)
+								}
+							})
+						})
+					},
+					formatImg:utils.formatImg,
+				},
+			})
+		</script>
+</body>
+</html>

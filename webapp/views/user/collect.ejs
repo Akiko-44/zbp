@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		.nocollect {
+			text-align: center;
+			padding: 55px 0;
+		}
+
+		.nocollect p {
+			margin-bottom: 65px;
+			font-size: 20px;
+		}
+
+		.nocollect .btn {
+			width: 96px;
+		}
+
+		.collectListWrap1 {
+			overflow: hidden;
+		}
+
+		#list li>div {
+			border: 1px solid #F4F4F4;
+			margin-bottom: 20px;
+		}
+
+		#list li h3 {
+			color: #666;
+			line-height: 20px;
+			padding: 5px 10px 0 10px;
+			height: 45px;
+			overflow: hidden;
+		}
+
+		#list li p {
+			padding: 15px 10px;
+		}
+
+		#list .imgWrap {
+			position: relative;
+			width: 125px;
+			height: 125px;
+			overflow: hidden;
+		}
+
+		#list .imgWrap .delBtn {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 99;
+			cursor: pointer;
+			background: #ccc;
+			color: #fff;
+			width: 24px;
+			height: 24px;
+			line-height: 20px;
+			text-align: center;
+		}
+
+		#list .imgWrap a {
+			display: block;
+			position: absolute;
+			width: 100%;
+			left: 0;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			-moz-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			-o-transform: translateY(-50%);
+			transform: translateY(-50%);
+		}
+
+		#list .imgWrap+div {
+			background: #F5F5F5;
+			overflow: hidden;
+			height: 125px;
+		}
+
+		#list .imgWrap+div>div {
+			background: #E1E1E1;
+			line-height: 32px;
+			padding: 0 10px;
+		}
+
+		.collect-wrap {
+			background: transparent;
+			width: 958px;
+		}
+
+		.collect-wrap .tabs {
+			margin-bottom: 12px;
+			height: 80px;
+			background: #ffffff;
+			padding: 25px 20px;
+			font-size: 14px;
+			color: #aaaaaa;
+		}
+
+		.collect-wrap .tabs li {
+			line-height: 30px;
+			display: inline-block;
+			margin-right: 40px;
+			cursor: pointer;
+		}
+
+		.collect-wrap .tabs li.cur {
+			font-size: 16px;
+			color: #333333;
+		}
+
+		.collect-wrap .tabs span {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			border: 1px solid #DEDEDE;
+			border-radius: 4px;
+			vertical-align: bottom;
+			text-align: center;
+			line-height: 24px;
+			cursor: pointer;
+		}
+
+		.goods-list,
+		.shop-list {
+			padding: 20px;
+			background: #ffffff;
+			font-size: 14px;
+			color: #999999;
+		}
+
+		.goods-list .tabs-category ul,
+		.goods-list .tabs-category li,
+		.shop-list .tabs-category ul,
+		.shop-list .tabs-category li {
+			display: inline-block;
+		}
+
+		.goods-list .tabs-category li,
+		.shop-list .tabs-category li {
+			margin: 0 15px;
+			cursor: pointer;
+		}
+
+		.goods-list .tabs-category li.cur,
+		.shop-list .tabs-category li.cur {
+			color: #FB746E;
+		}
+
+		.goods li {
+			width: 174px;
+			height: 280px;
+			border: 1px solid #e5e5e5;
+			display: inline-block;
+			margin-right: 11px;
+			margin-top: 11px;
+			position: relative;
+		}
+
+		.goods li:nth-child(5n) {
+			margin-right: 0;
+		}
+
+		.goods li>img {
+			width: 100%;
+			cursor: pointer;
+		}
+
+		.goods li div {
+			padding: 14px 9px;
+			font-size: 12px;
+			color: #FB746E;
+		}
+
+		.goods li h3 {
+			font-size: 14px;
+			color: #333333;
+			margin-bottom: 9px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.goods li .cancel-collect {
+			height: 46px;
+			line-height: 46px;
+			text-align: center;
+			background: #f3f3f3;
+			font-size: 12px;
+			color: #666666;
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			padding: 0;
+			cursor: pointer;
+		}
+
+		.goods li .cancel-collect img {
+			vertical-align: middle;
+			margin-right: 5px;
+		}
+
+		.shop-list .shop-card {
+			margin-top: 20px;
+			height: 231px;
+			border: 2px solid #f6f6f6;
+		}
+
+		.shop-list .shop-info {
+			width: 230px;
+			height: 100%;
+			position: relative;
+			border-right: 2px solid #f6f6f6;
+		}
+
+		.shop-list .logo {
+			margin: 36px auto 10px;
+			display: block;
+			width: 74px;
+			height: 74px;
+		}
+
+		.shop-list .shop-merchantname {
+			text-align: center;
+			margin-bottom: 16px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding: 0 5px;
+		}
+
+		.shop-list .star-level {
+			width: 145px;
+			height: 18px;
+			border-radius: 9px;
+			background: #f7f7f7;
+			font-size: 12px;
+			color: #333333;
+			text-align: left;
+			padding: 3px 7px;
+		}
+
+		.shop-list .operate {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 30px;
+			line-height: 30px;
+			background: #fafafa;
+			font-size: 0;
+		}
+
+		.shop-list .operate>span {
+			display: inline-block;
+			text-align: center;
+			width: 50%;
+			font-size: 12px;
+			color: #999;
+			border-right: 1px solid #f6f6f6;
+			cursor: pointer;
+		}
+
+		.shop-list .operate img {
+			vertical-align: text-bottom;
+			margin-right: 3px;
+		}
+
+		.shop-list .shop-goods {
+			margin-left: 231px;
+			padding: 12px;
+		}
+
+		.shop-list .shop-goods .top {
+			height: 24px;
+			font-size: 0;
+		}
+
+		.shop-list .shop-goods .top span {
+			display: inline-block;
+			width: 47px;
+			height: 24px;
+			line-height: 24px;
+			text-align: center;
+			border: 1px solid #e2e2e2;
+			font-size: 12px;
+			color: #999999;
+			cursor: pointer;
+		}
+
+		.shop-list .shop-goods .top .goods-type>span.cur {
+			color: #FB746E;
+			border-color: #FB746E;
+		}
+
+		.shop-list .shop-goods .shop-goods-list {
+			margin: 28px 0;
+			overflow: hidden;
+			position: relative;
+			height: 123px;
+		}
+
+		.shop-list .shop-goods .shop-goods-list>ul {
+			position: absolute;
+		}
+
+		.shop-list .shop-goods .shop-goods-list li {
+			display: inline-block;
+			font-size: 12px;
+			color: #333333;
+			width: 110px;
+			text-align: center;
+			margin-right: 26px;
+			cursor: pointer;
+		}
+
+		.shop-list .shop-goods .shop-goods-list li:nth-child(5n) {
+			margin-right: 0;
+		}
+
+		.shop-list .shop-goods .shop-goods-list img {
+			width: 88px;
+			height: 88px;
+			margin-bottom: 22px;
+		}
+
+		.shop-list .star {
+			padding: 0 5px;
+		}
+
+		.shop-list .star-level .el-rate {
+			display: inline;
+			line-height: 12px;
+		}
+
+		.shop-list .star-level .el-rate__icon {
+			font-size: 12px;
+			margin-right: 2px;
+		}
+
+		.collect-wrap .no-collect {
+			position: relative;
+			margin: 140px auto;
+		}
+
+		.collect-wrap .no-collect img {
+			width: 482px;
+		}
+
+		.collect-wrap .no-collect p {
+			position: absolute;
+			bottom: 40px;
+			margin-left: -48px;
+			left: 50%;
+			font-size: 16px;
+			color: #333333;
+		}
+
+		.saleout,
+		.isdel {
+			position: relative;
+		}
+
+		.saleout::after {
+			content: '商品已下架';
+			position: absolute;
+			width: 100%;
+			top: 0;
+			height: 172px;
+			background: rgba(255, 255, 255, 0.8);
+			text-align: center;
+			line-height: 172px;
+			color: #000;
+			cursor: not-allowed;
+		}
+
+		.isdel::after {
+			content: '商品已删除';
+			position: absolute;
+			width: 100%;
+			top: 0;
+			height: 172px;
+			background: rgba(255, 255, 255, 0.8);
+			text-align: center;
+			line-height: 172px;
+			color: #000;
+			cursor: not-allowed;
+		}
+	</style>
+</head>
+
+<body class="userCollect">
+
+	<%- include ../headerbar.ejs %>
+
+	<!-- <%- include ../header.ejs %> -->
+
+	<%- include userHeaderNav.ejs %>
+
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item>
+					<a href="/">首页</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item :to="{ path: '/' }">
+					<a href="/user/acc_info">个人中心</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>我的收藏</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+
+	<div id="main" class="main" v-cloak>
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent collect-wrap">
+				<div class="tabs">
+					<ul class="fl">
+						<li :class="{cur: goodsShow}" @click="goodsOrShop">收藏商品</li>
+						<li :class="{cur: !goodsShow}" @click="goodsOrShop">关注店铺</li>
+					</ul>
+					<div class="fr" v-if="goodsShow">
+						<input type="text" placeholder="请输入商品名称" v-model="goodsForm.goodsName">
+						<span @click="collectGoodsList(1)"><img src="../../src/img/user/icon-search.png" /></span>
+					</div>
+					<div class="fr" v-if="!goodsShow">
+						<input type="text" placeholder="请输入商家名称" v-model="shopForm.shopName">
+						<span @click="collectShopList(1)"><img src="../../src/img/user/icon-search.png" /></span>
+					</div>
+				</div>
+				<div class="goods-list" v-if="goodsShow">
+					<div class="clearfix tabs-category">
+						<div class="fl">
+							<span>分类：</span>
+							<ul>
+								<li v-for="(item, i) in secondCategoryList" :class="{cur: i == index}"
+									@click="categoryTabs(item.id, i)">
+									{{item.catName}}</li>
+							</ul>
+						</div>
+						<!-- <span class="fr">更多></span> -->
+					</div>
+					<div class="goods">
+						<ul v-if="goodsList && goodsList.length">
+							<li v-for="(item, index) in goodsList" :class="{'saleout': item.isOnSale, 'isdel': item.isDelete}">
+								<img :src="item.goodsImg" v-if="!item.isOnSale && !item.isDelete" @click="toGoodsDetail(item.goodsType, item.goodsId)" />
+								<img :src="item.goodsImg" v-else />
+								<div>
+									<h3>{{item.goodsName}}{{!item.isOnSale}}{{!item.isDelete}}</h3>
+									<p>
+										<span>￥{{item.lowPrice}}</span>
+										<span v-if="item.lowPrice!==item.highPrice">~{{item.highPrice}}</span>
+									</p>
+								</div>
+								<div class="cancel-collect" @click="cancelGoodsCollect(item.goodsId, index)">
+									<img src="../../src/img/user/icon-hasconcerned.png" />取消收藏
+								</div>
+							</li>
+						</ul>
+						<div v-else class="tc no-collect">
+							<img src="../../src/img/common/no-collect.png" />
+							<p>暂无收藏商品</p>
+						</div>
+					</div>
+				</div>
+				<div class="shop-list" v-if="!goodsShow">
+					<div class="clearfix tabs-category">
+						<div class="fl">
+							<ul>
+								<li v-for="(item, i) in shopCategoryList" :class="{cur: i == index}" @click="categoryTabs(item.id, i)">
+									{{item.catName}}</li>
+							</ul>
+						</div>
+						<!-- <span class="fr">更多></span> -->
+					</div>
+					<div class="shops">
+						<div v-if="shopList && shopList.length" class="shop-card clearfix" v-for="(item, index) in shopList">
+							<div class="shop-info fl">
+								<img class="logo" :src="item.merchantLogo" />
+								<p class="shop-merchantname">{{item.merchantName}}</p>
+								<div class="star">
+									<span class="star-level">店铺星级
+										<el-rate v-model="item.score" disabled disabled-void-color="#AAAAAA"
+											:colors="['#D57E6A','#D57E6A','#D57E6A']">
+										</el-rate>
+									</span>
+									<span style="margin-left: 30px;"><img src="../../src/img/user/icon-hasconcerned.png"
+											style="vertical-align: baseline;margin-right: 5px;">{{item.concernNum}}</span>
+								</div>
+								<div class="operate">
+									<span @click="toShopDetail(item.merchantId)"><img src="../../src/img/user/icon-shop.png" alt=""
+											style="vertical-align: baseline;">进入店铺</span>
+									<span @click="cancelShopCollect(item.merUserId, index)"><img
+											src="../../src/img/user/icon-hasconcerned.png" alt="">取消关注</span>
+								</div>
+							</div>
+							<div class="shop-goods">
+								<template v-for="(goodsTypeItem, i) in item.goodsTypeList">
+									<div v-if="i == 0 && goodsTypeItem.selected">
+										<div class="top clearfix">
+											<div class="goods-type fl">
+												<span v-for="(goodsTypeTabs, i) in item.goodsTypeList" :class="{cur: goodsTypeTabs.selected}"
+													@click="goodsTypeTabsHandler(goodsTypeTabs,
+													item.goodsTypeList)">{{goodsTypeTabs.typeName}}</span>
+											</div>
+											<div class="page-number fr">
+												<span style="border: none;"><i class="current-page"
+														style="color: #FB746E;">1</i>/{{Math.ceil(item.goodsConcernVOs.length/5)}}</span>
+												<span @click="goPre($event, item.goodsConcernVOs.length)"><i
+														class="el-icon-arrow-left"></i></span>
+												<span @click="goNext($event, item.goodsConcernVOs.length)"><i
+														class="el-icon-arrow-right"></i></span>
+											</div>
+										</div>
+										<div class="shop-goods-list">
+											<ul class="goods-concern-vos" :data-length="item.goodsConcernVOs.length">
+												<li v-for="goodsItem in item.goodsConcernVOs" @click="toGoodsDetail(1, goodsItem.goodsId)">
+													<img :src="goodsItem.goodsImg" alt="">
+													<p>
+														<span>￥{{goodsItem.lowPrice}}</span>
+														<span v-if="goodsItem.lowPrice!==goodsItem.highPrice">-￥{{goodsItem.highPrice}}</span>
+													</p>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div v-else-if="i == 1 && goodsTypeItem.selected">
+										<div class="top clearfix">
+											<div class="goods-type fl">
+												<span v-for="(goodsTypeTabs, i) in item.goodsTypeList" :class="{cur: goodsTypeTabs.selected}"
+													@click="goodsTypeTabsHandler(goodsTypeTabs,
+													item.goodsTypeList)">{{goodsTypeTabs.typeName}}</span>
+											</div>
+											<div class="page-number fr">
+												<span style="border: none;"><i class="current-page"
+														style="color: #FB746E;">1</i>/{{Math.ceil(item.promotionConcernVOs.length/5)}}</span>
+												<span @click="goPre($event, item.promotionConcernVOs.length)"><i
+														class="el-icon-arrow-left"></i></span>
+												<span @click="goNext($event, item.promotionConcernVOs.length)"><i
+														class="el-icon-arrow-right"></i></span>
+											</div>
+										</div>
+										<div class="shop-goods-list">
+											<ul class="promotion-concern-vos">
+												<li v-for="goodsItem in item.promotionConcernVOs" @click="toGoodsDetail(1, goodsItem.goodsId)">
+													<img :src="goodsItem.goodsImg" alt="">
+													<p>￥{{goodsItem.lowPrice}}-￥{{goodsItem.highPrice}}</p>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div v-else-if="i == 2 && goodsTypeItem.selected">
+										<div class="top clearfix">
+											<div class="goods-type fl">
+												<span v-for="(goodsTypeTabs, i) in item.goodsTypeList" :class="{cur: goodsTypeTabs.selected}"
+													@click="goodsTypeTabsHandler(goodsTypeTabs,
+													item.goodsTypeList)">{{goodsTypeTabs.typeName}}</span>
+											</div>
+											<div class="page-number fr">
+												<span style="border: none;"><i class="current-page"
+														style="color: #FB746E;">1</i>/{{Math.ceil(item.groupConcernVOs.length/5)}}</span>
+												<span @click="goPre($event, item.groupConcernVOs.length)"><i
+														class="el-icon-arrow-left"></i></span>
+												<span @click="goNext($event, item.groupConcernVOs.length)"><i
+														class="el-icon-arrow-right"></i></span>
+											</div>
+										</div>
+										<div class="shop-goods-list">
+											<ul class="group-concern-vos">
+												<li v-for="goodsItem in item.groupConcernVOs" @click="toGoodsDetail(1, goodsItem.goodsId)">
+													<img :src="goodsItem.goodsImg" alt="">
+													<p>￥{{goodsItem.lowPrice}}-￥{{goodsItem.highPrice}}</p>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</template>
+							</div>
+						</div>
+						<div v-if="shopList && shopList.length == 0" class="tc no-collect">
+							<img src="../../src/img/common/no-collect.png" />
+							<p>暂无关注店铺</p>
+						</div>
+					</div>
+				</div>
+				<div class="tr container" style="margin-top: 30px;" v-show="listPages > 1">
+					<div id="pagination" class="pagination"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%- include ../footer.ejs %>
+
+	<script>
+		$(".userLeftNav li[data-target='collect']").addClass("cur");
+		var mainVm = new Vue({
+			el: '#main',
+			data: {
+				goodsShow: true,
+				listPages: 0,
+				goodsList: [],
+				secondCategoryList: [{
+					id: '',
+					catName: '全部商品'
+				}],
+				shopCategoryList: [{
+					id: 1,
+					catName: '去哪儿买'
+				}],
+				goodsForm: {
+					offset: 1,
+					limit: 16,
+					categoryId: undefined,
+					goodsName: undefined
+				},
+				shopList: [],
+				shopForm: {
+					offset: 1,
+					limit: 3,
+					merchantType: 1,
+					shopName: undefined
+				},
+				goodsTypeList: {
+					0: '新品',
+					1: '促销',
+					2: '拼团'
+				},
+				index: 0,
+				goodsType: 0
+			},
+			mounted() {
+				this.collectGoodsList(1)
+				this.getCategoryList()
+				if (utils.getUrlParam('type') == 2) {
+					this.goodsOrShop()
+				}
+			},
+			methods: {
+				getCategoryList() {
+					var self = this
+					utils.ajax({
+						url: '/api/userCenter/collect/goodsCategory',
+						type: 'get',
+						success: function (data) {
+							data.data.map(item => {
+								self.secondCategoryList.push({
+									id: item.id,
+									catName: item.catName
+								})
+							})
+						}
+					})
+				},
+				collectGoodsList(page) {
+					var self = this
+					self.goodsForm.offset = page || 1
+					utils.ajax({
+						url: '/api/userCenter/collect/goods',
+						type: 'get',
+						data: self.goodsForm,
+						success: function (response) {
+							self.data = response.data
+							self.goodsList = self.data.records
+							self.listPages = self.data.pages
+							if (self.goodsForm.offset == 1) {
+								$("#pagination").pagination({
+									pageCount: self.data.pages,
+									jump: true,
+									coping: true,
+									current: self.data.current,
+									prevContent: '上一页',
+									nextContent: '下一页',
+									callback: function (api) {
+										self.collectGoodsList(api.getCurrent())
+									}
+								})
+							}
+						}
+					});
+				},
+				collectShopList(page) {
+					var self = this
+					self.shopForm.offset = page || 1
+					utils.ajax({
+						url: '/api/shopConcern/getShopConcern',
+						type: 'get',
+						data: self.shopForm,
+						success: function (response) {
+							self.data = response.data
+							self.shopList = self.data.records
+							self.listPages = self.data.pages
+							self.shopList.map(item => {
+								item.selectedGoodsType = 0
+								item.goodsTypeList = [{
+									type: 0,
+									typeName: '新品',
+									selected: true
+								}, {
+									type: 1,
+									typeName: '促销',
+									selected: false
+								}, {
+									type: 2,
+									typeName: '拼团',
+									selected: false
+								}]
+							})
+
+							if (self.shopForm.offset == 1) {
+								$("#pagination").pagination({
+									pageCount: self.data.pages,
+									jump: true,
+									coping: true,
+									current: self.data.current,
+									prevContent: '上一页',
+									nextContent: '下一页',
+									callback: function (api) {
+										self.collectShopList(api.getCurrent())
+									}
+								})
+							}
+							self.$nextTick(function () {
+								// 此时已经渲染完成
+								$('.goods-concern-vos').map((index, item) => {
+									$(item).css({
+										'width': ((Math.ceil($(item).data('length') / 5)) * 659) + 'px'
+									})
+								})
+							})
+						}
+					});
+				},
+				goodsOrShop() {
+					this.goodsShow = !this.goodsShow
+					if (this.goodsShow) {
+						this.collectGoodsList(1)
+					} else {
+						this.collectShopList(1)
+					}
+				},
+				categoryTabs(categoryId, i) {
+					this.index = i
+					this.goodsForm.categoryId = categoryId
+					this.collectGoodsList(1)
+				},
+				toGoodsDetail(goodsType, goodsId) {
+					if (goodsType == 1) {
+						window.location.href = '/jewelry/details?id=' + goodsId
+					}
+				},
+				toShopDetail(merchantId) {
+					window.location.href = '/jewelry/shopSearch?id=' + merchantId
+				},
+				cancelGoodsCollect(goodsId, index) {
+					utils.ajax({
+						url: `/api/userCenter/collect/delete/${goodsId}/1`,
+						type: 'post',
+						success: (response) => {
+							this.goodsList.splice(index, 1)
+						}
+					})
+				},
+				cancelShopCollect(merchantId, index) {
+					utils.ajax({
+						url: '/api/shopConcern/remove',
+						type: 'get',
+						data: {
+							merchantId: merchantId
+						},
+						success: (response) => {
+							this.shopList.splice(index, 1)
+						}
+					})
+				},
+				goodsTypeTabsHandler(goodsTypeTabs, goodsTypeTabsList) {
+					goodsTypeTabsList.map(item => {
+						item.selected = false
+					})
+					goodsTypeTabs.selected = true
+					this.$forceUpdate()
+					$('.current-page').text(1)
+					$('.shop-goods-list ul').css({
+						'left': 0
+					})
+				},
+				goPre(e, totalLength) {
+					let $currentPage = $(e.target).closest('div').find('.current-page')
+					let currentPage = parseInt($currentPage.text())
+					let totalNum = Math.ceil(totalLength / 5)
+					if (currentPage == 2 && totalNum >= 1) {
+						$currentPage.closest('.top').next().find('ul').css({
+							'left': '0px'
+						})
+						currentPage--
+						$currentPage.closest('div').find('.current-page').text(currentPage)
+					} else if (currentPage == 3 && totalNum >= 2) {
+						$currentPage.closest('.top').next().find('ul').css({
+							'left': '-659px'
+						})
+						currentPage--
+						$currentPage.closest('div').find('.current-page').text(currentPage)
+					}
+				},
+				goNext(e, totalLength) {
+					let $currentPage = $(e.target).closest('div').find('.current-page')
+					let currentPage = parseInt($currentPage.text())
+					let totalNum = Math.ceil(totalLength / 5)
+					if (currentPage == 2 && currentPage < totalNum) {
+						$currentPage.closest('.top').next().find('ul').css({
+							'left': -(currentPage * 659) + 'px'
+						})
+						currentPage++
+						$currentPage.closest('div').find('.current-page').text(currentPage)
+					} else if (currentPage == 1 && currentPage < totalNum) {
+						$currentPage.closest('.top').next().find('ul').css({
+							'left': -(currentPage * 659) + 'px'
+						})
+						currentPage++
+						$currentPage.closest('div').find('.current-page').text(currentPage)
+					}
+				}
+			}
+		})
+
+		var routerVm = new Vue({
+			el: "#router"
+		})
+		/*
+		var collectNavType = $("#collectNavType").val();
+		$(function(){
+			$(".userLeftNav li[data-val='" + collectNavType + "']").addClass("cur");
+			$(document).on("click", "#list .toBuy", function(e){
+				var self = $(e.currentTarget);
+				var id = self.parents("li").attr("id");
+				var goodsId = self.parents("li").attr("goodsId")
+				var collectSource = self.parents("li").attr("collectSource")
+			}).on("click", "#list .toCart", function(e){
+				var self = $(e.currentTarget);
+				var id = self.parents("li").attr("id");
+				var goodsId = self.parents("li").attr("goodsId")
+				var collectSource = self.parents("li").attr("collectSource")
+			}).on("click", ".delBtn", function(e){
+				var self = $(e.currentTarget);
+				var id = self.parents("li").attr("id");
+				var goodsId = self.parents("li").attr("goodsid")
+				utils.stopBubble(e)
+				utils.ajax({
+					url: "/api/userCenter/collect/delete/" + goodsId + "/" + collectNavType,
+					success: function(data){
+						$("#list li[id='"+id+"']").remove();
+					}
+				})
+
+			}).on("click", "#toIndex", function(e){
+				if(collectNavType == 1){
+					location.href = "../../jewelry/index"
+				}else if(collectNavType == 2){
+					location.href = "../../exchange/index"
+				}else if(collectNavType == 3){
+					location.href = "../../design/index"
+				}else if(collectNavType == 4){
+					location.href = "../../manufacture/index"
+				}else if(collectNavType == 5){
+					location.href = "../../design/index"
+				}else if(collectNavType == 6){
+					location.href = "../../manufacture/index"
+				}else if(collectNavType == 7){
+					location.href = "../../gallery/index"
+				}
+			}).on("click", "#list li", function(e){
+				var self = $(e.currentTarget);
+				var goodsId = self.attr("goodsId");
+				var onSale = self.attr("onSale")
+				var collectSource = self.attr("collectSource");
+				if(onSale != 0){
+				  utils.alert("danger","此商品已下架");
+				  return
+				}
+				if(collectSource == '1'){
+					location.href = "../../jewelry/details?id="+goodsId
+				}else if(collectSource == '2'){
+					location.href = "../../exchange/sale_detail?id="+goodsId
+				}else if(collectSource == '5'){
+					location.href = "../../design/product_detail?id="+goodsId
+				}else if(collectSource == '6'){
+					location.href = "../../manufacture/product_detail?id="+goodsId
+				}else if(collectSource == '7'){
+					var goodsName = self.attr("goodsName")
+					location.href = "../../gallery/detail/"+goodsId+'?routers='+goodsName
+				}
+			})
+
+			render();
+
+		})
+		function render(){
+
+			utils.ajax({
+				url: "/api/userCenter/collect/list/" + collectNavType,
+				type: "get",
+				data: {
+					collectSource: collectNavType
+				},
+				success: function(data){
+					data = data.data;
+					if(data.length == 0){
+						//没有数据
+						$(".nocollect").removeClass("hide");
+					}else{
+						var html = "";
+						for(var i = 0; i < data.length; i++){
+							data[i].thumbUrl = utils.formatImg(data[i].thumbUrl)
+							html += _template.userCollectList1({
+								data: data[i]
+							})
+						}
+						$("#list").html(html);
+
+					}
+				}
+
+			})
+
+		} */
+	</script>
+
+</body>
+
+</html>

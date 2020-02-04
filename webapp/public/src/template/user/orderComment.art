@@ -1,0 +1,90 @@
+ 
+ <input type="hidden" name="orderId" value="<%= data.id %>">
+<input type="hidden" name="commentType" value="3">
+ <table>
+    <% for(var i=0;i<data.orderGoodVOList.length;i++){ %>
+    	<% if(data.orderGoodVOList[i].isCommented == 1){ %>
+		<tr class="commentList">
+			<td valign="top" width="350">
+				<div class="clearfix goodsItem" goodId="<%=data.orderGoodVOList[i].goodId%>">
+					<div class="fl img">
+						<img src="<%=$imports.formatImg(data.orderGoodVOList[i].skuMainPic)%>" width="120" height="120">
+					</div>
+					<div class="goodsInfo">
+						<div>
+							<i class="iconfont icon-orderShop"></i>
+							<span><%= data.sellUserName %></span>
+						</div>
+						<h3 class="ellipsis"><%=data.orderGoodVOList[i].skuName%></h3>
+						<% for(var j=0;j<data.orderGoodVOList[i].skuExplain.length;j++){ %>
+							<p>
+								<span> <%= data.orderGoodVOList[i].skuExplain[j].specsName %> </span>
+								<span> <%= data.orderGoodVOList[i].skuExplain[j].attrValue %> </span>
+							</p>
+						<% } %>
+					</div>
+				</div>
+				
+				<ul>
+					<li class="score1">
+						<label>商家</label>&emsp;
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						&emsp;<span class="yellow">0</span>分
+						<input type="hidden" name="spmxxfScore" value="0">
+					</li>
+					<li class="score2">
+						<label>物流</label>&emsp;
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						&emsp;<span class="yellow">0</span>分
+						<input type="hidden" name="mjfwtdScore" value="0">
+					</li>
+					<li class="score3">
+						<label>客服</label>&emsp;
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						<img class="star" src="../../src/img/exchange/off.png" value="0">
+						&emsp;<span class="yellow">0</span>分
+						<input type="hidden" name="wlfhsdScore" value="0">
+					</li>
+				</ul>
+			</td>
+			<td valign="top">
+				<h3>填写评价</h3>
+				<div>
+					<div>
+						<textarea name="content" placeholder="评论不超过200字..."></textarea>
+					</div>
+					<p class="Validform_checktip"></p>
+				</div>
+				<div>
+					<div class="clearfix">
+						<div class="fl imgs clearfix">
+						
+						</div>
+						<div class="fl uploadbox triggerCommentFile">
+							
+						</div>
+					</div>
+					<p class="Validform_checktip"></p>
+				</div>
+			</td>
+		</tr>
+		<% } %>
+	<% } %>
+	<tr style="padding-bottom:10px;">
+		<td></td>
+		<td>
+			<a class="btn btn-warning submitCommentBtn" data-id="">提交评价</a>
+		</td>
+	</tr>
+</table>

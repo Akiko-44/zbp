@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+</head>
+<body class="reg-bd">
+	
+	<%- include loginHeader %>
+	
+	<div class="main">
+		<div class="container">
+			
+			<div class="regPanel" style="top:40%;">
+				<form id="bindForm" style="border: none;padding-bottom: 0;">
+					<h2>
+						<!--<i class="icon icon-regwx"></i>-->
+						<span class="iconlabel">第三方绑定手机号</span>
+					</h2>
+					<table>
+						<tr>
+							<td width="100">
+								<label>手机号：</label>
+							</td>
+							<td colspan="2" width="240">
+								<div>
+									<input name="mobilePhone" type="text" placeholder="请输入手机号码" maxlength="11" datatype="/^1\d{10}$/" nullmsg="请输入手机号" errormsg="手机号码格式错误">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr class="hide"  id="verifyCode2">
+							<td width="100">
+								<label>验证码：</label>
+							</td>
+							<td width="166">
+								<div>
+									<input name="verifyCode" type="text" class="code" datatype="s1-6" nullmsg="请输入验证码" errormsg="请输入验证码">
+									<p style="color: #666;margin-top: 3px;">按右图填写 不区分大小写</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td>
+								<img src="" width="74" height="30">
+							</td>
+						</tr>
+						<tr>
+							<td width="100">
+								<label>动态验证码：</label>
+							</td>
+							<td>
+								<div>
+									<input name="dynamicVerifyCode" type="text" class="dcode" maxlength="6" datatype="s1-6" nullmsg="请输入动态验证码" errormsg="请输入动态验证码">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td>
+								<a class="btn btn-danger codeBtn">获取验证码</a>
+							</td>
+						</tr>
+					</table>
+					
+				</form>
+				<div class="tc">
+					<br><br>
+					<a class="btn btn-danger bindBtn">确认绑定</a>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div class="dialog">
+		<div class="mask dialog-close"></div>
+		<div class="dialog-main">
+			<div class="dialog-header clearfix">
+				<a class="fr dialog-close"><i class="iconfont icon-close"></i></a>
+				<h3 class="dialog-title">提示</h3>
+			</div>
+			<div class="dialog-body">
+				<p>该手机已经绑定其他微信</p>
+			</div>
+			<div class="dialog-footer tr">
+				<a class="btn btn-default">重新绑定</a>
+				<a class="btn btn-primary">强制绑定</a>
+			</div>
+		</div>
+	</div>
+
+
+
+<script>
+var uuid = utils.uuid();
+var verify = 1;
+var msgId;
+$(function(){
+	
+	//验证码
+	$(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+	$(".codeUuid").val(uuid);
+	$(".codeImg").on("click", function(){
+		uuid = utils.uuid();
+		$(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+		$(".codeUuid").val(uuid);
+	});
+})
+$(function(){
+
+	window.validform = $("#bindForm").Validform({
+		tiptype: 2
+	})
+	$.Tipmsg.r = "";
+	
+	var flag = false;
+	var submitFlag = false;
+	$(".codeBtn").on("click", function(){
+		if(submitFlag){
+			return;
+		}
+		if(verify == 1){
+			$("[name=verifyCode]").val('123456')
+		}
+		var $phone = $("input[name='mobilePhone']");
+		var $verifyCode = $("input[name='verifyCode']");
+		$phone.blur();
+		$verifyCode.blur();
+		if(!$phone.hasClass("Validform_error") && !$verifyCode.hasClass("Validform_error")){
+			var phone = $.trim($phone.val());
+			var verifyCode = $.trim($verifyCode.val());
+			submitFlag = true;
+			var json = {
+				mobilePhone: phone,
+				verifyCode: verifyCode,
+				verify: verify,
+				codeUuid: $("#loginForm2 input[name='codeUuid']").val()
+			}
+			$.ajax({
+				type: 'post',
+				url: "/api/userCenter/smscode",
+				data: JSON.stringify(json),
+				contentType: 'application/json;charset=utf-8',
+		        headers:{   
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success: function(data){
+					if(data.success){
+						$("input[name='msgId']").val(data.data);
+						var i = 120;
+						var timer = setInterval(function(){
+							i--;
+							$(".codeBtn").text('已发送(' + i + ')');
+						}, 1000);
+						setTimeout(function(){
+							clearInterval(timer);
+							$(".codeBtn").text('重发');
+							flag = true;
+							submitFlag = false;
+						}, 120000);
+						msgId = data.data
+					}else{
+						submitFlag=false;
+						//$("#errorText2").text(data.msg);
+						utils.alert('danger', data.msg)
+					}
+				},
+				error: function(){
+					submitFlag = false;
+				}
+			})
+		}else{
+			submitFlag = false;
+		}
+		
+		
+	})
+
+	$(".bindBtn").on("click", function(){
+		if(validform.check(false)){
+//			window.location.href = "../bind_success";
+			sessionStorage.getItem('uid');
+			sessionStorage.getItem('loginType');
+			sessionStorage.getItem('name');
+			sessionStorage.getItem('profile_image_url');
+			var dynamicVerifyCode = $("input[name='dynamicVerifyCode']").val();
+			var mobilePhone = $("input[name='mobilePhone']").val();
+			var param = {
+				uid: sessionStorage.getItem('uid'),
+				loginType: +sessionStorage.getItem('loginType'),
+				name: sessionStorage.getItem('name'),
+				profile_image_url: sessionStorage.getItem('profile_image_url'),
+				dynamicVerifyCode: dynamicVerifyCode,
+				msgId: msgId,
+				mobilePhone: mobilePhone
+			}
+			$.ajax({
+				type: 'post',
+				url: "/api/userCenter/third-unband",
+				contentType: 'application/json;charset=utf-8',
+				data: JSON.stringify(param),
+				success: function(data){
+					if(data.success){
+						utils.setCookie("token", data.data.accessToken, 3);
+						utils.setCookie("phone", data.data.mobilePhone, 3);
+						utils.setCookie("nickName", data.data.nickName, 3);
+						utils.setCookie("userIdZBX", data.data.userId, 3);
+						
+						//链接直播
+						utils.setDomainCookie('token', data.data.accessToken, 3)
+						utils.setDomainCookie('phone', data.data.mobilePhone, 3)
+						utils.setDomainCookie('nickName', data.data.nickName, 3)
+						setTimeout(function(){
+							var from = utils.getUrlParam("from");
+							if(!!from){
+								window.location.href = decodeURIComponent(from);
+							}else{
+								window.location.href = "../user/acc_info";
+							}
+						}, 100);
+					}else{
+						g_const.verifyNum++
+						if(g_const.verifyNum>=5){
+							verify = 0
+							$("#verifyCode1 [name=verifyCode]").val('')
+							$("#verifyCode1").removeClass('hide')
+						}
+						utils.alert("danger", data.msg);
+					}
+				}
+			})
+		}
+	})
+	
+})
+</script>
+</body>
+</html>
+

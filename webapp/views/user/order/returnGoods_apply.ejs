@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    .userRightContent {
+      padding: 30px 20px 40px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .submit {
+      margin-top: 60px;
+      width: 376px;
+      height: 50px;
+      background: #DF735A;
+      border-radius: 0;
+    }
+
+    .el-select-dropdown__item.selected {
+      color: #FB746E;
+    }
+
+    .title {
+      font-size: 18px;
+      color: #666;
+    }
+
+    .return-addr {
+      margin: 20px 0;
+      padding: 10px 20px;
+      color: #999;
+      line-height: 30px;
+      background: #F7F7F7;
+    }
+
+    .return-addr .return-label {
+      color: #666;
+    }
+
+    .refundAddr .input {
+      width: 567px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body class="userOrderJewelry">
+
+  <%- include ../../headerbar.ejs %>
+
+  <%- include ../userHeaderNav.ejs %>
+
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>
+          <a href="/">首页</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/' }">
+          <a href="/user/acc_info">个人中心</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>寄回商品</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+
+  <div id="main" class="main">
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include ../userLeftNav.ejs %>
+      </div>
+      <div class="userRightContent">
+
+        <div id="returnGoods">
+
+          <h3 class="title">寄回商品</h3>
+
+          <div class="return-addr">
+            <div class="return-item">
+              <span class="return-label">
+                退货地址：
+              </span>
+              <span class="return-value">
+                {{returnList.addr}}
+              </span>
+            </div>
+            <div class="return-item">
+              <span class="return-label">
+                收货人：
+              </span>
+              <span class="return-value">
+                {{returnList.consignee}}
+              </span>
+            </div>
+            <div class="return-item">
+              <span class="return-label">
+                联系电话：
+              </span>
+              <span class="return-value">
+                {{returnList.mobileNum}}
+              </span>
+            </div>
+          </div>
+
+          <div id="mainForm">
+
+            <div class="refundAddr">
+
+              <el-form :model="form" :rules="rules" ref="form">
+                <el-form-item prop="expressCompany">
+                  <el-select v-model="form.expressCompany" placeholder="请选择物流公司" class="selectExpress input">
+                    <el-option v-for="(item, index) in expressList" :key="index" :label="item" :value="item">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item prop="expressNum">
+                  <el-input v-model="form.expressNum" placeholder="请输入物流单号" class="input"></el-input>
+                </el-form-item>
+                <el-form-item prop="remark">
+                  <el-input type="textarea" :rows="2" placeholder="请输入备注信息" v-model="form.remark" class="input"
+                    maxlength="500">
+                  </el-input>
+                </el-form-item>
+              </el-form>
+
+              <div class="btn-box tc">
+                <el-button type="danger" class="submit" @click="submit($event)">提交</el-button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <%- include ../../footer.ejs %>
+    <script>
+      $(".userLeftNav li[data-target='refund']").addClass("cur");
+
+      var routerVm = new Vue({
+        el: "#router"
+      })
+
+      var detailVm = new Vue({
+        el: "#returnGoods",
+        data: {
+          data: {},
+          expressList: [],
+          returnList: {},
+          form: {
+            expressCompany: '',
+            expressNum: '',
+            remark: '',
+            orderId: utils.getUrlParam("id")
+          },
+          rules: {
+            expressCompany: [{
+              required: true,
+              message: '请选择物流公司',
+              trigger: 'change'
+            }],
+            expressNum: [{
+              required: true,
+              message: '请输入正确的物流单号',
+              pattern: /^[0-9a-zA-Z]+$/,
+              trigger: 'blur'
+            }]
+          }
+        },
+        mounted() {
+          this.getRefundAddr()
+          this.getExpress()
+        },
+        methods: {
+          getRefundAddr() {
+            let sellUserId = utils.getUrlParam("sellUserId")
+            utils.ajax({
+              url: "/api/order/refundAddr/" + sellUserId,
+              type: 'get',
+              success: (data) => {
+                if (data.success) {
+                  this.returnList = data.data
+                } else {
+                  utils.alert("danger", data.msg)
+                }
+              }
+            })
+          },
+          getExpress() {
+            utils.ajax({
+              url: "/api/express/",
+              data: JSON.stringify({}),
+              success: (data) => {
+                if (data.success) {
+                  this.expressList = data.data
+                } else {
+                  utils.alert("danger", data.msg)
+                }
+              }
+            })
+          },
+          submit(e) {
+            this.$refs.form.validate((valid) => {
+              if (valid) {
+                utils.ajax({
+                  url: '/api/refund/express/save',
+                  data: JSON.stringify(this.form),
+                  el: e.target,
+                  success: (data) => {
+                    if (data.success) {
+                      utils.alert("success", "操作成功");
+                      setTimeout(function () {
+                        location.href = "../../user/order/refund"
+                        window.history.back(-1)
+                      }, 2000)
+                    } else {
+                      utils.alert("danger", data.msg)
+                    }
+                  }
+                })
+              } else {
+                return false;
+              }
+            })
+          }
+        }
+      })
+    </script>
+
+</body>
+
+</html>

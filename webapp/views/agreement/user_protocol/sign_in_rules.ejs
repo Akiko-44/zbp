@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <script src="../../dist/js/lib.js"></script>
+  <style type="text/css">
+    #main {
+      margin-top: 30px;
+    }
+
+    #infoPanel {
+      padding: 0 35px;
+    }
+
+    .signin-rules h3 {
+      font-size: 20px;
+      font-weight: bolder;
+      letter-spacing: 5px;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .signin-rules h1 {
+      font-size: 20px;
+      font-weight: bolder;
+      margin: 30px 0;
+    }
+
+    .signin-rules p {
+      font-size: 16px;
+      line-height: 30px;
+      color: #000000;
+    }
+
+    .userRightContent {
+      margin-bottom: 50px;
+    }
+
+    .userInfoWrap {
+      padding: 30px;
+    }
+  </style>
+</head>
+
+<body class="userAccount">
+  <%- include ../../headerbar.ejs %>
+
+  <%- include ../../headerNav.ejs %>
+  <div id="main" class="main signin-rules">
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include ../agreement_left.ejs %>
+      </div>
+      <div class="userRightContent">
+        <div class="userInfoWrap">
+
+          <p align="center"><b>附件1：</b><b>中宝平</b><b>签收问题的纠纷处理</b></p>
+          <p align="center"><b>&nbsp;</b></p>
+          <p>适用范围：本规则适用于中宝平：指入驻中宝平，使用中宝平及其包含的各板块提供的服务项目。</p>
+          <p>为了避免因为签收问题导致的交易纠纷，建议买家在签收时注意遵守以下几项内容：</p>
+          <p><b>一、关于收货信息</b></p>
+          <p>1.请买家在订单中填写准确的收货地址和收货人信息；若买家需要变更订单中的收货地址或收货人信息的，请征得卖家的明确同意，以免后续买家无法收到订单中购买的商品。</p>
+          <p>2.买家在填写收货人信息时，可以选择本人或者他人作为收货人。若选择他人作为收货人，视为买家本人签收，该收货人违反签收约定义务的，需要由买家承担相应责任。</p>
+          <p><b>二、关于签收</b></p>
+          <p>1.卖家按照约定发货后，收货人有收货的义务，不得无正当理由拒绝签收商品。</p>
+          <p>2.收货人可以本人签收商品或委托他人代为签收商品，收货人委托他人代收的行为视为收货人本人签收。</p>
+          <p>
+            注意：承运人未经买家同意将货物放置在智能快件箱（如：设立在公共场所，供经营快递业务的企业投递和用户提取快件的自助服务设备等），无论物流信息显示签收与否，均不属于买家本人签收，由此产生的相应费用及货物风险由卖家承担。若承运人征得买家同意后将货物放置在智能快件箱的，商品成功放入智能快件箱后，视为买家本人签收，相关费用及货物风险需要由买家承担。
+          </p>
+          <p>
+            3.收货人在签收商品时，应当对商品进行验收，特别是涉及商品及包装等表面一致的事项。&ldquo;表面一致&rdquo;：是指凭肉眼即可判断所收到的商品表面状况良好且与商品页面描述相符，表面一致的判断范围包括但不限于货物的形状、大小、数量、重量等。
+          </p>
+          <p>
+            4.收货人签收商品时发现存在表面不一致情形的，有权拒绝签收商品。对于需要先签收再打开包装查看的商品，收货人应当要求承运人当场监督并打开包装查看，如果发现表面不一致，应当在签收单（收货人联和承运人联）上备注详细情况并让承运人签字确认或者直接退回商品。如承运人拒绝与买家一起拆封验货，建议收货人保留相关证据，并立即联系卖家告知相关情况，或选择拒绝签收商品。
+          </p>
+          <p><b>三、签收问题的处理原则</b></p>
+          <p>1.若买家填写的收货地址和（或）收货人信息不准确，导致商品在该收货地址被签收的，视为本人签收。</p>
+          <p>2.若买家提供有效凭证证明签收时既已存在表面不一致情形的，交易做退款（买家拒绝签收的）或退货退款处理；若买家无法有效举证的，卖家有权不支持买家的退款（买家拒绝签收的）或退货退款要求。</p>
+          <p>3.对于不能在签收商品时验收的事项产生争议的，如商品存在质量问题等，具体处理原则参见《商品质量问题纠纷处理》。</p>
+          <p>4.收货人签收商品后，商品毁损、灭失的风险由卖家转移给买家。</p>
+          <p><b>四、签收问题的举证</b></p>
+          <p>1.若买家签收商品后对于商品表面一致的问题有异议的，买家需要对签收商品时商品已存在表面不一致的情形承担举证责任，需要提供承运人出具的书面证明文件并加盖公章，证明收到商品存在表面不一致情形（如破损/少件/空包裹等）。
+          </p>
+          <p>2.若买家表示未收到货，而卖家表示买家已签收商品，卖家需要承担举证责任。</p>
+          <p><b>五、签收问题的相关运费纠纷处理</b></p>
+          <p>交易中的运费争议，根据&ldquo;谁过错，谁承担&rdquo;的原则处理，但买卖双方协商一致的除外。具体关于签收问题相关的运费纠纷，买家可查看《运费问题纠纷处理》。</p>
+          <p><b>六、纠纷举证内容</b></p>
+          <p>1.若买家签收商品后对于商品表面一致问题存在异议的，此时需要买家对签收商品时商品已存在表面不一致的情形承担举证责任，需要提供的相关凭证如下：</p>
+          <p>2.物流凭证内容：需要详细说明该订单商品签收情况，如：需要证明商品签收时即出现了破损/少件/空包裹等问题，并加盖承运人公司公章；</p>
+          <p>3.印章要求：需要加盖承运人【如XX物流（或XX快递）】公司公章，而不是公司某个部门（如公司财务章、业务章等）。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include ../../footer.ejs %>
+  <script type="text/javascript">
+    $("#rightBar").hide()
+    $(".userLeftNav li li:eq(2)").addClass("cur")
+  </script>
+</body>
+
+</html>

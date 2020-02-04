@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		body {
+			background: #F5F5F5;
+		}
+
+		.icon-btn-arrow-down {
+			display: inline-block;
+			background: url('../src/img/sprite/arrowRight.png') no-repeat center/contain;
+			width: 18px;
+			height: 18px;
+			vertical-align: middle;
+			transform: rotateZ(90deg);
+		}
+
+		.introduction-box {
+			text-align: center;
+
+			img {
+				width: 850px;
+			}
+		}
+	</style>
+</head>
+
+<body class="">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include ../headerNav.ejs %>
+
+	<div id="main" class="main up_and_down detail">
+		<div class="container">
+			<h2 class="title">上下游服务</h2>
+			<div class="router">
+				<a class="link" href="../../">首页</a>
+				<i>&gt;</i>
+				<span>上下游服务</span>
+				<i>&gt;</i>
+				<span>法律咨询</span>
+				<i>&gt;</i>
+				<span>电话问法务</span>
+			</div>
+			<div class="content">
+				<div class="content-top clearfix">
+					<div class="lawyer-price fl">
+						<h4 class="title">{{providerInfo.serviceName}}</h4>
+						<div class="price-box">
+							<span class="price-name">价格</span><span class="price">¥ {{providerInfo.serviceFee}}</span>
+							<p class="price-description">此价格为参考价格，具体报价根据业务下单后，工作人员会及时联系</p>
+						</div>
+						<button class="btn">在线咨询</button>
+						<div class="description">
+							服务保障<i class="icon"
+								style="width: 28px;height: 28px;background: url('../src/img/up_and_down/bao.png') no-repeat center/contain;"></i>承诺按时按质保证完成
+						</div>
+					</div>
+					<div class="lawyer-brief fl">
+						<dl class="organization clearfix">
+							<dt class="fl"><img :src="providerInfo.logo | formatImg" /></dt>
+							<dd class="organization-box">
+								<p class="title">{{providerInfo.companyName}}<i class="icon"
+										style="width: 28px;height: 28px;background: url('../src/img/up_and_down/bao.png') no-repeat center/contain;"></i>
+								</p>
+								<p class="text"><i class="icon"
+										style="width: 20px;height: 20px;margin-right: 10px; background: url('../src/img/up_and_down/phoneSuccess.png') no-repeat center/contain;"></i>已实名审核认证
+								</p>
+							</dd>
+						</dl>
+						<div class="introduce">
+							<p class="brief"><span @click="handleIntroduction(1)">公司简介</span><span
+									@click="handleIntroduction(2)">业务简介</span></p>
+							<p class="detail" v-html="introduction"></p>
+
+						</div>
+					</div>
+				</div>
+				<div class="introduction-box">
+					<img :src="providerInfo.serviceImg" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%- include ../footer.ejs %>
+
+	<script>
+		$(".shops .more").on("click", function () {
+			$(".shops-list").toggleClass("more")
+		})
+		var vm = new Vue({
+			el: "#main",
+			data: function () {
+				return {
+					providerInfo: {},
+					id: "",
+					introduction: "",
+				}
+			},
+			filters: {
+				formatImg: function (str) {
+					return utils.formatImg(str);
+				},
+			},
+			mounted: function () {
+				var id = decodeURIComponent(utils.getUrlParam("id"));
+				this.id = id
+				this.getProviderInfo(id)
+			},
+			methods: {
+				getProviderInfo(id) { //栏目列表
+					var self = this
+					utils.ajax({
+						url: "/api/serv/portal/provider/service/info/" + id,
+						type: "get",
+						success: function (succ) {
+							var data = succ.data;
+							if (data) {
+								self.providerInfo = data
+								self.handleIntroduction(1)
+							}
+
+						}
+					})
+				},
+				handleIntroduction(type) {
+					if (type == 1) {
+						this.introduction = this.providerInfo.companyDesc
+					} else {
+						this.introduction = this.providerInfo.serviceDesc
+					}
+				}
+			}
+		})
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.title-container h3{font-size: 16px;padding-bottom: 10px;border-bottom: 1px solid #efefef;}
+.fundnav-container {margin: 40px 0;}
+.fundnav-container li {float: left;width: 33%;margin-bottom: 20px;text-align: center;}
+.fundnav-container li p {margin-top: 20px;}
+</style>
+</head>
+<body class="userAccount">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item>首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div class="fund-container" id="detail">
+					<div class="title-container">
+						<h3>
+							<!--<a class="fr yellow fs12" @click="toCard">添加银行卡</a>-->
+							<el-button class="fr" type="primary" size="mini" @click="toGetFund" style="margin-right: 10px;" v-if="(amount-lockAmount-freeMoney).toFixed(2)<1000" disabled>提现</el-button>
+              <el-button class="fr" type="primary" size="mini" @click="toGetFund" style="margin-right: 10px;" v-else>提现</el-button>
+							<span>资金管理</span>
+						</h3>
+					</div>
+					<div class="fundnav-container">
+						<ul class="clearfix">
+							<li>
+								<h3 class="fs16">总金额</h3>
+								<p class="red fs14">￥<span>{{amount}}</span></p>
+							</li>
+							<li>
+								<h3  class="fs16">可提现金额</h3>
+								<p class="red fs14">￥<span>{{(amount-lockAmount-freeMoney).toFixed(2)}}</span></p>
+							</li>
+							<li>
+								<h3  class="fs16">累计手续费</h3>
+								<p class="red fs14">￥<span>{{freeMoney}}</span></p>
+							</li>
+							<li>
+								<h3  class="fs16">冻结资金</h3>
+								<p class="red fs14">￥<span>{{lockAmount}}</span></p>
+							</li>
+						</ul>
+					</div>
+					<div style="color: #FF0000;font-size: 12px;margin-bottom: 15px;line-height: 20px;">
+					  	<div>温馨提示：</div>
+							<div>1.最低提现金额为1000元</div>
+							<div>2.银联会对每笔订单收取一定比例的手续费，C扫B（即扫码支付）的手续费为每笔订单金额的0.3%，APP购买商品的手续费为每笔订单的0.63%</div>
+					  </div>
+					<div>
+						<div class="app-toolbar">
+							<label>时间：</label>
+							<el-date-picker size="mini" @change="datechange"
+						      v-model="date"
+						      value-format="yyyy-MM-dd"
+						      type="datetimerange"
+						      range-separator="至"
+						      start-placeholder="开始日期"
+						      end-placeholder="结束日期">
+						    </el-date-picker>
+						    &emsp;
+							<el-button type="primary" size="mini" @click="search">搜索</el-button>
+						</div>
+						
+						<div>
+							<el-table :data="tableData" style="width: 100%">
+								<el-table-column prop="ssn" label="交易号">
+									
+								</el-table-column>
+						    	<el-table-column prop="transAmt" label="提现金额">
+						    		
+						    	</el-table-column>
+						    	<el-table-column prop="transAmt" label="应到账金额">
+						    		
+						    	</el-table-column>
+						    	<el-table-column prop="cardNo" label="银行卡号">
+						    		
+						    	</el-table-column>
+						    	<el-table-column prop="status" label="提现状态">
+						    		<template slot-scope="scope">
+						    			<span v-if="scope.row.status==0">处理中</span>
+						    			<span v-else-if="scope.row.status==4">成功</span>
+						    			<span v-else-if="scope.row.status==5">失败</span>
+						    		</template>
+						    	</el-table-column>
+						    	<el-table-column prop="trxTime" label="提现时间">
+						    	</el-table-column>
+					  		</el-table>
+						</div>
+						<br>
+						<el-pagination background 
+					      @current-change="handleCurrentChange"
+					      :current-page="current"
+					      :page-size="size"
+					      layout="total, prev, pager, next, jumper"
+					      :total="total">
+					    </el-pagination>
+					    <br>
+					</div>
+					
+					<el-dialog title="提现" :visible.sync="dialogVisible" width="30%">
+				  		<div>
+				  			<el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
+							  	<el-form-item label="提现金额" prop="amount">
+							    	<el-input v-model="ruleForm.amount" id="withdrawal"></el-input>
+							  	</el-form-item>
+							</el-form>
+				  		</div>
+				  		<span slot="footer" class="dialog-footer">
+				    		<el-button @click="dialogVisible = false" size="small">取 消</el-button>
+				    		<el-button type="primary" @click="add" size="small">确定</el-button>
+				  		</span>
+					</el-dialog>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<form id="test_form" style="display: none !important;" action="https://service.chinaums.com/uisouterfront/withdraw/process" method="post">
+		<input name="content" type="text" value="">
+		<input type="submit" value="submit">
+	</form>
+	
+	<%- include ../userFooter.ejs %>
+	
+<script>
+var routerVm = new Vue({
+	el: "#router"
+})
+$(".userLeftNav li li[data-target='fund']").addClass("cur")
+
+var checkamount = function(rule, value, callback){
+	if (!value) {
+    	callback(new Error('提现金额不能为空'));
+    }else if (!/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/.test(value)) {
+        callback(new Error('请输入数字值'));
+    } else if(value<1000){
+    	callback(new Error('提现金额不能低于1000'));
+    } else {
+      	callback();
+    }
+}
+var detailVm = new Vue({
+	el: "#detail",
+	data: {
+		amount: 0,
+		lockAmount: 0,
+		freeMoney: 0,
+		
+		tableData: [],
+		total: 0,
+		
+		current: 1,
+		size: 10,
+		createTimeBegin: "",
+		createTimeEnd: "",
+		date: "",
+		
+		dialogVisible: false,
+		ruleForm: {
+			amount: 1000
+        },
+        rules: {
+        	amount: [
+        		{ validator: checkamount, trigger: 'blur' }
+            ]
+        }
+	},
+	mounted: function(){
+		var self = this;
+		utils.ajax({
+			url: "/admin/drawMoneyrecord/count",
+			type: "get",
+			success: function(data){
+				data = data.data;
+				self.amount = data.amount;
+				self.lockAmount = data.lockAmount;
+				self.freeMoney = data.freeMoney;
+			}
+		})
+		this.render();
+	},
+	created(){
+    var d = new Date(),month,day;
+    if(d.getMonth()<10){
+      month = '0'+ (d.getMonth()+1)
+    }else{
+      month = (d.getMonth()+1)
+    }
+    if(d.getDate()<10){
+      day = '0'+d.getDate()
+    }else{
+      day = d.getDate()
+    }
+    this.createTimeBegin="2019-05-01"
+    this.createTimeEnd=d.getFullYear() + '-' + month + '-' + day
+  },
+	methods: {
+		render: function(){
+			var self = this;
+			utils.ajax({
+				url: "/api/pay/pay_cash_bill/list",
+				data: JSON.stringify({
+					page: self.current,
+					beginDate: self.createTimeBegin,
+					endDate: self.createTimeEnd
+				}),
+				success: function(data){
+					data = data.data;
+					if(data.responseCode == '000000'){
+						self.tableData = JSON.parse(data.recordList);
+						self.total = data.totalTransNum
+					}
+				}
+			})
+		},
+		handleCurrentChange(val) {
+	        var self = this;
+	        self.current = val;
+	        self.render();
+      	},
+      	datechange: function(val){
+      		
+      	},
+      	search: function(){
+      		var self = this;
+	        self.current = 1;
+	        self.render();
+      	},
+      	toCard: function(){
+      		location.href = "../../user/account/bankcard"
+      	},
+      	toGetFund: function(){
+      		var self = this;
+			this.dialogVisible = true;
+			setTimeout(function(){
+				self.$refs["ruleForm"].resetFields();
+			},100)
+      	},
+      	add: function(){
+      		var self = this;
+			this.$refs["ruleForm"].validate(function(valid){
+				if(valid){
+					utils.ajax({
+						url: "/api/pay/pay_cash_bill/push?amount=" + self.ruleForm.amount,
+						type: "get",
+						success: function(data){
+							$("[name=content]").val(data.data)
+							setTimeout(function(){
+								$("#test_form").submit()
+							},100)
+						}
+					})
+				}
+			});
+      	}
+	},
+	watch: {
+		date: function(val){
+			var self = this;
+			if(val == ""){
+				self.createTimeBegin = ""
+				self.createTimeEnd = ""
+			}else if(val.length == 2){
+				self.createTimeBegin = new Date(val[0]).format("yyyy-MM-dd")
+				self.createTimeEnd = new Date(val[1]).format("yyyy-MM-dd")
+			}
+		}
+	}
+})
+
+$('.userRightContent').on('change', '#withdrawal', function(){
+  var withdrawal = (detailVm.amount-detailVm.lockAmount-detailVm.freeMoney).toFixed(2);
+  if($(this).val() > withdrawal){
+    $(this).val(withdrawal);
+    detailVm.ruleForm.amount = withdrawal;
+  }
+})
+
+</script>
+</body>
+</html>
+

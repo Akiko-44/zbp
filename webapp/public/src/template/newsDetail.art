@@ -1,0 +1,32 @@
+<div>
+	<h2 class="detailTitle"><%= data.title %></h2>
+	<div class="layer-table">
+		<div>
+			<div>
+				<a class="detailAuthor">
+					<!--<img src=""> -->
+					<span><%= data.authorName %></span>
+				</a>
+				<span class="detailTime"><%= data.publishTime %></span>
+			</div>
+			<div>
+				<a class="fr detailLikeCount">
+					<i class="icon icon-like2"></i>
+					<span class="iconlabel"><%= data.praiseNum %></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="ue-view detailContent">
+		<%= data.content %>		
+	</div>
+	<br><br>
+	<p class="fs16 hide">文章来源：
+		<% if(typeof data.source != "undefined" && !!data.source){ %>
+			<a class="link" href="<%= data.source %>" target="_blank"><%= data.source %></a>
+		<% }else{ %>
+			个人原创
+		<% } %>
+	</p>
+	<br><br>
+</div>

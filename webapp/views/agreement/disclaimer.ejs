@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <script src="../../dist/js/lib.js"></script>
+  <style type="text/css">
+    .disclaimer h3 {
+      font-size: 20px;
+      font-weight: bolder;
+      letter-spacing: 5px;
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .disclaimer p {
+      font-size: 16px;
+      line-height: 30px;
+      color: #000000;
+    }
+  </style>
+</head>
+
+<body class="userAccount">
+
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../headerNav.ejs %>
+
+  <div class="main container disclaimer" id="main">
+    <h3>中宝平免责声明</h3>
+    <p>一、中宝平不担保本网站服务一定能满足用户的所有要求，也不担保本网站服务不会因为不可抗力或中宝平不可控等原因而造成服务中断或其它缺陷，对于以下原因（包括但不限于）：</p>
+    <p>1.其他用户可能会发布诈骗或虚假信息，或者发表有谩骂、诅咒、诋毁、攻击内容的，或者含有淫秽、色情、下流、反动、煽动民族仇恨等让人反感、厌恶的内容的非法言论；</p>
+    <p>
+      2.互联网并非绝对安全的环境，用户将个人资料或信息等上传到互联网上，有可能会被其他组织或个人用其它非法用途，其他用户可能会发布一些侵犯您或者其他第三方知识产权、肖像权、姓名权、名誉权、隐私权和/或其他合法权益的图片、照片、文字等资料；
+    </p>
+    <p>3.面临着诸如黑客攻击、计算机病毒困扰、系统崩溃、网络掉线、网速缓慢、程序漏洞等问题。</p>
+    <p>
+      对于上述原因中宝平不承担任何责任，但中宝平将尽力减少因此而给用户造成的损失和影响。中宝平有权依法停止传输任何前述内容并采取相应行动，包括但不限于暂停用户使用本网站服务的全部或部分，保存有关记录，并向有关机关报告。
+    </p>
+    <p style="margin-bottom: 30px;">
+      二、无论在任何原因下（包括但不限于疏忽原因），对用户或任何人通过使用本网站上的信息或由本网站链接的信息，或其他与本网站链接的网站信息所导致的损失或损害（包括直接、间接、特别或后果性的损失或损害，例如收入或利润之损失，电脑系统之损坏或数据丢失等后果），责任均由使用者自行承担（包括但不限于疏忽责任）
+      使用者对本网站的使用即表明同意承担浏览本网站的全部风险。</p>
+    <p style="margin-bottom: 30px;">
+      三、除法律法规规定或者用户与中宝平约定须提前通知的以外，中宝平有权单方面地中止或者终止本网站所提供的服务而无须提前通知用户。该等中止、终止，可能是因为中宝平解散、注销、合并、分立，也可能是因为中宝平将本网站或其运营权转让给了第三方，还可能是因为国家法律、法规、政策及国家机关的命令或者其他的诸如地震、火灾、海啸、台风、罢工、战争等不可抗力事件。
+    </p>
+    <p style="margin-bottom: 30px;">
+      四、任何经由本网站以上载、张贴、发送电子邮件或任何其它方式传送的资讯、资料、文字、软件、音乐、音讯、照片、图形、视讯、信息或其它资料（以下简称“内容”），无论系公开还是私下传送，均由内容提供者承担责任。同时，对于用户上传到中宝平内容即默认授权给中宝平运营方使用，中宝平在使用时不承担任何责任。
+    </p>
+    <p style="margin-bottom: 30px;">五、在由于排版错误或供应商提供价格信息错误的情况下以不正确的价格列出来的商品，中宝平有拒绝或取消任何对以不正确的价格列出来的商品所下订单的权利。</p>
+    <p style="margin-bottom: 30px;">
+      六、由于合理的或不可避免的送货延迟对用户或第三方带来的任何损失，中宝平不负任何责任。在这种情况下，中宝平将尽快地把任何可预知的延迟情况通知用户，并在此时请用户选择是否取消订单。</p>
+    <p style="margin-bottom: 30px;">
+      七、中宝平上面陈列的货物完全符合中华人民共和国的相关法律法规的规定。用户应充分了解到，由于珠宝产品的特殊属性，在中宝平上用作销售、互换、展示等用途的图像和视频可能跟实物有差异。中宝平直接与品牌供应商或者他们授权的经销商合作，他们保证其商品是正宗的。用户在中宝平上找到的商品描述均由品牌供应商或者他们授权的经销商提供，仅由他们对其真实性负责。用户应该系统性地参照货物描述找出他们的特征，对于任何种类的直接或间接的、实质或非实质的由于商品的使用造成的损失，中宝平概不负责。
+    </p>
+
+  </div>
+
+  <%- include ../footer.ejs %>
+</body>
+
+</html>

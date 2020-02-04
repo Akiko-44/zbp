@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.img_type{color: #999;}
+.contentWrap {
+	width: 960px;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+.uploadbox {
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+}
+#getCode{
+	display: inline-block;
+	width: 80px;
+	height: 30px;
+	position: relative;
+	cursor: pointer;
+}
+#getCode span{
+	display: inline-block;
+	width: 80px;
+	height: 30px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+	line-height: 30px;
+	color: #C26A3E;
+	background: #CCCCCC;
+}
+.codeImg{
+	width: 100%;
+	height: 100%;
+}
+</style>
+</head>
+<body class="business-bd">
+	
+	<%- include loginHeader %>
+	
+	<div class="contentWrap" id="apply">
+	
+		<div class="stepWrap">
+			<ul class="clearfix">
+				<li class="fl cur">
+					<span>
+						<i class="icon icon-businessStep1"></i>
+					</span>
+					<p>注册账号</p>
+				</li>
+				<li class="fl cur" style="margin-left: 150px">
+					<span>
+						<i class="icon icon-businessStep2_2"></i>
+					</span>
+					<p>选择类型</p>
+				</li>
+				<li class="fr cur">
+					<span>
+						<i class="icon icon-businessStep3_2"></i>
+					</span>
+					<p>填写资料</p>
+				</li>
+			</ul>
+		</div>
+		
+		<div>
+			<form id="applyForm">
+				<input type="hidden" name="merchantType" value="4">
+				<table>
+					<tr>
+						<td colspan="2"><h4>服务商名称<span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div>
+								<input type="text" name="name" maxlength="20" 
+								datatype="*1-20" 
+								nullmsg="请输入名称" 
+								errormsg="名称只能为1-20个字符">
+								<p class="tip">20个字以内，请勿使用含特殊符号或含有明显营销推广意图的店铺名</p>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><h4>服务商类别<span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<div>
+								<select name="type" 
+								datatype="*" 
+								nullmsg="请选择类别" 
+								errormsg="请选择类别">
+									<option value="1">旗舰店</option>
+									<option value="2">专卖店</option>
+									<option value="3">专营店</option>
+								</select>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td colspan="3"><h4>主营类目<span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td width="210">
+							<div class="w200">
+								<select name="categoryId1" datatype="*" nullmsg="请选择主营类目" errormsg="请选择主营类目">
+									<option v-for="item in categoryId1" :value="item.id">{{item.catName}}</option>
+								</select>
+								<input type="hidden" name="categoryName1">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td>
+							<div class="w200">
+								<input type="hidden" name="categoryName2">
+								<select name="categoryId2">
+									<option v-for="item in categoryId2" :value="item.id">{{item.catName}}</option>
+								</select>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td width="510">
+							<div>
+								<input name="categoryDesc" type="text" placeholder="请填写详细类目">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td width="120"><h4>服务商头像<span class="red">*</span></h4></td>
+						<td><h4>服务商简介<span class="red">*</span></h4></td>
+					</tr>
+					<tr>
+						<td valign="top">
+							<div class="clearfix">
+								<div class="uploadbox" data-target="logo">
+								
+								</div>
+							</div>
+							<p class="img_type">支持格式：jpg\jpeg\png</p>
+							<div>
+								<input type="hidden" name="logo" datatype="*" 
+								nullmsg="请上传 " 
+								errormsg="请上传">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td valign="top">
+							<div>
+								<textarea name="merchantExplain" maxlength="300" placeholder="300个字以内，要求内容完整通顺，无特殊符号，请勿添加任何联系方式如微博、手机号、QQ" 
+								datatype="s1-300" 
+								nullmsg="请输入店铺简介" 
+								errormsg="店铺简介只能为1-300个字符"></textarea>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+				</table>
+				<div>
+					<table>
+						<tr>
+							<td colspan="3"><h4>企业名称<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<div>
+									<input name="companyName" 
+									type="text" 
+									datatype="*1-50" 
+									nullmsg="请输入企业名称" 
+									errormsg="企业名称不能超过50个字符">
+									<p class="tip">请与营业执照的名称保持一致</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3"><h4>所在地<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td width="210" valign="top">
+								<div class="w200">
+									<select name="provinceId" 
+									datatype="*" 
+									nullmsg="请选择所在地" 
+									errormsg="请选择所在地">
+										<option v-for="item in province" :value="item.regionId">{{item.regionName}}</option>
+									</select>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td valign="top">
+								<div class="w200">
+									<select name="cityId" datatype="*" 
+									nullmsg="请选择所在地" 
+									errormsg="请选择所在地">
+										<option v-for="item in city" :value="item.regionId">{{item.regionName}}</option>
+									</select>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td width="510" valign="top">
+								<div>
+									<input type="text" name="address">
+									<p class="tip">请与营业执照上的地址保持一致</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+				<div>
+					<table>
+						<tr>
+							<td><h4>组织机构代码证/营业执照<span class="red">*</span></h4></td>
+							<td><h4>法人授权书扫描件<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="clearfix">
+									<div class="uploadbox" data-target="businessLicense">
+									</div>
+									<div class="fl">
+										<p class="tip">&emsp;组织机构代码证或营业执照信息清晰</p>
+										<p class="tip">&emsp;最大2M</p>
+										<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+									</div>
+								</div>
+								<div>
+									<input type="hidden" name="businessLicense" datatype="*" 
+									nullmsg="请上传 " 
+									errormsg="请上传">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td>
+								<div class="clearfix">
+									<div class="uploadbox" data-target="legalPersonPic">
+									</div>
+									<div class="fl">
+										<p class="tip">&emsp;请点此<a class="blue" @click="download">下载确认书模版</a></p>
+										<p class="tip">&emsp;填写后上传</p>
+										<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+									</div>
+								</div>
+								<div>
+									<input type="hidden" name="legalPersonPic" datatype="*" 
+									nullmsg="请上传 " 
+									errormsg="请上传">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><hr></td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>纳税人识别号<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div>
+									<input type="text" name="taxNumber" datatype="*1-50" nullmsg="请输入纳税人识别号" errormsg="请输入纳税人识别号">
+									<p class="tip">请与营业执照保持一致</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr class="hide">
+							<td colspan="2"><h4>税务登记号<span class="red">*</span></h4></td>
+						</tr>
+						<tr class="hide">
+							<td colspan="2">
+								
+								<div class="clearfix">
+									<div class="uploadbox" data-target="taxPic">
+									</div>
+									<div class="fl">
+										<p class="tip">&emsp;税务登记证信息清晰</p>
+										<p class="tip">&emsp;最大2M</p>
+										<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+									</div>
+								</div>
+								<div>
+									<input type="hidden" name="taxPic">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>开户姓名<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div>
+									<input type="text" name="realName" 
+									datatype="*1-30" 
+									nullmsg="请输入开户姓名" 
+									errormsg="开户行账号为1-30个字符"
+									placeholder="30个字符以内">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>开户银行<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div>
+									<input type="text" name="bankName" 
+										datatype="*1-50" 
+										nullmsg="请输入开户银行" 
+										errormsg="开户行名称为1-50个字符"
+										placeholder="50个字符以内">
+									<p class="tip">请具体到支行</p>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>开户行账号<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div>
+									<input type="text" name="bankAccount" 
+									datatype="*1-50" 
+									nullmsg="请输入开户行账号" 
+									errormsg="开户行账号为1-50个字符">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>银行开户许可证电子版<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td>
+								<div class="clearfix">
+									<div class="uploadbox" data-target="bankPermissionUrl">
+									</div>
+									<div class="fl">
+										<p class="tip">&emsp;银行开户许可证电子版信息清</p>
+										<p class="tip">&emsp;最大2M</p>
+										<p class="img_type">&emsp;支持格式：jpg\jpeg\png</p>
+									</div>
+								</div>
+								<div>
+									<input type="hidden" name="bankPermissionUrl" datatype="*" 
+									nullmsg="请上传 " 
+									errormsg="请上传">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><hr></td>
+						</tr>
+						<tr>
+							<td colspan="2"><h4>联系人实名认证<span class="red">*</span></h4></td>
+						</tr>
+						<tr>
+							<td colspan="2" class="certification">
+								<table>
+									<thead>
+										<tr>
+											<th>姓名</th>
+											<th>身份证号</th>
+											<th>身份证照片</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="item in cards" :data-id="item.id">
+											<td>{{item.name}}</td>
+											<td>{{item.idNumber}}</td>
+											<td>已上传</td>
+											<td>
+												<span class="red" v-if="item.authState==1">未通过</span>
+												<span class="green" v-else-if="item.authState==0">已通过</span>
+											</td>
+											<td>
+												<a class="uploadBtn blue">上传证件照片</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<br>
+								<div class="tc">
+									<a class="btn btn-danger showAddCardBtn">添加</a>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<h4>手机验证<span class="red">*</span></h4>
+								<input type="hidden" name="mobilePhone" class="mobilePhone" :value="mobilePhone">
+								<span>已绑定手机号码：{{mobilePhone}}</span>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<div class="imgCode fl">
+									<div class="clearfix">
+										<input type="hidden" class="codeUuid" value="">
+										<input type="text" class="verifyCode" maxlength="6" datatype="*1-6" nullmsg="请输入验证码" errormsg="请输入验证码">
+										<span id="getCode"><img src="" class="codeImg"><span>查看验证码</span></span>
+									</div>
+									<p class="Validform_checktip"></p>
+								</div>
+								<div class="fl msgCode">
+									<div class="clearfix">
+										<input type="hidden" name="msgId" value="" />
+										<input type="text" class="dynamicVerifyCode" name="dynamicVerifyCode" maxlength="6" datatype="s1-6" nullmsg="请输入验证码" errormsg="请输入验证码">
+										<a class="btn btn-danger codeBtn">获取短信验证码</a>
+									</div>
+									<p class="Validform_checktip"></p>
+								</div>
+								
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="tc">
+								<br>
+								<label class="checkbox">
+									<span class="checkbox-input">
+										<span class="checkbox-input-inner"></span>
+									</span>
+									<span class="checkbox-label">
+										我已阅读和接受
+										<a class="blue" href="">《中国珠宝云平台开店协议》</a>
+									</span>
+								</label>
+								<br>
+								<br>
+								<br>
+								<br>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="tc">
+								<a class="btn backBtn w200" @click="back">上一步</a>
+								<a class="btn btn-danger submitBtn w200" @click="save">提交开店</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+			</form>
+		</div>
+	</div>
+	
+	<br><br><br><br><br><br><br><br>
+
+<%- include ./cardDialog.ejs %>
+<%- include ./applyCode.ejs %>
+<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+     <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+</form>	
+<script>
+var applyVm = new Vue({
+	el: "#apply",
+	data: {
+		mobilePhone: utils.getCookie("phone"),
+		
+		categoryId1: [],
+		categoryId2: [],
+		
+		province: [],
+		city: [],
+		
+		cards: []
+	},
+	mounted: function(){
+		var self = this;
+		window.applyValidform = $("#apply form").Validform({
+			tiptype: 2
+		})
+		$.Tipmsg.r = "";
+		
+		utils.ajax({
+			url: "/api/swap/portal/common/categorys",
+			data: {
+				parentId: 0
+			},
+			type:"get",
+			success: function(data){
+				data = data.data;
+				self.categoryId1 = data;
+				setTimeout(function(){
+					$("[name='categoryId1']").trigger("change")
+				}, 100)
+			}
+		})
+		utils.ajax({
+			url: "/admin/region/list/0",
+			type:"get",
+			success: function(data){
+				data = data.data;
+				self.province = data;
+				setTimeout(function(){
+					$("[name='provinceId']").trigger("change")
+				}, 100)
+			}
+		})
+		
+		self.getCards();
+	},
+	methods: {
+		back: function(){
+			location.href = "../../business"
+		},
+		getCards: function(){
+			var self = this;
+			utils.ajax({
+				url: "/api/userCenter/auth/list",
+				type: "get",
+				success: function(data){
+					data = data.data;
+					self.cards = data;
+					
+				}
+			})
+		},
+		save: function(){
+			var self = this;
+			if(!$(".checkbox").hasClass("checked")){
+				utils.alert("info", "您未同意中宝协云平台商家用户注册协议");
+				return;
+			}
+			if(applyValidform.check(false)){
+				
+				clearInterval(timer);
+				$(".codeBtn").text('重发');
+				submitFlag = false;
+				
+				var str = $("#applyForm").serialize();
+				str = utils.str2json(str);
+				str.provinceName = $("[name='provinceId'] option:selected").text()
+				str.cityName = $("[name='cityId'] option:selected").text()
+				str.categoryName1 = $("[name='categoryId1'] option:selected").text()
+				str.categoryName2 = $("[name='categoryId2'] option:selected").text()
+				str.linkmanList = []
+				for(var i=0;i<self.cards.length; i++){
+					str.linkmanList.push({
+						linkName: self.cards[i].name,
+						idCard: self.cards[i].idNumber,
+						facePhoto: self.cards[i].idPicFront,
+						backPhoto: self.cards[i].idPicBack,
+						status: self.cards[i].authState
+					})
+				}
+				utils.ajax({
+					url: "/api/userCenter/merchantInfo/saveOrUpdate",
+					data: JSON.stringify(str),
+					success: function(data){
+						if(data.success){
+							utils.alert("success", "提交成功")
+							setTimeout(function(){
+								//location.href = "../../apply_checking"
+							}, 2000)
+						}else{
+							utils.alert("danger", data.msg)
+						}
+					}
+				})
+			}else{
+				utils.alert("info", "请检查资料是否填写完整")
+			}
+		},
+		download: function(){
+			utils.download("../../src/file/法人授权书模板.doc");
+		}
+	},
+	filters: {
+		
+	}
+})
+$(function(){
+
+	$(document).on("click", "#applyForm .uploadbox", function(e){
+		var t = $(e.currentTarget).attr("data-target");
+		$("#form1 input").attr("data-target", t);
+		$("#form1 input").trigger("click");
+	}).on("click", ".showAddCardBtn", function(){
+		if(applyVm.cards.length>0){
+			utils.alert("danger", "只能上传一条实名认证信息");
+			return;
+		}
+		$(".addCardDialog").addClass("show");
+		resetDialog();
+	}).on("change", "[name='provinceId']", function(){
+		var val = $(this).val();
+		utils.ajax({
+			url: "/admin/region/list/" + val,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				applyVm.city = data
+			}
+		})
+	}).on("change", "[name='categoryId1']", function(){
+		var val = $(this).val();
+		utils.ajax({
+			url: "/api/swap/portal/common/categorys/" + val,
+			type:"get",
+			success: function(data){
+				data = data.data;
+				applyVm.categoryId2 = data;
+			}
+		})
+	})
+	
+})
+
+
+//商品图片上传
+function uploadGoodsImg(self){
+	var uploadFile = new FormData($("#form1")[0]);
+	$.ajax({
+		url:'../../file/upload',
+		type:'POST',
+		data:	uploadFile,
+		async: false,  
+		cache: false, 
+		contentType: false, //不设置内容类型
+		processData: false, //不处理数据
+		success:function(data){
+			var t = $("#form1 input").attr("data-target");
+			$(".uploadbox[data-target='"+t+"']").html('<img src="'+data.data+'" width="100%">').addClass("uploaded")
+			$("[name='"+t+"']").val(data.data);
+			$("#form1 input").val("");
+		},
+		error:function(){
+			
+		}
+	})
+}
+</script>
+</body>
+</html>
+

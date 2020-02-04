@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+</head>
+<body class="userShopChecking">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router">
+			<a>首页</a>
+			<i>&gt;</i>
+			<span>我的店铺</span>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div class="checkingWrap">
+					<img src="../src/img/user/success.png">
+					<h3>提交成功，等待审核中</h3>
+					<h3>即将跳转到商家中心首页<strong class="red">3</strong>秒</h3>
+					<p>预计审核将在48小时内完成。审核结果我们会通过短信形式发送。</p>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+<script>
+$(".userLeftNav li li:eq(6)").addClass("cur");
+</script>
+
+</body>
+</html>
+

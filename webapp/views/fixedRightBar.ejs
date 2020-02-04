@@ -1,0 +1,226 @@
+<style>
+	#rightBar{
+		position: fixed;
+		/*left: 0;*/
+		right: 0;
+		top: 25%;
+		z-index: 2000;
+		max-width: 1440px;
+		margin: 0 auto;
+	}
+	#rightBar ul{
+		/*padding: 10px;*/
+		/*width: 102px;*/
+		width:70px; 
+		background: #f4f5f8;
+		position: absolute;
+		right: 0;
+		text-align: center;
+	}
+	#rightBar ul li{
+		cursor: pointer;
+	}
+	#rightBar ul li i,#rightBar ul li span{
+		display: block;
+		margin: 0 auto;
+		line-height: 1.5;
+	}
+	#rightBar ul li a{color: #333333;}
+	#rightBar ul li:hover{
+		background:rgba(218,57,55);
+		color:#fff;
+	}
+	#rightBar ul li:hover a,
+	#rightBar ul li:hover i{
+		color:#fff;
+	}
+	#rightBar ul li i{
+		width: 40px;
+		height: 40px;
+		background-repeat: no-repeat;
+		background-size: 100% auto;
+	}
+	#rightBar .car{position: relative;}
+	#rightBar .car span{
+		display: inline-block;
+		position: fixed;
+		/*right: 0;*/
+		/*top: 0;*/
+		width: 18px;
+		height: 18px;
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		background: #FF0000;
+		color: #FFFFFF;
+		text-align: center;
+		line-height: 18px;
+	}
+	.upDown{
+		position: fixed;
+		width: 70px;
+		height: 70px;
+		right:0;
+		bottom:5%;
+		background:#f4f5f8;
+		padding-top: 7px;
+	}
+
+	.hoverImg_1:hover i{
+		background-image:url(../src/img/right_bar/downLoadimg.png)!important;
+		width:24px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	.hoverImg_2:hover i{
+		background-image:url(../src/img/right_bar/cartimg.png)!important;
+		width:24px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	
+	.hoverImg_3:hover i{
+		background-image:url(../src/img/right_bar/wantGoimg.png)!important;
+		width:20px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	.hoverImg_4:hover i{
+
+		background-image:url(../src/img/right_bar/kefuimg.png)!important;
+		width:24px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	.hoverImg_5:hover i{
+		background-image:url(../src/img/right_bar/userimg.png)!important;
+		width:24px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	.hoverImg_6:hover i{
+		background-image:url(../src/img/right_bar/msgimg.png)!important;
+		width:20px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+</style>
+<script type="text/javascript">
+	/**
+	 * 小能客服
+	 * */
+	
+	var siteid = utils.getCookie('siteid') || ''
+	var uname = utils.getCookie('nickName') || ""
+	var NTKF_PARAM = {
+        siteid:siteid,                    //企业ID，为固定值，必填
+	    settingid:"zd_1000_9999",    //接待组ID，为固定值，必填
+	    uid:utils.getCookie('userIdZBX'),                            //用户ID，支持字母、数字、下划线。未登录可以为空，但不能给null，uid赋予的值在显示到小能客户端上
+	    uname:uname,                       //未登录可以为空，但不能给null，uname赋予的值显示到小能客户端上
+   }
+</script>
+<div id="rightBar">
+	<ul>
+		<li >
+			<a onclick="$('#downLoad').addClass('show')" class="hoverImg_1">
+				<i style="background-image: url(../src/img/right_bar/downLoad.png);"></i>
+				<span>
+					APP
+				</span>
+			</a>
+		</li>
+		<li>
+			<a data-href="../exchange/cart" onclick="toHref(this)"  class="hoverImg_2">
+				<i class="car" style="background-image: url(../src/img/right_bar/cart.png);">
+					<span id="carNum">0</span>
+				</i>
+				<span>
+					购物车
+				</span>
+			</a>
+		</li>
+		<li>
+			<a data-href="../user/collect/1" onclick="toHref(this)"  class="hoverImg_3">
+				<i style="background-image: url(../src/img/right_bar/wantGo.png);"></i>
+				<span>
+					收藏
+				</span>
+			</a>
+		</li>
+		<li onclick="NTKF.im_openInPageChat('zd_1000_9999')"  class="hoverImg_4">
+			<i style="background-image: url(../src/img/right_bar/kefu.png);"></i>
+			<span>
+				客服
+			</span>
+		</li>
+		<li>
+			<a data-href="../user/account" onclick="toHref(this)" class="hoverImg_5">
+				<i style="background-image: url(../src/img/right_bar/user.png);" ></i>
+				<span>
+					个人中心
+				</span>
+			</a>
+		</li>
+		<li>
+			<a data-href="../user/message" onclick="toHref(this)" class="hoverImg_6">
+				<i style="background-image: url(../src/img/right_bar/msg.png);"></i>
+				<span>
+					消息
+				</span>
+			</a>
+		</li>
+		<li class="upDown">
+			<a onclick="utils.goTop()">
+				<i  style="background: url(../src/img/up.png) center;background-size: 30px auto;background-repeat: no-repeat;"></i>
+				<div>TOP</div>
+			</a>
+		</li>
+	</ul>
+</div>	
+<%- include download_app %>
+<script>
+$(function(){
+	var _t = utils.getCookie("token");
+	if(!!_t){
+		utils.ajax({
+			url: "/api/order/cart/list",
+			type: "get",
+			success: function(data){
+				var len = 0
+				var list = data.data.cartItemList || 0;
+				for(var i= 0; i<list.length; i++){
+					len += list[i].goods.length
+				}
+				$("#carNum").text(len)
+			}
+		})
+	}
+})
+function toHref(e){
+	var el = e||window.event;
+	if(utils.islogin()){
+		var val = $(el).attr("data-href")
+		location.href = val;
+	}else{
+		location.href = "../../login?from=" + encodeURIComponent(location.href);
+	}
+}
+</script>

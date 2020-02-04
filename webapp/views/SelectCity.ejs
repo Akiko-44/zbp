@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico" />
+    <link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+    <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+    <script src="../../dist/js/template.js"></script>
+    <script src="../../dist/js/lib.js"></script>
+    <script src="../../dist/js/v.js"></script>
+    <title>
+        <%= title %>
+    </title>
+</head>
+<style>
+    .container {
+        width: 1200px;
+        margin: 0 auto 50px;
+    }
+
+    .white {
+        background: #fff;
+    }
+
+    .color333 {
+        color: #333;
+    }
+
+    .color666 {
+        color: #666;
+    }
+
+    .fw {
+        font-weight: bold;
+    }
+
+    .positiontr50 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%)
+    }
+
+    ;
+
+    .fzZ16 {
+        font-size: 16px;
+    }
+
+    .colormaind {
+        color: red !important;
+    }
+
+    .hotcitys {
+        font-size: 16px;
+    }
+
+    .marginL20 {
+        margin-left: 20px;
+    }
+
+    .marginR20 {
+        margin-right: 20px;
+    }
+
+    .marginL10 {
+        margin-left: 10px;
+    }
+
+    .marginR10 {
+        margin-right: 10px;
+    }
+
+    .marginT10 {
+        margin-top: 10px;
+    }
+
+    .marginT20 {
+        margin-top: 20px;
+    }
+
+    .marginB10 {
+        margin-bottom: 10px;
+    }
+
+    .paddingT20 {
+        padding-top: 20px;
+    }
+
+    .padding20 {
+        padding: 20px;
+    }
+
+    .hotcitymians {
+        margin-right: 41px;
+        ;
+    }
+
+    .slectcity {
+        margin-right: 43px;
+        ;
+    }
+
+    .marginR100 {
+        margin-right: 100px;
+    }
+
+    .search {
+        width: 250px;
+    }
+
+    select {
+        width: 150px;
+    }
+
+    .fontsize16 {
+        font-size: 16px;
+    }
+
+    .sort {
+        margin-top: 40px;
+    }
+
+    .city_label {
+        float: left;
+    }
+
+
+    .city_label {
+        color: #666;
+        font-size: 22px;
+        font-weight: bold;
+        width: 5%;
+        height: 100%;
+        position: absolute;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #F2F2F2;
+    }
+
+    dd {
+        margin-left: 20px;
+        width: 100%;
+    }
+
+    .m-categroy-section {
+        color: #999;
+        font-size: 16px;
+        color: #999;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .citysitem span {
+        margin-left: 33px;
+        color: #666666;
+        font-size: 14px;
+        float: left;
+        margin-top: 14px;
+        cursor: pointer;
+    }
+
+    dl div {}
+
+    .citysitem {
+        width: 900px;
+        ;
+    }
+
+    .selectcity {
+        align-items: center;
+        margin: 20px;
+        position: relative;
+    }
+
+    .pro {
+        width: 8%;
+        margin-top: 10px;
+        color: #666666;
+        font-size: 18px;
+    }
+
+    .new {
+        width: 90%;
+        margin-left: 60px;
+    }
+
+    [v-cloak] {
+        display: none
+    }
+
+    select {
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        /*以上三项,为清除select自带样式*/
+        background: url(/src/img/hx_img/x.png) center right no-repeat #fff;
+        background-origin: content-box;
+        background-size: 12px;
+        width: 210px;
+        padding: 0 8px;
+        height: 34px;
+        line-height: 34px;
+        border-radius: 2px;
+        border: solid 1px #dbdbdb;
+        color: #666;
+        cursor: pointer;
+    }
+
+    .active {
+        background: #DF735A;
+        color: #fff
+    }
+
+    .active:after,
+    .active:before {
+        border: solid transparent;
+        content: ' ';
+        height: 0;
+        left: 100%;
+        position: absolute;
+        width: 0;
+    }
+
+    .active:before {
+        border-width: 6px;
+        border-left-color: #DF735A;
+        top: 18px;
+    }
+    .hotcitys{
+        margin-right: 10px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <%- include ./headerbar.ejs %>
+    <%- include ./headerNav.ejs %>
+    <div class="container marginT20 padding20 white" id="app" v-cloak>
+        <p class="fontsize16 white"><span class="colormaind hotcitys marginR20 hotcitymians">热门城市</span>
+            <span class="hotcitys color666" v-for="item in cityHot" @click="goto(item)">{{item}}</span>
+        </p>
+        <p class="marginT20">
+            <span class="color666 fontsize16 slectcity">城市选择</span>
+            <select name="" id="provicess" class="marginR20" @change.prevent.stop="_Selectpromiss($event)">
+                <option value="" disabled selected style="display: none;">省份</option>
+                <option :value="item.provinceName" v-if="item.provinceName!=='国外'" v-for="(item,index) in allpro">{{item.provinceName}}</option>
+            </select>
+            <select name="" :disabled="cc==''" id="city" class="marginR100" @change="selectedcity($event)">
+                <option value="" disabled selected style="display: none;">城市</option>
+                <option value="" v-for="(item,index) in allcity"  :value="item.cityName">{{item.cityName}}</option>
+            </select>
+            <!-- <span class="color666 fontsize16 marginR20">直接搜索</span>
+            <input type="text" class="search" placeholder="请输入城市中文或拼音" v-model="searchval" @input="search"> -->
+        </p>
+        <p class="fZ16 fontsize16 color666 marginT20 fw sort">按省份首字母选择</p>
+        <div v-for="item in block" :key="item.title" class="m-categroy-section clearfix" >
+            <div :id="'city-'+item.title" class="city_label fl" >{{ item.title }}</div>
+            <div class="fl new">
+                <div v-for="c in item.citys" v-if="c.provinceName!=='国外'" class="clearfix selectcity " :key="c">
+                    <div class="fl pro">{{ c.provinceName | capitalize }}</div>
+                    <div class="citysitem fl"><span v-for="(ci,index) in c.citys"
+                            @click.prevent.stop="goto(ci.cityName)" @mouseenter.prevent.stop="enter($event)"
+                            @mouseout.prevent.stop="out($event)">{{ci.cityName }}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include footer.ejs %>
+    <script type="text/javascript" src="/src/js/cityList.js"></script>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: '#app',
+            data: {
+                listcity: [],
+                block: [],
+                pcr: [],
+                allpro: [],
+                ProductActive: [],
+                cc: '',
+                cityHot:['北京','上海','广州','深圳','天津','重庆','成都','武汉'],
+                allcity: [],
+                isAble: false,
+                searchval: ''
+            },
+            filters: {
+                capitalize: function (value) {
+                    return value.replace("省", '').replace("维吾尔自治区", '').replace("自治区", '')
+                },
+                // filtershop:function(value){
+                //     return this.allpro.filter(function(value){
+                //         return value!==""
+                //     })
+                // }
+            },
+            mounted() {
+                this.FomatCityCompany();
+            },
+            methods: {
+                _TemplateAjax(type, url, data) {
+                    var that = this;
+                    var params;
+                    utils.ajax({
+                        url: url,
+                        async: false,
+                        data: data,
+                        type: type,
+                        success: function (res) {
+                            params = res.data.address
+                        }
+                    })
+                    return params
+                },
+                FomatCityCompany() {
+                    let self = this
+                    var arr = []
+                    let p
+                    let c
+                    let x
+                    let d = {}
+                    let blocks = []
+                    // var pcr = this._TemplateAjax("get", "/admin/region/getPCR", {});
+                    var pcr = address
+                    pcr.forEach(item => {
+                        this.allpro.push(item)
+                    })
+                    console.log('all0',this.allpro);
+                    this.allpro=this.allpro
+                    this.pcr = pcr
+                    pcr.forEach(element => {
+                        p = pinyin.getFullChars(element.provinceName).toLocaleLowerCase().slice(0, 1);
+                        c = p.charCodeAt(0)
+                        if (c > 96 && c < 123) {
+                            if (!d[p]) {
+                                d[p] = []
+                            }
+                            d[p].push(element);
+                        }
+                    });
+                    
+                    for (let [k, v] of Object.entries(d)) {
+                        blocks.push({
+                            title: k.toUpperCase(),
+                            citys: v
+                        })
+                    }
+                    blocks.sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0))
+
+                    self.block = blocks
+                    console.log('block',blocks);
+                    
+                },
+                enter($event) {
+                    $($event.target).css("color", "#DF735A").parent().parent().parent().siblings().addClass(
+                        "active")
+                },
+                out($event) {
+                    $($event.target).css("color", "#666666").parent().parent().parent().siblings().removeClass(
+                        "active")
+                },
+                goto(name) {
+                    localStorage.setItem('cityName', name)
+                    window.location.href = '/'
+                },
+                _Selectpromiss($event) {
+                    this.cc = event.target.value;
+                    this.isAble = true
+                    this.pcr.forEach(item => {
+                        if (this.cc == item.provinceName) {
+                            this.allcity = item.citys
+                        }
+                    })
+                },
+                selectedcity($event) {
+                    localStorage.setItem('cityName', $($event.target).val())
+                    setTimeout(() => {
+                        window.location.href = "/"
+                    }, 1000);
+                },
+                search() {
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

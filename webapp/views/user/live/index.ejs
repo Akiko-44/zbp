@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style lang="less">
+
+.dialog .dialog-main {
+	height: 500px;
+	top: 27%;
+	padding: 0 32px;
+}
+
+.dialog .dialog-body {
+	border-top: 2px solid #CCCCCC;
+	
+    color: #48576a;
+    font-size: 14px;
+    position: initial;
+    bottom: initial;
+    top: 50px;
+    width: 100%;
+    overflow: hidden;
+}
+.dialog .dialog-body p{
+	line-height: 1.2;
+	color: #1A1A1A;
+	margin-top: 28px;
+	
+}
+.dialog .dialog-body p img{
+	width: 150px;
+	
+}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div id="main" class="main user-live liveIndex">
+		<div class="container clearfix">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="content userRightContent">
+				<h2><span class="head">直播列表</span><span class="subhead">Live list</span></h2>
+				<a href="../../user/live/upload" class="btn btn-warning upload">直播上传</a>
+				<div class="table">
+					<ul class="list t-head">
+						<li class="tr">
+							<span class="td">分类名称</span>
+							<span class="td">申请用户名称</span>
+							<span class="td" v-if="false">企业名称</span>
+							<span class="td">提交时间</span>
+							<span class="td">详细信息</span>
+							<span class="td">审核状态</span>
+						</li>
+					</ul>
+					<ul class="list t-body">
+						<li class="tr" v-for="item in tbList">
+							<span class="td">{{item.catName}}</span>
+							<span class="td">{{item.userName}}</span>
+							<span class="td" v-if="false">{{item.companyName}}</span>
+							<span class="td">{{item.createTime}}</span>
+							<span class="td" :class="'td'+item.isCheck">{{isCheckChange(item.isCheck)}}</span>
+							<span class="td" >
+								<button class="btn btn-default look" @click="handleCheck(item)">查看</button>
+								<button class="btn btn-default" v-if="item.isCheck == 2">修改</button>
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="dialog liveDialog">
+			<div class="mask dialog-close"></div>
+			<div class="dialog-main">
+				<div class="dialog-header clearfix">
+					<a class="fr dialog-close hide"><i class="iconfont icon-close"></i></a>
+					<h3 class="dialog-title">直播详情</h3>
+				</div>
+				<div class="dialog-body">
+					<p><span class="t-label">直播标题：</span><span class="value">{{liveDetail.liveTitle}}</span></p>
+					<p><span class="t-label">直播时间：</span><span class="value">{{livTimeChange(liveDetail.livTime)}}</span></p>
+					<p><span class="t-label">直播链接：</span><span class="value">{{liveDetail.liveUrl}}</span></p>
+					<p><img :src="liveDetail.liveLogo"></p>
+					<p><span class="t-label">审核描述：</span><span class="value">{{liveDetail.checkDesc}}</span></p>
+				</div>
+				
+				<div class="dialog-footer tr hide">
+					<a class="btn btn-default">重新绑定</a>
+					<a class="btn btn-primary">强制绑定</a>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+	<%- include ../userFooter.ejs %>
+	
+
+<script>
+	$(".userLeftNav li li:eq(0)").addClass("cur")
+	//显示添加弹出框
+	$(".table .t-body .look").on("click", function(){
+
+//		$(".addAddressDialog .dialog-title").text("新增收货地址");
+		$(".liveDialog").addClass("show");
+	})
+	var vm = new Vue({
+			el: "#main",
+			data: function(){
+				return {
+					applyDialog1:false,
+					applyDialog2:false,
+					tbList:[],
+
+					liveDetail:{}
+				}
+			},
+			mounted: function(){
+				this.getPageForUser()
+				
+			},
+			methods:{
+				handleIsApply(){
+					$(".applyDialog2").addClass("show")
+					
+				},
+				handleOrdRes(){
+					$(".applyDialog1").addClass("show")
+				},
+				getPageForUser(){
+					var self = this
+					utils.ajax({
+						url: "/api/extend/liveInfo/pageForUser",
+						type: "get",
+						data:{
+							offset: 1,
+							limit: 1000
+						},
+						success: function(data){
+							var data = data.data;
+							self.tbList = data.records
+
+						}
+					})
+				},
+				isCheckChange(isCheck){
+					switch(isCheck){
+						case 0:
+						return "待审核"
+						break;
+						case 1:
+						return "审核通过"
+						break;
+						case 2:
+						return "审核不通过"
+						break;
+					}
+				},
+				livTimeChange(livTime){
+					switch(livTime){
+						case 1:
+						return "9点-11点"
+						break;
+						case 2:
+						return "11：30-14点"
+						break;
+						case 3:
+						return "14点-18点"
+						break;
+						case 4:
+						return "18点-24点"
+						break;
+					}
+				},
+				handleCheck(item){
+					var self = this
+					utils.ajax({
+						url: "/api/extend/liveInfo/detail/"+item.id,
+						type: "get",
+						success: function(data){
+							var data = data.data;
+							self.liveDetail = data
+
+						}
+					})
+					$(".liveDialog").addClass("show");
+				}
+			}
+		})
+</script>
+
+</body>
+</html>
+

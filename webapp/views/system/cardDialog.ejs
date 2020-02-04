@@ -1,0 +1,375 @@
+<div class="dialog addCardDialog">
+  <div class="mask"></div>
+  <div class="dialog-main">
+    <div class="dialog-header clearfix">
+      <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+      <h3 class="dialog-title">实名认证</h3>
+    </div>
+    <div class="dialog-body">
+
+      <div>
+        <form>
+          <input type="hidden" name="id" class="id">
+          <table>
+            <tr>
+              <td valign="top"><label>姓名：</label></td>
+              <td colspan="3">
+                <div>
+                  <input type="text" name="name" maxlength="20" datatype="*1-20" nullmsg="请输入姓名，即开户人的真实姓名" errormsg="请输入姓名">
+                </div>
+                <p class="Validform_checktip"></p>
+              </td>
+            </tr>
+            <tr>
+              <td valign="top"><label>身份证号：</label></td>
+              <td colspan="3">
+                <div>
+                  <input type="text" name="idNumber" maxlength="18"
+                    datatype="/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/" nullmsg="请输入身份证，即开户人的身份证号" errormsg="身份证格式错误">
+                </div>
+                <p class="Validform_checktip"></p>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td width="224" valign="top">
+                <div class="uploadbox" previewEl="frontImg">
+                  <img width="100%" height="100%" id="frontImg">
+                  <div>
+                    <i class="icon icon-plus"></i>
+                    <p>手持身份证正面</p>
+                  </div>
+                </div>
+                <input type="hidden" name="idPicFront">
+                <p class="Validform_checktip"></p>
+
+              </td>
+              <td width="30" valign="top">
+                <span style="font-size: 12px">示例</span>
+              </td>
+              <td valign="top" width="210">
+                <div class="demo">
+                  <img width="100%" height="100%" src="../../src/img/sfz2.png">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td valign="top">
+                <div class="uploadbox" previewEl="backImg">
+                  <img width="100%" height="100%" id="backImg">
+                  <div>
+                    <i class="icon icon-plus"></i>
+                    <p>手持身份证反面</p>
+                  </div>
+                </div>
+                <input type="hidden" name="idPicBack">
+                <p class="Validform_checktip"></p>
+              </td>
+              <td valign="top">
+                <span style="font-size: 12px">示例</span>
+              </td>
+              <td valign="top">
+                <div class="demo">
+                  <img width="100%" height="100%" src="../../src/img/sfz1.png">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td colspan="3">
+                <div>
+                  <p class="tip"><span class="red">注：</span>1.真实姓名、身份证号码、及正反面照片需与身份证上保持一致</p>
+                  <p class="tip">&emsp;&emsp;2.身份证照片单张在1.5兆（M）以内，2张</p>
+                  <p class="tip">&emsp;&emsp;3.格式支持jpg\jpeg\png，尺寸不限，建议手持身份证拍摄</p>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+
+    </div>
+    <div class="dialog-footer tc">
+      <a class="btn btn-warning saveBtn">提交</a>
+      <a class="btn btn-default dialog-close">取消</a>
+    </div>
+  </div>
+</div>
+<form id="form2" class="hide" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="previewEl">
+  <input type="hidden" name="auth">
+  <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg2(this)">
+</form>
+<form id="uploadForm" action="../../file/add" target="uploadFrame" method="post" enctype="multipart/form-data"
+  style="display: none">
+  <input type="hidden" name="previewEl">
+  <input type="hidden" name="auth">
+  <input type="file" name="cloudfile" accept="image/*">
+</form>
+<iframe frameborder="0" name="uploadFrame" style="display: none"></iframe>
+<style>
+  .addCardDialog .dialog-main {
+    width: 644px;
+    margin-left: -322px;
+    height: 550px;
+    margin-top: -265px;
+  }
+
+  .addCardDialog .dialog-body {
+    color: #333;
+  }
+
+  .addCardDialog form {
+    margin-top: 35px;
+  }
+
+  .addCardDialog table {
+    width: 100%
+  }
+
+  .addCardDialog input[type="text"] {
+    width: 100%;
+  }
+
+  .addCardDialog .tip {
+    line-height: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .addCardDialog label {
+    display: inline-block;
+    width: 76px;
+    color: #1A1A1A;
+    line-height: 28px;
+  }
+
+  .addCardDialog .demo {
+    width: 210px;
+    height: 100px;
+    position: relative;
+    color: #fff;
+    background: #f8f8f8;
+  }
+
+  .addCardDialog .uploadbox {
+    width: 210px;
+    height: 100px;
+    background: #f8f8f8;
+    border: none;
+    cursor: pointer;
+  }
+
+  .addCardDialog .uploadbox:hover>div {
+    opacity: 1
+  }
+
+  .addCardDialog .uploadbox>div {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #C6C6C6;
+    font-size: 12px;
+  }
+
+  .addCardDialog .uploadbox>div p {
+    margin-top: 5px;
+  }
+
+  .addCardDialog .uploadbox:before,
+  .addCardDialog .uploadbox:after {
+    width: 0;
+    height: 0;
+  }
+
+  .addCardDialog .btn-default,
+  .addCardDialog .btn-default:hover {
+    color: #fff;
+    background: #ccc;
+    border-color: #ccc
+  }
+
+  .addCardDialog .red {
+    color: #FF0000;
+  }
+
+  .addCardDialog .btn {
+    width: 96px;
+  }
+</style>
+<script>
+  window.cardValidform = $(".addCardDialog form").Validform({
+    tiptype: 2
+  })
+  $.Tipmsg.r = "";
+  $('[name="auth"]').val(utils.getCookie("token"));
+
+  function resetDialog() {
+    $(".addCardDialog").find("input").val("");
+    $(".addCardDialog").find("#frontImg").attr("src", "../../src/img/noimg.png").removeAttr("name");
+    $(".addCardDialog").find("#backImg").attr("src", "../../src/img/noimg.png").removeAttr("name");
+  }
+
+  $(document).on("click", ".addCardDialog .saveBtn", function () {
+    if (cardValidform.check(false)) {
+      var name1 = $("#frontImg").attr("name");
+      if (!name1) {
+        utils.alert("warning", "请上传正面照！")
+        return;
+      }
+      var name2 = $("#backImg").attr("name");
+      if (!name2) {
+        utils.alert("warning", "请上传反面照！")
+        return;
+      }
+
+      var str = $(".addCardDialog form").serialize();
+      str = utils.str2json(str);
+      str.idPicFront = name1
+      str.idPicBack = name2
+      $(".addCardDialog").removeClass("show");
+      applyVm.cards=[{
+      	linkName: str.name,
+				idCard: str.idNumber,
+				facePhoto: str.idPicFront,
+				backPhoto: str.idPicBack,
+				status: 1
+      }]
+      /*utils.ajax({
+        url: "/api/userCenter/auth/save",
+        data: JSON.stringify(str),
+        success: function (data) {
+          if (data.success) {
+            utils.alert("success", "添加成功");
+            $(".addCardDialog").removeClass("show");
+            if (typeof applyVm != "undefined") {
+              applyVm.getCards()
+            } else {
+              render();
+            }
+          } else {
+            utils.alert("danger", data.msg);
+          }
+        }
+      })*/
+
+    }
+
+  }).on("click", ".uploadBtn", function (e) {
+    //上传
+    var self = $(e.currentTarget);
+    var data = JSON.parse(self.parents("tr").attr('data-list'))
+    $(".addCardDialog").addClass("show");
+    $(".addCardDialog input[name='name']").val(data.linkName);
+    $(".addCardDialog input[name='idNumber']").val(data.idCard);
+    $(".addCardDialog input[name='idPicFront']").val(data.facePhoto);
+    $(".addCardDialog input[name='idPicBack']").val(data.backPhoto);
+    $("#frontImg").attr("src", data.facePhoto).attr("name", data.facePhoto);
+    $("#backImg").attr("src", data.backPhoto).attr("name", data.backPhoto);
+    /*var id = self.parents("tr").attr("data-id");
+    utils.ajax({
+      url: "/api/userCenter/auth/detail/" + id,
+      type: "get",
+      success: function (data) {
+        data = data.data;
+        $(".addCardDialog").addClass("show");
+        resetDialog();
+        $(".addCardDialog input[name='id']").val(data.id);
+        $(".addCardDialog input[name='name']").val(data.name);
+        $(".addCardDialog input[name='idNumber']").val(data.idNumber);
+        $(".addCardDialog input[name='idPicFront']").val(data.idPicFront);
+        $(".addCardDialog input[name='idPicBack']").val(data.idPicBack);
+        $("#frontImg").attr("src", data.idPicFront).attr("name", data.idPicFront);
+        $("#backImg").attr("src", data.idPicBack).attr("name", data.idPicBack);
+        if (typeof applyVm != "undefined") {
+          applyVm.getCards()
+        }
+      }
+    })*/
+  })
+
+  $(".addCardDialog .uploadbox").on("click", function (e) {
+    var self = $(e.currentTarget);
+    /*$("#uploadForm [name='file']").trigger("click");
+    $("#uploadForm [name='previewEl']").val(self.attr("previewEl"));*/
+    $("#form2 [name='cloudfile']").trigger("click");
+    $("#form2 [name='previewEl']").val(self.attr("previewEl"));
+    var t = $(e.currentTarget).attr("name");
+    $("#form2 [name='cloudfile']").attr("data-target", t);
+  })
+
+  function uploadGoodsImg2(self) {
+    var files = self.files[0]
+    if (files.size > 2 * 1024 * 1024) {
+      utils.alert("info", "图片大小不能超过2M");
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var data = e.target.result;
+      //加载图片获取图片真实宽度和高度
+      var image = new Image();
+      image.onload = function () {
+        var width = image.width;
+        var height = image.height;
+        uploadCallback2(self)
+      }
+      image.src = data;
+    }
+    reader.readAsDataURL(self.files[0]);
+  }
+
+  function uploadCallback2(self) {
+    var uploadFile = new FormData($("#form2")[0]);
+    $.ajax({
+      url: '../../file/upload',
+      /*url:'/api/pic/upload',*/
+      type: 'POST',
+      data: uploadFile,
+      async: false,
+      cache: false,
+      contentType: false, //不设置内容类型
+      processData: false, //不处理数据
+      success: function (data) {
+        var t = $("#form2 [name='previewEl']").val();
+        /*if(t == 'frontImg'){
+        	$("[name='idPicFront']").val(data.data.picUrl);	
+        	
+        }else if(t == 'backImg'){
+        	$("[name='idPicBack']").val(data.data.picUrl);	
+        }
+        $(".uploadbox[previewEl='"+t+"']").html('<img id="'+t+'" src="'+data.data.picUrl+'" name="'+data.data.picUrl+'" height="100%" width="100%">').addClass("uploaded")
+        $("[name='"+t+"']").val(data.data.picUrl);*/
+        if (t == 'frontImg') {
+          $("[name='idPicFront']").val(data.data);
+
+        } else if (t == 'backImg') {
+          $("[name='idPicBack']").val(data.data);
+        }
+        $(".uploadbox[previewEl='" + t + "']").html('<img id="' + t + '" src="' + data.data + '" name="' + data
+          .data + '" height="100%" width="100%">').addClass("uploaded")
+        $("[name='" + t + "']").val(data.data);
+        $("#form2 input").val("");
+      },
+      error: function () {
+
+      }
+    })
+  }
+  $("#uploadForm [name='cloudfile']").on("change", function (e) {
+    var val = $(e.currentTarget).val();
+    var files = this.files[0]
+    if (files.size > 2 * 1024 * 1024) {
+      utils.alert("info", "图片大小不能超过2M");
+      return false;
+    }
+    if (val != "") {
+      $("#uploadForm").submit();
+    }
+  })
+  /*cloudfile => file*/
+</script>

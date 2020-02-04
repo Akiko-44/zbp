@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+    <script src="../../dist/js/template.js"></script>
+    <script src="../../dist/js/lib.js"></script>
+    <script src="../../dist/js/v.js"></script>
+    <title><%= title %></title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        ul,
+        h5 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .cp_main {
+            width: 1200px;
+            margin: auto;
+            background-color: #fff;
+        }
+
+        .cp_content {
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .cp_type {
+            width: 100%;
+            border-bottom: 2px solid rgb(224, 115, 89);
+            margin-bottom: 25px;
+        }
+
+        .cp_type li {
+            display: inline-block;
+            width: 130px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .cp_type li.on {
+            color: #fff;
+            background-color: rgb(224, 115, 89);
+        }
+
+        .cp_list .cp_list_detail {
+            border-bottom: 1px solid #ededed;
+            padding: 20px 0;
+        }
+
+        .cp_per {
+            display: flex;
+        }
+
+        .cp_per img {
+            width: 45px;
+            height: 45px;
+            border-radius: 100%;
+            background-color: #f2f2f2;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .cp_perMsg {
+            flex: 1;
+        }
+
+        .cp_perMsg h5 {
+            font-size: 15px;
+            color: #666;
+        }
+
+        .cp_perMsg p {
+            font-size: 13px;
+            color: #999;
+            margin: 7px 0 0;
+        }
+
+        .cp_state {
+            width: 105px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            font-size: 15px;
+            color: #999;
+            font-size: #999;
+            border: 1px solid #999;
+            border-radius: 8px;
+        }
+
+        .cp_state_ok {
+            color: rgb(224, 115, 89);
+            font-size: rgb(224, 115, 89);
+            border: 1px solid rgb(224, 115, 89);
+        }
+
+        .cp_dis {
+            font-size: 15px;
+            color: #555;
+            line-height: 1.5;
+            margin: 15px 0 25px;
+        }
+
+        .cp_detail p {
+            color: #888;
+            font-size: 14px;
+            margin: 0px 0 15px;
+        }
+
+        .cp_image {
+            overflow: hidden;
+        }
+
+        .cp_image img {
+            width: 220px;
+            height: 205px;
+            border-radius: 7px;
+            margin-right: 10px;
+            float: left;
+            margin-top: 15px;
+        }
+
+        .cp_image img:nth-child(5n) {
+            margin-right: 0;
+        }
+
+        .getnodata {
+            text-align: center;
+        }
+
+        [v-cloak] {
+            display: none
+        }
+
+        .complaintEnter {
+            border: none;
+            background: #DF735A;
+            color: #fff;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+
+        }
+    </style>
+</head>
+
+<body>
+    <%- include ../headerbar.ejs %>
+    <%- include ../headerNav.ejs %>
+    <div class="container">
+        <div class="router" id="router">
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+                <el-breadcrumb-item>
+                    <a href="/">首页</a>
+                </el-breadcrumb-item>
+                <el-breadcrumb-item :to="{ path: '/' }">
+                    <a href="/user/Complaint">投诉</a>
+                </el-breadcrumb-item>
+                <el-breadcrumb-item>投诉处理公示</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+    </div>
+    <div class='cp_main' id="cp_main" v-cloak>
+        <div class='cp_content'>
+            <div class='cp_type clearfix'>
+                <ul class="fl">
+                    <li v-bind:class='{on:index===tabselct}' v-for="(item,index) in list" @click="tab(index)">{{
+                        item.type}}</li>
+                </ul>
+                <a class="complaintEnter fr" href="/user/ComplaintDesc">投诉入口</a>
+            </div>
+            <ul class='cp_list' v-if="show==0">
+                <li class='cp_list_detail' v-for="(item,index) in info">
+                    <div class='cp_per'>
+                        <!-- <img src=""> -->
+                        <div class='cp_perMsg'>
+                            <h5 class='cp_perName'>{{item.userName}}</h5>
+                            <p>投诉时间：{{item.complaintDate}}</p>
+                        </div>
+                        <!-- <div class='cp_state'>未解决</div> -->
+                        <!-- 已解决 -->
+                        <!-- <div class='cp_state cp_state_ok'>已解决</div> -->
+                    </div>
+                    <div class='cp_dis'>
+                        <span>问题描述：{{item.complaintContent}}</span>
+                    </div>
+                    <div class='cp_detail'>
+                        <p>投诉品牌：{{item.brandName}}</p>
+                        <p>投诉商家：{{item.merchantName}}</p>
+                        <p>投诉商品：{{item.goodName}}</p>
+                        <!-- <p>处理结果：<span @click="goto(item.id)">查看>></span></p> -->
+                        <p>处理结果：{{item.complaintHandle}}</p>
+                        <p>处理时间：{{item.complaintHandleDate}}</p>
+                    </div>
+                    <!-- <div class='cp_image'>
+                        <img src="">
+                        <img src="">
+                        <img src="">
+                        <img src="">
+                        <img src="">
+                    </div> -->
+                </li>
+                <li v-if="!info.length" class="getnodata">暂无数据</li>
+            </ul>
+            <ul class='cp_list' v-if="show==1">
+                <li class='cp_list_detail' v-for="(item,index) in info" v-if="info.length">
+                    <div class='cp_per'>
+                        <!-- <img src=""> -->
+                        <div class='cp_perMsg'>
+                            <h5 class='cp_perName'>{{item.userName}}</h5>
+                            <p>投诉时间：{{item.complaintDate}}</p>
+                        </div>
+                        <!-- <div class='cp_state' v-if="item.state==0">未解决</div>
+                        <div class='cp_state' v-if="item.state==1">已解决</div> -->
+                        <!-- 已解决 -->
+                        <!-- <div class='cp_state cp_state_ok'>已解决</div> -->
+                    </div>
+                    <div class='cp_dis'>
+                        <span>问题描述：{{item.complaintContent}}</span>
+                    </div>
+                    <div class='cp_detail'>
+                        <p>投诉品牌：{{item.brandName}}</p>
+                        <p>投诉商家：{{item.merchantName}}</p>
+                        <p>投诉商品：{{item.goodName}}</p>
+                        <!-- <p>处理结果：<span @click="goto(item.id)">查看>></span></p> -->
+                        <p>处理结果：{{item.complaintHandle}}</p>
+                        <p>处理时间：{{item.complaintHandleDate}}</p>
+                    </div>
+                    <!-- <div class='cp_image'>
+                        <img src="">
+                        <img src="">
+                        <img src="">
+                        <img src="">
+                        <img src="">
+                    </div> -->
+                </li>
+                <li v-if="!info.length" class="getnodata">暂无数据</li>
+            </ul>
+        </div>
+    </div>
+    <%- include ../footer.ejs %>
+    <script>
+        var routerVm = new Vue({
+            el: "#router"
+        })
+        new Vue({
+            el: '#cp_main',
+            data: {
+                list: [{ type: '投诉大厅' }, { type: '我的投诉' }],
+                tabselct: 0,
+                show: 0,
+                info: []
+            },
+            mounted() {
+                this.tab(0)
+            },
+            methods: {
+                tab(i) {
+                    data = {
+                        offset: 1,
+                        limit: 2
+                    }
+                    var data = i ? Object.assign({}, data, { mobilePhone: utils.getCookie("phone") }) : data
+                    var url = i ? "/api/portal/fightingFalse/searchMyComplaint" : "/api/portal/fightingFalse/searchAllDeal"
+                    this.show = this.tabselct = i
+                    this.info = this._TemplateAjax("get", url, data)
+                },
+                goto(id) {
+                    window.location.href = "/admin/portal/fightingFalse/complaintDealRightNow?id=" + id
+                },
+                _TemplateAjax(type, url, data) {
+                    var that = this;
+                    var params;
+                    utils.ajax({
+                        url: url,
+                        async: false,
+                        data: data,
+                        type: type,
+                        success: function (res) {
+                            params = res.data.records
+                        }
+                    })
+                    return params
+                },
+            },
+        })
+
+    </script>
+</body>
+
+</html>

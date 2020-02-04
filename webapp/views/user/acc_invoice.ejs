@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.tipWrap {padding: 20px;border: 1px solid #E5E5E5;margin: 20px 0;}
+.tipWrap h2 {font-size: 18px;}
+.tipWrap h3 {color: #1a1a1a;margin-top: 15px;font-weight: bold;}
+.tipWrap p {margin-top: 15px;font-size: 14px;}
+#list {width: 100%;border: 1px solid #EAEAEA;}
+#list tbody tr {border-top: 1px dashed #EAEAEA;}
+#list tbody tr:first-child {border-top: 0;}
+#list thead {background: #F4F4F4;color: #666;line-height: 44px;}
+#list th {font-weight: normal;font-size: 16px;}
+.userPanel {margin-top: 20px;}
+.userPanel p {margin: 15px 0;font-size: 14px;}
+.userPanel p label {color: #666;}
+.title {font-size: 16px;}
+.btnWrap {margin-top: 20px;}
+</style>
+</head>
+<body class="userAccount">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div class="userAccInvoiceWrap">
+					<div class="tab-default userTab">
+						<div class="tab-header">
+							<div>
+								<ul>
+									<li class="active"><a><b>不开发票</b></a></li>
+									<li class=""><a><b>增票资质</b></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="tab-body">
+							<div class="tab-body-panel show" style="display: block;">
+								
+								<div class="tipWrap">
+									<h2 class="yellow">温馨提示</h2>
+									<h3>一、发票换开：</h3>
+									<p>1、订单完成60天内，可支持换开发票一次，换开时，若原发票为纸质发票，则需将纸质发票寄回，邮寄地址详见收票人信息页。</p>
+									<p>2、不支持变更“企业抬头”。</p>
+									<h3>二、补开发票规则</h3>
+									<p>1、增值税普通发票订单完成后1年内可补开发票，增值税专用发票订单完成10天后，180天内可以补开发票</p>
+									<h3>三、企业发票：</h3>
+									<p>1、增值税专用发票资质维护入口：我的-账户设置-增票资质。</p>
+								</div>
+								
+								<table id="list">
+									<thead>
+										<tr>
+											<th>订单详情</th>
+											<th>数量</th>
+											<th>发票类型</th>
+											<th>状态</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+									
+									</tbody>
+								</table>
+								
+							</div>
+							<div class="tab-body-panel" style="display: none;">
+								
+								<div class="tipWrap">
+									<h2 class="yellow">温馨提示</h2>
+									<h3>我们会在一个工作日内完成审核工作。</h3>
+									<p>1）注意有效增值税发票开票资质仅为一个。</p>
+									<p>2）发票常见问题查看增票资质帮助。</p>
+									<p>3）本页面信息仅供增值税专用发票-资质审核使用，切勿进行支付相关业务，谨防上当受骗。</p>
+								</div>
+								
+								<div>
+									<h2 class="title">您的增票资质：<span class="gray">未添加</span><span class="green hide">已通过审核</span></h2>
+									<div class="btnWrap">
+										<a class="btn btn-warning" id="showAddDialog">添加增票资质</a>
+									</div>
+									<div>
+										<div class="panel userPanel">
+											<div class="panel-header">
+												<div class="panel-control">
+													<a class="blue">修改</a>&emsp;
+													<a class="blue">删除</a>
+												</div>
+												<div class="panel-title">增票资质信息</div>
+											</div>
+											<div class="panel-body">
+												<p>
+													<label>单位名称：</label>
+													<span></span>
+												</p>
+												<p>
+													<label>纳税人识别码：</label>
+													<span></span>
+												</p>
+												<p>
+													<label>注册地址：</label>
+													<span></span>
+												</p>
+												<p>
+													<label>注册电话：</label>
+													<span></span>
+												</p>
+												<p>
+													<label>开户银行：</label>
+													<span></span>
+												</p>
+												<p>
+													<label>银行账户：</label>
+													<span></span>
+												</p>
+											</div>
+										</div>
+										<div class="panel userPanel">
+											<div class="panel-header">
+												<div class="panel-control">
+													<a class="blue">修改</a>&emsp;
+													<a class="blue">删除</a>
+												</div>
+												<div class="panel-title">收票地址信息</div>
+											</div>
+											<div class="panel-body">
+												<p>
+													<label>收票人姓名：</label>
+													<span></span>
+												</p>
+												<p>
+													<label>收票人手机号：</label>
+													<span></span>
+												</p>
+												<p>
+													<label>收票人省份：</label>
+													<span></span>
+												</p>
+												<p>
+													<label>收票人地址：</label>
+													<span></span>
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+<script>
+var routerVm = new Vue({
+	el: "#router"
+})
+$(".userLeftNav li li:eq(5)").addClass("cur")
+
+
+
+
+
+</script>
+</body>
+</html>
+

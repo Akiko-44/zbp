@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		.noticeDetail .body {
+			padding: 50px;
+			background: #ffffff;
+			font-size: 14px;
+			color: #666666;
+		}
+
+		.noticeDetail .active-header {
+			font-size: 18px;
+			text-align: center;
+		}
+
+		.noticeDetail .active-time {
+			text-align: center;
+			font-size: 12px;
+			color: #999999;
+			margin-bottom: 20px;
+			padding: 10px 0 50px;
+			border-bottom: 1px solid #F3F3F3;
+		}
+
+		.noticeDetail .active-content {
+			line-height: 18px;
+		}
+	</style>
+</head>
+
+<body class="noticeDetail">
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include ../headerNav.ejs %>
+
+	<div id="main" class="main container">
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item><a href="/">首页</a></el-breadcrumb-item>
+					<el-breadcrumb-item>网站公告</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		<div class="container clearfix body">
+			<div class="active-header">
+				<h3>{{detail.noticeName}}</h3>
+			</div>
+			<div class="active-time">{{detail.addTime}}</div>
+			<div class="active-content" v-html="detail.noticeDetails"></div>
+		</div>
+	</div>
+	<%- include ../footer.ejs %>
+</body>
+<script type="text/javascript">
+	var mainVm = new Vue({
+		el: '#main',
+		data: {
+			detail: {}
+		},
+		mounted: function () {
+			utils.ajax({
+				type: "get",
+				data: {
+					id: this.getQueryVariable('id')
+				},
+				url: "/api/portal/platformNotice/searchById",
+				success: (res) => {
+					this.detail = res.data
+				}
+			});
+		},
+		methods: {
+			//获取url的参数
+			getQueryVariable(variable) {
+				var query = window.location.search.substring(1);
+				var vars = query.split("&");
+				for (var i = 0; i < vars.length; i++) {
+					var pair = vars[i].split("=");
+					if (pair[0] == variable) {
+						return pair[1];
+					}
+				}
+				return (false);
+			}
+		}
+	})
+</script>
+
+</html>

@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="baidu-site-verification" content="ITnvXxZBIi" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。">
+	<meta name="keywords"
+		content="中宝协云平台、中宝云、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品">
+	<title>中宝协云平台_珠宝品牌大型购物商城!</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<script src="../dist/js/lib.js"></script>
+	<style>
+		.clearfix:after {
+			clear: both;
+			content: "";
+			display: block;
+			height: 0;
+		}
+
+		.clearfix {
+			*zoom: 1;
+		}
+
+		.hide {
+			display: none !important;
+		}
+
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		html,
+		body,
+		#main {
+			height: 100%;
+			overflow: hidden;
+		}
+
+		body {}
+
+		ul {
+			list-style: none;
+		}
+
+		a {
+			text-decoration: none;
+			cursor: pointer;
+			outline: none;
+		}
+
+		.link {
+			color: #333;
+		}
+
+		/*.head-middle {
+				display: none;
+			}*/
+
+		#main {
+			position: relative;
+		}
+
+		.left-box,
+		.right-box {
+			position: fixed;
+			top: 20%;
+			transition: all 1s;
+			-moz-transition: all 1s;
+			-webkit-transition: all 1s;
+		}
+
+		.left-box .lump-box,
+		.right-box .lump-box {
+			height: 100%;
+			position: absolute;
+			width: 40px;
+			top: 0;
+		}
+
+		.left-box .lump-box {
+			right: -40px;
+		}
+
+		.right-box .lump-box {
+			left: -40px;
+		}
+
+		.left-box {
+			left: -101px;
+			padding-left: 20px;
+		}
+
+		.left-box:hover {
+			left: 0px;
+		}
+
+		.left-box ul {
+			background-color: #eceff5;
+			padding: 11px 0;
+			width: 81px;
+			text-align: center;
+			font-size: 14px;
+		}
+
+		.left-box ul li {
+			height: 56px;
+			line-height: 56px;
+		}
+
+		.left-box ul a {
+			display: inline-block;
+			height: 56px;
+			line-height: 56px;
+			color: #333333;
+		}
+
+		.left-box ul a:hover {
+			color: #000000;
+			font-weight: bolder;
+		}
+
+		.left-box .lump {
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			top: 0px;
+			bottom: 0px;
+			left: 20px;
+			margin: auto;
+			background: url(../src/img/index/icon_greensmall@2x.png) no-repeat center/100% 100%;
+		}
+
+		.right-box {
+			right: -101px;
+			padding-right: 20px;
+		}
+
+		.right-box:hover {
+			right: 0px;
+		}
+
+		.right-box ul {
+			background-color: #eceff5;
+			/*padding: 11px 0;*/
+			width: 81px;
+			text-align: center;
+			font-size: 14px;
+		}
+
+		.right-box ul li {
+			height: 58px;
+			line-height: 56px;
+		}
+
+		.right-box ul li i {
+			display: inline-block;
+			width: 32px;
+			height: 32px;
+		}
+
+		.right-box .lump {
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			top: 0px;
+			bottom: 0px;
+			margin: auto;
+			background: url(../src/img/index/icon_redsmall@2x.png) no-repeat center/100% 100%;
+		}
+
+		.color-lump-box {
+			width: 297px;
+			height: 297px;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 42%;
+			bottom: 0;
+			margin: 0 auto;
+			clear: both;
+			margin-top: -249px;
+		}
+
+		.color-lump-box .box {
+			display: inline-block;
+			width: 92px;
+			height: 92px;
+			float: left;
+			margin: 3.5px;
+			position: relative;
+			top: 0;
+			left: 0;
+			transition: all .6s;
+			-moz-transition: all .6s;
+			-webkit-transition: all .6s;
+		}
+
+		.color-lump-box .box .img-out {
+			z-index: 1;
+		}
+
+		.color-lump-box .box img {
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			opacity: 1;
+			transition: all .6s;
+			-moz-transition: all .6s;
+			-webkit-transition: all .6s;
+		}
+
+		.box.hover .img-out {
+			opacity: .6;
+		}
+
+		.box1 {
+			/*box-shadow: 0px 0px 10px rgb(154,105,40) inset;
+				background-color: rgb(248,157,42);*/
+		}
+
+		.box1.hover {
+			top: -20px;
+			left: -20px;
+		}
+
+		.box2 {
+			/*box-shadow: 0px 0px 10px rgb(56,141,42) inset;
+				background-color: rgb(73,227,50);*/
+		}
+
+		.box2.hover {
+			top: -20px;
+		}
+
+		@keyframes moveRoat {
+			0% {
+				transform: translate(66px, -280px);
+			}
+
+			60% {
+				transform: translate(66px, 0);
+			}
+
+			85% {
+				transform-origin: left bottom;
+				transform: translate(66px, 0px) rotateZ(-45deg);
+			}
+
+			92% {
+				transform-origin: left bottom;
+				transform: translate(66px, 0px) rotateZ(-62.25deg);
+			}
+
+			100% {
+				transform-origin: left bottom;
+				transform: translate(92px, 0px) rotateZ(-90deg);
+			}
+		}
+
+		@-moz-keyframes myfirst
+		/* Firefox */
+
+			{
+			0% {
+				-moz-transform: translate(20px, -280px);
+			}
+
+			50% {
+				-moz-transform: translate(20px, 0px);
+			}
+
+			90% {
+				-moz-transform: rotateZ(-85deg);
+			}
+
+			100% {
+				-moz-transform: translate(0px, 0px) rotateZ(-90deg);
+			}
+		}
+
+		@-webkit-keyframes myfirst
+		/* Safari 和 Chrome */
+
+			{
+			0% {
+				-webkit-transform: translate(20px, -280px);
+			}
+
+			50% {
+				-webkit-transform: translate(20px, 0px);
+			}
+
+			90% {
+				-webkit-transform: rotateZ(-85deg);
+			}
+
+			100% {
+				-webkit-transform: translate(0px, 0px) rotateZ(-90deg);
+			}
+		}
+
+		@keyframes leftMove {
+			0% {
+				transform: translateX(0);
+			}
+
+			50% {
+				transform: translateX(0);
+			}
+
+			70% {
+				transform: translateX(0);
+			}
+
+			100% {
+				transform: translateX(-14px);
+			}
+		}
+
+		@-moz-keyframes leftMove {
+			0% {
+				-moz-transform: translateX(0);
+			}
+
+			50% {
+				-moz-transform: translateX(0);
+			}
+
+			70% {
+				-moz-transform: translateX(0);
+			}
+
+			100% {
+				-moz-transform: translateX(-14px);
+			}
+		}
+
+		@-webkit-keyframes leftMove {
+			0% {
+				-webkit-transform: translateX(0);
+			}
+
+			50% {
+				-webkit-transform: translateX(0);
+			}
+
+			70% {
+				-webkit-transform: translateX(0);
+			}
+
+			100% {
+				-webkit-transform: translateX(-14px);
+			}
+		}
+
+		.box1,
+		.box4,
+		.box7 {
+			/*left: -6px!important;*/
+			animation: leftMove 1.7s forwards;
+			-moz-animation: leftMove 1.7s forwards;
+			-webkit-animation: leftMove 1.7s forwards;
+		}
+
+		.box3 {
+			/*box-shadow: 0px 0px 10px rgb(85,88,140) inset;
+				background-color: rgb(119,125,221);*/
+			animation: moveRoat 1.3s linear;
+			-moz-animation: moveRoat 1.3s linear;
+			-webkit-animation: moveRoat 1.3s linear;
+
+		}
+
+		.box3.hover {
+			top: -20px;
+			left: 20px;
+		}
+
+		.box4 {
+			/*box-shadow: 0px 0px 10px rgb(147,31,83) inset;
+				background-color: rgb(223,15,113);*/
+		}
+
+		.box4.hover {
+			left: -20px;
+		}
+
+		.box5 {
+			/*box-shadow: 0px 0px 10px rgb(158,163,35) inset;
+				background-color: rgb(249,255,46);*/
+		}
+
+		.box6 {
+			/*box-shadow: 0px 0px 10px rgb(231,235,236) inset;
+				background-color: rgb(225,225,239);*/
+		}
+
+		.box6.hover {
+			left: 20px;
+		}
+
+		.box7 {
+			/*box-shadow: 0px 0px 10px rgb(66,81,142) inset;
+				background-color: rgb(81,105,210);*/
+		}
+
+		.box7.hover {
+			left: -20px;
+		}
+
+		.box8 {
+			/*box-shadow: 0px 0px 10px rgb(72,136,165) inset;
+				background-color: rgb(94,230,253);*/
+		}
+
+		.box8.hover {
+			top: 20px;
+		}
+
+		.box9 {
+			/*box-shadow: 0px 0px 10px rgb(57,132,76) inset;
+				background-color: rgb(90,194,101);*/
+		}
+
+		.box9.hover {
+			top: 20px;
+			left: 20px;
+		}
+
+		.color-lump-box .box .content {
+			position: absolute;
+			/*子元素给绝对定位*/
+			width: 100%;
+			height: 100%;
+		}
+
+		.nav-box {
+			position: absolute;
+			margin: auto;
+			bottom: 151px;
+			left: 0;
+			right: 0;
+			width: 1015px;
+		}
+
+		.nav-box li {
+			float: left;
+			margin-left: 20px;
+			transition: all .6s;
+			-moz-transition: all .6s;
+			-webkit-transition: all .6s;
+			position: relative;
+			top: 0;
+		}
+
+		.nav-box li.hover {
+			top: -12px;
+		}
+
+		.nav-box li i {
+			float: left;
+			display: block;
+			width: 15px;
+			height: 24px;
+		}
+
+		.nav-box li .text {
+			float: left;
+			margin-left: 5px;
+			font-size: 12px;
+		}
+
+		.nav-box li .text p {
+			line-height: 1;
+			color: #000;
+		}
+
+		.copyright {
+			text-align: center;
+			position: absolute;
+			bottom: 120px;
+			width: 100%;
+			font-size: 12px;
+		}
+
+		.right-box ul li i,
+		.right-box ul li span {
+			display: block;
+			margin: 0 auto;
+			line-height: 1.5;
+		}
+
+		.right-box ul li a {
+			color: #333333;
+		}
+
+		.right-box ul li a:hover {
+			color: #999;
+		}
+
+		.right-box ul li i {
+			width: 40px;
+			height: 40px;
+			background-repeat: no-repeat;
+			background-size: 100% auto;
+		}
+
+		.icon-close {
+			width: 30px;
+			height: 30px;
+			background-image: url(../src/img/sprite/close.png);
+			background-size: 100% 100%;
+		}
+
+		.wosn {
+			padding-left: 20px;
+			margin-bottom: 20px;
+		}
+
+		.wosnLeft {
+			height: 100px;
+			width: 300px;
+			position: absolute;
+			left: 20px;
+		}
+
+		.wosnRight {
+			height: 100px;
+			width: 300px;
+			position: absolute;
+			right: 0px;
+		}
+
+		.hoverImg_1:hover i {
+			background-image: url(../src/img/right_bar/downLoadimg.png) !important;
+			width: 24px !important;
+			position: relative !important;
+			top: 10px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.hoverImg_2:hover i {
+			background-image: url(../src/img/right_bar/cartimg.png) !important;
+			width: 24px !important;
+			position: relative !important;
+			top: 10px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.hoverImg_3:hover i {
+			background-image: url(../src/img/right_bar/wantGoimg.png) !important;
+			width: 20px !important;
+			position: relative !important;
+			top: 10px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.hoverImg_4:hover i {
+
+			background-image: url(../src/img/right_bar/kefuimg.png) !important;
+			width: 24px !important;
+			position: relative !important;
+			top: 10px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.hoverImg_5:hover i {
+			background-image: url(../src/img/right_bar/userimg.png) !important;
+			width: 24px !important;
+			position: relative !important;
+			top: 10px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.hoverImg_6:hover i {
+			background-image: url(../src/img/right_bar/msgimg.png) !important;
+			width: 20px !important;
+			position: relative !important;
+			top: 10px;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.right-box ul li:hover {
+			background: rgba(218, 57, 55);
+		}
+
+		.right-box ul li:hover span {
+			color: #fff;
+		}
+	</style>
+</head>
+<script type="text/javascript">
+	/**
+		 * 小能客服
+		 * */
+
+	var siteid = utils.getCookie('siteid') || ''
+	var NTKF_PARAM = {
+		siteid: siteid,                    //企业ID，为固定值，必填
+		settingid: "zd_1000_9999",    //接待组ID，为固定值，必填
+		uid: "",                              //用户ID，支持字母、数字、下划线。未登录可以为空，但不能给null，uid赋予的值在显示到小能客户端上
+		uname: "",                       //未登录可以为空，但不能给null，uname赋予的值显示到小能客户端上
+	}
+</script>
+
+<body class="index-bd">
+	<%- include headerIndexbar %>
+	<div id="main" class="main" style="min-height: 600px;">
+		<div class="left-box">
+			<ul>
+				<li>
+					<a href="jewelry/shopList">品牌</a>
+				</li>
+				<li>
+					<a href="manufacture/product">工艺</a>
+				</li>
+				<li>
+					<a href="design/designer">设计</a>
+				</li>
+				<li>
+					<a href="news/more/401?title=%u91CD%u8981%u65B0%u95FB">资讯</a>
+				</li>
+				<li>
+					<a href="exchange/swap">置换</a>
+				</li>
+				<li>
+					<a href="http://zhibo.gacjc.com">直播</a>
+				</li>
+			</ul>
+			<div class="lump-box">
+				<div class="lump"></div>
+			</div>
+
+		</div>
+		<div class="right-box">
+			<ul>
+				<li>
+					<a onclick="$('#downLoad').addClass('show')" class="hoverImg_1">
+						<i style="background-image: url(../src/img/right_bar/downLoad.png);"></i>
+						<span>
+							APP
+						</span>
+					</a>
+				</li>
+				<li>
+					<a data-href="../exchange/cart" onclick="toHref(this)" class="hoverImg_2">
+						<i style="background-image: url(../src/img/right_bar/cart.png);"></i>
+						<span>
+							购物车
+						</span>
+					</a>
+				</li>
+				<li>
+					<a data-href="../user/collect/1" onclick="toHref(this)" class="hoverImg_3">
+						<i style="background-image: url(../src/img/right_bar/wantGo.png);"></i>
+						<span>
+							收藏
+						</span>
+					</a>
+				</li>
+				<li onclick="NTKF.im_openInPageChat('zd_1000_9999')" class="hoverImg_4">
+					<i style="background-image: url(../src/img/right_bar/kefu.png);"></i>
+					<span>
+						客服
+					</span>
+				</li>
+				<li>
+					<a data-href="../user/account" onclick="toHref(this)" class="hoverImg_5">
+						<i style="background-image: url(../src/img/right_bar/user.png);"></i>
+						<span>
+							用户
+						</span>
+					</a>
+				</li>
+				<li>
+					<a data-href="../user/message" onclick="toHref(this)" class="hoverImg_6">
+						<i style="background-image: url(../src/img/right_bar/msg.png);"></i>
+						<span>
+							消息
+						</span>
+					</a>
+				</li>
+			</ul>
+			<div class="lump-box">
+				<div class="lump"></div>
+			</div>
+		</div>
+		<div class="color-lump-box">
+			<a class="box box1" href="jewelry/index">
+				<img class="img-out" src="../src/img/index/icon_orange@2x.png" />
+				<img class="img-in" src="../src/img/index/image6.png" />
+			</a>
+			<a class="box box2" href="manufacture/index">
+				<img class="img-out" src="../src/img/index/icon_green@2x.png" />
+				<img class="img-in" src="../src/img/index/image1.png" />
+			</a>
+			<a class="box box3" href="jewelry_fair/index">
+				<img class="img-out" src="../src/img/index/icon_bluemore@2x.png" />
+				<img class="img-in" src="../src/img/index/image2.png" />
+			</a>
+			<a class="box box4" href="design/index">
+				<img class="img-out" src="../src/img/index/icon_red@2x.png" />
+				<img class="img-in" src="../src/img/index/image8.png" />
+			</a>
+			<a class="box box5">
+				<img class="img-out" src="../src/img/index/icon_yellow@2x.png" />
+				<img class="img-in" src="../src/img/index/image5.png" />
+			</a>
+			<a class="box box6" href="news/">
+				<img class="img-out" src="../src/img/index/icon_white@2x.png" />
+				<img class="img-in" src="../src/img/index/image61.png" />
+			</a>
+			<a class="box box7" href="gallery/index">
+				<img class="img-out" src="../src/img/index/icon_bluemore@2x.png" />
+				<img class="img-in" src="../src/img/index/image7.png" />
+			</a>
+			<a class="box box8" href="exchange/index">
+				<img class="img-out" src="../src/img/index/icon_blue@2x.png" />
+				<img class="img-in" src="../src/img/index/image3.png" />
+			</a>
+			<a class="box box9" href="http://zhibo.gacjc.com">
+				<img class="img-out" src="../src/img/index/icon_greenmore@2x.png" />
+				<img class="img-in" src="../src/img/index/image21.png" />
+			</a>
+		</div>
+		<div class="nav-box">
+			<div class="wosn">
+				<!--<script type='text/javascript' src='http://www.wanbaoooo.com/static/js/wbao_link.js'></script>-->
+				<a class="wosnLeft" id="wosnLeft">
+
+				</a>
+				<a class="wosnRight" id="wosnRight">
+
+				</a>
+				<img src="https://www.wanbaoooo.com/static/images/home_link.jpg" alt="" />
+			</div>
+			<ul class="clearfix">
+				<li class="nav1 clearfix">
+					<a href="jewelry/index">
+						<i style="background: url(../src/img/index/icon_jewelry.png) no-repeat center/100% 100%;"></i>
+						<div class="text">
+							<p>珠宝店</p>
+							<p>Jewelry Store</p>
+						</div>
+					</a>
+				</li>
+				<li class="nav1 clearfix">
+					<a href="manufacture/index">
+						<i style="background: url(../src/img/index/icon_make.png) no-repeat center/100% 100%;"></i>
+						<div class="text">
+							<p>制造间</p>
+							<p>Manufactory</p>
+						</div>
+					</a>
+				</li>
+				<li class="nav1 clearfix">
+					<a href="jewelry_fair/index">
+						<i style="background: url(../src/img/index/icon_exhibit.png) no-repeat center/100% 100%;"></i>
+						<div class="text">
+							<p>珠宝展</p>
+							<p>Jewelry Exhibition</p>
+						</div>
+					</a>
+				</li>
+				<li class="nav1 clearfix">
+					<a href="design/index">
+						<i style="background: url(../src/img/index/icon_design.png) no-repeat center/100% 100%;"></i>
+						<div class="text">
+							<p>设计室</p>
+							<p>Design Room</p>
+						</div>
+					</a>
+				</li>
+				<li class="nav1 clearfix">
+					<a href="news/">
+						<i style="background: url(../src/img/index/icon_news.png) no-repeat center/100% 100%;"></i>
+						<div class="text">
+							<p>行业之声</p>
+							<p>Industry Voice</p>
+						</div>
+					</a>
+				</li>
+				<li class="nav1 clearfix">
+					<a href="gallery/index">
+						<i style="background: url(../src/img/index/icon_text.png) no-repeat center/100% 100%;"></i>
+						<div class="text">
+							<p>图文馆</p>
+							<p>Graphic Museum</p>
+						</div>
+					</a>
+				</li>
+				<li class="nav1 clearfix">
+					<a href="exchange/index">
+						<i style="background: url(../src/img/index/icon_exchange.png) no-repeat center/100% 100%;"></i>
+						<div class="text">
+							<p>互换坊</p>
+							<p>Swap Studio</p>
+						</div>
+					</a>
+				</li>
+				<li class="nav1 clearfix">
+					<a href="http://zhibo.gacjc.com">
+						<i style="background: url(../src/img/index/icon_live.png) no-repeat center/100% 100%;"></i>
+						<div class="text">
+							<p>直播厅</p>
+							<p>Live Hall</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="copyright tc">
+			<p>版权所有 中宝协（北京）珠宝文化有限公司 保留所有版权 京ICP备18003055号-1 &nbsp;&nbsp; 京网文 [ 2018 ] 11190-1028 号</p>
+			<p>Copyright@2017-2018 www.gacjc.com,All Rights Reserved</p>
+		</div>
+
+		<%- include download_app %>
+	</div>
+
+	<script>
+		var navLi = document.querySelectorAll(".nav-box li")
+		var wosnLeft = document.getElementById('wosnLeft')
+		var wosnRight = document.getElementById('wosnRight')
+		wosnLeft.onclick = function () {
+			var _t = utils.getCookie("token");
+			if (!!_t) {
+				utils.ajax({
+					type: 'get',
+					url: '/api/userCenter/getUserInfo',
+					success: function (res) {
+						let data = res.data;
+						let url = escape(JSON.stringify(data))
+						window.location.href = "https://www.wanbaoooo.com?gac=" + url
+					}
+
+				})
+			} else {
+				window.location.href = 'https://www.wanbaoooo.com'
+			}
+		}
+		wosnRight.onclick = function () {
+			var _t = utils.getCookie("token");
+			if (!!_t) {
+				utils.ajax({
+					type: 'get',
+					url: '/api/userCenter/getUserInfo',
+					success: function (res) {
+						let data = res.data;
+						let url = escape(JSON.stringify(data))
+						window.location.href = " https://www.wanbaoooo.com/home/index/english.html?gac=" + url
+					}
+
+				})
+			} else {
+				window.location.href = 'https://www.wanbaoooo.com/home/index/english.html'
+			}
+		}
+		var colorLumpBox = document.querySelectorAll(".color-lump-box .box")
+		Array.prototype.forEach.call(colorLumpBox, function (sub, index) {
+			sub.onmouseover = function () {
+				var num = index
+				if (index < 4) {
+					navLi[index].classList.add("hover");
+				} else if (index === 4) {
+					navLi[5].classList.remove("hover");
+				} else {
+					navLi[index - 1].classList.add("hover");
+				}
+				this.classList.add("hover");
+			}
+			sub.onmouseout = function () {
+				var num = index
+				if (index < 4) {
+					navLi[index].classList.remove("hover");
+				} else if (index === 4) {
+					navLi[5].classList.remove("hover");
+				} else {
+					navLi[index - 1].classList.remove("hover");
+				}
+				this.classList.remove("hover");
+			}
+
+		})
+		Array.prototype.forEach.call(navLi, function (sub, index) {
+			sub.onmouseover = function () {
+				var num = index
+				if (index < 4) {
+					colorLumpBox[index].classList.add("hover");
+				} else if (index === 4) {
+					colorLumpBox[5].classList.add("hover");
+				} else {
+					colorLumpBox[index + 1].classList.add("hover");
+				}
+				this.classList.add("hover");
+			}
+			sub.onmouseout = function () {
+				var num = index
+				if (index < 4) {
+					colorLumpBox[index].classList.remove("hover");
+				} else if (index === 4) {
+					colorLumpBox[5].classList.remove("hover");
+				} else {
+					colorLumpBox[index + 1].classList.remove("hover");
+				}
+				this.classList.remove("hover");
+			}
+
+		})
+		function toHref(e) {
+			var el = e || window.event;
+			if (utils.islogin()) {
+				var val = $(el).attr("data-href")
+				location.href = val;
+			} else {
+				utils.alert('danger', '请登录后再进行操作！')
+			}
+		}
+	</script>
+</body>
+
+</html>

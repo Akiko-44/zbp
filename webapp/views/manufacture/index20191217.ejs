@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'/>
+<meta name="renderer" content="webkit">
+<meta name="description" content="珠宝的智能新制造，以玉石雕刻、首饰、珠宝、钻戒加工生产、3D打印为一体的综合性制造间。工艺精湛，提用户之所需，造用户之所物。">
+<meta name="keywords" content="首饰加工、首饰定制、珠宝加工、珠宝制造、珠宝制作工艺、定制加工、戒指、珠宝原材料、黄金首饰、玉雕、珠宝改尺寸、婚戒首饰、黄金首饰、项链、戒指定做、珠宝工作室、珠宝加工厂、纯银定制">
+<title>中宝协云平台_珠宝制造_珠宝首饰定制</title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+body {background: #eee;}
+.galleryBanner .slideritem a {display: block;height: 400px}
+.exchangeTitle {margin-top: 50px;margin-bottom: 10px;}
+.exchangeTitle strong {color: #1A1A1A;font-size: 16px;}
+.exchangeTitle span {color: #666666;font-size: 16px;margin-left: 5px;}
+.exchangeTitle a {
+	display: inline-block;
+	line-height: 20px;
+	color: #666;
+	border-radius: 11px;
+	text-align: center;
+}
+.manufacturer li.listShadow{
+	float: left;
+	width: 235px;
+	margin-left: 20px;
+	text-align: center;
+	background-color: #fff;
+}
+.manufacturer li.listShadow .img-box{
+	height: 155px;
+}
+.manufacturer li.listShadow .img-box img{
+	width: 100%;
+	height: 100%;
+}
+.goods li .img-box img{
+	width: 100%;
+}
+.craft li.listShadow{
+	width: 232px;
+	height: 162px !important;
+	margin-bottom: 45px;
+}
+.craft li .img-box{
+	width: 232px;
+	height: 162px !important;
+}
+.goods li.listShadow{
+	float: left;
+	width: 178px;
+	margin-left: 27.5px;
+	margin-bottom: 30px;
+	text-align: center;
+	position: relative;
+	background: #FFFFFF;
+}
+.craft li.listShadow:nth-child(4n+1){
+	margin-left: 0 !important;
+}
+.goods li.listShadow .img-box {
+	background: #FFFFFF;
+}
+.goods li:first-child,.manufacturer li:first-child,li.first{
+	margin: 0 !important;
+}
+.manufacturer .listShadow .name{
+	height: 40px;
+	line-height: 40px;
+}
+.goods .img-box {
+	height: 226px;
+	line-height: 226px;
+	position: relative;
+	background: #f9f9f9;
+	overflow: hidden;
+}
+
+.goods li .info {padding: 8px 10px;background: #FF0000;
+	opacity: .8;
+	display: none;
+	color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.goods li .info .categoryName{
+	margin-top: 56px;
+}
+.goods li.listShadow:hover .info{
+	display: block;
+	
+}
+.goods li .info .brandName,.goods li .info .price{
+	margin-top: 20px;
+}
+.goods li .intro {
+	color: #fff;
+	line-height: 16px;
+	height: 32px;
+	line-height: 32px;
+	border: 1px solid #fff;
+	position: absolute;
+    left: 0;
+    right: 0;
+	bottom: 20px;
+	width: 100px;
+	margin: 0 auto;
+}
+.manufacturer .type-nav, .goods .type-nav{
+	padding: 20px 0;
+	height: 73px;
+}
+.manufacturer .type-nav li, .goods .type-nav li{
+	padding: 10px 20px;
+	float: left;
+	margin: 0 10px;
+	cursor: pointer;
+}
+.manufacturer .type-nav li.active, .goods .type-nav li.active{
+	border-bottom: 1px solid #000;
+}
+.manufacturer .type-nav li:hover, .goods .type-nav li:hover{
+	border-bottom: 1px solid #000;
+}
+.hotBuy .uneven-box{
+	height: 200px;
+	padding: 20px 80px;
+	background-color: #fff;
+}
+.hotBuy .uneven-box .uneven {
+	    width: 100%;
+	    text-align: center;
+}
+.hotBuy .uneven-box .slick-slide>div{
+	padding: 5px;
+}
+.hotBuy .uneven-box .slick-arrow{
+	top: 45%;
+}
+.hotBuy .uneven-box .slick-prev {
+	    left: -50px;
+}
+.hotBuy .uneven-box .slick-next {
+	    right: -50px;
+}
+.hotBuy .uneven-box .uneven .describe{
+	margin-top: 15px;
+}
+.hotBuy .needs-btn{
+	margin-top: 23px;
+}
+.hotBuy .needs-btn .btn{
+	width: 120px;
+	height: 40px;
+	line-height: 40px;
+	color: #000000;
+	border: 1px solid #000;
+	background-color: #fff;
+	float: right;
+	margin-left: 16px;
+}
+.cur{font-weight: bolder;color: #000000;}
+</style>
+</head>
+<body class="">
+
+<%- include ../headerbar.ejs %>
+
+<%- include ../header.ejs %>
+
+<%- include ../headerNav.ejs %>
+
+<div id="main" class="main">
+		
+		<div class="galleryBanner" id="banner" style="position: relative;">
+			<div class="slider">
+				<template v-for="item in dmBannerVOList">
+					<div class="slideritem" style="position: relative;">
+						<a v-if="item.bannerUrl" :href="item.bannerUrl | formatUrl" target="_blank">
+							<img :src="item.pcUrl |formatImg" width="100%" height="100%"/>
+						</a>
+						<a v-else target="_blank">
+							<img :src="item.pcUrl |formatImg" width="100%" height="100%"/>
+						</a>
+					</div>
+				</template>
+			</div>
+		</div>
+		<div class="galleryHeader" id="navWrap">
+			<div class="galleryNavBox">
+				<div class="galleryNav">
+					<ul>
+						<li>
+							<h3 style="color: #333333;font-weight: bolder;">商品分类</h3>
+						</li>
+						<li v-for="item in dcvolist">
+							<h3 class="subThree" :data-name="item.name" :data-id="item.id">{{item.name}}</h3>
+							<div class="clearfix gallerySub">
+								<div v-if="item.children && item.children.length"  v-for="subitem in item.children">
+									<p :data-name="subitem.name" :data-id="subitem.id" class="subThree">{{subitem.name}}</p>
+									<div v-if="subitem.children&&subitem.children.length>0">
+										<template  v-for="citem in subitem.children">
+											<a :data-name="citem.name" :data-id="citem.id" class="subThree">{{citem.name}}</a>
+										</template>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="gallerySubNav">
+					<div>
+						<ul>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="content">
+			<div class="containerIndex manufacturer">
+				<div class="exchangeTitle">
+					<a class="fr" href="../../manufacture/business">更多<i class="el-icon-d-arrow-right"></i></a>
+					<strong>制造商展示</strong>
+				</div>
+				<div>
+					<ul class="type-nav clearfix">
+						<li data-id="" class="cur" onclick="business(this)">全部</li>
+						<li v-for="item in designmanu" :data-id="item.id" :key="item.id" onclick="business(this)">
+							{{item.name}}
+						</li>
+					</ul>
+					<ul class="clearfix">
+						<li class="listShadow gripper" @click="toBusinessDetail(event)" :data-id="item.merchantId" v-if="index<4" v-for="(item,index) in emvoListItem">
+							<div class="img-box">
+								<img :src="item.thumbnail | formatImg">
+							</div>
+							<div class="name ellipsis">
+								{{item.merchantName}}
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="containerIndex goods">
+				<div class="exchangeTitle">
+					<a class="fr" id="caseMore">更多<i class="el-icon-d-arrow-right"></i></a>
+					<strong>商品展示</strong>
+				</div>
+				<div>
+					<ul class="type-nav goodsLi clearfix">
+						<li data-id="" class="cur">全部</li>
+						<li data-id="1">现货</li>
+						<li data-id="2">定制</li>
+					</ul>
+					<ul class="clearfix">
+						<template v-for="(item,index) in ecvoListItem">
+							<li class="gripper" v-if="index<10" :class="['listShadow',{'first':index==5 || index==0}]" @click="toProductDetail($event)" :data-id="item.caseId">
+								<div class="img-box">
+									<img :src="item.thumbnail | formatImg">
+								</div>
+								<div class="info">
+									<p class="categoryName">{{item.caseName}}</p>
+									<p class="brandName">{{item.designerName}}</p>
+									<p class="price">￥{{ item.price }}</p>
+									<div class="intro">
+										详情
+									</div>
+								</div>
+							</li>
+						</template>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="containerIndex manufacturer craft">
+				<div class="exchangeTitle">
+					<a class="fr" href="../../manufacture/art">更多<i class="el-icon-d-arrow-right"></i></a>
+					<strong>工艺展示</strong>
+				</div>
+				<div>
+					<ul class="clearfix">
+						<li class="listShadow gripper" :data-id="item.craftId" @click="toArtDetail($event)" v-if="index<8" v-for="(item,index) in ecfvoList">
+							<div class="img-box" style="overflow: hidden;">
+								<img :src="item.craftLogo | formatImg" style="width: 100%;height: auto;">
+							</div>
+							<div class="name ellipsis">
+								{{item.craftName}}
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--<div class="containerIndex hotBuy hide">
+				<div class="exchangeTitle">
+					<a class="fr" href="../../manufacture/need_more">更多<i class="el-icon-d-arrow-right"></i></a>
+					<strong>热门求购</strong>
+				</div>
+				<div class="uneven-box">
+					<div class="slider uneven containerIndex">
+						<template v-for="item in cmvoList">
+							<div :data-id="item.id" class="slideritem ecfvoList_item" style="position: relative;">
+								<a>
+									<p style="width: 100%;height: 140px;overflow: hidden;"><img :src="item.customsPic[0].picUrl | formatImg" width="100%"/></p>
+									<div class="info">
+										<p class="name ellipsis">{{item.userName}}</p>
+										<p class="describe ellipsis">{{item.name}}</p>
+									</div>
+								</a>
+							</div>
+						</template>
+					</div>
+				</div>
+				<div class="needs-btn clearfix">
+					<a href="made_list" class="btn my">我的需求</a>
+					<a href="made" class="btn publish">发布需求</a>
+				</div>
+			</div>-->
+			
+			<div class="containerIndex" style="margin-top: 50px;margin-bottom: 50px;">
+				<a href="../activity?supType=4" width="100%"><img src="../../src/img/jewelry/active.jpg" width="100%"/></a>
+			</div>
+			
+		</div>
+
+	</div>
+
+<%- include ../footer.ejs %>
+
+<script>
+    var $slider = null;
+    //乱序排列
+    function shuffle(arr) {
+      let i = arr.length;
+      while (i) {
+        let j = Math.floor(Math.random() * i--);
+        [arr[j], arr[i]] = [arr[i], arr[j]];
+      }
+      return arr;
+    }
+    var mainVm = new Vue({
+        el: "#main",
+        data: {
+        	ecfvoList: [],
+        	ecvoList: [],
+        	emvoList: [],
+        	dcvolist:[],
+        	designmanu: [],
+        	cmvoList:[],
+        	dmBannerVOList: [],
+        	emvoListItem: [],
+        	ecvoListItem: []
+        },
+        mounted: function () {
+        	var self = this
+          this.getMenufact()
+          utils.ajax({
+    				url: "/api/designmanu/menufact/designcategory/list",
+    				data: JSON.stringify({
+    					flag: 1
+    				}),
+    				success: function(data){
+    					self.designmanu = data.data
+    				}
+    			})
+          /*utils.ajax({
+    				type: "get",
+    				url: "/api/portal/user/search/list",
+    				data: {flag: 3},
+    				success: function(res) {
+    					self.dcvolist = res.data
+    				}
+    			});*/
+    			utils.ajax({
+            type: "get",
+            url: "/api/designmanu/designroom/categoryList/1",
+            success: function(res) {
+              self.dcvolist = res.data
+            }
+          });
+        },
+        methods: {
+        	getMenufact: function(){
+        		var self = this;
+	            utils.ajax({
+	                url: "/api/designmanu/menufact/index",
+	                type: "get",
+	                success: function (data) {
+	                    data = data.data;
+	                    self.ecfvoList = shuffle(data.ecfvoList);
+	                    self.ecvoList = shuffle(data.ecvoList);
+	                    self.emvoList = shuffle(data.emvoList);
+	                    self.emvoListItem = data.emvoList;
+	                    self.ecvoListItem = data.ecvoList;
+	                    self.dmBannerVOList = data.dmBannerVOList;
+	                    // self.cmvoList = shuffle(data.cmvoList);
+	
+	                    setTimeout(function () {
+	                        $slider = $("#banner .slider");
+	                        $slider.slick({
+	                            dots: true,
+	                            arrows: false,
+	                            swipe: true,
+								slidesToScroll: 1,
+							  	autoplay: true,
+							  	autoplaySpeed: 5000
+	                        });
+	                        $('.slider.uneven').slick({
+							  slidesToShow: 5,
+							  slidesToScroll: 4
+							});
+	                    }, 100)
+	                }
+	            })
+        	},
+        	
+        	toBusinessDetail: function(event){
+        		var id = event.currentTarget.getAttribute("data-id");
+        		location.href = "../../manufacture/business_detail?id=" + id;
+        	},
+        	toArtDetail: function(event){
+        		var id = event.currentTarget.getAttribute("data-id");
+        		location.href = "../../manufacture/art_detail?id=" + id;
+        	},
+        	toProductDetail: function(event){
+        		var id = event.currentTarget.getAttribute("data-id");
+        		location.href = "../../manufacture/product_detail?id=" + id;
+        	}
+        },
+        filters: {
+            formatImg: function (str) {
+                return utils.formatImg(str);
+            },
+            formatUrl: function(str){
+            	return utils.formatUrl(str);
+            }
+        }
+    })
+$(function(){
+	$(document).on('click','.subThree',function(e){
+		var self = $(e.currentTarget);
+		var id  = self.attr('data-id');
+		var val  = self.attr('data-name');
+		window.location = 'product?searchId='+id+'&searchWord='+val
+	}).on('click','.ecfvoList_item',function(e){
+		var self = $(e.currentTarget);
+		var val  = self.attr('data-id');
+		window.location = 'made_details?id='+val
+	}).on('click','.goodsLi li', function(e){
+		var self = $(e.currentTarget);
+		var id  = self.attr('data-id');
+		self.addClass("cur").siblings().removeClass("cur")
+		if(id == ''){
+			mainVm.ecvoListItem = mainVm.ecvoList;
+			return false;
+		}
+		var arr = []
+		$.each(mainVm.ecvoList, function(idx, item) {
+			if(String(item.caseType) == String(id)){
+				arr.push(item)
+			}
+		});
+		mainVm.ecvoListItem = arr;
+	}).on("click", "#caseMore", function(){
+		var caseType = $(".goodsLi .cur").attr('data-id');
+		window.location = "../../manufacture/product?caseType=" + caseType
+	})
+})
+function business(e){
+	var el = e || window.event;
+	var id = $(el).attr("data-id");
+	$(el).addClass("cur").siblings().removeClass("cur")
+	if(id == ''){
+		mainVm.emvoListItem = mainVm.emvoList;
+		return false;
+	}
+	var arr = []
+	$.each(mainVm.emvoList, function(idx, item) {
+		if(item.manucatid == id){
+			arr.push(item)
+		}
+	});
+	mainVm.emvoListItem = arr;
+}
+</script>
+</body>
+</html>

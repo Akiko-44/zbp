@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title><%= title %></title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/plugin/jquery-qrcode-master/jquery.qrcode.min.js"></script>
+		<style type="text/css">
+			#main{min-height: 380px;}
+			.ngtc{
+				width: 100%;
+				padding: 50px 0;
+				background: url('../../src/img/ngtc/ngtc_bg.png');
+				background-size: 100% 100%;
+			}
+			.ngtc img{width: 302px;}
+			.ngtc h2{font-weight: bolder;font-size:26px;font-family:MicrosoftYaHei-Bold;color: #333333;margin-bottom: 45px;}
+			#footer{margin-top: 0;}
+		</style>
+	</head>
+	<body class="galleryActivity-bd">
+		<%- include ../headerbar %>
+
+		<%- include ../header %>
+
+		<%- include ../headerNav %>
+
+		<div id="main">
+			<div class="container">
+				<div class="router" id="router">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item :to="{ path: '/' }">
+							<a href="../../">我的位置：首页</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item>行业之声</el-breadcrumb-item>
+						<el-breadcrumb-item>溯源查询</el-breadcrumb-item>
+					</el-breadcrumb>
+				</div>
+			</div>
+			<div class="ngtc">
+				<div class="tc container">
+					<h2>溯源查询</h2>
+					<a href="hjtc"><img src="../../src/img/ngtc/pic_hjtc.png" style="margin-right: 45px;"/></a>
+					<a href="ngtc"><img src="../../src/img/ngtc/pic_ngtc.png"/></a>
+				</div>
+			</div>
+		</div>
+		
+		<%- include ../user/userFooter %>
+		<script type="text/javascript">
+			var routerVm = new Vue({
+				el: "#router",
+				data: function(){
+					return {
+						
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

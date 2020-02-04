@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<!--<script src="../src/js/address.js"></script>-->
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		body {
+			background: #F5F5F5;
+		}
+
+		.applyDialog {}
+
+		.applyDialog .dialog-main {}
+
+		.applyDialog .dialog-header {}
+
+		.applyDialog .dialog-header .dialog-close {}
+
+		.applyDialog .dialog-body {}
+	</style>
+</head>
+
+<body class="">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include ../headerNav.ejs %>
+
+	<div id="main" class="main up_and_down index">
+		<div class="container">
+			<div class="quick-entry">
+
+			</div>
+
+			<div class="module">
+				<h2 class="title">上下游服务</h2>
+				<ul class="list clearfix">
+					<li class="item" :class="{'active-bar':item.isActive}" v-for="(item,index) in categorysList" :key="index"
+						@click="handleCategory(item,index)">
+						<img src="../test/1.jpg">
+						<p class="text">{{item.name}}</p>
+						<div class="is-top"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="current-module clearfix">
+				<div class="btn btn-warning">法律服务</div>
+				<a class="is-apply fr" href="/user/provider/order-information" v-if="provider">我是服务商</a>
+				<a class="is-apply fr" @click="handleIsApply" v-else>申请成为服务商</a>
+
+			</div>
+			<div class="content clearfix">
+				<div class="leftNav fl">
+					<div class="collapse">
+						<div class="colla-item" v-for="(item,index) in categoryServices" :key="index">
+							<h2 class="colla-title" :class="{'show':item.isUnfold}" @click="handleCollapse(item,index)">
+								{{item.category.name}}<i class="icon colla-icon"></i></h2>
+							<ul class="colla-content" v-show="item.isUnfold">
+								<li v-for="(value,key) in item.services" :key="key" @click="handleCollapseItem(value,key)"
+									:class="{'active':activeCollapseItem==value.id}">{{value.name}}</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+				<div class="right-content">
+					<div class="brief-summary">
+						<h3 class="title" v-text="servService.name">电话问法务</h3>
+						<div class="clearfix topic">
+							<div class="fl item">
+								<!--<p class="query">电话问法务是什么？</p>-->
+								<p class="answer" v-html="servService.detail">专业法律分析，获得解答和建议，搞定烦恼一身轻松。</p>
+							</div>
+							<div class="fr item">
+								<!--<p class="query">电话问法务是什么？</p>-->
+								<p class="answer" v-html="servService.detail1">专业法律分析，获得解答和建议，搞定烦恼一身轻松。</p>
+							</div>
+						</div>
+					</div>
+					<div class="summary">
+						为您找到{{servProviderRel.length}}家服务商，带有 <i class="icon"
+							style="width: 28px;height: 28px;background: url('../src/img/up_and_down/bao.png') no-repeat center/contain;"></i>标识为中宝协会担保交易
+						的服务商
+					</div>
+					<div class="consulting clearfix">
+						<div class="fl means" v-for="item in servProviderRel">
+							<dl class="organization clearfix">
+								<dt class="fl"><img :src="item.logo | formatImg" /></dt>
+								<dd class="organization-box">
+									<p class="title">{{item.companyName}}<i class="icon"
+											style="width: 28px;height: 28px;background: url('../src/img/up_and_down/bao.png') no-repeat center/contain;"></i>
+									</p>
+									<p class="text"><i class="icon"
+											style="width: 20px;height: 20px;margin-right: 10px; background: url('../src/img/up_and_down/phoneSuccess.png') no-repeat center/contain;"></i>已实名审核认证
+									</p>
+								</dd>
+							</dl>
+							<div class="introduce clearfix">
+								<p class="title">{{item.serviceName}}</p>
+								<p class="detail" v-html="item.serviceTimeDesc">
+									专业的律师团队，执业17年，深圳市政府决策咨询专家以及政协委员的精英团队组成
+								</p>
+								<button class="btn fr" @click="handleOrdRes(item)">订单申请</button>
+								<button class="btn fr" @click="handleGo(item)">查看详情</button>
+								<button class="btn fr">在线咨询</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="dialog applyDialog1">
+			<div class="mask"></div>
+			<div class="dialog-main">
+				<div class="dialog-header clearfix">
+					<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+					<h3 class="dialog-title">服务订单申请</h3>
+				</div>
+				<div class="dialog-body">
+					<form class="order-form">
+						<div class="formsub">
+							<ul>
+								<li>
+									<label><span class="need">*</span>你的名字</label>
+									<div class="input-box">
+										<input type="text" value="" name="realName" class="inputxt" datatype="*" nullmsg="请输入名字！"
+											errormsg="">
+									</div>
+									<div class="Validform_checktip"></div>
+
+								</li>
+								<li>
+									<label><span class="need">*</span>申请的服务</label>
+									<div class="input-box">
+										<input type="text" value="" name="serviceName" v-model="applyService.serviceName" class="inputxt"
+											datatype="*" nullmsg="请输入申请的服务！" errormsg="">
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+								<li>
+									<label><span class="need">*</span> 公司</label>
+									<div class="input-box">
+										<textarea value="" name="userCompany" class="inputxt" datatype="*" nullmsg="请输入公司名字！"
+											errormsg="请输入公司名字"></textarea>
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+
+								<li>
+									<label><span class="need">*</span> 邮箱地址</label>
+									<div class="input-box">
+										<input type="text" value="" name="userEmail" class="inputxt" datatype="e" nullmsg="请输入邮箱地址！"
+											errormsg="请输入正确的邮箱地址！">
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+								<li>
+									<label><span class="need">*</span> 联系电话</label>
+									<div class="input-box">
+										<input type="text" value="" name="userPhone" class="inputxt" datatype="*" nullmsg="请输入联系电话！"
+											errormsg="请输入正确联系电话！">
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+								<!--<li>
+										<span class="need">*</span>请确保号码无误，我们讲尽快联系你
+									</li>-->
+							</ul>
+							<div class="action">
+								<p id="errorText"></p>
+								<a class="btn btn-warning submitBtn" @click="handleOrderSubmit">提交</a>
+							</div>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="dialog applyDialog2">
+			<div class="mask"></div>
+			<div class="dialog-main">
+				<div class="dialog-header clearfix">
+					<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+					<h3 class="dialog-title">服务订单申请</h3>
+				</div>
+				<div class="dialog-body userPhoneWrap">
+					<div class="clearfix process-box">
+						<div class="fl process cur">
+							<div class="img-box"></div>
+							<p class="text">填写申请服务商</p>
+						</div>
+						<div class="line line1"></div>
+						<div class="fl process">
+							<div class="img-box"></div>
+							<p class="text">资料上交审核</p>
+						</div>
+						<div class="line line2"></div>
+						<div class="fl process">
+							<div class="img-box"></div>
+							<p class="text">审核成功，成为服务商</p>
+						</div>
+					</div>
+					<form class="apply-form">
+						<input type="hidden" class="codeUuid" name="codeUuid">
+						<input type="hidden" class="msgId" name="msgId" value="">
+						<div class="formsub">
+							<ul>
+								<li>
+									<label><span class="need">*</span><span class="name">公司名字</span></label>
+									<div class="input-box">
+										<input type="text" value="" name="company" class="inputxt" datatype="*2-10" nullmsg="请设置公司名称！"
+											errormsg="业执照名字保持一致！">
+									</div>
+									<div class="Validform_checktip">2-10个字，请与营业执照名字保持一致</div>
+								</li>
+								<li>
+									<label><span class="need">*</span><span class="name">公司简介介绍</span></label>
+									<div class="input-box">
+										<textarea value="" name="companyDesc" class="inputxt" datatype="*10-30" nullmsg="请再输入公司简介！"
+											errormsg="字符范围在10~30位之间！"></textarea>
+									</div>
+									<div class="Validform_checktip">10-30个字，要求内容完整通顺，无特殊符号，请勿添加任何联系方式如微博、手机号、QQ</div>
+								</li>
+								<li>
+									<label><span class="need">*</span><span class="name">公司业务介绍</span></label>
+									<div class="input-box">
+										<textarea value="" name="serviceDesc" class="inputxt" datatype="*10-30" nullmsg="请设置密码！"
+											errormsg="字符范围在10~30位之间！"></textarea>
+									</div>
+									<div class="Validform_checktip">10-30个字，要求内容完整通顺，无特殊符号，请勿添加任何联系方式如微博、手机号、QQ</div>
+								</li>
+
+								<li>
+									<div class="clearfix uploadBox1">
+										<label class="fl"><span class="need">*</span><span class="name">组织机构代码证/营业执照</span></label>
+										<div class="fl uploadbox triggerFile" data-target="uploadImg">
+										</div>
+										<!--<img class="uploadImg" src="../../test/1.jpg">-->
+									</div>
+
+									<div class="Validform_checktip">组织机构代码证或营业执照信息清晰最大2M</div>
+								</li>
+								<li>
+									<div class="clearfix uploadBox2">
+										<label class="fl"><span class="need">*</span><span class="name">确认书扫描件</span></label>
+										<div class="fl uploadbox triggerFile" data-target="uploadImg">
+										</div>
+										<!--<img class="uploadImg" src="../../test/1.jpg">-->
+									</div>
+									<div class="Validform_checktip">点确认书下载，填写盖章后上传</div>
+								</li>
+								<li>
+									<div class="clearfix uploadBox3">
+										<label class="fl"><span class="need">*</span><span class="name">公司logo</span></label>
+										<div class="fl uploadbox triggerFile" data-target="uploadImg">
+										</div>
+										<!--<img class="uploadImg" src="../../test/1.jpg">-->
+									</div>
+
+									<div class="Validform_checktip">公司logo清晰最大2M</div>
+								</li>
+								<li>
+									<label><span class="need">*</span><span class="name">提供的服务</span></label>
+									<div class="input-box">
+										<select name="serviceId1" datatype="*" nullmsg="请选择服务！" errormsg="请选择服务！"
+											@change="categorysListChange">
+											<option :value="item.id" v-for="(item,index) in categorysList" :key="index">{{item.name}}</option>
+										</select>类
+
+										<select name="serviceId2" datatype="*" nullmsg="请选择服务！" errormsg="请选择服务！"
+											@change="oncCtegoryServicesChange">
+											<option :value="item.category.id" v-for="(item,index) in categoryServices" :key="index">
+												{{item.category.name}}</option>
+										</select>
+
+										<select name="serviceId3" datatype="*" nullmsg="请选择服务！" errormsg="请选择服务！">
+											<option :value="item.id" v-for="(item,index) in servicesList" :key="index">{{item.name}}</option>
+										</select>
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+								<li>
+									<label><span class="need">*</span><span class="name">所在地</span></label>
+									<div class="input-box">
+										<select name="provinceId" datatype="*" nullmsg="请选择所在省！" errormsg="请选择所在省！">
+											<option v-for="item in province" :value="item.regionId">{{item.regionName}}</option>
+										</select>
+
+										<select name="cityId" datatype="*" nullmsg="请选择所在城市！" errormsg="请选择所在城市！">
+											<option v-for="item in city" :value="item.regionId">{{item.regionName}}</option>
+										</select>
+									</div>
+									<div class="Validform_checktip"></div>
+									<div class="input-box">
+										<input type="text" value="" name="addr" class="inputxt" placeholder="请填写具体地区" datatype="*"
+											nullmsg="请填写具体地区！" errormsg="" style="margin-left: 190px;margin-top: 10px;">
+									</div>
+									<div class="Validform_checktip"></div>
+								</li>
+							</ul>
+							<!--<div class="autonym">
+								<div class="title"><span class="need">*</span><span class="name">实名制认证</span></div>
+								<ul>
+									<li class="t-head"><span class="name td">姓名</span><span class="num td">身份证证件号码</span><span class="photo td">身份证照片</span><span class="state td">状态</span><span class="operate td">操作</span></li>
+									<li class="t-body"><span class="name td">姓名</span><span class="num td">身份证证件号码</span><span class="photo td">身份证照片</span><span class="state td">状态</span><span class="operate td">操作</span></li>
+								</ul>
+							</div>-->
+							<div class="tell-phone">
+								<div class="title"><span class="need">*</span><span class="name">手机号验证</span></div>
+								<ul>
+									<li class="binding">已绑定手机号{{authInfo.mobilePhone}}</li>
+									<li class="item">
+
+										<input type="text" class="" name="verifyCode" placeholder="请输入验证码" maxlength="6" datatype="s1-6"
+											nullmsg="请输入验证码" errormsg="请输入验证码">
+										<img src="" class="code refresh-btn codeImg">
+										<div class="Validform_checktip"></div>
+									</li>
+									<li class="item">
+										<input type="text" class="" name="msgCode" placeholder="请输入手机验证码" maxlength="11" datatype="*"
+											nullmsg="请输入手机验证码" errormsg="验证码错误">
+										<span class="btn phone-code">获取手机验证码</span>
+										<div class="Validform_checktip"></div>
+									</li>
+
+									<li class="item agreement">
+										<input name="shoppingsite2" class="rt2" id="shoppingsite21" type="checkbox" value="1" datatype="*"
+											errormsg="请接受协议！">
+										<label for="shoppingsite21" style="width: 300px;">我接受《中国珠宝云平台的服务商协议》</label>
+
+									</li>
+								</ul>
+
+							</div>
+						</div>
+						<div class="action">
+							<p id="errorText"></p>
+							<a class="btn btn-warning submitBtn" @click="handleApplySubmit">提交</a>
+						</div>
+					</form>
+
+					<!--<el-form 
+						:model="applyForm" 
+						:rules="applyFormRules" 
+						ref="applyForm" 
+						label-width="150px" 
+						class="apply-form">
+						<el-form-item label="公司名字" prop="liveUrl">
+							<el-input v-model="ruleForm.liveUrl"></el-input>
+						</el-form-item>
+						<el-form-item label="公司名字" prop="liveUrl">
+							<el-input type="textarea" v-model="form.desc"></el-input>
+						</el-form-item>
+						<el-form-item label="公司名字" prop="liveUrl">
+							<el-input type="textarea" v-model="form.desc"></el-input>
+						</el-form-item>
+						<el-form-item label="直播logo" prop="liveLogo" class="demo-block demo-box demo-zh-CN demo-upload">
+							<div class="avatar-uploader">
+								<img :src="ruleForm.liveLogo" v-if="ruleForm.liveLogo"/>
+								<div tabindex="0" class="el-upload el-upload--text" v-else>
+									<i class="el-icon-plus avatar-uploader-icon" @click="handleUpload"></i>
+									
+								</div>
+							</div>
+						</el-form-item>
+						<el-form-item label="直播logo" prop="liveLogo" class="demo-block demo-box demo-zh-CN demo-upload">
+							<div class="avatar-uploader">
+								<img :src="ruleForm.liveLogo" v-if="ruleForm.liveLogo"/>
+								<div tabindex="0" class="el-upload el-upload--text" v-else>
+									<i class="el-icon-plus avatar-uploader-icon" @click="handleUpload"></i>
+									
+								</div>
+							</div>
+						</el-form-item>
+					</el-form>-->
+				</div>
+			</div>
+		</div>
+		<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+			<input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+		</form>
+	</div>
+
+	<%- include ../footer.ejs %>
+
+	<script>
+		$(function () {
+			//				addressInit('cmbProvince', 'cmbCity');
+
+		})
+		var uuid = utils.uuid();
+		$(".userPhoneWrap .codeImg").attr("src", "/api/userCenter/verifyCode/getCode/" + uuid);
+		$(".userPhoneWrap .codeUuid").val(uuid);
+
+		var flag = false;
+		var submitFlag = false;
+		$(document).on("click", ".userPhoneWrap .refresh-btn", function () {
+			//刷新验证码
+			uuid = utils.uuid();
+			$(".userPhoneWrap .codeImg").attr("src", "/api/userCenter/verifyCode/getCode/" + uuid);
+			$(".userPhoneWrap .codeUuid").val(uuid);
+		}).on("click", ".userPhoneWrap .phone-code", function () {
+			//获取验证码
+			if (submitFlag) {
+				return;
+			}
+			var $phoneCode = $(".userPhoneWrap input[name='msgCode']");
+			var $verifyCode = $(".userPhoneWrap input[name='verifyCode']");
+			$phoneCode.blur();
+			$verifyCode.blur();
+			var phone = ""
+			if (!$phoneCode.hasClass("Validform_error") && !$verifyCode.hasClass("Validform_error")) {
+				var phoneCode = $.trim($phoneCode.val());
+				var verifyCode = $.trim($verifyCode.val());
+				submitFlag = true;
+				var json = {
+					mobilePhone: phone,
+					verifyCode: verifyCode,
+					codeUuid: $(".userPhoneWrap .codeUuid").val()
+				}
+				utils.ajax({
+					url: "/api/serv/user/provider/smscode",
+					data: JSON.stringify(json),
+					success: function (data) {
+						if (data.success) {
+							$(".userPhoneWrap input[name='msgId']").val(data.data);
+							if (flag) {
+								var i = 120;
+								var timer = setInterval(function () {
+									i--;
+									$(".phone-code").text('重发(' + i + ')');
+								}, 1000);
+								setTimeout(function () {
+									clearInterval(timer);
+									$(".phone-code").text('重发');
+									submitFlag = false;
+								}, 120000);
+							} else {
+
+								var i = 120;
+								var timer = setInterval(function () {
+									i--;
+									$(".phone-code").text('已发送(' + i + ')');
+								}, 1000);
+								setTimeout(function () {
+									clearInterval(timer);
+									$(".phone-code").text('重发');
+									flag = true;
+									submitFlag = false;
+								}, 120000);
+
+							}
+						} else {
+							submitFlag = false;
+							$("#errorText2").text(data.msg);
+						}
+					},
+					error: function () {
+						submitFlag = false;
+					}
+				})
+			} else {
+				submitFlag = false;
+			}
+		})
+
+		var vm = new Vue({
+			el: "#main",
+			data: function () {
+				return {
+					applyDialog1: true,
+					applyDialog2: false,
+					categorysList: [],
+					categoryServices: [],
+					activeCollapseItem: "",
+					servService: {},
+					provider: false,
+					applyValidform: null,
+					orderValidform: null,
+					authInfo: {},
+					servProviderRel: [],
+					servicesList: [],
+					province: [],
+					city: [],
+					applyService: {}
+				}
+			},
+			mounted: function () {
+				this.getCategorys()
+
+				this.applyValidform = $(".apply-form").Validform({
+					tiptype: 2
+				})
+				this.orderValidform = $(".order-form").Validform({
+					tiptype: 2
+				})
+				this.getRegionList()
+			},
+			filters: {
+				formatImg: function (str) {
+					return utils.formatImg(str);
+				},
+			},
+			methods: {
+				getRegionList() {
+					var that = this
+					utils.ajax({
+						url: "/admin/region/list/0",
+						type: "get",
+						success: function (data) {
+							data = data.data;
+							that.province = data;
+							setTimeout(function () {
+								$("[name='provinceId']").trigger("change")
+							}, 100)
+						}
+					})
+
+					$(".applyDialog2").on("change", "[name='provinceId']", function () {
+						var val = $(this).val();
+						utils.ajax({
+							url: "/admin/region/list/" + val,
+							type: "get",
+							success: function (data) {
+								data = data.data;
+								that.city = data
+							}
+						})
+					})
+				},
+				handleIsApply() {
+					$(".applyDialog2").addClass("show")
+					this.getuserAuthInfo()
+					/*if(!utils.islogin()){
+						this.getuserAuthInfo()
+
+					}else{
+						location.href = "../../login?from=" + encodeURIComponent(location.href);
+						
+					}*/
+				},
+				handleOrdRes(item) {
+					$(".applyDialog1").addClass("show")
+					this.applyService = {
+						providerId: item.providerId,
+						serviceId: item.serviceId,
+						serviceName: item.serviceName,
+					}
+				},
+				getCategorys() { //栏目列表
+					var self = this
+					utils.ajax({
+						url: "/api/serv/portal/categorys/0",
+						type: "get",
+						success: function (succ) {
+							var data = succ.data.categorys;
+							self.provider = succ.data.provider
+							self.getCategoryServices(data[0].id)
+							data.forEach((sub, index) => {
+								sub.isActive = false
+								if (index == 0) {
+									sub.isActive = true
+								}
+							})
+							self.categorysList = data.slice(0, 4)
+						}
+					})
+				},
+				categorysListChange(e) {
+					let id = $(e.target).val()
+					this.getCategoryServices(id)
+				},
+				getCategoryServices(pid) { //下子栏目与服务列表
+					var self = this
+					utils.ajax({
+						url: "/api/serv/portal/category_services/" + pid,
+						type: "get",
+						success: function (succ) {
+							var data = succ.data;
+							self.getServiceInfo(data[0].services[0].id)
+
+							self.activeCollapseItem = data[0].services[0].id
+							data.forEach((sub, index) => {
+								sub.isUnfold = true
+								/*if(index == 0){
+									sub.isUnfold = true
+								}*/
+							})
+							self.categoryServices = data
+							self.servicesList = data[0].services
+						}
+					})
+				},
+				handleCollapse(item, index) {
+					item.isUnfold = !item.isUnfold
+				},
+				handleCollapseItem(item, index) {
+					this.activeCollapseItem = item.id
+					this.getServiceInfo(item.id)
+				},
+				getServiceInfo(id) { //服务信息
+					var self = this
+					utils.ajax({
+						url: "/api/serv/portal/service/info/" + id,
+						type: "get",
+						success: function (succ) {
+							var data = succ.data;
+							self.servService = data
+							self.getProviderList(data.id)
+						}
+					})
+				},
+				getProviderList(id) { //查询服务 的所有提供商
+					var self = this
+					utils.ajax({
+						url: "/api/serv/portal/service/provider/list/" + id,
+						type: "get",
+						success: function (succ) {
+							var data = succ.data;
+							self.servProviderRel = data
+						}
+					})
+				},
+				getuserAuthInfo() { //查询服务 的所有提供商
+					var self = this
+					utils.ajax({
+						url: "/api/serv/user/provider/user_auth_info",
+						type: "get",
+						success: function (succ) {
+							var data = succ.data;
+							self.authInfo = data
+							phone = data.mobilePhone
+						}
+					})
+				},
+				handleCategory(item, index) {
+					this.categorysList.forEach((value, key) => {
+						value.isActive = false
+					})
+					item.isActive = true
+				},
+				handleApplySubmit() {
+					let applyValidform = this.applyValidform
+					if (applyValidform.check(false)) {
+						var str = $(".apply-form").serialize()
+						var strJson = utils.str2json(str);
+
+						var licenseUrl = $(".uploadBox1 img").attr("src");
+						var confirmationUrl = $(".uploadBox2 img").attr("src");
+						var logo = $(".uploadBox3 img").attr("src");
+						var provinceName = $("[name='provinceId'] option:selected").text()
+						var cityName = $("[name='cityId'] option:selected").text()
+						var opt = {
+							company: strJson.company,
+							companyDesc: strJson.companyDesc,
+							serviceDesc: strJson.serviceDesc,
+							licenseUrl: licenseUrl,
+							confirmationUrl: confirmationUrl,
+							logo: logo,
+							addr: strJson.addr,
+							cityName: cityName,
+							cityId: strJson.cityId,
+							provinceName: provinceName,
+							provinceId: strJson.provinceId,
+							serviceIds: [strJson.serviceId3],
+							msgCode: strJson.msgCode,
+							msgId: $(".userPhoneWrap input[name='msgId']").val()
+						}
+
+						utils.ajax({
+							url: "/api/serv/user/provider/apply",
+							type: 'POST',
+							data: JSON.stringify(opt),
+							withCredential: true,
+							success: function (data) {
+								if (data.success) {
+									utils.alert("success", "服务订单申请成功");
+									$(".applyDialog2").removeClass("show")
+								} else {
+									$("#errorText").text(data.msg);
+								}
+
+							}
+						})
+					} else {
+						utils.alert("info", "请检查资料是否填写完整")
+					}
+				},
+				handleOrderSubmit() {
+					let orderValidform = this.orderValidform
+					if (orderValidform.check(false)) {
+						var str = $(".order-form").serialize()
+						var strJson = utils.str2json(str);
+						var opt = {
+							providerId: this.applyService.providerId,
+							serviceId: this.applyService.serviceId,
+							userEmail: strJson.userEmail,
+							userPhone: strJson.userPhone,
+							userName: strJson.userName,
+							realName: strJson.realName,
+							userCompany: strJson.userCompany,
+						}
+
+						utils.ajax({
+							url: "/api/serv/portal/save_order",
+							type: 'POST',
+							data: JSON.stringify(opt),
+							withCredential: true,
+							success: function (data) {
+								if (data.success) {
+									utils.alert("success", "服务订单申请成功");
+									$(".applyDialog1").removeClass("show")
+								} else {
+									$("#errorText").text(data.msg);
+								}
+
+							}
+						})
+					} else {
+						utils.alert("info", "请检查资料是否填写完整")
+					}
+				},
+				handleGo(item) {
+					location.href = "/up_and_down/detail?id=" + item.id
+				},
+				oncCtegoryServicesChange(e) {
+
+					let id = $(e.target).val(),
+						arrList = [];
+					this.categoryServices.forEach((sub, index) => {
+						if (sub.category.id == id) {
+							arrList = sub.services
+						}
+					})
+					this.servicesList = arrList
+				}
+			}
+		})
+
+		window.target = "";
+		$(document).on("click", ".triggerFile", function (e) {
+			var t = $(e.currentTarget);
+			target = t;
+			$("#form1 input").trigger("click");
+		})
+		//商品图片上传
+		function uploadGoodsImg(self) {
+			var uploadFile = new FormData($("#form1")[0]);
+			$.ajax({
+				url: '../../file/upload',
+				type: 'POST',
+				data: uploadFile,
+				async: false,
+				cache: false,
+				contentType: false, //不设置内容类型
+				processData: false, //不处理数据
+				success: function (data) {
+					$(target).parent().append('<img src="' + data.data + '">');
+					$(target).remove()
+					$("#form1 input").val("");
+				},
+				error: function () {
+
+				}
+			})
+		}
+	</script>
+
+</body>
+
+</html>

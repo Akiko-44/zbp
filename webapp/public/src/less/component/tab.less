@@ -1,0 +1,159 @@
+/*
+	默认页签样式
+*/
+.tab-default {
+	border-bottom: 1px solid #d1dbe5;
+    padding: 0;
+    position: relative;
+    margin: 0 0 15px;
+}
+.tab-default .tab-header {
+	border-bottom: 1px solid #d1dbe5;
+    padding: 0;
+    position: relative;
+}
+.tab-default .tab-header li {
+	padding: 0 16px;
+    height: 42px;
+    box-sizing: border-box;
+    line-height: 42px;
+    display: inline-block;
+    list-style: none;
+    font-size: 14px;
+    color: #8391a5;
+    position: relative;
+}
+.tab-default .tab-header li.active {
+	color: #20a0ff;
+}
+.tab-default .tab-header li:after {
+	content: "";
+	position: absolute;
+	bottom: -1px;
+	height: 3px;
+	width: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
+	transition: all 0.35s ease;
+	background: #20a0ff;
+}
+.tab-default .tab-header li.active:after {
+	width: 100%;
+}
+.tab-default .tab-body {
+	overflow: hidden;
+    position: relative;
+    padding: 15px;
+}
+.tab-default .tab-body-panel {
+	display: none;
+}
+.tab-default .tab-body-panel.show {
+	display: block;
+}
+/*
+	选项卡样式
+*/
+.tab-primary {
+
+}
+.tab-primary .tab-body {
+	overflow: hidden;
+    position: relative;
+    border: 1px solid #d1dbe5;
+    border-top: 0;
+    padding: 15px;
+}
+.tab-primary .tab-body-panel {
+	display: none;
+}
+.tab-primary .tab-body-panel.show {
+	display: block;
+}
+.tab-primary .tab-header li {
+	padding: 0 16px;
+    height: 42px;
+    box-sizing: border-box;
+    line-height: 42px;
+    display: inline-block;
+    list-style: none;
+    font-size: 14px;
+    color: #8391a5;
+    position: relative;
+    border: 1px solid transparent;
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+}
+.tab-primary .tab-header li.active {
+	border: 1px solid #d1dbe5;
+    border-bottom-color: #fff;
+    border-radius: 4px 4px 0 0;
+    color: #20a0ff;
+}
+.tab-primary .tab-header > div {
+	overflow: hidden;
+    margin-bottom: -1px;
+    position: relative;
+}
+.tab-primary .tab-header {
+	border-bottom: 1px solid #d1dbe5;
+    padding: 0;
+    position: relative;
+}
+
+/*
+	卡片式页签
+*/
+.tab-card {
+	background: #fff;
+    border: 1px solid #d1dbe5;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.12), 0 0 6px 0 rgba(0,0,0,.04);
+}
+.tab-card .tab-header {
+	background-color: #eef1f6;
+    margin: 0;
+    border-bottom: 1px solid #d1dbe5;
+    padding: 0;
+    position: relative;
+}
+.tab-card .tab-header>div {
+	overflow: hidden;
+    margin-bottom: -1px;
+    position: relative;
+}
+.tab-card .tab-header li {
+	padding: 0 16px;
+    height: 42px;
+    box-sizing: border-box;
+    line-height: 42px;
+    display: inline-block;
+    list-style: none;
+    font-size: 14px;
+    color: #8391a5;
+    position: relative;
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+    border: 1px solid transparent;
+    border-top: 0;
+    margin-right: -1px;
+    margin-left: -1px;
+}
+.tab-card .tab-header li:first-child {
+	border-left-color: #d1dbe5;
+}
+.tab-card .tab-header li.active {
+	background-color: #fff;
+    border-right-color: #d1dbe5;
+     border-left-color: #d1dbe5;
+    color: #20a0ff;
+}
+.tab-card .tab-body {
+	overflow: hidden;
+    position: relative;
+    border-top: 0;
+    padding: 15px;
+}
+.tab-card .tab-body-panel {
+	display: none;
+}
+.tab-card .tab-body-panel.show {
+	display: block;
+}

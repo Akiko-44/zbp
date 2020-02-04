@@ -1,0 +1,56 @@
+<style>
+	.aside{
+		width: 120px;
+		overflow: hidden;
+		background-color: #fff;
+		position: relative;
+	}
+	.aside .list{
+		text-align: center;
+	}
+	.aside .list li{
+		width: 100%;
+		
+		padding-top: 40px;
+	}
+	.aside .list li img{
+		width: 60px;
+	}
+		
+	.aside .list1{
+		height: 508px;
+	}
+	.aside .list1 li{
+		height: 127px;
+	}
+	.aside .list1 li .current{
+		color: red;
+	}
+	.aside .list2{
+		background-color: #890F1C;
+		height: 92px;
+	}
+</style>
+<aside class="aside">
+  <ul class="list list1">
+  	<% for(var i=0; i<4; i++) {%>
+  	<li>
+  		<a class="<% if(asideIndex == 0){ %>current<% } %>">
+	  		<img src="../test/1.jpg" />
+	  		<p>我要直播</p>
+  		</a>
+  	</li>
+  	<% } %>
+  </ul>
+  <ul class="list list2">
+  	<li>
+  		
+  	</li>
+  </ul>
+</aside>
+
+<script>
+	$(function(){
+
+	})
+</script>

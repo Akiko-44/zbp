@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name=format-detection content="telephone=no" />
+		<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="description" content="中宝协云平台直播间是直播最新珠宝资讯，分享更多珠宝品质生活，大师干货分享。集合众多直播商家，海量新品，经济实惠、品质保证的直播网站，主要提供珠宝直播，玉石直播、专家在线咨询等。">
+		<meta name="keywords" content="珠宝直播、买珠宝、珠宝竞拍、买珠宝就直播、经济实惠、珠宝源头、首饰拍卖、首饰抢购">
+		<title>珠宝直播_发现你的珠宝生活</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<style>
+			body {
+				/*background-color: #f5f5f5;*/
+			}
+			
+			.aside {
+				overflow: hidden;
+				background-color: #fff;
+				position: relative;
+			}
+			
+			.aside .list {
+				text-align: center;
+			}
+			
+			.aside .list li {
+				width: 100%;
+			}
+			
+			.aside .list li .img {
+				/*width: 60px;*/
+				height: 66px;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: contain;
+			}
+			
+			.aside .list1 {
+				height: 508px;
+				padding-top: 20px;
+			}
+			
+			.aside .list1 li {
+				height: 105px;
+			}
+			
+			.aside .list1 li .img {
+				margin-top: 15px;
+			}
+			
+			.aside .list1 li a p {
+				color: #999999;
+			}
+			
+			.aside .list1 li.cur a p {
+				line-height: 1.5;
+				font-size: 14px;
+				color: #890F1C;
+			}
+			
+			.aside .list1 li:nth-of-type(1) .img {
+				background-image: url("../../src/img/live/story1.png");
+			}
+			
+			.aside .list1 li:nth-of-type(1).cur .story .img {
+				background-image: url("../../src/img/live/story2.png");
+			}
+			
+			.aside .list1 li:nth-of-type(2) .img {
+				background-image: url("../../src/img/live/product1.png");
+			}
+			
+			.aside .list1 li.cur:nth-of-type(2) .img {
+				background-image: url("../../src/img/live/product2.png");
+			}
+			
+			.aside .list1 li:nth-of-type(3) .img {
+				background-image: url("../../src/img/live/consult1.png");
+			}
+			
+			.aside .list1 li.cur:nth-of-type(3) .img {
+				background-image: url("../../src/img/live/consult2.png");
+			}
+			
+			.aside .list1 li:nth-of-type(4) .img {
+				background-image: url("../../src/img/live/auction1.png");
+			}
+			
+			.aside .list1 li.cur:nth-of-type(4) .img {
+				background-image: url("../../src/img/live/auction2.png");
+			}
+			
+			.aside .list2 {
+				/*background-color: #890F1C;*/
+				height: 92px;
+			}
+			
+			.aside .list2 .appDonwload .img {
+				/*height: 92px;*/
+				background-image: url("../../src/img/live/myLive.png");
+			}
+			
+			.aside .list2 .appDonwload p {
+				line-height: 1.5;
+				color: #C2A374;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<%- include ../headerbar.ejs %>
+
+		<%- include ../header.ejs %>
+
+		<%- include ../headerNav.ejs %>
+
+		<div id="main" class="main live">
+			<div class="container">
+				<div class="content-top clearfix">
+					<div class="liveLeftNav">
+						<aside class="aside">
+							<ul class="list list1">
+
+								<li :class="{'cur':item.id == id}" v-for="item in liveLeftNav">
+									<a class="story" :href="'/live/story/'+item.id+'?grade='+item.grade">
+										<div class="img"></div>
+										<p>{{item.catName}}</p>
+									</a>
+								</li>
+
+							</ul>
+							<ul class="list list2">
+								<li>
+									<a class="appDonwload" href="/user/live/index">
+										<div class="img"></div>
+										<p>我要直播</p>
+									</a>
+								</li>
+							</ul>
+						</aside>
+					</div>
+					<div class="liveRightContent clearfix">
+						<div class="fl main-video-box">
+							<!--<video src="http://www.w3school.com.cn/i/movie.ogg" controls="controls">
+								your browser does not support the video tag
+							</video>-->
+							<a :href="firstDetail.liveUrl"  target="_blank" class="video">
+								<img :src="firstDetail.liveLogo | formatImg" class="video">
+							</a>
+						</div>
+						<div class="fr main-right">
+							<div class="details">
+								<dl class="user-bos clearfix">
+									<dt class="fl" v-if="false">
+										<img :src="firstDetail.userLogo?firstDetail.userLogo:'http://img4.imgtn.bdimg.com/it/u=3702557683,740671603&fm=27&gp=0.jpg'">
+									</dt>
+									<dd class="fl">
+										<p>
+											<span class="title">{{firstDetail.userName}}</span>
+											<!--<span class="attention" @click="handleAttention(firstDetail)">{{attention?"已关注":"关注"}}</span>-->
+										</p>
+										<p class="live-num">直播号：{{firstDetail.userId}}</p>
+										<p class="describe">{{firstDetail.liveTitle}}</p>
+									</dd>
+								</dl>
+								<div class="line"></div>
+								<dl class="goods-bos clearfix" @click="handleGoDetail(firstGoods)">
+									<dt class="fl">
+										<img :src="firstGoods.goodsImg | formatImg">
+									</dt>
+									<dd class="fl">
+										<p class="title" v-html="firstGoods.goodsName">和田玉吊坠金镶玉项链凤凰吊坠女士白玉吊 坠天然玉石挂坠
+										</p>
+										<p class="goods-details">
+											<span class="price">￥<span>{{firstGoods.goodsPirce}}</span></span>
+											<i class="icon icon1"></i><i class="icon icon2"></i>
+											<!--<button class="btn btn-warning" @click="handleToBuy(firstGoods)">立即购买</button>
+											<button class="btn btn-line-warning" @click="handleToCart(firstGoods)">加入购物车</button>-->
+										</p>
+									</dd>
+								</dl>
+							</div>
+							<% if(data.grade != '4'){ %>
+							<div class="recommendation">
+								<p class="clearfix title">
+									<!--
+											<span class="brand">LV:50</span>
+											<span>直播客户：送了一个守护之心</span>
+										-->
+									<span class="high-quality">精品内容</span>
+									<span class="batch fr" @click="handleBatch"><i class="icon"></i>换一批</span>
+								</p>
+								<ul class="recommendation-list clearfix">
+
+									<li class="item fl" v-for="item in boutiqueList">
+										<!--'/live/story/'+item.id-->
+										<a :href="item.liveUrl" target="_blank"><img :src="item.liveLogo | formatImg" /></a>
+
+									</li>
+
+								</ul>
+							</div>
+							<% }else { %>
+							<div class="auction-notice">
+								<p class="title">拍卖须知：</p>
+								<ul class="auction-notice-list">
+									<li>1、参与人员必须为已通过实名制的客户</li>
+									<li>2、最终结束拍卖后的最高价为所拍者所得</li>
+									<li>3、成功拍得的客户需要在半个小时内完成付款</li>
+									<li>4、如有发现恶意抬价以及拍得商品后故意拖欠付款，我们将会有追究相关责任的权利</li>
+								</ul>
+							</div>
+							<!--<div class="countdown">
+								<span>距离结束还有：</span>
+								<span class="date-count">13:00:59</span>
+							</div>-->
+							<div class="btn-box clearfix" @click="handleGoDetail(firstGoods)">
+								<span>点击跳转到对应商铺互换坊</span><span class="buy fr">立即购买</span>
+							</div>
+							<% } %>
+						</div>
+					</div>
+				</div>
+				<div class="recommend">
+					<div class="title-box clearfix">
+						<h3 class="title fl">
+							<span>更多产品推荐</span>
+							<span class="subhead">
+								Wonderful recommendation
+							</span>
+						</h3>
+						<span class="fr more" @click="handleMore">更多<span class="icon-btn-arrow-down"></span></span>
+					</div>
+					<ul class="recommend-list clearfix">
+
+						<li class="fl" v-for="item in moreList">
+							<div class="img-box">
+								<!--'/live/story'+item.id-->
+								<a :href="item.liveUrl" target="_blank"><img :src="item.liveLogo | formatImg" width="100%"></a>
+							</div>
+							<div class="intro">
+								<p class="title">{{item.liveTitle}}</p>
+							</div>
+						</li>
+
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<%- include ../footer.ejs %>
+	</body>
+	<script>
+		//		$(".liveLeftNav .list1 li:eq(0)").addClass("cur")
+		//		console.log(name,"name11",location)
+
+		var vm = new Vue({
+			el: "#main",
+			data: function() {
+				return {
+					liveLeftNav: [
+						/*{
+												"catName": "hahahhaha",
+												"grade": 2,
+												"id": "1002",
+												"isShow": 0,
+												"liveCount": 0
+											}, {
+												"catName": "hahahhaha",
+												"grade": 2,
+												"id": "1005",
+												"isShow": 0,
+												"liveCount": 0
+											}, {
+												"catName": "hahahhaha",
+												"grade": 1,
+												"id": "1004",
+												"isShow": 0,
+												"liveCount": 0
+											}, {
+												"catName": "hahahhaha",
+												"grade": 1,
+												"id": "1003",
+												"isShow": 0,
+												"liveCount": 0
+											}*/
+					],
+					id: location.pathname.substr(location.pathname.lastIndexOf("/") + 1),
+					firstDetail: {},
+					firstGoods: {},
+					queryBoutiqueList: {
+						offset: 1,
+						limit: 100,
+					},
+					boutiqueList: [],
+					boutiqueListAll: [],
+					queryMoreList: {
+						offset: 1,
+						limit: 100,
+					},
+					moreList: [],
+					moreListAll: [],
+					attention: false,
+					findFollows: [],
+				}
+			},
+			filters: {
+				formatImg: function(str) {
+					return utils.formatImg(str);
+				},
+			},
+			mounted: function() {
+
+				//					console.log(qs.parse(location.search),555)
+
+				this.getLiveLeftNav()
+				//					this.getFindFollows()
+
+			},
+			methods: {
+				getLiveLeftNav() {
+					var self = this
+					utils.ajax({
+						url: "/api/extend/liveCategory/list",
+						type: "get",
+						success: function(data) {
+							var data = data.data;
+							self.liveLeftNav = data
+							if(data.length) {
+								var str = location.pathname.split("story")[1]
+								if(!str || str == "/") {
+									location.replace("/live/story/" + data[0].id + "?grade=" + data[0].grade)
+								} else {
+									self.getBoutiqueList()
+									self.getMoreList()
+
+								}
+
+							}
+
+						}
+					})
+				},
+				getFindFollows() {
+					var self = this
+					utils.ajax({
+						url: "/api/extend/liveShow/findFollows",
+						type: "get",
+						success: function(data) {
+							var data = data.data;
+							self.findFollows = data
+							self.isAttention()
+						}
+					})
+				},
+				getBoutiqueList() {
+					var self = this
+					var opt = {
+						offset: this.queryBoutiqueList.offset,
+						limit: this.queryBoutiqueList.limit,
+						catId: this.id,
+						isByWatchNum: true
+					}
+					utils.ajax({
+						url: "/api/extend/liveShow/showList",
+						type: "get",
+						data: opt,
+						success: function(data) {
+							var data = data.data;
+							if(data.records.length) {
+								self.firstDetail = data.records.shift()
+								self.boutiqueListAll = data.records
+								self.boutiqueList = self.boutiqueListAll.splice(0, 6)
+								self.firstGoods = self.firstDetail.goodsList[0]
+								//								self.isAttention()
+							}
+
+						}
+					})
+				},
+				isAttention() {
+					if(this.findFollows.length != 0 && this.firstDetail.userId) {
+						this.findFollows.forEach((sub, index) => {
+							if(sub.userId === this.firstDetail.userId) {
+								this.attention = true
+								return
+							}
+						})
+					}
+
+				},
+				handleBatch() {
+					let list = this.boutiqueListAll.splice(0, 6)
+					if(list.length){
+						this.boutiqueList = list
+					}
+					
+				},
+				getMoreList() {
+					var livTime
+					if(this.time_range("9:00", "11:00")) {
+						livTime = 1
+					} else if(this.time_range("11:30", "14:00")) {
+						livTime = 2
+					} else if(this.time_range("14:00", "18:00")) {
+						livTime = 3
+					} else if(this.time_range("18:00", "24:00")) {
+						livTime = 4
+					}
+
+					var self = this
+
+					var opt = {
+						offset: this.queryMoreList.offset,
+						limit: this.queryMoreList.limit,
+						catId: this.id,
+						livTime: livTime
+					}
+					utils.ajax({
+						url: "/api/extend/liveShow/showList",
+						type: "get",
+						data: opt,
+						success: function(data) {
+							var data = data.data;
+							self.moreListAll = data.records
+							self.moreList = self.moreListAll.splice(0, 3)
+						}
+					})
+				},
+				handleMore() {
+					let list = this.moreListAll.splice(0, 3)
+					if(list.length){
+						this.moreList = list
+					}
+					
+				},
+				time_range(beginTime, endTime) {
+					var strb = beginTime.split(":");
+					if(strb.length != 2) {
+						return false;
+					}
+
+					var stre = endTime.split(":");
+					if(stre.length != 2) {
+						return false;
+					}
+
+					var b = new Date();
+					var e = new Date();
+					var n = new Date();
+
+					b.setHours(strb[0]);
+					b.setMinutes(strb[1]);
+					e.setHours(stre[0]);
+					e.setMinutes(stre[1]);
+
+					if(n.getTime() - b.getTime() > 0 && n.getTime() - e.getTime() < 0) {
+						return true;
+					} else {
+						//							alert("当前时间是：" + n.getHours() + ":" + n.getMinutes() + "，不在该时间范围内！");
+						return false;
+					}
+
+				},
+				handleToBuy(firstGoods) {
+					//立即购买
+					if(utils.islogin()) {
+						location.href = "../../exchange/buy?flag=sale&source=2&id=" + id;
+					} else {
+						location.href = "../../login?from=" + encodeURIComponent(location.href);
+					}
+				},
+				handleToCart(firstGoods) {
+					if(utils.islogin()) {
+						var json = {
+							goodsId: firstGoods.goodsId,
+							goodsSku: detailVm.goodsSku.id,
+							number: 1,
+							goodsSource: 2
+						}
+						utils.ajax({
+							url: "/api/order/cart/add",
+							data: JSON.stringify(json),
+							success: function(data) {
+								if(data.success) {
+									utils.alert("success", "加入成功");
+								} else {
+									utils.alert("danger", data.msg);
+								}
+							}
+						})
+					} else {
+						location.href = "../../login?from=" + encodeURIComponent(location.href);
+					}
+				},
+				handleAttention(item) {
+					var obj = {
+						liveId: item.id
+					}
+					var url, info
+					if(this.attention) {
+						url = 'deleteFollow/' + item.id
+						info = "取消成功"
+					} else {
+						url = 'addFollow/' + item.id
+						info = "关注成功"
+					}
+					utils.ajax({
+						url: "/api/extend/liveShow/" + url,
+						type: "post",
+						//							data: JSON.stringify(obj),
+						success: function(data) {
+							if(data.success) {
+								utils.alert("success", info);
+							} else {
+								utils.alert("danger", data.msg);
+							}
+						}
+					})
+				},
+				handleGoDetail(firstGoods) {
+					switch(firstGoods.goodsSource) {
+						case 1:
+							location.href = "../../exchange/auction_detail?id=" + firstGoods.goodsId;
+							break;
+						case 2:
+							location.href = "../../exchange/auction_detail?id=" + firstGoods.goodsId;
+							break;
+						case 3:
+							location.href = "../../design/product_detail?id=" + firstGoods.goodsId;
+							break;
+						case 4:
+							location.href = "../../manufacture/business_detail?id=" + firstGoods.goodsId;
+							break;
+						default:
+							location.href = "../../exchange/auction_detail?id=" + firstGoods.goodsId;
+							break;
+					}
+
+				}
+			}
+		})
+	</script>
+
+</html>

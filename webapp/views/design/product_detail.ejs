@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.column1{background: #F5F5F5;height:500px;}
+.column1 .imgs{height:500px;width: 624px;}
+.column1 .imgs+div{margin-left: 624px;height:100%;position:relative;}
+.column1 .imgs+div>div{position:absolute;top: 50%;left:50%;transform: translate(-50%,-50%);}
+.column1 p {line-height: 28px;margin:38px 0;}
+
+.column2{padding:20px 0;border-bottom:2px solid #D6D6D6;margin-bottom:20px;}
+.column2 .el-input__inner {height:29px;line-height: 29px;}
+
+.fs30{font-size: 30px;}
+.scanInfo {width: 250px;}
+.scanList li{margin: 10px;cursor: pointer;}
+.scanList li p {line-height: 20px;}
+
+.detailNav{padding: 18px 0;text-align: center;}
+.detailNav li{display:inline-block;padding:0 60px;font-size:16px;color:#666;border-left: 1px solid #D6D6D6;}
+.detailNav li:first-child{border-left: 0;}
+.detailNav li.cur{color:#E54756;}
+
+.detail3 td {border: 1px solid #efefef;padding: 12px;color: #666;}
+.collect{
+	padding: 5px 10px;
+	background: #999999;
+	color: #FFFFFF;
+	font-size: 14px;
+	cursor: pointer;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+.collected{
+	background: #ff9900;
+}
+/*商品规格*/
+.specification{
+	line-height: 27px;
+}
+.specification .norms{
+	    display: inline-block;
+}
+.specification .norms .norm{
+	    border: 1px solid #CCCCCC;
+    padding: 3px 12px;
+    margin-left: 5px;
+        position: relative;
+    cursor: pointer;
+}
+.specification .norms .norm i{
+	display: inline-block;
+    	display: none;
+    	width: 8px;
+    	height: 8px;
+    	background: url(../../src/img/jewelry/default_adress.png) no-repeat;
+    	background-size: 100% auto;
+    	position: absolute;
+    	right: 0;
+    	bottom: 0;
+    }
+.specification .norms .norm:hover{
+	border-color: #E6B75B;
+}
+.specification .norms .norm.active{
+	    border: 1px solid #E6B75B;
+    padding: 3px 12px;
+    margin-left: 5px;
+}
+.specification .norms .norm.active i{
+	    display: block;
+}
+.specification,.goodsNum,.goodsStock{
+	margin-right: 15px;
+	    margin-top: 6px;
+}
+.goodsStock .el-input{
+	width: 100px;
+}
+
+.idea_design{
+	text-align: left;
+	max-height: 200px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.idea_design::-webkit-scrollbar {display:none}
+
+.statusWrap{
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	background: #FF0000;
+	padding: 0 5px;
+	text-align: center;
+	font-size: 12px;
+	color: #FFFFFF;
+	vertical-align: middle;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+/*放大镜样式*/
+#preview{ float:none;width:624px;}
+.jqzoom{ width:500px; height:500px; position:relative;padding:0;}
+#preview #spec-n5{
+	width: 100px;height: 500px;overflow:hidden;
+}
+#preview #spec-left{width:100px; height:10px;cursor:pointer;display: none;}
+#preview #spec-right{width:100px; height:10px;cursor:pointer;display: none;}
+#preview #spec-list{ width:100px;height:500px; overflow-x:hidden;overflow-y: auto;}
+#spec-list::-webkit-scrollbar {display:none}
+#preview #spec-list ul li{margin-right:0px; width:100px;margin-bottom: 5px;}
+#preview #spec-list ul li img{ border:1px solid transparent; width:94px; height:94px;}
+#preview .picimg{border:2px solid #C2A374;padding:1px}
+/*jqzoom*/
+.zoomdiv{z-index:100;position:absolute;top:0px;left:520px;width:500px;height:500px; border:1px solid #e4e4e4;display:block !important;text-align:center;overflow: hidden;}
+.bigimg{min-width:1200px;height:1200px;width:1200px;}
+.jqZoomPup{z-index:10;visibility:hidden;position:absolute;top:0px;left:0px;width:200px !important;height:200px !important;border:1px solid #aaa;background:#F5F5F5 50% top no-repeat;opacity:0.5;-moz-opacity:0.5;-khtml-opacity:0.5;filter:alpha(Opacity=50);cursor:move;}
+/*#spec-list{ position:relative; width:100px; margin-right:6px;}
+#spec-list div{ margin-top:0;margin-left:-30px; *margin-left:0;}*/
+.bdsharebuttonbox{position: absolute;top: 0px;right: 0;}
+</style>
+</head>
+<body class="">
+
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+	
+	    <div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+					<el-breadcrumb-item><a href="../../design/index">设计室</a></el-breadcrumb-item>
+					<el-breadcrumb-item>商品详情</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+	    </div>
+	
+		<div id="detail" class="container">
+
+			<div class="clearfix column1">
+				<div class="fl imgs" style="position: relative;">
+					<div id='preview' class="clearfix">
+						<div class='jqzoom fl' id='spec-n1'>
+							<img style="width: 500px;height: 500px;" :src="picListOne|formatImg" :jqimg="picListOne|formatImg"/>
+						</div>
+						<div id='spec-n5' class="fr">
+							<div class='control' id='spec-left'></div>
+							<div id='spec-list'>
+								<ul class='list-h'>
+									<li v-if="data.picList" 
+										v-for="(item, index) in data.picList"
+										:key="index"
+										><img @click="picClick(index)" :src="item|formatImg"> 
+									</li>	
+								</ul>
+							</div>
+							<div class='control' id='spec-right'></div>	
+					    </div>
+					</div>
+				</div>
+				<div style="position: relative;">
+					<div class="tc" style="width: 400px;">
+						<h3 class="fs24">
+							<span class="statusWrap" v-if="data.caseType == 2">定制商品</span>
+							<span style="line-height: 30px;">{{data.caseName}}</span>
+						</h3>
+						<p class="fs20">
+							{{data.subtitle}}
+						</p>
+						<div>
+							<span class="fs20 new-red">￥{{skuObj.price}}</span>
+							<span class="fs12" v-if="data.freightPrice>0">（运费：￥{{data.freightPrice}}）</span>
+							<span class="fs12" v-else>（运费：免运费）</span>
+							<span class="fs12" v-if="isServeType">支持七天无理由退换货</span>
+							<span class="fs12" v-else>不支持七天无理由退换货</span>
+						</div>
+						<p class="idea_design fs14"><b>设计理念：</b>{{data.designConcept}}</p>
+					</div>
+					<div style="position: absolute;top: 40px;right: 0;width: 100%;">
+						<%- include ../share_baidu.ejs %>
+					</div>
+					<a class="collect" val="0" onclick="collect(this)">收藏</a>
+				</div>
+			</div>
+
+			<div class="column2">
+				<div class="clearfix tc">
+					<div class="fl clearfix" style="width: 650px;">
+						<div class="specification fl" v-for="(specs,specsIndex) in goodsSpecs" :key="specsIndex">
+							<label>{{specs.specsName}}</label>
+							<div class="norms">
+								<span :class="['norm',{'active':item.active},'1'+item.active]" v-for="(item,index) in specs.goodsSpecsAttrs" :key="index" @click="handleNorm(item,index,specs,specsIndex)">{{item.attrValue}}<i></i></span>
+								
+							</div>
+						</div>
+					</div>
+					<div class="fr clearfix">
+						<div class="goodsNum fl">
+							<label>数量</label>
+							<el-input-number v-model="num"size="mini" @change="handleChange" :min="1" :max="skuObj.stock" label="描述文字"></el-input-number>
+						</div>
+						<div class="goodsStock fl">
+							<label>库存</label>
+							<el-input disabled v-model="skuObj.stock" size="mini"></el-input>
+						</div>
+
+						<el-button type="warning" v-if="skuObj.stock != 0 && data.hasMerNo" @click="addCart">加入购物车</el-button>
+						<el-button type="info" plain v-if="skuObj.stock == 0 && data.hasMerNo">加入购物车</el-button>
+						<el-button type="warning" plain v-if="skuObj.stock != 0 && data.hasMerNo" @click="toBuy">立即购买</el-button>
+            <el-button type="info" plain v-if="skuObj.stock == 0 && data.hasMerNo">立即购买</el-button>
+            <el-button type="info" v-if="!data.hasMerNo" disabled>备货中，敬请期待！</el-button>
+					</div>
+				</div>
+			</div>
+
+			<div class="column3 clearfix container">
+				<div class="fl scanInfo" id="leftAside">
+					<div class="designLeftItem">
+						<h2 class="title">{{data.merchantName}}</h2>
+						<div>
+							<br><br>
+							<table class="tc fs14" style="line-height: 26px;">
+								<tr v-if="data.shopScore">
+									<td width="80">
+										<b class="fs30 red">{{data.shopScore.multipleScore.toFixed(1)}}</b>
+									</td>
+									<td>
+										<p>宝贝描述：{{data.shopScore.spmxxfWholeScore.toFixed(1)}}</p>
+										<p>卖家服务：{{data.shopScore.mjfwtdWholeScore.toFixed(1)}}</p>
+										<p>物流速度：{{data.shopScore.wlfhsdWholeScore.toFixed(1)}}</p>
+									</td>
+								</tr>
+							</table>
+							<br><br>
+						</div>
+					</div>
+					
+					<div class="designLeftItem tc">
+						<h2 class="title" @click="NTKF.im_openInPageChat(data.keFuId)">
+							<img src="../../src/img/kefu.png" width="25"/>联系商家
+						</h2>
+					</div>
+					
+					<div class="designLeftItem">
+						<h2 class="title">热门推荐</h2>
+						<div>
+							<ul class="scanList">
+								<li v-for="item in list" :data-id="item.caseId" @click="toDetail($event)">
+									<table width="100%">
+										<tr>
+											<td width="90" valign="top">
+												<img :src="item.mainPic|formatImg" width="80" height="80">
+											</td>
+											<td valign="top">
+												<p class="fs14">{{item.caseName}}</p>
+												<p class="new-red">￥{{item.price}}</p>
+											</td>
+										</tr>
+									</table>
+								</li>
+							</ul>
+						</div>
+					</div>
+					
+				</div>
+				<div style="margin-left: 270px;">
+					<div class="detailNav">
+						<ul>
+							<li class="cur">
+								<a data-target="detail1">商品介绍</a>	
+							</li>
+							<li>
+								<a data-target="detail2">商品评价(<span id="commentTotal">0</span>)</a>	
+							</li>
+							<li>
+								<a data-target="detail3">商品属性</a>	
+							</li>
+							<li>
+								<a data-target="detail4">售后保障</a>	
+							</li>
+						</ul>
+					</div>
+					<div>
+						<div class="detail1 ue-view" v-html="data.caseInfo">
+						</div>
+						<div class="detail2 hide">
+							<%- include ../goodsComments.ejs %>
+						</div>
+						<div class="detail3 hide">
+							<table width="100%">
+								<tr v-for="attritem in data.caseAttrsDTOList">
+									<td width="30%">
+										{{attritem.attrName}}
+									</td>
+									<td>
+										{{attritem.attrValue}}
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div class="detail4 ue-view hide">
+							<h3 class="fs16">权利声明：</h3>
+							<p class="fs14">中宝协珠宝店内所有商品信息、客户评价、商品咨询、网友讨论等内容，是中宝协重要的经营资源，未经许可，禁止非法转载使用。</p>
+							<p class="fs14">注：本站商品信息均来自于合作方，其真实性、准确性和合法性由信息拥有者（合作方）负责。本站不提供任何保证，并不承担任何法律责任。</p>
+							<h3 class="fs16">中宝协承诺</h3>
+							<p class="fs14">中宝协平台卖家销售并发货的商品，由平台卖家提供发票和相应的售后服务。请您放心购买！</p>
+							<p class="fs14">注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，本司不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若本商城没有及时更新，请大家谅解！</p>
+							<h3 class="fs16">正品行货</h3>
+							<p>中宝协商城向您保证所售商品均为正品行货，由商家开具机打发票或电子发票。</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../footerDetail.ejs %>
+
+
+<script>
+var id = utils.getUrlParam("id");
+var contentType = 1;
+var routerVm = new Vue({
+	el: "#router"
+})
+var $slider = null;
+var detailVm = new Vue({
+	el: "#detail",
+	data: {
+		data: {},
+		num: 1,
+		stockTotal: 0,
+		picListOne:'',
+		list: [],
+		goodsSpecs:[],
+		goodsSkus:[],
+		skuObj:{},
+		isServeType: false
+	},
+	mounted: function(){
+		this.detail(function(){
+			conmmentRender(1);
+		});
+		this.asideList();
+	},
+	methods: {
+		detail: function(callback){
+			var self = this;
+			utils.ajax({
+				url: "/api/designmanu/designroom/case/info/"+id,
+				type: "get",
+				success: function(data){
+					data = data.data;
+					data.caseInfo = data.caseInfo.replace(/pa95ui71l.bkt.clouddn/g, 'image.gacjc')
+					self.data = data;
+					if(data.serveType.indexOf('0') > -1){
+						self.isServeType = true
+					}
+					setTimeout(function(){
+						self.picListOne = data.picList[0];
+						$(".jqzoom").jqueryzoom({
+							xzoom:400,
+							yzoom:400,
+							offset:10,
+							position:"right",
+							preload:1,
+							lens:1
+						});
+					}, 100)
+					
+					callback && callback()
+					//商品规格
+					function deepClone(obj){
+					    var _obj = JSON.stringify(obj),
+					        objClone = JSON.parse(_obj);
+					    return objClone
+					}    
+					var goodsSpecs = deepClone(data.goodsSpecs);
+					var symbolArr = []
+					goodsSpecs.forEach((sub1,index1)=>{
+						sub1.goodsSpecsAttrs.forEach((sub2,index2)=>{
+							if(index2){
+								sub2.active = false
+							}else{
+								sub2.active = true
+								symbolArr.push(String(sub2.symbol))
+							}
+							
+						})
+					})
+					self.goodsSpecs = goodsSpecs
+					self.goodsSkus = data.goodsSkus
+					self.getRepertory(symbolArr)
+					var stockTotal = 0
+					$.each(data.goodsSkus, function(idx, item) {
+						stockTotal += Number(item.stock)
+					});
+					self.stockTotal = stockTotal 
+					
+					//客服
+					var uname = utils.getCookie('nickName') || ""
+					var uid = utils.getCookie('userIdZBX') || ""
+					var NTKF_PARAM = {
+					    siteid:utils.getCookie('siteid'),     //企业ID，为固定值，必填
+					    sellerid: 'zd_'+utils.kefuStr(data.keFuId),
+					    settingid: data.keFuId,    //接待组ID，为固定值，必填
+					    uid:uid,                              //用户ID，支持字母、数字、下划线。未登录可以为空，但不能给null，uid赋予的值在显示到小能客户端上
+					    uname:uname,                            //未登录可以为空，但不能给null，uname赋予的值显示到小能客户端上
+					    isvip:"0",                           //是否为vip用户，0代表非会员，1代表会员，取值显示到小能客户端上
+					    userlevel:"0",                       //网站自定义会员级别，0-N，可根据选择判断，取值显示到小能客户端上
+					    erpparam:"erp",                        //erpparam为erp功能的扩展字段，可选，购买erp功能后用于erp功能集成
+					    itemid:data.id,                         //(必填)商品ID
+					    itemparam:"5"                         //(选填)itemparam为商品接口扩展字段，用于商品接口特殊要求集成
+					}
+				}
+			})
+		},
+		getRepertory(symbolArr){
+			var symbolStr = symbolArr.sort().join(",")
+			this.goodsSkus.forEach((sub,index)=>{
+				var arr = sub.attrSymbolPath.split(',').sort().join(',')
+				if(arr === symbolStr){
+					this.skuObj = sub
+				}
+			})
+		},
+		handleNorm(item,index,prevItem,prevIndex){
+			item.active = true
+			var symbolArr = []
+			this.goodsSpecs.forEach((sub1,index1)=>{
+				sub1.goodsSpecsAttrs.forEach((sub2,index2)=>{
+					if(prevIndex == index1){
+						if(index2 !== index){
+							sub2.active = false
+						}
+					}
+					if(sub2.active){
+						symbolArr.push(String(sub2.symbol))
+					}
+				})
+			})
+			
+			this.getRepertory(symbolArr)
+		},
+		picClick:function($index){
+			this.picListOne = this.data.picList[$index];
+		},
+		handleChange:function(val){
+
+		},
+		addCart: function(){
+			var self = this;
+			if(utils.islogin()){
+				var json = {
+					goodsId: id,
+					goodsSku: self.skuObj.id,
+					number: self.num,
+					goodsSource: self.data.goodsSource
+				}
+				utils.ajax({
+					url: "/api/order/cart/add",
+					data: JSON.stringify(json),
+					success: function(data){
+						utils.alert("success", "加入成功");
+						utils.ajax({
+							url: "/api/order/cart/list",
+							type: "get",
+							success: function(data){
+								var len = 0
+								var list = data.data.cartItemList;
+								for(var i= 0; i<list.length; i++){
+									len += list[i].goods.length
+								}
+								$("#carNum").text(len)
+							}
+						})
+					}
+				})
+			}else{
+				location.href = "../../login?from=" + encodeURIComponent(location.href);
+			}
+		},
+		toBuy: function(){
+			if(utils.islogin()){
+				location.href = "../../exchange/buy?flag=design&source=2&id=" + id + "&goodsNumber=" + this.num+'&skuid='+this.skuObj.id;
+			}else{
+				location.href = "../../login?from=" + encodeURIComponent(location.href);
+			}
+		},
+		asideList: function(){
+			var self = this;
+			utils.ajax({
+                url: " /api/designmanu/designroom/intell/case/list/5",
+                type: "get",
+                success: function (data) {
+                	data = data.data;
+                	self.list = self.list.splice(self.list.length);
+                    self.list = data;
+                }
+            });
+		},
+		toDetail: function(event){
+			var id = event.currentTarget.getAttribute("data-id");
+			location.href = "../../design/product_detail?id=" + id;
+		}
+	},
+	filters: {
+		formatImg: function(data){
+			return utils.formatImg(data);
+		}
+	}
+})
+
+$(function(){
+	$(document).on("click", ".detailNav a", function(e){
+		var self = $(e.currentTarget);
+		var t = self.attr("data-target");
+		$("."+t).removeClass("hide").siblings().addClass("hide");
+		self.parent().addClass("cur").siblings().removeClass("cur")
+	})
+})
+/* *
+ * 是否已收藏
+ * source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+ * */
+utils.checkCollect(utils.getUrlParamVal('id'), 5, function(){
+	$(".collect").attr("val","1").addClass("collected").text('已收藏')
+})
+/*
+ * 0:未收藏， 1已收藏
+ * source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+ * */
+function collect(e){
+	if(!utils.islogin()){
+		utils.alert("danger","请登录后再进行操作！");
+		return;
+	}
+	var el = e||window.event;
+	var val = $(el).attr("val");
+	if(val == '0'){
+		utils.ajax({
+			type:'post',
+			url:'/api/userCenter/collect/add/'+utils.getUrlParamVal('id')+'/5',
+			success: function (data){
+				if(data.success){
+					$(el).addClass("collected").text("已收藏").attr("val","1")
+					utils.alert("success","收藏成功");
+				}else{
+					utils.alert("danger",data.msg);
+				}
+			}
+		})
+	}else{
+		utils.ajax({
+			type:'post',
+			url:'/api/userCenter/collect/delete/'+utils.getUrlParamVal('id')+'/5',
+			success: function (data){
+				if(data.success){
+					$(el).removeClass("collected").text("收藏").attr("val","0")
+					utils.alert("success","您已取消收藏");
+				}else{
+					utils.alert("danger",data.msg);
+				}
+			}
+		})
+	}
+}
+</script>
+</body>
+</html>
+

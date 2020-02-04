@@ -1,0 +1,92 @@
+<input type="hidden" id="categoryId" value="<%= data.categoryId %>">
+<!--
+<div class="column1">
+	<h2></h2>
+	<p>提交信息立马知道</p>
+	<form>
+		<div class="username">
+			<input type="text" placeholder="您的称号">
+		</div>
+		<div class="phone">
+			<input type="text" placeholder="您的手机号">
+			<a class="btn btn-danger codeBtn">获取验证码</a>
+		</div>
+		<div class="code">
+			<input type="text" placeholder="填写验证码">
+		</div>
+		<div>
+			<a class="btn btn-danger submitBtn">立即提交</a>
+		</div>
+	</form>
+</div>
+-->
+					
+<div class="column2">
+	<div>
+		<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+		<script>var myhref=window.location.href;window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdUrl":myhref,"bdMini":"2","bdStyle":"0","bdSize":"16"},"share":{},"imagesadad":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+	</div>
+	<div class="info">
+		<h2>图片信息</h2>
+		<p>作品名称：<%= data.title %></p>
+		<p>作品作者：<%= data.designerName %></p>
+		<p>作品材质：<%= data.material %></p>
+		<p>上传时间：<%= data.createTime %></p>
+		<% for(var i=0;i<data.galleryAtlasCat.length;i++){ %>
+			<% if(data.galleryAtlasCat[i].name == 'D'){ %>
+				<p>赛事奖项：<%= data.galleryAtlasCat[i].categoryName %></p>
+			<% } %>
+			<% if(data.galleryAtlasCat[i].name == 'E'){ %>
+				<p>作品专利：<%= data.galleryAtlasCat[i].categoryName %></p>
+			<% } %>
+		<% } %>
+		<p class="info2 clamp">作品描述：<%= data.intro %></p>
+		<p class="info2_more">更多</p>
+	</div>
+	<div class="tags">
+		<h2>标签</h2>
+		<div>
+			<%= $imports.galleryLabel(data.labels) %>
+		</div>
+	</div>
+	<div class="iconGroup">
+		<div class="row tc">
+			<div class="col-4" id="toLike">
+				<a><i class="icon icon-praise"></i></a>
+				<p><%= data.praiseNum %></p>
+			</div>
+			<div class="col-4">
+				<i class="icon icon-comment2"></i>
+				<p><%= data.commentNum %></p>
+			</div>
+			<div class="col-3 hide" id="toDownload">
+				<a id="download"><i class="icon icon-download"></i></a>
+				<p><%= data.downloadNum %></p>
+			</div>
+			<div class="col-4">
+				<a id="collect" val="0"><i class="icon-collect"></i></a>
+				<p id="collectNum"><%= data.collectNum %></p>
+			</div>
+			<div class="col-4 hide" id="toShare">
+				<a><i class="icon icon-share"></i></a>
+				<p><%= data.shareNum %></p>
+			</div>
+		</div>
+	</div>
+	
+	<div class="comment">
+		<h2>评论</h2>
+		<div>
+			<ul>
+				
+			</ul>
+		</div>
+		<div>
+			<input type="text" placeholder="我要评论！" id="commentInput">
+			<div class="tr">
+				<a class="btn btn-danger" id="commentBtn">发表</a>
+			</div>
+		</div>
+	</div>
+	
+</div>		

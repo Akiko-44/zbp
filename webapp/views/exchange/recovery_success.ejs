@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+body {background: #FAFAFA;}
+.exchangeTop {border-bottom: 1px solid #ccc;}
+.detail1 {padding: 160px 0; background: #fff;text-align: center;}
+.detail1 h3 {font-size: 24px;color: #1A1A1A;margin-bottom: 10px;}
+.detail1 p {font-size: 14px;color: #999;margin-bottom: 120px;}
+.detail1 .btn {margin: 0 60px;font-size: 24px;}
+#toUserOrder {border: 1px solid #C2A374;color: #C2A374;line-height: 38px;width: 140px;}
+#toIndex {background: #C2A374;color: #fff;width: 220px;line-height: 40px;}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<div id="header" class="header exchangeTop">
+		<div class="container">
+			<div class="headerInfo">
+				<div>
+					<div class="logoWrap">
+						<a href="../../">
+							<i class="icon icon-logo"></i>
+						</a>
+						<span>回收订单申请</span>
+					</div>
+					<div>
+						
+					</div>
+					<div>
+						<img class="fr" src="../../src/img/exchange/recovery_progress2.png">
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<div class="detail1">
+				<h3>您的物品回收订单已提交成功，请耐心等待商家确认</h3>
+				<p>温馨提示：您可以在“个人中心-我申请的回收”中查看您的订单信息</p>
+				<div class="tc">
+					<a class="btn btn-waring" id="toUserOrder">查看订单</a>
+					<a class="btn btn-waring" id="toIndex">返回物品回收首页</a>
+				</div>
+			</div>
+		</div>
+		
+
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+
+<script>
+var id = utils.getUrlParam("id")
+$(function(){
+	
+	$(document).on("click", "#toIndex", function(){
+		location.href = "../../exchange/recovery"
+	}).on("click", "#toUserOrder", function(){
+		location.href = "../../user/order/exchange_recover"
+	})
+	
+})
+
+</script>
+
+</body>
+</html>
+

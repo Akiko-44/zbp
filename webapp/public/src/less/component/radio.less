@@ -1,0 +1,126 @@
+/*
+	<label class="radio">
+		<span class="radio-input">
+			<span class="radio-input-inner"></span>
+			<input type="radio" name="sex">
+		</span>
+		<span class="radio-label">男生</span>
+	</label>
+	
+	<label class="radio checked">
+		<span class="radio-input">
+			<span class="radio-input-inner"></span>
+			<input type="radio" name="sex">
+		</span>
+		<span class="radio-label">女生</span>
+	</label>
+	
+	<label class="radio disabled">
+		<span class="radio-input">
+			<span class="radio-input-inner"></span>
+			<input type="radio" name="sex2">
+		</span>
+		<span class="radio-label">男生</span>
+	</label>
+	
+	<label class="radio checked disabled">
+		<span class="radio-input">
+			<span class="radio-input-inner"></span>
+			<input type="radio" name="sex2">
+		</span>
+		<span class="radio-label">女生</span>
+	</label>
+
+*/
+.radio {
+	color: #1f2d3d;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.radio .radio-input {
+	white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    line-height: 1;
+    position: relative;
+    vertical-align: middle;
+}
+.radio .radio-input input {
+	opacity: 0;
+    outline: none;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+}
+.radio .radio-input-inner {
+    border: 1px solid #bfcbd9;
+    border-radius: 100%;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #fff;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    box-sizing: border-box;
+}
+.radio .radio-input-inner:after {
+	width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #fff;
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%) scale(0);
+    transition: transform .15s cubic-bezier(.71,-.46,.88,.6);
+}
+.radio.checked .radio-input-inner {
+    border-color: #20a0ff;
+    background: #20a0ff;
+}
+.radio.checked .radio-input-inner:after {
+    transform: translate(-50%,-50%) scale(1);
+}
+.radio .radio-label {
+    font-size: 14px;
+    vertical-align: middle;
+    display: inline-block;
+}
+/*
+	未选中禁用样式
+*/
+.radio.disabled .radio-label {
+    color: #bbb;
+    cursor: not-allowed;
+}
+.radio.disabled .radio-input-inner {
+	background-color: #eef1f6;
+    border-color: #d1dbe5;
+    cursor: not-allowed;
+}
+.radio.disabled .radio-input-inner:after{
+	cursor: not-allowed;
+    background-color: #eef1f6;
+}
+/*
+	选中禁用样式
+*/
+.radio.checked.disabled .radio-input-inner {
+	background-color: #d1dbe5;
+    border-color: #d1dbe5;
+}
+.radio.checked.disabled .radio-input-inner:after {
+	background-color: #fff;
+}

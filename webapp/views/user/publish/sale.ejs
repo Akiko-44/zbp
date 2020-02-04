@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<script src="../../src/js/plugin/tinymce4.7.5/tinymce.min.js"></script>
+<style type="text/css">
+  .layui-input-inline{
+    display: inline;
+  }
+  .goodsSkuClass>div{
+    padding: 10px;
+    border: 1px solid #E0E0E0;
+    margin-bottom: 10px;
+  }
+  .spec{
+    margin-bottom: 10px;
+  }
+  .spec a{
+    margin-left: 10px;
+  }
+  .specifications {margin-right: 10px;margin-bottom: 10px;}
+  .drag-item{
+    margin-top: 10px;
+  }
+  #specTable tr, #specTable td{
+    border-color: #E0E0E0;
+    text-align: center;
+  }
+  .userPublish .img2>div{
+    display: block;
+    float: left;
+    margin-right: 10px;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    position: relative;
+  }
+  .userPublish .img2>div>div{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    line-height: 20px;
+    background: rgba(0,0,0,.34);
+    color: #fff;
+    text-align: center;
+    right: 0;
+  }
+</style>
+</head>
+<body class="userPublish">
+
+  <%- include ../../headerbar.ejs %>
+  
+  <%- include ../../header.ejs %>
+  
+  <%- include ../userHeaderNav.ejs %>
+  
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>个人中心</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+  
+  <div id="main" class="main">
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include ../userLeftNav.ejs %>
+      </div>
+      <div class="userRightContent">
+        
+        <div class="panel userPanel">
+          <div class="panel-header">
+            <h3 class="panel-title">销售信息发布</h3>
+          </div>
+          <div class="panel-body">
+            <form id="publishForm">
+              <input type="hidden" name="swapble" value="2" />
+              <input type="hidden" name="id" v-if="id!=''" :value="id">
+              <table>
+                <tr>
+                  <td valign="top" width="100"><b class="red">*</b><label>商品名称</label></td>
+                  <td colspan="3">
+                    <div>
+                      <input type="text" name="goodsName" 
+                      datatype="*1-30" 
+                      nullmsg="请输入商品名称" 
+                      maxlength="30" 
+                      errormsg="商品名称不能为空" 
+                      style="width: 310px;" 
+                      :value="goodsName">
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>商品分类</label></td>
+                  <td width="155">
+                    <div>
+                      <select name="categoryId1"></select>
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                  <td width="155">
+                    <div>
+                      <select name="categoryId2"></select>
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                  <td>
+                    <div>
+                      <select name="categoryId3"></select>
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top">&nbsp;&nbsp;<label>商品品牌</label></td>
+                  <td colspan="3">
+                    <div>
+                      <select name="brandId" datatype="*"></select>
+                    </div>
+                    <p style="width: 1px;height: 28px;"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>新旧程度</label></td>
+                  <td colspan="3">
+                    <div>
+                      <select name="deprecition" datatype="*" nullmsg="请选择新旧程度" maxlength="300" errormsg="请选择新旧程度"></select>
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>原价</label></td>
+                  <td colspan="3">
+                    <div>
+                      <input type="text" 
+                      name="marketPrice" 
+                      datatype="/^[0-9]+([.]{1}[0-9]{1,2})?$/" 
+                      nullmsg="请输入原价" 
+                      maxlength="100" 
+                      errormsg="非法的数字格式" 
+                      :value="marketPrice">&emsp;元
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>售价</label></td>
+                  <td colspan="3">
+                    <div>
+                      <input type="text" 
+                      name="price" 
+                      datatype="/^[0-9]+([.]{1}[0-9]{1,2})?$/" 
+                      nullmsg="请输入转让价" 
+                      maxlength="100" 
+                      errormsg="非法的数字格式" 
+                      :value="price">&emsp;元
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>商品运费</label></td>
+                  <td>
+                    <div>
+                      <input type="text" 
+                      name="freightPrice" 
+                      datatype="/^[0-9]+([.]{1}[0-9]{1,2})?$/" 
+                      nullmsg="请输入运费" 
+                      maxlength="20" 
+                      errormsg="非法的数字格式" :value="freightPrice">
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>商品图片</label></td>
+                  <td colspan="3">
+                    <div class="clearfix">
+                      <div class="fl img clearfix">
+                        <template v-for="item in imgs">
+                          <div :data-name="item.imgUrl">
+                            <img :src="item.imgUrl | formatImg">
+                            <div>
+                              <a class="hide">设为封面</a>&ensp;
+                              <a class="delImgBtn">删除</a>
+                            </div>
+                          </div>
+                        </template>
+                      </div>
+                      <div class="fl" id="batchPic">
+
+                        	<div class="uploadbox" data-target="img" id="pickfiles" >
+                        		
+                        	</div>
+
+                        <input type="file" id="goodsImg" multiple="multiple" style="display: none;"/>
+                      </div>
+                    </div>
+                    <p class="Validform_checktip">图片建议尺寸600*600，分辨率为1:1，大小不超过2M，4张以内</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>添加规格</label></td>
+                  <td colspan="3">
+                    <input type="hidden" name="symbol" id="symbol" value="0" />
+                    <div class="goodsSkuClass">
+                          <div>
+                            <a class="btn btn-warning" onclick="addSpec()">+添加规格</a>
+                            <a class="btn btn-warning" onclick="getTableData()">刷新规格项目表</a>
+                          </div>
+                          <div id="drag" class="drag-c">
+                            <div class="drag-item">
+                            <div class="spec clearfix">
+                              <div class="layui-input-inline fl">
+                                  <input type="text" name="spec" placeholder="规格名称">
+                                </div>
+                                <a class="btn btn-warning fl" onclick="addSpecifications(this)">+添加规格项</a>
+                                      <a class="btn btn-warning fl" onclick="spec(this)">删除</a>
+                            </div>
+                            <div class="clearfix spec-item">
+                              <div class="specifications fl">
+                                <div class="layui-input-inline"><input type="text" val="0" name="specifications"></div><a class="btn btn-warning" onclick="specifications(this)">删除</a>
+                              </div>
+                            </div>
+                          </div>
+                          </div>
+                          <table id="specTable" border="1" cellpadding="0" cellspacing="0">
+                            <thead>
+                              
+                            </thead>
+                            <tbody>
+                              
+                            </tbody>
+                          </table>
+                        </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>参数</label></td>
+                  <td colspan="3">
+                    <div>
+                       <a class="btn btn-warning" onclick="addSpec2()">+添加参数</a>
+                    </div>
+                    <div id="drag2" class="drag-c">
+                      <div class="drag-item clearfix">
+                        <div class="layui-input-inline fl">
+                          <input type="text" name="spec" placeholder="参数">
+                        </div>
+                        <div class="layui-input-inline fl">
+                          <input type="text" name="specifications" placeholder="参数值" class="layui-input">
+                        </div>
+                        <a class="btn btn-warning fl" onclick="spec2(this)">删除</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>鉴定机构</label></td>
+                  <td>
+                    <div>
+                      <select name="hsMarkName"
+                        datatype="*" 
+                        nullmsg="请选择鉴定机构" 
+                        errormsg="请选择鉴定机构">
+                      </select>
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                  <td valign="top">
+                    <p style="line-height: 30px;">还没有经过鉴定，您可以点击这里<a class="blue" href="http://www.ngtc.com.cn/" target="_blank">立即申请鉴定</a></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>鉴定证书</label></td>
+                  <td colspan="3">
+                    <div class="clearfix">
+                      <div class="fl img2 clearfix">
+                        <!--<div v-if="hsMark.hsMarkUrl!=''" :data-name="hsMark.hsMarkUrl">
+                          <img :src="hsMark.hsMarkUrl | formatImg">
+                          <div>
+                            <a class="delImgBtn">删除</a>
+                          </div>
+                        </div>-->
+                        <template v-if="hsMarkUrl.length > 0" v-for="item in hsMarkUrl">
+                          <div :data-name="item.hsMarkUrl">
+                            <img :src="item.hsMarkUrl | formatImg"/>
+                            <div>
+                              <a class="delImgBtn">删除</a>
+                            </div>
+                          </div>
+                        </template>
+                      </div>
+                      
+                      <div class="fl uploadbox triggerFile" data-target="img2">
+                        
+                      </div>
+                    </div>
+                    <p class="Validform_checktip">上传证书信息有助于物品销售及提高宝贝互换的成功率,图片大小不能超过2M，4张以内</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top"><b class="red">*</b><label>商品描述</label></td>
+                  <td colspan="3">
+                    <div class="tinymce-container editor-container">
+                      <div class="editor-custom-btn-container">
+                            <a class="btn btn-primary triggerFile" data-target="tinymce">上传图片</a>
+                        </div>
+                      <textarea id="tinymce" class="tinymce-textarea">请具体描述您需要回收的信息内容</textarea>
+                    </div>
+                    <p class="Validform_checktip"></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td colspan="3">
+                    <a class="btn btn-warning" id="saveBtn" v-if="id==''" v-on:click="save">立即发布</a>
+                    <a class="btn btn-warning" id="editBtn" v-if="id!=''" v-on:click="save">保存</a>
+                  </td>
+                </tr>
+              </table>
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+  <%- include ../userFooter.ejs %>
+
+<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+     <input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+</form> 
+
+<%- include ../../exchange/commonJs.ejs %>
+<script>
+$(".userLeftNav .userSubNav li:eq(0)").addClass("cur");
+var routerVm = new Vue({
+  el: "#router"
+})
+
+window.target = "";
+
+var publishVm = new Vue({
+  el: "#publishForm",
+  data: {
+    id: "",
+    goodsName: "",
+    marketPrice: "",
+    price: "",
+    freightPrice: "",
+    category: [],
+    categoryId:"",
+    imgs: [],
+    hsMarkUrl: []
+  },
+  mounted: function(){
+    var self = this;
+    self.initTinymce();
+    utils.batchPicUploader();
+    
+   /* $.ajax({
+      url: "/api/userCenter/checkUser",
+      type: "get",
+      contentType: 'application/json;charset=utf-8',
+      headers:{
+            'Authorization':utils.getCookie("token")
+          },
+      success: function(data){
+        if(!data.success){
+          self.$confirm('您未申请开通互换坊', '信息', {
+                  distinguishCancelAndClose: true,
+                  confirmButtonText: '立即申请',
+                  cancelButtonText: '取消'
+              })
+                .then(() => {
+                  window.location.href="../../user/shop"
+                })
+                .catch(action => {
+                  window.location.href="../../user/account"
+                }); 
+        }
+      }
+    })*/
+    $.ajax({
+			url: "/api/userCenter/merchantInfo/checkUser",
+			type: "get",
+			beforeSend : function(request) {
+			　　request.setRequestHeader("Authorization", utils.getCookie("token"))
+			},
+			success: function(data){
+            if(data.msg.indexOf('互换') > -1){
+
+						} else{
+									self.$confirm('您未申请开通互换坊', '信息', {
+		              distinguishCancelAndClose: true,
+		              confirmButtonText: '立即申请',
+		              cancelButtonText: '取消'
+		          })
+		            .then(() => {
+		              window.location.href="../../user/shop"
+		            })
+		            .catch(action => {
+		              window.location.href="../../user/account"
+		            }); 
+						}
+			}
+    })
+    setTimeout(function(){
+      self.detail(function(){
+        getBrand(function(data){
+          var html ="";
+          for(var i=0;i<data.length;i++){
+            html += '<option value="'+data[i].id+'">'+data[i].brandName+'</option>'
+          }
+          $("[name='brandId']").html(html);
+        });
+        
+        getNewAndOld(function(data){
+          var html = '';
+          for(var k in data){
+            html += '<option value="'+k+'">'+data[k]+'</option>';
+          }
+          $("[name='deprecition']").html(html);
+        })
+        
+        getCategory(null, function(data){
+          self.category = data;
+          var html ="";
+          var html1 = "",html2 = "",html3 = "";
+          if(data[0].children){
+            for(var i=0;i<data.length;i++){
+              html1 += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+              
+              var children1 = data[i].children;
+              for(var j=0;j<children1.length;j++){
+                html2 += '<option value="'+children1[j].id+'">'+children1[j].name+'</option>'
+                
+                var children2 = children1[j].children;
+                for(var z=0;z<children2.length;z++){
+                  html3 += '<option value="'+children2[z].id+'">'+children2[z].name+'</option>'
+                }
+              }
+            }
+            $("[name='categoryId1']").html(html1);
+            $("[name='categoryId2']").html(html2);
+            $("[name='categoryId3']").html(html3);
+          }else{
+            for(var i=0;i<data.length;i++){
+              html += '<option value="'+data[i].id+'">'+data[i].catName+'</option>'
+            }
+            $("[name='categoryId1']").html(html);
+            setTimeout(function(){
+              $("[name='categoryId1']").trigger("change");
+            }, 100)
+          }
+        })
+        
+        getAgency(function(data){
+          var html ='';
+          for(var i=0;i<data.length;i++){
+            html += '<option value="'+data[i]+'">'+data[i]+'</option>'
+          }
+          $("[name='hsMarkName']").html(html);
+        })
+        
+        window.validform = $("#publishForm").Validform({
+          tiptype: 2
+        })
+        $.Tipmsg.r = "";
+      })
+    },100)
+  },
+  methods: {
+    IterationMenuChildren: function(arr, categoryId){
+      var self = this;
+      if (arr.length) {
+        for (let i in arr) {
+          if(arr[i].id == categoryId){
+            $("[name='categoryId1']").val(categoryId);
+            $("[name='categoryId2']").val('');
+            $("[name='categoryId3']").val('');
+          }
+          if(arr[i].children.length){
+            var arrChild1 = arr[i].children;
+            for (let i1 in arrChild1) {
+              if(arrChild1[i1].id == categoryId){
+                $("[name='categoryId1']").val(arr[i].id);
+                $("[name='categoryId2']").val(categoryId);
+                $("[name='categoryId3']").val('');
+              }
+              if(arrChild1[i1].children.length){
+                var arrChild2 = arrChild1[i1].children;
+                for (let i2 in arrChild2) {
+                  if(arrChild2[i2].id == categoryId){
+                    $("[name='categoryId1']").val(arr[i].id);
+                    $("[name='categoryId2']").val(arrChild1[i1].id);
+                    $("[name='categoryId3']").val(arrChild2[i2].id);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    detail: function(callback){
+      var self = this;
+      //编辑
+      var id = utils.getUrlParam("id");
+      if(!!id){
+        self.id = id;
+        utils.ajax({
+          url: "/api/swap/user/goods/sale_goods/info/" + id,
+          type: "get",
+          success: function(data){
+            data = data.data;
+            self.goodsName = data.goodsName
+            self.marketPrice = data.marketPrice;
+            self.price = data.price;
+            self.freightPrice = data.freightPrice;
+            self.categoryId = data.categoryId;
+            self.categoryName = data.categoryName;
+            self.goodsAttrs = data.goodsAttrs;
+            getGoodsAttrs(self.goodsAttrs);
+            if(data.goodsDesc != ''){
+              self.setContent(data.goodsDesc.goodsDesc);
+            }else{
+              self.setContent(data.goodsDesc);
+            }
+            $("[name='deprecition']").val(data.deprecition);
+            $("[name='hsMarkName']").val(data.hsMarkName)
+            self.imgs = data.imgs;
+            self.hsMarkUrl = data.hsMarkUrlList;
+            
+            callback && callback()
+            $("[name='brandId']").val(data.brandId);
+            self.IterationMenuChildren(self.category, self.categoryId)
+          }
+        })
+      }else{
+        callback && callback();
+      }
+    },
+    save: function(){
+      var self = this;
+      if(validform.check(false)){
+        if($(".img>div").length == 0){
+          utils.alert("info", "请上传商品图片");
+          return;
+        }
+        var str = $("#publishForm").serialize();
+        str = utils.str2json(str);
+        str.deprecition = parseInt(str.deprecition)
+        str.goodsSpecs= specTable();
+        str.goodsSkus= goodsSku();
+        if(str.goodsSkus.length == 0){
+          utils.alert("info", "请填写sku信息！");
+          return;
+        }
+        var getAttrData = getAttr()
+        if(getAttrData.length == 0){
+          utils.alert("info", "参数不能为空！");
+          return false;
+        }
+        str.goodsAttrs = getAttrData;
+        var imgs = [];
+        $(".img>div").each(function(i){
+          var imgType = 2;
+          if(i==0){
+            imgType = 1;
+          }
+          imgs.push({
+            imgUrl: $(this).attr("data-name"),
+            imgType: imgType
+          })
+        })
+        str.imgs = imgs;
+        var hsMarkUrl = [];
+        $(".img2>div").each(function(i){
+          hsMarkUrl.push($(this).attr("data-name"));
+        })
+        str.hsMarkUrl = hsMarkUrl;
+        /*str.hsMark = {
+          hsMarkName: $("[name='hsMarkName']").val(),
+          hsMarkUrl: $(".img2 a:eq(0)").attr("data-name")
+        }*/
+        str.hsMarkName = $("[name='hsMarkName']").val();
+        if(str.hsMarkUrl.length<1){
+          utils.alert("info", "请上传鉴定证书！");
+          return false;
+        }
+        if(!!$("[name='categoryId3']").val()){
+          str.categoryId = $("[name='categoryId3']").val()
+        }else if(!!$("[name='categoryId2']").val()){
+          str.categoryId = $("[name='categoryId2']").val()
+        }else{
+          str.categoryId = $("[name='categoryId1']").val()
+        }
+        
+        str.goodsDesc = self.getContent();
+        if(str.goodsDesc.length > 10000){
+          utils.alert("info", "描述内容过长");
+          return;
+        }
+        str.src = 1;
+        utils.ajax({
+          url: "/api/swap/user/goods/sale_goods/save",
+          data: JSON.stringify(str),
+          success: function(data){
+            if(data.success){
+              utils.alert("success", "操作成功");
+              setTimeout(function(){
+                location.href = "sale_list"
+              }, 2000)
+            }else{
+              utils.alert("danger", data.msg);
+            }
+          }
+        })
+        
+      }
+    },
+    initTinymce: function(){
+        var _this = this
+        window.tinymce.init({
+            language: "zh_CN",
+            selector: "#tinymce",
+            height: 500,
+            body_class: 'ue-view',
+            content_css: "../../dist/css/all.css",
+            object_resizing: false,
+            toolbar: ['bold italic underline strikethrough alignleft aligncenter alignright outdent indent  blockquote undo redo removeformat subscript superscript code codesample', 'hr bullist numlist link image charmap preview anchor pagebreak insertdatetime media table emoticons forecolor backcolor'],
+            menubar: {
+              
+            },
+            plugins: ['advlist anchor autolink autosave code codesample colorpicker colorpicker contextmenu directionality emoticons fullscreen hr image imagetools importcss insertdatetime link lists media nonbreaking noneditable pagebreak paste preview print save searchreplace spellchecker tabfocus table template textcolor textpattern visualblocks visualchars wordcount'],
+            end_container_on_empty_block: true,
+            powerpaste_word_import: 'clean',
+            code_dialog_height: 450,
+            code_dialog_width: 1000,
+            advlist_bullet_styles: 'square',
+            advlist_number_styles: 'default',
+            imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
+            default_link_target: '_blank',
+            link_title: false,
+            nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
+            init_instance_callback: editor => {
+              
+            },
+            setup(editor) {
+                editor.on('FullscreenStateChanged', function(e){
+                _this.fullscreen = e.state
+                })
+            }
+        })
+    },
+    setContent: function(value){
+        window.tinymce.activeEditor.setContent(value)
+    },
+    getContent: function(){
+      return window.tinymce.get("tinymce").getContent()
+    },
+    imageSuccessCBK: function(url){
+      window.tinymce.activeEditor.insertContent('<img class="wscnph" src="'+url+'" >')
+    }
+  },
+  filters: {
+    formatImg: function(str){
+      return utils.formatImg(str);
+    }
+  }
+})
+$(function(){
+  
+  $(document).on("click", ".triggerFile", function(e){
+    var t = $(e.currentTarget).attr("data-target");
+    target = t;
+    $("#form1 input").trigger("click");
+  }).on("change", "[name='categoryId1']", function(e){
+    var id = $(this).val();
+    getCategory(id, function(data){
+      var html ="";
+      for(var i=0;i<data.length;i++){
+        html += '<option value="'+data[i].id+'">'+data[i].catName+'</option>'
+      }
+      $("[name='categoryId2']").html(html);
+      $("[name='categoryId3']").html('');
+    })
+    
+  }).on("change", "[name='categoryId2']", function(e){
+    var id = $(this).val();
+    getCategory(id, function(data){
+      var html ="";
+      for(var i=0;i<data.length;i++){
+        html += '<option value="'+data[i].id+'">'+data[i].catName+'</option>'
+      }
+      $("[name='categoryId3']").html(html);
+    })
+    
+  }).on("click", ".delImgBtn", function(e){
+    var self = $(e.currentTarget);
+    var name = self.parent().parent("div").remove();
+  })
+  
+  
+})
+function getGoodsAttrs(data){
+  var html ='';
+  for(var i=0;i<data.length;i++){
+    html += '<div class="drag-item clearfix">'+
+      '<div class="layui-input-inline fl">'+
+            '<input type="text" name="spec" placeholder="参数" class="layui-input" value='+data[i].attrName+'>'+
+          '</div>'+
+          '<div class="layui-input-inline fl">'+
+            '<input type="text" name="specifications" placeholder="参数值" class="layui-input" value='+data[i].attrValue+'>'+
+          '</div>'+
+              '<a class="btn btn-warning fl" onclick="spec2(this)">删除</a>'+
+      '</div>';
+  }
+  $("#drag2").html(html);
+}
+//商品图片上传
+function uploadGoodsImg(self){
+  if(self.files && self.files[0]){
+    var file = self.files[0]
+    if(file.size > 2*1024*1024){
+      utils.alert("info", "图片大小不能超过2M");
+      return;
+    }
+    if(target=="img"){
+      if($(".img>div").length > 3){
+        utils.alert("info", "图片上传不能超过4张");
+        return;
+      }
+      var reader = new FileReader();
+          reader.onload = function(e) {
+            var data = e.target.result;
+            //加载图片获取图片真实宽度和高度
+            var image = new Image();
+            image.onload=function(){
+              var width = image.width;
+              var height = image.height;
+              if(width/height != 1){
+                utils.alert("info", "图片分辨率必须为1:1");
+              }else{
+                uploadCallback(self)
+              }
+            };
+            image.src = data;
+          }
+          reader.readAsDataURL(self.files[0]);
+    }else{
+      if($(".img2>div").length > 3){
+        utils.alert("info", "图片上传不能超过4张");
+        return;
+      }
+      var reader = new FileReader();
+          reader.onload = function(e) {
+            var data = e.target.result;
+            //加载图片获取图片真实宽度和高度
+            var image = new Image();
+            image.onload=function(){
+              var width = image.width;
+              var height = image.height;
+              if(width/height != 1){
+                utils.alert("info", "图片分辨率必须为1:1");
+              }else{
+                uploadCallback(self)
+              }
+            };
+            image.src = data;
+          }
+          reader.readAsDataURL(self.files[0]);
+    }
+    /*}else{
+      uploadCallback(self)
+    }*/
+  }
+  
+}
+
+function uploadCallback(self){
+  var uploadFile = new FormData($("#form1")[0]);
+  $.ajax({
+    url:'../../file/upload',
+    type:'POST',
+    data: uploadFile,
+    async: false,  
+    cache: false, 
+    contentType: false, //不设置内容类型
+    processData: false, //不处理数据
+    success:function(data){
+      if(target=="img"){
+        $("." + target).append('<div data-name="'+data.name+'"><img src="'+data.data+'"/><div><a class="hide">设为封面</a>&ensp;<a class="delImgBtn">删除</a></div></div>');
+      }else if(target=="img2"){
+        /*$("." + target).html('<a data-name="'+data.name+'"><img src="'+data.data+'"/></a>');*/
+        $("." + target).append('<div data-name="'+data.name+'"><img src="'+data.data+'"/><div><a class="delImgBtn">删除</a></div></div>');
+      }else if(target=="tinymce"){
+        publishVm.imageSuccessCBK(data.data);
+      }
+      $("#form1 input").val("");
+    },
+    error:function(){
+      
+    }
+  })
+}
+
+/* * * * * * * * * * * * * * 新加SKU * * ** * ** * * * * * * * * * */
+//添加规格
+function addSpec(){
+  var symbolN = Number($("#symbol").val())+1;
+  $("#symbol").val(symbolN)
+  var html = '<div class="drag-item">'+
+            '<div class="spec clearfix">'+
+              '<div class="layui-input-inline fl">'+
+                  '<input type="text" name="spec" placeholder="规格名称">'+
+                '</div>'+
+                '<a class="btn btn-warning fl" onclick="addSpecifications(this)">+添加规格项</a>'+
+                      '<a class="btn btn-warning fl" onclick="spec(this)">删除</a>'+
+            '</div>'+
+            '<div class="clearfix spec-item">'+
+              '<div class="specifications fl">'+
+                '<div class="layui-input-inline">'+
+                    '<input type="text"  val="'+symbolN+'" name="specifications">'+
+                  '</div>'+
+                        '<a class="btn btn-warning" onclick="specifications(this)">删除</a>'+
+              '</div>'+
+            '</div>'+
+          '</div>';
+    $("#drag").append(html);
+}
+//添加规格项
+function addSpecifications(e){
+  var el = e||window.event;
+  var len = $(el).parents(".drag-item").find('.specifications').length;
+  if(len>=10) return false;
+  var symbolN = Number($("#symbol").val())+1;
+  $("#symbol").val(symbolN);
+  var html = '<div class="specifications fl">'+
+          '<div class="layui-input-inline">'+
+                '<input type="text" val="'+symbolN+'" name="specifications">'+
+              '</div>'+
+                  '<a class="btn btn-warning" onclick="specifications(this)">删除</a>'+
+        '</div>';
+    $(el).parents(".drag-item").children(".spec-item").append(html);
+}
+//删除
+function spec(e){
+  var el = e||window.event;
+  var len = $(el).parents(".drag-c").find(".spec-item").length;
+  if(len<=1) return false;
+  $(el).parents(".drag-item").remove();
+}
+//删除规格
+function specifications(e){
+  var el = e||window.event;
+  var len = $(el).parents(".spec-item").find(".specifications").length;
+  if (len<=1) return;
+  $(el).parent().remove();
+}
+//获取Symbol对应的值
+function getSymbolValue(val,arr){
+  var attrValue;
+  $.each(arr,function(idx,item){
+    $.each(item.goodsSpecsAttrs,function(idx1,item1){
+      if(item1.symbol == Number(val)){
+        attrValue = item1.attrValue;
+      }
+    })
+  })
+  return attrValue;
+}
+//获取参数数据
+function getAttr(){
+  var dragItem = $("#drag2").find(".drag-item");
+  var goodsAttr = [];
+  $.each(dragItem, function(idx,item) {
+    var attrName = $(item).find("input[name=spec]").val()
+    var attrValue = $(item).find("input[name=specifications]").val()
+    if(attrName != '' && attrValue != ''){
+      var obj = {
+        "attrName": attrName,
+        "attrValue": attrValue,
+        "sortOrder": idx
+      }
+      goodsAttr.push(obj)
+    }
+  });
+  return goodsAttr;
+}
+//添加参数规格
+function addSpec2(){
+  var html = '<div class="drag-item clearfix">'+
+          '<div class="layui-input-inline fl">'+
+                '<input type="text" name="spec" placeholder="参数" class="layui-input">'+
+              '</div>'+
+              '<div class="layui-input-inline fl">'+
+                '<input type="text" name="specifications" placeholder="参数值" class="layui-input">'+
+              '</div>'+
+                  '<a class="btn btn-warning fl" onclick="spec2(this)">删除</a>'+
+          '</div>';
+    $("#drag2").append(html);
+}
+//删除
+function spec2(e){
+  var el = e||window.event;
+  var len = $(el).parents("#drag2").find(".drag-item").length;
+  $(el).parent().remove();
+}
+//分配成每条数据
+function getTableData(){
+  $("#specTable tbody").empty();
+  $("#freshen").hide();
+  var obj = specTable();
+  var arr = data(obj);
+  var th = '', tr2='';
+  $.each(obj,function(idx, item){
+    th+='<th>'+item.specsName+'</th>';
+  })
+  $.each(arr,function(idx, item){
+    var td = '';
+    var s = item.split(",");
+    $.each(s,function(idx2, item2){
+      var val = getSymbolValue(item2,obj);
+        td+='<td class="attrSymbol" val="'+item2+'">'+val+'</td>';
+    })
+    tr2 += '<tr>'+td+'<td><input type="text" name="stock" class="layui-input"></td><td><input type="number" name="price" class="layui-input"></td></tr>';
+  })
+  var tr = '<tr>'+th+'<th>库存</th><th>价格</th></tr>';
+  $("#specTable thead").html(tr);
+  $("#specTable tbody").html(tr2);
+}
+function data(originArr){
+  var tempArr = [],
+      item1 = {},
+      item2 = {},
+      item3 = {},
+      res = [],
+      value = '';
+    for (var i = 0, len = originArr.length; i < len; i++) {
+      item1 = originArr[i];
+      if(i === 0) {
+        for (var j = 0, lenj = item1.goodsSpecsAttrs.length; j < lenj; j++) {  
+          item2 = item1.goodsSpecsAttrs[j].symbol;
+          res.push(item2);
+        }
+      }else {
+        tempArr = [];
+        for (var j = 0, lenj = item1.goodsSpecsAttrs.length; j < lenj; j++) {
+          item2 = item1.goodsSpecsAttrs[j].symbol;
+          for(var k = 0,lenk = res.length;k < lenk;k++) {
+            value = res[k] + ',' + item2;
+            tempArr.push(value);
+          }
+        }
+        res = tempArr;
+      }
+    }
+    return res;
+}
+//获取规格/库存数据
+function specTable(){
+  var dragItemArr = $("#drag").find(".drag-item");
+  var specArr = [];
+  $.each(dragItemArr, function(idx, item){
+    var obj = {};
+    var specVal = $(item).find("input[name=spec]").val().trim();
+    var specificationsArr = $(item).find("input[name=specifications]");
+    var arr = [];
+    $.each(specificationsArr, function(idx1, item1){
+      var specificationsVal = $(item1).val().trim();
+      var symbolV = $(item1).attr("val");
+      if(specificationsVal != ''){
+          arr.push({
+            'symbol':symbolV,
+            'attrValue':specificationsVal,
+            'attrImgUrl':'http//'
+          });
+      }
+    })
+    obj.specsName = specVal;
+    obj.goodsSpecsAttrs = arr;
+    obj.sortOrder = idx;
+    specArr.push(obj);
+  })
+  return specArr;
+}
+//获取goodsSkus
+function goodsSku(){
+  var goodsSku = $("#specTable tbody").find("tr");
+  var goodsSkuArr = [];
+  $.each(goodsSku, function(idx,item) {
+    var attrSymbol = $(item).find(".attrSymbol");
+    var attrSymbolArr = [];
+    $.each(attrSymbol, function(a,b) {
+      attrSymbolArr.push($(b).attr("val"))
+    });
+    var obj = {
+      "attrSymbolPath": attrSymbolArr.join(","),
+      "price": Number($(item).find("input[name=price]").val()),
+      "stock": $(item).find("input[name=stock]").val()
+    }
+    goodsSkuArr.push(obj)
+  });
+  return goodsSkuArr;
+}
+</script>
+</body>
+</html>
+

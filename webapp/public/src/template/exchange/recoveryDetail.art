@@ -1,0 +1,27 @@
+<div class="detail1">
+	<h2><%= data.recycleName %></h2>
+	<p>
+		<span><%= data.createTime %>发布</span>&emsp;&emsp;&emsp;
+		<span>0次浏览</span>
+	</p>
+	<div class="line"></div>
+	<p>
+		<span>回收类别&emsp;</span>
+		<span class="black"><%= data.categoryName %></span>&emsp;&emsp;
+		<span>回收商家&emsp;</span>
+		<span class="black"><%= data.userName %></span>&emsp;&emsp;
+		<span>商家地址&emsp;</span>
+		<span class="black"><%= data.provinceName %>-<%= data.cityName %></span>
+	</p>
+	<div class="line"></div>
+	<div class="hide">
+		<a class="btn btn-warning toCheck">申请回收</a>
+	</div>
+</div>
+<div class="detail2">
+	<h2 class="dtitle">回收详情</h2>
+	<div class="line"></div>
+	<div class="dcontent ue-view">
+		<%= data.recycleDesc %>
+	</div>
+</div>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<%- include swapCss.ejs %>
+
+<style>
+.columnLeft {padding-right: 0;}
+.columnLeft ul {margin: -8px;}
+.columnLeft li {float: left;margin: 8px;width: 225px;}
+.columnLeft li .img {height: 225px;}
+.columnLeft li .btn {line-height: 20px;font-size: 12px;border-radius: 0;}
+.columnLeft li .info {height: 75px;}
+.nosearch {margin-right: 0;}
+.cateItem{
+	width: 100%;
+	padding-left: 50px;
+	border-top: 1px dashed #E0E0E0;
+}
+.cateItemChildren{
+	width: 1000px;
+	background: #FFFFFF;
+	padding: 10px 30px;
+	margin-left: 50px;
+	background: #FFFFFF;
+	border: 1px solid #E0E0E0;
+	border-radius: 3px;
+}
+.curs{color: #C2A374 !important;}
+
+.statusWrap{
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	color: #FFFFFF;
+	opacity: .7;
+	border-bottom-right-radius: 15px;
+	border-top-right-radius: 15px;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.statusWrap span{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+.statusWrap1{background: #6bb74a;}
+.statusWrap2{background: #890F1C;}
+.statusWrap3{background: #CCCCCC;}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+            <el-breadcrumb-item><a href="../../exchange/index">互换坊</a></el-breadcrumb-item>
+            <el-breadcrumb-item>物品拍卖</el-breadcrumb-item>
+        </el-breadcrumb>
+			</div>
+		</div>
+		
+		<div class="container exchangeSearch" id="search">
+			<table>
+				<tr>
+					<td width="90"><label>分类：</label></td>
+					<td class="category-container"  style="position: relative;">
+						<a data-id="" class="category1 curs">全部</a>
+						<template v-for="item in cateList">
+							<a :data-id="item.id" class="category1">{{item.name}}</a>
+						</template>
+						<div class="cateItem" v-if="cateItemArr && cateItemArr.length">
+							<a data-id="" id="category2" class="category2 curs">不限</a>
+							<template v-for="citem in cateItemArr">
+								<a :data-id="citem.id" class="category2">{{citem.name}}</a>
+							</template>
+						</div>
+						<div class="cateItemChildren" v-if="cateItemChildrenArr && cateItemChildrenArr.length">
+							<a data-id="" id="category3" class="category3 curs">不限</a>
+							<a :data-id="ccitem.id" class="category3" v-for="ccitem in cateItemChildrenArr">{{ccitem.name}}</a>
+						</div>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td width="90"><label>拍卖状态：</label></td>
+					<td class="status-container">
+						<a class="cur" data-id="">全部</a>
+						<a data-id="10">正在进行</a>
+						<a data-id="2">即将开始</a>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+			<div class="clearfix">
+				<div class="fr clearfix">
+					<div class="searchPage fr">
+                        <a @click="toPrev()"><i class="iconfont icon-exchangePageLeft"></i></a>
+                        <span>{{currentPage}}/{{totalPage}}</span>
+                        <a @click="toNext()"><i class="iconfont icon-userAccountRight"></i></a>
+                    </div>
+				</div>
+				<div class="clearfix">
+					<ul>
+						<li class="cur">
+							<a>综合排序</a>
+						</li>
+						<li class="sortByCount">
+							<a>出价次数</a>
+							<span class="caret-wrapper">
+								<i class="sort-caret ascending"></i>
+								<i class="sort-caret descending"></i>
+							</span>
+						</li>
+						<li class="sortByPrice">
+							<a>价格</a>
+							<span class="caret-wrapper">
+								<i class="sort-caret ascending"></i>
+								<i class="sort-caret descending"></i>
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="clearfix container">
+			<div class="columnLeft">
+				<p class="nosearch hide">很遗憾，未搜索到与<span class="red">“搜索词”</span>相关的商品，换个搜索词试试吧</p>
+				<ul class="clearfix" id="list" style="overflow: hidden">
+					
+				</ul>
+				<div id="pagination" class="pagination"></div>
+			</div>
+		</div>
+
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+	<%- include commonJs.ejs %>
+<script>
+var routerVm = new Vue({
+	el: "#router"
+})
+
+//搜索
+var searchVm = new Vue({
+	el: "#search",
+	data: {
+		currentPage: 1,
+        totalPage: 1,
+        cateList: [],
+        cateItemArr: [],
+		cateItemChildrenArr:[],
+	},
+	mounted: function(){
+		var self = this
+		getCategory(null, function(data){
+			self.cateList = data;
+		});
+	},
+	methods: {
+		toPrev: function(){
+        	if(params.current>1){
+        		var current = params.current - 1;
+        		render(current);
+        	}
+        	
+        },
+        toNext: function(){
+        	if(this.currentPage < this.totalPage){
+        		var current = this.currentPage + 1;
+        		render(current);
+        	}
+        },
+	}
+})
+$(document).on("click", ".status-container a", function(e){
+	var self = $(e.currentTarget);
+	var val = self.attr("data-id");
+	self.addClass("cur").siblings().removeClass("cur");
+	params.goodsStatus = val;
+	render(1)
+}).on("click", ".sortByPrice", function(e){
+	var self = $(e.currentTarget);
+	if(!self.hasClass("descending")){
+		self.addClass("descending").removeClass("ascending")
+		params.marketPrice = 0;
+	}else{
+		self.removeClass("descending").addClass("ascending")
+		params.marketPrice = 1;
+	}
+	params.offerConut = ""
+	$(".sortByCount").removeClass("descending").removeClass("ascending")
+	params.current = 1;
+	render(1);
+}).on("click", ".sortByCount", function(e){
+	var self = $(e.currentTarget);
+	if(!self.hasClass("descending")){
+		self.addClass("descending").removeClass("ascending")
+		params.offerConut = 0;
+	}else{
+		self.removeClass("descending").addClass("ascending")
+		params.offerConut = 1;
+	}
+	params.marketPrice = ""
+	$(".sortByPrice").removeClass("descending").removeClass("ascending")
+	params.current = 1;
+	render(1);
+}).on('click', '.category1', function(e){
+	var self = $(e.currentTarget);
+	var val = self.attr("data-id");
+	self.addClass("curs").siblings().removeClass("curs");
+	$(document).find('.category2').removeClass("curs");
+	$(document).find('.category3').removeClass("curs")
+	if(val == ''){
+		searchVm.cateItemArr = [];
+		searchVm.cateItemChildrenArr = [];
+	}else{
+		$.each(searchVm.cateList, function(idx, data) {
+			if(String(data.id) == val){
+				searchVm.cateItemArr = data.children
+				setTimeout(function(){
+					$("#category2").attr("data-id", val)
+				},20)
+			}
+		})
+	}
+	params.categoryId = val;
+	render(1)
+}).on('click', '.category2', function(e){
+	var self = $(e.currentTarget);
+	var val = self.attr("data-id");
+	self.addClass("curs").siblings().removeClass("curs");
+	$(document).find('.category3').removeClass("curs")
+	$.each(searchVm.cateItemArr, function(idx, data) {
+		if(String(data.id) == val){
+			searchVm.cateItemChildrenArr = data.children
+			setTimeout(function(){
+				$("#category3").attr("data-id", val)
+			},20)
+		}
+	});
+	params.categoryId = val;
+	render(1)
+}).on('click', '.category3', function(e){
+	var self = $(e.currentTarget);
+	var val = self.attr("data-id");
+	self.addClass("curs").siblings().removeClass("curs");
+	params.categoryId = val;
+	render(1)
+})
+$(function(){
+	
+	render(1)
+	
+	$(document).on("click", ".toDetail", function(e){
+		var self = $(e.currentTarget);
+		var id = self.parents("li").attr("data-id");
+		location.href = "../../exchange/auction_detail?id=" + id;
+	})
+})
+var userid = utils.getUrlParam("userid") || ""
+window.params = {
+	current: 1,
+	size: 45,
+	search: "",
+	categoryId: "",
+	goodsStatus: "",
+	marketPrice: "",
+	offerConut: "",
+	userId: userid,
+}
+/*
+current			分页的页号，从1开始
+size			每页显示数量
+categoryId		分类 ID
+goodsStatus	1, "即将开始"2, "正在进行" 3, "成交" 4, "留拍"
+search			搜索词
+marketPrice		价格排序  -1从高到低  1从低到高
+offerCount		出价顺序  -1从高到低  1从低到高
+ */
+function render(page){
+	params.current = page
+	utils.ajax({
+		url: "/api/swap/portal/goods/swap_goods_auction/list",
+		type: "get",
+		data: params,
+		success: function(data){
+			data = data.data;
+			searchVm.currentPage = data.current
+			searchVm.totalPage = data.pages
+			if(data.total == 0){
+				//没有数据
+				$("#list").html("");
+				$(".nosearch").removeClass("hide");
+			}else{
+				$(".nosearch").addClass("hide");
+				var html = "";
+				for(var i = 0; i < data.records.length; i++){
+					html += _template.exchangeAuctionItem({
+						data: data.records[i]
+					}) 
+				}
+				$("#list").html(html);
+				
+				if(params.current == 1 && data.pages > 1){
+					$("#pagination").pagination({
+						pageCount: data.pages,
+					    jump: true,
+					    coping: true,
+					    prevContent: '<',
+					    nextContent: '>',
+					    callback: function (api){
+					        render(api.getCurrent());
+					    }
+					});
+				}
+				
+			}
+		}
+	})
+}
+</script>
+
+</body>
+</html>
+

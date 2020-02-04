@@ -1,0 +1,60 @@
+.table {
+	width: 100%;
+}
+.table td, .table th {
+	padding: 8px;
+	border: 1px solid rgba(0,0,0,.05);
+}
+.table thead tr {
+	border-bottom: 2px solid #ddd;
+}
+.table tbody tr:hover {
+	background: #EFF3F3;
+}
+.toolbar {
+	margin-bottom: 15px;
+}
+
+.sheet {
+	font-size: 14px;
+    color: #1f2d3d;
+    width: 100%;
+    border: 1px solid #dfe6ec;
+}
+.sheet th, .sheet td {
+	white-space: nowrap;
+    overflow: hidden;
+    text-align: left;
+    height: 40px;
+    min-width: 0;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 30px;
+}
+.sheet th {
+	background-color: #eef1f6;
+	border-bottom: 1px solid #dfe6ec;
+}
+.sheet tbody tr {
+	border-top: 1px solid #dfe6ec;
+	transition: background-color .25s ease;
+}
+.sheet tbody tr:first-child {
+	border-top: 0
+}
+.sheet.border-striped tbody tr:nth-child(2n) {
+	background: #fafafa;
+}
+.sheet tbody tr:hover {
+	background: #EEF1F6;
+}
+.sheet.border-sheet {
+	border: none;
+}
+.sheet.border-sheet td, .sheet.border-sheet th {
+	border: 1px solid #dfe6ec;
+}

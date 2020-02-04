@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+<style type="text/css">
+	* {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-family: "微软雅黑";
+	}
+
+	.galleryActivity-bd {
+		width: 100%;
+		height: 100%;
+		background: #f8f8f8;
+	}
+
+	.activity {
+		width: 1200px;
+		margin: 0 auto;
+	}
+
+	.activity_list {
+		width: 1200px;
+		height: 300px;
+		margin-top: 20px;
+	}
+
+	.activity_list dt {
+		width: 400px;
+		height: 300px;
+		float: left;
+	}
+
+	.activity_list dt img {
+		width: 400px;
+		height: 300px;
+	}
+
+	.activity_list dd {
+		width: 767px;
+		height: 300px;
+		float: left;
+		margin-left: 23px;
+	}
+
+	.activity_list dd .activity_browse {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 50px;
+	}
+
+	.activity_list dd .browse_time span {
+		height: 19px;
+		font-size: 16px;
+		font-family: MicrosoftYaHei;
+		font-weight: 400;
+		color: rgba(153, 153, 153, 1);
+		line-height: 21px;
+	}
+
+	.activity_list dd .browse_time span:nth-child(2) {
+		margin-left: 21px;
+	}
+
+	.activity_list dd .browse_borw p {
+		display: inline-block;
+	}
+
+	.activity_list dd .browse_borw p span {
+		font-size: 16px;
+		font-family: MicrosoftYaHei;
+		font-weight: 400;
+		color: rgba(153, 153, 153, 1);
+		margin-left: 6px;
+	}
+
+	.activity_list dd .browse_borw p:nth-child(1) em {
+		background: url(../../../src/img/galleryNew/yanjing.png) no-repeat;
+		display: inline-block;
+		width: 22px;
+		height: 15px;
+	}
+
+	.activity_list dd .browse_borw p:nth-child(2) em {
+		background: url(../../../src/img/galleryNew/dianzan.png) no-repeat;
+		display: inline-block;
+		width: 19px;
+		height: 19px;
+		margin-left: 46px;
+	}
+
+	.activity_list dd .activity_content {
+		width: 767px;
+	}
+
+	.activity_list dd .activity_content h2 {
+		font-size: 28px;
+		font-family: MicrosoftYaHei;
+		font-weight: 400;
+		color: rgba(51, 51, 51, 1);
+		margin: 66px 0 41px;
+	}
+
+	.activity_list dd .activity_content p {
+		font-size: 14px;
+		height: 64px;
+		font-family: MicrosoftYaHei;
+		font-weight: 400;
+		color: rgba(102, 102, 102, 1);
+		width: 767px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		line-height: 21px;
+	}
+
+	.activity_list .activity_line {
+		width: 1200px;
+		height: 1px;
+		display: inline-block;
+		background: rgba(219, 218, 218, 1);
+	}
+
+	.activity_clearfix {
+		margin-top: 19px;
+		margin-left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.router a {
+		color: #999999;
+		font-weight: 400;
+		font-size: 14px;
+		font-family: MicrosoftYaHei;
+	}
+</style>
+
+<body class="galleryActivity-bd">
+	<%- include headerbar %>
+
+	<%- include header %>
+
+	<%- include headerNav %>
+
+	<div class="activity" id="activity">
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item :to="{ path: '/' }">
+						<a href="../../">我的位置：首页</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item>
+						<a :href="supTypeHref">{{supTxt}}</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item><span id="routerTitle">活动列表</span></el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		<dl class="activity_list" v-for="(item,index) in newList" @click="toTopic($event,item.id,item.type)" :id="item.id"
+			:text="item.title" :key="index">
+			<dt><img :src="item.phonePath | formatImg" /></dt>
+			<dd>
+				<div class="activity_content">
+					<h2>{{item.title}}</h2>
+					<p class="content" v-html="item.content"></p>
+				</div>
+				<div class="activity_browse">
+					<div class="browse_time">
+						<span>{{item.creationTime}}</span>
+					</div>
+					<div class="browse_borw">
+						<p><em></em><span>{{item.rate}}</span></p>
+						<p @click.stop="linkNum(item.id,index)" disabled="true"><em></em><span
+								class="browseNum">{{item.likeNum}}</span></p>
+					</div>
+				</div>
+			</dd>
+			<em class="activity_line"></em>
+		</dl>
+		<div v-if="newList.length == 0">
+			<p class="nosearch" style="margin-right: 0;">暂时无活动，敬请期待！</p>
+		</div>
+		<div class="activity_clearfix">
+			<template>
+				<el-pagination background @current-change="handleCurrentChange" :current-page="offset" :page-size="limit"
+					layout="total, prev, pager, next, jumper" :total="total">
+				</el-pagination>
+			</template>
+		</div>
+	</div>
+	<%- include footer %>
+	<script type="text/javascript">
+		var supArr = { '1': '图文馆', '2': '珠宝店', '3': '设计室', '4': '制造间', '5': '互换坊', '6': '行业之声', '7': '珠宝展', '8': '直播厅' }
+		var supType = utils.getUrlParam('supType');
+		var supTypeHref = ''
+		if (supType == '1') {
+			$("#headerNav").find('.cur').removeClass('cur')
+			$("#headerNav").find('li').eq(5).children('a').addClass('cur')
+			supTypeHref = '../../gallery/index'
+		} else if (supType == '2') {
+			$("#headerNav").find('.cur').removeClass('cur')
+			$("#headerNav").find('li').eq(1).children('a').addClass('cur')
+			supTypeHref = '../../jewelry/index'
+		} else if (supType == '3') {
+			$("#headerNav").find('.cur').removeClass('cur')
+			$("#headerNav").find('li').eq(3).children('a').addClass('cur')
+			supTypeHref = '../../design/index'
+		} else if (supType == '4') {
+			$("#headerNav").find('.cur').removeClass('cur')
+			$("#headerNav").find('li').eq(4).children('a').addClass('cur')
+			supTypeHref = '../../manufacture/index'
+		} else if (supType == '5') {
+			$("#headerNav").find('.cur').removeClass('cur')
+			$("#headerNav").find('li').eq(2).children('a').addClass('cur')
+			supTypeHref = '../../exchange/index'
+		}
+		var routerVm = new Vue({
+			el: "#router",
+			data() {
+				return {
+					supTxt: supArr[supType],
+					supTypeHref: supTypeHref
+				}
+			}
+		})
+		var ListType = new Vue({
+			el: "#activity",
+			data() {
+				return {
+					newList: [],
+					total: 0,
+					offset: 1,
+					limit: 10
+				}
+			},
+			mounted: function () {
+				this.render();
+				this.activiey_newList()
+			},
+			methods: {
+				render: function () {
+					var self = this;
+					utils.ajax({
+						url: "/admin/gallery/activity/getPCNumCount",
+						type: "get",
+						data: {
+							offset: self.offset,
+							limit: self.limit,
+							supType: supType
+						},
+						success: function (data) {
+							self.total = data.data;
+						}
+					})
+				},
+				handleCurrentChange: function (val) {
+					var self = this;
+					self.offset = val;
+					self.render();
+					self.activiey_newList()
+				},
+				toTopic: function (event, id, type) {
+					var byId = event.currentTarget.getAttribute("id");
+					var text = event.currentTarget.getAttribute("text");
+					window.location.href = "/activityDetails?supType=" + supType + "&routers=" + text + "&id=" + byId + "#" + type;
+				},
+				linkNum: function (id, index) {
+					var self = this;
+					if (!utils.islogin()) {
+						utils.alert('danger', '请登录！');
+						return false;
+					}
+					var type = self.newList[index].type;
+					if (type != 0) {
+						return false;
+					}
+					var num = self.newList[index].likeNum;
+					++num
+					utils.ajax({
+						url: "/admin/gallery/activity/updateIncrLikeNum?id=" + id,
+						type: "post",
+						success: function (data) {
+							if (data.success) {
+								self.newList[index].type = 1
+								self.newList[index].likeNum = num
+							}
+						}
+					})
+				},
+				activiey_newList: function () {
+					var self = this;
+					// supType： 1、图文馆 2、珠宝店 3、设计室 4、制造间 5、互换坊 6、行业之声 7、珠宝展 8、直播厅
+					utils.ajax({
+						url: '/admin/gallery/activity/page',
+						data: {
+							offset: self.offset,
+							limit: self.limit,
+							supType: supType
+						},
+						type: "get",
+						success: function (data) {
+							self.newList = data.data.map(function (item) {
+								item.type = 0;
+								return item;
+							});
+						}
+					})
+				}
+			},
+			filters: {
+				formatImg: function (str) {
+					return utils.formatImg(str);
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+</head>
+<style>
+	.laiy{
+		font-size: 16px;
+		margin-bottom: 20px;
+	}
+</style>
+<body class="newsDetail-bd">
+	
+	<%- include headerbar %>
+	
+	<%- include header %>
+	
+	<%- include headerNav %>
+	
+	<input type="hidden" id="id" value="<%= data.id %>">
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }"><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+			  	<el-breadcrumb-item><a href="../../news/">行业之声</a></el-breadcrumb-item>
+			  	<el-breadcrumb-item><span id="columnName">{{getTitle}}</span></el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="container">
+		
+			<div class="clearfix">
+				<div class="rightAside newsDetailAside"> 
+					<h2 class="clearfix">					
+						<b>精选文章</b>
+					</h2>
+					<div>
+						<ol>
+							
+						</ol>
+					</div>
+				</div>
+				
+				<div class="contentWrap">
+					
+					<div id="newsDetailWrap" class="newsDetailWrap clearfix">
+					
+					</div>
+					<div class="laiy" style="margin-top: 10px;">
+						文章来源： 
+						<span class="laiyuan"></span>
+					</div>
+					<div>
+						<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+						<script>
+							var myhref=window.location.href;window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdUrl":myhref,"bdMini":"2","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+						</script>
+					</div>
+					<div id="newsCommentWrap" class="newsCommentWrap">
+						<%- include commentPost %>
+					</div>
+					
+					<%- include commentList %>
+					<br>
+					<div class="tr">
+						<a class="toCommentDetail yellow">进入详细评论页</a>
+					</div>
+					
+				</div>
+			
+			</div>
+			
+		</div>
+	</div>
+	
+	<%- include newFooter %>
+	
+
+<script>
+var routerVm = new Vue({
+	el: "#router",
+	computed:{
+		getTitle:function (){
+			var res = location.href.split('/')
+			return unescape(res[res.length-1].split('?')[1].split('=')[1])
+		}
+	},
+})
+var id = $("#id").val();
+utils.ajax({
+	url: "/pc/industry/article/detail/" + id,
+	type: "get",
+	success: function(data){
+		data = data.data;
+		data.content = data.content.replace(/pa95ui71l.bkt.clouddn/g, 'image.gacjc')
+		$("#newsDetailWrap").html(_template.newsDetail({
+			data: data
+		}));
+		$(".laiyuan").html(data.source)
+		//相关新闻
+		if(data.related){
+			var html = "";
+			for(var i = 0; i < data.related.length; i++){
+				html += '<li class="ellipsis" data-id="' + data.related[i].id + '"><a title="'+data.related[i].title+'">' + data.related[i].title + '</a></li>';
+			}
+			$(".newsDetailAside ol").html(html);
+		}
+		//评论数
+		$(".totalCommentNum").text(data.commentNum);
+		
+		//评论列表 
+		if(data.comments){
+			var html2 = "";
+			for(var i = 0; i < data.comments.length; i++){
+				html2 += _template.commentList({
+					data: data.comments[i]
+				});
+			}
+			$(".commentListWrap ul").html(html2);
+		}
+		
+		//跳转详情
+		$(".toCommentDetail").on("click", function(){
+			window.location.href = "../../comment/" + id + "?title=" + data.title;
+		});
+	}
+});
+
+//点赞、取消点赞
+$(document).on("click", ".detailLikeCount", function(e){
+	if(!utils.islogin()){
+		utils.alert("danger", '需您登录后才可点赞！');
+		return false;
+	}
+	var self = $(e.currentTarget);
+	var isLiked = self.hasClass("liked");
+	var type = isLiked ? 2 : 1;
+	utils.ajax({
+		url: "/pc/industry/article/praise/" + id + "/" + type,
+		type: "post",
+		success: function(data){
+			var count = parseInt(self.find("span").text());
+			if(isLiked){
+				self.find("span").text(count - 1);
+				self.removeClass("liked");
+			}else{
+				self.addClass("liked");
+				self.find("span").text(count + 1);
+				self.addClass("liked");
+			}
+		}
+	});
+})
+
+
+$(document).on("click", ".commentPost .postBtn", function(){
+	//发表评论
+	var anonymous = $(".commentPost .checkbox").hasClass("checked") ? 2 : 1;
+	var val = $.trim($(".commentPost textarea").val());
+	var data = {
+		articleId: id,
+		content: val,
+		anonymous: anonymous
+	}
+	utils.postComment({
+		url: "/pc/industry/article/comment/add",
+		data: data,
+		succcess: function(data){
+			
+		}
+	})
+}).on("click", ".newsDetailAside li", function(e){
+	var id = $(e.currentTarget).attr("data-id");
+	var text = $(e.currentTarget).text();
+	location.href = "../../news/detail/"+id+"?title=" + escape(text)
+})
+</script>
+</body>
+</html>
+

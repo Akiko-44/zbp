@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+</head>
+
+<body class="fidelity_index">
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../header.ejs %>
+
+  <%- include ../headerNav.ejs %>
+
+  <div id="main" class="main">
+    <div class="bg_price container">
+      <div class="query_price">
+        <p class="query_title">打假保真</p>
+        <p class="query_content tc">查到诚信企业排名、消费者投诉情况、投诉处理情况等。</p>
+        <div class="fidelity clearfix">
+          <div class="fidelity-item fl tc" @click="integrity_enterprise">
+            <a><img src="../src/img/home/fidelity1.png" /></a>
+            <p>诚信企业</p>
+          </div>
+          <div class="fidelity-item fl tc" @click="enterprise_directories">
+            <a><img src="../src/img/home/fidelity2.png" /></a>
+            <p>企业名录</p>
+          </div>
+          <div class="fidelity-item fl tc" @click="complaint_entrance">
+            <a><img src="../src/img/home/fidelity3.png" /></a>
+            <p>投诉入口</p>
+          </div>
+          <div class="fidelity-item fl tc" @click="complaint">
+            <a><img src="../src/img/home/fidelity4.png" /></a>
+            <p>处理公示</p>
+          </div>
+          <div class="fidelity-item fl tc" @click="query_id_card">
+            <a><img src="../src/img/home/fidelity5.png" /></a>
+            <p>打假查询</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include ../footer.ejs %>
+</body>
+<script type="text/javascript">
+  var mainVm = new Vue({
+    el: '#main',
+    data: {
+
+    },
+    methods: {
+      //打假查询
+      query_id_card: function () {
+        location.href = "../home/query_id_card";
+      },
+
+      //投诉处理公示
+      complaint: function () {
+        if (!utils.islogin()) {
+          utils.alert("danger", "请登录后再进行操作！");
+          return;
+        }
+        location.href = "/user/Complaint";
+        // utils.alert('danger', '投诉处理公示')
+      },
+
+      //投诉入口
+      complaint_entrance: function () {
+        if (!utils.islogin()) {
+          utils.alert("danger", "请登录后再进行操作！");
+          return;
+        }
+        location.href = "/user/ComplaintDesc";
+        // utils.alert('danger', '投诉入口')
+      },
+
+      //企业名录
+      enterprise_directories: function () {
+        location.href = "../home/enterprise_directories";
+      },
+
+      //诚信企业
+      integrity_enterprise: function () {
+        location.href = "../home/integrity_enterprise";
+      }
+
+    }
+  })
+</script>
+
+</html>

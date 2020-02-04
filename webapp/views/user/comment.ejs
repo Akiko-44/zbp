@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.nocomment {text-align: center;padding: 55px 0;}
+.nocomment p {margin-bottom: 65px;font-size: 20px;}
+.nocomment .btn {width: 96px;}
+#list li {margin: 20px 0;color: #666;}
+#list table {width: 100%;}
+#list td {position: relative;font-size: 14px;}
+#list .panel-title {font-size: 14px;}
+#list .info p {color: #666;margin-top:5px;font-size: 12px;width: 220px;}
+#list .info h3 {line-height: 20px; color: #666;width: 220px;}
+#list .totalPrice p {line-height: 30px;}
+</style>
+</head>
+<body class="userComment">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>我的评价</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<!-- <div>
+					<div class="tab-default userTab">
+						<div class="tab-header">
+							<div>
+								<ul>
+									<li class="active" commFlag="1"><a><b>待评价(0)</b></a></li>
+									<li class="" commFlag="2"><a><b>已评价</b></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="tab-body">
+							<div class="tab-body-panel show" style="display: block;">
+								
+							</div>
+						</div>
+					</div>
+				</div> -->
+				
+				<div class="userCommentListWrap1">
+					<ul id="list">
+						
+					</ul>
+					<div id="pagination" class="pagination"></div>
+				</div>
+				
+				<div class="nocomment hide">
+					<p><b>您还没有评价任何商品噢！</b></p>
+					<div>
+						<a class="btn btn-warning" id="toIndex">先去逛逛</a>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include userFooter.ejs %>
+	
+
+<script>
+var routerVm = new Vue({
+	el: "#router"
+})
+var commentNavType = $("#commentNavType").val();
+var commFlag = "2";
+$(function(){
+	$(".userLeftNav li[data-val='" + commentNavType + "']").addClass("cur");	
+	
+	$(document).on("click", ".tab-header li", function(e){
+		//待评价、已评价类别点击
+		//var self = $(e.currentTarget);
+		//commFlag = self.attr("commFlag");
+		//render(commFlag, 1);
+	}).on("click", "#toIndex", function(){
+		//先去逛逛
+		if(commentNavType == 1){
+			location.href = "../../jewelry/index"
+		}else if(commentNavType == 2){
+			location.href = "../../exchange/index"
+		}else if(commentNavType == 5){
+			location.href = "../../design/index"
+		}else if(commentNavType == 6){
+			location.href = "../../manufacture/index"
+		}else if(commentNavType == 7){
+			location.href = "../../gallery/index"
+		}
+	}).on("click", ".toDel", function(e){
+		var self = $(e.currentTarget);
+		var val = $(self).attr("val");
+		utils.ajax({
+			url: "/api/order/comment/delete/"+val,
+			type: "post",
+			success: function(data){
+				if(data.success){
+					$(self).parents("li").remove();
+				}
+			}
+		})
+		
+	}).on("click", ".toDetail", function(e){
+		var self = $(e.currentTarget);
+		
+	}).on('click', ".toDelGallery", function(e){
+		var self = $(e.currentTarget);
+		var val = $(self).attr("val");
+		utils.ajax({
+			url: "/pc/gallery/atlas/comment/del/"+val,
+			type: "get",
+			success: function(data){
+				if(data.success){
+					$(self).parents("li").remove();
+				}
+			}
+		})
+	})
+	
+	//$(".tab-default li:eq(0)").trigger("click");
+	
+	render(commFlag, 1);
+	
+})
+
+function render(commFlag, page){
+	if(commentNavType != 7){
+		utils.ajax({
+			url: "/api/order/comment/list/"+commentNavType+"/" + commFlag,
+			type: "get",
+			data: {
+				offset: page,
+				limit: 10
+			},
+			success: function(data){
+				data = data.data;
+				if(data.total == 0){
+					//没有数据
+					$("#list").html("");
+					$(".nocomment").removeClass("hide");
+				}else{
+					$("#list").html("");
+					$(".nocomment").addClass("hide");
+					var html = "";
+					for(var i = 0; i < data.records.length; i++){
+						html += _template.userCommentList1({
+							data: data.records[i]
+						}) 
+					}
+					$("#list").html(html);
+					
+					if(page == 1 && data.pages > 1){
+						$("#pagination").pagination({
+							pageCount: data.pages,
+						    jump: true,
+						    coping: true,
+						    prevContent: '<',
+						    nextContent: '>',
+						    callback: function (api){
+						        render(commFlag, api.getCurrent());
+						    }
+						});
+					}
+					
+				}
+			}
+			
+		})
+	}else{
+		utils.ajax({
+			url: "/pc/gallery/atlas/comment/list",
+			type: "get",
+			data: {
+				offset: page,
+				limit: 10
+			},
+			success: function(data){
+				data = data.data;
+				if(data.total == 0){
+					//没有数据
+					$("#list").html("");
+					$(".nocomment").removeClass("hide");
+				}else{
+					$("#list").html("");
+					$(".nocomment").addClass("hide");
+					var html = "";
+					for(var i = 0; i < data.records.length; i++){
+						html += _template.userCommentListGallery({
+							data: data.records[i]
+						}) 
+					}
+					$("#list").html(html);
+					
+					if(page == 1 && data.pages > 1){
+						$("#pagination").pagination({
+							pageCount: data.pages,
+						    jump: true,
+						    coping: true,
+						    prevContent: '<',
+						    nextContent: '>',
+						    callback: function (api){
+						        render(commFlag, api.getCurrent());
+						    }
+						});
+					}
+					
+				}
+			}
+			
+		})
+	}
+}
+</script>
+</body>
+</html>
+

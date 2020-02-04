@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../src/js/address.js"></script>
+<style type="text/css">
+    .address-head{
+    	padding: 5px 20px;
+    	border-bottom: 1px solid #E6E6E6;
+    }
+    #address ul{
+    	margin: 25px 0;
+    	height: 138px;
+    	overflow: hidden;
+    }
+    #address li{
+    	width: 276px;
+    	height: 138px;
+    	border: 4px solid #CCCCCC;
+    	margin-right: 28.5px;
+    	margin-bottom: 10px;
+    	padding: 18px;
+    	position: relative;
+    }
+    #address li.checked{
+    	border-color: #D6C4AE;
+    }
+    #address li:nth-child(4n){
+    	margin-right: 0;
+    }
+    #address li img{
+    	position: absolute;
+    	right: 0;
+    	bottom: 0;
+    	display: none;
+    }
+    #address li.checked img{
+    	display: block;
+    }
+    .address{
+    	margin: 30px 0;
+    }
+    .default_adress:before{
+    	display: inline-block;
+    	content: '';
+    	width: 8px;
+    	height: 8px;
+    	border: 2px solid #D6C4AE;
+    	margin-right: 5px;
+    	border-radius: 50%;
+    	-webkit-border-radius: 50%;
+    	-moz-border-radius: 50%;
+    }
+    .modify{
+    	margin-right: 20px;color: #3366CC;
+    	cursor: pointer;
+    }
+    .modify:hover{
+    	opacity: 0.7;
+    }
+    #exhibition{
+    	border: none;
+    	width:94px;
+        height:22px; 
+        background: #CCCCCC;
+        color: #FFFFFF;
+        border-radius: 6px;
+    	-webkit-border-radius: 6px;
+    	-moz-border-radius: 6px;
+    }
+    .pay-head, .detailed-head{
+    	padding: 5px 20px;
+    	border-bottom: 1px solid #E6E6E6;
+    	margin-top: 40px;
+    	font-size: 18px;
+    }
+    #pay-method label{
+    	font-size: 18px;
+    	line-height: 24px;
+    	padding: 5px;
+    	border: 2px solid #D6C4AE;
+    }
+    table{
+    	width: 100%;
+    }
+    table th, table td{text-align: center;padding: 10px;}
+    table td{background-color: #F5F5F5;border-bottom: 10px solid #FFFFFF;}
+    .content{
+    	width: 230px;
+    	padding: 10px;
+    	text-align: left;
+    	font-size: 14px;
+    }
+    .content p:nth-child(1){
+    	margin-bottom: 8px;
+    	color: #333;
+    }
+    .content p:nth-child(2){
+    	height: 28px;
+    	color: #666666;
+    	display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+    }
+    .content p:nth-child(3){
+    	margin-bottom: 8px;
+    	color: #666666;
+    }
+    .content p.isF{
+    	color: #999999;
+    }
+    .content p.isF:before,  .invoice-head span:before{
+    	display: inline-block;
+    	content: '';
+    	width: 12px;
+    	height: 12px;
+    	background: url(../../src/img/jewelry/icon_Notice.png) no-repeat;
+    	background-size: 100% 100%;
+    	margin-right: 5px;
+    }
+    #invoice, #coupon, #comprehensive{
+    	border-top: 1px solid #E0E0E0;
+    	padding: 20px 0;
+    }
+    .isInvoice{
+    	padding-top: 20px;
+    	padding-left: 50px;
+    }
+    .isInvoice label{
+    	margin-right: 20px;	
+    	font-size: 14px;
+    }
+    #invoice table td{
+    	background: #FFFFFF;
+    	text-align: left;
+    	padding-top: 36px;
+    	padding-left: 45px;
+    }
+    .invoice-head{
+    	padding: 0 22px;
+    }
+    .invoice-head h2{
+    	font-weight: bolder;
+    	margin-right: 10px;
+    }
+    .invoice-head span{
+    	background: #F8F8F8;
+    	color: #B8B8B8;
+    	line-height: 16px;
+    }
+    .coupon-head{
+    	padding-left: 22px;
+    }
+    .coupon-head h2{
+    	font-weight: bolder;
+    }
+    #coupon li{
+    	width: 200px;
+    	height: 100px;
+    	padding: 20px;
+    	margin-top: 10px;
+    	margin-right: 22.5px;
+    	box-shadow: 0 0 2px #CCCCCC;
+    	overflow: hidden;
+    	cursor: pointer;
+    	background: url(../../src/img/jewelry/Coupon2.png) center top no-repeat;
+    	background-size: 100%　100%;
+    }
+    #coupon .coupon-active{
+    	background: url(../../src/img/jewelry/Coupon1.png) center top no-repeat;
+    	background-size: 100%　100%;
+    }
+    #coupon li:last-child{
+    	margin-right: 0;
+    }
+    #coupon li div:nth-child(2){
+    	height: 24px;
+    	margin-top: 10px;
+    	display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+    }
+    .full{
+    	font-size: 32px;
+    }
+    .comprehensive{
+    	font-size: 14px;
+    	color: #666666;
+    }
+    .comprehensive span{
+    	margin-left: 30px;
+    }
+    .comprehensive em{
+    	font-style:normal;
+    }
+    .payable{
+    	display: inline-block;
+    	width:400px;
+        height:150px;
+        margin-top: 20px;
+        padding: 20px;
+        border: 2px solid #FFAF4E;
+    }
+    .payable p{
+    	color: #3C3C3C;
+    }
+    .payable p:nth-child(2){
+    	margin-bottom: 8px;
+    	margin-top: 30px;
+    }
+    #pay{
+    	font-size: 26px;
+    	color: #FFAF4E;
+    }
+    .sub a{
+    	display: inline-block;
+    	width: 180px;
+    	height: 40px;
+    	text-align: center;
+    	line-height: 40px;
+    }
+    .sub a:hover{
+    	opacity: .7;
+    }
+    #goback{
+    	color: #999999;
+    }
+    #goback:before{
+    	content: '';
+    	display: inline-block;
+    	width: 15px;
+    	height: 15px;
+    	margin-bottom: -3px;
+    	margin-right: 3px;
+    	background: url(../../src/img/jewelry/icon_return.png) center bottom no-repeat;
+    	background-size: 100% auto;
+    }
+    #sub{
+    	background-color: #FFAF4E;
+    	color: #FFFFFF;
+    }
+    .set-adress{
+    	cursor: pointer;
+    }
+    /*
+	渐进动画
+	*/
+	.fadeIn2{
+		-webkit-animation: fadeIn2 .5s ease-in both;
+		animation: fadeIn2 .5s ease-in both
+	}
+	@-webkit-keyframes fadeIn2{
+		0%{opacity:0}
+		100%{opacity:1}
+	}
+	@keyframes fadeIn2{
+		0%{opacity:0}
+		100%{opacity:1}
+	}
+    /*弹框*/
+    #wrap, #bill{
+    	width: 100%;
+    	height: 100%;
+    	background: rgba(0,0,0,.5);
+    	position: fixed;
+    	top: 0;
+    	left: 0;
+    	display: none;
+    }
+    #newAddress{
+    	width: 700px;
+    	height: 350px;
+    	background-color: #FFFFFF;
+    	position: absolute;
+    	top: 50%;
+    	left: 50%;
+    	margin-top: -150px;
+    	margin-left: -350px;
+    }
+    .title{
+    	padding: 0 12px;
+    	background: #F5F5F5;
+    	font-size: 16px;
+    	color: #666666;
+    	height: 40px;
+    	line-height: 40px;
+    } 
+    #newAddress ul{
+    	padding: 20px 40px;
+    }
+    #newAddress li{
+    	margin-bottom: 15px;
+    }
+    #newAddress .areaCode{
+    	display: inline-block;
+    	width: 48px;
+    	text-align: center;
+    	border: 1px solid #CCCCCC;
+    	background: rgba(244,244,244,1);
+    	height: 30px;
+    	line-height: 30px;
+    }
+    #newAddress li label{
+    	width: 74px;
+    	min-height: 1px;
+    }
+    #newAddress li label i{
+    	color: #E64A4D;
+    	font-size: 18px;
+    	margin-right: 7px;
+    }
+    #keep{
+    	border: none;
+    	width:112px;
+		height:24px;
+		color: #FFFFFF;
+		background:rgba(230,64,64,.8);
+		border-radius:4px;
+		-webkit-border-radius:4px;
+		-moz-border-radius:4px;
+    }
+    #keep:hover{
+    	background:rgba(230,64,64,1);
+    }
+    .close{
+    	position: absolute;
+    	right: 0;
+    	top: 0;
+    	cursor: pointer;
+    }
+    /*发票*/
+    #billContent{
+    	width: 538px;
+    	background: #FFFFFF;
+    	position: absolute;
+    	top: 15%;
+    	left: 50%;
+    	margin-left: -269px;
+    }
+   	#bill-type button{
+   		border: 1px solid #E6E6E6;
+   		background: #FAFAFA;
+   		color: #CCCCCC;
+   		font-size: 14px;
+   		margin-right: 38px;
+   	}
+   	#bill-type button:hover{
+   		opacity: .7;
+   	}
+   	#bill-type button.bill-active{
+   		background: #D6C4AE;
+   		color: #FFFFFF;
+   		border-radius:3px;
+   		-webkit-border-radius:3px;
+   		-moz-border-radius:3px;
+   	}
+   	#bill-info ul{
+   		padding-bottom: 40px;
+   	}
+   	#bill-info li{
+   		margin-top: 20px;
+   	}
+   	#bill-info li label{
+   		display: inline-block;
+   		width: 90px;
+   		line-height: 30px;
+   	}
+   	.btn1{
+   		border: none;
+   		width:80px;
+		height:28px;
+		font-size: 14px;
+		color: #FFFFFF;
+		margin-right: 40px;
+		background:rgba(102,102,102,1);
+		border-radius:3px;
+   		-webkit-border-radius:3px;
+   		-moz-border-radius:3px;
+   	}
+   	.btn2{
+   		border: none;
+   		width:80px;
+		height:28px;
+		font-size: 14px;
+		color: #666666;
+		border: 1px solid #666666;
+		background:rgba(255,255,255,1);
+		border-radius:3px;
+   		-webkit-border-radius:3px;
+   		-moz-border-radius:3px;
+   	}
+   	.btn1:hover{
+   		opacity: .7;
+   	}
+   	.btn2:hover{
+   		opacity: .7;
+   	}
+   	.info2{
+   		padding-top: 20px;
+   	}
+   	.info2-c span{
+   		display: inline-block;
+   		text-align: center;
+   		height: 22px;
+   		padding: 0 10px;
+   		line-height: 20px;
+   		margin-left: 20px;
+   		border: 1px solid #D6C4AE;
+   		color: #D6C4AE;
+   		border-radius:3px;
+   		-webkit-border-radius:3px;
+   		-moz-border-radius:3px;
+   	}
+   	#billForm .info2-item{
+   		display: none;
+   	}
+   	#billForm .info2-item:first-child{
+   		display: block;
+   	}
+   	#billForm li label{
+   		display: inline-block;
+   		width: 100px;
+   		text-align: right;
+   		margin-right: 20px;
+   		font-size: 14px;
+   		line-height: 30px;
+   	}
+   	#billForm li label i{
+   		color: #D43B33;
+   		margin-right: 3px;
+   	}
+   	.step{margin-top: 29px;margin-bottom: 10px;}
+   	.step>div{
+   		height: 24px;
+   		line-height: 24px;
+   		padding-left: 24px;
+   		padding-right: 12px;
+   		margin-right: 20px;
+   		position: relative;
+   		color: #FFFFFF;
+   		cursor: pointer;
+   		background: #CCCCCC;
+   		border-radius:12px;
+   		-webkit-border-radius:12px;
+   		-moz-border-radius:12px;
+   	}
+   	.step>div>span{
+   		display: inline-block;
+   		width: 18px;
+   		height: 18px;
+   		text-align: center;
+   		line-height: 18px;
+   		background: #FFFFFF;
+   		color: #CCCCCC;
+   		position: absolute;
+   		left: 3px;
+   		top: 3px;
+   		border-radius:50%;
+   		-webkit-border-radius:50%;
+   		-moz-border-radius:50%;
+   	}
+   	.step>.stepGo{
+   		background: #DA3637;
+   	}
+   	.step>.stepGo>span{
+   		color: #DA3637;
+   	}
+</style>
+</head>
+<body class="jewelry-checkOrder">
+	<%- include ../headerbar.ejs %>
+	<div class="container">
+	    <div class="clearfix" style="margin: 58px 0;">
+	    	<h1 class="fl" style="font-size: 45px;">中国珠宝云平台</h1>
+	    	<img src="../../src/img/jewelry/progress_bar.png" class="fr"/>
+	    </div>
+	    <div id="address">
+	    	<div class="clearfix address-head">
+	    		<span class="fl">确认收货地址</span>
+	    		<span class="fr" style="color: #E61739;cursor: pointer;" onclick="addAddress()">新增收货地址</span>
+	    	</div>
+	    	<ul class="clearfix">
+	    		
+	    	</ul>
+	    	<button id="exhibition" val="0">显示全部地址</button>
+	    </div>
+	    <div id="pay-method">
+	    	<div class="pay-head">
+	    		<span>支付方式</span>
+	    	</div>
+	    	<div style="padding: 22px;">
+		    	<label>
+		    		<input type="radio" checked="checked"/>
+		    		<img src="../../src/img/jewelry/Online.png"/>
+		    		银联支付
+		    	</label>
+	    	</div>
+	    </div>
+	    <div id="detailed"></div>
+	    <div id="invoice">
+	    	<div class="clearfix invoice-head">
+	    		<h2 class="fl">发票信息</h2>
+	    		<span class="fl">开企业抬头发票须填写纳税人识别号，以免影响报销</span>
+	    	</div>
+	    	<div class="isInvoice">
+	    		<label><input type="radio" name="invoiceType" value="0" checked/>不使用</label>
+	    		<label><input type="radio" name="invoiceType" value="1" />使用</label>
+	    	</div>
+	    	<table border="0" cellspacing="0" cellpadding="0" style="display: none;">
+	    		<tr>
+	    			<td>增值税发票</td>
+	    			<td id="companyName">...</td>
+	    			<td>商品明细</td>
+	    			<td><a style="color: #0190FE;" onclick="$('#bill').show()">修改</a></td>
+	    		</tr>
+	    	</table>
+	    </div>
+	    <!--
+	    <div id="coupon">
+	    	<div class="clearfix coupon-head">
+	    		<h2>使用优惠券</h2>
+	    	</div>
+	    	<ul class="clearfix">
+	    		
+	    	</ul>
+	    </div>
+	    -->
+	    <div id="comprehensive" class="tr">
+	    	<div class="comprehensive">
+	    		<span><em id="goodsNum2">0</em>件商品，总商品金额：￥<em id="totalPrice">0.00</em></span>
+	    		<!--<span>返现：￥0.00</span>-->
+	    		<span>运费：￥<em id="freightPrice">0.00</em></span>
+	    		<!--<span>服务费：￥0.00</span>
+	    		<span>商品优惠：￥0.00</span>-->
+	    	</div>
+    		<div class="payable">
+    		    <p><label>应付金额：</label><span id="pay">￥0.00</span></p>
+    		    <p><label>配送至：</label><span id="address_1">广东深圳宝安西乡西乡街道鹤洲阳光工业园好实再集团</span></p>
+    		    <p><label>收货人：</label><span id="name_1">my 1234545</span></p>
+    		    <!--
+    		    <p style="margin-top: 10px;">
+    		    	<label><input type="checkbox" id="agree" checked="checked"/>我已同意</label>
+    		    	<a style="color: #169BD5;">《XXXXXXX合同》</a>
+    		    </p>
+    		    -->
+    	    </div>
+    	    <p class="sub">
+    	    	<a href="../exchange/cart" id="goback">返回购物车</a>
+    	    	<a id="sub">提交订单</a>
+    	    </p>
+	    </div>
+	</div>
+	<!--发票-->
+	<input type="hidden" name="billId" id="billId" value=""/>
+	<div id="bill" class="fadeIn2">
+		<div id="billContent" onclick="stopDefault(this)">
+			<p class="title">发票信息</p>
+			<div style="padding: 30px 40px;">
+				<div id="bill-type">
+					<!--<button>普通发票</button>-->
+					<button class="bill-active">增值税专业发票</button>
+				</div>
+				
+				<div id="bill-info">
+					<!--
+					<form id="billForm1" class="info1">
+						<div class="info2-c" style="margin-top: 30px;">
+							<p>发票内容<span>商品明细</span></p>
+						</div>
+						<ul>
+							<li class="clearfix">
+								<label class="fl">公司抬头</label>
+								<div class="fl">
+									<input type="text" name="companyName" datatype="*" nullmsg="请输入公司抬头！" errormsg="请输入正确信息！" value="" />
+								</div>
+								<p class="Validform_checktip"></p>
+							</li>
+							<li class="clearfix">
+								<label class="fl">纳税人识别号</label>
+								<div class="fl">
+									<input type="text" name="code" datatype="*" nullmsg="请输入纳税人识别号！" errormsg="请输入正确信息！" value="" />
+								</div>
+								<p class="Validform_checktip"></p>
+							</li>
+						</ul>
+						<div class="tc">
+							<button class="btn1">提交</button>
+							<button class="btn2">取消</button>
+						</div>
+					</form>
+					-->
+					<div class="info2">
+						<div class="clearfix info2-c">
+							<p class="fl" style="margin-right: 30px;">开票方式<span>订单完成后开票</span></p>
+							<p class="fl">发票内容<span>商品明细</span></p>
+						</div>
+						<form id="billForm" method="post">
+							<div class="info2-item">
+								<div class="step clearfix">
+									<div class="fl stepGo" onclick="step2(0)"><span>1</span>选择开票方式</div>
+									<div class="fl" onclick="step2(1)"><span>2</span>填写或核对公司信息</div>
+								</div>
+								<p class="tc" style="margin-bottom: 20px;color: #999999;">发票将在订单完成后3-5个工作日寄出</p>
+								<div class="tc">
+									<button class="btn1" onclick="step(0)">下一步</button>
+									<button class="btn2"  onclick="$('#bill').hide()">取消</button>
+								</div>
+							</div>
+							<div class="info2-item">
+								<div class="step clearfix">
+									<div class="fl stepGo" onclick="step2(0)"><span>1</span>选择开票方式</div>
+									<div class="fl stepGo" onclick="step2(1)"><span>2</span>填写或核对公司信息</div>
+								</div>
+								<p class="tc" style="margin-bottom: 20px;color: #999999;">发票将在订单完成后3-5个工作日寄出</p>
+								<ul>
+									<li class="clearfix">
+										<label class="fl"><i>&lowast;</i>单位名称</label>
+										<div class="fl">
+											<input type="text" name="companyName" datatype="*" nullmsg="请输入单位名称！" errormsg="请输入正确信息！" value="" />
+										</div>
+										<p class="Validform_checktip"></p>
+									</li>
+									<li class="clearfix">
+										<label class="fl"><i>&lowast;</i>纳税人识别号</label>
+										<div class="fl">
+											<input type="text" name="code" datatype="*" nullmsg="请输入纳税人识别号！" errormsg="请输入正确信息！" value="" />
+										</div>
+										<p class="Validform_checktip"></p>
+									</li>
+									<li class="clearfix">
+										<label class="fl"><i>&lowast;</i>注册地址</label>
+										<div class="fl">
+											<input type="text" name="address" datatype="*" nullmsg="请输入注册地址！" errormsg="请输入正确信息！" value="" />
+										</div>
+										<p class="Validform_checktip"></p>
+									</li>
+									<li class="clearfix">
+										<label class="fl"><i>&lowast;</i>注册电话</label>
+										<div class="fl">
+											<input type="text" name="phone" maxlength="11" datatype="*" nullmsg="请输入注册电话！" errormsg="请输入正确信息！" value="" />
+										</div>
+										<p class="Validform_checktip"></p>
+									</li>
+									<li class="clearfix">
+										<label class="fl"><i>&lowast;</i>开户银行</label>
+										<div class="fl">
+											<input type="text" name="holder_bank" maxlength="11" datatype="*" nullmsg="请输入开户银行！" errormsg="请输入正确信息！" value="" />
+										</div>
+										<p class="Validform_checktip"></p>
+									</li>
+									<li class="clearfix">
+										<label class="fl"><i>&lowast;</i>银行账号</label>
+										<div class="fl">
+											<input type="text" name="bankAccout" datatype="*" nullmsg="请输入银行账号！" errormsg="请输入正确信息！" value="" />
+										</div>
+										<p class="Validform_checktip"></p>
+									</li>
+								</ul>
+								<div class="tc">
+									<button class="btn1" id="addOrUpdateBill">保存</button>
+									<button class="btn2"  onclick="$('#bill').hide()">取消</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<i class="icon icon-close close" onclick="$('#bill').hide()"></i>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+			$("input[name=invoiceType]").click(function(){
+				if($(this).is(":checked")){
+					var val = $(this).val();
+					if(val == '1'){
+						$("#invoice table").show();
+					}else{
+						$("#invoice table").hide();
+					}
+				}
+			})
+			$("#bill-type button").click(function(){
+				if(!$(this).hasClass(".bill-active")){
+					var _index = $(this).index();
+					$(".bill-active").removeClass("bill-active");
+					$(this).addClass("bill-active");
+					if(_index == 0){
+						$(".info1").show();
+						$(".info2").hide()
+					}else{
+						$(".info2").show();
+						$(".info1").hide()
+					}
+				}
+			})
+		})
+		function step(index){
+			var _index = index+1;
+			$("#billForm").find(".info2-item").hide();
+			$("#billForm").find(".info2-item").eq(_index).show();
+		}
+		function step2(index){
+			$("#billForm").find(".info2-item").hide();
+			$("#billForm").find(".info2-item").eq(index).show();
+		}
+	</script>
+	<!--新增地址-->
+	<div id="wrap" class="fadeIn2" onclick="wrapHide()">
+		<form id="newAddress" onclick="stopDefault(this)" class="clearfix">
+			<p class="title">新增收货地址</p>
+			<input type="hidden" name="id" value="" />
+			<ul>
+				<li class="clearfix" style="margin-bottom: 0;">
+					<label class="fl"><i>&lowast;</i>所在地区</label>
+					<div class="fl">
+						<p>
+						<select id="cmbProvince" class="province" datatype="select" name="province" nullmsg="请选择所在省/市！" errormsg="请选择所在省/市！"></select> 
+						</p>
+						<p class="Validform_checktip"></p>
+					</div>
+					<div class="fl">
+						<p>
+						<select id="cmbCity" class="city" name="city" datatype="select" nullmsg="请选择所在市/区！" errormsg="请选择所在市/区！"></select>
+						</p>
+						<p class="Validform_checktip"></p>
+					</div>
+					<div class="fl">
+						<p>
+						<select id="cmbArea" class="area" name="area" datatype="select" nullmsg="请选择所在区/县！" errormsg="请选择所在区/县！"></select> 
+						</p>
+						<p class="Validform_checktip"></p>
+					</div>
+				</li>
+				<li class="clearfix">
+					<label class="fl"><i>&lowast;</i>详细地址</label>
+					<input type="text" name="detail" value="" class="fl" style="width: 220px;"/>
+				</li>
+				<li class="clearfix">
+					<label class="fl"><i>&lowast;</i>收货人</label>
+					<input type="text" name="consignee" value="" class="fl" style="width: 220px;"/>
+				</li>
+				<li class="clearfix">
+					<label class="fl"><i>&lowast;</i>手机号</label>
+					<span class="fl areaCode">0086</span>
+					<span class="fl" style="margin: 0 6px; color: #CCCCCC;font-size: 18px;">-</span>
+					<div class="fl">
+						<input type="text" class="mobile" name="mobile" maxlength="11" datatype="/^1\d{10}$/" ignore="ignore" errormsg="手机号码格式错误" placeholder="手机号码、电话号码必须填一项">
+					</div>
+					<p class="Validform_checktip fl"></p>
+				</li>
+				<li class="clearfix">
+					<label class="fl"></label>
+					<span class="fl areaCode">0086</span>
+					<span class="fl" style="margin: 0 6px; color: #CCCCCC;font-size: 18px;">-</span>
+					<div class="fl">
+						<input type="text" class="phone" name="phone" maxlength="20" datatype="phone" errormsg="手机与固话至少填写一项！" nullmsg="手机与固话至少填写一项！" placeholder="手机号码、电话号码必须填一项">
+					</div>
+					<p class="Validform_checktip fl"></p>
+				</li>
+				<li class="clearfix">
+					<label class="fl"></label>
+					<button class="fl" id="keep" onclick="address()">保存收货人信息</button>
+				</li>
+			</ul>
+			<i class="icon icon-close close" onclick="wrapHide()"></i>
+		</form>
+	</div>
+	<input type="hidden" name="" value="" />
+	<input type="hidden" name="" value="" />
+	<script type="text/javascript">
+		$(function(){
+			addressInit('cmbProvince', 'cmbCity', 'cmbArea');
+			var validform = $("#newAddress").Validform({
+				tiptype: 2,
+				datatype:{
+					"phone":function(gets,obj,curform,regxp){
+						/*参数gets是获取到的表单元素值，
+						  obj为当前表单元素，
+						  curform为当前验证的表单，
+						  regxp为内置的一些正则表达式的引用。*/
+			
+						var mobile=curform.find(".mobile");
+						if(/^1\d{10}$/.test(mobile.val())){return true;}
+						if(/[\d]{7}/.test(gets)){return true;}
+						
+						return false;
+					},
+					"select": function(gets,obj,curform,regxp){
+						if(gets != "" && gets.indexOf("请选择") == -1){
+							return true;
+						}
+						return false;
+					}
+				}
+			});
+			var validform1 = $("#billForm1").Validform({
+				tiptype: 2
+			});
+			var validform2 = $("#billForm").Validform({
+				tiptype: 2,
+				datatype:{
+					"phone":function(gets,obj,curform,regxp){
+						/*参数gets是获取到的表单元素值，   
+						  obj为当前表单元素，
+						  curform为当前验证的表单，
+						  regxp为内置的一些正则表达式的引用。*/
+			
+						var mobile=curform.find(".mobile");
+						if(/^1\d{10}$/.test(mobile.val())){return true;}
+						if(/[\d]{7}/.test(gets)){return true;}
+						
+						return false;
+					},   
+					"select": function(gets,obj,curform,regxp){
+						if(gets != "" && gets.indexOf("请选择") == -1){
+							return true;
+						}
+						return false;
+					}
+				}
+			});
+			$("#exhibition").click(function(){
+				if($(this).attr('val') == '0'){
+					$("#address ul").css('height','auto');
+					$(this).text('收起').attr('val','1');
+				}else{
+					$("#address ul").css('height','138px');
+					$(this).text('显示全部地址').attr('val','0');
+				}
+			})
+			addrList();
+			invoiceQual();
+			/**
+			 * 获取订单数据
+			 */
+			var source = utils.getUrlParamVal('source');
+			if(source == '1'){
+				var carIds = utils.getUrlParamVal('carIds');
+				$.ajax({
+					type:"get",
+					url:"/api/order/cart/list",
+					headers:{
+			        	'Authorization':utils.getCookie("token")
+			        },
+					success:function(response){
+						if(!response.success) return;
+						var oDiv = '', res = response.data, freightMoney1 = 0;
+						$.each(res.cartItemList,function(idx,item){
+							var html = '';
+							$.each(item.goods, function(idx1,item1) {
+								if(carIds.indexOf(String(item1.goodsSku)) > -1){
+									var str = '';
+									$.each(item1.skuList, function(idx2,item2) {
+										str += '<span>'+item2.specsName+':'+item2.attrValue+'</span><br />'
+									});
+									html += '<tr class="goodsTr" data-goodsid="'+item1.goodsId+'" data-skuid="'+item1.goodsSku+'" data-num="'+item1.quantity+'" data-price="'+item1.skuPrice+'">'+
+								    			'<td>'+
+								    				'<a href="details?id='+item1.goodsId+'" class="clearfix">'+
+								    					'<img src="'+item1.goodsLogo+'" width="120" height="120" class="fl"/>'+
+								    					'<div class="fl content">'+
+								    						'<p>商家：'+item.merchant+'</p>'+
+								    						'<p>'+item1.goodsName+'</p>'+
+								    						'<p>'+str+'</p>'+
+								    						//'<p class="isF">不支持7天无理由退货</p>'+
+								    					'</div>'+
+								    				'</a>'+
+								    			'</td>'+
+								    			'<td>x'+item1.quantity+'</td>'+
+								    			'<td style="color: #E61739;">￥'+item1.skuPrice+'</td>'+
+								    			'<td>珠宝店</td>'+
+								    		'</tr>';
+								}
+							});
+							if(html != ''){
+								freightMoney1 += item.freightMoney;
+								oDiv+='<div class="detailed-item">'+
+									    	'<div class="detailed-head"><span>店铺：'+item.merchant+'</span></div>'+
+									    	'<table cellspacing="0" cellpadding="0">'+
+									    		'<thead>'+
+										    		'<tr>'+
+										    			'<th>商品信息</th>'+
+										    			'<th>数量</th>'+
+										    			'<th>单价</th>'+
+										    			'<th>来源</th>'+
+										    		'</tr>'+
+									    		'</thead>'+
+									    		'<tbody class="skuList">'+html+'</tbody>'+
+									    	'</table>'+
+								    	'</div>';
+							}
+						})
+							$("#detailed").html(oDiv);
+							$("#freightPrice").html(freightMoney1);
+							//getCoupons();
+							goodsTotal();
+					},
+					error:function(error){
+						
+					}
+				})
+			}else{
+				var goodsNum = utils.getUrlParamVal('goodsNum');
+				var carIds = utils.getUrlParamVal('carIds');
+				$.ajax({
+					type:"get",
+					url:"/api/marketPage/goodsDetailShow",
+					data:{goodsId:utils.getUrlParamVal('goodsId')},
+					success:function(response){
+						if(!response.success) return;
+						var oDiv= '', res = response.data;
+						$.each(res.goodsSkus,function(idx1,item1){
+							var html= '';
+							if(carIds.indexOf(String(item1.id)) > -1){
+								var spec = getSpec(item1.attrSymbolPath,res.goodsSpecs);
+								var str = '', specStr = '';
+								if(res.restore == 0){
+									str = '<p class="isF">不支持7天无理由退货</p>';
+								}
+								$.each(spec, function(idx3,item3) {
+									specStr += '<span>'+item3.spec+':'+item3.attrValue+'</span><br />'
+								});
+								html += '<tr class="goodsTr" data-goodsid="'+item1.goodsId+'" data-skuid="'+item1.id+'" data-num="'+goodsNum+'" data-price="'+item1.price+'">'+
+							    			'<td>'+
+							    				'<a href="details?id='+item1.goodsId+'" class="clearfix">'+
+							    					'<img src="'+res.goodsGallerys[0].imgUrl+'" width="120" height="120" class="fl"/>'+
+							    					'<div class="fl content">'+
+							    						'<p>商家：'+res.merchantName+'</p>'+
+							    						'<p>'+res.goodsName+'</p><p>'+specStr+'</p>'+str+
+							    					'</div>'+
+							    				'</a>'+
+							    			'</td>'+
+							    			'<td>x'+goodsNum+'</td>'+
+							    			'<td style="color: #E61739;">￥'+item1.price+'</td>'+
+							    			'<td>珠宝店</td>'+
+							    			'<td>￥'+res.freightPrice+'</td>'+
+							    		'</tr>';
+							
+								oDiv+='<div class="detailed-item">'+
+									    	'<div class="detailed-head"><span>店铺：'+res.merchantName+'</span></div>'+
+									    	'<table cellspacing="0" cellpadding="0">'+
+									    		'<thead>'+
+										    		'<tr>'+
+										    			'<th>商品信息</th>'+
+										    			'<th>数量</th>'+
+										    			'<th>单价</th>'+
+										    			'<th>来源</th>'+
+										    			'<th>运费</th>'+
+										    		'</tr>'+
+									    		'</thead>'+
+									    		'<tbody class="skuList">'+html+'</tbody>'+
+									    	'</table>'+
+								    	'</div>';
+							}
+						})
+						$("#detailed").html(oDiv);
+						$("#freightPrice").html(res.freightPrice)
+						//getCoupons();
+						goodsTotal();
+					},
+					error:function(error){
+						
+					}
+				})
+			}
+			$("#addOrUpdateBill").click(function(){
+				if(validform2.check(false)){
+					var id = $("input[name=billId]").val();
+					var str = $("#billForm").serialize();
+					str = utils.str2json(str);
+					str.id = id;
+					$.ajax({
+						type:"post",
+						url:"/api/userCenter/invoiceQual/addOrUpdate",
+						contentType: 'application/json;charset=utf-8',
+						data: JSON.stringify(str),
+						headers:{
+				        	'Authorization':utils.getCookie("token")
+				        },
+						success:function(res){
+							if(res.success){
+								invoiceQual();
+								utils.alert('success','修改成功！')
+							}else{
+								utils.alert('danger',res.msg)
+							}
+						},
+						error:function(error){
+							utils.alert('danger','网络加载缓慢！请从新加载')
+						}
+					})
+				}
+			})
+			/**
+			 * 提交订单
+			 * */
+			$("#sub").click(function(){
+				/*
+				if(!$("#agree").is(":checked")){
+					utils.alert('danger','未同意xxx合同！');
+					return false;
+				}
+				*/
+				if($(".checked").length == 0){
+					utils.alert('danger','请选择收货地址！');
+					return false;
+				}
+				var carIds = utils.getUrlParamVal('carIds').split(",");
+				var carIdsArr = [], couponIdArr = [];
+				$.each(carIds, function(idx,item) {
+					carIdsArr.push({
+						skuId:item,
+						source:1,
+						goodsNumber: Number($(".goodsTr").data('num'))
+					})
+				});
+				if($('.coupon-active').length){
+					$.each($('.coupon-active'),function(idx,item){
+						var val = $(item).attr('val');
+						couponIdArr.push(Number(val))
+					})
+				}
+				var datas = JSON.stringify({
+					addrId:Number($(".checked").find(".set-adress").attr("val")),
+					buySkuDTOList:carIdsArr,
+					source:source,
+					invoiceType:Number($("input[name=invoiceType]:checked").val()),
+					invoiceId:$("input[name=billId]").val(),
+					couponIds:couponIdArr,
+					payType:3
+					
+				})
+				$.ajax({
+					type:'post',
+					url:'/api/order/payOrder/add',
+					data:datas,
+					contentType: 'application/json;charset=utf-8',
+					headers:{
+			        	'Authorization':utils.getCookie("token")
+			        },
+			        success:function(res){
+			        	if(res.success){
+							location.href = "../../exchange/pay?from=jewely&id=" + res.data.id + "&p=" + res.data.payAmount +"&tradeId="+ res.data.tradeId;
+						}else{
+							utils.alert('danger',res.msg)
+						}
+			        },
+			        error:function(error){
+			        	
+			        }
+				})
+			})
+		})
+		function wrapShow(){
+			$("#wrap").show()
+		}
+		function wrapHide(){
+			$("#wrap").hide()
+		}
+		function stopDefault(e){   
+		    window.event?window.event.cancelBubble=true:e.stopPropagation();
+            e.preventDefault?e.preventDefault():window.event.returnValue=false;  
+		}
+		/**
+		 * 根据symbol获取规格名称
+		 * */
+		function getSpec(attrSymbolPath,goodsSpecs){
+			var specArr = [];
+			$.each(goodsSpecs, function(idx,item) {
+				$.each(item.goodsSpecsAttrs,function(idx1,item1){
+					if(attrSymbolPath.indexOf(String(item1.symbol))>-1){
+						specArr.push({
+							'spec':item.specsName,
+							'attrValue':item1.attrValue
+						})
+					}
+				})
+			});
+			return specArr;
+		}
+		/**
+		 * 商品总价数量
+		 * */
+		function goodsTotal(){
+			var totalPrice = 0, couponPrice = 0;
+			var len = $('.goodsTr').length;
+			$.each($('.goodsTr'), function(idx,item) {
+				var num = Number($(item).attr('data-num'));
+				var price = Number($(item).attr('data-price'));
+				totalPrice += num * price;
+			});
+			/*
+			if($(".coupon-active").length){
+				$.each($(".coupon-active"),function(idx,item){
+					var val = $(item).find('.full').text();
+					couponPrice += Number(val);
+				})
+			}
+			*/
+			var copeWith = totalPrice + Number($("#freightPrice").text()) - couponPrice;
+			$("#goodsNum2").html(len);
+			$("#totalPrice").html(totalPrice.toFixed(2));
+			$("#pay").html('￥'+copeWith.toFixed(2));
+		}
+		/**
+		 * 展示发票
+		 * */
+		function invoiceQual(){
+			$.ajax({
+				type:"get",
+				url:"/api/userCenter/findInvoiceQualByUserId",
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(response){
+					if(!response.success) return;
+					var res = response.data.invoiceQual;
+					$("#companyName").html(res.companyName);
+					$("input[name=companyName]").val(res.companyName);
+					$("input[name=code]").val(res.code);
+					$("input[name=bankAccout]").val(res.bankAccout);
+					$("input[name=address]").val(res.address);
+					$("input[name=phone]").val(res.phone);
+					$("input[name=billId]").val(res.id);
+				},
+				error:function(error){
+					
+				}
+			})
+		}
+		/**
+		 * 地址列表
+		 * */
+		function addrList(){
+			$.ajax({
+				type:"get",
+				url:"/api/userCenter/addr/page",
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(response){
+					if(!response.success) return false;
+					var html= '', res = response.data;
+					$.each(res.records, function(idx,item) {
+						if(item.isDefault == 1){
+							html += '<li class="fl checked" onclick="chooseAddr(this)">';
+						}else{
+							html += '<li class="fl" onclick="chooseAddr(this)">';
+						}
+						
+							html += '<p class="clearfix">'+
+				    					'<span class="fl nickname">'+item.consignee+'</span>';
+					    			if(item.isDefault == 1){
+										html += '<span class="fr set-adress default_adress" val="'+item.id+'" onclick="setAdress(this, '+item.id+')">默认地址</span>';
+									}else{
+										html += '<span class="fr set-adress" val="'+item.id+'" onclick="setAdress(this, '+item.id+')">设为默认地址</span>';
+									}
+					    			html += '</p>'+
+					    			'<p class="address">'+item.province+item.city+item.area+item.detail+'</p>'+
+					    			'<p class="clearfix">'+
+					    				'<span class="fl">'+item.mobile+'</span>'+
+					    				'<span class="fr modify" onclick="modifyAddress('+item.id+')">修改</span>'+
+					    			'</p>'+
+					    			'<img src="../../src/img/jewelry/default_adress.png"/>'+
+					    		'</li>';
+					});
+					$("#address ul").html(html);
+					setTimeout(function(){
+						$("#address_1").text($('.checked').find(".address").text());
+						$("#name_1").text($('.checked').find(".nickname").text())
+					},100)
+				},
+				error:function(error){
+					
+				}
+			})
+		}
+		/**
+		 * 设置默认地址
+		 * */
+		function setAdress(e,addrId){
+			var el = e||window.event;
+			stopDefault(el);
+			if($(el).hasClass("default_adress")) return;
+			$.ajax({
+				type:"post",
+				url:"/api/userCenter/addr/setDefault/"+addrId,
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(res){
+					if(res.success){
+						$('.default_adress').html('设为默认地址').removeClass('default_adress');
+						$(el).addClass('default_adress').html('默认地址');
+					}else{
+						utils.alert('danger',res.msg);
+					}
+				},
+				error:function(error){
+					
+				}
+			});
+		}
+		/**
+		 * 修改地址
+		 * */
+		function modifyAddress(id){
+			$('#wrap').show();
+			$("input[name=id]").val(id);
+			$.ajax({
+				type:"get",
+				url:"/api/userCenter/addr/detail/"+id,
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(res){
+					if(res.success){
+						$("select[name=province]").val(res.data.province);
+						$("select[name=city]").val(res.data.city);
+						$("select[name=area]").val(res.data.area);
+						$("input[name=mobile]").val(res.data.mobile);
+						$("input[name=phone]").val(res.data.phone);
+						$("input[name=consignee]").val(res.data.consignee);
+						$("input[name=detail]").val(res.data.detail)
+					}else{
+						utils.alert('danger',res.msg);
+					}
+				},
+				error:function(error){
+					
+				}
+			})
+		}
+		/**
+		 * 选择地址
+		 * */
+		function chooseAddr(e){
+			var el = e||window.event;
+			if(!$(el).hasClass("checked")){
+				$(".checked").removeClass("checked");
+				$(el).addClass('checked');
+				$("#address_1").text($('.checked').find(".address").text());
+				$("#name_1").text($('.checked').find(".nickname").text())
+			}
+		}
+		function addAddress(){
+			$("#newAddress")[0].reset();
+			setTimeout(function(){
+				$('#wrap').show();
+				$("input[name=id]").val('');
+			},100)
+		}
+		/**
+		 * 编辑收货地址
+		 * */
+		function address(){
+			var str = $('#newAddress').serialize();
+			var id = $("input[name=id]").val();
+			str = utils.str2json(str);
+			str.id = id;
+			$.ajax({
+				type:'post',
+				url:"/api/userCenter/addr/addOrUpdate",
+				contentType: 'application/json;charset=utf-8',
+				data: JSON.stringify(str),
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(res){
+					if(res.success){
+						utils.alert('success',"编辑成功！");
+						addrList()
+					}else{
+						utils.alert('danger',res.msg);
+					}
+					$('#wrap').hide();
+				},
+				error:function(error){
+					
+				}
+			})
+		}
+		/**
+		 * 优惠券列表
+		 * */
+		function getCoupons(){
+			var arr = [];
+			$.each($(".skuList tr"), function(idx,item) {
+				var goodId = $(item).attr('data-goodsid');
+				arr.push(goodId);
+			});
+			var goodsIds = arr.join(",");
+			$.ajax({
+				type:'get',
+				url:"/api/userCenter/coupons/list/"+goodsIds,
+				contentType: 'application/json;charset=utf-8',
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(res){
+					if(res.success){
+						var html = '';
+						if(res.data.length !=0 ){
+							$.each(res.data, function(idx,item) {
+								var merchantIds = '';
+								if(item.couponsType == 1){
+									merchantIds = item.merchantId;
+								}else{
+									merchantIds = item.merchantIds.join(",");
+								}
+								html += '<li class="fl" merchant-id="'+merchantIds+'" val="'+item.id+'" onclick="checkCoupons(this)" title="点击使用">'+
+							    			'<div class="clearfix">'+
+							    				'<span class="fl" style="color: #DA3637;">￥<span class="full">'+item.couponsPrice+'</span></span>'+
+							    				'<span class="fr" style="margin-top: 18px;">满'+item.couponsScale+'可用</span>'+
+							    			'</div>'+
+							    			'<div>'+item.couponsName+'</div>'+
+							    		'</li>';
+							});
+						}else{
+							html += '<p class="tc" style="height: 100px;line-height: 100px;color: #999999;font-size: 18px;">暂无可用优惠券</p>';
+						}
+						$("#coupon ul").html(html);
+					}else{
+						utils.alert('danger',res.msg);
+					}
+				},
+				error:function(error){
+					
+				}
+			})
+		}
+		/**
+		 * 优惠券检查是否可用
+		 * */
+		function checkCoupons(e,couponsId){
+			var el = e||window.event, arr = [];
+			var couponsId = $(el).attr('val');
+			var merchantId = $(el).attr("merchant-id");
+			$.each($(".skuList tr"), function(idx,item) {
+				arr.push({
+					goodsId:$(item).attr('data-goodsid'),
+					goodsCount:$(item).attr('data-num'),
+					skuId:$(item).attr('data-skuid'),
+				})
+			});
+			var datas = JSON.stringify({
+				couponsId:Number(couponsId),
+				goodsCounts:arr
+			})
+			$.ajax({
+				type:'post',
+				url:"/api/userCenter/coupons/check",
+				contentType: 'application/json;charset=utf-8',
+				data:datas,
+				headers:{
+		        	'Authorization':utils.getCookie("token")
+		        },
+				success:function(res){
+					if(res.success){
+						$.each($('.coupon-active'), function(idx,item) {
+							var merchantIds = $(item).attr("merchant-id");
+							if(merchantIds.indexOf(merchantId) > -1 || merchantId.indexOf(merchantIds) > -1){
+								$(item).removeClass('coupon-active');
+							}
+						});
+						utils.alert('success','可用');
+						$(el).addClass("coupon-active");
+						setTimeout(function(){
+							goodsTotal()
+						},100)
+					}else{
+						utils.alert('danger',res.msg);
+					}
+				},
+				error:function(error){
+					
+				}
+			})
+		}
+	</script>
+</body>
+</html>
+

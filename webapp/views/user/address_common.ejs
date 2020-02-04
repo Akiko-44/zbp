@@ -1,0 +1,334 @@
+<style>
+	.addAddressDialog .dialog-main {
+		width: 644px;
+		height: 558px;
+		margin-left: -322px;
+		margin-top: -279px;
+	}
+
+	.addAddressDialog .dialog-body {
+		bottom: 0
+	}
+
+	.addAddressDialog .dialog-body>div {
+		padding: 0 35px;
+		font-size: 12px;
+	}
+
+	.addAddressDialog table {
+		width: 100%;
+		margin-top: 40px;
+	}
+
+	.addAddressDialog label {
+		position: relative;
+		top: 5px;
+		color: #666666;
+		font-size: 14px;
+	}
+
+	.addAddressDialog label::before {
+		content: '*';
+		display: inline-block;
+		color: #DF735A;
+	}
+
+	.addAddressDialog textarea {
+		width: 470px;
+		height: 78px;
+	}
+
+	.addAddressDialog .consignee {
+		width: 204px;
+	}
+
+	.addAddressDialog .mobile {
+		width: 214px;
+	}
+
+	.addAddressDialog .phone,
+	.addAddressDialog .email,
+	.addAddressDialog .zipcode {
+		width: 350px;
+	}
+
+	.addAddressDialog .btn {
+		margin-top: 20px;
+		width: 90px;
+		background: #DF735A;
+		border-color: #DF735A;
+	}
+
+	.delDialog .btn {
+		width: 96px;
+	}
+</style>
+<div class="dialog addAddressDialog">
+	<div class="mask"></div>
+	<div class="dialog-main">
+		<div class="dialog-header clearfix">
+			<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+			<h3 class="dialog-title">新增收货地址</h3>
+		</div>
+		<div class="dialog-body">
+
+			<div>
+				<form>
+					<input type="hidden" name="id" class="id">
+					<table class="tl">
+						<tr>
+							<td valign="top" width="92"><label>所在地区：</label></td>
+							<td valign="top" width="152">
+								<div>
+									<select id="cmbProvince" class="province" name="province" datatype="select" nullmsg="请选择所在省/市！"
+										errormsg="请选择所在省/市！"></select>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td width="152">
+								<div>
+									<select id="cmbCity" class="city" name="city" datatype="select" nullmsg="请选择所在市/区！"
+										errormsg="请选择所在市/区！"></select>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+							<td width="152">
+								<div>
+									<select id="cmbArea" class="area" name="area" datatype="select" nullmsg="请选择所在区/县！"
+										errormsg="请选择所在区/县！"></select>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top"><label>详细地址：</label></td>
+							<td colspan="3" valign="top">
+								<div>
+									<textarea class="detail" name="detail" maxlength="300" datatype="*1-300" nullmsg="请输入详细地址"
+										errormsg="详细地址不能超过300个字符" placeholder="请填写您的详细收货地址，例如街道名称，门牌号码，楼层和房间号等信息"></textarea>
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top"><label>收货人：</label></td>
+							<td colspan="3" valign="top">
+								<div>
+									<input type="text" class="consignee" name="consignee" maxlength="25" datatype="s1-25" nullmsg="请输入收货人"
+										errormsg="收货人不能超过25个字符" placeholder="长度不能超过25个字符">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top"><label>联系电话：</label></td>
+							<td valign="top" colspan="3">
+								<div>
+									<input type="text" class="mobile" name="mobile" maxlength="11" datatype="/^1\d{10}$/" ignore="ignore"
+										errormsg="手机号码格式错误" placeholder="手机号码或电话号码必须填一项">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<!--<tr>
+							<td valign="top"><label>固定电话：</label></td>
+							<td valign="top" colspan="3">
+								<div>
+									<input type="text" class="phone" name="phone" maxlength="20" datatype="phone" errormsg="手机与固话至少填写一项！" nullmsg="手机与固话至少填写一项！" placeholder="手机号码、电话号码必须填一项">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top"><label>邮箱地址：</label></td>
+							<td valign="top" colspan="3">
+								<div>
+									<input type="text" class="email" name="email" maxlength="100" datatype="/^\s*$/|e" nullmsg="请输入邮箱地址"
+										errormsg="邮箱格式错误" placeholder="用来接收订单提醒邮件，便于您及时了解订单状态">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top"><label>邮政编码：</label></td>
+							<td valign="top" colspan="3">
+								<div>
+									<input type="text" class="zipcode" name="zipcode" maxlength="6" datatype="/^\s*$/|/^[0-9]{6}$/"
+										nullmsg="请输入邮政编码" errormsg="邮政编码格式错误" placeholder="如您不清楚邮递区号，请填写000000">
+								</div>
+								<p class="Validform_checktip"></p>
+							</td>
+						</tr>-->
+						<tr>
+							<td></td>
+							<td colspan="3">
+								<label class="checkbox isDefault">
+									<span class="checkbox-input">
+										<span class="checkbox-input-inner"></span>
+									</span>
+									<span class="checkbox-label">设置为默认收货地址</span>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td colspan="3">
+								<a class="btn btn-warning" id="addBtn">保存地址</a>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="dialog delDialog">
+	<div class="mask"></div>
+	<div class="dialog-main">
+		<div class="dialog-header clearfix">
+			<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+			<h3 class="dialog-title">提示</h3>
+		</div>
+		<div class="dialog-body" style="height: 100px;line-height:100px;">
+			<div>
+				<p>确定删除此收货地址吗？</p>
+			</div>
+		</div>
+		<div class="dialog-footer tc">
+			<a class="btn btn-danger dialog-close">取消</a>
+			<a class="btn btn-primary" id="delBtn">删除</a>
+		</div>
+	</div>
+</div>
+<script>
+	var validform = $(".addAddressDialog form").Validform({
+		tiptype: 2,
+		datatype: {
+			"phone": function (gets, obj, curform, regxp) {
+				/*参数gets是获取到的表单元素值，
+				  obj为当前表单元素，
+				  curform为当前验证的表单，
+				  regxp为内置的一些正则表达式的引用。*/
+
+				var mobile = curform.find(".mobile");
+				if (/^1\d{10}$/.test(mobile.val())) {
+					return true;
+				}
+				if (/[\d]{7}/.test(gets)) {
+					return true;
+				}
+
+				return false;
+			},
+			"select": function (gets, obj, curform, regxp) {
+				if (gets != "" && gets.indexOf("请选择") == -1) {
+					return true;
+				}
+				return false;
+			}
+		}
+	});
+	$.Tipmsg.r = "";
+
+	setTimeout(function () {
+		addressInit('cmbProvince', 'cmbCity', 'cmbArea');
+	}, 100)
+
+	function resetDialog() {
+		$(".addAddressDialog textarea, .addAddressDialog input[type='text']").removeClass("Validform_error").val("");
+		$(".addAddressDialog span.Validform_checktip").removeClass("Validform_wrong").text("");
+		if ($(".addAddressDialog .isDefault").hasClass("checked")) {
+			$(".addAddressDialog .isDefault").removeClass("checked")
+		}
+	}
+
+	//显示添加弹出框
+	function showAddDialog() {
+		utils.ajax({
+			url: "/api/userCenter/getMobile",
+			type: "get",
+			success: function (data) {
+				$("input[name='mobile']").val(data.data);
+			}
+		})
+		resetDialog();
+		$(".addAddressDialog .dialog-title").text("新增收货地址");
+		$(".addAddressDialog").addClass("show");
+	}
+
+	//显示删除弹出框
+	function showDelAddress(id) {
+		$("#delBtn").data("id", id);
+		$(".delDialog").addClass("show");
+	}
+
+	//删除地址
+	function delAddress(id, callback) {
+		utils.ajax({
+			url: "/api/userCenter/addr/delete/" + id,
+			type: "post",
+			success: function (data) {
+				$(".delDialog").removeClass("show");
+				callback && callback(data);
+			}
+		})
+	}
+
+	//添加地址
+	function addAddress(callback) {
+		if (validform.check(false)) {
+			var str = $(".addAddressDialog form").serialize();
+			str = utils.str2json(str);
+			str.isDefault = $(".isDefault").hasClass("checked") ? 1 : 0;
+			utils.ajax({
+				url: "/api/userCenter/addr/addOrUpdate",
+				data: JSON.stringify(str),
+				success: function (data) {
+					callback && callback(data);
+				}
+			})
+		}
+	}
+
+	//设置默认地址
+	function setDefault(id, callback) {
+		utils.ajax({
+			url: "/api/userCenter/addr/setDefault/" + id,
+			type: "post",
+			success: function (data) {
+				callback && callback(data);
+			}
+		})
+	}
+
+	//显示编辑弹出框
+	function showEditAddress(id, callback) {
+		utils.ajax({
+			url: "/api/userCenter/addr/detail/" + id,
+			type: "get",
+			success: function (data) {
+				data = data.data;
+				resetDialog();
+				$(".addAddressDialog .dialog-title").text("编辑收货地址");
+				$(".addAddressDialog").addClass("show");
+				//赋值
+				for (var k in data) {
+					if ($(".addAddressDialog").find("." + k).is("input") || $(".addAddressDialog").find("." + k).is(
+						"textarea")) {
+						$(".addAddressDialog").find("." + k).val(data[k]);
+					}
+				}
+				$(".addAddressDialog").find(".province").val(data.province);
+				$(".addAddressDialog").find(".province").trigger("change");
+				$(".addAddressDialog").find(".city").val(data.city);
+				$(".addAddressDialog").find(".city").trigger("change");
+				$(".addAddressDialog").find(".area").val(data.area);
+				if (data.isDefault == 1) {
+					$(".isDefault").addClass("checked");
+				}
+			}
+		})
+	}
+</script>

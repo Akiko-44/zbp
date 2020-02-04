@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+
+<style>
+.Jewellery_doyen{background: #F5F5F5;}
+#list li{
+	background: #FFFFFF;
+	margin-bottom: 20px;
+	padding: 10px 20px;
+}
+.doyen_img{
+	display: inline-block;
+	width: 180px;
+	height: 180px;
+	padding: 10px;
+	margin-right: 40px;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	overflow: hidden;
+}
+.doyen_img img{
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+}
+.doyen_name{
+	display: inline-block;
+	width: 200px;
+	height: 24px;
+	font-size: 24px;
+	font-weight: bolder;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+.authentication{
+	display: inline-block;
+	width: 86px;
+	height: 22px;
+	margin-left: 20px;
+	background: url('../../src/img/exchange/authentication.png') center center no-repeat;
+	background-size: 100% 100%;
+}
+.authentication_ing{
+	display: inline-block;
+	width: 86px;
+	height: 22px;
+	text-align: center;
+	line-height: 22px;
+	margin-left: 20px;
+	background: #C2A374;
+	color: #FFFFFF;
+	border-radius: 11px;
+	-webkit-border-radius: 11px;
+	-moz-border-radius: 11px;
+}
+.look a{
+	color: #A11A1A;
+	opacity: .7;
+}
+.look a:hover{
+	opacity: 1;
+}
+.goods a{
+	display: inline-block;
+	width: 180px;
+	height: 180px;
+	background: #C9C9C9;
+	margin-left: 20px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+}
+.nosearch {margin-right: 0;}
+
+</style>
+</head>
+<body class="Jewellery_doyen">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+				  	<el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+            <el-breadcrumb-item><a href="../../exchange/index">互换坊</a></el-breadcrumb-item>
+				  	<el-breadcrumb-item class="breadcrumb"></el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		
+		<div class="container" id="JewelleryDoyen">
+			<div>
+				<p class="nosearch" v-if="data.length == 0">很遗憾，暂无数据，换个栏目试试吧</p>
+				<ul class="clearfix" id="list" style="overflow: hidden">
+					<li class="clearfix" v-if="data && data.length" v-for="item in data" :key="item.id">
+						<a class="doyen_img fl">
+							<img :src="item.userLogo | formatImg" width="160" height="160"/>
+						</a>
+						<div class="fl" style="padding-top: 50px;">
+							<p v-if="item.userType == 4">
+								<span class="doyen_name">{{item.shopName}}</span>
+								<a class="authentication"></a>
+							</p>
+							<p v-if="item.userType != 4">
+								<span class="doyen_name">{{item.userName}}</span>
+								<a class="authentication_ing">实名认证</a>
+							</p>
+							<p style="margin: 20px 0;color: #000;">
+								<span>发布商品：{{item.goodsCount}}件</span>
+							</p>
+							<p class="look"><a @click="toDetail(item.userid)">查看详情</a></p>
+						</div>
+						<div class="fr goods">
+							<a :data-id="jt.id" :data-type="jt.type" v-for="(jt, index) in item.jtlist" v-if="index<3"><img :src="jt.imgUrl | formatImg"/></a>
+						</div>
+					</li>
+				</ul>
+				<div id="pagination" class="pagination"></div>
+			</div>
+		</div>
+
+	</div>
+	
+	<%- include ../footer.ejs %>
+<script>
+if(utils.getUrlParam("userType") == 4){
+  $('.breadcrumb').text('特色商家')
+}else{
+  $('.breadcrumb').text('珠宝达人')
+}
+var routerVm = new Vue({
+	el: "#router"
+})
+
+//搜索
+var JewelleryDoyenVm = new Vue({
+	el: "#JewelleryDoyen",
+	data: {
+		data:{},
+		offset: 1,
+		limit: 10
+	},
+	mounted: function(){
+		this.render()
+	},
+	methods: {
+		render(){
+			var self = this
+			utils.ajax({
+				url: "/api/jewelry_talent/list",
+				type: "get",
+				data:{
+					offset: self.offset
+					,limit: self.limit
+					,userType: utils.getUrlParam("userType")
+				},
+				success: function(data){
+					self.data = data.data.records;
+					$("#pagination").pagination({
+						pageCount: data.data.pages,
+					    jump: true,
+					    coping: true,
+					    prevContent: '<',
+					    nextContent: '>',
+					    callback: function (api){
+					    	self.offset = api.getCurrent()
+					        self.render();
+					    }
+					});
+				}
+			})
+		},
+		toDetail(userid){
+			location.href = 'doyen?id='+userid
+		}
+	},
+	filters: {
+		formatImg: function(str){
+			return utils.formatImg(str)
+		}
+	},
+})
+//1互换商品;2:仅销售;3:拍卖;4:回收
+$(function(){
+	$(document).on("click", ".goods a", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("data-id");
+		var type = self.attr("data-type");
+		//1互换商品;2:仅销售;3:拍卖;4:回收
+		if(type == '1'){
+			location.href = "../../exchange/swap_detail?id=" + id;
+		}else if(type == '2'){
+			location.href = "../../exchange/sale_detail?id=" + id;
+		}else if(type == '3'){
+			location.href = "../../exchange/auction_detail?id=" + id;
+		}else if(type == '4'){
+			location.href = "../../exchange/recovery_detail?id=" + id;
+		}
+		
+	})
+})
+</script>
+
+</body>
+</html>
+

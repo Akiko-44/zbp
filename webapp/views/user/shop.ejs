@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    .userShop .success-state {
+      padding-top: 150px;
+      min-height: 677px;
+      text-align: center;
+      font-size: 12px;
+      color: #aaaaaa;
+    }
+
+    .userShop .success-state .text {
+      padding: 40px 0 15px;
+      font-size: 18px;
+      color: #26273C;
+    }
+
+    .userShop .edit-data {
+      margin-top: 26px;
+      padding: 0;
+      width: 106px;
+      height: 28px;
+      line-height: 28px;
+      background: #D57E6A;
+      font-size: 14px;
+      border-radius: 0;
+    }
+  </style>
+</head>
+
+<body class="userShop">
+  <%- include ../headerbar.ejs %>
+  <%- include userHeaderNav.ejs %>
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }"><a href="/">首页</a></el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/user/openShop' }"><a href="/user/acc_info">个人中心</a></el-breadcrumb-item>
+        <el-breadcrumb-item>企业认证</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+
+  <div id="main" class="main" v-cloak>
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include userLeftNav.ejs %>
+      </div>
+      <div class="userRightContent">
+        <div v-if="hasMerchantType && loadData">
+          <div class="success-state" v-if="failPassed">
+            <div class="imgwrap">
+              <img src="../../src/img/user/applyShopFail.gif" width="150" />
+            </div>
+            <h4 class="text">审核不通过 </h4>
+            <p>原因：{{errorMessage}}</p>
+            <el-button type="danger" class="edit-data" @click="linkTo(merchantType)">编辑资料</el-button>
+          </div>
+          <div class="success-state" v-else>
+            <div class="imgwrap">
+              <img src="../../src/img/user/applyShopAudit.gif" width="150" />
+            </div>
+            <h4 class="text">审核中 </h4>
+            <p>审核中，请耐心等待...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include ../footer.ejs %>
+  <script>
+    $(".userLeftNav li[data-target='openShop']").addClass("cur");
+    var routerVm = new Vue({
+      el: "#router",
+    })
+
+    var mainVm = new Vue({
+      el: "#main",
+      data: {
+        checkUser: false,
+        applyStatus: '',
+        popupShow: false,
+        title: '选择认证类型',
+        loadData: false,
+        isOpenShop: false,
+        hasMerchantType: false,
+        failPassed: false,
+        merchantType: '',
+        errorMessage: ''
+      },
+      mounted: function () {
+        var self = this
+        $.ajax({
+          url: "/api/userCenter/merchantInfo/checkUser",
+          type: "get",
+          beforeSend: function (request) {
+            request.setRequestHeader("Authorization", utils.getCookie("token"))
+          },
+          success: function (data) {
+            if (!utils.islogin()) {
+              utils.alert('danger', '请登录后再进行操作！');
+              setTimeout(function () {
+                window.location = '../login?from=' + encodeURIComponent(location.href)
+              }, 300)
+              return false;
+            }
+            self.loadData = true
+            let isHideFlag = data.data.isHide
+            let isCheckFlag = data.data.isCheck
+            //审核状态isCheck0、企业认证待审核1、审核通过（待签约）2、审核不通过3、签约中4、签约成功5、入网审核中6、入网成功7、入网失败8、对公账户待验证9、风控审核中10、资料验证失败11、开店待审核12、开店成功(待企业认证)
+
+            self.merchantType = data.data.merchantType
+            self.errorMessage = data.data.errorMessage
+            if (isHideFlag == 0 && self.merchantType != 0) {
+              self.hasMerchantType = true
+              self.title = '审核结果'
+            } else {
+              self.title = '选择认证类型'
+            }
+            if (isHideFlag == 0 && (isCheckFlag === 2 || isCheckFlag === 7 || isCheckFlag === 10) && self
+              .merchantType !=
+              0) {
+              self.failPassed = true
+            } else {
+              self.failPassed = false
+            }
+
+            // 已注册商家未认证
+            if (utils.getUrlParam('type') === '4') {
+              let merchantType = data.data.merchantType
+              location.href = "../system/applyShop?merchantType=" + merchantType
+              /* if (merchantType === 1) {
+                location.href = "../system/apply_store"
+              } else if (merchantType === 2) {
+                location.href = "../system/apply_office"
+              } else {
+                location.href = "../system/apply_room"
+              } */
+              return
+            }
+            if (data.data.merchantType == 0) {
+              self.isOpenShop = true
+            } else {
+              var host = window.location.host
+              if (host == "219.134.137.178:81" || host == "localhost") {
+                $("#jewelry_1").click(() => {
+                  location.href = "http://219.134.137.178:82/usrManager/jewelry/ "
+                })
+                $("#swap_2").click(() => {
+                  location.href = "http://219.134.137.178:84"
+                })
+                $("#design_3").click(() => {
+                  location.href = "http://219.134.137.178:82/designMerchant.html "
+                })
+                $("#make_4").click(() => {
+                  location.href = "http://219.134.137.178:82/makeMerchant.html"
+                })
+              } else {
+                $("#jewelry_1").click(() => {
+                  location.href = "http://admin.gacjc.com/usrManager/jewelry/"
+                })
+                $("#swap_2").click(() => {
+                  location.href = "http://swapadmin.gacjc.com"
+                })
+                $("#design_3").click(() => {
+                  location.href = "http://admin.gacjc.com/designMerchant.html"
+                })
+                $("#make_4").click(() => {
+                  location.href = "http://admin.gacjc.com/makeMerchant.html"
+                })
+              }
+              $("#merchant").addClass('hide')
+              self.checkUser = true
+              var merchantType = data.data.merchantType
+              var isHide = data.data.isHide
+              var isCheck = data.data.isCheck
+              if (merchantType != 0 && isHide == 0) {
+                if (isCheck === 2 || isCheck === 7 || isCheck === 10) {
+                  $('#merchantType').text('不通过理由：' + data.data.errorMessage);
+                  if (merchantType === 1) {
+                    $("#changeJewelry").removeClass('hide')
+                  } else if (merchantType === 2) {
+                    $("#changeDesign").removeClass('hide')
+                  } else if (merchantType === 3) {
+                    $("#changeMake").removeClass('hide')
+                  } else {
+                    $("#changeSwap").removeClass('hide')
+                  }
+                } else {
+                  $('#merchantType').text('资料审核中，请耐心等待');
+                }
+                if (data.data.merchantType == 1) {
+                  $(".userLeftNav .userSubNav li:eq(3)").removeClass("hide");
+                } else if (data.data.merchantType == 2) {
+                  $(".userLeftNav .userSubNav li:eq(5)").removeClass("hide");
+                } else if (data.data.merchantType == 3) {
+                  $(".userLeftNav .userSubNav li:eq(6)").removeClass("hide");
+                } else {
+                  $(".userLeftNav .userSubNav li:eq(7)").removeClass("hide");
+                }
+
+              }
+              if (data.data.merchantType == 1 && data.data.isHide == 1) {
+                $(".userLeftNav .userSubNav li:eq(3)").removeClass("hide");
+                $('#merchantType').text('您已是珠宝店商家');
+              }
+              if (data.data.merchantType == 2 && data.data.isHide == 1) {
+                $(".userLeftNav .userSubNav li:eq(5)").removeClass("hide");
+                $('#merchantType').text('您已是设计师商家');
+              }
+              if (data.data.merchantType == 3 && data.data.isHide == 1) {
+                $(".userLeftNav .userSubNav li:eq(6)").removeClass("hide");
+                $('#merchantType').text('您已是制造间商家');
+              }
+              if (data.data.merchantType == 4 && data.data.isHide == 1) {
+                $(".userLeftNav .userSubNav li:eq(4)").removeClass("hide");
+                $('#merchantType').text('您已是互换坊商家');
+
+                //判断是否已经企业认证
+                utils.ajax({
+                  url: "/api/merchant_auth/authMes",
+                  type: "get",
+                  success: function (data) {
+                    self.data = data.data
+                    if (self.data.merchantType == 4) {
+                      $(".personal").addClass('Prohibit')
+                      $(".personal").attr('href', 'javascript:void(0);');
+                    } else {
+                      $(".enterprise").addClass('Prohibit')
+                      $(".enterprise").attr('href', 'javascript:void(0);');
+                    }
+                  }
+                })
+              }
+            }
+          }
+        })
+      },
+      methods: {
+        linkTo(merchantType) {
+          location.href = "../system/applyShop?merchantType=" + merchantType
+        },
+        Close: function () {
+          if ($('.popupBox').hasClass('hide')) {
+            $('.popupBox').removeClass('hide')
+            $('.popupBox').addClass('show');
+          } else {
+            $('.popupBox').removeClass('show')
+            $('.popupBox').addClass('hide');
+          }
+          if ($('.shade').hasClass('hide')) {
+            $('.shade').removeClass('hide')
+            $('.shade').addClass('show');
+          } else {
+            $('.shade').removeClass('show')
+            $('.shade').addClass('hide');
+          }
+        }
+      }
+
+    })
+    /* $(function () {
+      $(document).on("click", '.applyBtn', function (e) {
+        if (!utils.islogin()) {
+          utils.alert('danger', '请登录后再进行操作！');
+          setTimeout(function () {
+            window.location = '../login?from=' + encodeURIComponent(location.href)
+          }, 300)
+          return false;
+        }
+        var val = $(e.currentTarget).attr("data-source")
+        var href = $(e.currentTarget).attr("data-href")
+        $.ajax({
+          url: "/api/userCenter/merchantInfo/checkUser?source=" + val,
+          type: "get",
+          beforeSend: function (request) {
+            request.setRequestHeader("Authorization", utils.getCookie("token"))
+          },
+          success: function (data) {
+            if (data.success) {
+              window.location.href = href
+
+            } else {
+              utils.alert("danger", data.msg);
+            }
+          }
+        })
+      })
+    })
+    $(function () {
+      $(document).on("click", '.applyBtn_', function (e) {
+        var val = $(e.currentTarget).attr("data-source")
+        $.ajax({
+          url: "/api/userCenter/merchantInfo/checkUser?source=" + val,
+          type: "get",
+          beforeSend: function (request) {
+            request.setRequestHeader("Authorization", utils.getCookie("token"))
+          },
+          success: function (data) {
+            if (data.success) {
+              if ($('.popupBox').hasClass('hide')) {
+                $('.popupBox').removeClass('hide')
+                $('.popupBox').addClass('show');
+              } else {
+                $('.popupBox').removeClass('show')
+                $('.popupBox').addClass('hide');
+              }
+              if ($('.shade').hasClass('hide')) {
+                $('.shade').removeClass('hide')
+                $('.shade').addClass('show');
+              } else {
+                $('.shade').removeClass('show')
+                $('.shade').addClass('hide');
+              }
+            } else {
+              if (data.msg.indexOf('互换') > -1) {
+                if ($('.popupBox').hasClass('hide')) {
+                  $('.popupBox').removeClass('hide')
+                  $('.popupBox').addClass('show');
+                } else {
+                  $('.popupBox').removeClass('show')
+                  $('.popupBox').addClass('hide');
+                }
+                if ($('.shade').hasClass('hide')) {
+                  $('.shade').removeClass('hide')
+                  $('.shade').addClass('show');
+                } else {
+                  $('.shade').removeClass('show')
+                  $('.shade').addClass('hide');
+                }
+              } else {
+                utils.alert("danger", data.msg);
+              }
+            }
+          }
+        })
+      })
+    })
+    $(".userLeftNav .userSubNav li:eq(0)").addClass("cur");
+
+     */
+  </script>
+
+</body>
+
+</html>

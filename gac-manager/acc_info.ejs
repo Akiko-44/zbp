@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+<style>
+	.navLeftItem span {
+		font-size: 16px;
+		font-weight: bold;
+		padding: 16px 0;
+		display: inline-block;
+		margin-left: 12px;
+		margin-right: 34px;
+
+	}
+
+	.navLeftItem ul li {
+		color: #999999;
+		font-size: 14px;
+		height: 30px;
+		line-height: 30px;
+		text-align: center;
+		margin-left: -30px
+	}
+
+	.navMy {
+		width: 22px;
+		height: 22px;
+		margin-left: -16px;
+	}
+
+	.trade {
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.count {
+		width: 7px;
+		height: 14px;
+	}
+
+	.countx {
+		width: 14px;
+		height: 7px;
+
+	}
+
+	.userPanel .panel-header {
+		height: 262px;
+	}
+
+	.userinfo {
+		width: 355px;
+		height: 293px;
+		margin-top: -15px;
+		background: #fff;
+		margin-left: 10px;
+		border-radius: 10px;
+		position: relative;
+		cursor: pointer;
+	}
+
+	.userinfo_card {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+		text-align: center;
+	}
+
+	.userinfo_card img {
+		width: 124px;
+		height: 124px;
+		float: left;
+		border-radius: 50%;
+		margin-left: 10px;
+	}
+
+	.usernames {
+		font-size: 30px;
+		color: #333;
+		font-weight: bold;
+	}
+
+	.userchen,
+	.mobile,
+	.userid {
+		font-size: 14px;
+		color: #999999;
+		margin-top: 6px;
+	}
+
+	.userchen {
+		margin: 10px 0 16px 0;
+	}
+
+	.marginleft {
+		float: left;
+		margin-left: 10px;
+	}
+
+	.marginleft p {
+		text-align: left;
+	}
+
+	.userdescitem img {
+		width: 100px;
+		height: 100px;
+	}
+
+	.userdescitem {
+		float: left;
+		margin-left: 78px;
+		margin-top: 42px;
+
+	}
+
+	.shoptext {
+		color: #666;
+		font-size: 16px;
+		text-align: center;
+		margin: 10px;
+	}
+
+	.shoptextbottom {
+		color: #333;
+		font-size: 20px;
+		text-align: center;
+	}
+
+	.userdesc {
+		width: 602px;
+		height: 265px;
+	}
+
+	.mycollectlike {
+		height: 278px;
+	}
+
+	.collect,
+	.like {
+		margin-top: 30px;
+		/* float: left; */
+		width: 49%;
+		background: #fff;
+		margin-left: 19px;
+		height: 278px;
+	}
+
+	.collect_head {
+		height: 60px;
+		border-bottom: 1px solid #f2f2f2;
+	}
+
+	.collect_head span {
+		font-size: 16px;
+		color: #333;
+		margin-top: 20px;
+		margin-left: 10px;
+
+	}
+
+	.collect_head span:nth-child(2) {
+		font-size: 12px;
+		color: #999999;
+		margin-right: 36px;
+	}
+
+	.collect .no-goods img {
+		padding-top: 10px;
+		height: 170px;
+	}
+
+	.collectitem {
+		margin-top: 10px;
+		margin-left: 10px;
+		width: 140px;
+		height: 194px;
+		text-align: center;
+		background: #F7F7F7;
+		cursor: pointer;
+	}
+
+	.collectitem img {
+		height: 122px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
+	.collectitem p {
+		padding: 0 10px;
+		color: #666;
+		font-size: 12px;
+
+	}
+
+	.collectseed {
+		margin-left: 0;
+		margin-bottom: 100px;
+	}
+
+	.collectitem p:nth-child(3) {
+		color: #FB746E;
+		margin: 10px 0 0 0;
+		font-size: 14px;
+	}
+
+	.collectseed {
+		width: 100%;
+	}
+
+	.collectseed .collectitem {
+		margin-left: 18px;
+	}
+
+	.userAccount {
+		background: #f4f4f4;
+	}
+
+	.orderStatus {
+		width: 300px;
+		height: 200px;
+	}
+
+	#orderList {
+		height: 224px;
+		background: #f7f7f7;
+	}
+
+	#orderList .no-order {
+		padding: 20px 0;
+		color: #666;
+	}
+
+	#orderList .no-order img {
+		height: 170px;
+	}
+
+	#orderList li {
+		float: left;
+		background: #fff;
+		margin: 12px 3px;
+	}
+
+	.userRightContent {
+		background: none;
+	}
+
+	.orderall {
+		font-size: 14px;
+		;
+		color: #666;
+	}
+
+	.order_state {
+		color: #FB746E
+	}
+
+	.order_inner img {
+		width: 90px;
+		height: 90px;
+		margin-left: 10px;
+	}
+
+	.orderdesc {
+		font-size: 14px;
+		;
+		color: #333;
+	}
+
+	.time {
+		color: #AAAAAA;
+		font-size: 12px;
+	}
+
+	.ordernum button {
+		float: right;
+		width: 90px;
+		height: 30px;
+		border: none;
+		background: #fff;
+		border: 1px solid #eee;
+		margin-right: 8px;
+	}
+
+	.ordernum {
+		line-height: 30px;
+	}
+
+	.order_head {
+		height: 47px;
+		line-height: 27px;
+		padding: 10px;
+	}
+
+	.order_inner {
+		height: 100px;
+		cursor: pointer;
+	}
+
+	.orderdescinfo {
+		height: 100px;
+	}
+
+	.orderdescinfo p {
+		margin-top: 20px;
+		margin-left: 20px;
+	}
+
+	.time {
+		margin-top: 10px !important;
+	}
+
+	.numorder {
+		margin-left: 10px;
+
+	}
+
+	#orderNav ul {
+		border: none;
+	}
+
+	#orderNav {
+		height: 38px;
+		line-height: 20px;
+		clear: both;
+	}
+
+	#orderNav img {
+		width: 6px;
+		height: 10px;
+	}
+
+	.order {
+		margin-top: 30px;
+		background: #fff;
+		padding: 20px;
+	}
+
+	.getmore {
+		color: #AAAAAA;
+		font-size: 14px;
+		cursor: pointer;
+	}
+
+	#orderNav li {
+		font-size: 14px;
+		font-weight: 100 !important;
+		color: #999999;
+	}
+
+	#orderNav li.cur {
+		color: #333;
+	}
+
+	#orderNav li span {
+		padding: 0 6px;
+		position: absolute;
+		top: -10px;
+		right: -20px;
+		text-align: center;
+		font-size: 12px;
+		color: #fff;
+		border-radius: 7px;
+		background: #FB746E;
+	}
+
+	#orderNav a {
+		position: relative;
+	}
+
+	#orderNav li.cur:after {
+		content: "";
+		position: absolute;
+		top: 28px;
+		left: 50%;
+		margin-left: -10px;
+		border-bottom: 10px solid #f7f7f7;
+		border-left: 10px solid transparent;
+		border-right: 10px solid transparent;
+	}
+
+
+	dd,
+	dl,
+	li,
+	ol,
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	.dw {
+		font-size: 12px;
+	}
+
+	.no-collect {
+		padding-top: 10px;
+		width: 100%;
+		height: 100%;
+		color: #666666;
+		text-align: center;
+	}
+
+	.no-collect img {
+		display: block;
+		margin: 0 auto;
+		width: 300px;
+	}
+</style>
+
+<body class="userAccount">
+
+	<%- include ../headerbar.ejs %>
+	<%- include userHeaderNav.ejs %>
+	<%- include ../header.ejs %>
+
+
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item><a href="/">首页</a></el-breadcrumb-item>
+				<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+
+	<div id="main" class="main" style="background: #f4f4f4">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				<div class="userInfoWrap">
+					<div class="panel userPanel" id="infoPanel">
+						<div class="panel-header">
+							<div class="userinfo fl" @click="location.href='/user/acc_userinfo'">
+								<div class="userinfo_card">
+									<div class="userinfo_card_inner">
+										<img src="/src/img/kefu.png" alt="">
+										<div class="marginleft">
+											<p class="usernames"></p>
+											<p class="userchen">会员</p>
+											<p class="mobile">手机号码：</p>
+											<p class="userid">用户ID：</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="userdesc fl">
+								<div class="userdescitem">
+									<img src="/src/img/hx_img/guip.png" alt="">
+									<p class="shoptext">账户余额</p>
+									<p class="shoptextbottom money"></p>
+								</div>
+								<div class="userdescitem" @click="message_center">
+									<img src="/src/img/hx_img/message.png" alt="">
+									<p class="shoptext">消息中心</p>
+									<p class="shoptextbottom bnum"></p>
+								</div>
+								<div class="userdescitem" @click="discount_coupon">
+									<img src="/src/img/hx_img/coupon.png" alt="">
+									<p class="shoptext">优惠券</p>
+									<p class="shoptextbottom coupus"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="order">
+						<div id="orderNav">
+							<ul class="fl">
+								<li state="0" class="" @click="tabselectItem(0)"><a>交易订单<span></span></a></li>
+								<li state="1" class="" @click="tabselectItem(1)"><a>待付款<span></span></a></li>
+								<li state="5" class="" @click="tabselectItem(5)"><a>待收货<span></span></a></li>
+								<li state="6" class="cur" @click="tabselectItem(6)"><a>已完成<span></span></a></li>
+							</ul>
+							<span class="fr getmore" @click="location.href='/user/order/index'">查看全部订单 <img
+									src="/src/img/hx_img/right.png" alt=""></span>
+						</div>
+						<div id="orderList" class="clearfix">
+							<div class="no-order tc" v-if="orderitem && !orderitem.length">
+								<img src="/src/img/user/no_order.png" alt="">
+								<p>暂无订单</p>
+							</div>
+							<ul v-else>
+								<li v-for="(item,index) in orderitem.slice(0,3)">
+									<div class="orderStatus">
+										<p class="order_head">
+											<span class="orderall fl">共计：{{item.orderGoodVOList.length}}件商品</span>
+											<span v-if="item.isCommented == 1 && item.state === 6" class="order_state fr">【待评价】</span>
+											<span v-else class="order_state fr">【{{orderState[item.state]}}】</span>
+										</p>
+										<div class="order_inner" @click="toGoodsDetails(item.orderGoodVOList[0].goodId)">
+											<img class="fl" :src="item.orderGoodVOList[0].skuMainPic" alt="">
+											<div class="fl orderdescinfo">
+												<p class="orderdesc" v-if="item.state==1">订单已提交，等待付款</p>
+												<p class="orderdesc" v-else-if="item.state==5">商家已发货</p>
+												<p class="orderdesc" v-else-if="item.state==8">订单已取消</p>
+												<p class="orderdesc" v-else>订单已完成</p>
+												<p class="time">{{item.createTime}}</p>
+												<p class="time">{{item.orderNumber}}</p>
+											</div>
+										</div>
+										<p class="ordernum clearfix">
+											<template v-if="item.state==1 || item.state==100">
+												<button class="btn-warning toPayOrderBtn"
+													:orderNumber="item.orderNumber">立即支付</button>&emsp;&emsp;
+												<button v-if="item.revokeState != 1" class="cancelOrderBtn"
+													:orderNumber="item.orderNumber">取消订单</button>
+											</template>
+											<template v-else-if="item.state==2">
+												<button v-if="item.revokeState != 1" class="cancelOrderBtn"
+													:orderNumber="item.orderNumber">取消订单</button>
+											</template>
+											<template v-else-if="item.state==4">
+												<button v-if="item.revokeState != 1" class="cancelOrderBtn"
+													:orderNumber="item.orderNumber">取消订单</button>
+											</template>
+											<template v-else-if="item.state==5">
+												<button class="ensureOrderBtn" :orderNumber="item.orderNumber">确认收货</button>
+												<button v-if="item.revokeState != 3 && item.revokeState != 4" class="serviceOrderBtn"
+													:orderNumber="item.orderNumber" :orderId="item.id" refundType="1">申请退款</button>
+												<button v-if="item.delayedReceipt == 0" class="delayOrderBtn" :orderId="item.id"
+													:orderNumber="item.orderNumber">延迟收货</button>
+											</template>
+											<template v-else-if="item.state==6">
+												<button v-if="item.isCommented != 2" class="commentOrderBtn"
+													:orderNumber="item.orderNumber">去评价</button>
+												<button v-if="item.revokeState != 6 && item.revokeState != 6" class="serviceOrderBtn"
+													:orderNumber="item.orderNumber" :orderId="item.id" refundType="1">申请退货</button>
+											</template>
+											<template v-else-if="item.state==10">
+												<button v-if="item.revokeState != 3 && item.revokeState != 4" class="revokeCancelBtn"
+													refundType="1" :orderId="item.orderRefundId">撤销退款</button>
+											</template>
+											<template v-else-if="item.state==11">
+
+											</template>
+											<template v-else-if="item.state==12">
+
+											</template>
+											<template v-else-if="item.state==13">
+												<button v-if="item.revokeState != 5 && item.revokeState != 6" class="revokeCancelBtn"
+													refundType="1" :orderId="item.orderRefundId">撤销退货</button>
+											</template>
+											<template v-else-if="item.state==14">
+
+											</template>
+											<template v-else-if="item.state==15">
+
+											</template>
+											<template v-else-if="item.state==16">
+												<button class="commentOrderBtn" :orderNumber="item.orderNumber">去评价</button>
+											</template>
+											<template v-else-if="item.state==17">
+												<button class="revokeCancelBtn" refundType="0" :orderId="item.id">撤销取消申请</button>
+											</template>
+											<template v-else-if="item.state==18">
+												<button class="revokeCancelBtn" refundType="1" :orderId="item.orderRefundId">撤销退货</button>
+												<button class="serviceOrderBtn" refundType="2" :orderNumber="item.orderNumber"
+													:orderId="item.id">申请退货</button>
+											</template>
+										</p>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="mycollectlike">
+						<div class="collect fl" style="margin-left: 0;">
+							<div class="collect_head">
+								<span class="fl">我收藏的商品</span>
+								<span class="fr getmore" @click="location.href='/user/collect/1'">更多 ></span>
+							</div>
+							<div class="collectitem fl" v-for="(item,index) in usercollect.slice(0,3)" v-if="usercollect.length"
+								@click="location.href='/jewelry/details?id='+item.goodsId">
+								<img :src="item.goodsImg" alt="">
+								<p class="ellipsis">{{item.goodsName}}</p>
+								<p>￥{{item.lowPrice}}</p>
+							</div>
+							<div v-if="!usercollect.length" class="no-collect tc">
+								<img src="/src/img/common/no-collect.png" alt="">
+								暂无商品
+							</div>
+						</div>
+						<div class="collect like fl" style="float: right;">
+							<div class="collect_head">
+								<span class="fl">我关注的店铺</span>
+								<span class="fr getmore" @click="location.href='/user/collect/1?type=2'">更多 ></span>
+							</div>
+							<div class="collectitem fl" v-for="(item,index) in userLike" v-if="userLike.length"
+								@click="location.href='/jewelry/shopSearch?id='+item.merchantId">
+								<img :src="item.merchantLogo" alt="">
+								<p class="ellipsis">{{item.merchantName}}</p>
+							</div>
+							<div v-if="!userLike.length" class="no-collect tc">
+								<img src="/src/img/common/no-collect.png" alt="">
+								暂无店铺
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="collect collectseed fl">
+							<div class="collect_head">
+								<span class="fl">我的足迹</span>
+								<span class="fr getmore" @click="location.href='/user/acc_mine_track'">更多 ></span>
+							</div>
+							<div class="no-goods tc" v-if="trackList && !trackList.length">
+								<img src="/src/img/user/no_goods.png" alt="">
+								<p>暂无商品</p>
+							</div>
+							<template v-else>
+								<div class="collectitem fl" v-for="(item,i) in trackList" :key="i" @click="toGoodsDetails(item.id)">
+									<img :src="item.imgUrl" alt="">
+									<p class="ellipsis">{{item.goodsName}}</p>
+									<p>¥{{utils.keepTwoDecimalFull(item.price)}}</p>
+								</div>
+							</template>
+						</div>
+					</div>
+					<div class="panel userPanel" id="editPanel" style="display: none">
+						<div class="panel-header">
+							<div class="panel-title">基本资料</div>
+						</div>
+						<div class="panel-body" id="apply">
+							<form id="applyForm">
+								<table>
+									<tr>
+										<td width="100">
+											<label>头像</label>
+										</td>
+										<td colspan="3" width="330">
+											<span class="avatar">
+												<img class="userLogo" width="100%" height="100%">
+											</span>
+											<input type="hidden" name="userLogo">
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<label style="position: relative; top: 8px;">昵称</label>
+										</td>
+										<td colspan="3">
+											<input type="text" class="nickname" name="nickname" maxlength="20" datatype="*1-20"
+												nullmsg="请填写昵称" errormsg="昵称不能超过20个字符">
+											<p class="tip">昵称填写需知，如与店铺名称冲突，将会被收回哦！</p>
+										</td>
+										<td valign="top">
+											<span class="Validform_checktip" style="position: relative; top: 4px;"></span>
+										</td>
+									</tr>
+									<!--<tr>
+										<td>
+											<label>真实姓名</label>
+										</td>
+										<td colspan="3">
+											<input type="text" class="realname" name="realname" maxlength="10" datatype="s1-10" nullmsg="请填写真实姓名" errormsg="真实姓名不能超过10个字符">
+										</td>
+										<td><span class="Validform_checktip"></span></td>
+									</tr>-->
+									<tr>
+										<td>
+											<label>性别</label>
+										</td>
+										<td colspan="3">
+											<label class="radio checked">
+												<span class="radio-input">
+													<span class="radio-input-inner"></span>
+													<input type="radio" class="sex" name="sex" value="0" checked="checked">
+												</span>
+												<span class="radio-label">男</span>
+											</label>
+											&emsp;
+											<label class="radio">
+												<span class="radio-input">
+													<span class="radio-input-inner"></span>
+													<input type="radio" class="sex" name="sex" value="1">
+												</span>
+												<span class="radio-label">女</span>
+											</label>
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>
+											<label>是否已婚</label>
+										</td>
+										<td colspan="3">
+											<label class="radio1 checked">
+												<span class="radio-input">
+													<span class="radio-input-inner"></span>
+													<input type="radio" class="MarriageState" name="MarriageState" value="1" checked="checked">
+												</span>
+												<span class="radio-label">是</span>
+											</label>
+											&emsp;
+											<label class="radio1">
+												<span class="radio-input">
+													<span class="radio-input-inner"></span>
+													<input type="radio" class="MarriageState" name="MarriageState" value="2">
+												</span>
+												<span class="radio-label">否</span>
+											</label>
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<label style="position: relative; top: 8px;">职业</label>
+										</td>
+										<td colspan="3">
+											<select id="occupation" name="occupation">
+												<option :value="item" v-for="item in Occupation">{{item}}</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<label style="position: relative; top: 8px;">爱好</label>
+										</td>
+										<td colspan="3">
+											<input type="text" class="hobby" name="hobby" maxlength="20" datatype="*1-20" nullmsg="请填写爱好"
+												errormsg="爱好不能超过20个字符">
+										</td>
+										<td valign="top">
+											<span class="Validform_checktip" style="position: relative; top: 4px;"></span>
+										</td>
+									</tr>
+									<tr>
+										<td valign="top">
+											<label style="position: relative; top: 8px;">所在城市</label>
+										</td>
+										<td width="210" valign="top">
+											<div class="w200">
+												<select name="provinceId" datatype="*" v-model="provinceValue" nullmsg="请选择所在地"
+													errormsg="请选择所在地">
+													<option v-for="item in province" :value="item.regionId">
+														{{item.regionName}}</option>
+												</select>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<td width="210" valign="top">
+											<div class="w200">
+												<select name="cityId" datatype="*" nullmsg="请选择所在地" v-model="cityValue" errormsg="请选择所在地">
+													<option v-for="item in city" :value="item.regionId">
+														{{item.regionName}}</option>
+												</select>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>
+										<!--<td valign="top">
+											<div class="w200">
+												<select name="countryId" datatype="*" 
+												nullmsg="请选择所在区" 
+												errormsg="请选择所在区">
+													<option v-for="item in country" :value="item.regionId">{{item.regionName}}</option>
+												</select>
+											</div>
+											<p class="Validform_checktip"></p>
+										</td>-->
+									</tr>
+									<tr>
+										<td>生日</td>
+										<td width="110">
+											<div class="select w100" id="year" target="year">
+												<input type="hidden" name="year" class="year">
+												<div class="select-input">
+													<input type="text" autocomplete="off" placeholder="请选择" readonly="readonly" datatype="*">
+													<i class="show-options iconfont icon-selectDown"></i>
+												</div>
+												<div class="select-inner">
+													<div>
+														<ul>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td width="110">
+											<div class="select w100" id="month" target="month">
+												<input type="hidden" name="month" class="month">
+												<div class="select-input">
+													<input type="text" autocomplete="off" placeholder="请选择" readonly="readonly" datatype="*">
+													<i class="show-options iconfont icon-selectDown"></i>
+												</div>
+												<div class="select-inner">
+													<div>
+														<ul>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td width="110">
+											<div class="select w100" id="day" target="day">
+												<input type="hidden" name="day" class="day">
+												<div class="select-input">
+													<input type="text" autocomplete="off" placeholder="请选择" readonly="readonly" datatype="*">
+													<i class="show-options iconfont icon-selectDown"></i>
+												</div>
+												<div class="select-inner">
+													<div>
+														<ul>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td><span class="tip">（出生年份为保密）</span></td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<a class="btn btn-warning" id="submitBtn">提交</a>
+										</td>
+									</tr>
+								</table>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<%- include ../footer.ejs %>
+	<%- include ./order/commonJs.ejs %>
+
+	<form id="form1" class="hide" method="post" enctype="multipart/form-data">
+		<input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+	</form>
+	<script>
+		var routerVm = new Vue({
+			el: "#router"
+		})
+		/* ---------------------------------------------*/
+		var applyVm = new Vue({
+			el: "#main",
+			data: {
+				orderState: g_const.orderState,
+				province: [],
+				city: [],
+				country: [],
+				orderitem: [],
+				cityValue: 0,
+				provinceValue: 0,
+				userLike: [],
+				usercollect: [],
+				trackList: [],
+				Occupation: ["IT", "通信", "电子", "销售", "客服", "技术支撑", "会计", "金融", "银行", "保险", "生产", "营运", "采购", "物流", "生物", "制药",
+					"医疗", "护理", "广告", "市场", "媒体", "艺术", "建筑", "房地产", "人事", "行政", "高级管理", "咨询", "法律", "教育", "科研", "服务业", "演员",
+					"模特", "公务员", "翻译", "其他"
+				]
+			},
+			mounted: function () {
+				var self = this;
+				this.getMyCollection();
+				this.getTrack()
+				window._GetUserLike = this._GetUserLike;
+				window.applyValidform = $(".userInfoWrap form").Validform({
+					tiptype: 2
+				})
+				$.Tipmsg.r = "";
+				utils.ajax({
+					url: "/admin/region/list/0",
+					type: "get",
+					success: function (data) {
+						data = data.data;
+						self.province = data;
+						setTimeout(function () {
+							$("[name='provinceId']").trigger("change")
+						}, 100)
+					}
+				})
+			},
+			methods: {
+
+				message_center() {
+					location.href = "../user/message";
+				},
+
+				discount_coupon() {
+					location.href = "../user/discount_coupon";
+				},
+
+				mineInfoDetails() {
+					location.href = "../user/acc_info_details";
+				},
+
+				getMyCollection() {
+					var self = this;
+					utils.ajax({
+						url: '/api/userCenter/collect/goods',
+						type: "get",
+						success: function (res) {
+							self.usercollect = res.data.records;
+						}
+					})
+				},
+				_GetUserLike() {
+					var self = this;
+					utils.ajax({
+						url: '/api/shopConcern/getShopConcern',
+						type: "get",
+						data: {
+							merchantType: 1
+						},
+						success: function (res) {
+							self.userLike = res.data.records;
+						}
+					})
+				},
+				getNum() {
+					utils.ajax({
+						url: "/api/order/state/number/list/0/0",
+						type: "get",
+						success: function (data) {
+							data = data.data;
+							var total = 0;
+							var sateOne = 0,
+								sateTwo = 0;
+							for (var i = 0; i < data.length; i++) {
+								total += parseInt(data[i].STATENUM)
+
+								if (data[i].STATE == 1 || data[i].STATE == 100) {
+									sateOne += data[i].STATENUM
+								}
+								if (data[i].STATE == 2 || data[i].STATE == 4) {
+									sateTwo += data[i].STATENUM
+								}
+								if ($("#orderNav li[state='" + data[i].STATE + "']").length > 0) {
+									$("#orderNav li[state='" + data[i].STATE + "'] span").text(data[i].STATENUM);
+								}
+							}
+							if ($("#orderNav li[state='1'] span") && sateOne) {
+								$("#orderNav li[state='1'] span").text(sateOne);
+							}
+							// if ($("#orderNav li[state='100'] span")) {
+							// 	$("#orderNav li[state='100'] span").text(sateOne);
+							// }
+							// if ($("#orderNav li[state='2'] span")) {
+							// 	$("#orderNav li[state='2'] span").text(sateTwo);
+							// }
+							// if ($("#orderNav li[state='4'] span")) {
+							// 	$("#orderNav li[state='4'] span").text(sateTwo);
+							// }
+							// $("#orderNav li[state='0'] span").text(total);
+						}
+					})
+				},
+				tabselectItem(state) {
+					var self = this;
+					utils.ajax({
+						url: "/api/order/page/" + state + "/0",
+						type: "get",
+						data: {
+							offset: 1,
+							limit: 3
+						},
+						success: function (data) {
+							data = data.data;
+							if (data.total == 0) {
+								//没有数据
+								self.orderitem = []
+							} else {
+								// var html = "";
+								// for (var i = 0; i < data.records.length; i++) {
+								// }
+								// $("#orderList ul").html(html);
+								self.orderitem = data.records;
+								self.getNum()
+							}
+						}
+
+					})
+				},
+				getTrack() {
+					utils.ajax({
+						type: "get",
+						url: "/api/userCenter/userFootprint",
+						data: {
+							limit: 6
+						},
+						success: (res) => {
+							this.trackList = res.data.page.records
+						}
+					})
+				},
+				toGoodsDetails(id) {
+					location.href = "/jewelry/details?id=" + id
+				},
+			}
+		})
+		$(function () {
+			$(document).on("change", "[name='provinceId']", function () {
+				utils.ajax({
+					url: "/admin/region/list/" + applyVm.provinceValue,
+					type: "get",
+					success: function (data) {
+						data = data.data;
+						applyVm.city = data
+						setTimeout(function () {
+							$("[name='cityId']").trigger("change")
+						}, 100)
+					}
+				})
+			})
+
+		})
+		/* ---------------------------------------------*/
+		var validform = $(".userInfoWrap form").Validform({
+			tiptype: 2
+		});
+		$.Tipmsg.r = "";
+
+		var sign = {
+			'00': '签约中',
+			'01': '签约成功',
+			'02': '入网审核中',
+			'03': '入网成功',
+			'04': '入网失败',
+			'99': '其它错误'
+		}
+		$(function () {
+
+			// $(".userLeftNav li li:eq(0)").addClass("cur")
+
+			/* 自主签约状态查询 */
+			/*utils.ajax({
+				url: '/admin/merchant/signQuery',
+				data: JSON.stringify({userId:''}),
+				success: function(data){
+					data = data.data
+					if(data.res_code == '0000'){
+						var signData = data.apply_status==''?'暂无': sign[data.apply_status]
+						var mer_no = data.apply_status == '03'? data.mer_no : ''
+						$(".signData").text(signData)
+					}else{
+						$(".signData").text('暂无')
+					}
+				}
+			})*/
+
+			getYear();
+
+			//获取用户信息
+			utils.ajax({
+				url: "/api/userCenter/info",
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					var src = "../../src/img/avatar.jpg";
+					if (data.userLogo) {
+						src = utils.formatImg(data.userLogo)
+						sessionStorage.setItem('userLogo', data.userLogo)
+					}
+					data.nickname && $(".usernames").html(data.nickname)
+					$(".mobile").html("手机号码：" + data.mobilePhone.substr(0, 3) + "****" + data.mobilePhone.substr(7))
+					$(".userinfo_card_inner img").attr("src", data.userLogo)
+					$(".userid").html("用户ID：" + data.id)
+					$(".bnum").html(data.mesNum)
+					$(".coupus").html(data.couponNum)
+					$(".userLogo").attr("src", src);
+					if (data.userType === 1) {
+						$(".money").html('￥ 0')
+						_GetUserLike(data.id)
+					} else {
+
+						getcompany(data.id)
+						var cctv = true;
+						_GetUserLike(data.id)
+					}
+					$("input[name='userLogo']").val(data.userLogo);
+					$("#infoPanel .nickname").text(data.nickname);
+					// $(".logined span").html('<a class="link" href="../../user/acc_info">会员【' + data.nickname + '】</a>，您好！');
+					$("#infoPanel .mobilePhone").text(data.mobilePhone);
+					$("#infoPanel .username").text(data.nickname)
+					$("#infoPanel .createTime").text(data.createTime);
+					applyVm.provinceValue = data.userProvince
+					applyVm.cityValue = data.userCity
+					$("[name='provinceId']").trigger("change")
+
+					//真实姓名
+					var realname = data.realname
+					if (realname.length <= 0) {
+						$("#infoPanel .realname").text('暂无');
+					} else {
+						$("#infoPanel .realname").text(data.realname);
+					}
+					//邮箱
+					var email = data.email
+					if (email.length <= 0) {
+						$("#infoPanel .email").text('暂无');
+					} else {
+						$("#infoPanel .email").text(data.email);
+					}
+					//职业
+					var occupation = data.occupation
+					if (occupation.length <= 0) {
+						$("#infoPanel .occupation").text('暂无');
+					} else {
+						$("#infoPanel .occupation").text(data.occupation);
+					}
+					//爱好
+					var hobby = data.hobby
+					if (hobby.length <= 0) {
+						$("#infoPanel .hobby").text('暂无');
+					} else {
+						$("#infoPanel .hobby").text(data.hobby);
+					}
+					//地址
+					var region = data.region
+					if (region.length <= 0) {
+						$("#infoPanel .region").text('暂无');
+					} else {
+						$("#infoPanel .region").text(data.region);
+					}
+					//生日
+					var birthday = data.birthday
+					if (birthday.length <= 0) {
+						$("#infoPanel .birthday").text('暂无');
+					} else {
+						$("#infoPanel .birthday").text(data.birthday);
+					}
+					//是否已婚
+					var marriageState = data.marriageState
+					if (marriageState === 1) {
+						$("#infoPanel .marriageState").text('已婚');
+					} else if (marriageState === 2) {
+						$("#infoPanel .marriageState").text('未婚');
+					} else {
+						$("#infoPanel .marriageState").text('暂无');
+					}
+
+
+					if (data.nickname) {
+						$("#editPanel .nickname").val(data.nickname);
+						utils.setCookie('nickName', data.nickname)
+					}
+					if (data.realname) {
+						$("#editPanel .realname").val(data.realname);
+					}
+					if (data.sex) {
+						$("#editPanel .sex[value='" + data.sex + "']").parents(".radio").trigger("click");
+					}
+					if (data.birthday) {
+						var arr = data.birthday.split("-");
+						$("#year li[data-val='" + arr[0] + "']").trigger("click");
+						$("#month li[data-val='" + arr[1] + "']").trigger("click");
+						$("#day li[data-val='" + arr[2] + "']").trigger("click");
+					}
+					if (data.marriageState) {
+						$("#editPanel .MarriageState[value='" + data.marriageState + "']").parents(".radio1").trigger(
+							"click");
+					}
+					if (data.occupation) {
+						$("#editPanel #occupation").val(data.occupation)
+
+					}
+					if (data.hobby) {
+						$("#editPanel .hobby").val(data.hobby)
+					}
+
+
+				}
+			})
+
+			function getcompany(id) {
+				utils.ajax({
+					type: "get",
+					url: '/admin/drawMoneyrecord/count?merchantId=' + id,
+					success: function (res) {
+						$(".money").html("<span class='dw'>￥</span>" + res.data.amount)
+
+
+					}
+
+				})
+			}
+			$(".toEditPhoneBtn").on("click", function () {
+				//window.location.href = "../user/acc_phone/0";
+				$("#infoPanel").hide();
+				$("#editPanel").show();
+			});
+
+			//提交
+			$("#submitBtn").on("click", function () {
+				if (validform.check(false)) {
+					var str = $(".userInfoWrap form").serialize();
+					str = utils.str2json(str);
+					str.userLogo = $("#editPanel .avatar img").attr('src');
+					str.birthday = $(".year").val() + "-" + $(".month").val() + "-" + $(".day").val();
+					str.marriageState = $("#editPanel .MarriageState[name='MarriageState']:checked").val();
+					str.userProvince = $("[name='provinceId'] option:selected").val();
+					str.userCity = $("[name='cityId'] option:selected").val();
+					//	str.provinceId: ,
+					//str.provinceName= $("[name='provinceId'] option:selected").text(),
+					//str.cityName= $("[name='cityId'] option:selected").text(),
+					//		str.cityId: ,
+					//str.countryName= $("[name='countryId'] option:selected").text(),
+					// countryId: $("[name='countryId'] option:selected").val(),
+					str.region = $("[name='provinceId'] option:selected").text() + $("[name='cityId'] option:selected")
+						.text()
+
+					utils.ajax({
+						url: "/api/userCenter/info/update",
+						data: JSON.stringify(str),
+						success: function (data) {
+							if (data.success) {
+								utils.alert("success", "保存成功");
+								location.reload();
+							} else {
+								utils.alert("danger", data.msg);
+							}
+						}
+					})
+				}
+			});
+
+			$(".year").on("change", function () {
+				getMonth();
+				if ($(".month").val() != "") {
+					var month = parseInt($(".month").val());
+					var year = parseInt($(".year").val());
+					var date = new Date(year, month, 0);
+					getDate(date.getDate());
+				}
+			});
+
+			$(".month").on("change", function (e) {
+				var month = parseInt($(".month").val());
+				var year = parseInt($(".year").val());
+				var date = new Date(year, month, 0);
+				getDate(date.getDate());
+
+			})
+
+			$(document).on("click", "#editPanel .avatar", function (e) {
+				$("#form1 input").trigger("click");
+			})
+
+		})
+
+
+		//年
+		function getYear() {
+			var nowYear = new Date().getFullYear();
+			var maxYear = nowYear;
+			var minYear = nowYear - 81
+			var html = "";
+			for (var i = minYear; i < maxYear; i++) {
+				html += '<li data-val="' + i + '">' + i + '年</li>'
+			}
+			$("#year ul").html(html);
+		}
+		//月
+		function getMonth() {
+			var html = "";
+			for (var i = 1; i <= 12; i++) {
+				var val = i;
+				if (val < 10) {
+					val = "0" + i;
+				}
+				html += '<li data-val="' + val + '">' + i + '月</li>'
+			}
+			$("#month ul").html(html);
+		}
+		//日
+		function getDate(maxDay) {
+			var html = "";
+			for (var i = 1; i <= maxDay; i++) {
+				var val = i;
+				if (val < 10) {
+					val = "0" + i;
+				}
+				html += '<li data-val="' + val + '">' + i + '日</li>'
+			}
+			$("#day ul").html(html);
+		}
+
+		//商品图片上传
+		function uploadGoodsImg(self) {
+			if (self.files && self.files[0]) {
+				var file = self.files[0]
+				if (file.size > 2 * 1024 * 1024) {
+					utils.alert("info", "图片大小不能超过2M");
+					return;
+				}
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					var data = e.target.result;
+					//加载图片获取图片真实宽度和高度
+					var image = new Image();
+					image.onload = function () {
+						var width = image.width;
+						var height = image.height;
+						if (width / height != 1) {
+							utils.alert("info", "图片分辨率必须为1:1");
+						} else {
+							uploadCallback(self)
+						}
+					};
+					image.src = data;
+				}
+				reader.readAsDataURL(self.files[0]);
+
+			}
+
+		}
+
+		function uploadCallback(self) {
+			var uploadFile = new FormData($("#form1")[0]);
+			$.ajax({
+				url: '../../file/upload',
+				type: 'POST',
+				data: uploadFile,
+				async: false,
+				cache: false,
+				contentType: false, //不设置内容类型
+				processData: false, //不处理数据
+				success: function (data) {
+					$("#editPanel .avatar img").attr('src', data.data);
+					$("#form1 input").val("");
+				},
+				error: function () {
+
+				}
+			})
+		}
+	</script>
+	<script>
+		$(".userLeftNav li[data-target='jewelry']").addClass("cur");
+
+		var routerVm = new Vue({
+			el: "#router"
+		})
+		$(function () {
+
+			/* $('#datepicker-start').Zebra_DatePicker({
+				direction: true,
+				pair: $('#datepicker-end')
+			});
+			 
+			$('#datepicker-end').Zebra_DatePicker({
+				direction: 1
+			}); */
+
+			$(document).on("click", "#orderNav li", function (e) {
+				var self = $(e.currentTarget);
+				self.addClass("cur").siblings().removeClass("cur");
+				var val = self.attr("state");
+				if (val == 4) {
+					val = 2;
+				}
+				// renderrender(val, 1);
+			}).on("click", ".toOrderDetail", function (e) {
+				var self = $(e.currentTarget);
+				var id = self.attr("orderNumber");
+				window.location.href = "../../user/order/jewelry_detail?id=" + id;
+			})
+
+			$("#orderNav li:eq(0)").trigger("click");
+			// getNum();
+		});
+
+		function toGoodsDetail(id) {
+			window.location.href = "../../jewelry/details?id=" + id;
+		}
+
+		var orderType = 1;
+
+		function render(state, page) {
+			utils.ajax({
+				url: "/api/order/page/" + state + "/" + orderType,
+				type: "get",
+				data: {
+					offset: page,
+					limit: 4
+				},
+				success: function (data) {
+					data = data.data;
+					if (data.total == 0) {
+						//没有数据
+						$("#orderList ul").html("");
+					} else {
+						var html = "";
+						for (var i = 0; i < data.records.length; i++) { }
+						$("#orderList ul").html(html);
+					}
+					if (page == 1) {
+						if (data.pages > 0) {
+							$("#pagination").removeClass("hide");
+							$("#pagination").pagination({
+								pageCount: data.pages,
+								jump: true,
+								coping: true,
+								prevContent: '<',
+								nextContent: '>',
+								callback: function (api) {
+									render(state, api.getCurrent());
+								}
+							});
+						} else {
+							$("#pagination").addClass("hide");
+						}
+					}
+					utils.unreadNumberType(1, 1, function (data) {
+						if (data > 0) {
+							$('[data-warn=jewelryWarn]').text(data).removeClass('hide');
+						} else {
+							$('[data-warn=jewelryWarn]').text('').addClass('hide');
+						}
+					})
+				}
+
+			})
+		}
+	</script>
+</body>
+
+</html>

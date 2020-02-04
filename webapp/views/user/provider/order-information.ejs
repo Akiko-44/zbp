@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style lang="less">
+body{
+	background: #f5f5f5;
+}
+.dialog .dialog-main {
+	height: 500px;
+	top: 27%;
+	padding: 0 32px;
+}
+
+.dialog .dialog-body {
+	border-top: 2px solid #CCCCCC;
+	
+    color: #48576a;
+    font-size: 14px;
+    position: absolute;
+    bottom: initial;
+    top: 50px;
+    width: 100%;
+    overflow: hidden;
+}
+.dialog .dialog-body p{
+	font-size: 18px;
+	color: #1A1A1A;
+	margin-top: 28px;
+	
+}
+.dialog .dialog-body p img{
+	width: 150px;
+	
+}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div id="main" class="main provider order-information">
+		<div class="container clearfix">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="content userRightContent">
+				<h2><span class="head">订单信息管理</span><span class="subhead">Live list</span></h2>
+				
+				<div class="table">
+					<ul class="list t-head">
+						<li class="tr">
+							<span class="td">服务名称</span>
+							<span class="td">服务商公司名</span>
+							<span class="td">客户名称</span>
+							<span class="td">企业名称</span>
+							<span class="td">用户邮箱</span>
+							<span class="td">用户手机</span>
+							<span class="td">状态</span>
+							<span class="td">操作</span>
+						</li>
+					</ul>
+					<ul class="list t-body">
+						
+						<li class="tr" v-for="item in orderList">
+							<span class="td">{{item.serviceName}}</span>
+							<span class="td">{{item.providerName}}</span>
+							<span class="td">{{item.realName}}</span>
+							<span class="td">{{item.userCompany}}</span>
+							<span class="td">{{item.userEmail}}</span>
+							<span class="td">{{item.userPhone}}</span>
+							<span class="td">{{item.number?"已处理":"未处理"}}</span>
+							<span class="td"><button class="btn btn-default look">查看</button><button class="btn btn-default">修改</button></span>
+							
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="dialog liveDialog">
+		<div class="mask dialog-close"></div>
+		<div class="dialog-main">
+			
+			<div class="dialog-header clearfix">
+				<a class="fr dialog-close hide"><i class="iconfont icon-close"></i></a>
+				<h3 class="dialog-title">直播详情</h3>
+			</div>
+			<div class="dialog-body">
+				<p><span class="t-label">直播标题：</span><span class="value">国宝故事</span></p>
+				<p><span class="t-label">直播时间：</span><span class="value">2018-01-21 21:00</span></p>
+				<p><span class="t-label">直播链接：</span><span class="value">https://adjs.cns</span></p>
+				<p><img src="../../test/1.jpg"></p>
+				<p><span class="t-label">状态：</span><span class="value">失败，被举报为涉黄</span></p>
+			</div>
+			
+			<div class="dialog-footer tr hide">
+				<a class="btn btn-default">重新绑定</a>
+				<a class="btn btn-primary">强制绑定</a>
+			</div>
+			
+		</div>
+	</div>
+	<%- include ../userFooter.ejs %>
+	
+
+<script>
+	$(".userLeftNav li li:eq(1)").addClass("cur")
+	//显示添加弹出框
+	$(".table .t-body .look").on("click", function(){
+
+//		$(".addAddressDialog .dialog-title").text("新增收货地址");
+		$(".liveDialog").addClass("show");
+	})
+	var vm = new Vue({
+				el: "#main",
+				data: function(){
+					return {
+						orderList: []
+					}
+				},
+				mounted: function(){
+					var search = decodeURIComponent(utils.getUrlParam("a"));
+					console.log(search,111)
+					this.getProviderInfo()
+				},
+				methods:{
+					getProviderInfo(){//栏目列表
+						var self = this
+						var json = {
+							current: 1,
+							size: 100
+						}
+						
+						utils.ajax({
+							url: "/api/serv/user/provider/order/list",
+							data: json,
+							type: "get",
+							success: function(succ) {
+								if(succ.success){
+									var data = succ.data;
+									self.orderList = data.records
+								}else{
+									
+								}
+								
+							}
+						})
+					},
+				}
+			})
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,59 @@
+/*基于 vant 按钮样式进行重写*/
+
+:root {
+  --minheight: 30px;
+  --minwidth: 90px;
+}
+
+.van-button.footer-btn {
+  position: absolute;
+  bottom: 0;
+  background: var(--brown);
+  font-weight: bold;
+}
+
+.van-button.fixed-btn {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-radius: 0;
+  font-size: 16px;
+  z-index: 99;
+}
+
+.van-button.min {
+  min-width: var(--minwidth);
+  height: var(--minheight);
+  line-height: var(--minheight);
+  font-size: 12px;
+}
+
+.van-button.van-button--primary,
+.van-button.primary-btn {
+  color: white;
+  background: var(--brown);
+  border-color: var(--brown);
+  &.block {
+    height: 38px;
+    line-height: 38px;
+  }
+}
+
+.van-button.van-button--danger {
+  color: white;
+  background: var(--red);
+  border-color: var(--red);
+  &.van-button--block {
+    height: 38px;
+    line-height: 38px;
+  }
+}
+
+.van-button.primary-outline-btn {
+  background: transparent;
+  color: var(--brown);
+  border-color: var(--brown);
+  & .van-loading--white circle {
+    stroke: #c9c9c9;
+  }
+}

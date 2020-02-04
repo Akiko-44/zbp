@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title><%= title %></title>
+		<link rel="stylesheet" type="text/css" href="../../src/css/gallery_index_new_css/common.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/gallery_index_new_css/gallery_list.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+
+		<link rel="stylesheet" type="text/css" href="../../src/css/icon/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/icons/iconfont.css" />
+
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+
+		<script src="../../dist/js/template.js"></script>
+
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+
+		<style>
+			.meau_list_info_describe p{
+				width: 213px;
+			}
+			.page{
+				clear:left;
+				text-align: center;
+			}
+		    .navList {
+		   	    margin-top:10px;
+		   	 	background: #FFFFFF;
+		   	 	padding: 18px 9px;
+		   	 	margin-top: 28px;
+		    }
+		    .navList span{
+		   	  margin:0 10px;
+		   	  cursor:pointer;
+		    }
+		    .navactive{
+		    	color:#ff0000 !important;
+		    }
+		    .navList span:hover{
+		   		margin:0 10px;
+		   		color:#ff0000;
+		    }
+		    .el-breadcrumb{
+		    	padding-top:10px;
+		    }
+		    #gallery_list{
+		    	min-height:calc(100vh - 425px)
+		    }
+		    .el-pagination{
+		    	margin-top:auto;
+		    }
+		    .el-pagination.is-background .el-pager li:not(.disabled).active{
+		    	background: #FF0000;
+		    }
+		    .el-pagination.is-background .btn-next.disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-prev.disabled, .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .el-pager li.disabled{
+		    	background: #E8E8E8;
+		    }
+		    .el-icon-arrow-left:before,.el-icon-arrow-right:before{
+		    	color:#FFFFFF;
+		    }
+		    .list_right i:before{
+		    	color:rgb(192, 196, 204) !important;
+		    }
+		    .meau_list_info dl{
+				position: relative;
+				cursor:pointer;
+			}
+			.meau_list_info dl:hover{
+				animation: top ease-in 0.2s;
+				animation-fill-mode: forwards;
+			}
+			@keyframes top
+			{
+				from {top:0px;}
+				to {top:-4px;}
+			}
+			.activity_clearfix{
+				margin-top: 20px;
+			}
+			.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li{
+				background: #B0B8B8;
+			}
+		</style>
+
+	</head>
+
+	<body class="more_body">
+		<%- include headerbar %>
+
+		<%- include header %>
+
+		<%- include headerNav %>
+		<div id="gallery_list">
+			<div class="meau_list">
+				<div class="list_right" id="router">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item :to="{ path: '/' }">
+							<a href="../../">我的位置：首页</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item :to="{ path: '/' }">
+							<a href="../../gallery/index">图文馆</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item :to="{ path: '/' }" v-for="(title,index) in titles">
+							<a :href="title.path">{{title.name}}</a>
+						</el-breadcrumb-item>
+					</el-breadcrumb>
+					<p class="navList"  v-if="navList.length">
+						<b>分类 :</b>
+						<span v-for="(item,index) in navList" v-text="item.name" @click="hrefs(item.name,item.id)"></span>
+					</p>
+					<!--列表-->
+					<div class="meau_list_info ">
+						<dl v-for="(item,index) in newList" @click="clickDetail(item.id)">
+							<dt>
+								<div :style="{backgroundImage:'url('+formatImg(item.coverPic)+')'}"></div>
+							</dt>
+							<dd>
+								<div class="meau_list_info_describe">
+									<h3>{{item.title}}</h3>
+									<span>{{item.intro}}</span>
+									<p>上传者：{{item.uploadUserName}}</p>
+									<div class="info_num">
+										<dl>
+											<dt></dt>
+											<dd>{{item.browseNum}}</dd>
+										</dl>
+										<dl>
+											<dt></dt>
+											<dd>{{item.commentNum}}</dd>
+										</dl>
+										<dl>
+											<dt></dt>
+											<dd>{{item.collectNum}}</dd>
+										</dl>
+									</div>
+								</div>
+							</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="activity_clearfix">
+					<el-pagination background @current-change="handleCurrentChange" :current-page="offset" :page-size="limit" layout="total, prev, pager, next, jumper" 
+						:total="total">
+					</el-pagination>
+				</div>
+			</div>
+		</div>
+		<%- include footer %>
+		<script>
+			//	实例Vue
+			new Vue({
+				el: "#gallery_list",
+				data: {
+					id:null,
+					tid:null,
+					total:null,
+					offset:1,
+					limit:10,
+					list: [],
+					newList:[],
+					routes: [],
+					navList:[],
+				},
+				created:function(){
+					this.id = this.pars('id').split(',')[this.pars('id').split(',').length-1]
+					this.tid = this.pars('id').split(',').length>1?this.pars('id').split(',')[this.pars('id').split(',').length-2]:this.id
+					this.more()
+					this.getTotal()
+					this.getNavList()
+				},
+				computed:{
+					titles:function(){
+						var _this = this
+						return unescape(this.pars('title')).split(',').map(function(item,index){
+							if(index==_this.pars('title').split(',').length-1){
+								return {name:item,path:'javascript:void(0)'}
+							}else{
+								var names = _this.pars('title').split(',')
+								names.pop()
+								var ids = _this.pars('id').split(',')
+								ids.pop()
+								return {name:item,path:`?title=${names}&id=${ids}`}
+							}
+						})
+					}
+				},
+				methods: {
+					pars:function(name){
+						var ary = location.href.split('?')[1].split('&')
+						var obj = {}
+						for(var i=0;i<ary.length;i++){
+							obj[ary[i].split('=')[0]] = ary[i].split('=')[1]
+						}
+						return obj[name]
+					},
+					hrefs:function(name,id) {
+							var names = [this.pars('title'),escape(name)].join(',')
+							var ids = [this.pars('id'),id].join(',')
+							window.location.href = `/gallery/detail?title=${names}&id=${ids}`
+					},
+					getNavList:function(){
+						utils.ajax({
+							url: '/pc/gallery/categoryList',
+							type: 'get',
+							data:{id:this.id},
+							success:res=>{
+								this.navList = res.data
+							}
+						})
+					},
+					getTotal:function(){
+						var _this = this
+						var data
+						var url
+						if(this.id== '6'){
+							url = '/pc/gallery/galleryListNum'
+							data = {}
+						}else{
+							data = {}
+							if(this.pars('id').split(',').length==3){
+								data.id = this.id
+								url = '/pc/gallery/galleryListNumById'
+							}else{
+								data.pid = this.id
+								url = '/pc/gallery/moreGalleryListNum'
+							}
+						}
+						utils.ajax({
+							url: url,
+							data:data,
+							type: 'get',
+							success: function(data) {
+								_this.total = data.data
+							}
+						})
+					},
+					handleCurrentChange: function(val) {
+						var self = this;
+						self.offset = val;
+						self.more();
+					},
+					more:function(){
+						var self = this;
+						var sos =window.location.search.split('?')[1].split('=')[1]
+						var url 
+						var data
+						if(this.id == '6'){
+							url = '/pc/gallery/newGalleryList'
+							data = {
+								offset:this.offset,
+								limit:this.limit
+							}
+						}else{
+							data = {
+								offset:this.offset,
+								limit:this.limit
+							}
+							if(this.pars('id').split(',').length==3){
+								url = '/pc/gallery/galleryListById'
+								data.id = this.id
+							}else{
+								url = '/pc/gallery/moreGalleryList'
+								data.pid = this.id
+							}
+						}
+						utils.ajax({
+							url:url,
+							type:"get",
+							data:data,
+							success:function(data){
+								self.newList = data.data;
+								
+							}
+						})
+					},
+					clickDetail:function(id) {
+						utils.ajax({
+							url: '/pc/gallery/atlas/detail/' + id,
+							type: 'get',
+							success: function(id) {
+							
+								window.location.href = "../../gallery/detail/" + id.data.id;
+							}
+						})
+					},
+					formatImg:utils.formatImg
+				},
+			})
+
+
+		</script>
+
+	</body>
+
+</html>

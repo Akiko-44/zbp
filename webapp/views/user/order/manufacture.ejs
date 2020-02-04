@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<link rel="stylesheet" type="text/css" href="../../src/js/plugin/Zebra_Datepicker/dist/css/metallic/zebra_datepicker.min.css"/>
+</head>
+<body class="userOrderJewelry">
+	
+	<%- include ../../headerbar.ejs %>
+	
+	<%- include ../../header.ejs %>
+	
+	<%- include ../userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<!-- <div id="orderSearch">
+					<input type="text" id="datepicker-start" class="searchTime" placeholder="订单时间"> - 
+					<input type="text" id="datepicker-end" class="searchTime" placeholder="订单时间">
+					<div class="input">
+						<input type="text" placeholder="输入商品名称或订单号搜索">
+						<a>搜索</a>
+					</div>
+				</div> -->
+				
+				<div id="orderNav">
+					<ul>
+						<li state="0"><a>全部订单(<span>0</span>)</a></li>
+						<li state="1"><a>待付款(<span>0</span>)</a></li>
+						<li state="4"><a>待发货(<span>0</span>)</a></li>
+						<li state="5"><a>待收货(<span>0</span>)</a></li>
+						<li state="6"><a>待评价(<span>0</span>)</a></li>
+					</ul>
+				</div>
+				
+				<div id="orderList">
+					<ul>
+						
+					</ul>
+					<div id="pagination" class="pagination"></div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../userFooter.ejs %>
+	
+<%- include commonJs.ejs %>	
+<script>
+$(".userLeftNav li[data-target='manufacture']").addClass("cur");
+
+var routerVm = new Vue({
+	el: "#router"
+})
+
+$(function(){
+	
+	/* $('#datepicker-start').Zebra_DatePicker({
+	    direction: true,
+	    pair: $('#datepicker-end')
+	});
+	 
+	$('#datepicker-end').Zebra_DatePicker({
+	    direction: 1
+	}); */
+	
+	$(document).on("click", "#orderNav li", function(e){
+		var self = $(e.currentTarget);
+		self.addClass("cur").siblings().removeClass("cur");
+		var val = self.attr("state");
+		if(val == 4){
+      val = 2;
+    }
+		render(val, 1);
+//	}).on("click", ".cancelOrderBtn", function(e){
+//		//取消订单
+//		var self = $(e.currentTarget)
+//		var id = self.attr("orderNumber")
+//		cancelOrder(id, function(){
+//			utils.alert("success", "取消成功");
+//			$("#orderNav li.cur").trigger("click");
+//		})
+//		
+//	}).on("click", ".ensureOrderBtn", function(e){
+//		//手动确认订单完成
+//		var self = $(e.currentTarget)
+//		var id = self.attr("orderNumber");
+//		ensureOrder(id, function(data){
+//			utils.alert("success", "操作成功");
+//			$("#orderNav li.cur").trigger("click");
+//		})
+	}).on("click", ".toOrderDetail", function(e){
+		var self = $(e.currentTarget);
+		var id = self.attr("orderNumber");
+		window.location.href = "../../user/order/manufacture_detail?id=" + id;
+	})
+	
+	$("#orderNav li:eq(0)").trigger("click");
+	getNum();
+	
+});
+
+var orderType = 6;
+function render(state, page){
+	utils.ajax({
+		url: "/api/order/page/" + state + "/" + orderType,
+		type: "get",
+		data: {
+			offset: page,
+			limit: 10
+		},
+		success: function(data){
+			data = data.data;
+			if(data.total == 0){
+				//没有数据
+				$("#orderList ul").html("");
+			}else{
+				var html = "";
+				for(var i = 0; i < data.records.length; i++){
+					html += _template.userOrderJewelry({
+						data: data.records[i]
+					}) 
+				}
+				$("#orderList ul").html(html);
+			}
+			if(page == 1){
+				if(data.pages > 0){
+					$("#pagination").removeClass("hide");
+					$("#pagination").pagination({
+						pageCount: data.pages,
+					    jump: true,
+					    coping: true,
+					    prevContent: '<',
+					    nextContent: '>',
+					    callback: function (api){
+					        render(state, api.getCurrent());
+					    }
+					});
+				}else{
+					$("#pagination").addClass("hide");
+				}
+			}
+			utils.unreadNumberType(6, 1, function(data){
+				if(data>0){
+					$('[data-warn=manufactureWarn]').text(data).removeClass('hide');
+				}else{
+					$('[data-warn=manufactureWarn]').text('').addClass('hide');
+				}
+			})
+		}
+		
+	})
+}
+
+function getNum(){
+	utils.ajax({
+		url: "/api/order/state/number/list/6/0",
+		type: "get",
+		success: function(data){
+			data = data.data;
+			var total = 0;
+			var sateOne = 0, sateTwo = 0;
+			for(var i = 0; i < data.length; i++){
+				total += parseInt(data[i].STATENUM)
+				if(data[i].STATE == 1 || data[i].STATE == 100){
+					sateOne += data[i].STATENUM
+				}
+				if(data[i].STATE == 2 || data[i].STATE == 4){
+					sateTwo += data[i].STATENUM
+				}
+				if($("#orderNav li[state='"+ data[i].STATE +"']").length > 0){
+					$("#orderNav li[state='"+ data[i].STATE +"'] span").text(data[i].STATENUM);
+				}
+			}
+			if($("#orderNav li[state='1'] span")){
+				$("#orderNav li[state='1'] span").text(sateOne);
+			}
+			if($("#orderNav li[state='100'] span")){
+				$("#orderNav li[state='100'] span").text(sateOne);
+			}
+			if($("#orderNav li[state='2'] span")){
+				$("#orderNav li[state='2'] span").text(sateTwo);
+			}
+			if($("#orderNav li[state='4'] span")){
+				$("#orderNav li[state='4'] span").text(sateTwo);
+			}
+			$("#orderNav li[state='0'] span").text(total);
+		}
+	})
+}
+
+function toGoodsDetail(id){
+  window.location.href = "../../manufacture/product_detail?id=" + id;
+}
+</script>
+
+</body>
+</html>
+

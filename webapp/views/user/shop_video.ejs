@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    .userRightContent {
+      background: #f3f3f3;
+    }
+
+    .help-title {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      line-height: 80px;
+      background: #fff;
+      font-size: 16px;
+    }
+
+    .video-item {
+      display: inline-block;
+      margin-right: 44px;
+      margin-bottom: 40px;
+      width: 290px;
+      background: #fff;
+    }
+
+    .video-item:nth-last-of-type(1) {
+      margin-right: 0;
+    }
+
+    .video-box .video-box-img {
+      position: relative;
+      width: 290px;
+      height: 164px;
+      background-size: cover;
+      z-index: 1;
+      cursor: pointer;
+    }
+
+    .video-box .video-box-info {
+      line-height: 42px;
+      padding: 10px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .video-box.active:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 0, 0, 0.3);
+      z-index: 0;
+    }
+
+    .video-play {
+      position: absolute;
+      left: 109px;
+      top: 53px;
+      width: 51px;
+      height: 51px;
+      z-index: 1;
+    }
+
+    .video-ink {
+      width: 31px;
+      height: 42px;
+    }
+
+    .el-dialog.tipDialog {
+      top: 50%;
+      transform: translateY(-50%);
+      margin-top: 0 !important;
+      width: 344px;
+      height: 218px;
+      box-shadow: none;
+      background: url(../../src/img/video/dialog_bg.png);
+      background-size: cover;
+    }
+
+    .confirm {
+      position: absolute;
+      bottom: 20px;
+      left: 122px;
+      padding: 0;
+      width: 100px;
+      height: 33px;
+      line-height: 33px;
+      background-color: #D57E6A;
+      border-color: #D57E6A;
+    }
+  </style>
+</head>
+
+<body class="userShop">
+
+  <%- include ../headerbar.ejs %>
+
+  <!-- <%- include ../header.ejs %> -->
+
+  <%- include userHeaderNav.ejs %>
+
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>
+          <a href="/">首页</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/' }">
+          <a href="/user/acc_info">个人中心</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>企业帮助视频</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+
+  <div id="main" class="main" v-cloak>
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include userLeftNav.ejs %>
+      </div>
+      <div class="userRightContent">
+        <h3 class="help-title">企业帮助视频</h3>
+
+        <div class="video-box">
+          <div class="video-item" v-for="(item,index) in videoList" :key="index"
+            @click="toVideoDetail(index, item.videoUrl)">
+            <div class="video-box-img" :class="{active: item.isActive}"
+              :style="{ 'background-image': 'url(../../src/img/video/' + item.imgUrl + '.png)'}">
+              <img class="video-play" src="../../src/img/video/play.png" alt="">
+            </div>
+            <div class="video-box-info">
+              <img class="video-ink" src="../../src/img/video/ink.png" alt="">
+              <span class="video-title">{{item.title}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <video v-if="videoUrl" controls="controls" autoplay :src="videoUrl"
+            style="width: 970px; height: 482px;object-fit: fill">
+            您的浏览器不支持 html5 video 属性，下载视频查看：
+            <button type="button" class="el-button el-button--text el-button--mini">
+              <span><a :href="videoUrl" target="_blank">下载视频</a></span></button></video>
+        </div>
+
+        <el-dialog :visible.sync="dialogVisible" :show-close="false" :close-on-click-modal="false"
+          custom-class="tipDialog">
+          <el-button class="confirm" @click="closeDialog" type="danger">知道了</el-button>
+        </el-dialog>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <%- include ../footer.ejs %>
+
+  <script>
+    // $(".userLeftNav .userSubNav li:eq(1)").addClass("cur");
+    $(".userLeftNav li[data-target='shopVideo']").addClass("cur");
+
+    var routerVm = new Vue({
+      el: "#router",
+    })
+
+    var mainVm = new Vue({
+      el: "#main",
+      data: {
+        dialogVisible: false,
+        videoList: [{
+          id: '1',
+          imgUrl: 'video_1_b',
+          videoUrl: 'http://image.gacjc.com/%E7%8F%A0%E5%AE%9D%E5%BA%97%E5%95%86%E5%AE%B6%E5%85%A5%E9%A9%BB.mp4',
+          title: '珠宝店商户认证',
+          isActive: false
+        },
+        {
+          id: '2',
+          imgUrl: 'video_2_b',
+          videoUrl: 'http://image.gacjc.com/%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%85%A5%E9%A9%BB.mp4',
+          title: '设计师认证',
+          isActive: false
+        },
+        {
+          id: '3',
+          imgUrl: 'video_3_b',
+          videoUrl: 'http://image.gacjc.com/%E5%88%B6%E9%80%A0%E9%97%B4%E5%95%86%E5%AE%B6%E5%85%A5%E9%A9%BB.mp4',
+          title: '制造间商户认证',
+          isActive: false
+        }
+        ],
+        videoUrl: ''
+      },
+      created() {
+        if (!localStorage.getItem('haveView')) {
+          this.dialogVisible = true
+        }
+      },
+      mounted: function () {
+        var self = this
+        $.ajax({
+          url: "/api/userCenter/merchantInfo/checkUser",
+          type: "get",
+          beforeSend: function (request) {
+            request.setRequestHeader("Authorization", utils.getCookie("token"))
+          },
+          success: function (data) {
+            if (!utils.islogin()) {
+              utils.alert('danger', '请登录后再进行操作！');
+              setTimeout(function () {
+                window.location = '../login?from=' + encodeURIComponent(location.href)
+              }, 300)
+              return false;
+            }
+            if (data.data.merchantType == 0) {
+              self.isOpenShop = true
+            } else {
+              var host = window.location.host
+              if (host == "219.134.137.178:81" || host == "localhost") {
+                $("#jewelry_1").click(() => {
+                  location.href = "http://219.134.137.178:82/usrManager/jewelry/ "
+                })
+                $("#swap_2").click(() => {
+                  location.href = "http://219.134.137.178:84"
+                })
+                $("#design_3").click(() => {
+                  location.href = "http://219.134.137.178:82/designMerchant.html "
+                })
+                $("#make_4").click(() => {
+                  location.href = "http://219.134.137.178:82/makeMerchant.html"
+                })
+              } else {
+                $("#jewelry_1").click(() => {
+                  location.href = "http://admin.gacjc.com/usrManager/jewelry/"
+                })
+                $("#swap_2").click(() => {
+                  location.href = "http://swapadmin.gacjc.com"
+                })
+                $("#design_3").click(() => {
+                  location.href = "http://admin.gacjc.com/designMerchant.html"
+                })
+                $("#make_4").click(() => {
+                  location.href = "http://admin.gacjc.com/makeMerchant.html"
+                })
+              }
+              $("#merchant").addClass('hide')
+              self.checkUser = true
+              if (data.data.merchantType != 0 && data.data.isHide == 0) {
+                if (data.data.errorMessage === '') {
+                  $('#merchantType').text('商户入驻资料审核中，请耐心等待');
+                } else if (data.data.errorMessage === '平台初审通过，银联审核中，请耐心等待') {
+                  $('#merchantType').text('平台初审通过，银联审核中，请耐心等待');
+                } else {
+                  $('#merchantType').text('不通过理由：' + data.data.errorMessage);
+                  if (data.data.merchantType === 1) {
+                    $("#changeJewelry").removeClass('hide')
+                  } else if (data.data.merchantType === 2) {
+                    $("#changeDesign").removeClass('hide')
+                  } else if (data.data.merchantType === 3) {
+                    $("#changeMake").removeClass('hide')
+                  } else {
+                    $("#changeSwap").removeClass('hide')
+                  }
+                }
+                if (data.data.merchantType == 1) {
+                  $(".userLeftNav .userSubNav li:eq(3)").removeClass("hide");
+                } else if (data.data.merchantType == 2) {
+                  $(".userLeftNav .userSubNav li:eq(5)").removeClass("hide");
+                } else if (data.data.merchantType == 3) {
+                  $(".userLeftNav .userSubNav li:eq(6)").removeClass("hide");
+                } else {
+                  $(".userLeftNav .userSubNav li:eq(7)").removeClass("hide");
+                }
+
+              }
+              if (data.data.merchantType == 1 && data.data.isHide == 1) {
+                $(".userLeftNav .userSubNav li:eq(3)").removeClass("hide");
+                $('#merchantType').text('您已是珠宝店商家');
+              }
+              if (data.data.merchantType == 2 && data.data.isHide == 1) {
+                $(".userLeftNav .userSubNav li:eq(5)").removeClass("hide");
+                $('#merchantType').text('您已是设计师商家');
+              }
+              if (data.data.merchantType == 3 && data.data.isHide == 1) {
+                $(".userLeftNav .userSubNav li:eq(6)").removeClass("hide");
+                $('#merchantType').text('您已是制造间商家');
+              }
+              if (data.data.merchantType == 4 && data.data.isHide == 1) {
+                $(".userLeftNav .userSubNav li:eq(4)").removeClass("hide");
+                $('#merchantType').text('您已是互换坊商家');
+
+                //判断是否已经企业认证
+                utils.ajax({
+                  url: "/api/merchant_auth/authMes",
+                  type: "get",
+                  success: function (data) {
+                    self.data = data.data
+                    if (self.data.merchantType == 4) {
+                      $(".personal").addClass('Prohibit')
+                      $(".personal").attr('href', 'javascript:void(0);');
+                    } else {
+                      $(".enterprise").addClass('Prohibit')
+                      $(".enterprise").attr('href', 'javascript:void(0);');
+                    }
+                  }
+                })
+              }
+            }
+          }
+        })
+      },
+      methods: {
+        toVideoDetail(i, videoUrl) {
+          this.videoUrl = videoUrl
+          this.videoList.forEach(element => {
+            element.isActive = false
+          })
+          this.videoList[i].isActive = true
+        },
+        closeDialog() {
+          this.dialogVisible = false
+          localStorage.setItem('haveView', true)
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    body {
+      background: #F5F5F5;
+    }
+
+    .cartTitle {
+      border-bottom: 2px solid #E6E6E6;
+      margin: 15px 0;
+      font-size: 14px;
+    }
+
+    .cartTitle .btn {
+      line-height: 22px;
+      background: #B8B8B8;
+      width: 56px;
+      color: #fff;
+    }
+
+    .cartTitle>b {
+      display: block;
+      padding-bottom: 15px;
+      position: relative;
+      top: 1px;
+      border-bottom: 2px solid #C2A374;
+      width: 140px;
+      text-align: center;
+    }
+
+    .main table {
+      width: 100%;
+      color: #666;
+    }
+
+    .tableHeader th {
+      color: #666;
+      font-weight: normal;
+    }
+
+    .tableList li {
+      margin-bottom: 20px;
+      background: #ffffff;
+    }
+
+    .tableList li>div {
+      border-bottom: 1px solid #e5e5e5;
+      padding: 0 20px;
+      height: 52px;
+      line-height: 52px;
+      font-size: 14px;
+      color: #666666;
+      font-weight: bold;
+    }
+
+    .tableList li table {
+      background: #fff;
+    }
+
+    .tableList li table tr {
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .tableList li td {
+      padding: 20px 0;
+      font-size: 14px;
+    }
+
+    .tableList li td h3 {
+      color: #333;
+    }
+
+    .tableFooter {
+      position: relative;
+      border: 1px solid #EAEAEA;
+      background: #fff;
+      line-height: 64px;
+      margin: 15px 0;
+      height: 64px;
+    }
+
+    .tableFooter .btn {
+      border-radius: 0;
+      line-height: 60px;
+      width: 200px;
+      font-size: 18px;
+      background: #DF735A;
+      border-color: #DF735A;
+    }
+
+    .sku {
+      color: #999999;
+      line-height: 20px;
+      font-size: 12px;
+    }
+
+    .el-input--small .el-input__inner {
+      height: 40px;
+      border-radius: 0;
+    }
+
+    .el-input-number--small .el-input-number__decrease,
+    .el-input-number--small .el-input-number__increase {
+      width: 40px;
+      height: 38px;
+      line-height: 38px;
+      background: transparent;
+      border: none;
+    }
+
+    .cart .tableHeader {
+      margin: 20px 0;
+    }
+
+    .cart .tableHeader tr {
+      height: 68px;
+      font-size: 14px;
+      background: #ffffff;
+    }
+
+    .label-promotion {
+      font-size: 12px;
+      color: #FB746E;
+      border: 1px solid;
+      padding: 2px 4px;
+      margin-top: 4px;
+      display: inline-block;
+    }
+
+    .understock {
+      position: relative;
+    }
+
+    .understock::before {
+      content: '';
+      position: absolute;
+      width: 86px;
+      height: 86px;
+      background: rgba(0, 0, 0, .5);
+      z-index: 1;
+    }
+
+    .understock .sign {
+      position: absolute;
+      top: 40px;
+      left: 22px;
+      z-index: 2;
+      color: #fff;
+    }
+
+    .orange-color {
+      color: #DF735A;
+    }
+
+    .checkbox-unselected,
+    .checkbox-selected {
+      display: inline-block;
+      position: relative;
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .checkbox-unselected {
+      background: url(../../src/img/common/checkbox-unselected.png) no-repeat center;
+    }
+
+    .checkbox-selected {
+      background: url(../../src/img/common/checkbox-selected.png) no-repeat center;
+    }
+
+    .checkbox-unselected input,
+    .checkbox-selected input {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .tableFooter .unselected-goods>a {
+      background: #E5E5E5;
+      border-color: #e5e5e5;
+      cursor: not-allowed;
+    }
+
+    .tableFooter .unselected-goods .check-reminder {
+      position: absolute;
+      right: 0;
+      bottom: 60px;
+      width: 200px;
+      height: 57px;
+      line-height: 50px;
+      text-align: center;
+      font-size: 16px;
+      color: #FB746E;
+      background: url(../../src/img/order/check-reminder.png) no-repeat center;
+    }
+  </style>
+</head>
+
+<body class="">
+
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../header.ejs %>
+
+  <%- include cartHeaderNav.ejs %>
+
+  <div id="header" class="header exchangeTop hide">
+    <div class="container">
+      <div class="headerInfo">
+        <div>
+          <div class="logoWrap">
+            <a href="../../">
+              <i class="icon icon-logo"></i>
+            </a>
+            <span>我的购物车</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="main" class="main cart">
+
+    <div class="container">
+      <div>
+        <table class="tableHeader">
+          <thead>
+            <tr>
+              <th width="80" class="tc"><span class="checkbox-unselected"><input type="checkbox"
+                    class="selectAll"></span>全选</th>
+              <th width="100"></th>
+              <th>商品名称</th>
+              <th width="200">规格</th>
+              <th width="190" class="tc">单价</th>
+              <th width="130" class="tc">数量</th>
+              <th width="100" class="tc">小计</th>
+              <th width="100" class="tc">操作</th>
+            </tr>
+          </thead>
+        </table>
+        <ul class="tableList">
+          <li v-for="(item, itemIndex) in list" :freightMoney="item.freightMoney" :id="item.id">
+            <div>
+              <span class="checkbox-unselected"><input type="checkbox" class="selectShopCart"></span>
+              <span>{{ item.goods[0].merchantName }}</span>
+            </div>
+            <table>
+              <tr class="cartItem" v-for="(goodsItem, goodsItemIndex) in item.goods" :data-id="goodsItem.id"
+                :goodsId="goodsItem.goodsId" :cartId=" goodsItem.cartId" :goodsPrice="goodsItem.skuPrice"
+                :goodsSku="goodsItem.goodsSku">
+                <td width="80" class="tc">
+                  <span class="checkbox-unselected checkbox-selected"
+                    v-if="goodsItem.selected && goodsItem.goodstate == 0"><input type="checkbox" class="selectCartItem"
+                      checked="checked"></span>
+                  <span class="checkbox-unselected" v-if="!goodsItem.selected && goodsItem.goodstate == 0"><input
+                      type="checkbox" class="selectCartItem"></span>
+                </td>
+                <td width="100">
+                  <div :class="{understock: goodsItem.goodsId && goodsItem.goodstate == 2}">
+                    <img :src="goodsItem.goodsLogo | formatImg" width="86" height="86">
+                    <p class="sign" v-if="goodsItem.goodsId && goodsItem.goodstate == 2"><span>已下架</span></p>
+                    <p class="sign" v-else-if="goodsItem.goodstate == 1"><span>库存不足</span></p>
+                  </div>
+                </td>
+                <td class="tc">
+                  <h3 class="fs14">{{ goodsItem.goodsName }}</h3>
+                </td>
+                <td class="tc" width="200">
+                  <div class="sku" v-if="goodsItem.skuList && goodsItem.skuList.length">
+                    <p v-for="sku in goodsItem.skuList">{{sku.specsName}}：{{sku.attrValue}}</p>
+                  </div>
+                </td>
+                <td width="190" class="tc">
+                  <p class="fs16">{{ goodsItem.skuPrice }}元</p>
+                  <span class="label-promotion" v-if="goodsItem.goodsType == 2">促销商品</span>
+                </td>
+                <td width="130" class="tc">
+                  <el-input-number size="small" v-model="goodsItem.quantity"
+                    @change="handleChange(goodsItem.goodsSku, itemIndex, goodsItemIndex, $event)" :min="1" label="">
+                  </el-input-number>
+                </td>
+                <td width="100" class="tc">
+                  <b class="fs16 orange-color">{{ goodsItem.skuPrice * goodsItem.quantity }}元</b>
+                </td>
+                <td width="100" class="tc">
+                  <a class="delBtn">删除</a>
+                </td>
+              </tr>
+            </table>
+          </li>
+        </ul>
+        <div class="clearfix tableFooter">
+          <div :class="totalGoodsNum == 0 ? 'unselected-goods' : ''">
+            <div class="check-reminder" v-if="totalGoodsNum == 0">请勾选需要结算的商品</div>
+            <a class="btn btn-warning fr" id="toBuy">去结算</a>
+          </div>
+          <div class="fr" style="padding-right: 10px;">
+            合计：<span class="orange-color fs24">{{ parseFloat(totalGoodsPrice + expressPrice).toFixed(2) }}</span><span
+              class="orange-color">元</span>
+            <!-- （运费：{{ expressPrice }}） -->
+          </div>
+          <div class="fl" style="padding-left: 28px;">
+            <span class="fs16" id="toList" style="cursor: pointer;">继续购物</span> |
+            共<span class="orange-color fs16">{{ totalGoodsNumber }}</span>件商品，已选择<span
+              class="orange-color fs16">{{ totalGoodsNum }}</span>件
+            <!-- <label style="margin-left: 15px;">
+              <input type="checkbox" class="selectAll">
+              全选
+            </label>
+            <a id="clearSelect" style="margin-left: 10px;">删除选中商品</a>
+            <a id="clearAll" style="margin-left: 10px;">一键清除商品</a> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <%- include ../footer.ejs %>
+
+  <script>
+    var detailVm = new Vue({
+      el: "#main",
+      data: function () {
+        return {
+          list: [],
+          totalGoodsNumber: 0,
+          totalGoodsNum: 0,
+          totalGoodsPrice: 0,
+          expressPrice: 0
+        }
+      },
+      mounted: function () {
+        this.cartList()
+      },
+      methods: {
+        cartList: function () {
+          var self = this;
+          utils.ajax({
+            url: "/api/order/cart/list",
+            type: "get",
+            success: function (data) {
+              data = data.data;
+              for (var i = 0; i < data.cartItemList.length; i++) {
+                data.cartItemList[i].id = utils.uuid();
+                for (var j = 0; j < data.cartItemList[i].goods.length; j++) {
+                  data.cartItemList[i].goods[j].selected = false;
+                }
+              }
+              self.list = data.cartItemList;
+              var totalGoodsNumber = 0;
+              for (var i = 0; i < detailVm.list.length; i++) {
+                totalGoodsNumber += detailVm.list[i].goods.length
+                /* for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+                  totalGoodsNumber += detailVm.list[i].goods[j].quantity
+                } */
+              }
+              self.totalGoodsNumber = totalGoodsNumber
+            }
+          })
+        },
+        carNum: function () {
+          utils.ajax({
+            url: "/api/order/cart/list",
+            type: "get",
+            success: function (data) {
+              var len = 0
+              var list = data.data.cartItemList;
+              for (var i = 0; i < list.length; i++) {
+                len += list[i].goods.length
+              }
+              $("#carNum").text(len)
+            }
+          })
+        },
+        handleChange: function (skuid, itemIndex, goodsItemIndex, val) {
+          const self = this
+          this.$nextTick(() => {
+            utils.ajax({
+              url: '/api/order/cart/update/' + skuid + '/' + val,
+              success: function (data) {
+                if (data.data.state == 0) {
+                  countTotalGoodsPrice();
+                  countGoodsNum()
+                  countTotalGoodsNum()
+                  countExpressPrice()
+                } else {
+                  self.list[itemIndex].goods[goodsItemIndex].quantity = data.data.stock
+                  countTotalGoodsPrice();
+                  countGoodsNum()
+                  countTotalGoodsNum()
+                  countExpressPrice()
+                }
+              }
+            })
+          })
+        }
+      },
+      filters: {
+        formatImg: function (str) {
+          return utils.formatImg(str)
+        }
+
+      }
+    })
+    $(function () {
+
+      $(document).on("click", ".selectShopCart", function (e) {
+        var self = $(e.currentTarget);
+        var id = self.parents("li").attr("id");
+        var selected = null
+        if (!self.prop("checked")) {
+          self.parent().removeClass("checkbox-selected");
+          self.parents("li").find(".selectCartItem").prop("checked", false);
+          self.parents("li").find(".selectCartItem").parent().removeClass("checkbox-selected");
+          selected = false;
+        } else {
+          self.parent().addClass("checkbox-selected");
+          self.parents("li").find(".selectCartItem").prop("checked", true);
+          self.parents("li").find(".selectCartItem").parent().addClass("checkbox-selected");
+          selected = true;
+        }
+        for (var i = 0; i < detailVm.list.length; i++) {
+          if (detailVm.list[i].id == id) {
+            for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+              if (detailVm.list[i].goods[j].goodstate == 0) {
+                detailVm.list[i].goods[j].selected = selected;
+              }
+            }
+          }
+
+        }
+        countTotalGoodsPrice();
+        countGoodsNum()
+        countTotalGoodsNum()
+        countExpressPrice()
+      }).on("click", ".selectCartItem", function (e) {
+        var self = $(e.currentTarget);
+        var id = self.parents("tr.cartItem").attr("data-id");
+        var selected = null
+        if (!self.prop("checked")) {
+          self.prop("checked", false);
+          selected = false;
+        } else {
+          self.prop("checked", true);
+          selected = true;
+        }
+        for (var i = 0; i < detailVm.list.length; i++) {
+          for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+            if (detailVm.list[i].goods[j].id == id) {
+              detailVm.list[i].goods[j].selected = selected;
+              break;
+            }
+          }
+        }
+        countTotalGoodsPrice();
+        countGoodsNum()
+        countTotalGoodsNum()
+        countExpressPrice()
+      }).on("click", ".delBtn", function (e) {
+        var self = $(e.currentTarget);
+        var li = self.parents("li");
+        var sku = self.parents("tr").attr("goodsSku");
+        var goodsSku = [];
+        goodsSku.push(sku)
+        utils.ajax({
+          url: "/api/order/cart/delete/" + goodsSku.join(","),
+          success: function (data) {
+            self.parents("tr").remove();
+            if (li.find("tr").length == 0) {
+              li.remove();
+            }
+            detailVm.carNum()
+          }
+        })
+        detailVm.cartList()
+        countTotalGoodsPrice();
+        countGoodsNum()
+        countTotalGoodsNum()
+        countExpressPrice()
+        location.reload()
+      }).on("click", ".selectAll", function (e) {
+        var self = $(e.currentTarget);
+        var selected = null;
+        if (!self.prop("checked")) {
+          $(".selectAll").prop("checked", false);
+          $(".selectShopCart").prop("checked", false);
+          $(".selectCartItem").prop("checked", false);
+          $(".selectAll").parent().removeClass('checkbox-selected');
+          $(".selectShopCart").parent().removeClass('checkbox-selected');
+          $(".selectCartItem").parent().removeClass('checkbox-selected');
+          selected = false;
+        } else {
+          $(".selectAll").prop("checked", true);
+          $(".selectShopCart").prop("checked", true);
+          $(".selectCartItem").prop("checked", true);
+          $(".selectAll").parent().addClass('checkbox-selected');
+          $(".selectShopCart").parent().addClass('checkbox-selected');
+          $(".selectCartItem").parent().addClass('checkbox-selected');
+          selected = true;
+        }
+        for (var i = 0; i < detailVm.list.length; i++) {
+          for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+            if (detailVm.list[i].goods[j].goodstate == 0) {
+              detailVm.list[i].goods[j].selected = selected;
+            }
+          }
+        }
+        countTotalGoodsPrice();
+        countGoodsNum()
+        countTotalGoodsNum()
+        countExpressPrice()
+      }).on("click", "#toList", function () {
+        window.location.href = "/jewelry/index"
+      }).on("click", "#toBuy", function () {
+        setTimeout(function () {
+          var arr = [];
+          for (var i = 0; i < detailVm.list.length; i++) {
+            for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+              if (detailVm.list[i].goods[j].selected) {
+                var temp = _.filter(arr, function (o) {
+                  return o.id == detailVm.list[i].id;
+                });
+                if (temp.length == 0) {
+                  arr.push({
+                    merchant: detailVm.list[i].merchant,
+                    id: detailVm.list[i].id,
+                    freightMoney: detailVm.list[i].freightMoney,
+                    goods: [],
+                    selected: true
+                  })
+                }
+                for (var m = 0; m < arr.length; m++) {
+                  if (arr[m].id == detailVm.list[i].id) {
+                    arr[m].goods.push(detailVm.list[i].goods[j])
+                  }
+                }
+              }
+            }
+          }
+          if (!arr.length) {
+            utils.alert('info', '请选择商品！')
+            return false;
+          }
+          localStorage.clear();
+          localStorage.setItem("cart", JSON.stringify(arr));
+          location.href = "../../exchange/buy?flag=cart&source=1";
+        }, 50)
+      }).on("click", "#clearAll", function () {
+        var goodsSku = [];
+        $(".selectCartItem").each(function () {
+          goodsSku.push($(this).parents("tr").attr("goodsSku"))
+        })
+        utils.ajax({
+          url: "/api/order/cart/delete/" + goodsSku.join(","),
+          success: function (data) {
+            detailVm.list = [];
+          }
+        })
+      }).on("click", "#clearSelect", function () {
+        var goodsSku = [];
+        $(".selectCartItem:checked").each(function () {
+          goodsSku.push($(this).parents("tr").attr("goodsSku"))
+        })
+        utils.ajax({
+          url: "/api/order/cart/delete/" + goodsSku.join(","),
+          success: function (data) {
+            window.location.reload();
+          }
+        })
+      })
+
+    })
+
+    function countTotalGoodsPrice() {
+      var totalGoodsPrice = 0;
+      for (var i = 0; i < detailVm.list.length; i++) {
+        for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+          if (detailVm.list[i].goods[j].selected) {
+            totalGoodsPrice += detailVm.list[i].goods[j].quantity * detailVm.list[i].goods[j].skuPrice
+          }
+        }
+      }
+      detailVm.totalGoodsPrice = totalGoodsPrice;
+    }
+
+    function countGoodsNum() {
+      var totalGoodsNum = 0;
+      for (var i = 0; i < detailVm.list.length; i++) {
+        detailVm.list[i].goods.map(item => {
+          if (item.selected) {
+            totalGoodsNum++
+          }
+        })
+        /* for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+          if (detailVm.list[i].goods[j].selected) {
+            totalGoodsNum += detailVm.list[i].goods[j].quantity
+          }
+        } */
+      }
+      detailVm.totalGoodsNum = totalGoodsNum
+    }
+
+    function countTotalGoodsNum() {
+      var totalGoodsNum = 0;
+      for (var i = 0; i < detailVm.list.length; i++) {
+        totalGoodsNum += detailVm.list[i].goods.length
+        /* for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+          totalGoodsNum += detailVm.list[i].goods[j].quantity
+        } */
+      }
+      detailVm.totalGoodsNumber = totalGoodsNum
+    }
+
+    function countExpressPrice() {
+      var len = 0;
+      for (var i = 0; i < detailVm.list.length; i++) {
+        for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+          if (detailVm.list[i].goods[j].selected) {
+            len += detailVm.list[i].goods[j].freightPrice;
+          }
+        }
+        var total = 0;
+        for (var j = 0; j < detailVm.list[i].goods.length; j++) {
+          if (detailVm.list[i].goods[j].selected) {
+            total += detailVm.list[i].goods[j].skuPrice * parseInt(detailVm.list[i].goods[j].quantity)
+          }
+        }
+      }
+      detailVm.expressPrice = len;
+    }
+  </script>
+
+</body>
+
+</html>

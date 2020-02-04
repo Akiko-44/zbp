@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+		<meta name=renderer content=webkit>
+		<meta name=author content=Avanmemety/>
+		<meta name=apple-mobile-web-app-capable content=yes/>
+		<meta name=apple-mobile-web-app-status-bar-style content=blank/>
+		<meta name=format-detection content="telephone=no" />
+		<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>直播间</title>
+		<link rel="stylesheet/less" type="text/css" href="../zbxpc/less/index.less" />
+		<script src="http://wap.hongdoujiao.com/CDN/less.min.js"></script>
+
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<!--[if lt IE 9]>
+    <script src="http://wap.hongdoujiao.com/CDN/html5shiv.min.js"></script>
+    <script src="http://wap.hongdoujiao.com/CDN/respond.min.js"></script>
+    <script src="http://wap.hongdoujiao.com/CDN/html5media.min.js"></script>
+    <![endif]-->
+		<style>
+			html,
+			body {
+				background: #f1f1f1;
+			}
+			.el-icon-arrow-left:before,.el-icon-arrow-right:before{
+	    	color:#606266;
+	    	}
+	    	.router{
+				margin: 5px 0 18px 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<%- include ../headerbar %>
+
+		<%- include ../header %>
+
+		<%- include ../headerNav %>
+		<div class="container" id="container">
+				<div class="router" id="router">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item :to="{ path: '/' }">
+							<a href="../../">我的位置：首页</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item>
+							<a href="./story">直播厅</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item><span id="routerTitle">直播间</span></el-breadcrumb-item>
+					</el-breadcrumb>
+				</div>
+		</div>
+		<div class="living">
+			<div class="container">
+				<div class="left">
+					<p class="title"></p>
+					<div id="video"></div>
+					<img src="../zbxpc/image/livingplay.png" alt="" class="play">
+					<div class="no_flash">您需要安装Flash Player后才能观看精彩直播～<br> 请您
+                <a target="_blank" href="http://www.adobe.com/go/getflashplayer_cn">安装</a>后刷新本页面</div>
+	                <div class="user">
+		                <div class="top">
+		                    <div class="left"><img src="./image/1.png" alt=""></div>
+		                    <div class="right">
+		                        <p class="name">佛珠工艺</p>
+		                        <p class="num">1.9w观看</p>
+		                    </div>
+		                </div>
+		                <p class="notice">店铺公告公告</p>
+		            </div>
+		            <div class="to-index">进入店铺</div>
+				</div>
+				<div class="center">
+					<p class="title"></p>
+					<div class="areaBox"></div>
+					<div class="message-box">
+						<div class="box">
+							<input type="text">
+							<button id="sendMsg">发送</button>
+						</div>
+					</div>
+				</div>
+				<div class="right">
+					<p class="title">直播商品 <span></span></p>
+					<ul class="list">
+					</ul>
+					<img src="../zbxpc/image/nolist.png" alt="" class="no-list">
+				</div>
+			</div>
+			<div class="toast"></div>
+			
+    		<div id="videoPlayer" style="width:450px; height:100%;"></div>
+		</div>
+		<%- include ../footer.ejs %>
+		<script src="http://wap.hongdoujiao.com/CDN/keywords.js"></script>
+		<script src="http://wap.hongdoujiao.com/CDN/RongIMLib-2.2.6.min.js"></script>
+		<script src="http://wap.hongdoujiao.com/CDN/jquery.min.js"></script>
+		<script src="../zbxpc/js/global.js"></script>
+		<script src="http://wap.hongdoujiao.com/CDN/TcPlayer-2.2.2.js" charset="utf-8"></script>
+		<script src="../zbxpc/js/living.js"></script>
+		<script>
+			let container = new Vue({
+				el: "#container",
+			})
+		</script>
+	</body>
+
+</html>

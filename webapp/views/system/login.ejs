@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <!--<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101585228"
+    charset="utf-8"></script>-->
+  <style type="text/css">
+    #main {
+      height: 713px;
+      background: url('../src/img/signin/login-bg.png') no-repeat;
+      background-size: 100% 100%;
+    }
+  </style>
+</head>
+
+<body class="login-bd">
+
+  <%- include loginHeader %>
+
+  <div id="main" class="main">
+    <span class="mask"></span>
+    <div class="container">
+      <div class="loginPanel" style="min-height: 400px;">
+        <div class="tab-default">
+          <div class="tab-header login-panel">
+            <div>
+              <ul>
+                <li class="active"><a>密码登录</a></li>
+                <li><a>短信登录</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="tab-body">
+            <div class="tab-body-panel show">
+              <form id="loginForm1">
+                <input type="hidden" name="loginType" value="2">
+                <input type="hidden" name="loginMethod" value="0">
+                <input type="hidden" class="codeUuid" name="codeUuid" value="">
+                <table>
+                  <tr>
+                    <td colspan="2">
+                      <div class="input">
+                        <input type="text" name="name" placeholder="请输入手机号" maxlength="11" datatype="s4-20|/^1\d{10}$/"
+                          nullmsg="请输入手机号" errormsg="手机号码格式错误" autocomplete="off"
+                          onkeyup="this.value=this.value.replace(/\D/g,'')">
+                      </div>
+                      <p class="Validform_checktip"></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <div class="input">
+                        <input type="password" name="password" placeholder="请输入密码" maxlength="20" datatype="s6-20"
+                          nullmsg="请输入密码" errormsg="密码为6至20位字符" autocomplete="new-password">
+                      </div>
+                      <p class="Validform_checktip"></p>
+                    </td>
+                  </tr>
+                  <tr class="hide" id="verifyCode1">
+                    <td>
+                      <div class="input">
+                        <input type="text" name="verifyCode" placeholder="验证码" maxlength="6" datatype="s1-6"
+                          nullmsg="请输入验证码" errormsg="请输入验证码">
+                      </div>
+                      <p class="Validform_checktip"></p>
+                    </td>
+                    <td>
+                      <img class="fr codeImg" src="" width="130" height="40">
+                    </td>
+                  </tr>
+                  <!-- <tr class="hide" id="verifyCode1">
+                    <td width="156">
+                      <div class="input">
+                        <i class="icon icon-logincode"></i>
+                        <input type="text" name="verifyCode" placeholder="验证码" maxlength="6" datatype="s1-6"
+                          nullmsg="请输入验证码" errormsg="请输入验证码">
+                      </div>
+                      <p class="gray">
+                        按右图填写 不区分大小写
+                        <span class="Validform_checktip"></span>
+                      </p>
+                    </td>
+                    <td>
+                      <img class="fr codeImg" src="" width="130" height="40">
+                    </td>
+                  </tr> -->
+                </table>
+                <div>
+                  <a class="btn btn-danger loginBtn">登录</a>
+                </div>
+                <p class="clearfix forgetpwd">
+                  <a class="link" href="../reg">注册账号</a>|
+                  <a class="link" href="../findpwd">忘记密码？</a>
+                </p>
+              </form>
+            </div>
+            <div class="tab-body-panel">
+
+              <form id="loginForm2">
+                <input type="hidden" name="loginType" value="2">
+                <input type="hidden" class="codeUuid" name="codeUuid" value="">
+                <input type="hidden" class="msgId" name="msgId" value="">
+                <table>
+                  <tr>
+                    <td colspan="2">
+                      <div class="input">
+                        <input type="text" name="mobilePhone" placeholder="请输入手机号" maxlength="11" datatype="/^1\d{10}$/"
+                          nullmsg="请输入手机号" errormsg="手机号码格式错误" autocomplete="off"
+                          onkeyup="this.value=this.value.replace(/\D/g,'')">
+                      </div>
+                      <p class="Validform_checktip"></p>
+                    </td>
+                  </tr>
+                  <tr class="hide" id="verifyCode2">
+                    <td>
+                      <div class="input">
+                        <input type="text" name="verifyCode" placeholder="验证码" maxlength="6" datatype="s1-6"
+                          nullmsg="请输入验证码" errormsg="请输入验证码">
+                      </div>
+                      <p class="Validform_checktip"></p>
+                    </td>
+                    <td>
+                      <img class="fr codeImg" src="" width="130" height="40">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="239">
+                      <div class="input">
+                        <input type="text" name="dynamicVerifyCode" placeholder="请输入短信验证码" maxlength="6" datatype="n1-6"
+                          nullmsg="请输入短信验证码" errormsg="请输入短信验证码">
+                      </div>
+                      <p class="Validform_checktip"></p>
+                    </td>
+                    <td>
+                      <a class="fr btn btn-danger codeBtn">获取验证码</a>
+                    </td>
+                  </tr>
+
+                </table>
+                <div>
+                  <a class="btn btn-danger loginBtn">登录</a>
+                </div>
+                <p class="clearfix forgetpwd">
+                  <a class="link" href="../reg">注册账号</a>
+                </p>
+              </form>
+
+            </div>
+          </div>
+        </div>
+        <div class="tc" style="padding: 0 67px;">
+          <!--<div class="otherway">您也可以使用社交帐号登录</div>
+        	<div>
+	          <a class="loginQqBtn" target="_blank"></a>
+          	<a class="loginWxBtn" target="_blank"></a>
+	          <a class="loginWbBtn" target="_blank"></a>
+	        </div>-->
+          <!--<div>
+          	<a class="loginWxBtn"><i class="icon icon-loginwx"></i></a>
+	          <a class="loginQqBtn" target="_blank" href="https://graph.qq.com/oauth2.0/show?which=Login&display=pc&response_type=code&client_id=100270989&redirect_uri=https%3A%2F%2Fpassport.csdn.net%2Faccount%2Flogin%3Foauth_provider%3DQQProvider&state=test"><i class="icon icon-loginqq"></i></a>
+	          <a class="loginWbBtn" target="_blank" href="https://api.weibo.com/oauth2/authorize?client_id=2601122390&response_type=code&redirect_uri=https%3A%2F%2Fpassport.csdn.net%2Faccount%2Flogin%3Foauth_provider%3DSinaWeiboProvider"><i class="icon icon-loginwb"></i></a>
+	          <span id="qqLoginBtn"></span>
+          </div>-->
+        </div>
+        <!--<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101261403" data-redirecturi="http://www.52yifu.wang/qq_back.jsp" charset="utf-8" ></script>-->
+        <!--<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js"
+          data-appid="101574118" data-redirecturi="http://www.52yifu.wang/qq_back.jsp" charset="utf-8"></script>-->
+        <script>
+          /*$(function () {
+            QC.Login.signOut();
+          });
+          QC.Login({
+
+            btnId: "qqLoginBtn" //插入按钮的节点id
+
+          });
+
+          var paras = {};
+
+          //if (QC.Login.check()) {
+
+          QC.api("get_user_info", paras).success(function (s) { //成功回调
+
+              //成功回调
+              QC.Login.getMe(function (openId, accessToken) {
+                sessionStorage.setItem('uid', openId);
+                sessionStorage.setItem('loginType', 1);
+                sessionStorage.setItem('name', s.data.nickname);
+                sessionStorage.setItem('profile_image_url', s.data.figureurl_2);
+                var param = {
+                  uid: openId,
+                  loginType: 1
+                }
+                $.ajax({
+                  type: 'post',
+                  url: "/api/userCenter/third-login",
+                  contentType: 'application/json;charset=utf-8',
+                  data: JSON.stringify(param),
+                  success: function (data) {
+                    //									if (data.data.loginStatus == 1) {
+                    //										window.location.href = "../bind";
+                    //									} else {
+                    //
+                    //									}
+                    if (data.success) {
+                      utils.setCookie("token", data.data.accessToken, 3);
+                      utils.setCookie("phone", data.data.mobilePhone, 3);
+                      utils.setCookie("nickName", data.data.nickName, 3);
+                      utils.setCookie("userIdZBX", data.data.userId, 3);
+
+                      //链接直播
+                      utils.setDomainCookie('token', data.data.accessToken, 3)
+                      utils.setDomainCookie('phone', data.data.mobilePhone, 3)
+                      utils.setDomainCookie('nickName', data.data.nickName, 3)
+                      setTimeout(function () {
+                        var from = utils.getUrlParam("from");
+                        if (!!from) {
+                          window.location.href = decodeURIComponent(from);
+                        } else {
+                          window.location.href = "../user/acc_info";
+                        }
+                      }, 100);
+                    } else {
+                      window.location.href = "../bind";
+                    }
+
+                  }
+                })
+              });
+            })
+
+            .error(function (f) { //失败回调
+
+              alert("获取用户信息失败！");
+
+            })
+
+            .complete(function (c) {
+
+              //完成请求回调
+
+            });
+
+          //}
+
+
+          function showQQlogin() {
+            QC.Login.showPopup({
+              appId: "101261403",
+              redirectURI: ("http://www.52yifu.wang/qq_back.jsp")
+            });
+          }
+          if (QC.Login.check()) {
+            //登录中，请稍后...
+            QC.Login.getMe(function (openId, accessToken) {
+              var paras = {};
+              var _accessToken = accessToken;
+              QC.api("get_user_info", paras, "json", "get").success(function (s) {
+
+              }).error(function (f) {
+
+              }).complete(function (c) {
+                //完成请求回调
+              });
+
+            });
+
+
+          }*/
+        </script>
+      </div>
+
+    </div>
+  </div>
+  <%- include ../footer.ejs %>
+  <script>
+    var uuid = utils.uuid();
+    var verify = 1;
+    $(function () {
+      //验证码
+      $(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+      $(".codeUuid").val(uuid);
+      $(".codeImg").on("click", function () {
+        uuid = utils.uuid();
+        $(".codeImg").attr("src", "../api/userCenter/verifyCode/getCode/" + uuid);
+        $(".codeUuid").val(uuid);
+      });
+      // 背景图配置
+      utils.ajax({
+        type: 'get',
+        url: '/api/backgroundImg/getbackgroundImg',
+        data: {
+          backgroundImgType: 2
+        },
+        success: (res) => {
+          this.background = res.data
+          if (this.background.wholeType === 1 && this.background.wholeColor) {
+            $('#main').css('background', this.background.wholeColor)
+          } else if (this.background.wholeType === 2 && this.background.wholeImg) {
+            $('#main').css('background', 'url(' + this.background.wholeImg + ') no-repeat')
+            $('#main').css('background-size', '100% 100%')
+          }
+        }
+      })
+    })
+    $.Tipmsg.r = "";
+
+    $("#loginForm1 .loginBtn").on("click", function () {
+      window.validform1 = $("#loginForm1").Validform({
+        tiptype: 2
+      })
+      if (verify == 1) {
+        $("#verifyCode1 [name=verifyCode]").val('123456')
+      }
+      if (validform1.check(false)) {
+        var str = $("#loginForm1").serialize();
+        str = utils.str2json(str);
+        str.verify = verify
+        $.ajax({
+          type: 'post',
+          url: "/api/userCenter/account-login",
+          data: JSON.stringify(str),
+          contentType: 'application/json;charset=UTF-8',
+          beforeSend: function (request) {
+            var _t = utils.getCookie("token");
+            if (!!_t) {
+              request.setRequestHeader("Authorization", _t);
+            }
+          },
+          success: function (data) {
+            if (data.success) {
+              utils.setCookie("token", data.data.accessToken, 3);
+              utils.setCookie("phone", str.name, 3);
+              utils.setCookie("nickName", data.data.nickName, 3);
+              utils.setCookie("userIdZBX", data.data.userId, 3);
+
+              //链接直播
+              utils.setDomainCookie('token', data.data.accessToken, 3)
+              utils.setDomainCookie('phone', str.name, 3)
+              utils.setDomainCookie('nickName', data.data.nickName, 3)
+              setTimeout(function () {
+                var from = utils.getUrlParam("from");
+                if (!!from) {
+                  window.location.href = decodeURIComponent(from);
+                } else {
+                  window.location.href = "../user/acc_info";
+                }
+              }, 100);
+            } else {
+              g_const.verifyNum++
+              if (g_const.verifyNum >= 3) {
+                verify = 0
+                $("#verifyCode1 [name=verifyCode]").val('')
+                $("#verifyCode1").removeClass('hide')
+              }
+              utils.alert("danger", data.msg);
+            }
+          }
+        })
+
+      }
+    })
+
+
+    $("#loginForm2 .loginBtn").on("click", function (e) {
+      window.validform2 = $("#loginForm2").Validform({
+        tiptype: 2
+      })
+
+      if (!$("#loginForm2 input[name='msgId']").val() && $("#loginForm2 input[name='dynamicVerifyCode']").val() !=
+        '190326') {
+        utils.alert('danger', '请输入正确的验证码')
+        return false
+      }
+      if (verify == 1) {
+        $("#verifyCode2 [name=verifyCode]").val('123456')
+      }
+      if (validform2.check(false)) {
+        var str = $("#loginForm2").serialize();
+        str = utils.str2json(str);
+        str.verify = verify
+        $.ajax({
+          type: 'post',
+          url: "/api/userCenter/mobile-login",
+          data: JSON.stringify(str),
+          contentType: 'application/json;charset=UTF-8',
+          beforeSend: function (request) {
+            var _t = utils.getCookie("token");
+            if (!!_t) {
+              request.setRequestHeader("Authorization", _t);
+            }
+          },
+          success: function (data) {
+            if (data.success) {
+              utils.setCookie("token", data.data.accessToken, 3);
+              utils.setCookie("phone", str.mobilePhone, 3);
+              utils.setCookie("nickName", data.data.nickName, 3);
+              utils.setCookie("userIdZBX", data.data.userId, 3);
+
+              //链接直播
+              utils.setDomainCookie('token', data.data.accessToken, 3)
+              utils.setDomainCookie('phone', str.mobilePhone, 3)
+              utils.setDomainCookie('nickName', data.data.nickName, 3)
+              setTimeout(function () {
+                var from = utils.getUrlParam("from");
+                if (!!from) {
+                  window.location.href = decodeURIComponent(from);
+                } else {
+                  window.location.href = "../user/acc_info";
+                }
+              }, 100);
+            } else {
+              g_const.verifyNum++
+              if (g_const.verifyNum >= 3) {
+                $("#verifyCode2 [name=verifyCode]").val('')
+                $("#verifyCode2").removeClass('hide')
+                verify = 0
+              }
+              utils.alert("danger", data.msg);
+              $("#errorText2").text(data.msg);
+            }
+          }
+        })
+      }
+    })
+
+    var flag = false;
+    var submitFlag = false;
+    $(".codeBtn").on("click", function () {
+      if (submitFlag) {
+        return;
+      }
+      if (verify == 1) {
+        $("[name=verifyCode]").val('123456')
+      }
+      var $phone = $("#loginForm2 input[name='mobilePhone']");
+      var $verifyCode = $("#loginForm2 input[name='verifyCode']");
+      $phone.blur();
+      $verifyCode.blur();
+      if (!$phone.hasClass("Validform_error") && !$verifyCode.hasClass("Validform_error")) {
+        var phone = $.trim($phone.val());
+        var verifyCode = $.trim($verifyCode.val());
+        submitFlag = true;
+        var json = {
+          mobilePhone: phone,
+          verifyCode: verifyCode,
+          verify: verify,
+          codeUuid: $("#loginForm2 input[name='codeUuid']").val()
+        }
+        $.ajax({
+          type: 'post',
+          url: "/api/userCenter/smscode",
+          data: JSON.stringify(json),
+          contentType: 'application/json;charset=utf-8',
+          headers: {
+            'Authorization': utils.getCookie("token")
+          },
+          success: function (data) {
+            if (data.success) {
+              $("#loginForm2 input[name='msgId']").val(data.data);
+              var i = 120;
+              var timer = setInterval(function () {
+                i--;
+                $(".codeBtn").text('已发送(' + i + ')');
+              }, 1000);
+              setTimeout(function () {
+                clearInterval(timer);
+                $(".codeBtn").text('重发');
+                flag = true;
+                submitFlag = false;
+              }, 120000);
+            } else {
+              submitFlag = false;
+              utils.alert('danger', data.msg)
+            }
+          },
+          error: function () {
+            submitFlag = false;
+          }
+        })
+      } else {
+        submitFlag = false;
+      }
+
+
+    })
+    $(function () {
+      document.onkeydown = function (e) {
+
+        if (!e) e = window.event;
+
+        if ((e.keyCode || e.which) == 13) {
+          stopDefault(e)
+          var index = $('.active').index()
+          if (index == 0) {
+            $("#loginForm1 .loginBtn").click()
+          } else {
+            $("#loginForm2 .loginBtn").click()
+          }
+        }
+      }
+    })
+
+    function stopDefault(e) {
+      if (e.preventDefault) {
+        e.preventDefault();
+      } else {
+        window.event.returnValue == false;
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+/** app shell **/
+.app-shell {
+  width: 100%;
+  height: 100%;
+  background-color: var(--light-gray);
+}
+.app-card-item1-shell {
+  border-radius: 7px;
+  height: 240px;
+  background-color: var(--light-gray);
+}
+
+.app-card-item2-shell {
+  margin-bottom: 10px;
+  height: 90px;
+  background-color: var(--light-gray);
+}

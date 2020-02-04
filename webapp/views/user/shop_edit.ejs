@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+</head>
+<body class="userShopEdit">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router">
+			<a>首页</a>
+			<i>&gt;</i>
+			<span>我的店铺</span>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div class="infoWrap">
+					<div class="clearfix title">
+						<a class="fr" title="编辑"><i class="icon"></i></a>
+						<h3 class="fl">商家信息</h3>
+					</div>
+					<ul>
+						<li>
+							<table>
+								<tr>
+									<td width="90" class="tr">
+										<label>店铺名称</label>
+									</td>
+									<td>
+										<span>周大福珠宝</span>
+										&emsp;&emsp;&emsp;
+										<label>店铺类别</label>&emsp;
+										<span>旗舰店</span>
+										&emsp;&emsp;&emsp;
+										<label>主营类目</label>&emsp;
+										<span>黄金</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="tr" valign="top">
+										<label>店铺简介</label>
+									</td>
+									<td valign="top">
+										<p>周大福（股票代号：1929）是香港上市市值最大珠宝公司，专营周大福品牌珠宝玉石金饰业务，是集原料采购、生产设计、零售服务的综合性经营企业，是中国内地及香港最著名及最具规模的珠宝首饰品牌。</p>
+									</td>
+								</tr>
+							</table>
+						</li>
+						<li>
+							<table>
+								<tr>
+									<td width="90" class="tr"><label>经营品牌</label></td>
+									<td>
+										<span>周大福</span>
+										&emsp;&emsp;&emsp;
+										<label>品牌使用期限</label>&emsp;
+										<span>周大福</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="tr"><label>品牌授权书</label></td>
+									<td>
+										<img src="">
+									</td>
+								</tr>
+							</table>
+						</li>
+						<li>
+							<table>
+								<tr>
+									<td width="110" class="tr"><label>企业名称</label></td>
+									<td colspan="3">
+										<span>周大福珠宝金行有限公司</span>
+										&emsp;&emsp;&emsp;
+										<label>所在地</label>&emsp;
+										<span>广东省 深圳市 河南洪德路11-2</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="tr"><label>组织机构代码证/营业执照</label></td>
+									<td>
+										<img src="">
+									</td>
+									<td width="110" class="tr"><label>法人授权书扫描件</label></td>
+									<td>
+										<img src="">
+									</td>
+								</tr>
+							</table>
+						</li>
+						<li>
+							<table>
+								<tr>
+									<td width="110" class="tr"><label>税务登记号</label></td>
+									<td colspan="3">
+										<span>516579618741</span>
+										&emsp;&emsp;&emsp;
+										<label>开户行账号</label>&emsp;
+										<span>3218941656511641</span>
+										&emsp;&emsp;&emsp;
+										<label>开户行名称</label>&emsp;
+										<span>中国银行广东支行</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="tr"><label>税务登记证</label></td>
+									<td>
+										<img src="">
+									</td>
+									<td width="110" class="tr"><label>银行开户许可证电子版</label></td>
+									<td>
+										<img src="">
+									</td>
+								</tr>
+							</table>
+						</li>
+						<li class="cardInfo">
+							<div>
+								<label>联系人实名认证</label>
+							</div>
+							<table class="tc">
+								<thead>
+									<tr>
+										<th>姓名</th>
+										<th>身份证号</th>
+										<th>身份证照片</th>
+										<th>状态</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>梁胜博</td>
+										<td>2201**********0211</td>
+										<td>已上传</td>
+										<td>已通过</td>
+										<td>上传照片</td>
+									</tr>
+								</tbody>
+							</table>
+							<div>
+								<label>手机验证</label>
+								<span>已绑定手机号：180****5171</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+<script>
+$(".userLeftNav li li:eq(6)").addClass("cur");
+</script>
+
+</body>
+</html>
+

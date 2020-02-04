@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+    <meta name="renderer" content="webkit">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title><%= title %></title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico" />
+    <link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+    <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+    <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+    <script src="../../dist/js/template.js"></script>
+    <script src="../../dist/js/lib.js"></script>
+    <script src="../../dist/js/v.js"></script>
+</head>
+<style>
+    .Tobuy .buynav {
+        width: 1200px;
+        height: 50px;
+        margin: 0 auto;
+
+    }
+
+    .Tobuy {
+        background: #F2F2F2;
+        width: 1200px;
+        margin: 0 auto;
+    }
+
+    .Tobuy ul {
+        /* line-height: 50px; */
+    }
+
+    .Tobuy ul li {
+        font-size: 16px;
+        color: #333;
+        float: left;
+        margin-left: 18px;
+        cursor: pointer;
+        height: 40px;
+    }
+
+    .cur {
+        color: #DF735A !important;
+        padding-bottom: 4px;
+        border-bottom: 2px solid #DF735A;
+    }
+
+    .buy_banner {
+        height: 460px;
+    }
+
+    .buy_banner img {
+        width: 100%;
+    }
+
+    strong {
+        font-size: 24px;
+        color: #333;
+    }
+
+    .el-icon-d-arrow-right {
+        font-size: 14px;
+        color: #737373;
+    }
+
+    .slideritem a {
+        display: block;
+        height: 400px
+    }
+
+    .exchangeTitle {
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
+
+    .exchangeTitle strong {
+        color: #1A1A1A;
+        font-size: 16px;
+    }
+
+    .exchangeTitle span {
+        color: #666666;
+        font-size: 16px;
+        margin-left: 5px;
+    }
+
+    .exchangeTitle a {
+        display: inline-block;
+        line-height: 20px;
+        color: #666;
+        border-radius: 11px;
+        text-align: center;
+    }
+
+    .brandMarketers ul {}
+
+    .brandMarketers li {
+        float: left;
+        width: 176px;
+        background-color: #fff;
+        margin-left: 30px;
+        margin-bottom: 30px;
+        text-align: center;
+        position: relative;
+    }
+
+    .brandMarketers li:hover .img-box {
+        border: 1px solid #E0E0E0;
+    }
+
+    .containerJewelyIndex {
+        width: 1210px;
+        /*padding-right: 100px;
+				padding-left: 100px;*/
+        margin: 0 auto;
+    }
+
+    .containerJewelyIndex li:first-child,
+    li.first {
+        margin-left: 0 !important;
+    }
+
+    .brandMarketers .img-box {
+        height: 162px;
+        position: relative;
+        background: #f9f9f9;
+        overflow: hidden;
+    }
+
+    .hotSale .img-box {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    .hotSale img {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        margin-top: -113.5px;
+    }
+
+    .brandMarketers img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .brandMarketers li .name {
+        height: 30px;
+        line-height: 30px;
+        overflow: hidden;
+        border-top: 1px solid #D7D7D7;
+    }
+
+    .platformMarketers,
+    .flagshipStore {
+        width: 485px;
+    }
+
+    .platformMarketers .img-box,
+    .flagshipStore .img-box {
+        height: 162px;
+        background: #FFFFFF;
+    }
+
+    .patent {}
+
+    .patent .content {
+        height: 529px;
+        padding: 30px;
+        background-color: #fff;
+    }
+
+    .patent .slider-for {
+        width: 100%;
+        height: 321px;
+    }
+
+    .patent .slider-for .infodata.banner[0] pcPicture {
+        width: 500px;
+    }
+
+    .patent .slider-for .slideritem a {
+        height: 321px;
+        line-height: 321px;
+    }
+
+    .patent .slider-for .slideritem a img {
+        display: inline-block;
+    }
+
+    .patent .slider-nav {
+        padding: 10px 30px;
+    }
+
+    .patent .slider-nav .slick-slide>div {
+        margin: 25px;
+    }
+
+    .patent .slider-nav .slick-current>div {
+        border: 1px solid #FF0000;
+    }
+
+    .slider-brandshop .slick-slide>div {
+        margin: auto;
+        width: 176px;
+    }
+
+    .slider-brandshop .slick-current li {
+        webkit-box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+        transform: translate3d(0, -2px, 0)
+    }
+
+    .patent .slider-nav .slideritem {
+        /*margin: 50px;*/
+    }
+
+    .patent .slider-nav .slideritem img {
+        width: 100%;
+        /*height: 100px;*/
+    }
+
+    .patent .infodata.banner[0] pcPicture {
+        height: 321px;
+        margin-left: 45px;
+    }
+
+    .patent .infodata.banner[0] pcPicturep {
+        margin-top: 30px;
+    }
+
+    .patent .infodata.banner[0] pcPicture.brandName {
+        font-size: 20px;
+        margin-top: 80px;
+    }
+
+    .patent .infodata.banner[0] pcPicture.describe {
+        font-size: 18px;
+    }
+
+    .patent .infodata.banner[0] pcPicture.model {
+        font-size: 14px;
+        color: #FF0000;
+    }
+
+    .patent .infodata.banner[0] pcPicture.price,
+    .todayNew .infodata.banner[0] pcPicture.price {
+        font-weight: 600;
+    }
+
+    .hotSale ul {
+        padding: 30px;
+        background: #fff;
+    }
+
+    .hotSale li {
+        float: left;
+        width: 227px;
+        height: 315px;
+        margin-left: 8px;
+        margin-bottom: 5px;
+        text-align: center;
+        position: relative;
+    }
+
+    .hotSale li .img-box {
+        height: 100%;
+        position: relative;
+    }
+
+    .hotSale li .infodata.banner[0] pcPicture {
+        padding: 8px 10px;
+        background: #FF0000;
+        opacity: .8;
+        display: none;
+        color: #fff;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .hotSale li .infodata.banner[0] pcPicture.designerName {
+        margin-top: 56px;
+    }
+
+    .hotSale li:hover .infodata.banner[0] pcPicture {
+        display: block;
+    }
+
+    .hotSale li .infodata.banner[0] pcPicture.cateThree,
+    .hotSale li .infodata.banner[0] pcPicture.price {
+        margin-top: 20px;
+    }
+
+    .hotSale li .intro {
+        color: #fff;
+        line-height: 16px;
+        height: 32px;
+        line-height: 32px;
+        border: 1px solid #fff;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 82px;
+        width: 100px;
+        margin: 0 auto;
+    }
+
+    .todayNew ul {
+        text-align: center;
+    }
+
+    .todayNew ul li {
+        width: 288px;
+        height: 435px;
+        margin-left: 16px;
+        background-color: #fff;
+        float: left;
+        position: relative;
+        margin-top: 10px;
+        transition: all 0.25s ease;
+    }
+
+    .todayNew ul li .img-box {
+        height: 288px;
+    }
+
+    .todayNew ul li .infodata.banner[0] pcPicture {
+        /*height: 110px;*/
+    }
+
+    .todayNew ul li .infodata.banner[0] pcPicture.name {
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+    .todayNew ul li .infodata.banner[0] pcPicture.describe {
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+    .todayNew ul li .infodata.banner[0] pcPicture.price {
+        margin-top: 27px;
+        font-weight: 600;
+    }
+
+    .todayNew ul li .addCar {
+        height: 50px;
+        line-height: 50px;
+        background-color: #FF0000;
+        color: #fff;
+        display: none;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .todayNew ul li:hover {
+        transform: scale(1.05, 1.05);
+        box-shadow: 1px -3px 10px 4px #cec0c0ad;
+    }
+
+    /* .todayNew ul li:hover .addCar {
+			display: block;
+		} */
+
+    .hotStyle {
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    .brandJewelry {
+        width: 320px;
+        height: 401px;
+        border-left: 20px solid #F5F5F5;
+        padding: 23px 30px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 999;
+        background: #FFFFFF;
+    }
+
+    .brandJewelry>a {
+        display: inline-block;
+        width: 100px;
+        border: 1px solid #D9D9D9;
+        margin-bottom: 15px;
+    }
+
+    .brandJewelry>a:nth-child(odd) {
+        margin-right: 30px;
+    }
+
+    .brandJewelry p {
+        line-height: 16px;
+        font-size: 12px;
+        color: #333;
+        border-top: 1px solid #D9D9D9;
+    }
+
+    /* hx-2019-11-8 */
+    .gallerybtgTransparent {
+        background: #000000;
+        height: 100%;
+        opacity: 0.9;
+        z-index: 998;
+        position: absolute;
+        width: 100%;
+    }
+
+
+
+    .catname {
+        float: left;
+        margin-left: 10px;
+        width: 96px;
+    }
+
+    .linehide {
+        display: none;
+    }
+
+    .galleryNav h3 {
+        font-size: 13px;
+        color: #ddd;
+        position: relative;
+        width: 150px;
+        text-align: left;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    .subThreesecond {
+        font-weight: bold;
+    }
+
+    .rightarrowsub {
+        background: url(/src/img/hx_img/rightarrow.png) no-repeat;
+        background-size: 100% 100%;
+        float: left;
+        width: 30px;
+        height: 30px;
+        margin-top: 5px;
+        display: block;
+
+    }
+
+    .tip {
+        width: 100%;
+    }
+
+    .marquee {
+        width: 100%;
+        height: 50px;
+        align-items: center;
+        color: #3A3A3A;
+        background-color: aqua;
+        display: flex;
+        box-sizing: border-box;
+    }
+
+    .marquee_title {
+        padding: 0 20px;
+        height: 30px;
+        /*关键样式*/
+        font-size: 14px;
+        border-right: 1px solid #d8d8d8;
+        align-items: center;
+    }
+
+    .marquee_box {
+        display: block;
+        position: relative;
+        width: 60%;
+        height: 30px;
+        /*关键样式*/
+        overflow: hidden;
+    }
+
+    .marquee_list {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 4px;
+    }
+
+    .marquee_top {
+        transition: top 0.5s;
+    }
+
+    /*关键样式*/
+    .marquee_list li {
+        height: 30px;
+        /*关键样式*/
+        line-height: 36px;
+        /*关键样式*/
+        font-size: 14px;
+        padding-left: 20px;
+        background-color: #fff;
+    }
+
+    .marquee_list li span {
+        padding: 0 2px;
+        font-size: 12px;
+        color: #666;
+    }
+
+    .red {
+        color: #FF0101;
+    }
+
+    .tipnotice {
+        position: absolute;
+        left: 0px;
+        z-index: 9;
+        width: 20px;
+        height: 20px;
+        top: 50%;
+        transform: translate(0, -50%)
+    }
+
+    .detail {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        color: #666;
+        font-size: 12px;
+
+    }
+
+    .import {
+        color: #fee900;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .team-img img {
+        width: 188px;
+        height: 200px;
+        border-radius: 50%;
+        transition: all 1.2s;
+        -moz-transition: all 1.2s;
+        -webkit-transition: all 1.2s;
+        -o-transition: all 1.2s;
+    }
+
+    .team-img img:hover {
+        transform: scale(1.2);
+        -moz-transform: scale(1.2);
+        -webkit-transform: scale(1.2);
+        -o-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+    }
+
+    .textaLeft {
+        text-align: left;
+    }
+
+    .reference {
+        color: #999999;
+        font-size: 14px;
+    }
+
+    .fs16 {
+        color: #e54941;
+        font-size: 18px;
+        ;
+    }
+
+    .iconmerchantPic {
+        width: 32px;
+        height: 32px;
+        ;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .merchantPic {
+        text-align: left;
+        line-height: 32px;
+    }
+
+    .merchantPic span {
+        color: #666;
+    }
+
+    .hotitem {
+        width: 389px;
+        height: 212px;
+    }
+
+    .bugwrap {
+        height: 340px;
+    }
+
+    .bugwrap p {
+        margin-left: 10px;
+        color: #AAAAAB;
+        font-size: 14px;
+
+    }
+
+    .bugwrap li {
+        background: #fff;
+        height: 290px !important;
+        margin-left: 16px !important;
+    }
+
+    .bugwrap li:nth-child(1) {
+        margin: 0 !important;
+    }
+
+    .bugwrap p:nth-child(2) {
+        margin-right: 82px;
+
+    }
+
+    .bugwrap .title {
+        margin: 18px 22px;
+        color: #585858;
+        font-size: 16px;
+    }
+
+    .infodata.banner[0] {
+        pcPicture width: 100%;
+        ;
+    }
+
+    .map {
+        background: url(/src/img/hx_img/map.png)no-repeat;
+        display: block;
+        width: 16px;
+        height: 17px;
+        background-size: 100% 100%;
+        margin: -2px 10px 0 22px;
+    }
+
+    .buynav li {
+        line-height: 40px;
+    }
+
+    .crdata {
+        background: url(/src/img/hx_img/see.png)no-repeat;
+        display: block;
+        width: 16px;
+        height: 17px;
+        background-size: 100% 100%;
+        margin-top: -4px;
+        margin-right: 10px;
+    }
+
+    .container_content {
+        width: 1200px;
+        margin: 0 auto;
+    }
+
+    #tobuy {
+        margin: 0 0 100px 0;
+    }
+</style>
+
+<body>
+    <%- include ./headerbar.ejs %>
+    <div id="tobuy">
+        <div class="Tobuy">
+            <div class="buynav">
+                <ul class="clearfix">
+                    <li class="cur">推荐</li>
+                    <li v-for="(item,index) in list" @click="goto(item.id)">{{item.catName}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="buy_banner">
+            <a href="#"><img :src="info.banner[0].pcPicture" alt=""></a>
+        </div>
+        <div class="container_content">
+            <div class="exchangeTitle" style="margin-top: 30px;">
+                <a class="fr" href="goodsList">更多商品<i class="el-icon-d-arrow-right"></i></a>
+                <strong>限时促销</strong>
+            </div>
+            <div class="containerJewelyIndex todayNew">
+                <div class="exchangeTitle">
+
+                </div>
+                <div class="hot">
+                    <!-- <ul class="bugwrap clearfix">
+                                <li class="fl">
+                                    <img class="hotitem" src="/src/img/hx_img/guip.png" alt="">
+                                    <p class="title">高端奢华鸿钛珠宝店</p>
+                                    <div class="info clearfix">
+                                        <p class="fl address"><i class="map fl"></i><span>广东&nbsp;&nbsp; 深圳</span></p>
+                                        <p class="fr num"><i class="crdata fl"></i><span>1230</span></p>
+                                    </div>
+                                </li>
+                                <li class="fl">
+                                    <img class="hotitem" src="/src/img/hx_img/guip.png" alt="">
+                                    <p class="title">高端奢华鸿钛珠宝店</p>
+                                    <div class="info clearfix">
+                                        <p class="fl address clearfix"><i class="map fl"></i><span class="fl">广东&nbsp;&nbsp;
+                                                深圳</span>
+                                        </p>
+                                        <p class="fr num clearfix"><i class="crdata fl"></i><span class="fl">1230</span></p>
+                                    </div>
+                                </li>
+                                <li class="fl">
+                                    <img class="hotitem" src="/src/img/hx_img/guip.png" alt="">
+                                    <p class="title">高端奢华鸿钛珠宝店</p>
+                                    <div class="info clearfix">
+                                        <p class="fl address"><i class="map fl"></i><span>广东&nbsp;&nbsp; 深圳</span></p>
+                                        <p class="fr num"><i class="crdata fl"></i><span>1230</span></p>
+                                    </div>
+                                </li>
+                            </ul> -->
+                    <ul class="clearfix">
+                        <li class="gripper" v-for="(item,index) in info.promotion" #click="goto(item.id)">
+                            <div class="discount">{{item.discount}}折</div>
+                            <div class="img-box">
+                                <img :src="item.goodsPic" width="100%" height="100%">
+                            </div>
+                            <div class="info clearfix" style="padding: 0 20px">
+                                <p class="name ellipsis textaLeft">{{item.goodsName}}</p>
+                                <p class="price new-red fs16 textaLeft">￥{{lowPrice}}~{{highPrice}}</p>
+                                <!-- <p class="price new-red fs16">￥{{item.price}}</p> -->
+                                <p class="describe ellipsis textaLeft  reference">
+                                    参考价：{{item.referLowPrice}}~{{item.referHighPrice}}
+                                </p>
+                                <div class="merchantPic"><img class="iconmerchantPic" :src="item.merchantPic"
+                                        alt=""><span>{{merchantName}}</span></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include footer.ejs %>
+
+    <script>
+        new Vue({
+            el: "#tobuy",
+            data: {
+                newGoods: [],
+                list: [],
+                info: '',
+                vbv: [{}]
+            },
+            mounted() {
+                this.list = this._TemplateAjax("get", '/app/homePage/secondCategory', {});
+                this.info = this._TemplateAjax("get", '/app/homePage/whereBuy', {});
+
+            },
+            methods: {
+                goto(id) {
+                    window.location.href = "/jewelry/goodsList?entrance=2&catIds=" + id
+                },
+                _TemplateAjax(type, url, data) {
+                    var that = this;
+                    var params;
+                    utils.ajax({
+                        url: url,
+                        async: false,
+                        data: data,
+                        type: type,
+                        success: function (res) {
+                            params = res.data
+                        }
+                    })
+                    return params
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<style>
+.mask {z-index: 3000;}
+.addAddressDialog .dialog-main {z-index: 4000;}
+</style>
+<script>
+//互换订单 列表页和详情页公共摸快
+
+//确认交换
+function agreeOrder(orderNumber, type, callback){
+	utils.ajax({
+		url: "/api/order/swap/agree/" + orderNumber + "/" + type,
+		success: function(data){
+			callback && callback(data);
+		}
+	})
+}
+//取消订单
+function cancelOrder(orderNumber, type, callback){
+	utils.ajax({
+		url: "/api/order/swap/cancel/" + orderNumber + "/" + type,
+		success: function(data){
+			callback && callback(data);
+		}
+	})
+}
+
+//发货
+function sendOrder(orderNumber, type, datas, callback){
+	utils.ajax({
+		url: "/api/order/swap/send/" + orderNumber + "/" + type,
+		data: JSON.stringify(datas),
+		success: function(data){
+			callback && callback(data);
+		}
+	})
+}
+
+//确认收货
+function receiveOrder(orderNumber, type, callback){
+	utils.ajax({
+		url: "/api/order/swap/receive/" + orderNumber + "/" + type,
+		success: function(data){
+			callback && callback(data);
+		}
+	})
+}
+
+$(document).on("click", ".toPayOrderBtn", function(e){
+	//支付保证金
+	var id = $(e.currentTarget).attr("orderNumber");
+	var from = $(e.currentTarget).attr("from");
+	utils.ajax({
+		url: "/api/order/swap/pay/caution/" + id + "/" + swapType,
+		type: "post",
+		success: function(data){
+			window.location.href = "../../exchange/pay?id=" + data.data.id + "&p=" + data.data.payAmount+ "&swapType=" + swapType + "&from="+ from;
+		}	
+	})
+}).on("click", "#showAddDialog", function(){
+	//显示添加弹出框
+	showAddDialog();
+}).on("click", "#addBtn", function(){
+	addAddress(function(data){
+		if(data.success){
+			$(".addAddressDialog").removeClass("show");
+			addressOrderDialogVm.render();
+		}else{
+			utils.alert("danger", data.msg);
+		}
+	})
+})
+
+</script>
+
+<%- include ../address_common.ejs %>
+<div id="addressOrderDialog">
+	<el-dialog  title="收货地址" :visible.sync="isShowAddressOrderDialog" width="1000px" :before-close="handleClose">
+		<el-table :data="tableData" style="width: 100%">
+		    <el-table-column prop="consignee" label="收货人" width="180"></el-table-column>
+		    <el-table-column prop="mobile" label="电话" width="180"></el-table-column>
+		    <el-table-column prop="detail" label="地址" width="180">
+		    	<template slot-scope="scope">
+		    		{{scope.row.province + scope.row.city + scope.row.area +  scope.row.detail}}
+		      	</template>
+		    </el-table-column>
+		    <el-table-column prop="zipcode" label="邮编" width="180"></el-table-column>
+		    <el-table-column label="操作">
+		     	<template slot-scope="scope">
+		     		<a class="blue" @click="handleEdit(scope.$index, scope.row)">选择</a>
+		      	</template>
+		    </el-table-column>
+		  </el-table>
+		  <br>
+		  <div>
+		  		<el-button type="primary" size="mini" id="showAddDialog">添加地址</el-button>
+		  </div>
+	</el-dialog>
+</div>
+<script>
+var addressOrderDialogVm = new Vue({
+	el: "#addressOrderDialog",
+	data: {
+		isShowAddressOrderDialog: false,
+		id: "",
+		swapType: "",
+		
+		tableData: []
+	},
+	mounted: function(){
+		this.render();
+	},
+	methods: {
+		handleClose: function(){
+			this.isShowAddressOrderDialog = false;
+		},
+	    show: function(){
+	    	this.isShowAddressOrderDialog = true;
+	    },
+	    handleEdit: function(index, row){
+	    	var id = this.id;
+	    	var swapType = row.id;
+	    	var self = this;
+	    	agreeOrder(id, swapType, function(data){
+				utils.alert("success", "操作成功");
+				self.isShowAddressOrderDialog = false;
+				$("#orderNav li.cur").trigger("click");
+			})
+	    },
+	    render: function(){
+	    	var self = this;
+	    	utils.ajax({
+	    		url: "/api/userCenter/addr/page",
+	    		type: "get",
+	    		success: function(data){
+	    			self.tableData = self.tableData.splice(self.tableData.length);
+	    			self.tableData = data.data.records;
+	    		}
+	    	})
+	    }
+  	}
+})
+</script>

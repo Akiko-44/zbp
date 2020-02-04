@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<style type="text/css">
+	.jewelry-brandWall{background: #F8F8F8;}
+	#brandWall{padding-top: 20px;}
+	#brandWall li{
+		width: 360px;
+		margin-bottom: 40px;
+		background: #FFFFFF;
+	}
+	#brandWall li:nth-child(3n-1){
+		margin: 0 55px;
+	}
+	.brand-t{
+		display: inline-block;
+		position: relative;
+		width: 360px;
+		height: 240px;
+	}
+	.brand-b{
+		height: 48px;
+		overflow: hidden;
+		padding: 10px 20px;
+		color: #B39A7D;
+		font-size: 14px;
+	}
+	.goods-img, .goods-img img{
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+	}
+	.brand-logo{
+		width: 320px;
+		height: 220px;
+		position: absolute;
+		left: 20px;
+		top: 10px;
+		padding: 10px;
+		border: 1px solid #FFFFFF;
+	}
+	.brand-logo>div{
+		width: 100%;
+		height: 100%;
+		padding-top: 25px;
+		background: rgba(255,255,255,0.7);
+	}
+	.brand-logo p:nth-child(2){
+		color: #1A1A1A;
+		font-size: 16px;
+		margin-top: 15px;
+	}
+</style>
+</head>
+<body class="jewelry-brandWall">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+
+	<div class="clearfix"><img src="../../src/img/jewelry/Title3.png" style="width: 100%;"/></div>
+	<div class="container">
+		<ul class="clearfix" id="brandWall">
+			
+		</ul>
+	</div>
+	<script type="text/javascript">
+	$(function(){
+	    $.ajax({
+	        url:'/api/homePage/brandWallShow',
+	        type:'get',
+	        data:{
+	            offset:1,
+	            limit:9
+	        },
+	        success:function(res){
+	        console.log(res)
+	            if(!res.success) return;
+	            var html = '';
+	            $.each(res.data,function(idx,item){
+	            	html += '<li class="fl">'+
+								'<a  href="'+item.pcBrandUrl+'" target="_blank" class="brand-t">'+
+									'<span class="goods-img">'+
+										'<img src="'+item.pic+'"/>'+
+									'</span>'+
+									'<div class="brand-logo tc">'+
+										'<div>'+
+											'<p><img src="../../src/img/jewelry/brand.png" width="160" height="100"/></p>'+
+											'<p>'+item.brandName+'</p>'+
+										'</div>'+
+									'</div>'+
+								'</a>'+
+								/*'<div class="brand-b"></div>'+*/
+							'</li>';
+	            })
+	            $("#brandWall").html(html);
+	        },
+	        error: function(error){
+	            
+	        }
+	    })
+	})
+	</script>
+	<%- include ../footer.ejs %>
+</body>
+</html>
+

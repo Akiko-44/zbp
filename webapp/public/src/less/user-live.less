@@ -1,0 +1,207 @@
+.user-live{
+    .container{
+        padding-top: 40px;
+       
+        .content{
+            
+            h2{
+               .head{
+                   font-size: 24px;
+                   color: #1A1A1A;
+               } 
+               .subhead{
+                   color: #666666;
+                   margin-left: 15px;
+               }
+            }
+        }
+    }
+}
+
+.liveIndex{
+    .container{
+        .content{
+            .btn.upload{
+                width: 100px;
+                height: 30px;
+                line-height: 28px;
+
+                margin-top: 19px;
+                color: #fff;
+            }
+            .table{
+                margin-top: 20px;
+
+                .list{
+                    .tr{
+                        display: flex;
+                        .td{
+                            display: inline-block;
+                            flex: 1;
+                            text-align: center;
+                            &:last-child{
+                               flex: 0 0 15%; 
+                            }
+                            &.td0{
+                                color: #C27400;
+                            }
+                            &.td1{
+                                color: #0F8B18;
+                            }
+                            &.td2{
+                                color: #E60017;
+                            }
+                        }
+                    }
+                    
+                }
+                .t-head{
+                    background-color: #C2A374;
+                    color: #fff;
+                    li{
+                        padding: 6px 0;
+                       
+                        .td{
+                            border-right: 1px solid #fff;
+                            &:last-child{
+                                border: none;
+                            }
+                        }
+                    }
+                }
+                .t-body{
+                    background-color: #fff;
+                    border-left: 1px solid #EFEFEF;
+                    .tr{
+                       border-bottom: 1px solid #EFEFEF;
+                       font-size: 12px;
+                       height: 30px;
+                       line-height: 30px;
+                        .td{
+                            display: inline-block;
+                            border-right: 1px solid #EFEFEF;
+                            &.success{
+                                color: #0F8B18;
+                            }
+                            &.error{
+                                color: #E60017;
+                            }
+                            &.info{
+                                color: #C27400;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
+.liveUpload{
+    .userRightContent{
+            padding-left: 20px;
+            overflow: hidden;
+    }
+    .upload-form{
+        margin-top: 25px;
+        padding-left: 15px;
+    }
+    .formsub {
+        font-size: 20px;
+        color: #1A1A1A;
+        .Validform_checktip{
+            margin: 4px 0 12px 165px;
+            font-size: 16px;
+        }
+        .Validform_error {
+            background-color: #ffe7e7;
+        }
+        .Validform_wrong{
+              &:before{
+                  content: " ";
+                  display: inline-block;
+                  width: 20px;
+                  height: 20px;
+                  vertical-align: middle;
+                    background: url("/src/img/live/warn.png") no-repeat left center/contain;
+                  
+              }
+
+        }
+        label{
+            display: inline-block;
+            width: 140px;
+            margin: 0 15px 0 4px;
+        }
+        .inputxt,textarea,select{
+            border: 1px solid #a5aeb6;
+            width: 396px;
+            height: 40px;
+            padding: 4px 2px;
+            vertical-align: middle;
+            font-size: 1em;
+        }
+        li img{
+            width: 240px;
+            height: 150px;
+            margin-bottom: 30px;
+            
+        }
+        img + .Validform_checktip{
+            margin: 0;
+            position: relative;
+            bottom: 30px;
+            vertical-align: bottom;
+        }
+        .action{
+            text-align: center;
+            .submitBtn{
+                width: 264px;
+                height: 64px;
+                line-height: 62px;
+                border-radius: 10px;
+                font-size: 32px;
+            }
+        }
+    }
+    .el-form{
+        width: 560px;
+        margin-top: 25px;
+        .el-form-item__label{
+            font-size: 20px;
+        }
+        .el-select,.el-input{
+            width: 400px;
+            height: 40px;
+            input{
+                height: 100%;
+            }
+        }
+        .el-form-item__content{
+           img{
+               vertical-align: middle;
+               max-width: 200px;
+               margin-right: 5px;
+           } 
+        }
+       .avatar-uploader{
+           
+            .el-upload{
+                vertical-align: middle;
+                border: 1px dashed #d9d9d9;
+                border-radius: 6px;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+                .avatar-uploader-icon{
+                    font-size: 28px;
+                    color: #8c939d;
+                    width: 178px;
+                    height: 178px;
+                    line-height: 178px;
+                    text-align: center;
+                }
+            }
+        }    
+    }
+}

@@ -1,0 +1,108 @@
+<script>
+//获取品牌
+function getBrand(callback){
+	utils.ajax({
+		url: "/api/homePage/showBrand/2",
+		type: "get",
+		async: false,
+		success: function(data){
+			data = data.data;
+			if(callback){
+				 callback(data);
+			}else{
+				if($(".brand-container").length > 0){
+					var html = '<a class="cur" data-id="">全部</a>';
+					for(var i = 0; i < data.length; i++){
+						html += '<a data-id="'+data[i].id+'">'+data[i].brandName+'</a>';
+					}
+					$(".brand-container").html(html);
+				}
+			}
+		}
+	})
+}
+//获取分类
+function getCategory(id, callback){
+	var url = '/api/designmanu/designroom/categoryList/3'
+	if(id != null || id == 0){
+		url = "/api/swap/portal/common/swapCategorys/" + id +'/3'
+	}
+	utils.ajax({
+		url: url,
+		type: "get",
+		async: false,
+		success: function(data){
+			data = data.data;
+			callback && callback(data);
+		}
+	})
+}
+
+//新旧程度
+function getNewAndOld(callback){
+	utils.ajax({
+		url: "/api/swap/portal/common/goods_deprecition",
+		type: "get",
+		async: false,
+		success: function(data){
+			data = data.data;
+			if(callback){
+				 callback(data);
+			}else{
+				if($(".newAndOld-container").length > 0){
+					var html = '<a class="cur" data-id="">全部</a>';
+					for(var k in data){
+						html += '<a data-id="'+k+'">'+data[k]+'</a>';
+					}
+					$(".newAndOld-container").html(html);
+				}
+			}
+		}
+	})
+}
+
+//侧边热卖
+function getHot(brandName, categoryName, callback){
+	brandName = brandName || "";
+	categoryName = categoryName || "";
+	utils.ajax({
+		url: "/api/swap/portal/goods/sale_goods/hot_list",
+		type: "get",
+		data: {
+			brandName: brandName,
+			categoryName: categoryName
+		},
+		success: function(data){
+			data = data.data;
+			if(callback){
+				 callback(data);
+			}else{
+				if($(".hot-container").length > 0){
+					var html = '';
+					for(var i = 0; i < data.length; i++){
+						html += _template.exchangeHotItem({
+							data: data[i]
+						})
+					}
+					$(".hot-container").html(html);
+				}
+			}
+		}
+	})
+}
+
+//获取鉴定机构列表
+function getAgency(callback){
+	utils.ajax({
+		url: "/api/swap/user/common/hsmark/list",
+		type: "get",
+		success: function(data){
+			data = data.data;
+			callback && callback(data)
+		}
+	})
+}
+</script>
+<script>
+
+</script>

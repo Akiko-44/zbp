@@ -1,0 +1,28 @@
+<tr data-id="<%= data.id %>">
+	<td class="tc"><%= data.consignee %></td>
+	<td class="tc">
+		<% if(data.mobile){ %>
+			<%= data.mobile %>
+		<% }else if(data.phone){ %>
+			<%= data.phone %>
+		<% } %>
+	</td>
+	<td>
+		<p><%= data.province %><%= data.city %><%= data.area %></p>
+		<p><%= data.detail %></p>
+	</td>
+	<td class="tc">
+		<%= data.zipcode %>
+	</td>
+	<td class="tc">
+		<a class="blue showEditBtn" data-id="<%= data.id %>">编辑</a>&emsp;
+		<a class="blue showDelBtn" data-id="<%= data.id %>">删除</a>
+	</td>
+	<td class="tc">
+		<% if(data.isDefault == 1){ %>
+			<span class="yellow">默认地址</span>
+		<% }else{ %>
+			<a class="blue setBtn" data-id="<%= data.id %>">设为默认地址</a>
+		<% } %>
+	</td>
+</tr>

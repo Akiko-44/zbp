@@ -1,0 +1,22 @@
+<li data-id="<%=data.id%>" class="listShadow">
+	<div class="img toDetail">
+		<a><img src="<%= $imports.formatImg(data.imgUrl) %>" width="100%" height="100%"></a>
+	</div>
+	<div class="info">
+		<div class="intro">
+			<p class="toDetail"><%= data.recycleName %></p>
+		</div>
+		<div class="clearfix" style="color: #666">
+			<span class="fr">
+				<%= data.provinceName%>&ensp;
+				<%= data.cityName%>
+			</span>
+			<div class="fl">
+				<% if(data.userHeadUrl){ %>
+				<img src="<%= data.userHeadUrl %>" class="img-circle" width="24" height="24">
+				<% } %>
+				<span><%= data.userName %></span>
+			</div>
+		</div>
+	</div>
+</li>

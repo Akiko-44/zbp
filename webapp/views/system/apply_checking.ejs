@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.checkingWrap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+img {
+	margin-bottom: 40px;
+}
+h4 {
+	font-size: 18px;
+	margin-bottom: 20px;
+}
+p {
+	font-size: 12px;
+	color: #666;
+}
+strong {
+	margin: 0 5px;
+	color: #8B0F1A;
+}
+</style>
+</head>
+<body>
+	
+	<%- include loginHeader %>
+	
+	<div class="checkingWrap">
+		<img src="../src/img/system/apply_checking.png" width="200">
+		<h4>提交成功，等待审核中</h4>
+		<h4>即将跳转到商家中心首页<strong>3</strong>秒</h4>
+		<p>预计审核将在48小时内完成。审核结果我们会通过短信形式发送。</p>
+	</div>
+
+<script>
+var i = 3;
+var timer = setInterval(function(){
+	i--;
+	$(".checkingWrap strong").text(i);
+	if(i == 0){
+		window.clearInterval(timer);
+		window.location.href = "../user/acc_info";
+	}
+}, 1000);
+
+$(".btn-danger").on("click", function(){
+	window.location.href = "../login";
+})
+</script>
+</body>
+</html>
+

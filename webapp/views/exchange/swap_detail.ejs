@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.exchangeDetailDesc {padding: 20px 0;}
+.collect{
+	background: #999999;
+	color: #FFFFFF;
+	font-size: 16px;
+	cursor: pointer;
+}
+.collected{
+	background: #ff9900;
+}
+/*jqzoom*/
+.jqzoom,#detail{
+	position: relative;
+	
+}
+.zoomdiv{
+	z-index:100;
+	position:absolute;
+	top:0px;
+	left:400px;
+	width:370px;
+	height:370px;
+	 border:1px solid #e4e4e4;
+	 display:block !important;
+	 text-align:center;
+	 overflow: hidden;
+	 }
+.bigimg{
+	min-width:700px;
+	height:700px;
+	width:700px;
+	}
+.jqZoomPup{
+	z-index:10;
+	visibility:hidden;
+	position:absolute;
+	top:0px;left:0px;
+	width:200px !important;
+	height:200px !important;
+	border:1px solid #aaa;
+	background:#F5F5F5 50% top no-repeat;
+	opacity:0.5;
+	-moz-opacity:0.5;
+	-khtml-opacity:0.5;
+	filter:alpha(Opacity=50);cursor:move;
+	}
+.authentication{
+	display: inline-block;
+	width: 86px;
+	height: 22px;
+	background: url('../../src/img/exchange/authentication.png') center center no-repeat;
+	background-size: 100% 100%;
+}
+#goodsAttrs{
+  margin: 20px;
+  font-size: 16px;
+}
+#goodsAttrs table{
+  width: 100%;
+  text-align: center;
+}
+#goodsAttrs table, #goodsAttrs tr, #goodsAttrs td{
+  border-color: #E0E0E0 !important;
+}
+#goodsAttrs td{
+  padding: 10px 0;
+}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+				  	<el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+            <el-breadcrumb-item><a href="../../exchange/index">互换坊</a></el-breadcrumb-item>
+            <el-breadcrumb-item>宝贝互换</el-breadcrumb-item>
+      </el-breadcrumb>
+			</div>
+		</div>
+		
+		<div class="container">
+			<div class="clearfix">
+				<div class="fr exchangeDetailRight"  id="businessInfo">
+					<div class="opt" style="height: 50px;">
+						<!--<a val='0' class="startBtn fl"><i class="iconfont icon-exchangeStar"></i>收藏</a>
+						&emsp;-->
+						<!--<a><i class="iconfont icon-exchangeShare"></i>分享</a>-->
+						<%- include ../share_baidu.ejs %>
+					</div> 
+					<div class="businessInfo">
+						<h3>卖家信息</h3>
+						<div style="padding: 0 10px 20px 10px;">
+							<table>
+								<tr>
+									<td width="80">
+										<img id="user_logo" src="../../src/img/avatar.jpg" width="60" height="60">
+									</td>
+									<td>
+									  <p id="userName">
+									  	<span v-if="userType == 4">{{shopName}}</span>
+									  	<span v-else>{{nickname}}</span>
+									  </p>
+										<strong id="hsMarkUrl"></strong>
+										<p v-if="userType != 4">已实名认证<span class="tag">证</span></p>
+										<p v-if="userType == 4"><a class="authentication"></a></p>
+									</td>
+								</tr>
+								<tr>
+									<td><label>认证时间</label></td>
+									<td id="authTime"></td>
+								</tr>
+								<tr>
+									<td><label>发布商品</label></td>
+									<td><span id="goodsCount"></span>件</td>
+								</tr>
+								<tr>
+									<td><label>联系电话</label></td>
+									<td id="mobilePhone"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><a class="btn btn-primary doyenDetail">查看个人详情</a></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="designLeftItem tc">
+						<h2 class="title cursor" @click="NTKF.im_openInPageChat(keFuId)">
+							<img src="../../src/img/kefu.png" width="25"/>联系商家
+						</h2>
+					</div>
+					<div class="other">
+						<h3>卖家其他互换商品</h3>
+						<ul class="other-container">
+							
+						</ul>
+					</div>
+					<div class="recommend">
+						<h3>同类商品推荐</h3>
+						<ul class="hot-container">
+							
+						</ul>
+					</div>
+				</div>
+				<div class="exchangeDetailLeft">
+					<div class="clearfix" id="detail" style="overflow:hidden;margin-bottom: 20px;">
+						<div class="fl img jqzoom">
+							<img src="" width="100%">
+						</div>
+						<div class="fl imgs">
+							<ul>
+								<li v-for="item in imgs">
+									<a><img :src="item.imgUrl | formatImg" width="100%"></a>
+								</li>
+							</ul>
+						</div>
+						<div class="info">
+							<div class="intro">
+								<p>{{ goodsName }}</p>
+							</div>
+							<table>
+								<tr class="priceWrap">
+									<td>
+										<label>交换价</label>
+									</td>
+									<td class="tr" colspan="3">
+										<span class="new-red">￥<strong>{{ price }}</strong></span>
+									</td>
+								</tr>
+								<tr>
+									<td><label>鉴定机构</label></td>
+									<td class="tr" colspan="3">
+										<span>{{ hsMark.hsMarkName }}<span class="tag">证</span></span>
+									</td>
+								</tr>
+								<tr>
+									<td><label>商品品牌</label></td>
+									<td class="tr" colspan="3">
+										<span>{{ brandName }}</span>
+									</td>
+								</tr>
+								<tr>
+									<td><label>新旧程度</label></td>
+									<td class="tr">
+										<span>{{ deprecition | formatDep }}</span>
+									</td>
+									<!--<td><label>所在地</label></td>
+									<td class="tr">
+										<span>广东深圳</span>
+									</td>-->
+								</tr>
+								<tr>
+									<td><label>交换方式</label></td>
+									<td class="tr" colspan="3">
+										<span>在线交换</span>
+									</td>
+								</tr>
+								<tr class="demandWrao">
+									<td><span>交换需求</span></td>
+									<td class="tr" colspan="3">
+										<span>{{ swapRemark }}</span>
+									</td>
+								</tr>
+							</table>
+							<div class="opt">
+								<!--<a class="btn collect" val="0" onclick="collect(this)">收藏</a>-->
+								<a class="btn exchangeBtn">我要换</a>
+								<a class="btn btn-warning toBuyBtn">立即购买</a>
+								<a class="btn btn-danger toCartBtn">加入购物车</a>
+							</div>
+						</div>
+					</div>
+					<div>
+						<ul class="tabWrap clearfix">
+							<li class="cur" target=".exchangeDetailDesc"><a>详情</a></li>
+							<li target=".exchangeDetailAttr"><a>商品属性</a></li>
+							<li target=".exchangeDetailComment"><a>留言<span class="red">(0)</span></a></li>
+						</ul>
+						<div>
+							<div class="exchangeDetailDesc ue-view">
+							
+							</div>
+							<div class="exchangeDetailAttr hide" id="goodsAttrs">
+                <table border="1" cellspacing="0" cellpadding="0">
+                  <tbody></tbody>
+                </table>
+              </div>
+							<div class="exchangeDetailComment hide">
+								<%- include ../goodsComment.ejs %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+	<%- include ../footer.ejs %>
+
+<script>
+var id = utils.getUrlParam("id")
+var routerVm = new Vue({
+	el: "#router"
+})
+var businessInfo = new Vue({
+	el: "#businessInfo",
+	data:{
+		keFuId: '',
+		userType: '',
+		companyName: '',
+		nickname: '',
+		shopName: ''
+	}
+})
+/* *
+ * 是否已收藏
+ * source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+ * */
+/*utils.checkCollect(id, 2, function(){
+	$(".startBtn").attr("val","1")
+	$('.startBtn').children("i").attr("class",'icon_collect')
+})*/
+$(function(){
+	
+	$(document).on("click", ".startBtn", function(){
+		//收藏
+		utils.ajax({
+			url: "/api/userCenter/collect/add/" + id,
+			success: function(data){
+				utils.alert("success", "收藏成功");
+			}
+		})
+	}).on("click", ".imgs li", function(e){
+		//图片预览
+		var self = $(e.currentTarget);
+		var src = self.find("img").attr("src");
+		self.addClass("cur").siblings().removeClass("cur");
+		$(".img img").attr("jqimg", src);
+		$("#detail .img img").attr("src", src);
+	}).on("click", ".toDetail", function(e){
+		//点击去详情
+		var self = $(e.currentTarget);
+		var id = self.parents("li").attr("data-id");
+		location.href = "../../exchange/swap_detail?id=" + id;
+	}).on("click", ".tabWrap li", function(e){
+		//详情评论切换
+		var self = $(e.currentTarget);
+		var target = self.attr("target");
+		self.addClass("cur").siblings().removeClass("cur")
+		$(target).removeClass("hide").siblings().addClass("hide");
+	}).on("click", ".toBuyBtn", function(){
+		//立即购买
+		if(utils.islogin()){
+			location.href = "../../exchange/buy?flag=swap&source=2&id=" + id;
+		}else{
+			location.href = "../../login?from=" + encodeURIComponent(location.href);
+		}
+	}).on("click", ".toCartBtn", function(){
+		//加入购物车
+		if(utils.islogin()){
+			var json = {
+				goodsId: id,
+				goodsSku: detailVm.goodsSku.id,
+				number: 1,
+				goodsSource: 2
+			}
+			utils.ajax({
+				url: "/api/order/cart/add",
+				data: JSON.stringify(json),
+				success: function(data){
+					utils.alert("success", "加入成功");
+					utils.ajax({
+						url: "/api/order/cart/list",
+						type: "get",
+						success: function(data){
+							var len = 0
+							var list = data.data.cartItemList;
+							for(var i= 0; i<list.length; i++){
+								len += list[i].goods.length
+							}
+							$("#carNum").text(len)
+						}
+					})
+				}
+			})
+		}else{
+			location.href = "../../login?from=" + encodeURIComponent(location.href);
+		}
+	}).on("click", ".exchangeBtn", function(){
+		//我要换
+		if(utils.islogin()){
+			location.href = "../../exchange/swap_order?id=" + id;
+		}else{
+			location.href = "../../login?from=" + encodeURIComponent(location.href);
+		}
+		
+		
+	})
+	
+	
+	
+	
+	
+	var detailVm = new Vue({
+		el: "#detail",
+		data: function(){
+			return {
+				imgs: [],
+				goodsName: "",
+				price: "",
+				hsMark: {
+					hsMarkName: ""
+				},
+				brandName: "",
+				deprecition: "",
+				categoryName: "",
+				goodsSku: {},
+				swapRemark: "",
+				userId:''
+			}
+		},
+		mounted: function(){
+			var self = this;
+			utils.ajax({
+				url: "/api/swap/portal/goods/sale_goods/info/" + id,
+				type: "get",
+				success: function(data){
+					data = data.data;
+					self.imgs = data.imgs;
+					self.goodsName = data.goodsName;
+					self.price = data.price;
+					self.hsMark.hsMarkName = data.hsMark.hsMarkName
+					self.brandName = data.brandName;
+					self.deprecition = data.deprecition;
+					self.categoryName = data.categoryName;
+					self.goodsSku = data.goodsSku;
+					self.swapRemark = data.swapRemark;
+					businessInfo.userType = data.userType;
+					businessInfo.keFuId = data.keFuId;
+					self.userId = data.userId;
+					setTimeout(function(){
+						$(".imgs li:eq(0)").trigger("click");
+					}, 0)
+					
+					getOther(data.userId);
+					
+					getHot();
+					
+					getDesc();
+					
+					getBusiness(data.userId)
+					
+					goodsComment.idValue = id;
+					goodsComment.render();
+					$(".jqzoom").jqueryzoom({
+							xzoom:400,
+							yzoom:400,
+							offset:10,
+							position:"right",
+							preload:1,
+							lens:1
+					});
+					//商品属性
+          $.each(data.goodsAttrs,function(idx,item){
+            goodsAttrs += '<tr><td style="width: 150px">'+item.attrName+'</td><td>'+item.attrValue+'</td></tr>';
+          })
+          $("#goodsAttrs tbody").html(goodsAttrs);
+					//客服
+					var uname = utils.getCookie('nickName') || ""
+					var uid = utils.getCookie('userIdZBX') || ""
+					var NTKF_PARAM = {
+					    siteid:utils.getCookie('siteid'),     //企业ID，为固定值，必填
+					    sellerid: 'zd_'+utils.kefuStr(data.keFuId),
+					    settingid: data.keFuId,    //接待组ID，为固定值，必填
+					    uid:uid,                              //用户ID，支持字母、数字、下划线。未登录可以为空，但不能给null，uid赋予的值在显示到小能客户端上
+					    uname:uname,                            //未登录可以为空，但不能给null，uname赋予的值显示到小能客户端上
+					    isvip:"0",                           //是否为vip用户，0代表非会员，1代表会员，取值显示到小能客户端上
+					    userlevel:"0",                       //网站自定义会员级别，0-N，可根据选择判断，取值显示到小能客户端上
+					    erpparam:"erp",                        //erpparam为erp功能的扩展字段，可选，购买erp功能后用于erp功能集成
+					    itemid:data.id,                         //(必填)商品ID
+					    itemparam:"2"                         //(选填)itemparam为商品接口扩展字段，用于商品接口特殊要求集成
+					}
+				}
+			})
+		},
+		filters: {
+			formatImg: function(src){
+				console.log(src)
+				return utils.formatImg(src);
+			},
+			formatDep: function(str){
+				return utils.formatDep(str);
+			}
+		}
+	})
+	$('.doyenDetail').click(function(){
+		location.href="doyen?id=" + detailVm.userId
+	})
+})
+
+//卖家其他互换商品
+function getOther(userId){
+	utils.ajax({
+		url: "/api/swap/portal/goods/sale_goods/user_goods_list",
+		type: "get",
+		data: {
+			userId: userId
+		},
+		success: function(data){
+			data = data.data;
+			var html = '';
+			if(data.length==0){
+				$(".other").addClass('hide');
+				return false
+			}
+			for(var i = 0; i < data.length; i++){
+				html += _template.exchangeHotItem({
+					data: data[i]
+				})
+			}
+			$(".other-container").html(html);
+		}
+	})
+}
+
+//侧边热卖
+function getHot(){
+	utils.ajax({
+		url: "/api/swap/portal/goods/sale_goods/hot_list",
+		type: "get",
+		success: function(data){
+			data = data.data;
+			var html = '';
+			if(data.length==0){
+				$(".recommend").addClass('hide');
+				return false
+			}
+			for(var i = 0; i < data.length; i++){
+				html += _template.exchangeHotItem({
+					data: data[i]
+				})
+			}
+			$(".hot-container").html(html);
+		}
+	})
+}
+
+//商品描述
+function getDesc(){
+	utils.ajax({
+		url: "/api/swap/portal/common/goods_desc/" + id,
+		type: "get",
+		success: function(data){
+			data = data.data;
+			$(".exchangeDetailDesc").html(data.goodsDesc.replace(/pa95ui71l.bkt.clouddn/g, 'image.gacjc'));
+		}
+	})
+}
+
+//商家信息
+function getBusiness(userId){
+	utils.ajax({
+		url: "/api/swap/portal/common/sale_user/info/" + userId,
+		type: "get",
+		success: function(data){
+			data = data.data;
+			var mobilePhone = utils.phoneHide(data.mobilePhone);
+			businessInfo.companyName = data.companyName;
+			businessInfo.nickname = data.nickname;
+			businessInfo.shopName = data.shopName;
+			$("#hsMarkUrl").html(data.hsMarkUrl);
+			$("#authTime").html(new Date(data.authTime).format("yyyy-MM-dd"));
+			$("#mobilePhone").html(mobilePhone);
+			$("#goodsCount").html(data.goodsCount);
+			if(data.user_logo){
+				$("#user_logo").attr("src", data.user_logo);
+			}
+			
+		}
+	})
+}
+/*
+ * 0:未收藏， 1已收藏
+ * source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+ * */
+function collect(e){
+	if(!utils.islogin()){
+		utils.alert("danger","请登录后再进行操作！");
+		return;
+	}
+	var el = e||window.event;
+	var val = $(el).attr("val");
+	if(val == '0'){
+		utils.ajax({
+			type:'post',
+			url:'/api/userCenter/collect/add/'+utils.getUrlParamVal('id')+'/2',
+			success: function (data){
+				if(data.success){
+					$(el).addClass("collected").text("已收藏").attr("val","1")
+					utils.alert("success","收藏成功");
+				}else{
+					utils.alert("danger",data.msg);
+				}
+			}
+		})
+	}else{
+		utils.ajax({
+			type:'post',
+			url:'/api/userCenter/collect/delete/'+utils.getUrlParamVal('id')+'/2',
+			success: function (data){
+				if(data.success){
+					$(el).removeClass("collected").text("收藏").attr("val","0")
+					utils.alert("success","您已取消收藏");
+				}else{
+					utils.alert("danger",data.msg);
+				}
+			}
+		})
+	}
+}
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<script src="../../src/js/plugin/jquery-qrcode-master/jquery.qrcode.min.js"></script>
+	<style>
+		.payDetail {
+			background: #ffffff;
+			margin: 50px auto 74px;
+			padding: 90px 336px;
+			height: 671px;
+			font-size: 14px;
+		}
+
+		.payDetail .code {
+			width: 226px;
+			padding: 15px;
+			border: 2px solid #DF735A;
+			margin: 20px auto;
+		}
+
+		.payDetail .contractDetail {
+			margin-top: 10px;
+			font-size: 14px;
+			text-align: center;
+		}
+	</style>
+</head>
+
+<body class="exchangePay">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include cartHeaderNav.ejs %>
+	<div id="main" class="main">
+		<div class="container payDetail" id="detail">
+			<div>
+				<p style="margin-bottom: 20px;">订单提交成功，请尽快付款！订单号：{{orderNumber}}</p>
+			</div>
+			<div>支持微信、支付宝、云闪付扫码支付 请您在30分钟内完成付款，否则订单会自动取消</div>
+			<p class="tc" style="margin-top: 80px;">应付金额：<b class="fs22 new-red">{{price}}</b>元</p>
+			<div class="code">
+				<div id="qrcode">
+
+				</div>
+			</div>
+			<div class="fs18 tc">扫码支付</div>
+			<div class="contractDetail" v-if="caseType == 2">
+				<p>扫描二维码 即表明您同意<a class="blue" onclick="$('#contract').addClass('show')">电子合同</a></p>
+			</div>
+
+		</div>
+
+	</div>
+	<%- include contract.ejs %>
+	<%- include ../footer.ejs %>
+
+
+	<script>
+		$('.step-cart .step').eq(1).addClass('active')
+		$('.step-cart .step').eq(2).addClass('active')
+		var id = utils.getUrlParam("id")
+		var swapType = utils.getUrlParam("swapType") || ''
+		//是从哪个模块来的
+		var from = utils.getUrlParam("from");
+		var detailVM = new Vue({
+			el: "#detail",
+			data: {
+				id: "",
+				price: "",
+				goodsName: "",
+				payDetail: "",
+				qrsrc: "",
+				payBillId: "",
+				data: {},
+				caseType: 1,
+				orderNumber: ""
+			},
+			mounted: function () {
+				var self = this;
+				self.id = id;
+				self.goodsName = utils.getUrlParam("goodsName") || ""
+				self.getCode();
+			},
+			methods: {
+				contractDetail: function (callback) {
+					var self = this
+					utils.ajax({
+						url: "/api/order/contract/" + self.payBillId,
+						type: "post",
+						success: function (data) {
+							self.data = data.data
+							data.data.forEach(function (item) {
+								if (item.caseType == 2) {
+									self.caseType = 2;
+									$('#contract').addClass('show')
+								}
+							})
+							callback && callback()
+						}
+					})
+				},
+				getCode: function () {
+					var self = this;
+					utils.ajax({
+						url: "/api/pay/pay_bill/pay/" + self.id,
+						type: "get",
+						success: function (data) {
+							self.payDetail = data.data.payDetail;
+							self.payBillId = data.data.id
+							self.price = data.data.payAmount
+							self.orderNumber = data.data.orderNumber
+							$("#qrcode").qrcode({
+								width: 191,
+								height: 191,
+								text: data.data.qrCodeUrl
+							});
+							self.contractDetail(function () {
+								contract.render(self.data)
+							})
+						}
+					})
+				},
+				showDialog: function () {
+					var self = this;
+					this.$confirm('是否已完成支付？', '确认信息', {
+							distinguishCancelAndClose: true,
+							confirmButtonText: '已完成支付',
+							cancelButtonText: '重新支付'
+						})
+						.then(() => {
+							if (from == 'swap') {
+								location.href = "../../user/order/exchange_swap"
+							} else if (from == 'swapOut') {
+								location.href = "../../user/order/exchange_swap_out"
+							} else {
+								location.href = "pay_success?id=" + self.id + "&orderNumber=" + self.orderNumber + "&price=" +
+									self.price + "&swapType=" + swapType
+							}
+
+						})
+						.catch(action => {
+
+						});
+				}
+			}
+		})
+
+
+		var timer = setInterval(function () {
+			$.ajax({
+				url: "/api/pay/pay_bill/payQuery/" + id,
+				type: "get",
+				beforeSend: function (request) {
+					var _t = utils.getCookie("token");
+					if (!!_t) {
+						request.setRequestHeader("Authorization", _t);
+					}
+				},
+				success: function (data) {
+					if (data.success) {
+						if (data.data.payStatus == 3) {
+							detailVM.showDialog();
+							detailVM.price = data.data.payAmount
+							clearInterval(timer)
+						}
+					} else {
+						if (data.msg != 'Token丢失或者不可用' && data.msg != '内部错误，服务器异常') {
+							utils.alert("danger", data.msg)
+						}
+						if (data.msg == '无法找到指定的账单') {
+							window.location.reload()
+						}
+					}
+				}
+			})
+		}, 3000)
+	</script>
+
+</body>
+
+</html>

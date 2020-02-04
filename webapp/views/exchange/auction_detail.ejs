@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.exchangeDetailDesc {padding: 20px 0;}
+.statusWrap{margin-bottom: 10px;}
+.statusWrap em{margin-right: 20px;display: inline-block;background:#890F1C;color:#fff;width: 80px;line-height: 26px;text-align: center;border-top-right-radius: 10px;border-bottom-right-radius: 10px;font-style:normal;}
+.priceWrap .input {width: 135px;}
+.label-w label{display: inline-block;width: 56px;}
+.label-w .tr{max-width: 180px;}
+
+.exchangeDetailComment {padding: 20px 0;}
+.exchangeDetailComment>h2 {line-height: 40px;background:#999999;color: #fff;font-size: 18px;text-align: center;}
+.exchangeDetailComment>table {width: 100%}
+.exchangeDetailComment td, .exchangeDetailComment th {border: 1px solid #E6E6E6;line-height: 32px;text-align: center;font-weight: normal;}
+
+.icon_collect{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-bottom: -3px;
+	background: url(../../src/img/exchange/collected.png) center center no-repeat;
+	background-size: 100% 100%;
+}
+.authentication{
+	display: inline-block;
+	width: 86px;
+	height: 22px;
+	background: url('../../src/img/exchange/authentication.png') center center no-repeat;
+	background-size: 100% 100%;
+}
+/*jqzoom*/
+.jqzoom,#detail{
+	position: relative;
+	
+}
+.zoomdiv{
+	z-index:100;
+	position:absolute;
+	top:0px;
+	left:400px;
+	width:370px;
+	height:370px;
+	 border:1px solid #e4e4e4;
+	 display:block !important;
+	 text-align:center;
+	 overflow: hidden;
+	 }
+.bigimg{
+	min-width:700px;
+	height:700px;
+	width:700px;
+	}
+.jqZoomPup{
+	z-index:10;
+	visibility:hidden;
+	position:absolute;
+	top:0px;left:0px;
+	width:200px !important;
+	height:200px !important;
+	border:1px solid #aaa;
+	background:#F5F5F5 50% top no-repeat;
+	opacity:0.5;
+	-moz-opacity:0.5;
+	-khtml-opacity:0.5;
+	filter:alpha(Opacity=50);cursor:move;
+	}
+	
+.auctionSuccess .dialog-main {width: 450px;height: 370px;margin-left: -225px;margin-top: -185px;}
+.auctionSuccess .dialog-body{bottom: 0;top: 0;}
+.auctionSuccess .dialog-body>div {padding: 45px 80px;position: relative;text-align: center;}
+.infoSuccess h1{font-weight: bolder;color: #1A1A1A;margin-bottom: 39px;}
+.price{color: #333333;font-size: 18px;}
+.price span{color: #C2A374;font-size: 24px;}
+#btn button{margin: 0 20px;}
+#goodsAttrs{
+  margin: 20px;
+  font-size: 16px;
+}
+#goodsAttrs table{
+  width: 100%;
+  text-align: center;
+}
+#goodsAttrs table, #goodsAttrs tr, #goodsAttrs td{
+  border-color: #E0E0E0 !important;
+}
+#goodsAttrs td{
+  padding: 10px 0;
+}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+				  	<el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+            <el-breadcrumb-item><a href="../../exchange/index">互换坊</a></el-breadcrumb-item>
+				  	<el-breadcrumb-item>物品拍卖</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		
+		<div class="container">
+			<div class="clearfix">
+				<div class="fr exchangeDetailRight">
+					 <div class="opt clearfix">
+						<!--<a val="0" class="startBtn fs16 fl"><i class="iconfont icon-exchangeStar"></i>收藏</a>-->
+						&emsp;
+						<!--<a><i class="iconfont icon-exchangeShare"></i>分享</a>-->
+						<div class="fr" style="height: 20px;">
+							<%- include ../share_baidu.ejs %>
+						</div>
+					</div> 
+					<div class="businessInfo" id="businessInfo">
+						<h3>卖家信息</h3>
+						<div style="padding: 0 10px 20px 10px;">
+							<table>
+								<tr>
+									<td width="80">
+										<img id="user_logo" src="../../src/img/avatar.jpg" width="60" height="60">
+									</td>
+									<td>
+									  <p id="userName">
+									  	<span v-if="userType == 4">{{companyName}}</span>
+									  	<span v-else>{{nickname}}</span>
+									  </p>
+										<strong id="hsMarkUrl"></strong>
+										<p v-if="userType != 4">已实名认证<span class="tag">证</span></p>
+										<p v-if="userType == 4"><a class="authentication"></a></p>
+									</td>
+								</tr>
+								<tr>
+									<td><label>认证时间</label></td>
+									<td id="authTime"></td>
+								</tr>
+								<tr>
+									<td><label>发布商品</label></td>
+									<td><span id="goodsCount"></span>件</td>
+								</tr>
+								<tr>
+									<td><label>联系电话</label></td>
+									<td id="mobilePhone"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><a class="btn btn-primary doyenDetail">查看个人详情</a></td>
+									<td></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="designLeftItem tc">
+						<h2 class="title cursor" @click="NTKF.im_openInPageChat(keFuId)">
+							<img src="../../src/img/kefu.png" width="25"/>联系商家
+						</h2>
+					</div>
+					<div class="other">
+						<h3>卖家其他互换商品</h3>
+						<ul class="other-container">
+							
+						</ul>
+					</div>
+					<div class="recommend">
+						<h3>同类商品推荐</h3>
+						<ul class="hot-container">
+							
+						</ul>
+					</div>
+				</div>
+				<div class="exchangeDetailLeft">
+					<div class="clearfix" id="detail" style="overflow:hidden;margin-bottom: 20px;">
+						<div class="fl img jqzoom">
+							<img src="" width="100%">
+						</div>
+						<div class="fl imgs">
+							<ul>
+								<li v-for="item in imgs">
+									<a><img :src="item.imgUrl|formatImg" width="100%"></a>
+								</li>
+							</ul>
+						</div>
+						<div class="info">
+							<div class="intro">
+								<p>{{ goodsName }}</p>
+							</div>
+							<div class="statusWrap">
+								<template v-if="goodsStatus==10">
+									<em>正在进行</em>
+									距结束 <span class="timer">{{ auctionStartTime | formatStatus2(auctionEndTime, goodsStatus) }}</span>
+								</template>
+								<template v-if="goodsStatus==2">
+									<em>即将开始</em>
+									距结束 <span class="timer">{{ auctionStartTime | formatStatus2(auctionEndTime, goodsStatus) }}</span>
+								</template>
+								<template v-if="goodsStatus==11||goodsStatus==12">
+									<em>已结束</em>
+									结束时间 {{ auctionStartTime | formatStatus2(auctionEndTime, goodsStatus) }}
+								</template>
+							</div>
+							<table>
+								<tr class="priceWrap fs16">
+									<td colspan="4">
+										<template v-if="goodsStatus==10 && hasSend">
+											<div>
+												<label>当前价</label>
+												<b class="new-red fs24">￥{{presentPrice==''?upsetPrice:presentPrice}}</b>
+												&ensp;
+												<label>出价人</label>
+												<span>{{swapAuction.userName}}</span>
+											</div>
+											<div>
+												<label>出价</label>
+												<div class="input">
+													<!--<input type="text" onkeyup="this.value=this.value.replace(/\D|^0/g,'')" onafterpaste="this.value=this.value.replace(/\D|^0/g,'')">-->
+													<input type="text">
+												</div>
+												<a class="btn btn-danger" v-on:click="addPrice">出价</a>
+											</div>
+										</template>
+										<template v-else-if="goodsStatus==10&&!hasSend">
+											<div>
+												<label>保证金</label>
+												<b class="new-red fs24">￥{{ deposit }}</b>
+												&ensp;
+												<label>当前价</label>
+												<span>￥{{presentPrice==''?upsetPrice:presentPrice}}</span>
+											</div>
+											<div>
+												<a class="btn btn-danger" v-on:click="toPayBond">报名提交保证金</a>
+												<span>提醒：先报名交保证金再出价</span>
+											</div>
+										</template>
+										<template v-else-if="goodsStatus==2&&hasSend">
+											<div>
+												<label>当前价</label>
+												<b class="green fs24">￥{{presentPrice==''?upsetPrice:presentPrice}}</b>
+											</div>
+											<div>
+												<label>出价</label>
+												<div class="input">
+													<input type="text" onkeyup="this.value=this.value.replace(/\D|^0/g,'')" onafterpaste="this.value=this.value.replace(/\D|^0/g,'')">
+												</div>
+												<a class="btn btn-success">即将开始</a>
+											</div>
+										</template>
+										<template v-else-if="goodsStatus==2&&!hasSend">
+											<div>
+												<label>保证金</label>
+												<b class="new-red fs24">￥{{ deposit }}</b>
+												&ensp;
+												<label>起拍价</label>
+												<span class="new-red">{{upsetPrice}}</span>
+											</div>
+											<div>
+												<a class="btn btn-success" v-on:click="toPayBond">报名提交保证金</a>
+												<span>提醒：先报名交保证金再出价</span>
+											</div>
+										</template>
+										<template v-else-if="goodsStatus==11">
+											<div>
+												<label>成交价</label>
+												<b class="new-red fs24">￥{{ dealPrice }}</b>
+												<span>拍卖已成交</span>
+											</div>
+											<div>
+												{{ joinConut }}人报名 | {{ lookConut }}人围观
+											</div>
+										</template>
+										<template v-else-if="goodsStatus==12">
+											<div>
+												<b class="yellow fs24">拍卖已流拍，未达到保留价</b>
+											</div>
+											<div>
+												{{ joinConut }}人报名 | {{ lookConut }}人围观
+											</div>
+										</template>
+									</td>
+								</tr>
+								<tr class="label-w">
+									<td><label>起拍价</label></td>
+									<td class="tr new-red"><span class="fs20">{{ upsetPrice }}</span>元</td>
+									<td><label>加价幅度</label></td>
+									<td class="tr new-red"><span class="fs20">{{ skipPrice }}</span>元</td>
+								</tr>
+								<tr class="label-w">
+									<td><label>保证金</label></td>
+									<td class="tr new-red"><span class="fs20">{{ deposit }}</span>元</td>
+									<!--<td><label>保留价</label></td>
+									<td class="tr">{{ reservePrice }}元</td>-->
+									<td><label>新旧程度</label></td>
+									<td class="tr">
+										<span>{{ deprecition | formatDep }}</span>
+									</td>
+								</tr>
+								<tr class="label-w">
+									<td><label>商品品牌</label></td>
+									<td class="tr" colspan="3">
+										<span>{{ brandName }}</span>
+									</td>
+								</tr>
+								<tr class="label-w">
+									<td><label>鉴定机构</label></td>
+									<td class="tr" colspan="3">
+										<span>{{ hsMark.hsMarkName }}</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					
+					<div>
+						<ul class="tabWrap clearfix">
+							<li class="cur" target=".exchangeDetailDesc"><a>详情</a></li>
+							<li target=".exchangeDetailAttr"><a>商品属性</a></li>
+							<li target=".exchangeDetailComment"><a>出价记录<span class="red">(<span id="recordCount"></span>)</span></a></li>
+						</ul>
+						<div>
+							<div class="exchangeDetailDesc ue-view">
+								
+							</div>
+							<div class="exchangeDetailAttr hide" id="goodsAttrs">
+                <table border="1" cellspacing="0" cellpadding="0">
+                  <tbody></tbody>
+                </table>
+              </div>
+							<div class="exchangeDetailComment hide">
+								<h2>拍卖描述</h2>
+								<table id="record">
+									<thead>
+										<tr>
+											<th>出价金额</th>
+											<th>出价人</th>
+											<th>出价时间</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="item in list">
+											<td>{{item.auctionPrice}}</td>
+											<td>{{item.userName | formatName}}</td>
+											<td>{{item.createTime}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+<!--竞拍成功提示-->
+<div class="dialog auctionSuccess" id="auctionSuccess">
+	<div class="mask"></div>
+	<div class="dialog-main">
+		<div class="dialog-body">
+			<div>
+				<div class="infoSuccess">
+					<h1>恭喜您竞拍成功</h1>
+					<p class="price" style="margin-bottom: 19px;">成交价<span id="dealPrice">￥0.00</span></p>
+					<p class="price" style="margin-bottom: 10px;">待支付金额 <span id="surplusPrice">￥0.00</span></p>
+					<p class="fs14" style="color: #999999;margin-bottom: 20px;">（保证金已抵扣部分成交款）</p>
+					<div class="fs12" style="text-align: left;color: #999999;padding: 20px 0;border-top: 1px solid #E0E0E0;">
+						<p>自拍卖结束 48小时内未完成支付 ，订单将自动取消 ！ </p>
+						<p>保证金也会扣除，请及时支付！</p>
+					</div>
+				</div>
+				<div id="btn">
+					<button class="btn btn-default" onclick="$('#auctionSuccess').removeClass('show')">暂不支付</button>
+					<button class="btn btn-warning toPay">去支付</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<%- include ../footer.ejs %>
+
+<script>
+var userIdZBX = utils.getCookie("userIdZBX") ||　"";
+var routerVm = new Vue({
+	el: "#router"
+})
+
+var id = utils.getUrlParam("id")
+var businessInfo = new Vue({
+	el: "#businessInfo",
+	data:{
+		keFuId: '',
+		userType: '',
+		companyName: '',
+		nickname: ''
+	}
+})
+/* *
+ * 是否已收藏
+ * source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+ * */
+/*utils.checkCollect(id, 2, function(){
+	$(".startBtn").attr("val","1")
+	$('.startBtn').children("i").attr("class",'icon_collect')
+})*/
+$(document).on("click", ".startBtn", function(){
+	if(!utils.islogin()){
+		utils.alert("danger","请登录后再进行操作！");
+		return;
+	}
+	var val = $(this).attr("val");
+	//source：1珠宝店,2互换销售订单, 5设计室, 6制造间, 7图文管
+	if(val == '0'){
+		//收藏
+		utils.ajax({
+			url: "/api/userCenter/collect/add/" + id+'/2',
+			success: function(data){
+				if(data.success){
+					utils.alert("success", "收藏成功");
+					$('.startBtn').attr("val","1");
+					$('.startBtn').children("i").attr("class",'icon_collect')
+				}else{
+					utils.alert("danger", data.msg);
+				}
+			}
+		})
+	}else{
+		//删除
+		utils.ajax({
+			url: "/api/userCenter/collect/delete/" + id+'/2',
+			success: function(data){
+				if(data.success){
+					utils.alert("success", "您已取消收藏！");
+					$('.startBtn').attr("val","0")
+					$('.startBtn').children("i").attr("class",'iconfont icon-exchangeStar')
+				}else{
+					utils.alert("danger", data.msg);
+				}
+			}
+		})
+	}
+}).on("click", ".imgs li", function(e){
+	//图片预览
+	var self = $(e.currentTarget);
+	var src = self.find("img").attr("src");
+	self.addClass("cur").siblings().removeClass("cur");
+	$(".img img").attr("src", src);
+	$(".img img").attr("jqimg", src);
+}).on("click", ".toDetail", function(e){
+	//点击去详情
+	var self = $(e.currentTarget);
+	var id = self.parents("li").attr("data-id");
+	location.href = "../../exchange/swap_detail?id=" + id;
+}).on("click", ".tabWrap li", function(e){
+	//详情评论切换
+	var self = $(e.currentTarget);
+	var target = self.attr("target");
+	self.addClass("cur").siblings().removeClass("cur")
+	$(target).removeClass("hide").siblings().addClass("hide");
+}).on("click", ".toBuyBtn", function(){
+	//立即购买
+	if(utils.islogin()){
+		location.href = "../../exchange/buy?source=2&id=" + id;
+	}else{
+		location.href = "../../login?from=" + encodeURIComponent(location.href);
+	}
+}).on("click", ".toCartBtn", function(){
+	//加入购物车
+	if(utils.islogin()){
+		utils.ajax({
+			url: "/api/order/cart",
+			data: {
+				goodsId: id,
+				goodsSku: "",
+				number: 1,
+				goods_source: 2
+			},
+			success: function(data){
+				
+			}
+		})
+	}else{
+		location.href = "../../login?from=" + encodeURIComponent(location.href);
+	}
+}).on("click",'.toPay', function(){
+	window.location.href = '../../exchange/buy?flag=auction&skuid=0&source=2&id='+id
+})
+
+
+//竞拍列表
+var recordVm = new Vue({
+	el: "#record",
+	data: {
+		list: []
+	},
+	mounted: function(){
+		var self = this;
+		utils.ajax({
+			url: "/api/swap/portal/goods/swap_goods_auction/auction_list",
+			data: {
+				goodsId: id,
+				current: 1,
+				size: 1000
+			},
+			type: "get",
+			success: function(data){
+				self.list = data.data.records;
+				$("#recordCount").text(data.data.total || 0)
+			}
+		})
+	},
+	filters: {
+		formatResult: function(val){
+			var text = "未开始";
+			if(val == 1){
+				text = "成交"
+			}else if(val == 2){
+				text = "失败"
+			}else if(val == 3){
+				text = "退费"
+			}
+			return text;
+		},
+		formatName: function(val){
+			var str = val.substring(3,7)
+			var str2 = val.replace(str,'****')
+			return str2;
+		}
+	}
+})
+
+
+var detailVm = new Vue({
+	el: "#detail",
+	data: function(){
+		return {
+			imgs: [],
+			goodsName: "",
+			hsMark: {
+				hsMarkName: ""
+			},
+			brandName: "",
+			deprecition: "",
+			categoryName: "",
+			goodsSku: {},
+			goodsStatus: "",
+			auctionEndTime: "",
+			auctionStartTime: "",
+			deposit: 0,
+			joinConut: 0,
+			lookConut: 0,
+			marketPrice: 0,
+			skipPrice: 0,
+			upsetPrice: 0,
+			reservePrice: 0,
+			dealPrice: 0,
+			presentPrice: 0,
+			swapAuction: {
+				userName: ""
+			},
+			
+			//是否提交过保证金
+			hasSend: false,
+			userId: '',
+		}
+	},
+	mounted: function(){
+		var self = this;
+		utils.ajax({
+			url: "/api/swap/portal/goods/swap_goods_auction/info/" + id,
+			type: "get",
+			success: function(data){
+				data = data.data;
+				self.imgs = data.imgs;
+				self.goodsName = data.goodsName;
+				self.hsMark.hsMarkName = data.hsMark.hsMarkName
+				self.brandName = data.brandName;
+				self.deprecition = data.deprecition;
+				self.categoryName = data.categoryName;
+				self.goodsSku = data.goodsSku;
+				self.goodsStatus = data.goodsStatus
+				self.auctionEndTime = data.auctionEndTime
+				self.auctionStartTime = data.auctionStartTime;
+				self.deposit = data.deposit;
+				self.joinConut = data.joinConut;
+				self.lookConut = data.lookConut;
+				self.marketPrice = data.marketPrice
+				self.skipPrice = data.skipPrice
+				self.upsetPrice = data.upsetPrice
+				self.reservePrice = data.reservePrice;
+				self.dealPrice = data.dealPrice
+				self.presentPrice = data.presentPrice;
+				businessInfo.userType = data.userType;
+				self.userId = data.userId;
+				if(data.swapAuction){
+				  if(data.swapAuction.userName.indexOf('1') > -1){
+				    self.swapAuction.userName = utils.phoneHide(data.swapAuction.userName);
+				  }else{
+				    self.swapAuction.userName = data.swapAuction.userName;
+				  }
+				}
+				if(data.goodsStatus == '11' && userIdZBX　== data.dealUserId && data.orderState == ''){
+					var num = self.dealPrice - self.deposit
+					$("#dealPrice").html('￥'+self.dealPrice)
+					$("#surplusPrice").html('￥'+num.toFixed(2))
+					$("#auctionSuccess").addClass('show')
+				}
+				setTimeout(function(){
+					$(".imgs li:eq(0)").trigger("click");
+				}, 0)
+				
+				getOther(data.userId);
+				
+				getHot();
+				
+				getDesc();
+				//商品属性
+        $.each(data.goodsAttrs,function(idx,item){
+          goodsAttrs += '<tr><td style="width: 150px">'+item.attrName+'</td><td>'+item.attrValue+'</td></tr>';
+        })
+        $("#goodsAttrs tbody").html(goodsAttrs);
+				getBusiness(data.userId);
+				$(".jqzoom").jqueryzoom({
+							xzoom:400,
+							yzoom:400,
+							offset:10,
+							position:"right",
+							preload:1,
+							lens:1
+				});
+				$.ajax({
+					url: "/api/swap/portal/goods/swap_goods_auction/join_check/" + id,
+					type: "get",
+					contentType: 'application/json;charset=utf-8',
+			        headers:{   
+			        	'Authorization':utils.getCookie("token")
+			        },
+					success: function(data){
+						if(data.success){
+							self.hasSend = data.data
+						}
+					}
+				})
+				if(data.goodsStatus == 2 || data.goodsStatus == 10){
+					window.setInterval(function(){
+						if(new Date().getTime()>=new Date(data.auctionEndTime).getTime()){
+							location.reload();
+						}else{
+							$(".timer").text(self.formatStatus(data.auctionStartTime, data.auctionEndTime, data.goodsStatus))
+						}
+						
+					}, 1000)
+				}
+				
+				//客服
+				var uname = utils.getCookie('nickName') || ""
+				var uid = utils.getCookie('userIdZBX') || ""
+				var NTKF_PARAM = {
+				    siteid:utils.getCookie('siteid'),     //企业ID，为固定值，必填
+				    sellerid: 'zd_'+utils.kefuStr(data.keFuId),
+				    settingid: data.keFuId,    //接待组ID，为固定值，必填
+				    uid:uid,                              //用户ID，支持字母、数字、下划线。未登录可以为空，但不能给null，uid赋予的值在显示到小能客户端上
+				    uname:uname,                            //未登录可以为空，但不能给null，uname赋予的值显示到小能客户端上
+				    isvip:"0",                           //是否为vip用户，0代表非会员，1代表会员，取值显示到小能客户端上
+				    userlevel:"0",                       //网站自定义会员级别，0-N，可根据选择判断，取值显示到小能客户端上
+				    erpparam:"erp",                        //erpparam为erp功能的扩展字段，可选，购买erp功能后用于erp功能集成
+				    itemid:data.id,                         //(必填)商品ID
+				    itemparam:"2"                         //(选填)itemparam为商品接口扩展字段，用于商品接口特殊要求集成
+				}
+			}
+		})
+	},
+	
+	methods: {
+		toPayBond: function(){
+			if(utils.islogin()){
+				location.href = "../../exchange/auction_pay?id=" + id;
+			}else{
+				location.href = "../../login?from=" + encodeURIComponent(location.href);
+			}
+		},
+		addPrice: function(e){
+			var self = $(e.currentTarget);
+			var price = $.trim(self.siblings(".input").find("input").val());
+			if(price == ""){
+				utils.alert("info", "请输入价格");
+				return;
+			}
+			var json = {
+				auctionPrice: price,
+				goodsId: id
+			}
+			utils.ajax({
+				url: "/api/swap/portal/goods/swap_goods_auction/offer",
+				data: JSON.stringify(json),
+				success: function(data){
+					if(data.success){
+						utils.alert("success", "出价成功");
+						setTimeout(function(){
+							location.reload();
+						}, 2000)
+					}else{
+						utils.alert("danger", data.msg)
+					}
+				}
+			})
+		},
+		formatStatus: function(start, end, status){
+			var text = "";
+			var start = new Date(start).getTime();
+			var end = new Date(end).getTime();
+			if(status == 10){
+				start = new Date().getTime();
+				text = leftTimer(end-start);
+			}else if(status == 2){
+				start = new Date().getTime();
+				text = leftTimer(end-start);
+			}else if(status == 11 || status == 12){
+				text = new Date(end).format("MM月dd日 hh:mm");
+			}
+			return text
+		}
+	},
+	filters: {
+		formatStatus2: function(start, end, status){
+			return detailVm.formatStatus(start, end, status)
+		},
+		formatImg: function(str){
+			return utils.formatImg(str)
+		},
+		formatDep: function(str){
+			return utils.formatDep(str);
+		}
+	},
+})
+$(function(){
+	$('.doyenDetail').click(function(){
+		location.href="doyen?id=" + detailVm.userId
+	})
+	
+	
+})
+
+//卖家其他拍卖商品
+function getOther(userId){
+	utils.ajax({
+		url: "/api/swap/portal/goods/swap_goods_auction/user_goods_list",
+		type: "get",
+		data: {
+			userId: userId
+		},
+		success: function(data){
+			data = data.data;
+			if(data.length == 0){
+				$(".other").addClass('hide')
+			}
+			var html = '';
+			for(var i = 0; i < data.length; i++){
+				data[i].price = data[i].upsetPrice
+				html += _template.exchangeHotItem({
+					data: data[i]
+				})
+			}
+			$(".other-container").html(html);
+		}
+	})
+}
+
+//侧边热卖
+function getHot(){
+	utils.ajax({
+		url: "/api/swap/portal/goods/sale_goods/hot_list",
+		type: "get",
+		success: function(data){
+			data = data.data;
+			if(data.length == 0){
+				$(".recommend").addClass('hide')
+			}
+			var html = '';
+			for(var i = 0; i < data.length; i++){
+				html += _template.exchangeHotItem({
+					data: data[i]
+				})
+			}
+			$(".hot-container").html(html);
+		}
+	})
+}
+
+//商品描述
+function getDesc(){
+	utils.ajax({
+		url: "/api/swap/portal/common/goods_desc/" + id,
+		type: "get",
+		success: function(data){
+			data = data.data;
+			$(".exchangeDetailDesc").html(data.goodsDesc.replace(/pa95ui71l.bkt.clouddn/g, 'image.gacjc'));
+		}
+	})
+}
+
+//商家信息
+function getBusiness(userId){
+	utils.ajax({
+		url: "/api/swap/portal/common/sale_user/info/" + userId,
+		type: "get",
+		success: function(data){
+			data = data.data;
+			var	mobilePhone = utils.phoneHide(data.mobilePhone)
+			businessInfo.companyName = data.companyName;
+			businessInfo.nickname = data.nickname;
+			$("#hsMarkUrl").html(data.hsMarkUrl);
+			$("#authTime").html(new Date(data.authTime).format("yyyy-MM-dd"));
+			$("#mobilePhone").html(mobilePhone);
+			$("#goodsCount").html(data.goodsCount);
+			if(data.user_logo){
+				$("#user_logo").attr("src", data.user_logo);
+			}
+		}
+	})
+}
+
+function leftTimer(leftTime) {
+	var text = "";
+  	var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+  	var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+  	var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟
+  	var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数
+  	days = checkTime(days);
+  	hours = checkTime(hours);
+  	minutes = checkTime(minutes);
+  	seconds = checkTime(seconds);
+  	if (days >= 0 || hours >= 0 || minutes >= 0 || seconds >= 0) {
+		text = days + "天" + hours + "小时" + minutes + "分" + seconds + "秒";
+	}	
+	return text
+}
+function checkTime(i) { //将0-9的数字前面加上0，例1变为01
+	if (i < 10) {
+  		i = "0" + i;
+  	}
+	return i;
+}
+</script>
+
+</body>
+</html>
+

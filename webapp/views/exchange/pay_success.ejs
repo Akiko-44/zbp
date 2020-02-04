@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		/* body {background: #f5f5f5;}
+.exchangeTop {border-bottom: 1px solid #ccc;}
+.payInfo {width: 800px;height: 170px;background:#fff;margin:40px auto;position: relative;}
+.payInfo>table {width: 100%;}
+.payInfo td {padding: 40px;}
+.payInfo h2 {font-size: 24px;margin-bottom: 20px;}
+.payInfo p{font-size: 18px;margin-top: 10px;}
+.otherInfo {font-size: 18px;}
+.otherInfo h3 {margin: 30px auto;}
+.paySucc{width: 1200px;margin: 120px auto 0;}
+.orderInfo{margin: 32px 0 32px 490px;width: 586px;height: 246px;background: #FFFFFF;border-radius: 16px;padding: 40px;box-sizing: border-box;}
+.paySucc .p1{font-size: 40px;font-weight: bold;color: #C0A475;}
+.paySucc .p2{width: 310px;font-size: 28px;border-bottom: 1px solid #C0A475;padding: 10px 0 5px;margin-bottom: 40px;}
+.paySucc .p3{font-size: 20px;color: #666666;}
+.paySucc .paySuccBtn{padding-top: 40px;text-align: center;}
+.paySucc button{display:inline-block;width: 152px;height: 44px;margin: 35px;line-height: 44px;text-align: center;font-size: 22px;border-radius: 22px;}
+.paySucc button:first-child{background: #C0A475;color: #FFFFFF;border: 1px solid #C0A475;}
+.paySucc button:last-child{background: #FFFFFF;color: #C0A475;border: 1px solid #C0A475;}
+#payBg{overflow: hidden;background-image: url('../../src/img/noimg.png');background-size: 310px 310px;background-repeat: no-repeat;background-position: 170px center;} */
+		.pay-success {
+			padding-top: 140px;
+			margin: 50px auto 74px;
+			height: 671px;
+			background: #ffffff;
+			text-align: center;
+			font-size: 24px;
+			color: #666666;
+		}
+
+		.pay-success a {
+			display: inline-block;
+			margin: 89px 15px;
+			width: 200px;
+			height: 50px;
+			line-height: 50px;
+			font-size: 18px;
+			border-radius: 10px;
+			color: #df735a;
+			border: 1px solid #df735a;
+		}
+
+		.pay-success a:last-child {
+			background: #DF735A;
+			color: #ffffff;
+		}
+	</style>
+</head>
+
+<body class="exchangePaySuccess">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../header.ejs %>
+
+	<%- include cartHeaderNav.ejs %>
+	<div class="pay-success container">
+		<img src="../../src/img/order/icon_success.png" alt="" width="70" height="70" style="margin-bottom: 25px;">
+		<p>订单支付成功</p>
+		<div>
+			<a href="/">返回首页</a><a href="/user/order/index">查看订单</a>
+		</div>
+	</div>
+	<!-- <div class="paySucc">
+	  <div id="payBg">
+      <div class="orderInfo">
+        <p class="p1">您的订单已完成</p>
+        <p class="p2">宝贝正在飞奔向您</p>
+        <p class="p3" style="margin-bottom: 10px;">订单编号：<span id="orderNumber"></span></p>
+        <p class="p3">订单金额：<span id="price"></span>元</p>
+      </div>
+	  </div>
+	  <div class="paySuccBtn">
+	    <button id="toOrder">查看订单</button>
+	    <button id="toBuy">再次购买</button>
+	  </div>
+	</div> -->
+
+	<%- include ../footer.ejs %>
+
+
+	<script>
+		$('.step-cart .step').eq(1).addClass('active')
+		$('.step-cart .step').eq(2).addClass('active')
+		$('.step-cart .step').eq(3).addClass('active')
+		/*var swapType = utils.getUrlParam("swapType") || ''
+		$(function(){
+			$("#orderNumber").text(utils.getUrlParam("orderNumber"));
+			$("#price").text(utils.getUrlParam("price"));
+			if(!swapType){
+				utils.ajax({
+			      url: "/api/order/info/"+utils.getUrlParam("orderNumber"),
+			      type:"get",
+			      success: function(data){
+			        data = data.data;
+			        var bgUrl = utils.formatImg(data.orderGoodVOList[0].skuMainPic);
+			        $("#payBg").css("background-image", "url("+bgUrl+")")
+			      }
+			    })
+			}else{
+				utils.ajax({
+			      url: "/api/order/swap/info/"+utils.getUrlParam("orderNumber") + '/' + swapType,
+			      type:"get",
+			      success: function(data){
+			        data = data.data;
+			        var bgUrl = utils.formatImg(data.swapOutList[0].skuMainPic);
+			        $("#payBg").css("background-image", "url('"+bgUrl+"')")
+			      }
+			    })
+			}
+			$(document).on("click", "#toOrder", function(){
+				location.href = "../../user/order/jewelry"
+
+			}).on("click", "#toBuy", function(){
+				location.href = "../"
+			})
+
+		}) */
+	</script>
+
+</body>
+
+</html>

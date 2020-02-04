@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.contentWrap {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+}
+.contentWrap>ul {
+	width: 1040px;
+	margin-top: 60px;
+}
+.contentWrap>ul li {
+	float: left;
+	width: 220px;
+	position: relative;
+	margin: 0 20px;
+}
+.contentWrap .applyBtn {
+	background: #fff;
+	position: absolute;
+	left: 50%;
+	width: 88px;
+	line-height: 26px;
+	margin-left: -44px;
+	bottom: 22px;
+	color: #931822;
+	border-radius: 4px;
+}
+</style>
+</head>
+<body class="business-bd">
+	
+	
+	<div class="contentWrap">
+	
+		<div class="stepWrap">
+			<ul class="clearfix">
+				<li class="fl cur">
+					<span>
+						<i class="icon icon-businessStep1"></i>
+					</span>
+					<p>注册账号</p>
+				</li>
+				<li class="fl cur" style="margin-left: 150px">
+					<span>
+						<i class="icon icon-businessStep2_2"></i>
+					</span>
+					<p>选择类型</p>
+				</li>
+				<li class="fr">
+					<span>
+						<i class="icon icon-businessStep3"></i>
+					</span>
+					<p>填写资料</p>
+				</li>
+			</ul>
+		</div>
+		
+		<ul class="clearfix" id="merchant">
+			<li>
+				<img src="../src/img/system/jewellery.png" width="100%">
+				<a class="btn applyBtn" data-href="../apply_store" data-source="1">立即申请</a>
+			</li>
+			<li>
+				<img src="../src/img/system/design.png" width="100%">
+				<a class="btn applyBtn" data-href="../apply_office" data-source="2">立即申请</a>
+			</li>
+			<li>
+				<img src="../src/img/system/manufacture.png" width="100%">
+				<a class="btn applyBtn" data-href="../apply_room" data-source="3">立即申请</a>
+			</li>
+			<li>
+				<img src="../src/img/system/Exchange.png" width="100%">
+				<a class="btn applyBtn" data-href="../apply_provider">立即申请</a>
+			</li>
+		</ul>
+		
+	</div>
+
+<script>
+$(function(){
+	$(document).on("click", '.applyBtn', function(e){
+		var val = $(e.currentTarget).attr("data-source")
+		var href = $(e.currentTarget).attr("data-href")
+		$.ajax({
+			url: "/api/userCenter/merchantInfo/checkUser?source="+val,
+			type: "get",
+			beforeSend : function(request) {
+			　　request.setRequestHeader("Authorization", utils.getCookie("token"))
+			},
+			success: function(data){
+				if(data.success){
+					window.location.href = href
+				}else{
+					utils.alert("danger", data.msg);
+				}
+			}
+		})
+	})
+})
+	
+</script>
+</body>
+</html>
+

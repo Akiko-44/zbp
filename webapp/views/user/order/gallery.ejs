@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="../../src/js/plugin/Zebra_Datepicker/dist/css/metallic/zebra_datepicker.min.css" />
+</head>
+
+<body class="userOrderJewelry">
+
+	<%- include ../../headerbar.ejs %>
+
+	<%- include ../../header.ejs %>
+
+	<%- include ../userHeaderNav.ejs %>
+
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+				<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include ../userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+
+				<!-- <div id="orderSearch">
+					<input type="text" id="datepicker-start" class="searchTime" placeholder="订单时间"> - 
+					<input type="text" id="datepicker-end" class="searchTime" placeholder="订单时间">
+					<div class="input">
+						<input type="text" placeholder="输入商品名称或订单号搜索">
+						<a>搜索</a>
+					</div>
+				</div> -->
+
+				<div id="orderNav">
+					<ul>
+						<li state="0"><a>全部订单(<span>0</span>)</a></li>
+						<li state="1"><a>待付款(<span>0</span>)</a></li>
+						<li state="7"><a>已完成(<span>0</span>)</a></li>
+					</ul>
+				</div>
+
+				<div id="orderList">
+					<ul>
+
+					</ul>
+					<div id="pagination" class="pagination"></div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div id="picsImg" class="hide"></div>
+	<%- include ../userFooter.ejs %>
+
+	<%- include commonJs.ejs %>
+	<script>
+		$(".userLeftNav li[data-target='gallery']").addClass("cur");
+
+		var routerVm = new Vue({
+			el: "#router"
+		})
+		$(function () {
+
+			/* $('#datepicker-start').Zebra_DatePicker({
+			    direction: true,
+			    pair: $('#datepicker-end')
+			});
+			 
+			$('#datepicker-end').Zebra_DatePicker({
+			    direction: 1
+			}); */
+
+			$(document).on("click", "#orderNav li", function (e) {
+				var self = $(e.currentTarget);
+				self.addClass("cur").siblings().removeClass("cur");
+				var val = self.attr("state");
+				render(val, 1);
+			}).on("click", ".cancelOrderBtn", function (e) {
+				//取消订单
+				var self = $(e.currentTarget)
+				var id = self.attr("orderNumber")
+				cancelOrder(id, function () {
+					utils.alert("success", "取消成功");
+					$("#orderNav li.cur").trigger("click");
+				})
+
+			}).on("click", ".ensureOrderBtn", function (e) {
+				//手动确认订单完成
+				var self = $(e.currentTarget)
+				var id = self.attr("orderNumber");
+				ensureOrder(id, function (data) {
+					utils.alert("success", "操作成功");
+					$("#orderNav li.cur").trigger("click");
+				})
+			}).on("click", ".toOrderDetail", function (e) {
+				var self = $(e.currentTarget);
+				var id = self.attr("orderNumber");
+				window.location.href = "../../user/order/gallery_detail?id=" + id;
+			}).on('click', ".newUpDown", function (e) {
+				var self = $(e.currentTarget);
+				var id = self.attr("orderNumber");
+				utils.ajax({
+					url: '/pc/gallery/atlas/orderatlas/' + id + '/3',
+					type: "post",
+					success: function (data) {
+						if (data.success && data.data == '') {
+							utils.ajax({
+								url: '/pc/gallery/atlas/detail/' + id,
+								type: "get",
+								success: function (data) {
+									if (data.success) {
+										var res = data.data.pics;
+										var t = '';
+										$.each(res, function (idx, item) {
+											t += '<img src="' + utils.formatImg(item.url) + '" class="picsImg"/>'
+										});
+										$("#picsImg").html(t);
+										setTimeout(function () {
+											packageImages()
+										}, 200)
+									}
+								}
+							})
+						} else {
+							utils.alert("danger", "超出下载有效期！")
+						}
+					}
+				})
+
+			})
+
+			$("#orderNav li:eq(0)").trigger("click");
+			getNum();
+
+		});
+
+
+		function render(state, page) {
+			utils.ajax({
+				url: "/api/order/page/" + state + "/7",
+				type: "get",
+				data: {
+					offset: page,
+					limit: 10
+				},
+				success: function (data) {
+					data = data.data;
+					if (data.total == 0) {
+						//没有数据
+						$("#orderList ul").html("");
+					} else {
+						var html = "";
+						for (var i = 0; i < data.records.length; i++) {
+							html += _template.userOrderGallery({
+								data: data.records[i]
+							})
+						}
+						$("#orderList ul").html(html);
+					}
+					if (page == 1) {
+						if (data.pages > 0) {
+							$("#pagination").removeClass("hide");
+							$("#pagination").pagination({
+								pageCount: data.pages,
+								jump: true,
+								coping: true,
+								prevContent: '<',
+								nextContent: '>',
+								callback: function (api) {
+									render(state, api.getCurrent());
+								}
+							});
+						} else {
+							$("#pagination").addClass("hide");
+						}
+					}
+				}
+
+			})
+		}
+
+		function getNum() {
+			utils.ajax({
+				url: "/api/order/state/number/list/7/0",
+				type: "get",
+				success: function (data) {
+					data = data.data;
+					var total = 0;
+					for (var i = 0; i < data.length; i++) {
+						total += parseInt(data[i].STATENUM)
+						if ($("#orderNav li[state='" + data[i].STATE + "']").length > 0) {
+							$("#orderNav li[state='" + data[i].STATE + "'] span").text(data[i].STATENUM);
+						}
+					}
+					$("#orderNav li[state='0'] span").text(total);
+				}
+			})
+		}
+		/**
+		 * 把图片压缩成zip下载
+		 * */
+		function packageImages() {
+			var imgs = $('.picsImg');
+			var imgsSrc = [];
+			var imgBase64 = [];
+			var imageSuffix = []; //图片后缀
+			var zip = new JSZip();
+			zip.file("readme.txt", "案件详情资料\n");
+			var img = zip.folder("images");
+
+			for (var i = 0; i < imgs.length; i++) {
+				var src = imgs[i].getAttribute("src");
+				var suffix = src.substring(src.lastIndexOf("."));
+				imageSuffix.push(suffix);
+
+				getBase64(imgs[i].getAttribute("src"))
+					.then(function (base64) {
+						imgBase64.push(base64.substring(22));
+					}, function (err) {
+						console.log(err); //打印异常信息
+					});
+
+			}
+
+			function tt() {
+				setTimeout(function () {
+					if (imgs.length == imgBase64.length) {
+						for (var i = 0; i < imgs.length; i++) {
+							img.file(i + imageSuffix[i], imgBase64[i], {
+								base64: true
+							});
+						}
+						zip.generateAsync({
+							type: "blob"
+						}).then(function (content) {
+							// see FileSaver.js
+							saveAs(content, "images.zip");
+						});
+						$(".code").removeClass("show");
+						utils.alert('success', '下载成功')
+					} else {
+						tt();
+					}
+				}, 100);
+
+			}
+			tt();
+
+		}
+
+		//传入图片路径，返回base64
+		function getBase64(img) {
+			function getBase64Image(img, width, height) { //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+				var canvas = document.createElement("canvas");
+				canvas.width = width ? width : img.width;
+				canvas.height = height ? height : img.height;
+
+				var ctx = canvas.getContext("2d");
+				ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+				var dataURL = canvas.toDataURL();
+				return dataURL;
+			}
+			var image = new Image();
+			image.crossOrigin = 'Anonymous';
+			image.src = img;
+			var deferred = $.Deferred();
+			if (img) {
+				image.onload = function () {
+					deferred.resolve(getBase64Image(image)); //将base64传给done上传处理
+				}
+				return deferred.promise(); //问题要让onload完成后再return sessionStorage['imgTest']
+			}
+		}
+	</script>
+
+</body>
+
+</html>

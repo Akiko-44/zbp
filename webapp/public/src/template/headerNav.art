@@ -1,0 +1,81 @@
+<%data.forEach(function(curData,index){%>
+  <% if (curData.id == '1000') { %>
+    <li>
+      <a class="navItem <% if(headerIndex == 0){ %>cur<% } %>" href="../../">
+        <% if (curData.name) { %>
+          <%= curData.name %>
+        <% } else { %>
+          <%= curData.defaultName %>
+        <% } %>
+      </a>
+      <div>
+
+      </div>
+    </li>
+  <% } else if(curData.id == '1001'){ %>
+    <li>
+      <a class="navItem <% if(headerIndex == 1){ %>cur<% } %>" href="../../jewelry/index">
+        <% if (curData.name) { %>
+          <%= curData.name %>
+        <% } else { %>
+          <%= curData.defaultName %>
+        <% } %>
+      </a>
+      <div>
+
+      </div>
+    </li>
+  <% } else if(curData.id == '1002'){ %>
+    <li>
+      <a class="navItem <% if(headerIndex == 3){ %>cur<% } %>" href="../../design/index">
+        <% if (curData.name) { %>
+          <%= curData.name %>
+        <% } else { %>
+          <%= curData.defaultName %>
+        <% } %>
+      </a>
+      <div>
+
+      </div>
+    </li>
+  <% } else if(curData.id == '1003'){ %>
+    <li id="manufacture" class="hide">
+      <a class="navItem <% if(headerIndex == 4){ %>cur<% } %>" href="../../manufacture/index">
+        <% if (curData.name) { %>
+          <%= curData.name %>
+        <% } else { %>
+          <%= curData.defaultName %>
+        <% } %>
+      </a>
+      <div>
+
+      </div>
+    </li>
+  <% } else if(curData.id == '1004'){ %>
+    <li>
+      <a class="navItem <% if(headerIndex == 5){ %>cur<% } %>" href="../../jewelryCircle/index">
+        <% if (curData.name) { %>
+          <%= curData.name %>
+        <% } else { %>
+          <%= curData.defaultName %>
+        <% } %>
+      </a>
+      <div>
+
+      </div>
+    </li>
+  <% } else if(curData.id == '1005'){ %>
+  <li>
+    <a class="navItem <% if(headerIndex == 7){ %>cur<% } %>" href="../../jewelry_fair/index">
+      <% if (curData.name) { %>
+          <%= curData.name %>
+        <% } else { %>
+          <%= curData.defaultName %>
+        <% } %>
+    </a>
+    <div>
+
+    </div>
+  </li>
+  <% } %>
+<%});%>

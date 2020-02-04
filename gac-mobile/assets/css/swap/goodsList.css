@@ -1,0 +1,18 @@
+/* 商品列表 */
+.Base-goods-list {
+  & .list-header-wrap {
+    height: 84px;
+  }
+  & .list-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+  }
+  & .list-content {
+    padding: 13px;
+  }
+  & .app-card-item1 {
+    margin-bottom: 10px;
+  }
+}

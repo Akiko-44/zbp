@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/4.4.0-rc.1/echarts.min.js"></script>
+</head>
+<style>
+  .todyprice li {
+    float: left;
+    float: left;
+    width: 276px;
+    height: 120px;
+    text-align: center;
+    margin-left: 20px;
+    position: relative;
+
+  }
+
+  .todyprice li:nth-child(1) {
+    background: url(/src/img/hx_img/img_1.png);
+    background-size: 100% 100%;
+  }
+
+  .todyprice li:nth-child(2) {
+    background: url(/src/img/hx_img/img_2.png);
+    background-size: 100% 100%;
+  }
+
+  .todyprice li:nth-child(3) {
+    background: url(/src/img/hx_img/img_3.png);
+    background-size: 100% 100%;
+  }
+
+  .todyprice li:nth-child(4) {
+    background: url(/src/img/hx_img/img_4.png);
+    background-size: 100% 100%;
+  }
+
+  .todyprice {
+    margin-top: 20px;
+  }
+
+  .todyprice .item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 190px;
+  }
+
+  .todyprice .item p.order {
+    margin-bottom: 10px;
+
+  }
+
+  .todyprice p {
+    text-align: left;
+    font-size: 18px;
+    color: #fff;
+  }
+
+  .todyprice li:nth-child(1) {
+    margin-left: 0px;
+  }
+
+  .money {
+    color: #fff600;
+    font-size: 20px;
+  }
+
+
+  .nowtime {
+    margin: 20px 0;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .type li {}
+
+  .piece {
+    margin-bottom: 40px;
+  }
+
+  .piece ul {
+    width: 250px;
+    /* margin: 0 auto; */
+    height: 266px;
+    margin: 0 24px;
+    box-shadow: 0px 1px 20px 2px #eee;
+  }
+
+  .piece ul:nth-child(1) {
+    margin-left: 10px;
+  }
+
+  .type li:nth-child(1) {
+    margin-top: 31px;
+    margin-bottom: 30px;
+  }
+
+  .typedata li {
+    color: #666;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .typedata {
+    border: 1px solid #f7f7f7;
+    float: left;
+  }
+
+
+  .need {
+    color: #e07359;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+
+  .navbar {
+    width: 1200px;
+    margin: 30px auto;
+    font-size: 14px;
+    color: #666;
+  }
+
+
+  .typeselect {
+    padding: 20px 0;
+    width: 250px;
+    height: 266px;
+  }
+
+  .shopprice {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  .unit {
+    font-size: 16px;
+    color: #333;
+  }
+
+  .retailprice {
+    margin-top: 9px;
+  }
+
+  .todayprice {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .pricetime {
+    color: #666;
+    font-size: 12px;
+  }
+
+  [v-cloak] {
+    display: none;
+  }
+
+  .headernav {
+    width: 1200px;
+    margin: 20px auto;
+  }
+</style>
+
+<body>
+  <%- include ./headerbar.ejs %>
+  <%- include ./headerNav.ejs %>
+  <div class="Goldprice" id="app" v-cloak>
+    <el-breadcrumb separator-class="el-icon-arrow-right" class="headernav">
+      <el-breadcrumb-item><a href="/">首页</a></el-breadcrumb-item>
+      <el-breadcrumb-item>今日指导价</el-breadcrumb-item>
+    </el-breadcrumb>
+    <div class="container" style="padding: 10px;margin-bottom: 50px;background: #ffffff;">
+      <!-- <ul class="todyprice clearfix">
+                <li v-for="(item,index) in newprice">
+                    <div class="item">
+                        <p class="order">{{item.name}} </p>
+                        <p>零售价：<span class="money">{{item.price}}</span>{{item.priceUnit}}</p>
+                    </div>
+                </li>
+            </ul> -->
+      <p class="nowtime"><span class="todayprice">今日指导价</span><span class="pricetime">（{{systemDate}} 更新）</span>
+      </p>
+      <div class="piece clearfix">
+        <ul class="type typedata clearfix" v-for="(item,index) in list">
+          <li>{{ item.name }}</li>
+          <li><span class="shopprice">{{item.todayGuidedPriceVOS[6].price}}</span> <span
+              class="unit">{{item.priceUnit}}</span>
+          </li>
+          <li class="retailprice">零售价格</li>
+          <li>
+            <div class="echart" :id="echart(index)" style="width: 206px;height:100px;"></div>
+          </li>
+        </ul>
+      </div>
+      <p class="need">黄金价格频道可以查询到黄金价格,铂金价格,实物黄金报价(国内知名黄金品牌)。</p>
+      <p class="need">备注：以上价格仅供参考，请以各机构营业厅挂价为准！</p>
+    </div>
+  </div>
+  <%- include footer.ejs %>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        newprice: [],
+        list: [],
+        info: [],
+        systemDate: ''
+
+      },
+      mounted() {
+        this.GoadList()
+        this.CurrentTime()
+        // this._GetNewPrice()
+        // setTimeout(() => {
+        //   this.drawImg()
+        // }, 500)
+      },
+      methods: {
+        GoadList() {
+          var that = this
+          utils.ajax({
+            url: '/api/portal/GuidedPrice/searchSeven',
+            type: "get",
+            data: {
+              offset: 1,
+              limit: 8
+            },
+            success: function (res) {
+              that.list = res.data
+              setTimeout(() => {
+                that.drawImg()
+              }, 500)
+              console.log(that.list);
+            }
+          })
+        },
+        _GetNewPrice() {
+          var that = this;
+          utils.ajax({
+            type: 'get',
+            url: "/admin/portal/todayGuidedPrice/searchAll",
+            data: {
+              offset: 1,
+              limit: 8
+            },
+            success: function (res) {
+              that.newprice = res.data.records
+              console.log('this', this.newprice);
+            }
+          })
+        },
+        echart(i) {
+          return 'step' + i
+        },
+        drawImg() {
+          var that = this;
+          this.list.forEach(function (item, index) {
+            var price = [];
+            item.todayGuidedPriceVOS.forEach((element, index2) => {
+              price.push(element.price)
+              that.templateEchart('step' + index, price, item)
+            })
+
+          });
+
+        },
+        CurrentTime() {
+          nowDate = new Date();
+          let date = {
+            year: nowDate.getFullYear(),
+            month: nowDate.getMonth() + 1,
+            date: nowDate.getDate(),
+          }
+          this.systemDate = date.year + '-' + date.month + '-' + date.date;
+        },
+        templateEchart(id, sdata, item) {
+          var echart = echarts.init(document.getElementById(id));
+          console.log('item', item.minPrice, item.maxPrice);
+
+          echart.setOption({
+            grid: {
+              top: 50,
+              left: 50,
+              bottom: 5
+            },
+            // x轴的数据
+            xAxis: {
+              show: false,
+              data: [1, 2, 3, 4, 5, 6, 7]
+            },
+            // y轴的数据
+            yAxis: [{
+              show: false,
+              min: 'dataMin', // 最小值,
+              max: 'dataMax',
+              axisLine: {
+                show: true,
+                lineStyle: {
+                  color: "#bae1e5"
+                }
+              },
+              scale: true,
+              axisTick: {
+                show: true
+              },
+              axisLabel: {
+                show: false
+              },
+              position: 'left',
+              type: 'value',
+              // boundaryGap: [0, '20%'],
+              splitLine: {
+                show: false,
+                interval: 1,
+                lineStyle: {
+                  color: "#bae1e5"
+                }
+              }
+            }],
+            animation: false,
+            // 折线图 （写几条折线图就写几个对象；是这个{}对象）
+            series: [{
+              type: "line",
+              symbol: "circle",
+              data: sdata,
+              color: "#fb746e"
+            }]
+          })
+        },
+
+      },
+    })
+  </script>
+</body>
+
+</html>

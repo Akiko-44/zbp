@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.list {width: 100%;border: 1px solid #EAEAEA;margin: 20px 0;}
+.list tbody tr {border-top: 1px dashed #EAEAEA;text-align: center;}
+.list tbody td{padding: 10px 0;}
+.list tbody tr:first-child {border-top: 0;}
+.list thead {background: #F4F4F4;color: #666;line-height: 44px;}
+.list th {font-weight: normal;font-size: 16px;}
+</style>
+</head>
+<body class="userAccount">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include userHeaderNav.ejs %>
+	
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+			  	<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			  	<el-breadcrumb-item>个人中心</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="userLeftNav">
+				<%- include userLeftNav.ejs %>
+			</div>
+			<div class="userRightContent">
+				
+				<div class="userAccInvoiceWrap">
+					<div class="tab-default userTab">
+						<div class="tab-header">
+							<div>
+								<ul>
+									<li data-type="" class="active couponsTypeClick"><a><b>全部</b></a></li>
+									<li data-type="1" class="couponsTypeClick"><a><b>可用代金券</b></a></li>
+									<li data-type="2" class="couponsTypeClick"><a><b>已使用代金券</b></a></li>
+									<li data-type="3" class="couponsTypeClick"><a><b>已过期代金券</b></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="tab-body">
+							<div class="tab-body-panel show" style="display: block;">
+
+								<div>
+									<table class="list">
+										<thead>
+											<tr>
+												<th>代金券名称/来源</th>
+												<th>代金券金额</th>
+												<th>有效期限</th>
+												<th>使用规则</th>
+												<th>状态</th>
+											</tr>
+										</thead>
+										<tbody class="listBody">
+											<tr v-for="item in list" :key="item.id">
+												<td>{{item.couponsName}}</td>
+												<td>￥{{item.couponsPrice}}</td>
+												<td>{{item.startDate}} - {{item.endDate}}</td>
+												<td>满{{item.couponsScale}}减{{item.couponsPrice}}</td>
+												<td>
+													<span v-if="item.isUsed == 1">未使用</span>
+													<span v-if="item.isUsed == 2">已使用</span>
+													<span v-if="item.isUsed == 3">已过期</span>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								
+							</div>
+							<div>
+								<el-pagination background 
+							      @current-change="handleCurrentChange"
+							      :current-page="offset"
+							      page-size="10"
+							      layout="total, prev, pager, next, jumper"
+							      :total="total">
+							    </el-pagination>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	<%- include userFooter.ejs %>
+	
+<script>
+$(".userLeftNav li li:eq(5)").addClass("cur")
+var routerVm = new Vue({
+	el: "#router"
+})
+var listVm = new Vue({
+	el: "#main",
+	data:{
+		offset: 1,
+		couponsType: '',
+		list: [],
+		total: 100
+	},
+	mounted(){
+		this.render()
+	},
+	methods:{
+		render(){
+			var self = this
+			utils.ajax({
+				type:'get',
+				url:'/api/userCenter/coupons/page',
+				data:{
+					offset: self.offset,
+					limit: 10,
+					couponsType: self.couponsType
+				},
+				success:function(data){
+					self.total = data.data.total
+					self.list = data.data.records
+				}
+			})
+		},
+		handleCurrentChange: function(val){
+	        var self = this;
+	        self.offset = val;
+	        self.render();
+		},
+		toPrev: function(){
+			var self = this
+        	if(self.offset>1){
+        		self.offset = self.offset - 1;
+        		self.render();
+        	}
+        	
+        },
+        toNext: function(){
+        	var self = this
+        	if(this.currentPage < this.totalPage){
+        		self.offset = self.offset + 1;
+        		self.render();
+        	}
+        }
+	}
+})
+
+$(function(){
+	$(document).on('click', '.couponsTypeClick', function(e){
+		var self = $(e.currentTarget);
+		var val = self.attr("data-type");
+		$('.active').removeClass('active');
+		self.addClass('active')
+		listVm.couponsType = val;
+		listVm.render();
+	})
+})
+
+
+
+
+</script>
+</body>
+</html>
+

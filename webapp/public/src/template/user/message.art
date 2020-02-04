@@ -1,0 +1,9 @@
+<li class="fs14" isRead="<% data.isRead %>">
+	<div class="clearfix">
+		<span class="fr"><%= data.sendTime %></span>
+		<a class="ellipsis"><%= data.title %></a>
+	</div>
+	<div class="contentWrap">
+		<p><%= data.content %></p>
+	</div>
+</li>

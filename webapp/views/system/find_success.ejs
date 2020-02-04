@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+</head>
+<body class="find-bd">
+	
+	<%- include loginHeader %>
+	
+	<div class="regPanel findpwd">
+		<div class="title"><span>找回密码</span></div>
+		<div class="stepWrap">
+			<ul class="clearfix">
+				<li class="cur">
+					<span class="step-circle"></span>
+					<p>验证身份</p>
+				</li>
+				<li class="cur">
+					<span class="step-circle"></span>
+					<span class="step-line"></span>
+					<p>设置新密码</p>
+				</li>
+				<li class="cur">
+					<span class="step-circle"></span>
+					<span class="step-line"></span>
+					<p>设置成功</p>
+				</li>
+			</ul>
+		</div>
+		<div class="find-result">
+			<img src="../../src/img/signin/regist-success.png" width="80" height="80"/>
+			<p class="subtitle">密码修改成功，请牢记您的新密码！</p>
+			<p><span id="countdown">3</span>S后自动跳转到登录页，若未跳转，可<a href="/login" style="color: #DF735A;">点击跳转</a></p>
+		</div>
+	</div>
+	<%- include ../footer.ejs %>
+
+<script>
+var i = 3;
+var timer = setInterval(function(){
+	i--;
+	$("#countdown").text(i);
+	if(i == 0){
+		window.clearInterval(timer);
+		window.location.href = "../login";
+	}
+}, 1000);
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+  <meta name="renderer" content="webkit" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <title>
+    <%= title %>
+  </title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <link rel="stylesheet" type="text/css"
+    href="../../src/js/plugin/Zebra_Datepicker/dist/css/metallic/zebra_datepicker.min.css" />
+</head>
+<style>
+  .userRightContent {
+    background: #f3f3f3;
+  }
+
+  .my-comment {
+    background: #fff;
+  }
+
+  .no-comment {
+    padding: 207px 0 381px;
+    color: #333;
+    font-size: 16px;
+    background: #fff;
+  }
+
+  .no-comment p {
+    margin-top: -50px;
+  }
+
+  .comment-body {
+    padding: 0 33px 44px;
+  }
+
+  .collect_head {
+    margin-left: 20px;
+    margin-right: 20px;
+    line-height: 80px;
+    height: 80px;
+    font-size: 16px;
+    color: #333333;
+  }
+
+  .page-pagination {
+    padding: 40px 0 80px;
+  }
+
+  .table-head {
+    line-height: 54px;
+    font-size: 14px;
+    border: 1px solid #e5e5e5;
+  }
+
+  .table-head span {
+    display: inline-block;
+  }
+
+  .table-head .goods-item {
+    padding-left: 37px;
+    width: 230px;
+  }
+
+  .table-head .rate-item {
+    width: 170px;
+  }
+
+  .table-head .time-item {
+    width: 200px;
+  }
+
+  .table-head .comment-item {
+    width: 139px;
+  }
+
+  .table-head .operation-item {
+    width: 144px;
+  }
+
+  table {
+    width: 100%;
+    color: #666;
+    font-size: 14px;
+    border: 1px solid #e5e5e5;
+    border-top: 0;
+  }
+
+  table tr {
+    height: 156px;
+  }
+
+  table tr:nth-child(2n + 1) {
+    background: #f7f7f7;
+  }
+
+  table .goodsName {
+    padding: 0 22px;
+  }
+
+  table .createTime {
+    color: #999;
+  }
+
+  table .operation-btn button {
+    width: 84px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid #666;
+  }
+
+  .evaluate-content-wrap {
+    position: relative;
+  }
+
+  .evaluate-content {
+    max-height: 52px;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+
+  .evaluate-content-tips {
+    width: 297px;
+    border-color: #ffffff !important;
+    box-shadow: 2px 2px 10px #eee !important;
+    font-size: 14px !important;
+    line-height: 18px !important;
+    color: #666 !important;
+  }
+
+  .evaluate-content-tips .popper__arrow {
+    border-bottom-color: #ffffff !important;
+    border-top-color: #ffffff !important;
+  }
+</style>
+
+<body class="userAccount">
+  <%- include ../headerbar.ejs %> <%- include userHeaderNav.ejs %>
+
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>
+          <a href="/">首页</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <a href="/user/acc_info">个人中心</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>我的评价</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+
+  <div id="main" class="main" style="background: #f4f4f4" v-cloak>
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include userLeftNav.ejs %>
+      </div>
+      <div class="userRightContent">
+        <div class="my-comment" v-if="records && records.length">
+          <div class="collect_head">我的评价</div>
+          <div class="comment-body">
+            <div class="table-head">
+              <span class="head-item goods-item">商品信息</span>
+              <span class="head-item rate-item tc">评价</span>
+              <span class="head-item time-item tc">评价时间</span>
+              <span class="head-item comment-item tc">评语</span>
+              <span class="head-item operation-item tc">操作</span>
+            </div>
+            <table>
+              <tr v-for="(item,i) in records" :key="i">
+                <td width="250" class="goodsName">{{ item.goodsName }}</td>
+                <td width="170" class="tc">
+                  <el-rate v-model="item.commentRank" disabled :colors="['#D57E6A', '#D57E6A', '#D57E6A']">
+                  </el-rate>
+                </td>
+                <td width="200" class="tc createTime">
+                  {{ item.createTime }}
+                </td>
+                <!-- <td class="tc">{{ item.content }}</td> -->
+                <td class="tc">
+                  <el-tooltip :content="item.content" placement="bottom" effect="light"
+                    popper-class="evaluate-content-tips">
+                    <div class="evaluate-content">{{ item.content }}</div>
+                  </el-tooltip>
+                  <!-- <div class="evaluate-content-wrap">
+                    <div class="evaluate-content">{{ item.content }}</div>
+                    <div class="evaluate-content-tips">{{ item.content }}</div>
+                  </div> -->
+                </td>
+                <td width="144" class="tc operation-btn">
+                  <button @click="deleteItemEvaluate(item.id)">删除</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="page-pagination" v-if="pages>1">
+          <el-pagination class="tc list-pagination" background @current-change="handleCurrentChange"
+            :current-page="params.offset" :page-size="params.limit" layout="prev, pager, next, jumper" :total="total">
+          </el-pagination>
+        </div>
+        <div class="no-comment tc" v-if="records && !records.length">
+          <img src="/src/img/user/no_comment.png" alt="" width="482">
+          <p>暂无评价</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include ../footer.ejs %>
+</body>
+<script>
+  $(".userLeftNav li[data-target='evaluate']").addClass("cur");
+  var routerVm = new Vue({
+    el: '#router'
+  })
+  var applyVm = new Vue({
+    el: '#main',
+    data: {
+      total: 0,
+      params: {
+        limit: 7,
+        offset: 1
+      },
+      pages: 0,
+      records: [{
+        commentRank: '',
+        commentType: '',
+        content: '',
+        createTime: '',
+        goodsName: '',
+        id: '',
+        idValue: '',
+        userId: '',
+        userLogo: '',
+        userName: ''
+      }]
+    },
+    mounted() {
+      this.getList()
+    },
+    methods: {
+      getList() {
+        utils.ajax({
+          type: 'get',
+          url: '/api/userCenter/userComment/getUserCommentPage/1',
+          data: this.params,
+          success: res => {
+            this.records = res.data.records
+            this.total = res.data.total
+            this.pages = res.data.pages
+          }
+        })
+      },
+      handleCurrentChange(val) {
+        this.params.offset = val
+        this.getList()
+      },
+      deleteItemEvaluate: function (id) {
+        utils.ajax({
+          type: 'post',
+          url: '/api/userCenter/userComment/delete/' + id,
+          success: res => {
+            if (res.success) {
+              location.reload()
+            }
+          }
+        })
+      }
+    }
+  })
+</script>
+
+</html>

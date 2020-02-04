@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<!--<link rel="stylesheet" type="text/css" href="../../src/js/plugin/Zebra_Datepicker/dist/css/metallic/zebra_datepicker.min.css" />-->
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<style>
+			body {
+				background: #f5f5f5;
+			}
+		</style>
+	</head>
+
+	<body class="">
+
+		<%- include ../../headerbar.ejs %>
+
+		<%- include ../../header.ejs %>
+
+		<%- include ../userHeaderNav.ejs %>
+
+		<div id="main" class="main provider information">
+			<div class="container clearfix ">
+				<div class="userLeftNav">
+					<%- include ../userLeftNav.ejs %>
+				</div>
+				<div class="content userRightContent">
+					<h2 class="status" v-show="false">
+						正在审核中，请稍后/审核不通过请重新填写
+					</h2>
+					<form class="upload-form">
+						<div class="formsub">
+							<ul>
+								<li>
+									<label><span class="need">*</span><span class="name">公司名字</span></label>
+									<div class="input-box">
+										<input type="text" v-model="servProvider.company" name="company" class="inputxt" datatype="*2-10" nullmsg="请设置公司名称！" errormsg="业执照名字保持一致！">
+									</div>
+									<div class="Validform_checktip">2-10个字，请与营业执照名字保持一致</div>
+								</li>
+								<li>
+									<label><span class="need">*</span><span class="name">公司简介介绍</span></label>
+									<div class="input-box">
+										<textarea v-model="servProvider.companyDesc" name="companyDesc" class="inputxt" datatype="*10-30" nullmsg="请再输入公司简介！" errormsg="字符范围在10~30位之间！"></textarea>
+									</div>
+									<div class="Validform_checktip">10-30个字，要求内容完整通顺，无特殊符号，请勿添加任何联系方式如微博、手机号、QQ</div>
+								</li>
+								<li>
+									<label><span class="need">*</span><span class="name">公司业务介绍</span></label>
+									<div class="input-box">
+										<textarea v-model="servProvider.serviceDesc" name="serviceDesc" class="inputxt" datatype="*10-30" nullmsg="请再输入公司业务介绍！" errormsg="字符范围在10~30位之间！"></textarea>
+									</div>
+									<div class="Validform_checktip">10-30个字，要求内容完整通顺，无特殊符号，请勿添加任何联系方式如微博、手机号、QQ</div>
+								</li>
+								<li>
+									<div class="clearfix uploadBox">
+										<label class="fl"><span class="need">*</span><span class="name">组织机构代码证/营业执照</span></label>
+										<img class="uploadImg" :src="servProvider.licenseUrl">
+										<!--<div class="fl uploadbox triggerFile" data-target="uploadImg">
+										</div>-->
+										
+									</div>
+
+									<div class="Validform_checktip">组织机构代码证或营业执照信息清晰最大2M</div>
+								</li>
+								<li>
+									<div class="clearfix uploadBox">
+										<label class="fl"><span class="need">*</span><span class="name">确认书扫描件</span></label>
+										<!--<div class="fl uploadbox triggerFile" data-target="uploadImg">
+										</div>-->
+										<img class="uploadImg" :src="servProvider.confirmationUrl">
+									</div>
+									<div class="Validform_checktip">点确认书下载，填写盖章后上传</div>
+								</li>
+								<li>
+										<div class="clearfix uploadBox3">
+											<label class="fl"><span class="need">*</span><span class="name">公司logo</span></label>
+											<!--<div class="fl uploadbox triggerFile" data-target="uploadImg">
+											</div>-->
+											<img class="uploadImg" :src="servProvider.logo">
+										</div>
+
+										<div class="Validform_checktip">公司logo清晰最大2M</div>
+									</li>
+								<li>
+									<label><span class="need">*</span><span class="name">提供的服务</span></label>
+									<!--<select name="serviceId1" datatype="*" nullmsg="请选择服务！" errormsg="请选择服务！">
+										<option value="">请选择</option>
+										<option value="1">法律服务</option>
+										<option value="1">金融服务</option>
+										<option value="1">营销服务</option>
+										<option value="1">其他</option>
+									</select>
+									<div class="Validform_checktip"></div>
+									类
+									<select name="serviceId2" datatype="*" nullmsg="请选择服务！" errormsg="请选择服务！">
+										<option value="">请选择</option>
+										<option value="1">电话问法务</option>
+										<option value="1">期权股权</option>
+										<option value="1">合同</option>
+									</select>-->
+										<input type="text" v-model="item.serviceName" v-for="item in servProvider.servProviderRel"/>
+									<div class="Validform_checktip"></div>
+								</li>
+								<li>
+										<label><span class="need">*</span><span class="name">所在地</span></label>
+										<div class="input-box">
+										<!--<select name="provinceId" datatype="*" nullmsg="请选择所在省！" errormsg="请选择所在省！">
+											<option v-for="item in province" :value="item.regionId">{{item.regionName}}</option>
+										</select>
+										
+										<select name="cityId" datatype="*" nullmsg="请选择所在城市！" errormsg="请选择所在城市！">
+											<option v-for="item in city" :value="item.regionId">{{item.regionName}}</option>
+										</select>-->
+											<input class="select" type="text" v-model="servProvider.provinceName" />
+											<input class="select" type="text" v-model="servProvider.cityName" />
+										</div>
+										<div class="Validform_checktip"></div>
+										<div class="input-box">
+											<input type="text" v-model="servProvider.addr" name="addr" class="inputxt" placeholder="请填写具体地区" datatype="*" nullmsg="请填写具体地区！" errormsg="" style="margin-left: 150px;margin-top: 0px;">
+										</div>
+										<div class="Validform_checktip"></div>
+									</li>
+							</ul>
+						</div>
+						<div class="action">
+							<!--<a class="btn btn-warning submitBtn">提交</a>-->
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<%- include ../userFooter.ejs %>
+
+		<script>
+			$(".userLeftNav li li:eq(3)").addClass("cur")
+
+			var vm = new Vue({
+				el: "#main",
+				data: function() {
+					return {
+						servProvider: {}
+					}
+				},
+				mounted: function() {
+					this.applyValidform = $(".upload-form").Validform({
+						tiptype: 2
+					})
+					this.getProviderInfo()
+				},
+				methods: {
+					getProviderInfo() { //栏目列表
+						var self = this
+						var json = {
+							current: 1,
+							size: 100
+						}
+
+						utils.ajax({
+							url: "/api/serv/user/provider/info",
+							data: json,
+							type: "get",
+							success: function(succ) {
+								if(succ.success) {
+									var data = succ.data;
+									self.servProvider  = data
+								} else {
+
+								}
+
+							}
+						})
+					},
+				}
+			})
+		</script>
+
+	</body>
+</html>

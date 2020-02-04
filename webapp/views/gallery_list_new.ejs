@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="../../src/css/gallery_index_new_css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="../../src/css/gallery_index_new_css/gallery_list.css"/>
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>	
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+	<script src="../../dist/js/template.js"></script>			
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style media="screen"></style>
+
+</head>
+<body>
+	       <%- include headerbar %>
+	
+			<%- include header %>
+			
+			<%- include headerNav %>
+	<div id="gallery_list">
+		 <div class="meau_list">
+		 	   <div class="mineLocation">
+	 	   	      <!--左侧菜单-->
+		 	   	      <div class="banner_left_meau">
+				 	   	<ul></ul>
+					 </div>
+		       </div>
+		         <div class="list_right">
+		         	    <el-breadcrumb separator-class="el-icon-arrow-right">
+					  	<el-breadcrumb-item :to="{ path: '/' }"><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+					  	>
+					  	<el-breadcrumb-item><a href="../../gallery/index">图文馆</a></el-breadcrumb-item>
+					  	<el-breadcrumb-item v-for="item in routers"></el-breadcrumb-item>
+					</el-breadcrumb>
+		         <!--列表-->
+		         <div class="meau_list_info ">
+		         	  <dl v-for="(item,index) in newList" :key="index" @click="clickDetail(item.id)">
+		         	  	<dt><img :src="item.coverPic|formatImg"/></dt>
+		         	  	<dd>
+		         	  		<div class="meau_list_info_describe">
+	    		 			 <h3>{{item.designerName}}</h3>
+	    		 			 <span>{{item.intro}}</span>
+	    		 			 <p>上传者：{{item.uploadUserName}}</p>
+	    		 			 <div class="info_num">
+	    		 			 	<dl>
+	    		 			 		<dt></dt>
+	    		 			 		<dd>{{item.picNum}}</dd>
+	    		 			 	</dl>
+	    		 			 	<dl>
+	    		 			 		<dt></dt>
+	    		 			 		<dd>{{item.praiseNum}}</dd>
+	    		 			 	</dl>
+	    		 			 	<dl>
+	    		 			 		<dt></dt>
+	    		 			 		<dd>{{item.shareNum}}</dd>
+	    		 			 	</dl>
+	    		 			 </div>
+	    		 		</div>
+		         	  	</dd>
+		         	  </dl>
+                 </div>
+		        
+		         </div>
+
+						        
+		 </div>
+		
+		<div class="">
+			  <!--页脚-->
+		<%- include footer %>
+			
+		</div>
+	
+	</div>
+	   
+		  
+	<script>
+		var columnId = utils.getUrlParam("columnId") || "";
+		var routers = [];
+		if(utils.getUrlParam("routers")){
+//			routers = utils.getUrlParam("routers").split(",")
+		}
+		//	实例Vue
+        new Vue({
+        	el:"#gallery_list",
+        	data: {
+        	
+        	
+				list: [],
+				total: 0,
+		
+				offset: 1,
+				limit: 10,
+				routes:[],
+				
+//				//2级title
+//				title:[],
+
+                newList:[],
+	       },
+	       created:function (){
+	       	this.more()
+	       },
+        	methods:{
+        		more:function(){
+						var self = this;
+						var sos = window.location.href.split('/gallery/list/')[1]
+						utils.ajax({
+							url:'/admin/gallery/atlas/getPhoto/'+sos,
+							type:"get",
+							success:function(data){
+								self.newList = data.data;
+							}
+						})
+					},
+        		init:function (){
+        			var self = this;
+        			//左侧列表的
+                    utils.ajax({
+						url: "/pc/gallery/categoryList",
+						type: "get",
+						success: function(data){
+							data = data.data;
+                            $.each(data, function(i,v) {
+                          	      $('.banner_left_meau ul').append(`<li data-key=${i} >${v.name}</li>`);
+                             	
+                            });
+                            $('.banner_left_meau ul').on('click','li',function(e){
+                            		e.stopPropagation();
+									var selfs = $(e.currentTarget);
+									var categoryId = selfs.attr("data-id");
+									var name = selfs.text();
+									this.title=name;
+									
+									
+									var sos = e.target.getAttribute('data-key') - 0 + 1;
+								   utils.ajax({
+										url: "/admin/gallery/atlas/getPhoto/"+sos,
+										type: "get",
+										success: function(data){
+											data = data.data,
+											id=data.id,
+											self.newList=data
+								       
+										}
+									});
+                            })
+                            
+         				}
+					});
+	 		},
+	 		
+        		render: function(){
+					var self = this;
+					utils.ajax({
+						url: "/pc/industry/article/list",
+						data: {
+							offset: self.offset,
+							limit: self.limit,
+							columnId: columnId
+						},
+						type: "get",
+						success: function(data){
+							data = data.data;
+							self.list = self.list.splice(self.list.length)
+							self.list = data.records;
+							self.offset = data.current;
+							self.total = data.total
+						}
+					})
+				},
+				handleCurrentChange: function(val){
+			        var self = this;
+			        self.offset = val;
+			        self.render();
+				},
+				//点击跳转图文详情、
+					clickDetail:function (id) {
+						utils.ajax({
+							url: '/pc/gallery/atlas/detail/' + id,
+							type: 'get',
+							success: function(id) {
+								window.location.href = "../../gallery/detail/" + id.data.id;
+
+							}
+						})
+					}
+
+        	},
+           mounted:function (){
+        		this.init()
+        		this.render();
+        		var routers = utils.getUrlParam("routers");
+        	},
+        	filters: {
+				formatImg: function(str){
+					return utils.formatImg(str)
+				}
+			}
+        })
+        
+
+        
+
+	</script>
+		
+</body>
+</html>

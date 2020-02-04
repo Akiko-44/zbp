@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+</head>
+
+<body class="query_id_card">
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../header.ejs %>
+
+  <%- include ../headerNav.ejs %>
+
+  <div id="main" class="main">
+    <div class="bg_price container">
+      <div class="query_price">
+        <p class="query_title">查珠宝身份证</p>
+        <div class="query_form">
+          <div class="query_form-item" @click="institutionShow">
+            <p class="query_des">鉴定机构 </p>
+            <!-- <input type="text" v-model="institutionStr" disabled="disabled" placeholder="请选择鉴定机构"
+              style="background-color: #FFFFFF;" /> -->
+            <p class="query-input select-box">{{institutionText}}</p>
+            <i class="icon icon-right" :class="institutionActive?'icon-right-show':''"></i>
+            <ul class="institution" :class="institutionActive?'institution-show':'' ">
+              <li @click="choose(item.name,item.code)" v-for='item in institution'>{{item.name}}</li>
+            </ul>
+          </div>
+          <div class="query_form-item">
+            <p class="query_des">证书编号</p>
+            <input class="query-input" type="text" v-model="queryNum" placeholder="请输入证书编号" />
+          </div>
+          <div class="query_form-item" style="margin-bottom: 20px;">
+            <p class="query_des">查询/防伪码</p>
+            <input class="query-input" type="text" v-model="queryCode" placeholder="请输入查询/防伪码" />
+          </div>
+        </div>
+        <button class="btn" @click="queryIdCrad">查询</button>
+        <p class="tc query-num">已查询{{commentNum}}件珠宝身份信息</p>
+      </div>
+    </div>
+  </div>
+  <%- include ../footer.ejs %>
+</body>
+<script type="text/javascript">
+  var mainVm = new Vue({
+    el: '#main',
+    data: {
+      commentNum: '0',
+      institutionActive: false,
+      institutionText: '请选择鉴定机构',
+      institutionStr: '',
+      institutionId: '',
+      queryNum: '',
+      queryCode: '',
+      institution: [{
+        code: '',
+        name: ''
+      }]
+    },
+    mounted: function () {
+      utils.ajax({
+        type: "get",
+        url: "/api/serv/portal/searchCredential/queryNumber",
+        success: (res) => {
+          this.commentNum = res.data
+        }
+      });
+    },
+    methods: {
+      institutionShow: function () {
+        this.institutionActive = !this.institutionActive
+        utils.ajax({
+          type: "get",
+          url: "/api/serv/portal/searchCredential/queryIdentificationInstitution",
+          success: (res) => {
+            this.institution = res.data
+          }
+        });
+      },
+      choose: function (strName, str) {
+        this.institutionId = str
+        this.institutionStr = strName
+        this.institutionText = strName
+      },
+      queryIdCrad: function () {
+        if (this.institutionId == '') {
+          utils.alert('danger', '请选择查询机构')
+          return
+        }
+
+        if (this.queryNum == '') {
+          utils.alert('danger', '证书编号不能为空')
+          return
+        }
+
+        if (this.queryCode == '') {
+          utils.alert('danger', '查询码不能为空')
+          return
+        }
+
+        location.href = "../home/query_result?testFacility=" + this.institutionId + "&testNo=" + this.queryNum +
+          "&queryCode=" + this.queryCode;
+      }
+    }
+  })
+</script>
+
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    .userRightContent {
+      padding: 30px 20px 40px;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .goods-info {
+      padding: 0 66px 0 20px;
+      color: #666;
+      font-size: 12px;
+      border: 1px solid #dedede;
+    }
+
+    .goods-info .shop-name {
+      line-height: 34px;
+      font-size: 16px;
+    }
+
+    .goods-info .select-item {
+      margin-top: 40px;
+    }
+
+    .goods-info img {
+      width: 100px;
+      height: 100px;
+    }
+
+    .goods-info .el-row {
+      padding-bottom: 12px;
+    }
+
+    .goods-name {
+      margin: 20px 0;
+      font-size: 16px;
+    }
+
+    .goods-sku {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .goods-count {
+      margin-top: 40px;
+    }
+
+    .goods-total {
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      color: #FB746E;
+    }
+
+    .rufund-info {
+      margin: 20px 0;
+      padding: 10px 20px;
+      color: #333;
+      line-height: 30px;
+      background: #F7F7F7;
+    }
+
+    .refund-reason .title {
+      margin-top: 20px;
+      color: #666666;
+      line-height: 36px;
+    }
+
+    .refund-reason .body {
+      padding: 20px;
+      background: #f3f3f3;
+    }
+
+    .image-tip {
+      color: #999;
+      font-size: 12px;
+      line-height: 40px;
+    }
+
+    .submit {
+      margin-top: 60px;
+      width: 376px;
+      height: 50px;
+      background: #DF735A;
+      border-radius: 0;
+    }
+
+    /* td {
+      padding: 5px;
+      line-height: 22px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    td td {
+      padding: 0 5px !important;
+    }
+
+    textarea {
+      width: 100%;
+      display: block;
+    }
+
+    .img img,
+    .uploadbox {
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+    } */
+
+    .selectReason {
+      width: 100%;
+    }
+
+    .selectReason .el-input__icon {
+      line-height: 30px;
+    }
+
+    .tips {
+      font-size: 12px;
+      color: red;
+    }
+
+    .tip-title {
+      margin-top: 10px;
+    }
+
+    .el-select-dropdown__item.selected {
+      color: #FB746E;
+    }
+  </style>
+</head>
+
+<body class="userOrderJewelry">
+
+  <%- include ../../headerbar.ejs %>
+
+  <%- include ../../header.ejs %>
+
+  <%- include ../userHeaderNav.ejs %>
+
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>
+          <a href="/">首页</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/' }">
+          <a href="/user/acc_info">个人中心</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>取消订单</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+
+  <div id="main" class="main">
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include ../userLeftNav.ejs %>
+      </div>
+      <div class="userRightContent">
+
+        <div id="orderCancel">
+
+          <div id="mainForm">
+            <div class="goods-info">
+              <div class="shop-name">{{data.sellUserName}}</div>
+              <el-row v-for="(item,i) in data.orderGoodVOList">
+                <el-col :span="4">
+                  <img :src="item.skuMainPic | formatImg" alt="">
+                </el-col>
+                <el-col :span="10">
+                  <div class="goods-name">{{item.skuName}}</div>
+                  <span class="goods-sku" v-for="(subItem,subI) in item.skuExplain">
+                    <span>{{subItem.specsName}}</span>
+                    <span>：</span>
+                    <span>{{subItem.attrValue}}</span>
+                    <span v-if="subI !== item.skuExplain.length-1">&nbsp;&nbsp;;&nbsp;&nbsp;</span>
+                  </span>
+                </el-col>
+                <el-col :span="5" class="tc">
+                  <div class="goods-count">数量：{{item.goodsNumber}}</div>
+                </el-col>
+                <el-col :span="5" class="tr">
+                  <div class="goods-total">总价：<span class="price">￥{{item.totalPrice}}</span></div>
+                  <span class="goods-freice">( 含运费：￥0.00 )</span>
+                </el-col>
+              </el-row>
+            </div>
+
+            <!-- <div class="rufund-info">
+              <p>售后类型：仅退款</p>
+              <p>退款金额：<span class="price">￥{{data.goodsTotalMoney}}</span></p>
+            </div> -->
+
+            <div class="refund-reason">
+              <div class="title">取消原因</div>
+              <div class="body">
+                <div>
+                  <!-- <textarea placeholder="请描述您遇到的问题" datatype="s1-500" name="comments" v-model="form.comments"
+                    nullmsg="请输入问题描述" maxlength="500" errormsg="问题描述不能为空"></textarea> -->
+                  <el-select v-model="reason" placeholder="请选择取消订单原因" class="selectReason">
+                    <el-option v-for="(item, index) in reasonsList" :key="index" :label="item.label"
+                      :value="item.value">
+                    </el-option>
+                  </el-select>
+                  <p class="Validform_checktip"></p>
+                  <div class="tips">
+                    <p class="tip-title">温馨提示：待发货订单，取消订单后，需商家同意后，方可退款；如商家在您取消订单7天内仍未同意，系统将会自动退款。</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="btn-box tc">
+                <el-button type="danger" class="submit" @click="submit($event)">提交</el-button>
+              </div>
+            </div>
+
+
+
+            <!-- <el-tabs type="border-card">
+            <el-tab-pane label="取消订单">
+              <form id="mainForm">
+                <table width="100%">
+                  <tr>
+                    <td width="85" valign="top"><label>售后商品：</label></td>
+                    <td>
+                      <ul class="goodsList">
+                        <template v-for="(item, Oindex) in data.orderGoodVOList" :key="Oindex">
+                          <li :skuId="data.skuId" style="margin-bottom: 10px;">
+                            <table width="100%">
+                              <tr>
+                                <td width="115">
+                                  <img :src="item.skuMainPic | formatImg" width="100" height="100">
+                                </td>
+                                <td width="150">
+                                  <h2 class="goodsName">{{item.skuName}}</h2>
+                                  <p v-for="(citem,index) in item.skuExplain" class="goodsIntro" :key="index">
+                                    {{citem.specsName}}:{{citem.attrValue}}
+                                  </p>
+                                </td>
+                                <td width="150" class="tc">
+                                  <template v-if="item.caseType != 2">商品价格: ￥{{ item.unitPrice*item.goodsNumber }}
+                                  </template><br />
+                                  <a class="toGoodDetail" v-if="item.caseType == 2" :data-source="item.source"
+                                    :data-goodid="item.goodId" style="color: #FF0000;">(定制商品请联系商家)</a>
+                                </td>
+                                <td width="150" class="tc">
+                                  <span v-if="item.caseType != 2">实际支付: ￥{{ item.totalPrice }}</span>
+                                </td>
+                                <td>
+                                  商品数量: {{ item.goodsNumber }}
+                                </td>
+                              </tr>
+                            </table>
+                          </li>
+                        </template>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><label>退款金额：</label></td>
+                    <td>
+                      <div>
+                        <input type="text" name="refundAmount" v-model="payMoney" readonly>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top"><label>选择原因：</label></td>
+                    <td>
+                      <el-select v-model="reason" placeholder="请选择取消订单原因" class="selectReason">
+                        <el-option v-for="(item, index) in reasonsList" :key="index" :label="item.label"
+                          :value="item.value">
+                        </el-option>
+                      </el-select>
+                      <div class="tips">
+                        <p class="tip-title">温馨提示：待发货订单，取消订单后，需商家同意后，方可退款；如商家在您取消订单7天内仍未同意，系统将会自动退款。</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><label></label></td>
+                    <td>
+                      <el-button type="warning" @click="submit">提交申请</el-button>
+                    </td>
+                  </tr>
+                </table>
+              </form>
+            </el-tab-pane>
+          </el-tabs> -->
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <%- include ../../footer.ejs %>
+
+    <%- include commonJs.ejs %>
+    <script>
+      $(".userLeftNav li[data-target='refund']").addClass("cur");
+
+      var routerVm = new Vue({
+        el: "#router"
+      })
+
+      //var orderId = utils.getUrlParam("orderId");
+      var orderNumber = utils.getUrlParam("orderNumber");
+      //var refundType = utils.getUrlParam("refundType");
+
+      var detailVm = new Vue({
+        el: "#orderCancel",
+        data: {
+          data: {},
+          picList: [],
+          price: 0,
+          totalPrice: 0,
+          payMoney: 0,
+          reason: '',
+          reasonsList: [{
+            value: '不想买了',
+            label: '不想买了'
+          }, {
+            value: '信息有误',
+            label: '信息有误'
+          }, {
+            value: '重新拍',
+            label: '重新拍'
+          }, {
+            value: '商家缺货',
+            label: '商家缺货'
+          }, {
+            value: '其他原因',
+            label: '其他原因'
+          }]
+        },
+        created: function () {
+          this.reason = '不想买了'
+        },
+        mounted: function () {
+          var self = this;
+          utils.ajax({
+            url: "/api/order/info/" + orderNumber,
+            type: "get",
+            success: function (data) {
+              data = data.data;
+              // for (var i = 0; i < data.orderGoodVOList.length; i++) {
+              //   data.orderGoodVOList[i].selected = false
+              //   data.orderGoodVOList[i].goodsNumberSelect = data.orderGoodVOList[i].goodsNumber
+              // }
+              self.data = data;
+              self.price = (data.payMoney - data.freightMoney) >= 0 ? (data.payMoney - data.freightMoney) :
+                0
+              //				totalPrice()
+              self.payMoney = data.payMoney
+            }
+          })
+
+          window.validform = $("#mainForm").Validform({
+            tiptype: 2
+          })
+          $.Tipmsg.r = ""
+        },
+        methods: {
+          submit: function (e) {
+            var self = this;
+            if (validform.check(false)) {
+              utils.ajax({
+                url: encodeURI("/api/order/cancel/" + orderNumber + "/" + this.reason),
+                el: e.target,
+                success: function (data) {
+                  if (data.success) {
+                    debugger
+                    utils.alert("success", "操作成功");
+                    // setTimeout(function () {
+                    //   window.history.back(-1)
+                    // }, 2000)
+                  } else {
+                    utils.alert("danger", data.msg)
+                  }
+                }
+              })
+            }
+          },
+          handleChange: function (val) {
+            totalPrice()
+          }
+        },
+        filters: {
+          formatImg: function (str) {
+            return utils.formatImg(str);
+          }
+        }
+      })
+
+      $(function () {
+
+        $(document).on("click", ".toGoodDetail", function (e) {
+          var self = $(e.currentTarget);
+          var source = self.attr('data-source');
+          var goodId = self.attr('data-goodid');
+          if (source == 5) {
+            //设计室
+            window.location.href = "../../design/product_detail?id=" + goodId
+          } else {
+            //制造间
+            window.location.href = "../../manufacture/product_detail?id=" + goodId
+          }
+        })
+
+      })
+      //总金额
+      function totalPrice() {
+        var orderList = detailVm.data.orderGoodVOList;
+        var total = 0
+        for (var i = 0; i < orderList.length; i++) {
+          if (orderList[i].selected) {
+            total += parseFloat(orderList[i].totalPrice)
+          }
+        }
+        detailVm.totalPrice = parseFloat(total)
+      }
+    </script>
+
+</body>
+
+</html>

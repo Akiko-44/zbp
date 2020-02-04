@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+.exchange-rtitle {padding: 16px;background: #333;color: #fff;}
+.exchange-rtitle h2 {font-size: 24px;margin-bottom: 10px;}
+.exchange-rtitle p {font-size: 14px;}
+.exchange-rcontent h3 {margin-top: 35px;margin-bottom: 20px;font-size: 14px;color: #999;border-bottom: 2px solid #E0E0E0;padding: 0 40px 10px 40px;}
+.exchange-rcontent h3 strong {color: #333;margin-right: 10px;}
+.exchange-rcontent table {width: 100%;font-size: 14px;color: #666;}
+.exchange-rcontent td label{color: #1A1A1A;display: inline-block;margin-bottom: 5px;}
+.main .btn {line-height: 40px;border-radius: 0;width: 180px;font-size: 22px;}
+.main textarea {height: 300px;width: 500px;}
+.main .tip label{font-size: 12px;color: #999;line-height: 20px;height: 20px;}
+
+.editDialog form {padding: 20px 60px;}
+.editDialog table {width: 100%;}
+.editDialog label {line-height: 30px;}
+.editDialog .dialog-main {height: 380px;margin-top: -190px;}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<div id="header" class="header exchangeTop">
+		<div class="container">
+			<div class="headerInfo">
+				<div>
+					<div class="logoWrap">
+						<a href="../../">
+							<i class="icon icon-logo"></i>
+						</a>
+						<span>回收订单申请</span>
+					</div>
+					<div>
+						
+					</div>
+					<div>
+						<img class="fr" src="../../src/img/exchange/recovery_progress1.png">
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		
+		<div class="exchange-rtitle">
+			<div class="container">
+				<h2><strong>填写并核对回收物品信息</strong></h2>
+				<p>申请回收系统将自动从您账户中冻结 x 元作为保证金，在回收结束后会自动解除冻结</p>
+			</div>
+		</div>
+		<div class="exchange-rcontent container">
+			<h3 class="clearfix">
+				<a class="blue fr">修改</a>
+				<strong>请确认您的联系信息</strong>
+				<span>请正确填写，方便回收人与您联系</span>
+			</h3>
+			<div style="padding: 0 40px">
+				<table>
+					<tr>
+						<td>姓名：张茹</td>
+						<td>手机号码：15848444444</td>
+						<td>QQ：15848484632</td>
+						<td>微信：1598464465</td>
+						<td>所在地：广东—深圳</td>
+					</tr>
+				</table>
+			</div>
+			<h3>
+				<strong>填写您申请回收的商品信息</strong>
+			</h3>
+			<div style="padding: 0 40px">
+				<table>
+					<tr>
+						<td width="320">
+							<label>商品名称</label>
+							<div>
+								<input type="text" class="w300">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td width="320">
+							<label>商品品牌</label>
+							<div>
+								<input type="text" class="w300">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td>
+							<label>新旧程度</label>
+							<div>
+								<select class="w300">
+								</select>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>回收单价</label>
+							<div>
+								<input type="text" class="w300">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td>
+							<label>回收数量</label>
+							<div>
+								<input type="text" class="w300">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<label>鉴定机构</label>
+							<div>
+								<select class="w300">
+								</select>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+						<td>
+							<label>鉴定证书</label>
+							<div>
+								<input type="text">
+							</div>
+							<p class="tip"><label><input type="checkbox">如有鉴定证书，请勾选并上传证书图片</label></p>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<label>商品描述</label>
+							<div>
+								<textarea class="w500" placeholder="不超过200个字"></textarea>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div class="tr container" style="background:#F5F5F5;line-height:60px;font-size:18px;padding: 0 20px;'">
+			回收总价：<strong class="red">￥12354.00</strong>
+		</div>
+		<br>
+		<div class="container tr">
+			<a class="btn btn-warning" id="submitBtn">发起回收订单</a>
+		</div>
+
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+<div class="dialog editDialog show">
+	<div class="mask"></div>
+	<div class="dialog-main">
+		<div class="dialog-header clearfix">
+			<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+			<h3 class="dialog-title">个人信息修改</h3>
+		</div>
+		<div class="dialog-body">
+			
+			<form>
+				<table>
+					<tr>
+						<td valign="top"><label>姓名</label></td>
+						<td>
+							<div>
+								<input type="text">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top"><label>手机号码</label></td>
+						<td>
+							<div>
+								<input type="text">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top"><label>QQ</label></td>
+						<td>
+							<div>
+								<input type="text">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top"><label>微信</label></td>
+						<td>
+							<div>
+								<input type="text">
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top"><label>所在地</label></td>
+						<td>
+							<div>
+								<select></select>
+							</div>
+							<p class="Validform_checktip"></p>
+						</td>
+					</tr>
+				</table>
+			</form>
+			
+		</div>
+		<div class="dialog-footer tc">
+			<a class="btn btn-warning saveBtn">保存信息</a>
+		</div>
+	</div>
+</div>
+<script>
+var id = utils.getUrlParam("id")
+$(function(){
+	
+	$(document).on("click", "#submitBtn", function(){
+		
+		location.href = "../../exchange/recovery_success"
+		
+	})
+	
+})
+
+</script>
+
+</body>
+</html>
+

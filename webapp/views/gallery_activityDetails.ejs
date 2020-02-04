@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<link rel="stylesheet" type="text/css" href="../src/css/gallery_index_new_css/galleryActivity.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+</head>
+<style type="text/css">
+	.datails_list {
+		background: #fff;
+		padding: 40px;
+		margin-top: 30px;
+	}
+
+	.val {
+		margin-left: 2px !important;
+	}
+
+	.datails_time>span:first-child {
+		margin-left: 0 !important;
+	}
+
+	.hh {
+		font-weight: bold;
+		font-size: 20px;
+	}
+
+	.datails_num {
+		cursor: pointer;
+	}
+</style>
+
+<body class="activityDatails-bd">
+	<%- include headerbar %>
+
+	<%- include header %>
+
+	<%- include headerNav %>
+	<div class="activity_datails">
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item :to="{ path: '/' }">
+						<a href="../../">我的位置：首页</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item>
+						<a href="../../gallery/index">图文馆</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item>
+						<a href="../../gallery/activity">活动列表</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item><span id="routerTitle">活动详情</span></el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		<div class="datails_list" id="datails_list">
+			<h2 class="hh" v-text="list.title"></h2>
+			<div class="datails_freq">
+				<div class="datails_time">
+					<span>发布时间：<span v-text="list.creationTime" class="val"></span></span>
+					<span>浏览次数：<span v-text="list.rate" class="val"></span></span>
+				</div>
+				<div class="datails_num" @click.stop="linkNum($event,list)">
+					<em></em><span class="browseNum" v-text="list.likeNum"></span>
+				</div>
+			</div>
+			<div class="datails_content">
+				<p v-html="list.content"></p>
+			</div>
+		</div>
+	</div>
+	<%- include footer %>
+	<script type="text/javascript">
+		var name, value;
+		var routerVm = new Vue({
+			el: "#router",
+		})
+		function UrlSearch() {
+			var str = location.href; //取得整个地址栏
+			var num = str.indexOf("?")
+			str = str.substr(num + 1); //取得所有参数   stringvar.substr(start [, length ]
+
+			var arr = str.split("&"); //各个参数放到数组里
+			for (var i = 0; i < arr.length; i++) {
+				num = arr[i].indexOf("=");
+				if (num > 0) {
+					name = arr[i].substring(0, num);
+					value = arr[i].substr(num + 1);
+					this[name] = value;
+				}
+			}
+		}
+		UrlSearch();
+		var datailsList = new Vue({
+			el: "#datails_list",
+			data: function () {
+				return {
+					list: ""
+				}
+			},
+			created: function () {
+				this.render()
+			},
+			methods: {
+				render: function () {
+					var self = this;
+					utils.ajax({
+						url: "/admin/gallery/activity/getGalleryActivityById/" + id,
+						type: "get",
+						success: function (data) {
+							self.list = data.data;
+						}
+					})
+				},
+				linkNum: function (event, li) {
+					var id = li.id
+					if (li.types != 1) {
+						li.types = 1
+						var type = window.location.href.split('#')[1]
+						if (type == 0) {
+							var self = this;
+							utils.ajax({
+								url: "/admin/gallery/activity/updateIncrLikeNum?id=" + id,
+								type: "post",
+								success: function (data) {
+									var browseBorw = document.querySelector('.datails_num');
+									var browseNum = browseBorw.querySelector('.browseNum');
+									browseNum.innerHTML++;
+								}
+							})
+						}
+					}
+				},
+			},
+			filters: {
+				formatImg: function (src) {
+					return utils.formatImg(src);
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>

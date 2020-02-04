@@ -1,0 +1,87 @@
+<style>
+.contract .dialog-main {width: 644px;height: 558px;margin-left: -322px;margin-top: -279px;}
+.contract .dialog-body{bottom: 0}
+.contract .dialog-body>div {padding: 0 35px;font-size: 14px;position: relative;}
+.contract .dialog-body table{width: 100%;margin-top: 20px;margin-bottom: 20px;border-color: #F5F5F5;}
+.contract table td, .contract th{text-align: center;padding: 5px;}
+.contract .info{margin-top: 20px;}
+.contract .info h3{font-weight: bolder;margin-bottom: 10px;}
+#btn{width: 100%;text-align: center;padding-bottom: 20px;}
+#btn .btn{margin: 0 20px;}
+</style>
+<div class="dialog contract" id="contract">
+	<div class="mask"></div>
+	<div class="dialog-main">
+		<div class="dialog-header clearfix">
+			<!--<a class="fr dialog-close"><i class="icon icon-close"></i></a>-->
+			<h3 class="dialog-title">电子合同</h3>
+		</div>
+		<div class="dialog-body">
+			<div>
+				<ul>
+					<li v-for="item in data" :key="item.id" v-if="item.caseType == 2">
+						<div style="margin-top: 20px;">用户{{item.buyUserName}}在商家{{item.sellUserName}}购买了如下商品：</div>
+						<table border="1">
+							<tr><th>商品名称</th><th>原价</th><th>下单时间</th></tr>
+							<tr v-for="citem in item.orderGoodVOList" :key="citem.goodId">
+								<td>{{citem.skuName}}</td>
+								<td>￥{{citem.unitPrice}}</td>
+								<td>{{item.createTime}}</td>
+							</tr>
+						</table>
+						<div class="tr">
+							<span>订单金额: ￥{{item.payMoney}}</span>
+							<span>(含运费: ￥{{item.freightMoney}})</span>
+						</div>
+					</li>
+					<li>
+						<div class="info">
+							<h3 class="fs16">补充信息</h3>
+							<p class="tc" v-if="designOrderType"><img src="../../src/img/contract.jpg"/></p>
+							<p class="tc" v-if="makeOrderType">
+								<img src="../../src/img/contractMake.jpg"/>
+							</p>
+						</div>
+					</li>
+				</ul>
+				<div id="btn">
+					<button class="btn btn-confirm" onclick="window.history.go(-2)">不同意</button>
+					<button class="btn btn-primary" onclick="$('#contract').removeClass('show')">同意</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$.Tipmsg.r = "";
+var contract = new Vue({
+	el: '#contract',
+	data:function(){
+		return {
+			data:{},
+			designOrderType: false,
+			makeOrderType: false,
+		}
+	},
+	methods: {
+		render: function(data){
+			this.data = data
+			var arrType = []
+			this.data.forEach(item => {
+				if(arrType.indexOf(item.orderType) < 0){
+					arrType.push(item.orderType)
+				}
+			})
+			if(arrType.indexOf(5) !== -1){
+				this.designOrderType = true
+			}
+			if(arrType.indexOf(6) !== -1){
+				this.makeOrderType = true
+			}
+		}
+	}
+})
+function contractBtn(){
+	$("#contract").addClass("show")
+}
+</script>

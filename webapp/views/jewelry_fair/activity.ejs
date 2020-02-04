@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+</head>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding: 0;
+			list-style: none;
+			font-family: "微软雅黑";
+		}
+		.Activity-bd {
+			width: 100%;
+			height: 100%;
+		   	background: #f8f8f8;
+		}
+		.activity {
+		   	width: 1200px;
+		   	margin: 0 auto;
+		}
+		.activity_list {
+		   	width: 1200px;
+		   	margin-top:10px;
+		   	cursor:pointer;
+		}
+		.activity_list:hover{
+		   	box-shadow: 5px 5px 5px #eeeeee;
+		}
+		.activity_list dt{
+			width: 340px;
+			height: 255px;
+			float:left;
+		}
+		.activity_list dt img{
+			width: 340px;
+			height:255px;
+		}
+		.activity_list dd{
+			width: 920px;
+			float: left;
+			margin-left: 23px;
+		}
+		.activity_list dd .activity_browse{
+			display: flex;
+			justify-content: space-between;
+			margin-top:16px;
+		}
+		.activity_list dd .activity_browse span{
+			font-size: 14px !important;
+		}
+		.activity_list dd .browse_time span{
+			height:19px;
+			font-size:16px;
+			font-family:MicrosoftYaHei;
+			font-weight:400;
+			color:rgba(153,153,153,1);
+			line-height:21px;
+		}
+		.activity_list dd .browse_time span:nth-child(2){
+			margin-left: 21px;
+		}
+		.activity_list dd .browse_borw p{
+			display: inline-block;
+		}
+		.activity_list dd .browse_borw p~p{
+			cursor:pointer;
+		}
+		.activity_list dd .browse_borw p span{
+			font-size:16px;
+			font-family:MicrosoftYaHei;
+			font-weight:400;
+			color:rgba(153,153,153,1);
+			margin-left: 6px;
+		}
+		.activity_list dd .browse_borw p:nth-child(1) em{
+			background: url(../../../src/img/galleryNew/yanjing.png) no-repeat;
+			background-size:100% 100%;
+			display: inline-block;
+			width: 18px;
+			height: 12px;
+		}
+		.activity_list dd .browse_borw p:nth-child(2) em{
+			background: url(../../../src/img/galleryNew/dianzan.png) no-repeat;
+			background-size:100% 100%;
+			display: inline-block;
+			width: 14px;
+			height: 14px;
+			margin-left: 24px;
+		}
+		.activity_list dd .activity_content{
+			width: 767px;
+		}
+		.activity_list dd .activity_content h2{
+			font-size:20px;
+			font-family:MicrosoftYaHei;
+			font-weight:900;
+			color:rgba(51,51,51,1);
+			margin: 24px 0 16px;
+		}
+		.activity_list dd .activity_content p{
+			font-size:16px;
+			height:64px ;
+			font-family:MicrosoftYaHei;
+			font-weight:400;
+			color:rgba(102,102,102,1);
+			width: 880px;
+			overflow : hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			line-height:21px;
+		}
+		.activity_list .activity_line{
+			width: 1200px;
+			height: 1px;
+			display: inline-block;
+			
+		}
+		.activity_clearfix{
+			margin-top: 19px;
+			display:flex;
+			justify-content: center;
+		}
+		.datails_content img{
+			display:none;
+		}
+		.activity_content{
+			margin-right:0;
+		}
+		.el-pagination.is-background .el-pager li:not(.disabled).active{
+	    	background: #FF0000;
+	    }
+	    .el-pagination.is-background .btn-next.disabled, .el-pagination.is-background .btn-next:disabled, .el-pagination.is-background .btn-prev.disabled, .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .el-pager li.disabled{
+	    	background: #B0B8B8;
+	    }
+	    .el-icon-arrow-left:before,.el-icon-arrow-right:before{
+	    	color:#FFFFFF;
+	    }
+	    
+	    .el-breadcrumb__separator:before{
+			color:#c0c4cc;
+		}
+		.activity_list dt{
+			width:240px;
+			height:167px;
+		}
+		.activity_list dd{
+			height:120px;
+		}
+		.activity_list dt div{
+			width:240px;
+			height:167px;
+			background-size:cover;
+			background-position:center;
+			background-repeat: no-repeat;
+		}
+		.content>p{
+			font-size: 14px !important;
+		}
+		.activity_list{
+			height:167px !important;
+			background:#fff;
+		}
+	</style>
+
+	<body class="Activity-bd">
+		<%- include ../headerbar %>
+
+		<%- include ../header %>
+
+		<%- include ../headerNav %>
+
+		<div class="activity" id="activity">
+			<div class="container">
+				<div class="router" id="router">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item :to="{ path: '/' }">
+							<a href="../../">我的位置：首页</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item>
+							<a href="../../../jewelry_fair/index">珠宝展</a>
+						</el-breadcrumb-item>
+						<el-breadcrumb-item><span id="routerTitle">活动列表</span></el-breadcrumb-item>
+					</el-breadcrumb>
+				</div>
+			</div>
+			<dl class="activity_list" v-for="(item,index) in newList" @click="toTopic($event,item.id,item.type)" :id="item.id" :text="item.title" :key="index">
+				<dt>
+					<div :style="{backgroundImage:'url('+formatImg(item.phonePath)+')'}"></div>
+				</dt>
+				<dd>
+					<div class="activity_content">
+						<h2 v-text="item.title"></h2>
+						<p class="content" v-html="item.content"></p>
+					</div>
+					<div class="activity_browse">
+						<div></div>
+						<div class="browse_borw">
+							<p><em></em><span v-text="item.rate"></span></p>
+							<p @click.stop="linkNum($event,item.id,index)" disabled="true"><em></em><span class="browseNum" v-text="item.likeNum"></span></p>
+						</div>
+					</div>
+				</dd>
+				<div class="activity_line"></div>
+			</dl>
+			<div class="activity_clearfix">
+				<template>
+					<el-pagination background @current-change="handleCurrentChange" :current-page="offset" :page-size="limit" layout="total, prev, pager, next, jumper" :total="total">
+					</el-pagination>
+				</template>
+			</div>
+		</div>
+		<%- include ../footer %>
+		<script type="text/javascript">
+			var ListType = new Vue({
+				el: "#activity",
+				data() {
+					return {
+						newList: [],
+						list: [],
+						total: 0,
+						offset: 1,
+						limit: 10
+					}
+				},
+				mounted: function() {
+					this.render();
+				},
+				created() {
+					this.activiey_newList();
+				},
+				methods: {
+					render: function() {
+						var self = this;
+						utils.ajax({
+							url: "/admin/gallery/activity/getPCNumCount",
+							type: "get",
+							data: {
+								offset: self.offset,
+								limit: self.limit,
+								supType:7,
+							},
+							success: function(data) {
+								self.total = data.data;
+							}
+						})
+					},
+					handleCurrentChange: function(val) {
+						var self = this;
+						self.offset = val;
+						self.render();
+						self.activiey_newList()
+					},
+					toTopic: function(event,id,type) {
+						var byId = event.currentTarget.getAttribute("id");
+						var text = event.currentTarget.getAttribute("text");
+						window.location.href = "../../jewelry_fair/activitys?type?routers=" + text + "&id=" + id + "#" + type;
+					},
+					linkNum:function(event,id,index){
+						var self = this;
+						if(!this.newList[index].type){
+							utils.ajax({
+								url:"/admin/gallery/activity/updateIncrLikeNum?id="+id,
+								type:"post",
+								success:function(data){
+									var browseBorw=document.querySelectorAll('.browse_borw');
+									for(let i=0;i<browseBorw.length;i++){
+										var browseNum=browseBorw[i].querySelector('.browseNum');
+	  								    if(browseNum.innerHTML){
+	  								    	browseNum.innerHTML++;
+	  								    }
+									}
+								}
+							})
+						}
+						this.newList[index].type = 1
+					},
+					activiey_newList: function() {
+						var self=this;
+						utils.ajax({
+							url: '/admin/gallery/activity/page',
+							data: {
+								offset: self.offset,
+								limit: self.limit,
+								supType:7
+							},
+							type: "get",
+							success: function(data) {
+								self.newList = data.data.map(function(item){
+									item.type = 0;
+									return item;
+								});
+							}
+						})
+					},
+					formatImg:utils.formatImg
+				}
+			})
+
+		</script>
+</body>
+</html>

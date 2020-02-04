@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/cropper.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/ImgCropping.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		.applyShop .apply-shop-step {
+			height: 80px;
+			background: #ffffff;
+			margin-bottom: 20px;
+			overflow: hidden;
+		}
+
+		.applyShop .apply-shop-step>ul {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			text-align: center;
+			font-size: 18px;
+			color: #aaaaaa;
+			margin: 31px 0;
+		}
+
+		.applyShop .apply-shop-step>ul>li>i {
+			margin-right: 39px;
+		}
+
+		.applyShop .apply-shop-step>ul>li.cur {
+			color: #FC8D88;
+		}
+
+		.applyShop .apply-shop-form {
+			padding: 20px;
+			margin-bottom: 76px;
+			background: #ffffff;
+		}
+
+		.applyShop .apply-shop-form>h3 {
+			padding: 10px 0 20px;
+			font-size: 16px;
+			color: #333333;
+			border-bottom: 1px solid #e5e5e5;
+		}
+
+		.applyShop .apply-shop-form input.el-input__inner {
+			height: 33px;
+		}
+
+		.applyShop .apply-shop-form .el-input-group__append {
+			background: transparent;
+		}
+
+		.applyShop .apply-shop-form .el-input-group__append button {
+			padding: 0 12px;
+		}
+
+		.applyShop .apply-shop-form .form {
+			padding: 30px 500px 30px 0;
+		}
+
+		.applyShop .success-state {
+			margin-bottom: 70px;
+			padding-top: 150px;
+			min-height: 677px;
+			text-align: center;
+			font-size: 12px;
+			color: #aaaaaa;
+			background: #ffffff;
+		}
+
+		.applyShop .success-state .text {
+			padding: 40px 0 15px;
+			font-size: 18px;
+			color: #26273C;
+		}
+
+		.applyShop .materials-list {
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.applyShop .materials-list .materials-item {
+			position: relative;
+			display: inline-block;
+			width: 81px;
+			height: 81px;
+			margin: 0 10px;
+		}
+
+		.applyShop .materials-list .del-materials {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			background: rgba(0, 0, 0, .34);
+			color: #fff;
+			font-size: 12px;
+			cursor: pointer;
+		}
+
+		.applyShop .uploadbox {
+			display: inline-block;
+		}
+
+		.applyShop .diagram {
+			display: inline-block;
+			vertical-align: top;
+			width: 81px;
+			height: 81px;
+			margin-left: 10px;
+			border: 1px dashed #e5e5e5;
+			position: relative;
+			cursor: pointer;
+		}
+
+		.applyShop .diagram>img {
+			width: 50px;
+			margin: 5px 15px;
+		}
+
+		.applyShop .diagram>span {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			text-align: center;
+			font-size: 12px;
+			color: #aaaaaa;
+		}
+
+		.applyShop .diagram .el-icon-zoom-in {
+			margin-left: 4px;
+		}
+
+		.save-btn {
+			width: 176px;
+			border-radius: 0;
+			background: #DF735A;
+		}
+
+		.tip {
+			display: inline-block;
+			font-size: 12px;
+			color: #aaa;
+			line-height: 21px;
+		}
+
+		.verifycode-class .el-form-item__content {
+			margin-top: 3px;
+			margin-left: 210px;
+			height: 31px;
+			border: 1px solid rgba(0, 0, 0, .09);
+			border-radius: 3px;
+		}
+
+		.verifycode-class .el-input__inner {
+			vertical-align: text-bottom;
+			border: none;
+			height: 29px !important;
+		}
+
+		.el-form-item__label {
+			line-height: 33px;
+		}
+
+		.el-form-item__content {
+			line-height: 21px;
+		}
+
+		.agreement .dialog-title {
+			text-align: center;
+			font-size: 20px;
+		}
+
+		.agreement .dialog-main {
+			width: 644px;
+			height: 558px;
+			margin-left: -322px;
+			margin-top: -279px;
+		}
+
+		.agreement .dialog-body {
+			bottom: 0;
+			line-height: 26px;
+			padding-bottom: 20px;
+			height: 490px;
+			overflow-y: auto;
+		}
+
+		.agreement .dialog-body>div {
+			padding: 0 35px 20px;
+			font-size: 14px;
+			position: relative;
+			/* overflow-y: auto; */
+			text-align: left;
+
+		}
+
+		.protocol .dialog-title {
+			text-align: center;
+			font-size: 20px;
+		}
+
+		.protocol .dialog-main {
+			width: 644px;
+			height: 558px;
+			margin-left: -322px;
+			margin-top: -279px;
+		}
+
+		.protocol .dialog-body {
+			bottom: 0;
+			line-height: 26px;
+			padding-bottom: 20px;
+			height: 490px;
+			overflow-y: auto;
+		}
+
+		.protocol .dialog-body>div {
+			padding: 0 35px 20px;
+			font-size: 14px;
+			position: relative;
+			/* overflow-y: auto; */
+			text-align: left;
+
+		}
+	</style>
+</head>
+
+<body class="applyShop">
+
+	<%- include ../headerbar.ejs %>
+
+	<%- include ../user/userHeaderNav.ejs %>
+
+	<div class="container">
+		<div class="router" id="router">
+			<el-breadcrumb separator-class="el-icon-arrow-right">
+				<el-breadcrumb-item>
+					<a href="/">首页</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item :to="{ path: '/' }">
+					<a href="/user/acc_info">个人中心</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>企业认证</el-breadcrumb-item>
+			</el-breadcrumb>
+		</div>
+	</div>
+
+	<div id="main" class="main">
+		<div class="clearfix container">
+			<div class="success-state" v-if="submitSuccess">
+				<div class="imgwrap">
+					<img src="../../src/img/user/applyShopSuccess.png" width="166" />
+				</div>
+				<h4 class="text">开店资料提交成功（<span class="red">{{count}}</span>秒）</h4>
+				<p>平台将在3个工作日内进行审核，请耐心等待</p>
+			</div>
+			<template v-else>
+				<div class="apply-shop-step">
+					<ul>
+						<li v-for="(item, i) in stepList" :class="{'cur': i <= curStep}"><i class="el-icon-arrow-right"
+								v-if="i>0"></i><span><span style="margin-right: 10px;">{{i+1}}</span>{{item.name}}</span></li>
+					</ul>
+				</div>
+				<div class="apply-shop-form">
+					<h3>{{merchantName}}认证申请</h3>
+					<el-form class="form" id="form1" ref="form1" :model="form1" :rules="rules1" label-width="150px"
+						v-if="curStep == 0">
+						<el-form-item label="认证主体：" prop="registType" v-if="form.merchantType == 1">
+							<el-radio v-model="form1.registType" :label="2">企业</el-radio>
+							<el-radio v-model="form1.registType" :label="1">个人</el-radio>
+						</el-form-item>
+						<el-form-item label="店铺名称：" prop="name">
+							<el-input :maxlength="30" v-model="form1.name" placeholder="请输入店铺名称，30字以内"></el-input>
+						</el-form-item>
+
+						<el-form-item label="主营类目：" prop="categoryDTOList2">
+							<el-select style="width:100%;" v-model="form1.categoryDTOList2" multiple placeholder="请选择"
+								@change="categoryChange">
+								<el-option v-for="item in secondCategoryList" :key="item.id" :label="item.catName" :value="item.id">
+								</el-option>
+							</el-select>
+						</el-form-item>
+
+						<el-form-item label="店铺LOGO：" prop="logo">
+							<div class="uploadbox" data-target="logo">
+								<img v-if="form1.logo" :src="form1.logo | formatImg" width="100%" />
+							</div>
+							<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/diagram-logo.png')">
+								<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+								<img src="../../src/img/user/diagram-logo.png" />
+							</div>
+							<span class="tip">尺寸400*400，大小1.5M（兆）以内，支持jpg/jpeg/png/gif格式</span>
+						</el-form-item>
+
+						<el-form-item label="店铺背景：" prop="backgroundImg">
+							<div class="uploadbox" data-target="backgroundImg">
+								<img v-if="form1.backgroundImg" :src="form1.backgroundImg | formatImg" width="100%" />
+							</div>
+							<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/diagram-backgroundImg.jpg')">
+								<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+								<img src="../../src/img/user/diagram-backgroundImg.jpg" />
+							</div>
+							<span class="tip">尺寸710*350，大小1.5M（兆）以内，支持jpg/jpeg/png/gif格式</span>
+						</el-form-item>
+
+						<el-form-item label="店铺简介：" prop="merchantExplain">
+							<el-input type="textarea" :maxlength="300" v-model="form1.merchantExplain"
+								placeholder="300字以内，内容完整通畅、无特殊符号或者微信、QQ、微博、手机号等联系方式">
+							</el-input>
+						</el-form-item>
+
+						<el-form-item label="企业名称：" prop="companyName" v-if="form.registType == 2">
+							<el-input :maxlength="30" v-model="form1.companyName" placeholder="请输入企业名称，30字以内"></el-input>
+						</el-form-item>
+
+						<el-form-item label="联系地址:" prop="countryId">
+							<el-select style="width: 160px;" placeholder="请选择省份" v-model="form1.provinceId" @change="getCity">
+								<el-option v-for="item in provinceList" :key="item.regionId" :label="item.regionName"
+									:value="item.regionId">
+								</el-option>
+							</el-select>
+							<el-select style="width: 160px;" placeholder="请选择城市" v-model="form1.cityId" @change="cityChange">
+								<el-option v-for="item in cityList" :key="item.regionId" :label="item.regionName"
+									:value="item.regionId">
+								</el-option>
+							</el-select>
+							<el-select style="width: 160px;" placeholder="请选择所在区" v-model="form1.countryId" @change="countryChange">
+								<el-option v-for="item in countryList" :key="item.regionId" :label="item.regionName"
+									:value="item.regionId">
+								</el-option>
+							</el-select>
+						</el-form-item>
+
+						<el-form-item label="详细地址：" prop="address">
+							<el-input :maxlength="50" v-model="form1.address" placeholder="与营业执照上保持一致，50字以内"></el-input>
+						</el-form-item>
+
+						<el-form-item label="门牌号：" prop="houseNumber">
+							<el-input :maxlength="6" v-model="form1.houseNumber" placeholder="实体店铺的门牌号，6个字以内"></el-input>
+						</el-form-item>
+
+						<el-form-item label="邮箱地址：" prop="email">
+							<el-input v-model="form1.email" placeholder="用于接收信息提醒"></el-input>
+						</el-form-item>
+
+						<el-form-item>
+							<el-button type="danger" class="save-btn" :loading="loading" @click="nextStep(1)">下一步</el-button>
+						</el-form-item>
+					</el-form>
+					<el-form class="form" id="form2" ref="form2" :model="form2" :rules="rules2" label-width="150px"
+						v-if="curStep == 1">
+						<el-form-item label="纳税人识别号：" prop="taxNumber" v-if="form.registType == 2">
+							<el-input :maxlength="20" v-model="form2.taxNumber" placeholder="与营业执照上保持一致"></el-input>
+						</el-form-item>
+
+						<el-form-item label="开户名称：" prop="realName">
+							<el-input :maxlength="30" v-model="form2.realName"
+								:placeholder="(form.registType == 2) ? '即开户许可证上的企业名称' : '即开户人的真实姓名，与实名认证者保持一致'">
+							</el-input>
+						</el-form-item>
+						<el-form-item label="开户账号：" prop="bankAccount">
+							<el-input :maxlength="25" v-model="form2.bankAccount"
+								:placeholder="(form.registType == 2) ? '即对公账户的银行账号' : '即个人银行卡号'">
+							</el-input>
+						</el-form-item>
+						<el-form-item label="开户银行：" prop="bankName">
+							<el-input :maxlength="30" v-model="form2.bankName"
+								:placeholder="(form.registType == 2) ? '即对公账户的开户行名称，具体到支行' : '即个人银行卡的开户行名称，具体到支行'">
+							</el-input>
+						</el-form-item>
+
+						<el-form-item label="开户行联行号：" prop="bankNumber">
+							<el-input :maxlength="12" v-model="form2.bankNumber" placeholder="由12位数字组成的联行号"></el-input>
+							<p style="font-size: 12px;color: #aaaaaa;">可通过查询入口（<a class="blue" href="https://www.icvio.cn"
+									target="_blank">https://www.icvio.cn</a>）获得开户行联行号</p>
+						</el-form-item>
+
+						<el-form-item label="银行开户证明图片：" prop="materials" v-if="form.registType == 2">
+							<div class="uploadbox" data-target="materials">
+								<img v-if="form2.materials" :src="form2.materials[0] | formatImg" width="100%" />
+							</div>
+							<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/diagram-materials.png')">
+								<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+								<img src="../../src/img/user/diagram-materials.png" />
+							</div>
+							<span class="tip">(请上传开户许可证照片或由银行提供的开户证明照片，需加盖本公司公章。支持jpg、jpeg、png格式，大小1.5兆以内，尺寸不限)</span>
+						</el-form-item>
+
+						<el-form-item label="营业执照：" prop="businessLicense" v-if="form.registType == 2">
+							<div class="uploadbox" data-target="businessLicense">
+								<img v-if="form2.businessLicense" :src="form2.businessLicense | formatImg" width="100%" />
+							</div>
+							<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/diagram-businessLicense.png')">
+								<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+								<img src="../../src/img/user/diagram-businessLicense.png" />
+							</div>
+							<span class="tip">1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</span>
+						</el-form-item>
+
+						<el-form-item label="银联商务自由划付业务承诺书：" prop="legalPersonPic" v-if="form.registType == 2">
+							<div class="uploadbox" data-target="legalPersonPic">
+								<img v-if="form2.legalPersonPic" :src="form2.legalPersonPic | formatImg" width="100%" />
+							</div>
+							<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/diagram-legalPersonPic.png')">
+								<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+								<img src="../../src/img/user/diagram-legalPersonPic.png" />
+							</div>
+							<span class="tip"><a class="blue"
+									@click="download">下载模板</a>填写相关资料并签字盖章，然后以拍照或扫描件的形式上传；1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</span>
+						</el-form-item>
+
+						<el-form-item label="门店招牌图片：" prop="doorPhotos">
+							<div class="uploadbox" data-target="doorPhotos">
+								<img v-if="form2.doorPhotos" :src="form2.doorPhotos | formatImg" width="100%" />
+							</div>
+							<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/diagram-doorPhotos.png')">
+								<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+								<img src="../../src/img/user/diagram-doorPhotos.png" />
+							</div>
+							<span class="tip">1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</span>
+						</el-form-item>
+
+						<el-form-item label="店铺内部图片：" prop="idroomPic">
+							<div class="uploadbox" data-target="idroomPic">
+								<img v-if="form2.idroomPic" :src="form2.idroomPic | formatImg" width="100%" />
+							</div>
+							<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/diagram-idroomPic.png')">
+								<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+								<img src="../../src/img/user/diagram-idroomPic.png" />
+							</div>
+							<span class="tip">1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</span>
+						</el-form-item>
+
+						<el-form-item label="辅助材料：" prop="materials" v-if="form.registType == 1">
+							<div>
+								<div class="materials-list">
+									<div class="materials-item" v-if="form2.materials" v-for="(item, index) in form2.materials">
+										<img :src="item | formatImg" width="100%" height="100%" />
+										<div class="del-materials" @click="removeMaterials(index)">删除</div>
+									</div>
+								</div>
+								<div class="uploadbox" data-target="materials" v-if="form2.materials.length<5">
+									<!-- <img v-if="form2.materials" :src="form2.materials[0] | formatImg" width="100%" /> -->
+								</div>
+								<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/diagram-materials.png')">
+									<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+									<img src="../../src/img/user/diagram-materials.png" />
+								</div>
+							</div>
+							<span class="tip">1、银行卡正反面照片各1张；<br />
+								2、经营场所的租赁合同、或产权证明、或个体商户营业执照图片3者至少上传1张；<br />
+								3、格式支持jpg/jpeg/png，单张照片大小1.5M以内<br /></span>
+						</el-form-item>
+
+						<el-form-item>
+							<el-button type="danger" class="save-btn" :loading="loading" @click="preStep">上一步</el-button>
+							<el-button type="danger" class="save-btn" :loading="loading" @click="nextStep(2)">下一步</el-button>
+						</el-form-item>
+					</el-form>
+					<el-form class="form" id="form3" ref="form3" :model="form3" :rules="rules3" label-width="210px"
+						v-if="curStep == 2">
+						<el-form-item label="姓名：" prop="linkmanList[0].linkName">
+							<el-input :maxlength="20" v-model="form3.linkmanList[0].linkName" placeholder="请输入真实姓名"></el-input>
+						</el-form-item>
+
+						<el-form-item label="身份证号：" prop="linkmanList[0].idCard">
+							<el-input :maxlength="18" v-model="form3.linkmanList[0].idCard" placeholder="请输入身份证号,目前仅支持中国大陆身份信息">
+							</el-input>
+						</el-form-item>
+
+						<el-form-item label="手持身份证照片（人像面）：" prop="linkmanList[0].facePhoto">
+							<div class="uploadbox" data-target="facePhoto">
+								<img v-if="form3.linkmanList[0].facePhoto" :src="form3.linkmanList[0].facePhoto | formatImg"
+									width="100%" />
+							</div>
+							<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/sfz2.png')">
+								<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+								<img src="../../src/img/user/sfz2.png" />
+							</div>
+							<span class="tip">1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</span>
+						</el-form-item>
+
+						<el-form-item label="手持身份证照片（党徽面）：" prop="linkmanList[0].backPhoto">
+							<div class="uploadbox" data-target="backPhoto">
+								<img v-if="form3.linkmanList[0].backPhoto" :src="form3.linkmanList[0].backPhoto | formatImg"
+									width="100%" />
+							</div>
+							<div class="diagram" title="单击查看大图" @click="lookImg('../../src/img/user/sfz1.png')">
+								<span style="vertical-align: top;">示例图<i class="el-icon-zoom-in"></i></span>
+								<img src="../../src/img/user/sfz1.png" />
+							</div>
+							<span class="tip">1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</span>
+						</el-form-item>
+
+						<el-form-item>
+							<el-button type="danger" class="save-btn" :loading="loading" @click="preStep">上一步</el-button>
+							<el-button type="danger" class="save-btn" :loading="loading" @click="nextStep(3)">下一步</el-button>
+						</el-form-item>
+					</el-form>
+					<el-form class="form" id="form4" ref="form4" :model="form4" :rules="rules4" label-width="210px"
+						v-if="curStep == 3">
+						<el-form-item label="手机号：" prop="mobilePhone">
+							<el-input :maxlength="11" v-model="form4.mobilePhone" placeholder="请确保该手机号码为银行预留手机号码" disabled>
+							</el-input>
+						</el-form-item>
+						<el-form-item label="图形验证码：" prop="verifyCode" v-if="verifyFlag == 0" class="is-required verifycode-class">
+							<el-col :span="18">
+								<el-input name="code" type="text" v-model="form4.verifyCode" autoComplete="on" placeholder="验证码" />
+							</el-col>
+							<el-col :span="6">
+								<img @click="code = getVerifyCode()" v-if="code" :src="code.url"
+									style="display: block;float: right; border-radius: 0 5px 5px 0;width: 94px; height: 29px;" />
+							</el-col>
+						</el-form-item>
+
+						<el-form-item label="短信验证码：" prop="dynamicVerifyCode" class="is-required">
+							<el-input :maxlength="6" v-model="form4.dynamicVerifyCode" placeholder="请输入短信验证码">
+								<template slot="append">
+									<el-button v-if="sendAuthCode" @click.native.prevent="codeBtn">获取验证码</el-button>
+									<el-button v-if="!sendAuthCode" disabled>已发送({{authTime}})</el-button>
+								</template>
+							</el-input>
+						</el-form-item>
+
+						<el-form-item prop="checked" style="line-height: 21px;">
+							<el-checkbox v-model="form4.checked"></el-checkbox>
+							我已阅读并同意
+							<a @click="shopAgreement" class="blue">《中宝平开店协议》</a>和
+							<a @click="cooperateAgreement" class="blue">《银联商务T+N自由划付业务合作协议》</a>
+						</el-form-item>
+
+						<el-form-item>
+							<el-button type="danger" class="save-btn" :loading="loading" @click="preStep">上一步</el-button>
+							<el-button type="danger" class="save-btn" :loading="loading" @click="nextStep(4)">提交</el-button>
+						</el-form-item>
+					</el-form>
+					</el-bu>
+				</div>
+			</template>
+		</div>
+
+		<el-dialog title="示例图" fullscreen='fullscreen' :visible.sync="dialogImgVisible">
+			<div style="text-align: center;">
+				<img :src="bigImgSrc" width="50%" />
+			</div>
+		</el-dialog>
+
+		<!--图片裁剪框 start-->
+		<div style="display: none" class="tailoring-container">
+			<div class="black-cloth" onclick="closeTailor(this)"></div>
+			<div class="tailoring-content">
+				<div class="tailoring-content-one">
+					<label title="上传图片" for="chooseImg" class="l-btn choose-btn">
+						<input type="file" accept="image/jpg,image/jpeg,image/png" name="bgfile" id="chooseImg" class="hidden"
+							onchange="selectImg(this)">
+						选择图片
+					</label>
+					<div class="close-tailoring" onclick="closeTailor(this)">×</div>
+				</div>
+				<div class="tailoring-content-two">
+					<div class="tailoring-box-parcel">
+						<img id="tailoringImg">
+					</div>
+					<div class="preview-box-parcel">
+						<p>图片比例：710*350</p>
+					</div>
+				</div>
+				<div class="tailoring-content-three">
+					<button class="l-btn sureCut" id="sureCut">确定</button>
+				</div>
+			</div>
+		</div>
+		<!--图片裁剪框 end-->
+		<%- include agreement.ejs %>
+		<%- include protocol.ejs %>
+		<%- include ../footer.ejs %>
+		<form id="formBackgroundImg" class="hide" method="post" enctype="multipart/form-data">
+			<input type="file" name="cloudfile" accept="image/*" onchange="uploadGoodsImg(this)">
+		</form>
+
+		<script>
+			var routerVm = new Vue({
+				el: "#router",
+			})
+
+			var mainVm = new Vue({
+				el: "#main",
+				data: {
+					loading: false,
+					dialogImgVisible: false,
+					bigImgSrc: '',
+					success: false,
+					updateCreate: false,
+					code: undefined,
+					sendAuthCode: true,
+					submitSuccess: false,
+					count: 3,
+					authTime: 0,
+					verifyFlag: 1,
+					nextNum: 0,
+					merchantName: '',
+					secondCategoryList: [],
+					curStep: 0,
+					stepList: [{
+						id: 1,
+						name: '基本信息'
+					}, {
+						id: 2,
+						name: '资质认证'
+					}, {
+						id: 3,
+						name: '实名认证'
+					}, {
+						id: 4,
+						name: '手机号码验证'
+					}],
+					provinceList: [],
+					cityList: [],
+					countryList: [],
+					form: {
+						merchantType: '',
+						registType: 2,
+						categoryDTOList2: []
+					},
+					form1: {
+						registType: 2,
+						name: '',
+						categoryDTOList: [],
+						categoryDTOList2: [],
+						logo: '',
+						backgroundImg: '',
+						merchantExplain: '',
+						companyName: '',
+						region: '',
+						provinceId: '',
+						provinceName: '',
+						cityId: '',
+						cityName: '',
+						countryId: '',
+						countryName: '',
+						address: '',
+						houseNumber: '',
+						email: ''
+					},
+					form2: {
+						taxNumber: '',
+						realName: '',
+						bankAccount: '',
+						bankName: '',
+						bankNumber: '',
+						businessLicense: '',
+						legalPersonPic: '',
+						doorPhotos: '',
+						idroomPic: '',
+						materials: []
+					},
+					form3: {
+						linkmanList: [{
+							linkName: '',
+							idCard: '',
+							facePhoto: '',
+							backPhoto: '',
+							status: 1
+						}]
+					},
+					form4: {
+						mobilePhone: '',
+						msgId: '', //消息id
+						codeUuid: '', //图形验证码Uuid
+						dynamicVerifyCode: '', //动态验证码
+						verifyCode: '', //验证码
+						checked: true
+					},
+					rules1: {
+						name: [{
+							required: true,
+							message: '请填写店铺名称'
+						}],
+						categoryDTOList2: [{
+							required: true,
+							message: '请选择主营类目'
+						}],
+						logo: [{
+							required: true,
+							message: '请上传店铺logo'
+						}],
+						backgroundImg: [{
+							required: true,
+							message: '请上传店铺背景图'
+						}],
+						merchantExplain: [{
+							required: true,
+							message: '请填写店铺简介'
+						}],
+						companyName: [{
+							required: true,
+							message: '请填写企业名称'
+						}],
+						countryId: [{
+							required: true,
+							message: '请选择联系地址',
+							trigger: 'blur'
+						}],
+						address: [{
+							required: true,
+							message: '请填写详细地址'
+						}],
+						houseNumber: [{
+							required: true,
+							message: '请填写门牌号'
+						}],
+						email: [{
+							required: true,
+							pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+							message: '请填写正确的email'
+						}]
+					},
+					rules2: {
+						taxNumber: [{
+							required: true,
+							pattern: /^[0-9a-zA-Z]+$/,
+							message: '请填写纳税人识别号，仅限输入15位或18位或20位数字和字母'
+						}],
+						realName: [{
+							required: true,
+							message: '请填写开户名称'
+						}],
+						bankAccount: [{
+							required: true,
+							pattern: /^[0-9]{0,25}$/,
+							message: '请填写开户账号，仅限25位以内的数字'
+						}],
+						bankName: [{
+							required: true,
+							message: '请填写开户银行'
+						}],
+						bankNumber: [{
+							required: true,
+							pattern: /^[0-9]{12}$/,
+							message: '请填写开户行联行号，仅限12位以内的数字'
+						}],
+						businessLicense: [{
+							required: true,
+							message: '请上传营业执照'
+						}],
+						legalPersonPic: [{
+							required: true,
+							message: '请上传银联商务自由划付业务承诺书'
+						}],
+						doorPhotos: [{
+							required: true,
+							message: '请上传门店招牌图片'
+						}],
+						idroomPic: [{
+							required: true,
+							message: '请上传店铺内部图片'
+						}],
+						materials: [{
+							required: true,
+							message: '请上传辅助材料'
+						}]
+					},
+					rules3: {
+						'linkmanList[0].linkName': [{
+							required: true,
+							message: '请输入真实姓名'
+						}],
+						'linkmanList[0].idCard': [{
+							required: true,
+							pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+							message: '请输入身份证号'
+						}],
+						'linkmanList[0].facePhoto': [{
+							required: true,
+							message: '请上传身份证照片（人像面）'
+						}],
+						'linkmanList[0].backPhoto': [{
+							required: true,
+							message: '请上传身份证照片（党徽面）'
+						}]
+					},
+					rules4: {
+						mobilePhone: [{
+							required: true,
+							pattern: /^1\d{10}$/,
+							message: '请输入手机号码'
+						}],
+						// dynamicVerifyCode: [{
+						// 	required: true,
+						// 	pattern: /^\d{6}$/,
+						// 	message: '请输入正确的验证码'
+						// }],
+						// verifyCode: [{
+						// 	required: true,
+						// 	message: '请输入图形验证码'
+						// }],
+						// msgId: [{
+						// 	required: true,
+						// 	message: '短信验证码有误'
+						// }],
+						// checked: [{
+						// 	required: true,
+						// 	message: '请阅读并同意相关协议'
+						// }]
+					},
+				},
+				mounted() {
+					this.getSecondCategoryList()
+					this.getDetail()
+					this.code = this.getVerifyCode()
+				},
+				methods: {
+					preStep() {
+						this.curStep--
+					},
+					nextStep(step) {
+						this.secondCategoryList.map(item => {
+							if (this.form1.categoryDTOList2.includes(item.id)) {
+								this.form1.categoryDTOList.push({
+									secondCatId: item.id,
+									secondCatName: item.catName
+								})
+							}
+						})
+						this.form1.categoryDTOList = this.form1.categoryDTOList.reverse().filter((item, index) => {
+							const _index = this.form1.categoryDTOList.findIndex((_item) => {
+								return item.secondCatId === _item.secondCatId
+							})
+							return index == _index
+						})
+						if (typeof this.form2.materials === 'string') {
+							this.form2.materials = this.form2.materials.split(',')
+						}
+						if (step == 2 && this.form.registType == 1 && this.form2.materials.length < 3) {
+							this.$notify({
+								title: '警告',
+								message: '辅助材料图片不能少于3张',
+								type: 'warning'
+							})
+							return
+						}
+						this.$refs['form' + step].validate(valid => {
+							if (valid) {
+								this.loading = false
+								if (step < 4) {
+									this.curStep++
+								}
+								if (step === 4) {
+									if (!this.form4.dynamicVerifyCode.trim()) {
+										this.$notify({
+											title: '警告',
+											message: '短信验证码不能为空',
+											type: 'warning'
+										})
+										return false
+									} else if (!/^\d{6}$/.test(this.form4.dynamicVerifyCode.trim())) {
+										this.$notify({
+											title: '警告',
+											message: '请输入正确的验证码',
+											type: 'warning'
+										})
+										return false
+									}
+									if (!this.form4.checked) {
+										this.$notify({
+											title: '警告',
+											message: '请阅读并同意相关协议',
+											type: 'warning'
+										})
+										return false
+									}
+									Object.assign(this.form, this.form4)
+									utils.ajax({
+										url: "/api/userCenter/merchantInfo/saveOrUpdate",
+										data: JSON.stringify(this.form),
+										success: (data) => {
+											if (data.success) {
+												this.submitSuccess = !this.submitSuccess
+												if (this.submitSuccess) {
+													this.start()
+												}
+											} else {
+												if (this.nextNum >= 3) {
+													this.verifyFlag = 0
+													this.form4.verifyCode = ''
+												} else {
+													this.nextNum++
+												}
+												if (this.nextNum > 3) {
+													this.code = this.getVerifyCode
+												}
+											}
+										},
+										fail: (data) => {
+											if (this.nextNum >= 3) {
+												this.verifyFlag = 0
+												this.form4.verifyCode = ''
+											} else {
+												this.nextNum++
+											}
+											if (this.nextNum > 3) {
+												this.code = this.getVerifyCode
+											}
+										}
+									})
+
+								}
+							} else {
+								this.$notify({
+									title: '警告',
+									message: '请务必填写必选项',
+									type: 'warning'
+								})
+								return false
+							}
+						})
+						scrollTo(0, 0)
+					},
+					start() {
+						this.timer = setTimeout(() => {
+							if (this.count === 1) {
+								clearTimeout(this.timer)
+								this.linkTo()
+							} else {
+								this.start()
+								this.count--
+							}
+						}, 1000)
+					},
+					linkTo() {
+						clearTimeout(this.timer)
+						window.location.href = '/user/shop'
+					},
+					getVerifyCode() {
+						let uuid = utils.uuid()
+						return {
+							uuid,
+							url: `/api/userCenter/verifyCode/getCode/${uuid}`
+						}
+					},
+					codeBtn() {
+						const self = this
+						this.form4.codeUuid = this.code.uuid
+						this.$refs.form4.validate(valid => {
+							if (valid) {
+								utils.ajax({
+									url: '/api/userCenter/smscode',
+									method: 'post',
+									data: JSON.stringify(self.form4),
+									success: (data) => {
+										if (data.success) {
+											self.form4.msgId = data.data
+											self.sendAuthCode = false;
+											self.authTime = 2 * 60;
+											var auth_timetimer = setInterval(() => {
+												self.authTime--;
+												if (self.authTime <= 0) {
+													self.sendAuthCode = true;
+													clearInterval(auth_timetimer);
+												}
+											}, 1000)
+										} else {
+											if (this.nextNum >= 3) {
+												this.verifyFlag = 0
+												this.form4.verifyCode = ''
+											} else {
+												this.nextNum++
+											}
+											if (this.nextNum > 3) {
+												this.code = this.getVerifyCode
+											}
+										}
+									}
+								})
+							}
+						})
+					},
+					categoryChange(value) {
+						this.form1.categoryDTOList2 = value
+						this.$forceUpdate()
+					},
+					getSecondCategoryList() {
+						utils.ajax({
+							url: "/admin/category/getSecondCategoryList",
+							type: "get",
+							success: (data) => {
+								this.secondCategoryList = data.data
+							}
+						})
+					},
+					getProvince() {
+						utils.ajax({
+							url: `/admin/region/list/0`,
+							type: "get",
+							success: (data) => {
+								this.provinceList = data.data
+								// 防止回显数据被覆盖
+								if (!this.updateCreate) {
+									this.form1.provinceId = this.provinceList[0].regionId
+									this.form1.provinceName = this.provinceList[0].regionName
+								}
+								this.getCity(this.form1.provinceId)
+							}
+						})
+					},
+					getCity(id) {
+						utils.ajax({
+							url: `/admin/region/list/${id}`,
+							type: "get",
+							success: (data) => {
+								this.cityList = data.data
+								this.provinceList.map(item => {
+									if (item.regionId === id) {
+										this.form1.provinceId = item.regionId
+										this.form1.provinceName = item.regionName
+									}
+								})
+								// 防止回显数据被覆盖
+								if (!this.updateCreate) {
+									this.form1.cityId = this.cityList[0].regionId
+									this.form1.cityName = this.cityList[0].regionName
+								}
+								this.cityChange(this.form.cityId)
+							}
+						})
+					},
+					cityChange(id) {
+						utils.ajax({
+							url: `/admin/region/list/${id}`,
+							type: "get",
+							success: (data) => {
+								this.countryList = data.data
+								this.cityList.map(item => {
+									if (item.regionId === id) {
+										this.form1.cityId = item.regionId
+										this.form1.cityName = item.regionName
+									}
+								})
+								// 防止回显数据被覆盖
+								if (this.updateCreate) {
+									this.updateCreate = !this.updateCreate
+								} else {
+									this.form1.countryId = this.countryList[0].regionId
+									this.form1.countryName = this.countryList[0].regionName
+								}
+							}
+						})
+					},
+					countryChange(id) {
+						this.countryList.map(item => {
+							if (item.regionId === id) {
+								this.form1.countryId = item.regionId
+								this.form1.countryName = item.regionName
+							}
+						})
+					},
+					getDetail() {
+						utils.ajax({
+							url: "/api/userCenter/info",
+							type: "get",
+							success: (data) => {
+								if (data.data.userType !== 1) {
+									utils.ajax({
+										url: "/api/userCenter/merchantInfo/info",
+										type: "get",
+										success: (result) => {
+											this.success = true
+											this.form = result.data
+											//初始赋值
+											this.form.categoryDTOList2 = []
+											this.form.categoryDTOList.map(item => {
+												this.form.categoryDTOList2.push(item.secondCatId)
+											})
+											if (this.form.registType == '') {
+												this.form.registType = 2
+											}
+											if (this.form.linkmanList && this.form.linkmanList.length == 0) {
+												this.form.linkmanList = [{
+													linkName: '',
+													idCard: '',
+													facePhoto: '',
+													backPhoto: '',
+													status: 1
+												}]
+											}
+											this.form1 = this.form
+											this.form1.categoryDTOList2 = this.form.categoryDTOList2
+											this.form2 = this.form
+											this.form3 = this.form
+											this.form4.mobilePhone = this.form.mobilePhone
+
+											this.updateCreate = !!this.form.countryId
+											this.getProvince()
+											//模块认证显示
+											this.form.merchantType = data.data.merchantType
+											if (this.form.merchantType === 1) {
+												this.merchantName = '珠宝店'
+											} else if (this.form.merchantType === 2) {
+												this.merchantName = '设计师'
+											} else {
+												this.merchantName = '制造间'
+											}
+										}
+									})
+								}
+							}
+						})
+					},
+					removeMaterials(index) {
+						this.form2.materials.splice(index, 1)
+					},
+					shopAgreement() {
+						$('#agreement2').addClass('show')
+					},
+					cooperateAgreement() {
+						$('#protocol').addClass('show')
+					},
+					download() {
+						utils.download("../../src/file/银联商务自由划付业务承诺书.docx")
+					},
+					lookImg(imgSrc) {
+						this.dialogImgVisible = true
+						this.bigImgSrc = imgSrc
+					},
+				},
+				filters: {
+					formatImg: utils.formatImg()
+				}
+			})
+			$(function () {
+				$(document).on("click", "#main .uploadbox", function (e) {
+					var t = $(e.currentTarget).attr("data-target");
+					if (t != 'backgroundImg') {
+						$("#formBackgroundImg input").attr("data-target", t);
+						$("#formBackgroundImg input").trigger("click");
+					} else {
+						$(".tailoring-container").toggle();
+						$('body').css('overflow', 'hidden')
+					}
+				})
+			})
+			//弹出框水平垂直居中
+			var win_height = $(window).height();
+			var win_width = $(window).width();
+			if (win_width <= 768) {
+				$(".tailoring-content").css({
+					"top": (win_height - $(".tailoring-content").outerHeight()) / 2,
+					"left": 0
+				});
+			} else {
+				$(".tailoring-content").css({
+					"top": (win_height - $(".tailoring-content").outerHeight()) / 2,
+					"left": (win_width - $(".tailoring-content").outerWidth()) / 2
+				});
+			}
+			//图像上传
+			function selectImg(file) {
+				if (!file.files || !file.files[0]) {
+					return;
+				}
+				if (!/image\/\w+/.test(file.files[0].type)) {
+					utils.alert("info", "请上传图片文件")
+					return false
+				}
+				if (file.files[0].size > 1.5 * 1024 * 1024) {
+					utils.alert("info", "图片大小不能超过1.5M");
+					return false
+				}
+				var reader = new FileReader();
+				reader.onload = function (evt) {
+					var replaceSrc = evt.target.result;
+					//更换cropper的图片
+					$('#tailoringImg').cropper('replace', replaceSrc, false); //默认false，适应高度，不失真
+				}
+				reader.readAsDataURL(file.files[0]);
+			}
+			//cropper图片裁剪
+			$('#tailoringImg').cropper({
+				aspectRatio: 710 / 350, //默认比例
+				preview: '.previewImg', //预览视图
+				guides: false, //裁剪框的虚线(九宫格)
+				autoCropArea: 0.5, //0-1之间的数值，定义自动剪裁区域的大小，默认0.8
+				movable: false, //是否允许移动图片
+				dragCrop: true, //是否允许移除当前的剪裁框，并通过拖动来新建一个剪裁框区域
+				movable: true, //是否允许移动剪裁框
+				resizable: true, //是否允许改变裁剪框的大小
+				zoomable: false, //是否允许缩放图片大小
+				mouseWheelZoom: false, //是否允许通过鼠标滚轮来缩放图片
+				touchDragZoom: true, //是否允许通过触摸移动来缩放图片
+				rotatable: true, //是否允许旋转图片
+				crop: function (e) {
+					// 输出结果数据裁剪图像。
+				}
+			});
+
+			//裁剪后的处理
+			$("#sureCut").on("click", function () {
+				if ($("#tailoringImg").attr("src") == null) {
+					return false;
+				} else {
+					var cas = $('#tailoringImg').cropper('getCroppedCanvas'); //获取被裁剪后的canvas
+					var base64url = cas.toDataURL('image/png'); //转换为base64地址形式
+					$("#finalImg").prop("src", base64url); //显示为图片的形式
+					$('[data-target="backgroundImg"]').html('<img src="' + base64url + '" />');
+					var formData = new FormData();
+					formData.append('cloudfile', convertBase64UrlToBlob(base64url), '.png')
+					$.ajax({
+						url: '../../file/upload',
+						type: 'POST',
+						data: formData,
+						async: false,
+						cache: false,
+						contentType: false, //不设置内容类型
+						processData: false, //不处理数据
+						success: function (data) {
+							$('[data-target="backgroundImg"]').html('<img src="' + data.data + '" width="100%" />').addClass(
+								"uploaded");
+							// $("[name='backgroundImg']").val(data.data);
+							mainVm.form1['backgroundImg'] = data.data
+
+						},
+						error: function () {
+
+						}
+					})
+					//关闭裁剪框
+					closeTailor();
+				}
+			});
+			//关闭裁剪框
+			function closeTailor() {
+				$('body').css('overflow', 'auto')
+				$(".tailoring-container").toggle();
+			}
+
+			function convertBase64UrlToBlob(urlData) {
+				var bytes = window.atob(urlData.split(',')[1]); //去掉url的头，并转换为byte        
+				var ab = new ArrayBuffer(bytes.length);
+				var ia = new Uint8Array(ab);
+				for (var i = 0; i < bytes.length; i++) {
+					ia[i] = bytes.charCodeAt(i);
+				}
+				return new Blob([ab], {
+					type: 'image/png'
+				});
+			}
+			//商品图片上传
+			function uploadGoodsImg(self) {
+				var files = self.files[0]
+				var t = $("#formBackgroundImg input").attr("data-target")
+				if (files.size > 1.5 * 1024 * 1024) {
+					utils.alert("info", "图片大小不能超过1.5M");
+					return;
+				}
+				if (t == 'logo') {
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						var data = e.target.result;
+						//加载图片获取图片真实宽度和高度
+						var image = new Image();
+						image.onload = function () {
+							var width = image.width;
+							var height = image.height;
+							if (width / height != 1) {
+								utils.alert("info", "图片分辨率必须为1:1");
+							} else {
+								uploadCallback(self)
+							}
+						}
+						image.src = data;
+					}
+					reader.readAsDataURL(self.files[0]);
+				} else {
+					uploadCallback(self)
+				}
+			}
+
+			function uploadCallback(self) {
+				var uploadFile = new FormData($("#formBackgroundImg")[0]);
+				$.ajax({
+					url: '../../file/upload',
+					type: 'POST',
+					data: uploadFile,
+					async: false,
+					cache: false,
+					contentType: false, //不设置内容类型
+					processData: false, //不处理数据
+					success: function (data) {
+						var t = $("#formBackgroundImg input").attr("data-target");
+						if (t == 'facePhoto' || t == 'backPhoto') {
+							mainVm.form.linkmanList[0][t] = data.data
+							$(".uploadbox[data-target='" + t + "']").html('<img src="' + data.data + '" width="100%">').addClass(
+								"uploaded")
+						} else if (t == 'materials' && mainVm.form.registType == 1) {
+							mainVm.form2.materials.push(data.data)
+						} else {
+							mainVm.form[t] = data.data
+							$(".uploadbox[data-target='" + t + "']").html('<img src="' + data.data + '" width="100%">').addClass(
+								"uploaded")
+						}
+
+						$("#formBackgroundImg input").val("");
+					},
+					error: function () {
+
+					}
+				})
+			}
+		</script>
+
+</body>
+
+</html>

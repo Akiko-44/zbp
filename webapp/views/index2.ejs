@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="UTF-8" />
+    <meta name="baidu-site-verification" content="ITnvXxZBIi" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。">
+		<meta name="keywords" content="中宝协云平台、中宝云、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品">
+		<title>中宝协云平台_珠宝品牌大型购物商城!</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<style>
+			body {
+				background: #eee;
+			}
+			body .slick-dots li button:before{
+				overflow: hidden;
+				border-radius: 50%;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+			}
+			.slideritem a {
+				display: block;
+				height: 400px
+			}
+			
+			.exchangeTitle {
+				margin-top: 50px;
+				margin-bottom: 30px;
+			}			
+			.exchangeTitle strong {
+				color: #1A1A1A;
+				font-size: 16px;
+			}			
+			.exchangeTitle span {
+				color: #666666;
+				font-size: 16px;
+				margin-left: 5px;
+			}			
+			.exchangeTitle a {
+				display: inline-block;
+				line-height: 20px;
+				color: #666;
+				border-radius: 11px;
+				text-align: center;
+			}			
+			.brandMarketers li {
+				float: left;
+				width: 176px;
+				background-color: #fff;
+				margin-left: 30px;
+				margin-bottom: 30px;
+				text-align: center;
+				position: relative;
+			}			
+			.brandMarketers li:hover .img-box {
+				border: 1px solid #E0E0E0;
+			}
+			.containerJewelyIndex{
+				width: 1000px;
+				margin: 0 auto;
+			}
+			.containerJewelyIndex li:first-child, li.first {
+				margin: 0!important;
+			}			
+			.brandMarketers .img-box {
+				height: 162px;
+				position: relative;
+				background: #f9f9f9;
+				overflow: hidden;
+			}
+			.hotSale .img-box {
+				width: 100%;
+				height: 100%;
+				position: relative;
+			}
+			.hotSale img {
+				width: 100%;
+				height: auto;
+				position: absolute;
+				top: 50%;
+				left: 0;
+				margin-top: -113.5px;
+			}			
+			.brandMarketers img {
+				width: 100%;
+				height: 100%;
+			}			
+			.brandMarketers li .name {
+				height: 30px;
+				line-height: 30px;
+				overflow: hidden;
+				border-top: 1px solid #D7D7D7;
+			}	
+			.hotSale ul {
+				padding: 30px;
+				background: #fff;
+			}			
+			.hotSale li {
+				float: left;
+				width: 227px;
+				height: 315px;
+				margin-left: 8px;
+				margin-bottom: 5px;
+				text-align: center;
+				position: relative;
+			}			
+			.hotSale li .img-box {
+				height: 100%;
+				position: relative;
+			}			
+			.hotSale li .info {
+				padding: 8px 10px;
+				background: #FF0000;
+				opacity: .8;
+				display: none;
+				color: #fff;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}			
+			.hotSale li .info .designerName {
+				margin-top: 56px;
+			}			
+			.hotSale li:hover .info {
+				display: block;
+			}			
+			.hotSale li .info .cateThree,
+			.hotSale li .info .price {
+				margin-top: 20px;
+			}			
+			.hotSale li .intro {
+				color: #fff;
+				line-height: 16px;
+				height: 32px;
+				line-height: 32px;
+				border: 1px solid #fff;
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 82px;
+				width: 100px;
+				margin: 0 auto;
+			}
+			.hotStyle {
+				margin-top: 30px;
+				margin-bottom: 50px;
+			}
+
+      .outstandWorks  ul li{
+        width: 227px;
+        height: 200px;
+        margin-left: 28.5px;
+        margin-bottom: 57px;
+        background-color: #fff;
+        float: left;
+        position: relative;
+      }
+      .outstandWorks  ul li .info{
+        height: 57px;
+        line-height: 57px;
+        padding: 0 21px;
+        background: #fff;
+      }
+      .outstandWorks  ul li .info .name{
+        height: 57px;
+        line-height: 57px;
+        background: #fff;
+        font-size: 14px;
+      }
+      .outstandWorks  ul li .info span,.outstandWorks  ul li .info i{
+        vertical-align: middle;
+      }
+      .outstandWorks  ul li .info .look{
+        float: right;
+      }
+      .outstandWorks  ul li .info .look i{
+        display: inline-block;
+        width: 16px;
+          height: 16px;
+          margin-right: 5px;
+        background: url(../../src/img/exchange/look.png) no-repeat center/16px 10px;
+      }
+      .statusWrap{
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
+        color: #FFFFFF;
+        background: rgba(107, 183, 74, .5);
+        border-bottom-right-radius: 15px;
+        border-top-right-radius: 15px;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .manufacturer li.listShadow{
+        float: left;
+        width: 235px;
+        margin-left: 20px;
+        text-align: center;
+        background-color: #fff;
+      }
+      .manufacturer li.listShadow .img-box{
+        height: 155px;
+      }
+      .manufacturer li.listShadow .img-box img{
+        width: 100%;
+        height: 100%;
+      }
+      .manufacturer .type-nav, .goods .type-nav{
+        padding: 20px 0;
+        height: 73px;
+      }
+      .manufacturer .type-nav li, .goods .type-nav li{
+        padding: 10px 20px;
+        float: left;
+        margin: 0 10px;
+        cursor: pointer;
+      }
+      .manufacturer .type-nav li.active, .goods .type-nav li.active{
+        border-bottom: 1px solid #000;
+      }
+      .manufacturer .type-nav li:hover, .goods .type-nav li:hover{
+        border-bottom: 1px solid #000;
+      }
+      .manufacturer .listShadow .name{
+        height: 40px;
+        line-height: 40px;
+      }
+      .cur{font-weight: bolder;color: #000000;}
+		</style>
+	</head>
+
+	<body class="jewelryIndex">
+
+		<%- include headerbar.ejs %>
+
+		<%- include header.ejs %>
+
+		<%- include headerNav.ejs %>
+
+		<div id="main" class="main">
+
+			<div class="designBanner galleryBanner" id="banner" style="position: relative;">
+				<div class="slider">
+					<template v-if="dmBannerDTOList.length>0" v-for="item in dmBannerDTOList">
+						<div class="slideritem">
+							<a v-if="item.pcUrl" :href="item.pcUrl|formatUrl" target="_blank">
+								<img :src="item.pcPicture | formatImg" height="400" width="100%">
+							</a>
+							<a v-else>
+								<img :src="item.pcPicture | formatImg" height="400" width="100%">
+							</a>
+						</div>
+					</template>
+				</div>				
+			</div>
+
+			<div id="content">
+        <div class="containerJewelyIndex hotSale">
+					<div class="exchangeTitle">
+						<a class="fr" href="jewelry/goodsList?condition=isSales">更多<i class="el-icon-d-arrow-right"></i></a>
+						<strong>大牌热卖</strong>
+					</div>
+					<div>
+						<ul class="clearfix">
+							<template v-if="index<4" v-for="(item,index) in hotSellGoods">
+								<li class="listShadow gripper" :data-id="item.id" @click="toDetail(item.id)">
+									<div class="img-box">
+										<img :src="item.imgUrl | formatImg" width="100%" height="100%">
+									</div>
+									<div class="info">
+										<p class="designerName fs16">{{item.goodsName}}</p>
+										<p class="cateThree fs16">{{item.brandName}}</p>
+										<p class="price fs16">￥{{ item.price }}</p>
+										<div class="intro">
+											详情
+										</div>
+									</div>
+								</li>
+							</template>
+						</ul>
+					</div>
+        </div>
+        
+        <div class="containerJewelyIndex brandMarketers">
+          <div class="exchangeTitle">
+            <a class="fr" href="jewelry/shopList">更多<i class="el-icon-d-arrow-right"></i></a>
+            <strong>推荐商家</strong>
+          </div>
+          <div>
+            <ul class="clearfix slider slider-brandshop">
+              <template v-for="(item,index) in brand">
+                <li class="gripper" :class="['listShadow',{first:index==5}, 'brandShop']" :data-id="item.merchantId" @click="toBrandShop(item.merchantId)">
+                  <div class="img-box">
+                    <img :src="item.thumbnail | formatImg" width="100%" height="100%">
+                  </div>
+                  <div class="name ellipsis">
+                    {{item.merchantName}}
+                  </div>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </div>
+
+        <div class="containerJewelyIndex outstandWorks">
+          <div class="exchangeTitle">
+            <a class="fr" href="design/product">更多<i class="el-icon-d-arrow-right"></i></a>
+            <strong>私人定制</strong>
+          </div>
+          <ul class="clearfix">
+            <li :data-id="item.caseId" @click="toProductDetail(item.caseId)" v-for="(item,index) in ecvoList" :key="index" v-if="index<3">
+              <a class="imgHover">
+                <img :src="item.thumbnail | formatImg" width="100%" height="100%">
+              </a>
+              <div class="info ellipsis clearfix">
+                <span class="name">{{item.caseName}}</span>
+                <!--<span class="look"><i></i><span class="num"></span></span>-->
+                <span class="look new-red fs16">￥{{item.price}}</span>
+              </div>
+              <span class="statusWrap tc" v-if="item.caseType == 2">
+                定制商品
+              </span>
+            </li>
+            
+          </ul>
+        </div>
+
+        <div class="containerJewelyIndex manufacturer">
+          <div class="exchangeTitle">
+            <a class="fr" href="manufacture/business">更多<i class="el-icon-d-arrow-right"></i></a>
+            <strong>推荐制造商</strong>
+          </div>
+          <div>
+            <ul class="type-nav clearfix">
+              <li data-id="" class="cur" onclick="business(this)">全部</li>
+              <li v-for="(item, i) in designmanu" :data-id="item.id" :key="item.id" onclick="business(this)">
+                {{item.name}}
+              </li>
+            </ul>
+            <ul class="clearfix">
+              <li class="listShadow gripper" @click="toBusinessDetail(item.merchantId)" :data-id="item.merchantId" v-if="index<4" v-for="(item,index) in emvoListItem">
+                <div class="img-box">
+                  <img :src="item.thumbnail | formatImg">
+                </div>
+                <div class="name ellipsis">
+                  {{item.merchantName}}
+                </div>
+              </li>
+            </ul>
+          </div>
+          </div>				
+
+				<div class="containerJewelyIndex hotStyle">
+					<div @click="btUrl">
+						<img src="../../src/img/jewelry/b2b.jpg" style="width: 100%;"/>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+		<%- include footer.ejs %>
+
+		<script>
+			var $slider = null;
+
+			var mainVm = new Vue({
+				el: "#main",
+				data: {
+          dmBannerDTOList: [],
+          ecvoList: [],
+          designmanu: [],
+          emvoList: [],
+          emvoListItem: [],
+					brand:[],
+					hotSellGoods: []
+				},
+				mounted() {
+					this.bannerShow()
+          this.getActivitiesShow()
+          this.getDesignManu()
+				},
+				methods: {
+					btUrl() {
+						var _t = utils.getCookie("token")
+						if(_t){
+							utils.ajax({
+								type: 'get',
+								url:'/api/userCenter/getUserInfo',
+								success: (res) => {
+									let data = res.data;
+									let url = escape(JSON.stringify(data))
+										window.location.href = 'https://www.wanbaoooo.com?gac=' + url
+								}								
+							})
+						} else {
+							window.location.href = 'https://www.wanbaoooo.com'
+						}
+					},
+				  shuffle(arr = []) {
+            let i = arr.length
+            while (i) {
+              let j = Math.floor(Math.random() * i--)
+              [arr[j], arr[i]] = [arr[i], arr[j]]
+            }
+            return arr
+          },
+					bannerShow() {
+						$.ajax({
+							type: "get",
+							url: "/api/homePage/bannerShow/1",
+							success: (res) => {
+								if(!res.success) return
+								this.dmBannerDTOList = res.data
+								setTimeout(() => {
+									$slider = $(".galleryBanner .slider")
+									$slider.slick({
+										dots: true,
+										arrows: false,
+										swipe: true,
+										slidesToScroll: 1,
+										autoplay: true,
+										autoplaySpeed: 3000
+									})
+								}, 100)
+							}
+						})
+          },
+          getDesignManu() {
+            utils.ajax({
+              url: "/api/designmanu/menufact/designcategory/list",
+              data: JSON.stringify({
+                flag: 1
+              }),
+              success: (data) => {
+                this.designmanu = data.data
+              }
+            })
+          },
+					getActivitiesShow() {
+						$.ajax({
+							type: "get",
+							url: "/api/pcPage/",
+							success: (res) => {
+                console.log(res)
+								if(!res.success) return
+								this.brand = res.data.brand
+                this.hotSellGoods = res.data.hot
+                this.ecvoList = res.data.case
+                this.emvoList = res.data.emvoList
+                this.emvoListItem = res.data.emvoList
+							}
+						})
+          },
+          // business(id = '') {
+          //   // $(event.currentTarget).addClass("cur").siblings().removeClass("cur")
+          //   // let id = event.currentTarget.getAttribute("data-id")
+          //   if (!id) {
+          //     this.emvoListItem = this.emvoList
+          //     return
+          //   }
+          //   this.emvoList.map(item => {
+          //     if (item.manucatid === id) {
+          //       this.emvoListItem.push(item)
+          //     }
+          //   })
+          // },
+					toDetail(id) {
+            location.href = "jewelry/details?id=" + id
+          },
+          toProductDetail(id) {
+            location.href = "design/product_detail?id=" + id
+          },
+          toBusinessDetail(id) {
+        		location.href = "manufacture/business_detail?id=" + id
+          },
+          toBrandShop(id) {
+        		location.href = "jewelry/shopSearch?id=" + id
+        	}
+				},
+				filters: {
+					formatImg(str) {
+						return utils.formatImg(str)
+					},
+					formatUrl(str) {
+						return utils.formatUrl(str)
+					}
+				}
+			})
+
+			$('.slider').on('mouseenter', '.slick-slide', function(){
+			  $(this).trigger('click');
+      })
+      function business(e){
+        var el = e || window.event;
+        var id = $(el).attr("data-id");
+        $(el).addClass("cur").siblings().removeClass("cur")
+        if(id == ''){
+          mainVm.emvoListItem = mainVm.emvoList;
+          return false;
+        }
+        var arr = []
+        $.each(mainVm.emvoList, function(idx, item) {
+          if(item.manucatid == id){
+            arr.push(item)
+          }
+        });
+        mainVm.emvoListItem = arr;
+      }
+		</script>
+	</body>
+
+</html>

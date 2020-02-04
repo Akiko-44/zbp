@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'/>
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+	body {
+    	background: #F5F5F5;
+	}
+	.designListItem .img>div {
+		position: absolute;
+		opacity: 0;
+		top: 50%;
+		left: 50%;
+		width: 140px;
+		height: 80px;
+		transition: all 0.35s ease;
+		transform: translate(-50%, -50%);
+		margin-top: 30px;
+		background: rgba(0, 0, 0, 0.35);
+		color: #fff;
+		font-size: 14px;
+		text-align: center;
+		padding: 15px 0;
+	}
+	.designListItem .img:hover>div{
+		opacity: 1;
+		margin-top: 0;
+	}
+	.designListItem h3 {
+		padding-bottom: 10px;
+		position: relative;
+		margin-bottom: 10px;
+	}
+	.designListItem h3:after {
+		content: "";
+		width: 40px;
+		height: 2px;
+		background: #fff;
+		bottom: -1px;
+		left: 50%;
+		margin-left: -20px;
+		position: absolute;
+	}
+	.second-city{
+      width: 100%;
+      padding: 10px;
+      background: #EEEEEE;
+    }
+</style>
+</head>
+<body class="">
+
+    <%- include ../headerbar.ejs %>
+
+    <%- include ../header.ejs %>
+
+    <%- include ../headerNav.ejs %>
+
+    <div id="main" class="main">
+
+        <div class="container">
+            <div class="router" id="router">
+                <el-breadcrumb separator-class="el-icon-arrow-right">
+                    <el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+					<el-breadcrumb-item><a href="../../manufacture/index">制造间</a></el-breadcrumb-item>
+                    <el-breadcrumb-item>
+                    	<span v-if="merchantId == ''">所有工艺</span>
+                    	<span v-else>TA的工艺</span>
+                    </el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
+        </div>
+
+        <div class="container exchangeSearch" id="search">
+            <table>
+                <tr>
+                    <td width="90"><label>所在地：</label></td>
+                    <td class="address-container">
+                        <a class="cur provice" data-id="" data-name="">全部</a>
+                        <a class="provice" v-for="item in cityList" :data-id="item.regionId" :data-name="item.regionName">{{item.regionName}}</a>
+                        <div class="second-city" v-if="cityChildren && cityChildren.length">
+                        	<a class="city" data-id="" data-name="">不限</a>
+                        	<a class="city" v-for="citem in cityChildren" :data-id="citem.regionId" :data-name="citem.regionName">{{citem.regionName}}</a>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="container" id="list">
+            <ul class="clearfix listUl">
+                <template v-for="item in list">
+                    <li class="designListItem listShadow" @click="toDetail($event)" :data-id="item.id">
+                        <div class="img">
+                            <img :src="item.craftLogo | formatImg" width="100%" height="100%">
+                        	<div>
+                        		<h3 class="ellipsis">{{item.craftName}}</h3>
+                        		<p class="ellipsis">{{item.merchantName}}</p>
+                        	</div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+
+            <el-pagination background
+                @current-change="handleCurrentChange"
+                :current-page="offset"
+                :page-size="limit"
+                layout="total, prev, pager, next, jumper"
+                :total="total">
+            </el-pagination>
+        </div>
+
+    </div>
+
+<%- include ../footer.ejs %>
+
+<script>
+var merchantId = utils.getUrlParam("merchantId") || "";
+var routerVm = new Vue({
+	el: "#router",
+	data: {
+        merchantId: merchantId
+    }
+})
+var searchVm = new Vue({
+    el: "#search",
+    data: {
+        cityList: [],
+        cityChildren: []
+    },
+    mounted: function () {
+        this.render();
+    },
+    methods: {
+        render: function () {
+            var self = this;
+            utils.ajax({
+                url: " /admin/region/getRegion",
+                type: "get",
+                success: function (data) {
+                    self.cityList = data.data;
+                }
+            });
+
+        }
+    }
+});
+var listVm = new Vue({
+    el: "#list",
+    data: {
+        list: [],
+        total: 0,
+
+        merchantId: merchantId,
+        provice: '',
+        city: "",
+
+        offset: 1,
+        limit: 30
+    },
+    mounted: function () {
+        this.render();
+    },
+    methods: {
+        render: function () {
+            var self = this;
+            var json = {
+                city: self.city,
+                provice: self.provice,
+                merchantId: self.merchantId,
+            };
+            utils.ajax({
+
+                url: "/api/designmanu/menufact/craftPCPage?offset=" + self.offset + "&limit=" + self.limit,
+                data: JSON.stringify(json),
+                success: function (data) {
+                    data = data.data;
+                    self.list = self.list.splice(self.list.length)
+                    self.list = data.records;
+                    self.total = data.total;
+                }
+            })
+        },
+        handleCurrentChange: function (val) {
+            var self = this;
+            self.offset = val;
+            self.render();
+        },
+        toDetail: function(event){
+            var id = event.currentTarget.getAttribute("data-id");
+            window.open("../../manufacture/art_detail?id=" + id)
+        }
+    },
+    filters: {
+        formatImg: function (str) {
+            return utils.formatImg(str);
+        }
+    }
+})
+$(function () {
+    $(document).on("click", ".provice", function (e) {
+	    var self = $(e.currentTarget);
+	    self.addClass("cur").siblings().removeClass("cur");
+	    self.addClass("activeCur").siblings().removeClass("activeCur");
+	    var val = self.attr("data-id");
+	    var name = self.attr("data-name");
+	    
+	    if(name == ''){
+	    	searchVm.cityChildren = []
+			listVm.offset = 1;
+		    listVm.provice = name;
+		    listVm.city = '';
+		    listVm.render();
+		    return false;
+	    }
+		$.each(searchVm.cityList, function(idx, item) {
+			if(item.regionId == val){
+				searchVm.cityChildren = item.children
+				setTimeout(function(){
+					$('.second-city').find(".cur").removeClass('cur')
+	    			$('.second-city').find("a").eq(0).addClass('cur')
+				},20)
+				
+				listVm.offset = 1;
+			    listVm.provice = name;
+			    listVm.city = '';
+			    listVm.render();
+			    return false;
+			}
+		});
+		
+	}).on("click", ".city", function (e) {
+	    var self = $(e.currentTarget);
+	    self.addClass("cur").siblings().removeClass("cur");
+	    var val = self.attr("data-name");
+	    var val0 = self.parents('td').find(".activeCur").attr("data-name")
+		listVm.offset = 1;
+	    listVm.provice = val0;
+	    listVm.city = val;
+	    listVm.render();
+		
+	})
+})
+</script>
+</body>
+</html>
+

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style type="text/css">
+    .jewelry-shopSearch .bg {
+      position: relative;
+      height: 400px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+    }
+
+    .bgimg {
+      /* opacity: 0.48; */
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 100%;
+      z-index: 0;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-position: center;
+    }
+
+    .bgimg::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 100%);
+    }
+
+    .bginfo {
+      position: relative;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .jewelry-shopSearch .bg img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 65px auto 30px;
+    }
+
+    .jewelry-shopSearch .bg h2 {
+      margin-bottom: 13px;
+      font-size: 24px;
+    }
+
+    .jewelry-shopSearch .server .server-btn {
+      display: inline-block;
+      width: 120px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 4px;
+      margin: 25px 15px 30px;
+      padding: 0;
+      cursor: pointer;
+      border: 1px solid #fff;
+      background: transparent;
+      color: #fff;
+    }
+
+    .jewelry-shopSearch .server .server-btn:last-child {
+      color: #FFFFFF;
+      background: #df735a;
+      border-color: #df735a;
+    }
+
+    .jewelry-shopSearch .server .server-btn.has-concerned {
+      color: #666666;
+      background: #DDDDDD;
+      border-color: #DDDDDD;
+    }
+
+    .jewelry-shopSearch .grade {
+      padding: 0 22px;
+      height: 40px;
+      line-height: 40px;
+      background: #fff;
+      font-size: 14px;
+      color: #666666;
+    }
+
+    .jewelry-shopSearch .grade span {
+      display: inline-block;
+      width: 133px;
+    }
+
+    .jewelry-shopSearch .tab {
+      height: 50px;
+      line-height: 50px;
+      background: #ffffff;
+      margin: 20px 0;
+      padding: 0 22px;
+      font-size: 16px;
+    }
+
+    .jewelry-shopSearch .tab>li {
+      display: inline-block;
+      margin-right: 80px;
+      cursor: pointer;
+    }
+
+    .jewelry-shopSearch .tab>li.cur {
+      color: #DF735A;
+      border-bottom: 3px solid;
+      height: 50px;
+    }
+
+    .jewelry-shopSearch .goods-list>li {
+      display: inline-block;
+      width: 288px;
+      height: 396px;
+      margin-right: 16px;
+      margin-bottom: 16px;
+      background: #FFFFFF;
+      cursor: pointer;
+    }
+
+    .jewelry-shopSearch .goods-list>li:nth-child(4n+0) {
+      margin-right: 0;
+    }
+
+    .jewelry-shopSearch .goods-list .goods-info {
+      padding: 14px 20px;
+    }
+
+    .jewelry-shopSearch .goods-list .goods-info .goodsname {
+      margin-bottom: 12px;
+      font-size: 18px;
+      color: #585858;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .jewelry-shopSearch .goods-list .goods-info .price {
+      color: #FB746E;
+      font-size: 24px;
+    }
+
+    .jewelry-shopSearch .goods-list .goods-info .price>span {
+      font-size: 18px;
+    }
+
+    .jewelry-shopSearch .goods-list .goods-info .navprice {
+      margin: 10px 0 9px;
+      font-size: 14px;
+      color: #aaaaaa;
+    }
+
+    .jewelry-shopSearch .goods-list .goods-info .merchant {
+      color: #585858;
+      font-size: 16px;
+    }
+
+    .jewelry-shopSearch .goods-list .goods-info .merchant img {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      margin-right: 5px;
+      border-radius: 50%;
+    }
+
+    .jewelry-shopSearch .desc {
+      margin-bottom: 20px;
+      padding: 30px;
+      background: #fff;
+      font-size: 14px;
+      color: #666;
+      text-indent: 10px;
+    }
+
+    .jewelry-shopSearch .desc span {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #666;
+      max-width: 1040px;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .jewelry-shopSearch .desc .label-name {
+      width: 50px;
+      color: #999;
+    }
+
+    .notice {
+      padding: 0 22px;
+      height: 40px;
+      background: #ffffff;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    .notice img {
+      float: left;
+      margin-top: 12px;
+    }
+
+    .notice ul {
+      display: inline-block;
+      margin-left: 10px;
+      width: 1120px;
+    }
+
+    .notice li p {
+      width: 1100px;
+      padding: 13px 0;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+
+    .notice li img {
+      float: right;
+      margin-top: 12px;
+    }
+  </style>
+</head>
+
+<body class="jewelry-shopSearch">
+
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../header.ejs %>
+
+  <%- include ../headerNav.ejs %>
+  <div id="main" class="container">
+    <div class="bg">
+      <div class="bgimg" v-if="data.backgroundImg" :style="[{
+          backgroundImage: 'url('+ data.backgroundImg +')'
+				}]"></div>
+      <div class="bgimg" v-else style="background-image: url(../../../../src/img/common/merchant-backgroundimg.png)">
+      </div>
+      <div class="bginfo">
+        <img :src="data.logo" />
+        <h2>{{data.name}}</h2>
+        <p>{{data.provinceName}}<span style="margin: 0 5px;">|</span>{{data.cityName}}</p>
+        <div class="server">
+          <span class="server-btn">客服</span>
+          <el-button type="danger" class="server-btn" @click="shopConcern(data.userId,$event)" v-if="isShopConcern">关注
+          </el-button>
+          <el-button type="info" class="server-btn has-concerned" @click="removeShopConcern(data.userId,$event)" v-else>
+            已关注
+          </el-button>
+          <!-- <span @click="shopConcern(data.userId,$event)" v-if="isShopConcern">关注</span> -->
+          <!-- <span @click="removeShopConcern(data.userId,$event)" v-else class="has-concerned">已关注</span> -->
+        </div>
+        <p v-if="data.brands">经营品牌：{{data.brands}}</p>
+      </div>
+    </div>
+    <div class="grade">
+      <div class="fl">
+        <span>综合评分：{{data.multipleScore}}</span>
+        <span>销售：{{data.goodsSaleCount}}</span>
+        <span>粉丝：{{data.concernNum}}</span>
+      </div>
+      <div class="fr">共{{goodsTotal}}件商品</div>
+    </div>
+    <div class="notice hide">
+      <img src="../../src/img/common/notice.png" />
+      <ul>
+        <li>
+          <img src="../../src/img/common/right-arrow.png" alt="" />
+          <p>霓漫天设计师在5分钟前接到定制吊坠一单</p>
+        </li>
+      </ul>
+    </div>
+    <ul class="tab">
+      <li class="cur" @click="tabChange(0)">商品</li>
+      <li @click="tabChange(1)">品牌故事</li>
+      <li @click="tabChange(2)">店铺信息</li>
+    </ul>
+    <div class="tab-content">
+      <ul class="goods-list" v-if="goodsData && goodsData.length">
+        <li v-for="item in goodsData" @click="toGoodsDetail(item.goodsId)">
+          <img :src="item.goodsPic" alt="" width="288" height="288" v-if="item.goodsPic" />
+          <img src="../../src/img/noimg.png" alt="" width="288" height="288" v-else />
+          <div class="goods-info">
+            <p class="goodsname">{{item.goodsName}}</p>
+            <p class="price"><span>￥</span>
+              <template v-if="item.lowPrice == item.hightPrice">
+                {{item.lowPrice}}
+              </template>
+              <template v-else>
+                {{item.lowPrice}} ~ {{item.hightPrice}}
+              </template>
+            </p>
+            <p class="navprice">参考价：￥{{item.navLowPrice}} ~ {{item.navHightPrice}}</p>
+            <!-- <p class="merchant"><img :src="item.merchantPic" alt="" /><span>{{item.merchantName}}</span></p> -->
+          </div>
+        </li>
+      </ul>
+      <div v-else class="no-content tc" style="padding:100px 0;color:#333;font-size:16px;">
+        <img src="../../src/img/common/no-content.png" width="482" alt="">
+        <p style="margin-top:-50px">暂无商品</p>
+      </div>
+      <div class="tr" style="margin-top: 30px;" v-show="listPages > 1">
+        <div id="pagination" class="pagination"></div>
+      </div>
+    </div>
+    <div class="tab-content hide desc">
+      <div v-for="item in data.storyList" v-html="item.stroyDetail" v-if="data.storyList && data.storyList.length">
+      </div>
+      <div v-else class="no-content tc" style="padding:100px 0;color:#333;font-size:16px;">
+        <img src="../../src/img/common/no-content.png" width="482" alt="">
+        <p style="margin-top:-50px">暂无品牌故事</p>
+      </div>
+    </div>
+    <div class="tab-content hide desc">
+      <div><span class="label-name">名称</span><span>{{data.name}}</span></div>
+      <div><span class="label-name">地址</span><span>{{data.provinceName}}{{data.cityName}}{{data.address}}</span></div>
+      <div><span class="label-name">电话</span><span>{{data.mobilePhone}}</span></div>
+      <div><span class="label-name">邮箱</span><span>{{data.email}}</span></div>
+      <div><span class="label-name" v-if="data.merchantExplain">简介</span><span>{{data.merchantExplain}}</span></div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var mainVm = new Vue({
+      el: '#main',
+      data: {
+        isGoodsSort: false,
+        isOpened: false,
+        isShopConcern: true,
+        brandList: [],
+        form: {
+          offset: 1,
+          limit: 12,
+          merchantId: utils.getUrlParamVal('id')
+        },
+        data: {},
+        goodsData: {},
+        goodsTotal: 0,
+        listPages: 0,
+        merchantId: ''
+      },
+      mounted: function () {
+        this.getMerchantStore()
+        this.render(1)
+      },
+      methods: {
+        getMerchantStore() {
+          var self = this;
+          utils.ajax({
+            type: "get",
+            url: "/api/merchantShow/merchantStore",
+            data: {
+              id: utils.getUrlParamVal('id')
+            },
+            success: function (res) {
+              self.data = res.data;
+              self.merchantId = res.data.userId
+              if (utils.islogin()) {
+                self.shopConcernCheck(self.merchantId)
+              }
+              document.title = self.data.name + '店铺主页'
+            }
+          });
+        },
+
+        shopConcernCheck(merchantId) {
+          utils.ajax({
+            type: "post",
+            url: "/api/userCenter/collect/check/0/1",
+            data: JSON.stringify({
+              merchantId: merchantId
+            }),
+            success: (res) => {
+              this.isShopConcern = res.data.shopCheck
+              this.$forceUpdate()
+            }
+          });
+        },
+        shopConcern(merchantId, e) {
+          utils.ajax({
+            type: "get",
+            url: "/api/shopConcern/concern",
+            data: {
+              merchantId: merchantId
+            },
+            el: e.target,
+            success: (res) => {
+              this.isShopConcern = !this.isShopConcern
+              this.$forceUpdate()
+              utils.alert('success', '关注成功')
+            }
+          });
+        },
+        removeShopConcern(merchantId, e) {
+          utils.ajax({
+            type: "get",
+            url: "/api/shopConcern/remove",
+            data: {
+              merchantId: merchantId
+            },
+            el: e.target,
+            success: (res) => {
+              this.isShopConcern = !this.isShopConcern
+              this.$forceUpdate()
+              utils.alert('success', '您已取消关注')
+            }
+          });
+        },
+
+        render(page) {
+          var self = this;
+          self.form.offset = page || 1
+          utils.ajax({
+            type: "get",
+            url: "/app/search/jewelryGoods",
+            data: self.form,
+            success: function (res) {
+              self.goodsTotal = res.data.total
+              self.goodsData = res.data.records;
+              self.listPages = res.data.pages
+              if (self.form.offset == 1) {
+                $("#pagination").pagination({
+                  pageCount: res.data.pages,
+                  jump: true,
+                  coping: true,
+                  current: res.data.current,
+                  prevContent: '上一页',
+                  nextContent: '下一页',
+                  callback: function (api) {
+                    self.render(api.getCurrent())
+                  }
+                })
+              }
+            }
+          });
+        },
+        tabChange(index) {
+          $('.tab>li:eq(' + index + ')').addClass('cur').siblings().removeClass('cur');
+          $('.tab-content:eq(' + index + ')').removeClass('hide').siblings('.tab-content').addClass('hide');
+        },
+        toGoodsDetail(goodsId) {
+          window.location.href = 'details?id=' + goodsId;
+        }
+      }
+    })
+  </script>
+  <%- include ../footer.ejs %>
+</body>
+
+</html>

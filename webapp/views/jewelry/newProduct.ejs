@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../dist/css/all.css"/>
+<script src="../dist/js/template.js"></script>
+<script src="../dist/js/lib.js"></script>
+<style type="text/css">
+    .jewelry-newProduct{background: #F8F8F8;}
+	.navWrap {
+		border: 1px solid #CCCCCC;
+		background-color: #FFFFFF;
+		margin-top: 22px;
+	}
+	.navWrap li {
+		float: left;
+	}
+	.navWrap li:hover a{
+		background: #C2A374;
+		color: #fff;
+	}
+	.navWrap a {
+		display: block;
+		padding: 0 30px;
+		color: #808080;
+		font-size: 14px;
+		line-height: 34px;
+	}
+	.navWrap li.cur a {
+		background: #C2A374;
+		color: #fff;
+	}
+	.goods-list li{
+		width: 224px;
+		background: #FFFFFF;
+		margin-right: 17.5px;
+		overflow: hidden;
+		margin-top: 18px;
+	}
+	.goods-list li a{
+		color: #333;
+	}
+	.goods-list li:nth-child(5n){
+		margin-right: 0;
+	}
+	.goods-list p{
+		padding: 5px;
+		line-height: 16px;
+	}
+</style>
+</head>
+<body class="jewelry-newProduct">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	<div class="clearfix"><img src="../../src/img/jewelry/Title2.png" style="width: 100%;"/></div>
+	<div class="container">
+	    <ul class="navWrap clearfix">
+			
+		</ul>
+		<div class="goods-list">
+			<ul class="clearfix">
+				
+			</ul>
+		</div>
+	</div>
+	<div class="tc container" style="margin-top: 30px;">
+		<div id="pagination" class="pagination"></div>
+	</div>
+	<%- include ../footer.ejs %>
+</body>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+        url:'/api/marketPage/guidecategoryShow',
+        type:'get',
+        success:function(res){
+	        if(!res.success) return;
+            var cat = '<li class="cur" val="" onclick="curData(this)"><a>全部</a></li>';
+            $.each(res.data, function(idx,item) {
+	            if(item.categoryType == 3){
+	            	cat += '<li val="'+item.id+'" onclick="curData(this)"><a>'+item.categoryName+'</a></li>';
+	            }
+            });
+            $(".navWrap").html(cat);
+            $(".cur").click();
+        },
+        error:function(error){
+            
+        }
+    })
+    
+})
+function getData(page,id){
+    $.ajax({
+        url:'/api/marketPage/newProductShowShow',
+        type:'get',
+        data:{
+            offset:page,
+            limit:25,
+            categoryId:id
+        },
+        success:function(res){
+	        if(!res.success) return;
+            var html = '';
+            $.each(res.data.records, function(idx,item) {
+            	html += '<li class="fl">'+
+							'<a href="/jewelry/details?id='+item.id+'">'+
+								'<img src="'+item.imgUrl+'" width="224" height="224"/>'+
+								'<p class="tc">'+
+									'<span>'+item.goodsName+'</span>'+
+									'<br />'+
+									'<span>¥'+item.price+'</span>'+
+								'</p>'+
+							'</a>'+
+						'</li>';
+            });
+            $(".goods-list ul").html(html)
+        },
+        error: function(error){
+            
+        }
+    })
+}
+function page(id){
+	$.ajax({
+        url:'/api/marketPage/newProductShowShow',
+        type:'get',
+        data:{
+            offset:1,
+            limit:25,
+            categoryId:id
+        },
+        success:function(res){
+            if(!res.success) return;
+            $("#pagination").pagination({
+				pageCount: res.data.pages,
+			    jump: true,
+			    coping: true,
+			    prevContent: '<',
+			    nextContent: '>',
+			    callback: function (api){
+			        getData(api.getCurrent(),id);
+			    }
+			});
+        },
+        error: function(error){
+            
+        }
+    })
+}
+function curData(e){
+	var el = e||window.event;
+	var id = $(el).attr("val");
+	$(el).parent().children(".cur").removeClass("cur");
+	$(el).addClass("cur");
+	page(id);
+	getData(1,id)
+}
+</script>
+</html>
+

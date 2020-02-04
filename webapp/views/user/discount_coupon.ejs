@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <link rel="stylesheet" type="text/css"
+    href="../../src/js/plugin/Zebra_Datepicker/dist/css/metallic/zebra_datepicker.min.css" />
+</head>
+
+<body>
+
+  <%- include ../headerbar.ejs %>
+
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>
+          <a href="/">首页</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <a href="../user/acc_info">个人中心</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>优惠券</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+
+  <div id="main" class="main" style="background: #f4f4f4">
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include userLeftNav.ejs %>
+      </div>
+      <div class="userRightContent" style="height: 100%">
+
+        <div id="main" class="main">
+          <div class="no_coupon">
+            <img src="../../src/img/user/no_coupon.png" alt="">
+            <p>暂无优惠券</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <%- include ../footer.ejs %>
+</body>
+<script type="text/javascript">
+  $(".userLeftNav li[data-target='coupon']").addClass("cur");
+  var routerVm = new Vue({
+    el: "#router"
+  })
+  var applyVm = new Vue({
+    el: "#main",
+    data: {
+
+    },
+    mounted: function () {
+
+    },
+    methods: {
+
+    }
+  })
+</script>
+
+</html>

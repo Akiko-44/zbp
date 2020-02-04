@@ -1,0 +1,683 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="汇聚国内外参展商、品牌商、国外钻石团；既有可交互的展会场景，又有高价值的珠宝全真模型，线上看珠宝展，在线预约参观，全新体验，尽在中宝协云平台珠宝展，实现365天线上看展。">
+		<meta name="keywords" content="珠宝展、逛珠宝、中国珠宝展、上海珠宝展、珠宝鉴定、 天然珠宝 线上看展">
+		<title>2018中国国际珠宝展_北京珠宝展_展会</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<link rel="stylesheet" href="../src/css/icon/iconfont.css" />
+		<link rel="stylesheet" href="../src/css/icons/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+		<link rel="stylesheet" type="text/css" href="../src/css/news/newBelow.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-family: "微软雅黑";
+			}
+			.jewelryBox-bd {
+				width: 100%;
+				height: 100%;
+				background: #eee;
+			}
+			.jewelry_box{
+				width: 1200px;
+				margin:0 auto;
+			}
+			.banner{
+				width:1200px;
+			}
+			.banner img{
+				width: 1200px;
+				height: 960px;
+			}
+			.jewelry_content{
+				width: 1030px;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+			.jewelry_atlas{
+				width: 1030px;
+				margin-top: 50px;
+			}
+			.jewelry_show{
+				margin-top: 51px;
+			}
+			.atlas_top{
+				width: 1030px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.atlas_top h1{
+			    font-size: 15px!important;
+				font-family: MicrosoftYaHei;
+				font-weight: 600!important;
+				color: rgba(0, 0, 0, 1);
+			}
+			.atlas_top a{
+				font-size: 12px;
+    			font-family: MicrosoftYaHei;
+    			font-weight: 400;
+    			color: rgba(102, 102, 102, 1)
+			}
+			.alert_list,.alert_show{
+				width: 1030px;
+			}
+			.alert_list ul,.alert_show ul{
+				width: 1030px;
+				display: flex;
+				justify-content: space-between;
+				margin-top: 30px;
+			}
+			.alert_list ul li{
+				width: 146px;
+				height: 76px;
+				position: relative;
+			}
+			.alert_list ul li div{
+				width: 146px;
+				height: 76px;
+				background-size:cover;
+				background-position:center;
+				background-repeat: no-repeat;
+			}
+			.alert_list ul li p{
+				width:146px;
+				height: 76px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background: rgba(255, 0, 0, .7);
+				font-size: 12px;
+				font-family: MicrosoftYaHei;
+				font-weight: 400;
+				color: rgba(255, 255, 255, 1);
+				line-height: 74px;
+				text-align: center;
+				display: none;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				display: none;
+			}
+			.alert_show ul li{
+				width: 320px;
+				height: 180px;
+				position: relative;
+			}
+			.alert_show > ul > li:nth-last-child(2){
+				margin: 0px 5px;
+			}
+			.alert_show ul li img{
+				width: 320px;
+				height: 180px;
+			}
+			.alert_show ul li .alert_marks{
+				width: 320px;
+				height: 180px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background: rgba(255, 0, 0, .7);
+				font-size: 12px;
+				font-family: MicrosoftYaHei;
+				font-weight: 400;
+				color: rgba(255, 255, 255, 1);
+				display: none;
+			}
+			.alert_show ul li .alert_marks h5{
+				text-align: center;
+				font-size:16px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(255,255,255,1);
+				margin-top: 54px;
+			}
+			.alert_show ul li .alert_marks p{
+				width: 242px;
+				font-size:14px;
+				line-height:24px;
+				margin-top: 40px;
+				margin-left: 40px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(255,255,255,1);
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+			.alert_show ul li:hover div.alert_marks{
+				display: block;
+			}
+			.jewelry_banner{
+				margin-top: 40px;
+			}
+			/*走马灯*/
+			.alert_list ul li:hover p.alert_marks{
+				display: block;
+			} 
+			.el-carousel__arrow.el-carousel__arrow--left{
+				left:260px;
+			}
+			.el-carousel__arrow.el-carousel__arrow--right{
+				right:260px;
+			}
+			.el-carousel{
+				width:1500px;
+				margin-left:-235px;
+			}
+			.el-carousel__item h3 {
+			    color: #475669;
+			    font-size: 14px;
+			    opacity: 0.75;
+			    line-height: 200px;
+			    margin: 0;
+			  }
+			  .el-carousel__item:nth-child(2n) {
+			    background-color: #99a9bf;
+			  }
+			  
+			  .el-carousel__item:nth-child(2n+1) {
+			    background-color: #d3dce6;
+			  }
+			  .jewelry_shop{
+			  	width: 1030px;
+			  	margin-top: 36px;
+			  	display: flex;
+			  	flex-wrap:wrap;
+			  	justify-content: space-between;
+			  }
+			  .jewelry_shop dl:hover{
+			  	box-shadow: 5px 5px 5px #e0dbdb;
+			  }
+			  .jewelry_shop dl{
+			  	background: #fff;
+			  	/*padding: 15px;*/
+			  	margin-top: 25px;
+			  	margin-right:5px;
+			  	padding:25px 30px;
+			  }
+			  .jewelry_shop dl dt{
+			  	width: 260px;
+			  	height:174px;
+			  	margin: 0 auto;
+			  }
+			  .jewelry_shop dl dt div{
+			  	width: 260px;
+			  	height: 174px;
+			  	background-size: cover;
+			    background-position: center;
+			    background-repeat: no-repeat;
+			  }
+			  .jewelry_shop dl dd{
+			  	width:260px;
+			  	/*text-align: center;*/
+			  	margin: 0 auto 15px;
+			  }
+			  .jewelry_shop dl dd h1{
+			  	text-align: center;
+			  	color: #333;
+				font-size: 14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				margin-top: 12px;
+				font-weight: bold;
+			  }
+			  .jewelry_shop dl dd p{
+			  	font-size:12px;
+				font-family:MicrosoftYaHei;
+				font-weight: 400;
+				color: #666;
+				line-height:15px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				margin-top: 12px;
+			  }
+			  .jewelry_shop .atlas_top{
+				width: 1030px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.jewelry_shop .atlas_top h1{
+				font-size: 16px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+			}
+			.atlas_top a i{
+				position:relative;
+				top: -1px;
+			}
+			.jewelry_down{
+				margin-bottom: 60px;
+			}
+			.banner_time{
+				width:100%;
+				display: flex;
+				justify-content: center;
+			}
+			.banner_time li{
+				width: 44px;
+				text-align: center;
+				margin: 14px 6.5px;
+			}
+			.banner_time li span:nth-child(1){
+				font-size:15px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(220,40,40,1);
+			}
+			.banner_time li span:nth-child(2){
+				font-family: arial;
+				width: 44px;
+				height: 44px;
+				display: block;
+				background: #cfad5b;
+				color:#fff;
+				text-align: center;
+				line-height: 22px;
+				margin-top: 8px;
+				font-size:18px;
+				font-weight:400;
+				color:rgba(255,255,255,1);
+				line-height:44px;
+			}
+			.bannerImg button{
+				width: 206px;
+				height: 40px;
+				background: #ff0000;
+				border:0;
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(255,255,255,1);
+				color: #fff;
+				margin-left: 50%;
+				transform: translateX(-50%);
+			}
+			li p{
+				text-align: center;
+			}
+			dl{
+				cursor:pointer;
+			}
+			.alert_list li{
+				cursor:pointer;
+			}
+			.alert_show li{
+				cursor:pointer;
+			}
+			.posit{
+				top: -2px!important;
+			}
+			.positions{
+				position: relative;
+			}
+			.showHide{
+				width: 260px;
+				font-size: 16px;
+				display: none;
+				background: rgba(255, 0, 0, .7);
+				position:absolute;
+				text-align: center;
+				color: #fff;
+				height: 180px;
+				top:12px;
+				left:40px;
+				
+			}
+			.showHide h5{
+				font-size: 16px;
+				line-height: 70px;
+			}
+			.showHide p{
+				font-size: 15px;
+				color: #fff
+			}
+			.positions:hover .showHide {
+				display: block;
+			}
+			@media screen and (max-width: 1400px) {
+		    .more{
+		    	width:1030px;
+		    }
+		}
+		.atlas_museum{
+			width: 1030px;
+			margin-top: 36px;
+		}
+		.atlas_two{
+			width: 1030px;
+			display: flex;
+			flex-wrap: wrap;
+			background: #FFFFFF;
+			margin-top: 25px;
+		}
+		.atlas_two .positions_one{
+			width: 300px;
+			position: relative;
+			flex-grow: 1;
+			margin:30px;
+			margin-bottom: 0;
+		}
+		.atlas_two .positions_one:nth-child(3n-2){
+			margin-right:0;
+		}
+		.atlas_two .positions_one:nth-child(3n){
+			margin-left:0;
+		}
+		.atlas_two .positions_one:nth-child(n+4){
+			margin-bottom:30px !important;
+		}
+		.atlas_two .positions_one dt{
+			width: 100%;
+			height: 200px;
+		}
+		.atlas_two .positions_one dt div{
+			width: 100%;
+			height: 100%;
+			background-size: cover;
+		    background-position: center;
+		    background-repeat: no-repeat;
+		}
+		.atlas_two .positions_one .hides{
+			position: absolute;
+			top:0;
+			left:0;
+			right:0;
+			bottom:0;
+			background: rgba(255, 0, 0, .7);
+			display: none;
+			font-size: 15px;
+			text-align: center;
+			line-height: 200px;
+			color:#FFFFFF
+		}
+		.atlas_two .positions_one:hover .hides{
+			display: block;
+		}
+		.more{
+			margin-top: 20px;
+		}
+		</style>
+	</head>
+
+	<body class="jewelryBox-bd">
+
+		<%- include ../headerbar.ejs %>
+
+		<%- include ../header.ejs %>
+
+		<%- include ../headerNav.ejs %>
+
+		<div class="jewelry_box" id="jewelry_box">
+			<div class="banner" v-for="item in banner">
+				<iframe :src="item.vrsite" width="1200px" height="600px" style="border:none"></iframe>
+			</div>
+			<div class="jewelry_content">
+				<div class="jewelry_atlas">
+					<div class="atlas_top">
+						<h1>主题墙</h1>
+						<a @click="toMore(1,1,'主题墙')">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+					</div>
+					<div class="alert_list">
+						<ul>
+							<li v-for="(item,index) in theme" @click="toDetails(1,item.id,null,item.title)">
+								<div :style="{backgroundImage:'url('+formatImg(item.showPrint)+')'}"></div>
+								<p class="alert_marks">{{item.title}}</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="jewelry_banner">
+					<template>
+					  <el-carousel :interval="4000000" type="card" height="400px">
+					    <el-carousel-item class="bannerImg" v-for="(item,index) in bannerList" style="background: #fff;">
+					    	<div>
+						        <img :src="formatImg(item.showPrint)"  height="250px" width="1000px" @click.stop="toImage(item.id,item.title)"/>
+						        <ul class="banner_time">
+						      	<li>
+						      		<span>天</span>
+						      		<span v-text="item.time.d"></span>
+						      	</li>
+						      	<li>
+						      		<span>时</span>
+						      		<span v-text="item.time.h"></span>
+						      	</li>
+						      	<li>
+						      		<span>分</span>
+						      		<span v-text="item.time.m"></span>
+						      	</li>
+						      	<li>
+						      		<span>秒</span>
+						      		<span v-text="item.time.s"></span>
+						      	</li>
+						        </ul>
+						        <!--<button @click.stop="toDetails(3,item.id,item.startTime,item.title,item.detailSite)">预约观展</button>-->
+					        </div>
+					    </el-carousel-item>
+					  </el-carousel>
+					</template>
+				</div>
+				<div class="jewelry_atlas jewelry_show">
+					<div class="atlas_top">
+						<h1>珠宝展</h1>
+						<a @click="toMore(1,2,'珠宝展')">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+					</div>
+					<div class="alert_show">
+						<ul>
+							<li v-for="(item,index) in jewelryList" @click="toDetails(1,item.id,null,item.title)">
+								<img :src="formatImg(item.showPrint)"/>
+								<div class="alert_marks">
+									<h5 v-text="item.title"></h5>
+									<p v-text="item.describe"></p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="jewelry_shop">
+					<div class="atlas_top">
+						<h1>珠宝大市场</h1>
+						<a @click="toMore(2,9,'珠宝大市场')">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+					</div>
+					<dl v-for="(item,index) in list1" @click="toDetails(2,item.id,null,item.title)">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.vrpicture)+')'}"></div>
+						</dt>
+						<dd>
+							<h1>{{item.title}}</h1>
+							<p>{{item.describe}}</p>
+						</dd>
+					</dl>
+				</div>
+				<div class="atlas_museum">
+					<div class="atlas_top">
+						<h1>珠宝博物馆</h1>
+						<a @click="toMore(2,14,'珠宝博物馆')">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+					</div>
+					<div class="atlas_two">
+						<dl v-for="(item,index) in list2" @click="toDetails(2,item.id,null,item.title)" class="positions_one">
+							<dt>
+								<div :style="{backgroundImage:'url('+formatImg(item.vrpicture)+')'}"></div>
+							</dt>
+							<div v-text="item.title" class="hides"></div>
+						</dl>
+					</div>
+				</div>
+				<div class="atlas_museum">
+					<div class="atlas_top">
+						<h1>珠宝小镇</h1>
+						<a @click="toMore(2,19,'珠宝小镇')">更多<i class="iconfont icon_more posit">&#xe6d6</i></a>
+					</div>
+					<div class="atlas_two">
+						<dl v-for="(item,index) in list3" @click="toDetails(2,item.id,null,item.title)" class="positions_one">
+							<dt>
+								<div :style="{backgroundImage:'url('+formatImg(item.vrpicture)+')'}"></div>
+							</dt>
+							<div v-text="item.title" class="hides"></div>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<%- include below %>
+		</div>
+
+		<%- include ../footer.ejs %>
+		<script type="text/javascript">
+			var jewelryBox = new Vue({
+				el:"#jewelry_box",
+				data(){
+					return{
+						jewelryList:[],
+						theme:[],
+						banner:[],
+						bannerList:[],
+						list1:[],
+						list2:[],
+						list3:[]
+					}
+				},
+				created(){
+					this._init()
+				},
+				methods:{
+					getList(val,num,pdVr){
+						let urls = '/admin/jewelry/home/getHomePage'
+						if(pdVr == 'VR'){
+							urls = '/admin/jewelry/home/getHomeVRPage'
+						}
+						return new Promise((resolve,reject)=>{
+							utils.ajax({
+								url:urls,
+								type:'get',
+								data:{
+									classIFY:val,
+									num:num
+								},
+								success:function(data){
+									resolve(data.data)
+								}
+							})
+						})
+					},
+					getDate(endtime){
+						let begintime = new Date().getTime()
+						let nTimeD = endtime - begintime
+						if(nTimeD<0) nTimeD = 0
+						let nTimeH = nTimeD%86400000
+						let nTimeM = nTimeH%3600000
+						let nTimeS = nTimeM%60000
+						let d = Math.floor(nTimeD/86400000)
+						let h = Math.floor(nTimeH/3600000)
+						let m = Math.floor(nTimeM/60000)
+						let s = Math.floor(nTimeS/1000)
+						return {d,h,m,s}
+					},
+					setDate(){
+						this.bannerList.forEach(item=>{
+							item.time = this.getDate(item.finishTime)
+						})
+						setInterval(_=>{
+							this.bannerList.forEach(item=>{
+								item.time = this.getDate(item.finishTime)
+							})
+							this.bannerList = [...this.bannerList]
+						},1000)
+					},
+					getBanner(){
+						return new Promise((resolve,reject)=>{
+							utils.ajax({
+								url:"/pc/jewelry/exhibition/IndexJewelryPicture",
+								type:'get',
+								success:function(res){
+									resolve(res.data)
+								}
+							})
+						})
+					},
+					_init(){
+						this.getList(1,1,'VR').then(data=>{
+							this.banner = data
+						})
+						this.getList(2,6).then(data=>{
+							this.theme = data
+						})
+						this.getList(3,3).then(data=>{
+							this.jewelryList = data
+						})
+						this.getList(4,6,'VR').then(data=>{
+							this.list1 = data
+						})
+						this.getList(5,6,'VR').then(data=>{
+							this.list2 = data
+						})
+						this.getList(6,6,'VR').then(data=>{    
+							this.list3 = data
+						})
+						this.getBanner().then(data=>{
+							this.bannerList = data.map(item=>{
+								let date = new Date(item.finishTime.replace(/-/g, '/'))
+								item.finishTime = Date.parse(date)
+								return item
+							})
+							this.setDate()
+						})
+					},
+					formatImg: utils.formatImg,
+					toMore(type,id,name){
+						if(type==1){
+							window.location.href='../../../jewelry_fair/langdata/'+id+ '?title=' + escape(name)
+						}else{
+							window.location.href='../../../jewelry_fair/more/'+id+'?title=' + escape(name)
+						}
+					},
+					toDetails(type,id,time,name,dir){              
+						if(type==1){
+							window.open('../../jewelry_fair/detail/'+id+ '?title=' + escape(name))
+						}else if(type==2){
+							window.open('../../jewelry_fair/details/'+id+ '?title=' + escape(name))
+						}else{
+							if(!utils.islogin()){
+								utils.alert('danger','请登录后再进行操作！');
+								setTimeout(function(){
+									window.location = '../../login?from=' + encodeURIComponent(location.href);
+								},300)
+								return false;
+							}
+							time = time.split(' ').join(',')
+							window.open('../../jewelry_fair/from/'+id +'?time=' + time + '&dir=' + escape(dir))
+						}
+					},
+					toImage(id,name){
+						window.open('../../jewelry_fair/detail/'+id+ '?title=' + escape(name))
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

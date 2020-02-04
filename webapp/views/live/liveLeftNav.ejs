@@ -1,0 +1,120 @@
+<style>
+	.aside{
+		
+		overflow: hidden;
+		background-color: #fff;
+		
+		position: relative;
+	}
+	.aside .list{
+		text-align: center;
+	}
+	.aside .list li{
+		width: 100%;
+		
+		
+	}
+	.aside .list li .img{
+		/*width: 60px;*/
+		height: 66px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+
+	}
+		
+	.aside .list1{
+		height: 508px;
+		padding-top: 20px;
+	}
+	.aside .list1 li{
+		height: 105px;
+	}
+	.aside .list1 li .img{
+		margin-top: 15px;
+	}
+	.aside .list1 li a p{
+		
+		color: #999999;
+	}
+	.aside .list1 li.cur a p{
+		line-height: 1.5;
+		font-size: 14px;
+		color: #890F1C;
+	}
+	.aside .list1 li .story .img{
+		background-image: url("../src/img/live/story1.png");
+	}
+	.aside .list1 li.cur .story .img{
+		background-image: url("../src/img/live/story2.png");
+	}
+	.aside .list1 li .product .img{
+		background-image: url("../src/img/live/product1.png");
+	}
+	.aside .list1 li.cur .product .img{
+		background-image: url("../src/img/live/product2.png");
+	}
+	.aside .list1 li .consult .img{
+		background-image: url("../src/img/live/consult1.png");
+	}
+	.aside .list1 li.cur .consult .img{
+		background-image: url("../src/img/live/consult2.png");
+	}
+	.aside .list1 li .auction .img{
+		background-image: url("../src/img/live/auction1.png");
+	}
+	.aside .list1 li.cur .auction .img{
+		background-image: url("../src/img/live/auction2.png");
+	}
+	.aside .list2{
+		background-color: #890F1C;
+		height: 92px;
+	}
+	.aside .list2 .appDonwload .img{
+		height: 92px;
+		background-image: url("../src/img/live/APPDownload.png");
+	}
+</style>
+<aside class="aside">
+  <ul class="list list1">
+
+  	<li class="<% if(name == 'story'){ %>cur<% } %>">
+  		<a class="story" href="/live/story">
+	  		<div class="img"></div>
+	  		<p>新奇故事</p>
+  		</a>
+  	</li>
+  	<li class="<% if(name == 'product'){ %>cur<% } %>">
+  		<a class="product" href="/live/product">
+	  		<div class="img"></div>
+	  		<p>直销产品</p>
+  		</a>
+  	</li>
+  	<li class="<% if(name == 'consult'){ %>cur<% } %>">
+  		<a class="consult" href="/live/consult">
+	  		<div class="img"></div>
+	  		<p>专家咨询</p>
+  		</a>
+  	</li>
+  	<li class="<% if(name == 'auction'){ %>cur<% } %>">
+  		<a class="auction" href="/live/auction">
+	  		<div class="img"></div>
+	  		<p>在线拍卖</p>
+  		</a>
+  	</li>
+
+  </ul>
+  <ul class="list list2">
+  	<li>
+  		<a class="appDonwload">
+	  		<div class="img" ></div>
+  		</a>
+  	</li>
+  </ul>
+</aside>
+
+<script>
+	$(function(){
+
+	})
+</script>

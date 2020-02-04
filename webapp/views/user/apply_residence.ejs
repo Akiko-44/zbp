@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <style>
+    .el-tabs__header {
+      padding-left: 32px;
+      margin-bottom: 0;
+      height: 60px;
+      background: #fff;
+    }
+
+    .el-tabs__nav-wrap::after {
+      background-color: #fff;
+    }
+
+    .el-tabs__item {
+      height: 60px;
+      line-height: 60px;
+      font-size: 16px;
+    }
+
+    .el-tabs__item:hover {
+      color: #DF735A;
+    }
+
+    .el-tabs__item.is-active {
+      color: #DF735A;
+      font-weight: bold;
+    }
+
+    .el-tabs__active-bar {
+      background-color: #DF735A;
+    }
+
+    .el-tabs__content {
+      overflow: visible;
+    }
+
+    .merchant-bg {
+      width: 100%;
+      height: auto;
+    }
+
+    .query_form {
+      margin: -200px auto 50px;
+      width: 1010px;
+      padding: 40px 100px;
+      border-radius: 10px;
+      background-color: #FFFFFF;
+      position: relative;
+      z-index: 1;
+    }
+
+    .application-info {
+      margin-bottom: 50px;
+      line-height: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .query_form-item {
+      margin-bottom: 30px;
+      font-size: 16px;
+      position: relative;
+    }
+
+    .query_form span {
+      display: inline-block;
+      width: 80px;
+      height: 44px;
+      text-align: right;
+      color: #333333;
+      line-height: 44px;
+    }
+
+    .query_form input {
+      width: 720px;
+      height: 44px;
+      line-height: 44px;
+    }
+
+    .btn {
+      margin: 20px 0 10px;
+      width: 470px;
+      height: 50px;
+      font-size: 16px;
+      background-color: #DF735A;
+      border-color: #DF735A;
+      border-radius: 0;
+      color: #FFFFFF;
+    }
+
+    .committee-info {
+      height: 800px;
+    }
+
+    .committee-btn-box {
+      /* margin-top: 90px; */
+      text-align: center;
+      background: rgba(0, 0, 0, .3);
+    }
+
+    .committee-btn {
+      margin: 50px 0;
+      width: 300px;
+      height: 60px;
+    }
+
+    .committee-btn.download {
+      margin-right: 70px;
+      background: url('../../src/img/user/button-bg.png');
+      border: 0;
+    }
+
+    .apply-dialog .dialog-main {
+      width: 828px;
+      margin-left: -414px;
+      margin-top: -260px;
+    }
+
+    .apply-dialog table {
+      margin: 37px auto 0;
+    }
+
+    .apply-dialog label {
+      line-height: 44px;
+    }
+
+    .apply-dialog input {
+      margin-bottom: 30px;
+      width: 100%;
+      height: 44px;
+      line-height: 44px;
+    }
+
+    .apply-dialog .dialog-btn {
+      margin-bottom: 60px;
+      width: 260px;
+      height: 40px;
+    }
+  </style>
+</head>
+
+<body class="userShop">
+
+  <%- include ../headerbar.ejs %>
+  <%- include ../headerNav.ejs %>
+
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>
+          <a href="/">首页</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>加盟入驻</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div id="main" class="main">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="商家入驻申请" name="merchant">
+          <img class="merchant-bg" src="../../src/img/user/apply-bg.png" alt="">
+          <div class="query_form">
+            <div class="application-info">
+              <p>中宝平适合珠宝加工厂、品牌珠宝店、珠宝零售商、珠宝设计工作室、个人珠宝设计师等从事珠宝行业</p>
+              <p>相关的主体入驻。在下方留下您的联系方式后，将有专业的服务人员协助您完成入驻。</p>
+            </div>
+            <div class="query_form-item">
+              <span>企业名称：</span>
+              <input type="text" v-model="form.companyName" placeholder="请输入企业名称" />
+            </div>
+            <div class="query_form-item">
+              <span>联系人：</span>
+              <input type="text" v-model="form.contactsName" placeholder="请输入联系人" />
+            </div>
+            <div class="query_form-item">
+              <span>手机号码：</span>
+              <input type="text" v-model="form.contactMobile" placeholder="请输入手机号码" maxlength="11" />
+            </div>
+            <div class="tc">
+              <button class="btn" @click="submit($event)">提交</button>
+            </div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="领导小组申请" name="committee">
+          <img src="../../src/img/user/committee.png" alt="" width="1200">
+          <div class="committee-btn-box">
+            <button class="btn committee-btn download" @click="download">下载申请表</button>
+            <button class="btn committee-btn" @click="showDialog">我要入驻</button>
+          </div>
+
+        </el-tab-pane>
+      </el-tabs>
+      <div class="dialog apply-dialog" id="applyDialog">
+        <div class="mask"></div>
+        <div class="dialog-main">
+          <div class="dialog-header clearfix">
+            <a class="fr dialog-close"><i class="icon icon-close"></i></a>
+            <h3 class="dialog-title">入驻申请</h3>
+          </div>
+          <div class="dialog-body">
+            <div>
+              <table>
+                <tr>
+                  <td valign="top" width="92"><label>企业名称</label></td>
+                  <td valign="top" width="530">
+                    <input type="text" v-model="form.companyName" placeholder="请输入企业名称" />
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top" width="92"><label>联系人</label></td>
+                  <td valign="top" width="530">
+                    <input type="text" v-model="form.contactsName" placeholder="请输入联系人" />
+                  </td>
+                </tr>
+                <tr>
+                  <td valign="top" width="92"><label>手机号码</label></td>
+                  <td valign="top" width="530">
+                    <input type="text" v-model="form.contactMobile" placeholder="请输入手机号码" maxlength="11" />
+                  </td>
+                </tr>
+              </table>
+              <button class="btn dialog-btn" @click="submit($event)">我要入驻</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <%- include ../footer.ejs %>
+
+  <script>
+    var routerVm = new Vue({
+      el: "#router",
+    })
+
+    var mainVm = new Vue({
+      el: "#main",
+      data: {
+        activeName: 'merchant',
+        form: {
+          companyName: '',
+          contactsName: '',
+          contactMobile: '',
+          joinType: 0
+        }
+      },
+      mounted() {
+        const ww = document.body.clientWidth
+        const ml = -(ww - 1200) / 2
+        $(".committee-btn-box").css({
+          "margin-left": ml,
+          "width": ww
+        });
+      },
+      methods: {
+        submit(e) {
+          if (!this.form.companyName) {
+            utils.alert('danger', '企业名称不可为空')
+            return
+          }
+          if (!this.form.contactsName) {
+            utils.alert('danger', '联系人不可为空')
+            return
+          }
+          if (!this.form.contactMobile) {
+            utils.alert('danger', '手机号码不可为空')
+            return
+          }
+          const reg = /^[0-9]{11}$/
+          if (!reg.test(this.form.contactMobile)) {
+            utils.alert('danger', '请填写正确的手机号码')
+            return
+          }
+          utils.ajax({
+            type: 'post',
+            url: '/api/intention/saveOrUpdate',
+            data: JSON.stringify(this.form),
+            el: e.target,
+            success: (data) => {
+              utils.alert("success", "提交成功")
+            }
+          })
+        },
+        showDialog() {
+          $('#applyDialog').addClass('show')
+        },
+        download() {
+          let src = 'http://app.gacjc.com/app/download/application.doc'
+          let form = document.createElement('form')
+          form.action = src
+          document.getElementsByTagName('body')[0].appendChild(form)
+          form.submit()
+        },
+        handleClick(val) {
+          if (val.name === 'committee') {
+            this.form.joinType = 1
+            document.body.style.background = "url('../../src/img/user/bc.png')"
+          } else {
+            this.form.joinType = 0
+            document.body.style.background = "#f3f3f3"
+          }
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

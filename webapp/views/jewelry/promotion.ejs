@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../dist/css/all.css"/>
+<script src="../dist/js/template.js"></script>
+<script src="../dist/js/lib.js"></script>
+<style type="text/css">
+	#promotion{padding-top: 20px;}
+	#promotion li{
+		width: 360px;
+		height: 240px;
+		margin-bottom: 40px;
+		position: relative;
+	}
+	#promotion li:nth-child(3n-1){
+		margin: 0 55px;
+	}
+	.goods-img, .goods-img img{
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+	}
+	.brand-logo{
+		width: 320px;
+		height: 220px;
+		position: absolute;
+		left: 20px;
+		top: 10px;
+		padding: 10px;
+		border: 1px solid #FFFFFF;
+	}
+	.brand-logo>div{
+		width: 100%;
+		height: 100%;
+		padding-top: 15px;
+		background: rgba(255,255,255,0.7);
+	}
+	.brand-logo p:nth-child(2){
+		color: #1A1A1A;
+		font-size: 16px;
+		line-height: 35px;
+	}
+	.brand-logo a{
+		display: inline-block;
+		width: 84px;
+		height: 24px;
+		line-height: 24px;
+		background-color: #FFAF4E;
+		color: #FFFFFF;
+		border-radius: 3px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+	}
+</style>
+</head>
+<body class="jewelry-promotion">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+
+	<div class="clearfix"><img src="../../src/img/jewelry/Title.png" style="width: 100%;"/></div>
+	<div class="container">
+		<ul class="clearfix" id="promotion">
+			
+		</ul>
+	</div>
+	<div class="tc container" style="margin-top: 30px;">
+		<div id="pagination" class="pagination"></div>
+	</div>
+	<%- include ../footer.ejs %>
+</body>
+<script type="text/javascript">
+$(function(){
+    getData(1)
+    $.ajax({
+        url:'/api/marketPage/preferentialShow',
+        type:'get',
+        data:{
+            offset:1,
+            limit:9
+        },
+        success:function(res){
+            if(!res.success) return;
+            $("#pagination").pagination({
+				pageCount: res.data.pages,
+			    jump: true,
+			    coping: true,
+			    prevContent: '<',
+			    nextContent: '>',
+			    callback: function (api){
+			        getData(api.getCurrent());
+			    }
+			});
+        },
+        error: function(error){
+            
+        }
+    })
+})
+function getData(page){
+    $.ajax({
+        url:'/api/marketPage/preferentialShow',
+        type:'get',
+        data:{
+            offset:page,
+            limit:9
+        },
+        success:function(res){
+            if(!res.success) return;
+            var html = '';
+            $.each(res.data.records, function(idx,item) {
+            	html += '<li class="fl">'+
+							'<a class="goods-img">'+
+								'<img src="'+item.pic+'"/>'+
+							'</a>'+
+							'<div class="brand-logo tc">'+
+								'<div>'+
+									'<p><img src="../../src/img/jewelry/brand.png" width="160" height="100"/></p>'+
+									'<p>看新奇好物 来优惠活动</p>'+
+									'<p><a href="'+item.pcActivityUrl+'">品牌疯抢 ></a></p>'+
+								'</div>'+
+							'</div>'+
+						'</li>';
+            });
+            $("#promotion").html(html)
+        },
+        error: function(error){
+            
+        }
+    })
+}
+</script>
+</html>
+

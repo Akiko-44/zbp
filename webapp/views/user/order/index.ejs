@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+  <title><%= title %></title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+  <link rel="stylesheet" type="text/css"
+    href="../../src/js/plugin/Zebra_Datepicker/dist/css/metallic/zebra_datepicker.min.css" />
+</head>
+<style>
+  .userRightContent {
+    margin-bottom: 20px;
+  }
+
+  .order-box {
+    position: relative;
+    padding: 30px 20px 200px;
+  }
+
+  .el-select {
+    width: 150px;
+  }
+
+  .el-select-dropdown.el-popper {
+    margin: 0;
+  }
+
+  .el-select-dropdown__item.selected {
+    color: #FB746E;
+  }
+
+  /* .searchTime {
+    width: 320px;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle
+  } */
+
+  .pagination {
+    margin: 0;
+    padding: 50px 0 80px;
+    background: #F3F3F3;
+  }
+</style>
+
+<body class="userOrderJewelry">
+
+  <%- include ../../headerbar.ejs %>
+  <%- include ../userHeaderNav.ejs %>
+
+  <div class="container">
+    <div class="router" id="router">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>
+          <a href="/">首页</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/' }">
+          <a href="/user/acc_info">个人中心</a>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item>我的订单</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+  </div>
+
+  <div id="main" class="main">
+    <div class="clearfix container">
+      <div class="userLeftNav">
+        <%- include ../userLeftNav.ejs %>
+      </div>
+      <div class="userRightContent">
+        <div class="order-box">
+          <div id="orderNav">
+            <ul>
+              <!-- <li state="0"><a>全部订单<span>0</span></a></li> -->
+              <li state="0"><a>全部订单</a></li>
+              <li state="1"><a>待付款<span></span></a></li>
+              <li state="2"><a>待发货<span></span></a></li>
+              <li state="5"><a>待收货<span></span></a></li>
+              <li state="6"><a>待评价<span></span></a></li>
+            </ul>
+          </div>
+
+          <div id="orderSearch">
+            下单时间：
+            <!-- <input type="text" id="datepicker-start" class="searchTime" placeholder="开始时间">
+            <span class="dot"></span>
+            <input type="text" id="datepicker-end" class="searchTime" placeholder="结束时间"> -->
+            <el-date-picker class="searchTime" v-model="searchTime" type="datetimerange" range-separator="·"
+              align="right" start-placeholder="开始时间" end-placeholder="结束时间" value-format="yyyy-MM-dd HH:mm:ss">
+            </el-date-picker>
+            <div class="input" id="search" @click="search">
+              <a><i class="el-icon-search"></i></a>
+            </div>
+          </div>
+
+          <div class="order-table-head" id="orderTableHead">
+            <div class="head-item type-item">
+              <el-select v-model="type" placeholder="订单类型" class="type" @change="changeType">
+                <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+            <span class="head-item count-item">数量</span>
+            <span class="head-item money-item">金额</span>
+            <span class="head-item operation-item">操作</span>
+          </div>
+
+          <div id="orderList">
+            <ul>
+
+            </ul>
+          </div>
+        </div>
+
+        <div id="pagination" class="pagination"></div>
+
+      </div>
+    </div>
+  </div>
+
+  <%- include ../../footer.ejs %>
+
+  <%- include commonJs.ejs %>
+  <script>
+    $(".userLeftNav li[data-target='order']").addClass("cur");
+    let payStartTime, payEndTime
+    let state = '0'
+    var routerVm = new Vue({
+      el: "#router"
+    })
+    var searchVm = new Vue({
+      el: "#orderSearch",
+      data: {
+        searchTime: []
+      },
+      methods: {
+        search() {
+          console.log(this.searchTime)
+          payStartTime = this.searchTime && this.searchTime.length ? this.searchTime[0] : undefined
+          payEndTime = this.searchTime && this.searchTime.length ? this.searchTime[1] : undefined
+          render(state, 1)
+        }
+      }
+    })
+    var mainVm = new Vue({
+      el: "#orderTableHead",
+      data: {
+        type: '0',
+        typeList: [{
+            label: '全部订单类型',
+            value: '0'
+          }, {
+            label: '去哪儿买订单',
+            value: '1'
+          },
+          {
+            label: '设计师订单',
+            value: '5'
+          },
+          {
+            label: '制造间订单',
+            value: '6'
+          }
+        ],
+        showData: true
+      },
+      methods: {
+        changeType() {
+          state = $('#orderNav li.cur').attr('state')
+          render(state, 1)
+        }
+      }
+    })
+
+    $(function () {
+
+      $('#datepicker-start').Zebra_DatePicker({
+        direction: true,
+        pair: $('#datepicker-end')
+      });
+
+      $('#datepicker-end').Zebra_DatePicker({
+        direction: 1
+      });
+
+      $(document).on("click", "#orderNav li", function (e) {
+        var self = $(e.currentTarget);
+        self.addClass("cur").siblings().removeClass("cur");
+        var val = self.attr("state");
+        // if (val == 4) {
+        //   val = 2;
+        // }
+        render(val, 1);
+      }).on("click", ".toOrderDetail", function (e) {
+        var self = $(e.currentTarget);
+        var id = self.attr("orderNumber");
+        window.location.href = "../../user/order/detail?id=" + id;
+        // }).on("click", "#search", function (e) {
+        //   payStartTime = $('#datepicker-start').val() + ' 00:00:00'
+        //   payEndTime = $('#datepicker-end').val() + ' 00:00:00'
+        //   render(0, 1)
+      })
+
+      $("#orderNav li:eq(0)").trigger("click");
+      getNum();
+
+    });
+
+    function toGoodsDetail(id, source) {
+      if (source == 1) {
+        window.location.href = "../../jewelry/details?id=" + id;
+      } else if (source == 2) {
+        // 互换坊
+      } else if (source == 5) {
+        window.location.href = "../../design/product_detail?id=" + id;
+      } else if (source == 6) {
+        window.location.href = "../../manufacture/product_detail?id=" + id;
+      }
+    }
+
+
+
+    function render(state, page) {
+      var orderType = mainVm.type;
+      utils.ajax({
+        url: "/api/order/page/" + state + "/" + orderType,
+        type: "get",
+        data: {
+          offset: page,
+          limit: 10,
+          payStartTime: payStartTime,
+          payEndTime: payEndTime
+        },
+        success: function (data) {
+          data = data.data;
+          if (data.total == 0) {
+            //没有数据
+            var html =
+              '<div class="no-order tc" style="padding-top:70px;color:#333;font-size:16px;"><img src="/src/img/user/no_order.png" alt="" width="482"><p style="margin-top:-50px">暂无订单</p></div>'
+            $("#orderList ul").html(html);
+          } else {
+            var html = "";
+            for (var i = 0; i < data.records.length; i++) {
+              html += _template.userOrder({
+                data: data.records[i]
+              })
+            }
+            $("#orderList ul").html(html);
+          }
+          if (page == 1) {
+            if (data.pages > 1) {
+              $("#pagination").removeClass("hide");
+              $("#pagination").pagination({
+                pageCount: data.pages,
+                jump: true,
+                coping: true,
+                prevContent: '上一页',
+                nextContent: '下一页',
+                callback: function (api) {
+                  render(state, api.getCurrent());
+                }
+              });
+            } else {
+              $("#pagination").addClass("hide");
+            }
+          }
+          // utils.unreadNumberType(1, 1, function (data) {
+          //   if (data > 0) {
+          //     $('[data-warn=jewelryWarn]').text(data).removeClass('hide');
+          //   } else {
+          //     $('[data-warn=jewelryWarn]').text('').addClass('hide');
+          //   }
+          // })
+        }
+
+      })
+    }
+
+    function getNum() {
+      utils.ajax({
+        url: "/api/order/state/number/list/0/0",
+        type: "get",
+        success: function (data) {
+          data = data.data;
+          var total = 0;
+          var sateOne = 0,
+            sateTwo = 0;
+          for (var i = 0; i < data.length; i++) {
+            total += parseInt(data[i].STATENUM)
+            if (data[i].STATE == 1 || data[i].STATE == 100) {
+              sateOne += data[i].STATENUM
+            }
+            if (data[i].STATE == 2 || data[i].STATE == 4) {
+              sateTwo += data[i].STATENUM
+            }
+            if ($("#orderNav li[state='" + data[i].STATE + "']").length > 0) {
+              $("#orderNav li[state='" + data[i].STATE + "'] span").text(data[i].STATENUM);
+            }
+          }
+          if ($("#orderNav li[state='1'] span") && sateOne) {
+            $("#orderNav li[state='1'] span").text(sateOne);
+          }
+          // if ($("#orderNav li[state='100'] span") && sateOne) {
+          //   $("#orderNav li[state='100'] span").text(sateOne);
+          // }
+          if ($("#orderNav li[state='2'] span") && sateTwo) {
+            $("#orderNav li[state='2'] span").text(sateTwo);
+          }
+          // if ($("#orderNav li[state='4'] span") && sateTwo) {
+          //   $("#orderNav li[state='4'] span").text(sateTwo);
+          // }
+          $("#orderNav li[state='0'] span").text(total);
+        }
+      })
+    }
+  </script>
+
+</body>
+
+</html>

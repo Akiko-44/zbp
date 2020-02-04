@@ -1,0 +1,32 @@
+/*
+	下拉菜单
+*/
+.dropdown, .dropup {
+	position: relative;
+}
+.dropdown-menu {
+   	font-size: 14px;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.3);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    transition: all 0.35s ease;
+    margin-top: -20px;
+}
+.dropdown.open>.dropdown-menu {
+    margin-top: 0;
+    opacity: 1;
+    visibility: visible;
+}

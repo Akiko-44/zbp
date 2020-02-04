@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<%- include swapCss.ejs %>
+
+<style>
+.columnLeft {padding-right: 0;}
+.columnLeft ul {margin: -8px;}
+.columnLeft li {float: left;margin: 8px;width: 225px;}
+.columnLeft li .img {height: 225px;}
+.columnLeft li .btn {line-height: 20px;font-size: 12px;border-radius: 0;}
+.columnLeft li .info {height: 75px;}
+.nosearch {margin-right: 0;}
+.columnLeft li .info .intro {margin-bottom: 10px;}
+.cateItem{
+	width: 100%;
+	padding-left: 50px;
+	border-top: 1px dashed #E0E0E0;
+}
+.cateItemChildren{
+	width: 1000px;
+	background: #FFFFFF;
+	padding: 10px 30px;
+	margin-left: 50px;
+	background: #FFFFFF;
+	border: 1px solid #E0E0E0;
+	border-radius: 3px;
+}
+.curs{color: #C2A374 !important;}
+</style>
+</head>
+<body class="">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include ../header.ejs %>
+	
+	<%- include ../headerNav.ejs %>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+				  	<el-breadcrumb-item :to="{ path: '/' }">我的位置：互换坊</el-breadcrumb-item>
+				  	<el-breadcrumb-item>金银回收</el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		
+		<div class="container exchangeSearch" id="search">
+			<table>
+				<tr>
+					<td width="90"><label>分类：</label></td>
+					<td class="category-container"  style="position: relative;">
+						<a data-id="" class="category1 curs">全部</a>
+						<template v-for="item in cateList">
+							<a :data-id="item.id" class="category1">{{item.name}}</a>
+						</template>
+						<div class="cateItem" v-if="cateItemArr && cateItemArr.length">
+							<a data-id="" id="category2" class="category2 curs">不限</a>
+							<template v-for="citem in cateItemArr">
+								<a :data-id="citem.id" class="category2">{{citem.name}}</a>
+							</template>
+						</div>
+						<div class="cateItemChildren" v-if="cateItemChildrenArr && cateItemChildrenArr.length">
+							<a data-id="" id="category3" class="category3 curs">不限</a>
+							<a :data-id="ccitem.id" class="category3" v-for="ccitem in cateItemChildrenArr">{{ccitem.name}}</a>
+						</div>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+			<div class="clearfix">
+				<div class="fr clearfix">
+					<div class="searchPage fr">
+                        <a @click="toPrev()"><i class="iconfont icon-exchangePageLeft"></i></a>
+                        <span>{{currentPage}}/{{totalPage}}</span>
+                        <a @click="toNext()"><i class="iconfont icon-userAccountRight"></i></a>
+                    </div>
+					<div class="searchAddress fr">
+						<a @click="showAddress">卖家城市</a>
+						<div class="hide">
+							<a data-id="" @click="searchByProvince($event)">全部</a>
+							<a v-for="item in province" :data-id="item.regionId" @click="searchByProvince($event)">
+								{{item.regionName}}
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix">
+					<ul>
+						<li class="cur">
+							<a>综合排序</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<div class="clearfix container">
+			<div class="columnLeft">
+				<p class="nosearch hide">很遗憾，未搜索到与<span class="red">“搜索词”</span>相关的商品，换个搜索词试试吧</p>
+				<ul class="clearfix" id="list" style="overflow: hidden">
+					
+				</ul>
+				<div id="pagination" class="pagination"></div>
+			</div>
+		</div>
+
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+	<%- include commonJs.ejs %>
+<script>
+
+var routerVm = new Vue({
+	el: "#router"
+})
+
+//搜索
+var searchVm = new Vue({
+	el: "#search",
+	data: {
+		cateList: [],
+        cateItemArr: [],
+		cateItemChildrenArr:[],
+		province: [],
+		
+		currentPage: 1,
+        totalPage: 1
+	},
+	mounted: function(){
+		var self = this;
+		getCategory(null, function(data){
+			self.cateList = data;
+		});
+		
+		this.getProvince();
+	},
+	methods: {
+		toPrev: function(){
+        	if(params.current>1){
+        		var current = params.current - 1;
+        		render(current);
+        	}
+        	
+        },
+        toNext: function(){
+        	if(this.currentPage < this.totalPage){
+        		var current = this.currentPage + 1;
+        		render(current);
+        	}
+        },
+		getProvince: function(){
+			var self = this;
+			//地址
+			utils.ajax({
+				url: "/admin/region/list/0",
+				type:"get",
+				async: false,
+				success: function(data){
+					data = data.data;
+					self.province = data;
+					
+				}
+			})
+		},
+		searchByProvince: function(event){
+			var id = event.currentTarget.getAttribute("data-id");
+			params.provinceId = id;
+			render(1);
+			$(".searchAddress>div").addClass("hide")
+			$(".searchAddress a[data-id='"+id+"']").addClass("blue").siblings().removeClass("blue");
+		},
+		showAddress: function(){
+			$(".searchAddress>div").toggleClass("hide");
+		}
+	}
+})
+var userid = utils.getUrlParam("userid") || ""
+window.params = {
+	current: 1,
+	size: 30,
+	categoryId: "",
+	search: "",
+	provinceId: "",
+	userId:userid
+}
+$(function(){
+	
+	render(1)
+	
+	$(document).on("click", ".toDetail", function(e){
+		var self = $(e.currentTarget);
+		var id = self.parents("li").attr("data-id");
+		location.href = "../../exchange/recovery_detail?id=" + id;
+	}).on('click', '.category1', function(e){
+		var self = $(e.currentTarget);
+		var val = self.attr("data-id");
+		self.addClass("curs").siblings().removeClass("curs");
+		$(document).find('.category2').removeClass("curs");
+		$(document).find('.category3').removeClass("curs")
+		if(val == ''){
+			searchVm.cateItemArr = [];
+			searchVm.cateItemChildrenArr = [];
+		}else{
+			$.each(searchVm.cateList, function(idx, data) {
+				if(String(data.id) == val){
+					searchVm.cateItemArr = data.children
+					$("#category2").attr("data-id", val)
+				}
+			})
+		}
+		params.categoryId = val;
+		render(1)
+	}).on('click', '.category2', function(e){
+		var self = $(e.currentTarget);
+		var val = self.attr("data-id");
+		self.addClass("curs").siblings().removeClass("curs");
+		$(document).find('.category3').removeClass("curs")
+		$.each(searchVm.cateItemArr, function(idx, data) {
+			if(String(data.id) == val){
+				searchVm.cateItemChildrenArr = data.children
+				$("#category3").attr("data-id", val)
+			}
+		});
+		params.categoryId = val;
+		render(1)
+	}).on('click', '.category3', function(e){
+		var self = $(e.currentTarget);
+		var val = self.attr("data-id");
+		self.addClass("curs").siblings().removeClass("curs");
+		params.categoryId = val;
+		render(1)
+	})
+})
+
+
+/*
+current			分页的页号，从1开始
+size			每页显示数量
+id				id
+search			搜索词
+categoryName	分类名
+src				发布来源 1 web 2 安卓 3 苹果
+ */
+function render(page){
+	params.current = page
+	utils.ajax({
+		url: "/api/swap/portal/goods/swap_recycle/list",
+		type: "get",
+		data: params,
+		success: function(data){
+			data = data.data;
+			searchVm.currentPage = data.current
+			searchVm.totalPage = data.pages
+			if(data.total == 0){
+				//没有数据
+				$("#list").html("");
+				$(".nosearch").removeClass("hide");
+			}else{
+				$(".nosearch").addClass("hide");
+				var html = "";
+				for(var i = 0; i < data.records.length; i++){
+					html += _template.exchangeRecoveryItem({
+						data: data.records[i]
+					}) 
+				}
+				$("#list").html(html);
+				
+				if(params.current == 1 && data.pages > 1){
+					$("#pagination").pagination({
+						pageCount: data.pages,
+					    jump: true,
+					    coping: true,
+					    prevContent: '<',
+					    nextContent: '>',
+					    callback: function (api){
+					        render(api.getCurrent());
+					    }
+					});
+				}
+				
+			}
+		}
+	})
+}
+
+
+</script>
+
+</body>
+</html>
+

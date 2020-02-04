@@ -1,0 +1,427 @@
+/*
+	首页轮播图
+*/
+.indexBannerWrap {
+	position: relative;
+	height: 480px;
+	overflow: hidden;
+	
+	.toSlideNext, .toSlidePrev {
+		position: absolute;
+		top: 50%;
+		transform: translate(0, -50%);
+		left: 0;
+		display: block;
+		width: 50px;
+		height: 50px;
+		z-index: 1000;
+	}
+	.toSlideNext {
+		left: auto;
+		right: 0;
+	}
+	.bannerBottom {
+		background: rgba(0, 0, 0, 0.35);
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		color: #fff;
+		font-size: 14px;
+	}
+	.bannerBottom>div {
+		display: table;
+		table-layout: fixed;
+	}
+	.bannerBottom ul {
+		display: table-row;
+		cursor: pointer;
+	}
+	.bannerBottom li {
+		display: table-cell;
+		vertical-align: middle;
+		padding: 27px 50px;
+	}
+	.bannerBottom li.cur {
+		background: @red;
+	}
+	.bannerBottom h2 {
+		font-size: 22px;
+	}
+	.bannerBottom p {
+		margin-top: 10px;
+	}
+	.layer-table>div>div {
+	    vertical-align: middle;
+	}
+	.layer-table>div>div:first-child {
+		width: 54px;
+	}
+	
+	.bannerOpt {
+		position: absolute;
+		left: 50%;
+		top: 0;
+		height: 100%;
+		transform: translate(-50%, 0);
+	}
+}
+
+/*
+	首页标题
+*/
+.indexTitleWrap {
+	width: 360px;
+	margin: 0 auto;
+	margin-top: 55px;
+	margin-bottom: 30px;
+	text-align: center; 
+	
+	h2 {
+		font-size: 36px;
+		color: @red;
+	}
+	h2 span {
+		position: relative;
+		padding: 0 62px;
+		display: inline-block;
+	}
+	h2 span:before, h2 span:after {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 4px;
+		height: 20px;
+		background: @red;
+		content: "";
+		top: 50%;
+    	margin-top: -10px;
+	}
+	h2 span:after {
+		right: 0;
+		left: auto;
+	}
+	p {
+		color: #999999;	
+		font-size: 12px;
+		border-bottom: 1px solid #999999;
+		padding-bottom: 8px;
+		margin-top: 12px;
+		position: relative;
+	}
+	p:after {
+		position: absolute;
+		left: 50%;
+		bottom: -5px;
+		width: 9px;
+		height: 9px;
+		background: #999999;
+		content: "";
+    	margin-left: -4.5px;
+    	border-radius: 50%;
+	}
+}
+
+/*
+	首页珠宝店模块
+*/
+.indexJewelryWrap {
+	li {
+		width: 224px;
+		margin-left: 15px;
+		float: left;
+	}
+	li:first-child {
+		margin-left: 0;
+	}
+	li>a {
+		display: block;
+		position: relative;
+		height: 224px;
+	}
+	li>a>img {
+		height: 224px;
+		height: 224px;
+	}
+	li>a span {
+		position: absolute;
+		bottom: -30px;
+		left: 50%;
+		width: 64px;
+		height: 64px;
+		
+		margin-left: -32px;
+	}
+	li>a span img {
+		display: block;
+		width: 100%;
+		padding: 2px;
+		background: #fff;
+		height: 100%;
+		border-radius: 50%;
+		overflow: hidden;
+	}
+	li>div {
+		padding: 32px 10px 5px 10px;
+		color: #666666;
+	}
+	li>div p {
+		margin-bottom: 5px;
+		line-height: 1.5;
+	}
+}
+
+/*
+	首页设计室模块
+*/
+.indexDesignWrap {
+	.imgbox {
+		margin-top: 15px;
+	}
+	.imgbox li {
+		float: left;
+		overflow: hidden;
+		position: relative;
+		width: 200px;
+		height: 200px;
+		transition: all 0.35s linear;
+		cursor: pointer;
+	}
+	.imgbox li.cur{
+		width: 390px;
+	}
+	
+	.productitem {
+		position: relative;
+		width: 200px;
+		height: 200px;
+		overflow: hidden;
+		float: left;
+		margin-right: 40px;
+		margin-bottom: 20px;
+	}
+	.productitem>div {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: rgba(146,34,45, 0.6);
+		color: #fff;
+		opacity: 0;
+		transition: all 0.35s ease;
+	}
+	.productitem:hover>div {
+		opacity: 1;
+	}
+	.designInfo>div {
+		display: none;
+		padding: 10px 0;
+		height: 390px;
+		overflow: hidden;
+	}
+	.designInfo>div.cur {
+		display: block;
+	}
+	.designInfo td {
+		padding: 10px 0;
+	}
+	.designInfo .avatar {
+		width: 130px;
+		height: 130px;
+		border-radius: 50%;
+		display: inline-block;
+		overflow: hidden;
+	}
+	.designInfo table {
+		width: 100%;
+	}
+	.designInfo h3 {
+		font-size: 24px;
+		color: #1A1A1A;
+		margin-bottom: 5px;
+		margin-top: 10px;
+	}
+	.designInfo p {
+		color: #A8A8A8;
+		line-height: 1.6;
+	}
+	.btn-line-warning {
+		width: 120px;
+	}
+	
+}
+
+.indexManuWrap  {
+	.imgbox {
+		margin-top: 15px;
+	}
+	.imgbox li {
+		float: left;
+		overflow: hidden;
+		position: relative;
+		width: 200px;
+		height: 200px;
+		transition: all 0.35s linear;
+		cursor: pointer;
+	}
+	.imgbox li.cur{
+		width: 390px;
+	}
+	
+	.productitem {
+		position: relative;
+		width: 200px;
+		height: 200px;
+		overflow: hidden;
+		float: left;
+		margin-right: 40px;
+		margin-bottom: 20px;
+	}
+	.productitem>div {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: rgba(146,34,45, 0.6);
+		color: #fff;
+		opacity: 0;
+		transition: all 0.35s ease;
+	}
+	.productitem:hover>div {
+		opacity: 1;
+	}
+	.designInfo>div {
+		display: none;
+		padding: 10px 0;
+	}
+	.designInfo>div.cur {
+		display: block;
+	}
+	.designInfo td {
+		padding: 10px 0;
+	}
+	.designInfo .avatar {
+		width: 130px;
+		height: 130px;
+		border-radius: 50%;
+		display: inline-block;
+		overflow: hidden;
+	}
+	.designInfo table {
+		width: 100%;
+	}
+	.designInfo h3 {
+		font-size: 24px;
+		color: #1A1A1A;
+		margin-bottom: 5px;
+		margin-top: 10px;
+	}
+	.designInfo p {
+		color: #A8A8A8;
+		line-height: 1.6;
+	}
+	.btn-line-warning {
+		width: 120px;
+	}
+	
+}
+
+/*
+	首页互换坊模块
+*/
+.indexExchangeWrap {
+	ul {
+		margin-top: 45px;
+		margin-bottom: 20px;
+	    font-size: 0;
+	}
+	ul>li {
+		display: inline-block;
+		width: 280px;
+		margin-left: 20px;
+		vertical-align: top;
+	}
+	ul>li:first-child {
+		margin-left: 0;
+	}
+	ul>li>div {
+		border: 1px solid #F0F0F0;
+		border-top: none;
+		text-align: left;
+		padding: 20px 15px;
+	}
+	ol>li a {
+		line-height: 1.5;
+		color: #666;
+		font-size: 14px;
+		display: inline-block;
+		max-width: 260px;
+	}
+	ol>li a:hover {
+		color: #20a0ff;
+		text-decoration: underline;
+	}
+	.row {
+		margin: 0 -10px;
+	}
+	.col-6 {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
+
+/*
+	首页图文馆模块
+*/
+.indexGalleryWrap {
+	.navWrap {
+		border: 1px solid #CCCCCC;
+		margin-bottom: 22px;
+	}
+	.navWrap li {
+		float: left;
+	}
+	.navWrap a {
+		display: block;
+		padding: 0 30px;
+		color: #808080;
+		font-size: 14px;
+		line-height: 34px;
+	}
+	.navWrap li.cur a {
+		background: #C2A374;
+		color: #fff;
+	}
+	.imgWrap ul {
+		font-size: 0;
+	}
+	.imgWrap li {
+		display: inline-block;
+		width: 255px;
+		height: 255px;
+		overflow: hidden;
+		margin-left: 28px;
+		margin-bottom: 30px;
+	}
+	.imgWrap li:first-child {
+		margin-left: 0;
+	}
+	.imgWrap li.big {
+		width: 340px;
+	}
+}
+
+/*
+	首页行业之声模块
+*/
+.indexNewsWrap {
+	li {
+		width: 280px;
+	}
+	
+}
+.index-bd {
+
+}

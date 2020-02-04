@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- <html xmlns:wb="http://open.weibo.com/wb"> -->
+
+<head>
+  {{ HEAD }}
+
+  <!-- <script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script> -->
+  <meta name="referrer" content="no-referrer" />
+  <link href="//imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=axuGbU5OwYN4offoWjAhErQOH8U69WYZ"></script> -->
+  <!-- <script src="http://192.168.199.193:9090/target/target-script-min.js#anonymous"></script> -->
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=axuGbU5OwYN4offoWjAhErQOH8U69WYZ"></script>
+  <script src="//imgcache.qq.com/open/qcloud/video/tcplayer/libs/hls.min.0.12.4.js"></script>
+  <script src="https://imgcache.qq.com/open/qcloud/video/vcplayer/TcPlayer-2.3.2.js"></script>
+  <!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
+  <!--<script async="true" type="text/javascript" src="http://dl.ntalker.com/js/xn6/ntkfstat.js?siteid=zd_1000" charset="utf-8"></script>-->
+  <script type="text/javascript">
+    NTKF_PARAM = {
+      siteid: "zd_1000",
+      settingid: "zd_1000_9999"
+    }
+
+  </script>
+
+  <script>
+    (function flexible(window, document) {
+      var docEl = document.documentElement
+      var dpr = window.devicePixelRatio || 1
+
+      // adjust body font size
+      function setBodyFontSize() {
+        if (document.body) {
+          document.body.style.fontSize = (12 * dpr) + 'px'
+        } else {
+          document.addEventListener('DOMContentLoaded', setBodyFontSize)
+        }
+      }
+      setBodyFontSize();
+
+      // set 1rem = viewWidth / 10
+      function setRemUnit() {
+        var rem = docEl.clientWidth / 10
+        docEl.style.fontSize = rem + 'px'
+      }
+
+      setRemUnit()
+
+      // reset rem unit on page resize
+      window.addEventListener('resize', setRemUnit)
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted) {
+          setRemUnit()
+        }
+      })
+
+      // detect 0.5px supports
+      if (dpr >= 2) {
+        var fakeBody = document.createElement('body')
+        var testElement = document.createElement('div')
+        testElement.style.border = '.5px solid transparent'
+        fakeBody.appendChild(testElement)
+        docEl.appendChild(fakeBody)
+        if (testElement.offsetHeight === 1) {
+          docEl.classList.add('hairlines')
+        }
+        docEl.removeChild(fakeBody)
+      }
+    }(window, document))
+
+  </script> {{ APP }}
+
+  <!-- <wb:share-button appkey="1742873256" addition="simple" type="icon" style="display: none;"></wb:share-button> -->
+  <!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" async></script> -->
+
+
+  <script type="text/javascript" src="https://dl.ntalker.com/js/b2b/ntkfstat.js?siteid=zd_1000" charset="utf-8">
+  </script>
+</body>
+
+</html>

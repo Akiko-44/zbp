@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1'/>
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style>
+body {background: #F5F5F5;}
+.col-right{width:360px;}
+.col-left{width:810px;}
+.teamInfo{background:#fff;padding: 20px 30px;}
+.teamInfo .img{width:80px;height:80px;display: block;background: #efefef;}
+.teamInfo .img img{display:block;}
+.teamInfo .line{margin: 20px 0;}
+.teamInfo b {font-size:30px;display:block;margin: 15px 0 40px 0;}
+.downloadInfo {height: 360px;background:#ccc;margin: 10px 0;color: #fff;font-size: 40px;padding:57px 32px;background:url("../../src/img/download.png")no-repeat;}
+.downloadInfo h3 {margin:20px 0 35px 0;}
+.downloadInfo p {margin-top: 10px;}
+
+.userInfo{padding: 20px 45px;background:#fff;margin-bottom: 22px;}
+.userInfo>.fl{width: 150px;text-align: center;}
+.userInfo>.fl>*{margin-bottom: 10px;}
+.userInfo .info span{margin-right: 30px;}
+.userInfo .bottom h4 {margin: 10px 0;font-size: 14px;}
+.userInfo .bottom p {line-height: 24px;}
+video{width: 100%}
+</style>
+</head>
+<body class="">
+
+    <%- include ../headerbar.ejs %>
+
+    <%- include ../header.ejs %>
+
+    <%- include ../headerNav.ejs %>
+
+    <div id="main" class="main">
+
+        <div class="container">
+            <div class="router" id="router">
+                <el-breadcrumb separator-class="el-icon-arrow-right">
+                    <el-breadcrumb-item><a href="../../">我的位置：首页</a></el-breadcrumb-item>
+					<el-breadcrumb-item><a href="../../manufacture/index">制造间</a></el-breadcrumb-item>
+                    <el-breadcrumb-item>工艺详情</el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
+        </div>
+
+        <div class="container clearfix" id="detail">
+            <div class="fr col-right">
+                <div class="teamInfo" v-if="data.merVO">
+                    <div class="clearfix">
+                        <a class="img fl img-circle">
+                            <img src="">
+                        </a>
+                        <div style="padding-left:100px">
+                            <h2 class="fs24" style="padding:10px 0 10px 0">
+                                {{data.merVO.merchantName}}
+                                <span class="fs12">
+                                    {{data.merVO.province}}
+                                    {{data.merVO.city}}
+                                </span>
+                            </h2>
+                            <p>
+                                <a class="tag tag-warning">认证</a>
+                                <span>收藏：0</span>
+                                <!--<span>评价：0</span>-->
+                            </p>
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                    <div class="fs18 tc">
+                        <el-row>
+                            <el-col :span="8">
+                                <div class="grid-content">
+                                    <p>商品</p>
+                                    <div><b>{{data.merVO.caseNumber}}</b></div>
+                                </div>
+                            </el-col>
+                            <el-col :span="8">
+                                <div class="grid-content">
+                                    <p>签单</p>
+                                    <div><b>{{data.merVO.orderNumber}}</b></div>
+                                </div>
+                            </el-col>
+                            <el-col :span="8">
+                                <div class="grid-content">
+                                    <p>评价</p>
+                                    <div><b>{{data.merVO.commentNumber}}</b></div>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </div>
+                    <div class="tc">
+                        <el-button type="danger" style="width:200px" @click="toDetail($event)" :data-id="data.merVO.merchantId">找TA制造</el-button>
+                    </div>
+                </div>
+                <div class="downloadInfo">
+                    <h2 class="tc">Jewellery</h2>
+                    <h3 class="fs24 tc">中国珠宝云平台</h3>
+                    <div class="tc">
+                        <el-row>
+                            <el-col :span="12">
+                                <div class="grid-content">
+                                    <div>
+                                        <el-button type="warning" round style="width:140px">安卓版本下载</el-button>
+                                    </div>
+                                    <div>
+                                        <el-button type="warning" round style="width:140px">IOS版本下载</el-button>
+                                    </div>
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div class="grid-content">
+                                    <img src="../../src/img/qr.png" width="95" height="95">
+                                    <p class="fs14">
+                                        	扫描二维码下载APP     
+                                    </p>
+                                </div>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </div>
+            </div>
+            <div class="fl col-left">
+                <div class="userInfo clearfix">
+                    <div>
+                        <h2 style="margin-top: 10px">
+                            <span class="fs24">{{ data.craftName }}</span>
+                        </h2>
+                        <p class="info" style="margin: 10px 0 15px 0">
+                            <span v-if="data.price">
+                            	设计价格：{{data.price}}
+                            </span>
+                            <span class="hide">
+                            	风格：罗曼提克
+                            </span>
+                        </p>
+                        <div>
+                            <div class="bottom">
+	                            <h4 class="gray">工艺介绍：</h4>
+	                            <div class="ue-view" v-html="data.intro"></div>
+	                        </div>
+                        </div>
+                    </div>
+                   
+                </div>
+
+                <div v-if="!!data.videoUrl">
+                    <video :src="data.videoUrl|formatImg" controls></video>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+<%- include ../footer.ejs %>
+
+<script>
+var routerVm = new Vue({
+	el: "#router"
+})
+
+var id = utils.getUrlParam("id");
+var detailVm = new Vue({
+    el: "#detail",
+    data: {
+        data: {}
+    },
+    mounted: function(){
+        this.detail();
+    },
+    methods: {
+        detail: function(){
+            var self = this;
+            utils.ajax({
+                url: "/api/designmanu/menufact/craft/info/"+id,
+                type: "get",
+                success: function(data){
+                    self.data = data.data;
+                }
+            })
+        },
+        toDetail: function(event){
+            var id = event.currentTarget.getAttribute("data-id");
+            location.href = "../../manufacture/business_detail?id=" + id;
+        }
+    },
+    filters: {
+        formatImg: function(str){
+            return utils.formatImg(str)
+        }
+    }
+})
+</script>
+</body>
+</html>
+

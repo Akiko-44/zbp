@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<style type="text/css">
+	.jewelry-shopGoodsList{background: #F5F5F5;}
+	#list{margin-top: 40px;}
+	#list li{
+		width: 224px;margin-right: 17.5px;
+		background: #FFFFFF;
+		margin-bottom: 18px;
+	}
+	#list li .goods-img{display: inline-block;width: 224px;height: 224px;}
+	#list li:nth-child(5n){margin-right: 0;}
+	.goods-msg{padding: 10px;}
+	.goods{color: #747474;margin-bottom: 8px;}
+	.goods-buy a{
+		display: inline-block;
+		width: 80px;
+		height: 24px;
+		line-height: 24px;
+		color: #FFFFFF;
+		background:rgba(194,163,116,.8);
+		border-radius: 3px;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+	}
+	.goods-buy a:hover{
+		background:rgba(194,163,116,1);
+	}
+</style>
+</head>
+<body class="jewelry-shopGoodsList">
+	
+	<%- include ../headerbar.ejs %>
+	
+	<%- include shopHeader.ejs %>
+	
+	<%- include shopNav.ejs %>
+	
+	<div class="container">
+		<p class="nosearch hide">很遗憾，未搜索到相关的商品，换个搜索词试试吧</p>
+		<ul id="list" class="clearfix">
+			
+		</ul>
+	</div>
+	<div class="tr container" style="margin-top: 30px;">
+		<div id="pagination" class="pagination"></div>
+	</div>
+	
+	<%- include ../footer.ejs %>
+	<script type="text/javascript">
+		var shopid = utils.getUrlParamVal('shopid') || ""
+		var catIndex = utils.getUrlParamVal('catIndex') || 0
+		utils.ajax({
+			type:"get",
+			url:"/api/marketPage/storePageShow",
+			headers:{
+	        	'Authorization':utils.getCookie("token")
+	        },
+			data:{merchantId:shopid,pageType:0},
+			success:function(response){
+				if(!response.success) return;
+				var res = response.data;
+				var menus = '<li>'+
+								'<a class="navItem" href="/businessShop/index?shopid='+shopid+'&catIndex=0">首页</a>'+
+							'</li>'+
+							'<li>'+
+								'<a class="navItem cur" href="/businessShop/shopGoodsList?shopid='+shopid+'&catId=&catIndex=1">全部</a>'+
+							'</li>';
+				$.each(res.menus, function(idx,item) {
+					var j = idx+2
+					if(item.catId != ''){
+						var str = '';
+						$.each(item.ssm, function(idx1,item1) {
+							str += '<a href="" class="fl">'+item1.subMenuName+'</a>'
+						});
+						menus += '<li><a class="navItem" href="shopGoodsList?shopid='+shopid+'&catId='+item.catId+'&catIndex='+j+'">'+item.menuName+'</a></li>';
+					}else{
+						menus += '<li><a class="navItem" href="'+item.menuUrl+'" target="view_frame">'+item.menuName+'</a></li>';
+					}
+					
+				});
+				$("#menus").html(menus);
+				setTimeout(function(){
+					$('.cur').removeClass('cur')
+					$("#menus").find('li').eq(catIndex).children('a').addClass('cur')
+				},10)
+			}
+		})
+		$(function(){
+			var catId = utils.getUrlParamVal('catId');
+			getData(1, catId)
+		})
+		
+		function getData(page, catId){
+			$.ajax({
+		        url:'/api/marketPage/page',
+		        type:'get',
+		        data:{
+		        	merchantId:utils.getUrlParamVal("shopid"),
+					offset:page,
+					limit:6,
+					isOnSale:0,
+					catId:catId,
+					brandId:''
+		        },
+		        success:function(response){
+		        	if (!response.success){
+		        		return false;
+		        	};
+		        	var res = response.data, html = '';
+		        	if(res.records.length == 0){
+						$(".nosearch").removeClass("hide");
+						return false;
+					}
+		        	$("#pagination").pagination({
+						pageCount: res.pages,
+					    jump: true,
+					    coping: true,
+					    current:res.current,
+					    prevContent: '<',
+					    nextContent: '>',
+					    callback: function (api){
+					        getData(api.getCurrent(), catId)
+					    }
+					});
+					$.each(res.records, function(idx,item) {
+						html += '<li class="fl">'+
+									'<a href="../jewelry/details?id='+item.id+'" class="goods-img"><img src="'+item.imgUrl+'" alt="" width="224" height="224"/></a>'+
+									'<div class="goods-msg tc">'+
+										'<p class="goods">'+item.goodsName+'</p>'+
+										'<p class="goods">￥'+item.price+'</p>'+
+										'<p class="goods-buy"><a href="../jewelry/details?id='+item.id+'">立即购买</a></p>'+
+									'</div>'+
+								'</li>';
+					});
+					$("#list").html(html)
+		        }
+		    })
+		}
+	</script>
+	
+</body>
+</html>
+

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>
+			<%= title %>
+		</title>
+		<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<link rel="stylesheet" href="../src/css/icon/iconfont.css" />
+		<link rel="stylesheet" href="../src/css/icons/iconfont.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/css/news/newBelow.css" />
+		<link rel="stylesheet" type="text/css" href="../src/css/news/newBelow.css" />
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				font-family: "微软雅黑";
+			}
+			
+			.jewelryBox-bd {
+				width: 100%;
+				height: 100%;
+				background: #f8f8f8;
+			}
+			.details_box{
+				width: 1200px;
+				margin: 0 auto;
+				display: flex;
+			}
+			.details_content{
+				width: 796px;
+				background: #FFFFFF;
+				padding: 20px;
+			}
+			.details_content h1{
+				font-size:24px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				margin-bottom: 20px;
+				margin-top: 10px;
+				color:rgba(51,51,51,1);
+			}
+			.detail_aerial p{
+				font-size:14px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				color:rgba(102,102,102,1);
+				line-height:24px;
+				margin-top: 30px;
+			}
+			.detail_aerial div{
+				margin-top:20px;
+			}
+			.detail_VR{
+				width: 400px;
+				height: 1000px;
+				background: #eee;
+			}
+			.detail_VR p{
+				width: 400px;
+				display: flex;
+				justify-content: center;
+				margin:50px 0 20px;
+				padding: 0px 15px;
+			}
+			.detail_VR img{
+				width: 100%;
+				height: 203px
+			}
+			.detail_VR div{
+				background: #ff0000;
+				width: 120px;
+				height: 40px;
+				color:#fff;
+				font-size:16px;
+				font-family:MicrosoftYaHei;
+				font-weight:400;
+				line-height: 40px;
+				text-align: center;
+				margin: 0 auto;
+			}
+			.more{
+				margin-top: 20px;
+			}
+			@media screen and (max-width: 1400px) {
+			    .more{
+			    	width:1030px;
+			    }
+			}
+		</style>
+</head>
+<body class="jewelryBox-bd">
+		<%- include ../headerbar.ejs %>
+
+		<%- include ../header.ejs %>
+
+		<%- include ../headerNav.ejs %>
+		<div class="container">
+			<div class="router" id="router">
+				<el-breadcrumb separator-class="el-icon-arrow-right">
+					<el-breadcrumb-item :to="{ path: '/' }">
+						<a href="../../">我的位置：首页</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item>
+						<a href="../../../jewelry_fair/index">珠宝展</a>
+					</el-breadcrumb-item>
+					<el-breadcrumb-item><span id="routerTitle">{{getTitle}}</span></el-breadcrumb-item>
+				</el-breadcrumb>
+			</div>
+		</div>
+		<div class="details_box" id="details_box">
+			<div class="details_content">
+				<h1 v-text="detailList.title"></h1>
+				<div class="detail_aerial" v-html="detailList.content"></div>
+			</div>
+			<div class="detail_VR">
+				<p><img :src="formatImg(detailList.vrpicture)"/></p>
+				<a :href="detailList.vrsite" target="_blank"><div>跳转VR</div></a>
+			</div>
+		</div>
+		<%- include below %>
+	<%- include ../newFooter.ejs %>
+	<script type="text/javascript">
+		var routerVm = new Vue({
+				el: "#router",
+				computed:{
+					getTitle(){
+						let res = location.href.split('/')
+						return unescape(res[res.length-1].split('?')[1].split('=')[1])
+					}
+				},
+				created(){
+					document.getElementsByTagName('title')[0].innerHTML = this.getTitle
+				}
+			})
+		var detailsBox = new Vue({
+			el:"#details_box",
+			data(){
+				return {
+					detailList:[]
+				}
+			},
+			created(){
+				this.init()
+			},
+			computed:{
+				getId(){
+					let res = location.href.split('/')
+					return res[res.length-1].split('?')[0]
+				}
+			},
+			methods:{
+				formatImg: utils.formatImg,
+				init(){
+					var _this=this;
+					utils.ajax({
+						url:"/pc/jewelry/vr/detailsVr?id="+_this.getId ,
+						type:"get",
+						success(data){
+							data.data.content = data.data.content.replace(/pa95ui71l.bkt.clouddn/g, 'image.gacjc')
+							_this.detailList = data.data;
+							
+						}
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>

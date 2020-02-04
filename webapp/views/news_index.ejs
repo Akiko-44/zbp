@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="以诚信的姿态追溯珠宝行业大事记，提供全新权威的资讯。最全的珠宝资讯，行业政策、权威发布、重大活动尽在行业之声">
+	<meta name="keywords" content="珠宝新闻、珠宝资讯、珠宝玉石、选珠宝、珠宝文化、珠宝行业之声、行业政策、指数趋势、知识产权、珠宝溯源">
+	<title>纵览珠宝最新资讯_如何选择珠宝</title>
+	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<link rel="stylesheet" href="../src/css/icon/iconfont.css" />
+	<link rel="stylesheet" href="../src/css/icons/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="../src/css/news/newBelow.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			font-family: "微软雅黑";
+		}
+
+		.news-bd {
+			width: 100%;
+			height: 100%;
+			background: #eee;
+		}
+
+		.main {
+			width: 1200px;
+			margin: 0 auto;
+		}
+
+		.swiper-pagination-bullet {
+			background: #c8c8c8;
+		}
+
+		.swiper-pagination-bullet-active {
+			background: #FFFFFF;
+		}
+
+		.new_all {
+			width: 1030px;
+			margin: 0 auto;
+		}
+
+		.new_important {
+			width: 1030px;
+			margin-top: 48px;
+		}
+
+		.new_important .new_caption {
+			width: 1030px;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.new_important .new_caption span {
+			font-size: 15px;
+			font-family: MicrosoftYaHei;
+			font-weight: 600;
+			color: rgba(0, 0, 0, 1);
+		}
+
+		.new_important .new_caption a {
+			font-size: 12px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(102, 102, 102, 1);
+		}
+
+		.new_important .new_caption a i.iconfont {
+			margin-left: 5px;
+		}
+
+		.new_contents dl {
+			width: 494px;
+			height: 190px;
+			margin-top: 30px;
+			display: inline-block;
+			cursor: pointer;
+			background: #fff;
+		}
+
+		.new_contents dl:nth-child(2n) {
+			margin-left: 40px;
+		}
+
+		.new_contents dl dt {
+			margin-left: 30px;
+			margin-top: 30px;
+			float: left;
+			width: 160px;
+			height: 140px;
+		}
+
+		.new_contents dl dt div {
+			width: 160px;
+			height: 140px;
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		.new_contents dl dd {
+			margin-top: 30px;
+			margin-left: 21px;
+			height: 138px;
+			float: left;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.new_contents dl dd .new_cont {
+			width: 250px;
+		}
+
+		.new_contents dl dd .new_cont h1 {
+			font-family: MicrosoftYaHei;
+			font-weight: bold;
+			color: #333;
+			font-size: 14px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			width: 250px;
+			height: 14px;
+		}
+
+		.new_contents dl dd .new_cont p {
+			font-size: 12px;
+			width: 250px;
+			height: 49px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: #666;
+			line-height: 23px;
+			margin-top: 19px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+		}
+
+		.new_contents dl dd .new_icon {
+			display: flex;
+			justify-content: flex-end;
+			margin-top: auto;
+		}
+
+		.new_contents dl dd .new_icon p {
+			margin-left: 19px;
+		}
+
+		.new_icon p:nth-child(1) em {
+			background: url(../../../src/img/news/new4.png) no-repeat;
+			width: 16px;
+			height: 10px;
+			display: inline-block;
+		}
+
+		.new_icon p:nth-child(2) em {
+			background: url(../../../src/img/news/new3.png) no-repeat;
+			width: 11px;
+			height: 10px;
+			display: inline-block;
+		}
+
+		.new_icon p:nth-child(3) em {
+			background: url(../../../src/img/news/new2.png) no-repeat;
+			width: 11px;
+			height: 10px;
+			display: inline-block;
+		}
+
+		.new_contents dl dd .new_icon p span {
+			font-size: 9px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(153, 153, 153, 1);
+			margin-left: 8px;
+		}
+
+		.new_icon span {
+			color: rgba(153, 153, 153, 1);
+		}
+
+		.new_literature {
+			margin-top: 50px;
+		}
+
+		.new_teb {
+			width: 1030px;
+			margin-top: 40px;
+		}
+
+		.el-tabs__nav-wrap::after {
+			background-color: transparent;
+		}
+
+		.el-tabs__item.is-active {
+			color: rgba(51, 51, 51, 1);
+		}
+
+		.el-tabs__active-bar {
+			background-color: rgba(51, 51, 51, 1)
+		}
+
+		.el-tabs__item:hover {
+			color: rgba(51, 51, 51, 1)
+		}
+
+		.teb_content {
+			width: 1030px;
+			display: flex;
+			position: relative;
+			cursor: pointer;
+			background: #fff;
+		}
+
+		.teb_content dl {
+			width: 480px;
+			height: 200px;
+		}
+
+		.teb_content dl dt {
+			width: 232px;
+			height: 200px;
+			float: left;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.teb_content dl dt div {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		.teb_content dl dd {
+			width: 221px;
+			height: 200px;
+			margin-left: 21px;
+			float: left;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.teb_content dl dd .teb_cont {
+			margin-top: 30px;
+		}
+
+		.teb_content dl dd .teb_cont h1 {
+			font-size: 14px;
+			font-family: MicrosoftYaHei;
+			font-weight: bold;
+			color: #333;
+		}
+
+		.teb_content dl dd .teb_cont p {
+			margin-top: 19px;
+			font-size: 12px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: #333;
+			line-height: 19px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+		}
+
+		.teb_content dl dd .new_icon {
+			display: flex;
+			margin-top: auto;
+			margin-bottom: 10px;
+		}
+
+		.teb_content dl dd .new_icon p~p {
+			margin-left: 19px;
+		}
+
+		.teb_content dl dd .new_icon p span {
+			margin-left: 8px;
+		}
+
+		.teb_content ul {
+			margin-left: 88px;
+			margin-top: 12px;
+		}
+
+		.teb_content ul li {
+			display: flex;
+			margin-top: 18px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+			width: 310px;
+		}
+
+		.teb_content ul li em {
+			background: url(../../../src/img/news/yuan.png) no-repeat;
+			width: 4px;
+			height: 4px;
+			margin: auto 9px;
+			display: inline-block;
+		}
+
+		.teb_content a {
+			position: absolute;
+			bottom: 0px;
+			right: 30px;
+			font-size: 12px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(102, 102, 102, 1);
+			margin-bottom: 10px;
+		}
+
+		.new_listImg {
+			width: 1030px;
+		}
+
+		.new_listImg ul {
+			width: 1030px;
+			display: flex;
+		}
+
+		.new_listImg ul li {
+			flex: 1;
+			position: relative;
+			width: 146px;
+			height: 74px;
+			cursor: pointer;
+		}
+
+		.new_listImg ul li~li {
+			margin-left: 14px;
+		}
+
+		.new_listImg ul li div {
+			height: 74px;
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+		.new_listImg ul li p {
+			width: 160px;
+			height: 74px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: rgba(255, 0, 0, .7);
+			font-size: 12px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(255, 255, 255, 1);
+			line-height: 74px;
+			text-align: center;
+			display: none;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+		}
+
+		.new_listImg ul li:hover p.new_imgactive {
+			display: block;
+		}
+
+		.new_listImg ul li p.new_imgactive {
+			display: none;
+		}
+
+		.new_hotlist {
+			width: 1030px;
+			margin-top: 30px;
+			background: #fff;
+			padding-top: 20px;
+			;
+		}
+
+		.new_hotlist ol {
+			width: 1030px;
+		}
+
+		.new_hotlist ol li {
+			width: 478px;
+			margin-bottom: 28px;
+			margin-left: 35px;
+			display: inline-block;
+		}
+
+		.new_hotlist ol li a {
+			font-size: 14px;
+			width: 424px;
+			height: 14px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(51, 51, 51, 1);
+			display: inline-block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+		}
+
+		.new_hotlist ol li.hotlist:hover a {
+			color: #FF0000;
+		}
+
+		.hotlist:hover {
+			color: #FF0000;
+		}
+
+		.new_bigbanner {
+			width: 1030px;
+			margin: 50px auto 50px;
+		}
+
+		.new_listImg {
+			margin-top: 30px;
+		}
+
+		.new_bigbanner ul {
+			width: 970px;
+			display: flex;
+			margin: 0 auto;
+			justify-content: space-between;
+		}
+
+		.new_bigbanner ul li {
+			position: relative;
+			width: 232px;
+			height: 123px;
+			cursor: pointer;
+			overflow: hidden;
+		}
+
+		.new_bigbanner ul li img {
+			width: 100%;
+			height: 100%;
+			display: block;
+			max-width: 1000px;
+		}
+
+		.new_bigbanner ul li:hover img {
+			animation: myfirst 0.5s linear forwards;
+		}
+
+		@keyframes myfirst {
+			from {
+				filter: contrast(100%)
+			}
+
+			to {
+				filter: contrast(40%);
+
+			}
+		}
+
+		.new_bigbanner ul li .bigbanner_content {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 232px;
+			height: 123px;
+			text-align: center;
+		}
+
+		.new_bigbanner ul li .bigbanner_content h1 {
+			font-size: 20px;
+			font-family: MicrosoftYaHei;
+			font-weight: 400;
+			color: rgba(250, 252, 255, 1);
+			margin-top: 37px;
+		}
+
+		.new_bigbanner ul li .bigbanner_content p {
+			font-size: 14px;
+			font-family: SimHei;
+			font-weight: 400;
+			color: rgba(255, 255, 255, 1);
+			margin-top: 18px;
+		}
+
+		.new_banner {
+			width: 1200px;
+			height: 400px;
+		}
+
+		.new_banner .swiper-slide {
+			width: 1200px;
+			height: 400px;
+		}
+
+		.new_banner .swiper-slide a {
+			display: block;
+			width: 1200px;
+			height: 400px;
+		}
+
+		.new_banner .swiper-slide a img {
+			width: 1200px;
+			height: 400px;
+		}
+
+		.banner_mask_father {
+			position: relative;
+			cursor: pointer;
+		}
+
+		.banner_left_meau {
+			width: 117px;
+			position: absolute;
+			left: -117px;
+			z-index: 300;
+			min-height: 400px;
+		}
+
+		.banner_left_meau>ul {
+			min-height: 400px;
+			position: relative;
+		}
+
+		.banner_left_meau ul li {
+			font-size: 14px;
+			font-weight: 400;
+			color: rgba(51, 51, 51, 1);
+			line-height: 45px;
+			text-align: center;
+		}
+
+		.banner_left_meau ul li div {
+			min-height: 400px;
+			top: 0;
+			left: 100%;
+			position: absolute;
+		}
+
+		.banner_mask {
+			width: 820px;
+			background: #fff;
+			position: absolute;
+			top: 0;
+			z-index: 99;
+			left: 112px;
+			flex-direction: row;
+			flex-wrap: wrap;
+			overflow-y: scroll;
+			overflow-x: hidden;
+			height: 400px;
+		}
+
+		.banner_mask::-webkit-scrollbar {
+			width: 4px;
+			height: 1px;
+		}
+
+		.banner_mask::-webkit-scrollbar-thumb {
+			border-radius: 10px;
+			-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+			background: #f3f3f3;
+		}
+
+		.banner_mask::-webkit-scrollbar-track {
+			background: #fff;
+		}
+
+		.banner_mask>ul>li {
+			text-align: left;
+			margin-left: 14px;
+		}
+
+		.banner_mask a:hover {
+			color: #FF0000;
+		}
+
+		.bannerBox {
+			position: relative;
+		}
+
+		.banner_left_meau ul {
+			margin-right: 10px;
+			background: #fff;
+		}
+
+		.banner_left_meau li {
+			cursor: pointer;
+		}
+
+		.banner_left_meau>ul>li:hover {
+			background: #eff2f8;
+		}
+
+		.banner_mask {
+			color: rgb(51, 51, 51);
+		}
+
+		.el-tabs__item {
+			font-weight: bold !important;
+			font-size: 15px !important;
+			font-family: MicrosoftYaHei !important;
+			color: rgba(0, 0, 0, 1) !important;
+		}
+
+		.iconfont {
+			margin-left: 0 !important;
+
+		}
+
+		.new_caption {
+			vertical-align: middle;
+		}
+
+		.new_caption i {
+			position: relative;
+			top: -2px;
+		}
+
+		@media screen and (max-width: 1400px) {
+			.banner_left_meau {
+				left: 0 !important;
+			}
+
+			.more {
+				width: 1030px;
+			}
+		}
+
+		.navLi:first-of-type {
+			margin-top: 20px;
+		}
+
+		.navLi:last-of-type {
+			margin-bottom: 20px;
+		}
+
+		.zij {
+			line-height: 20px;
+		}
+
+		.zij a {
+			color: #999;
+		}
+
+		.zij a~a {
+			margin-left: 10px;
+		}
+
+		.swiper-container-horizontal>.swiper-pagination-bullets,
+		.swiper-pagination-custom,
+		.swiper-pagination-fraction {
+			text-align: right;
+			bottom: 30px;
+		}
+
+		.swiper-pagination>span:last-child {
+			margin-right: 46px !important;
+		}
+
+		.new_contents dl {
+			position: relative;
+		}
+
+		.new_contents dl:hover {
+			animation: top ease-in 0.2s;
+			animation-fill-mode: forwards;
+		}
+
+		.teb_content dl dt div {
+			animation: xiao ease-in 0.1s;
+			animation-fill-mode: forwards;
+		}
+
+		.teb_content dl dt div:hover {
+			animation: da ease-in 0.2s;
+			animation-fill-mode: forwards;
+		}
+
+		@keyframes top {
+			from {
+				top: 0px;
+			}
+
+			to {
+				top: -4px;
+			}
+		}
+
+		@keyframes da {
+			from {
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
+
+			to {
+				top: -10px;
+				left: -10px;
+				right: -10px;
+				bottom: -10px;
+			}
+		}
+
+		@keyframes xiao {
+			from {
+				top: -10px;
+				left: -10px;
+				right: -10px;
+				bottom: -10px;
+			}
+
+			to {
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
+		}
+	</style>
+</head>
+
+<body class="news-bd">
+
+	<%- include headerbar %>
+
+	<%- include header %>
+
+	<%- include headerNav %>
+
+	<div id="main" class="main">
+		<div class="bannerBox">
+			<div class="banner_left_meau slideritem">
+				<ul>
+					<li v-for="(item,index) in navList1" @mouseenter="mouseMask(item)" @mouseleave="mouseOut(item)">
+						<span v-text="item.name"></span>
+						<div class="banner_mask" v-show="item.active">
+							<ul v-for="(iten, keys) in item.children" class="navLi">
+								<li>
+									<a @click="_moreNew(iten.name,iten.id)" v-text="iten.name">
+									</a>
+								</li>
+								<li v-show="iten.children[0]" class="zij">
+									<a @click="_moreNew(itea.name,itea.id)" v-for="(itea, i) in iten.children" v-text="itea.name">
+									</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<!--banner-->
+			<div class="bannerBox">
+				<div class="swiper-container new_banner">
+					<ul class="swiper-wrapper">
+						<li class="swiper-slide" v-for="(item,index) in banner">
+							<a v-if="item.pcUrl" :href="item.pcUrl"><img :src="formatImg(item.bannerUrl)" /></a>
+							<a v-else><img :src="formatImg(item.bannerUrl)" /></a>
+						</li>
+					</ul>
+					<div class="swiper-pagination"></div>
+				</div>
+			</div>
+		</div>
+		<div class="new_bigbanner" id="new_bigbanner">
+			<ul>
+				<li>
+					<img src="../../src/img/news/banner4s.png" />
+					<div class="bigbanner_content">
+						<h1>诚信体系</h1>
+						<p>打造行业诚信白名单</p>
+					</div>
+				</li>
+				<li @click="_patent">
+					<img src="../../src/img/news/banner3s.png" />
+					<div class="bigbanner_content">
+						<h1>专利服务</h1>
+						<p>珠宝IP确权、用权、维权服务</p>
+					</div>
+				</li>
+				<li @click="_ngtc">
+					<img src="../../src/img/news/banner5s.png" />
+					<div class="bigbanner_content">
+						<h1>追溯查询</h1>
+						<p>珠宝“身份”认证、查询</p>
+					</div>
+				</li>
+				<li @click="_bulletin">
+					<img src="../../src/img/news/banner6s.png" />
+					<div class="bigbanner_content">
+						<h1>公示公告</h1>
+						<p>平台动态&最新消息</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="new_all" id="new_contents">
+			<!--重要新闻-->
+			<div class="new_important">
+				<p class="new_caption">
+					<span>重要新闻</span>
+					<a @click="_moreNew('重要新闻');">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</p>
+				<div class="new_contents">
+					<dl v-for="(item,index) in list1" @click="_listXQ(item.id,'重要新闻');">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.thumbnail)+')'}"></div>
+						</dt>
+						<dd>
+							<div class="new_cont">
+								<h1>{{item.title}}</h1>
+								<p>{{item.summary}}</p>
+							</div>
+							<div class="new_icon">
+								<p><em></em><span>{{item.readNum}}</span></p>
+								<p><em></em><span>{{item.commentNum}}</span></p>
+								<p><em></em><span>{{item.praiseNum}}</span></p>
+							</div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="new_important new_literature">
+				<p class="new_caption">
+					<span>重要文献</span>
+					<a @click="_moreNew('重要文献');">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</p>
+				<div class="new_contents">
+					<dl v-for="(item,index) in list2" @click="_listXQ(item.id,'重要文献');">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.thumbnail)+')'}"></div>
+						</dt>
+						<dd>
+							<div class="new_cont">
+								<h1>{{item.title}}</h1>
+								<p>{{item.summary}}</p>
+							</div>
+							<div class="new_icon">
+								<p><em></em><span>{{item.readNum}}</span></p>
+								<p><em></em><span>{{item.commentNum}}</span></p>
+								<p><em></em><span>{{item.praiseNum}}</span></p>
+							</div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="new_teb">
+				<template>
+					<el-tabs v-model="activeName">
+						<el-tab-pane v-for="(item,index) in navList2" :label="item.name" :name="item.name">
+							<div class="teb_content">
+								<dl @click="_listXQ(item.pid,item.name);">
+									<dt>
+										<div :style="{backgroundImage:'url('+formatImg(item.imgsrc)+')'}"></div>
+									</dt>
+									<dd>
+										<div class="teb_cont">
+											<h1>{{item.title}}</h1>
+											<p>{{item.summary}}</p>
+										</div>
+										<div class="new_icon">
+											<p><em></em><span>{{item.readNum}}</span></p>
+											<p><em></em><span>{{item.commentNum}}</span></p>
+											<p><em></em><span>{{item.praiseNum}}</span></p>
+										</div>
+									</dd>
+								</dl>
+								<ul>
+									<li v-for="(val,index) in item.newList" class="hotlist" @click="_listXQ(val.id,item.name);">
+										<em></em>{{val.title}}</li>
+								</ul>
+								<a @click="_moreNew(item.name);">查看更多<i class="iconfont icon_more">&#xe6d6</i></a>
+							</div>
+						</el-tab-pane>
+					</el-tabs>
+				</template>
+			</div>
+			<div class="new_important new_literature">
+				<p class="new_caption">
+					<span>热点新闻</span>
+					<a @click="_moreNew('热点新闻');">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</p>
+				<div class="new_listImg">
+					<ul>
+						<li v-for="(item,index) in list3" v-if="index<6" @click="_listXQ(item.id,'热点新闻');">
+							<div :style="{backgroundImage:'url('+formatImg(item.thumbnail)+')'}"></div>
+							<p class="new_imgactive">{{item.title}}</p>
+						</li>
+					</ul>
+				</div>
+				<div class="new_hotlist">
+					<ol>
+						<li v-for="(item,index) in list3" v-if="index>5" :class="hotlist">
+							<a @click="_listXQ(item.id,'热点新闻');">{{item.title}}</a>
+						</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+
+		<%- include new_below %>
+	</div>
+	<%- include footer %>
+
+	<script>
+		var newContents = new Vue({
+			el: "#main",
+			data: function () {
+				return {
+					nav: [],
+					filterate1: ['资讯头条', '政策聚焦', '领袖观点', '行业动向', '重要新闻', '重要文献', '热点新闻'],
+					filterate2: ['资讯头条', '政策聚焦', '领袖观点', '行业动向'],
+					classIfy: [],
+
+					datass: [],
+					list1: null,
+					list2: null,
+					list3: [],
+					hotlist: 'hotlist',
+					activeName: '资讯头条',
+					teblist: [],
+					banner: "",
+					marks: [],
+				}
+			},
+			computed: {
+				navList1: function () {
+					var arry
+					var that = this
+
+					arry = this.nav.filter(function (item) {
+						if (that.filterate1.indexOf(item.name) >= 0) {
+							return false
+						} else {
+							return true
+						}
+					})
+					return arry
+				},
+				navList2: function () {
+					var arr = []
+					this.filterate2.forEach(item => {
+						for (var i = 0; i < this.teblist.length; i++) {
+							if (item == this.teblist[i].name) {
+								arr.push(this.teblist[i])
+								break;
+
+							}
+						}
+					})
+					return arr
+				},
+			},
+			created: function () {
+				this.init()
+			},
+			methods: {
+				init() {
+					this.getClasifyList()
+					this.getList(1, 4, data => this.list1 = data)
+					this.getList(2, 4, data => this.list2 = data)
+					this.setClassifyList()
+					this.getHot(14, data => this.list3 = data)
+					this.getBanner()
+					this.getNavList()
+					this.$nextTick(_ => {
+						this.setSwiper()
+					})
+				},
+				//获取分类目录
+				getClassifyList: function (id, callback) {
+					var data = id ? {
+						id
+					} : {}
+					let that = this;
+					utils.ajax({
+						url: "/pc/industry/column/classifyList",
+						type: "get",
+						data: data,
+						success: function (res) {
+							callback(res.data)
+						}
+					})
+				},
+				//获取分类目录id
+				getClassIfyId: function (name) {
+					var res = null
+					if (name != '热点新闻') {
+						this.classIfy.forEach(item => {
+							if (item.name == name) {
+								res = item.id
+							}
+						})
+					}
+					return res
+				},
+				getNavList: function () {
+					let that = this
+					utils.ajax({
+						url: "/pc/industry/column/classifyListTwo",
+						type: "get",
+						success: function (data) {
+							that.nav = data.data
+						}
+					})
+				},
+				setClassifyList() {
+					let that = this
+					that.getClassifyList(false, (item) => {
+						that.datass = item
+						that.datass.forEach((data, i) => {
+							if (that.filterate2.indexOf(data.name) > -1) {
+								that.getSort(data.id, item => data.newList = item)
+							}
+							that.getClassifyList(data.id, item => data.children = item)
+						})
+						that.getList(3, 4, callba)
+						that.teblist = that.datass
+					})
+
+					function callba(data) {
+						data.forEach((item, index) => {
+							// that.navList2[index] = {}
+							that.navList2[index].pid = item.id
+							that.navList2[index].praiseNum = item.praiseNum
+							that.navList2[index].imgsrc = item.thumbnail
+							that.navList2[index].title = item.title
+							that.navList2[index].summary = item.summary
+							that.navList2[index].readNum = item.readNum
+							that.navList2[index].commentNum = item.commentNum
+							that.navList2[index].collectionNum = item.collectionNum
+						})
+
+					}
+
+
+				},
+				//获取列表
+				getList: function (type, num, callback) {
+					//return new Promise((resolve, reject) => {
+					utils.ajax({
+						url: "/admin/industry/homeSetting/getHomePage",
+						type: "get",
+						data: {
+							classIFY: type,
+							num: num
+						},
+						success: function (res) {
+							callback(res.data)
+						}
+					})
+					//						})
+				},
+				//获取栏目分类
+				getClasifyList: function (type, num) {
+					let that = this
+					utils.ajax({
+						url: "/pc/industry/column/classifyList",
+						type: "get",
+						success: function (res) {
+							that.classIfy = res.data
+						}
+					})
+
+				},
+				//获取热点
+				getHot: function (num, callback) {
+					var _this = this;
+					utils.ajax({
+						url: "/pc/industry/article/list",
+						type: "get",
+						data: {
+							limit: num,
+							offset: 1
+						},
+						success: function (res) {
+							callback(res.data.records)
+						}
+					})
+				},
+				getSort: function (id, callba) {
+					utils.ajax({
+						url: "/pc/industry/article/list",
+						type: "get",
+						data: {
+							limit: 5,
+							offset: 1,
+							columnId: id
+						},
+						success(res) {
+							callba(res.data.records)
+						}
+					})
+				},
+				formatImg: utils.formatImg,
+				_moreNew: function (name, id) {
+					window.location.href = '../../news/more/' + (id || this.getClassIfyId(name)) + '?title=' + escape(name)
+				},
+				_patent: function () {
+					if (utils.islogin()) {
+						window.location.href = "../../copyright";
+					} else {
+						utils.alert("danger", "请登录后再进行操作")
+					}
+				},
+				_bulletin: function () {
+					window.location.href = "../../news/bulletin";
+				},
+				_ngtc: function () {
+					window.location.href = "../../ngtc/index";
+				},
+				getBanner: function () {
+					let that = this
+					utils.ajax({
+						url: "/pc/industry/banner/list",
+						type: "get",
+						success: function (res) {
+							that.banner = res.data
+						}
+					})
+
+				},
+				setSwiper: function () {
+					new Swiper('.swiper-container', {
+						autoplay: true, //可选选项，自动滑动
+						pagination: '.swiper-pagination',
+						autoplay: 5000,
+						paginationClickable: true,
+					})
+				},
+				_listXQ: function (id, name) {
+					window.location.href = '../../news/detail/' + id + '?title=' + escape(name)
+				},
+				mouseOut: function (item) {
+					clearTimeout(item.timer)
+					item.timer = setTimeout(_ => {
+						item.active = false
+						this.teblist = [...this.teblist]
+					}, 30)
+				},
+				mouseMask: function (item) {
+					item.active = true
+					this.teblist = [...this.teblist]
+				}
+			}
+		})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
+</head>
+
+<body class="query_jewelry_price">
+  <%- include ../headerbar.ejs %>
+
+  <%- include ../header.ejs %>
+
+  <%- include ../headerNav.ejs %>
+
+  <div id="main" class="main">
+    <div class="bg_price container">
+      <div class="query_price">
+        <p class="query_title">查珠宝价格</p>
+        <p class="query_content tc">查到珠宝的参考价格范围。<br />（此范围由平台“领导小组”提供规则，大数据计算出来）</p>
+
+        <div class="query_form">
+          <div class="query_form-item">
+            <p class="query_des">商品名称/货号/条形码： </p>
+            <input v-model="brandName" placeholder="请输入要查询的商品品牌" />
+          </div>
+        </div>
+        <div class="btn-box tc">
+          <button class="btn" @click="queryPrice">查询</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%- include ../footer.ejs %>
+</body>
+<script type="text/javascript">
+  var mainVm = new Vue({
+    el: '#main',
+    data: {
+      brandName: ''
+    },
+
+    methods: {
+      queryPrice: function () {
+        if (this.brandName == '') {
+          utils.alert('danger', '查询条件不能为空')
+        } else {
+          location.href = "../jewelry/goodsList?keyWord=" + this.brandName;
+        }
+      }
+    }
+  })
+</script>
+
+</html>

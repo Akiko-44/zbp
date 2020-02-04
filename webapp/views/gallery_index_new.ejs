@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+		<meta name="renderer" content="webkit">
+		<meta name="description" content="最全最新的大师珠宝资讯，最新珠宝玉石类原图，天工奖作品赏析、首饰设计作品赏析，参考、设计借鉴、交流欣赏。">
+		<meta name="keywords" content="珠宝图片、原创珠宝、珠宝摄影、拍摄珠宝、珠宝图、精品珠宝玉石高清图、世界珠宝、珠宝玉石图、天工奖、大师作品、设计新锐、专利珠宝">
+		<title>珠宝图片_国内外匠心作品赏析</title>
+		<link rel="stylesheet" type="text/css" href="../src/css/gallery_index_new_css/galleryNew.css" />
+		<link rel="stylesheet" type="text/css" href="../src/css/gallery_index_new_css/swiper-3.4.2.min.css" />
+
+		<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+		<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+		<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+		<link rel="stylesheet" href="../src/css/icon/iconfont.css" />
+		<link rel="stylesheet" href="../src/css/icons/iconfont.css" />
+
+		<script src="../../dist/js/template.js"></script>
+		<script src="../../dist/js/lib.js"></script>
+		<script src="../../dist/js/v.js"></script>
+		<script src="../../src/js/js/swiper-3.4.2.min.js"></script>
+	</head>
+	<style type="text/css">
+		body{
+			background: #eee;
+		}
+		.banner_mask_father {
+			position: relative;
+			cursor:pointer;
+		}
+		.banner_mask {
+			width: 820px;
+			background: #fff;
+			position: absolute;
+			top:20px;
+			height: 400px;
+			overflow-y:scroll;
+			overflow-x:hidden;
+			z-index: 99;
+			left:100%;
+		}
+		
+		.banner_mask::-webkit-scrollbar {
+	        width: 4px;    
+	        height: 1px;
+	    }
+		.banner_mask::-webkit-scrollbar-thumb {
+	        border-radius: 10px;
+	        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+	        background: #f3f3f3;
+	    }
+		.banner_mask::-webkit-scrollbar-track {
+	        background: #fff;
+	    }
+		.banner_left_meau>ul{
+			background: #fff;
+			min-height: 400px;
+		}
+		.banner_left_meau>ul ul:first-child{
+			margin-top:20px !important;
+		}
+		.banner_left_meau>ul ul:last-child{
+			margin-bottom:20px !important;
+		}
+		.banner_mask ul{
+			margin-top:0 !important;
+			width:820px !important;
+		}
+		.banner_mask ul li{
+			text-align: left !important;
+			margin-left:14px !important;
+		}
+		.banner_mask a:hover{
+			color:#FF0000;
+		}
+				#rightBar{
+		position: fixed;
+		/*left: 0;*/
+		right: 0;
+		top: 25%;
+		z-index: 2000;
+		max-width: 1440px;
+		margin: 0 auto;
+	}
+		#rightBar{
+		position: fixed;
+		/*left: 0;*/
+		right: 0;
+		top: 25%;
+		z-index: 2000;
+		max-width: 1440px;
+		margin: 0 auto;
+	}
+	#rightBar ul{
+		/*padding: 10px;*/
+		/*width: 102px;*/
+		width:70px;
+		background: #f4f5f8;
+		position: absolute;
+		right: 0;
+		text-align: center;
+	}
+	#rightBar ul li{
+		cursor: pointer;
+	}
+	#rightBar ul li i,#rightBar ul li span{
+		display: block;
+		margin: 0 auto;
+		line-height: 1.5;
+	}
+	#rightBar ul li a{color: #333333;}
+	#rightBar ul li:hover{
+		background:rgba(218,57,55);color:#fff;
+	}
+	#rightBar ul li:hover a,
+	#rightBar ul li:hover i{
+		color:#fff;
+	}
+	#rightBar ul li i{
+		width: 40px;
+		height: 40px;
+		background-repeat: no-repeat;
+		background-size: 100% auto;
+	}
+	#rightBar .car{position: relative;}
+	#rightBar .car span{
+		display: inline-block;
+		position: fixed;
+		/*right: 0;*/
+		/*top: 0;*/
+		width: 18px;
+		height: 18px;
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		background: #FF0000;
+		color: #FFFFFF;
+		text-align: center;
+		line-height: 18px;
+	}
+	.upDown{
+		position: fixed;
+		width: 70px;
+		height: 58px;
+		right:0;
+		bottom:5%;
+		background:#f4f5f8;
+		padding-top: 7px;
+	}
+
+	.hoverImg_1:hover i{
+		background-image:url(../src/img/right_bar/downLoadimg.png)!important;
+		width:24px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	.hoverImg_2:hover i{
+		background-image:url(../src/img/right_bar/cartimg.png)!important;
+		width:24px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	
+	.hoverImg_3:hover i{
+		background-image:url(../src/img/right_bar/wantGoimg.png)!important;
+		width:20px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	.hoverImg_4:hover i{
+		background-image:url(../src/img/right_bar/kefuimg.png)!important;
+		width:24px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	.hoverImg_5:hover i{
+		background-image:url(../src/img/right_bar/userimg.png)!important;
+		width:24px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+	.hoverImg_6:hover i{
+		background-image:url(../src/img/right_bar/msgimg.png)!important;
+		width:20px!important;
+		position: relative!important;
+		top:10px;
+		left:0;
+		right:0;
+		bottom:0;	
+	}
+		.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{
+			text-align: right;
+			bottom: 30px;
+		}
+		.swiper-pagination>span:last-child{
+			margin-right:46px !important;
+		}
+		.swiper-pagination-bullet-active{
+			background: #fff;
+		}
+		.gallery_game_title i{
+			position: relative;
+			top:-1px;
+		}
+		@media screen and (max-width: 1400px) {
+		    .banner_left_meau {
+		        left:0 !important;
+		    }
+		    .more{
+		    	width:1030px;
+		    }
+		}
+		.gallery_game_list dl{
+			position: relative;
+		}
+		.gallery_game_list dl:hover{
+			animation: top ease-in 0.2s;
+			animation-fill-mode: forwards;
+		}
+		.jade_carving_list dl{
+			position: relative;
+		}
+		.jade_carving_list dl:hover{
+			animation: top ease-in 0.2s;
+			animation-fill-mode: forwards;
+		}
+		.jewelry_list dl{
+			position: relative;
+		}
+		.jewelry_list dl:hover{
+			animation: top ease-in 0.2s;
+			animation-fill-mode: forwards;
+		}
+		.new_upload_list dl{
+			position: relative;
+		}
+		.new_upload_list dl:hover{
+			animation: top ease-in 0.2s;
+			animation-fill-mode: forwards;
+		}
+		@keyframes top
+		{
+			from {top:0px;}
+			to {top:-4px;}
+		}
+		.gallery_game_list{
+			margin-top:14px !important;
+		}
+		.gallery_game_list dl:nth-child(n+4){
+			margin-top:20px !important;
+		}
+		.banner_left_meau ul li{
+			cursor:pointer;
+		}
+		.banner_left_meau ul li .banner_mask{
+			display:none;
+		}
+		.banner_left_meau ul li:hover .banner_mask{
+			display:block !important;
+		}
+		.zij{
+			line-height: 20px !important;
+		}
+		.zij a{
+			color:#999;
+		}
+		.zij a~a{
+			color:#999;
+			margin-left:10px;
+		}
+	</style>
+	<body>
+		<%- include headerbar %>
+
+		<%- include header %>
+
+		<%- include headerNav %>
+		<div id="gallery_index_new">
+			<!--banner部分-->
+			<div class="gallery_banner">
+				<div class="banner_left_meau slideritem">
+					<ul>
+						<li v-for="(item, key) in datas2">
+							<span v-text="item.name"></span>
+							<div class="banner_mask" >
+								<ul v-for="(iten, keys) in item.children">
+									<li>
+										<a  @click="hrefs([item.name,iten.name],[item.id,iten.id])" >
+											<span v-text="iten.name"></span>
+										</a>
+									</li>
+									<li v-show="iten.children[0]" class="zij">
+										<a @click="hrefs([item.name,iten.name,itea.name],[item.id,iten.id,itea.id])" v-for="(itea, i) in iten.children" v-text="itea.name">
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="gallery_center_banner swiper-container  galleryBanner">
+					<div class="swiper-wrapper slider">
+						<div class="swiper-slide" v-for="(item,key) in newbanner">
+							<a v-if="item.bannerUrl" :href="item.bannerUrl">
+								<img :src="formatImg(item.pcUrl)"/>
+							</a>
+							<a v-else>
+								<img :src="formatImg(item.pcUrl)"/>
+							</a>
+						</div>
+					</div>
+					<div class="swiper-pagination"></div>
+				</div>
+			</div>
+			<div class="gallery-all">
+			<!--赛事获奖作品-->
+			<div class="gallery_game">
+				<div class="gallery_game_title">
+					<span>赛事获奖作品</span>
+					<a @click="hrefs(['赛事获奖作品'],[getId('赛事获奖作品')])">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+
+				</div>
+				<div class="gallery_game_list" style="cursor:pointer;">
+					<dl v-for="(item,index) in gameList" :key="index" @click="clickDetail(item.id)" v-if="index<6">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.coverPic)+')'}"></div>
+						</dt>
+						<dd>
+							<div class="game_list_describe">
+								<h3>{{item.designerName}}</h3>
+								<b>{{item.intro}}</b>
+								<p>上传者：{{item.uploadUserName}}</p>
+								<div class="jade_describe_num jade_nums">
+									<dl>
+										<dt></dt>
+										<dd>{{item.browseNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.commentNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.praiseNum}}</dd>
+									</dl>
+								</div>
+							</div>
+						</dd>
+					</dl>
+
+				</div>
+			</div>
+			<!--玉雕设计作品-->
+			<div class="jade_carving_design">
+				<div class="jade_carving_design_title">
+					<span>玉雕设计作品</span>
+					<a  @click="hrefs(['玉雕设计作品'],[getId('玉雕设计作品')])">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</div>
+				<div class="jade_carving_list" style="cursor:pointer;">
+					<dl v-for="(item,index) in jadeList" :key="index" @click="clickDetail(item.id)" v-show="index < 4">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.coverPic)+')'}"></div>
+						</dt>
+						<dd>
+							<div class="jade_carving_list_describe">
+								<h3>{{item.designerName}}</h3>
+								<b>{{item.intro}}</b>
+								<p>上传者：{{item.uploadUserName}}</p>
+								<div class="jade_describe_num">
+									<dl>
+										<dt></dt>
+										<dd>{{item.browseNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.commentNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.praiseNum}}</dd>
+									</dl>
+								</div>
+							</div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<!--首饰设计作品-->
+			<div class="jewelry_design">
+				<div class="jewelry_title">
+					<span>首饰设计作品</span>
+					<a @click="hrefs(['首饰设计作品'],[getId('首饰设计作品')])">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</div>
+				<div class="jewelry_list" style="cursor:pointer;">
+					<dl v-for="(item,index) in jewelryList" :key="index" @click="clickDetail(item.id)">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.coverPic)+')'}"></div>
+						</dt>
+						<dd>
+							<div class="jewelry_describe">
+								<h3>{{item.designerName}}</h3>
+								<h4>{{item.intro}}</h4>
+								<p>上传者：{{item.uploadUserName}}</p>
+								<div class="jade_describe_num">
+									<dl>
+										<dt>
+										   <em></em>
+										</dt>
+										<dd>{{item.browseNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.commentNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.praiseNum}}</dd>
+									</dl>
+								</div>
+							</div>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			<!--国际设计师作品-->
+			<div class="jade_carving_design international_design">
+				<div class="jade_carving_design_title international_title">
+					<span>国际设计师作品</span>
+					<a @click="hrefs(['国际设计师作品'],[getId('国际设计师作品')])">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</div>
+				<div class="jade_carving_list international_list" style="cursor:pointer;">
+					<dl v-for="(item,index) in internationalList" :key="index" @click="clickDetail(item.id)" v-show="index<4">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.coverPic)+')'}"></div>
+						</dt>
+						<dd>
+							<div class="jade_carving_list_describe international_list_bescribe">
+								<h3>{{item.designerName}}</h3>
+								<b>{{item.intro}}</b>
+								<p>上传者：{{item.uploadUserName}}</p>
+								<div class="jade_describe_num">
+									<dl>
+										<dt></dt>
+										<dd>{{item.browseNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.commentNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.praiseNum}}</dd>
+									</dl>
+								</div>
+							</div>
+						</dd>
+					</dl>
+
+				</div>
+			</div>
+			<!--专利作品-->
+			<div class="gallery_game patent_design">
+				<div class="gallery_game_title patent_title">
+					<span>专利作品</span>
+					<a @click="hrefs(['专利作品'],[getId('专利作品')])">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</div>
+				<div class="gallery_game_list patent_list" style="cursor:pointer;">
+					<dl v-for="(item,index) in patentList" :key="index" @click="clickDetail(item.id)">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.coverPic)+')'}"></div>
+						</dt>
+						<dd>
+							<div class="game_list_describe patent_list_describe">
+								<h3>{{item.designerName}}</h3>
+								<b>{{item.intro}}</b>
+								<p>上传者：{{item.uploadUserName}}</p>
+								<div class="jade_describe_num jade_nums">
+									<dl>
+										<dt></dt>
+										<dd>{{item.browseNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.commentNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.praiseNum}}</dd>
+									</dl>
+								</div>
+							</div>
+						</dd>
+					</dl>
+
+				</div>
+			</div>
+			<!--最新上传-->
+			<div class="new_upload">
+				<div class="new_upload_title">
+					<span>最新上传</span>
+					<a @click="hrefs(['最新上传'],[6])">更多<i class="iconfont icon_more">&#xe6d6</i></a>
+				</div>
+				<div class="new_upload_list" style="cursor:pointer;">
+					<dl v-for="(item,index) in newLits" @click="clickDetail(item.id)">
+						<dt>
+							<div :style="{backgroundImage:'url('+formatImg(item.coverPic)+')'}"></div>
+						</dt>
+						<dd>
+							<div class="new_upload_list_describe">
+								<h3>{{item.designerName}}</h3>
+								<b>{{item.intro}}</b>
+								<p>上传者：{{item.uploadUserName}}</p>
+								<div class="jade_describe_num">
+									<dl>
+										<dt></dt>
+										<dd>{{item.browseNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.commentNum}}</dd>
+									</dl>
+									<dl>
+										<dt></dt>
+										<dd>{{item.praiseNum}}</dd>
+									</dl>
+								</div>
+							</div>
+						</dd>
+					</dl>
+
+				</div>
+
+			</div>
+			</div>
+			<!--更多活动-->
+			<div style="width: 1030px;margin: 50px auto 50px;">
+				<a href="../../gallery/activity" width="100%"><img src="../../src/img/jewelry/active.jpg" width="100%"/></a>
+			</div>
+			<!--页脚-->
+			<%- include footer %>
+		</div>
+
+		<script type="text/javascript">
+			var routerVm = new Vue({
+				el: "#router"
+			})
+
+			//	实例Vue
+			var topicType = new Vue({
+				el: "#gallery_index_new",
+				data:function (){
+					return {
+						filterate: ['赛事获奖作品', '玉雕设计作品', '首饰设计作品', '国际设计师作品', '专利作品'],
+						meauList: [],
+						gameList: [], //赛事作品
+						jadeList: [], //玉雕设计作品
+						jewelryList: [], //首饰设计作品
+						internationalList: [], //国际设计作品
+						patentList: [], //专利作品
+						marks: [],
+						datas: [],
+						clas: 'banner_mask_father',
+						newLits:[],
+						timer:null,
+						newbanner:[]
+					}
+
+				},
+				created:function (){
+					var self = this
+					this.banners()
+					this.init()
+					utils.ajax({
+						url:"/admin/gallery/homeSetting/getHomePages",
+						type:'get',
+						success:function(data){
+							data = data.data
+							self.gameList = data.one
+							self.jadeList = data.two
+							self.jewelryList = data.three
+							self.internationalList = data.four
+							self.patentList = data.five
+						}
+					})
+				},
+				computed:{
+					datas2:function (){
+						return this.datas.filter(item=>{
+							if(this.filterate.indexOf(item.name)>=0){
+								return false
+							}else{
+								return true
+							}
+						})
+					}
+				},
+				methods: {
+					hrefs:function (names,ids) {
+						names = names.map(item=>escape(item))
+						window.location.href = `/gallery/detail?title=${names.join(',')}&id=${ids.join(',')}`
+					},
+					banners:function(){
+						var _this=this;
+						utils.ajax({
+							url:"/pc/gallery/banner/list",
+							type:"get",
+							success:function(data){
+								_this.newbanner=data.data;
+								_this.$nextTick(function(){  
+						             var mySwiper = new Swiper('.swiper-container', {
+										autoplay: true, //可选选项，自动滑动
+										pagination: '.swiper-pagination',
+										autoplay: 5000,
+										paginationClickable :true,
+									})
+					            })
+							}
+						})
+					},
+					getId:function (name){
+						for(var i=0;i<this.datas.length;i++){
+							if(this.datas[i].name==name){
+								return this.datas[i].id
+							}
+						}
+					},
+					init:function () {
+						var self = this;
+						utils.ajax({
+							url: "/pc/gallery/categoryListTwo",
+							type: "get",
+							success: function(res) {
+								self.datas = res.data
+							}
+						});
+						utils.ajax({
+							url:"/pc/gallery/newGalleryList",
+							type:'get',
+							data:{
+								offset:1,
+								limit:5
+							},
+							success:function(data){
+								data=data.data;
+								self.newLits=data;
+							}
+						})
+					},
+					//点击跳转图文详情、
+					clickDetail:function (id) {
+						window.location.href = "../../gallery/detail/" + id;
+					},
+					formatImg: utils.formatImg
+				}
+			})
+			
+
+		</script>
+	</body>
+
+</html>

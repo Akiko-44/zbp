@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+<meta name="renderer" content="webkit">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title><%= title %></title>
+<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
+<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
+<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
+<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
+<script src="../../dist/js/template.js"></script>
+<script src="../../dist/js/lib.js"></script>
+<script src="../../dist/js/v.js"></script>
+<script src="../../src/js/address.js"></script>
+<style>
+body {background: #F7F7F7;}
+.exchangeTop {border-bottom: 1px solid #ccc;}
+.main .container {background: #fff;padding: 160px 0;text-align: center;}
+.main h3 {color: #1A1A1A;font-size: 24px;}
+.main p {font-size: 14px;color: #999;margin: 8px 0 120px 0;}
+</style>
+</head>
+<body>
+	
+	<%- include ../headerbar.ejs %>
+	
+	<div id="header" class="header exchangeTop">
+		<div class="container">
+			<div class="headerInfo">
+				<div>
+					<div class="logoWrap">
+						<a href="../../">
+							<i class="icon icon-logo"></i>
+						</a>
+						<span>交换清单</span>
+					</div>
+					<div>
+						
+					</div>
+					<div>
+						<img class="fr" src="../../src/img/exchange/swap_order_detail.png">
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div id="main" class="main">
+		
+		<div class="container">
+			<h3>您的物品交换订单已提交成功，请耐心等待卖家确认</h3>
+			<p>温馨提示：您可以在“个人中心-我申请的交换”中查看您的订单信息</p>
+			<div class="tc">
+				<a class="btn btn-warning orderBtn">查看订单</a>
+				<a class="btn btn-warning backBtn">返回互换坊首页</a>
+			</div>
+		</div>
+		
+		
+	</div>
+	
+	<%- include ../footer.ejs %>
+	
+<%- include ../user/address_common.ejs %>
+<script>
+var orderId = utils.getUrlParam("orderId")
+$(".orderBtn").on("click", function(){
+	location.href = "../../user/order/exchange_swap"
+})
+$(".backBtn").on("click", function(){
+	location.href = "../../exchange/swap"
+})
+
+</script>
+
+</body>
+</html>
+

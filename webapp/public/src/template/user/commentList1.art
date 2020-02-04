@@ -1,0 +1,49 @@
+<li>
+	<div class="panel userPanel">
+		<div class="panel-header">
+			<div class="panel-title">
+				<b><%= data.payTime %></b>&emsp;&emsp;
+				<span>订单编号：<%= data.orderNumber %></span>&emsp;&emsp;
+				<span><i class="icon"></i><%= data.sellUserName %></span>
+			</div>
+		</div>
+		<div class="panel-body">
+			<table>
+				<% for(var i=0;i<data.orderGoodVOList.length;i++){ %>
+				<tr>
+					<td width="115">
+						<img src="<%=$imports.formatImg(data.orderGoodVOList[i].skuMainPic)%>" width="100" height="100">
+					</td>
+					<td class="info">
+						<h3><b><%=data.orderGoodVOList[i].skuName%></b></h3>
+						<p class="fs12"><%=data.orderGoodVOList[i].skuExplain%></p>
+					</td>
+					<td width="60">
+						X
+						<span>
+							<%= data.orderGoodVOList[i].goodsNumber %>
+						</span>
+					</td>
+					<td width="110">
+						<span class="yellow">￥
+							<%= data.orderGoodVOList[i].unitPrice %>
+						</span>
+					</td>
+					<% if(i==0){ %>
+						<td width="160" class="tc totalPrice" rowspan="<%= data.orderGoodVOList.length %>">
+							<p><b class="yellow">￥<%= data.payMoney %></b></p>
+							<p>（含运费￥<%= data.freightMoney %>）</p>
+							<p>已完成</p>
+						</td>
+						<td width="210" class="tc" rowspan="<%= data.orderGoodVOList.length %>">
+							<p>
+								<a class="blue toDel" val="<%= data.orderNumber %>">删除</a>
+							</p>
+						</td>
+					<% } %>
+				</tr>
+				<% } %>
+			</table>
+		</div>
+	</div>
+</li>
