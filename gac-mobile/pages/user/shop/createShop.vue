@@ -118,6 +118,7 @@ export default {
         }
         let isHide = result.data.isHide
         let isCheck = result.data.isCheck
+        this.form.registType = result.data.registType
         // 审核状态isCheck0、企业认证待审核1、审核通过（待签约）2、审核不通过3、签约中4、签约成功5、入网审核中6、入网成功7、入网失败8、对公账户待验证9、风控审核中10、资料验证失败11、开店待审核12、开店成功(待企业认证)
 
         this.merchantType = result.data.merchantType
@@ -160,11 +161,11 @@ export default {
       localStorage.setItem('merchantType', merchantType)
       localStorage.removeItem('form')
       if (merchantType == 1) {
-				/*this.$router.push({
-	        name: 'user-shop-create',
-	        query: { merchantType, step: 1 }
-	      })
-				localStorage.setItem('form', JSON.stringify({registType: ''}))*/
+        // this.$router.push({
+        //   name: 'user-shop-create',
+        //   query: { merchantType, step: 1 }
+        // })
+        // localStorage.setItem('form', JSON.stringify({ registType: '' }))
         this.chooseShow = true
       } else {
         this.$router.push({

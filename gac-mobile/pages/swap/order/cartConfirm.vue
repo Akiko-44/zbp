@@ -82,9 +82,9 @@
 				</li>
 			</ul>
 			<p style="width: 100%;height: 200px;overflow-y: auto;">
-				<img v-if='arrOrderType.indexOf(5) !== -1' style="width: 100%;" src="../../../assets/images/contract.png" />
+				<img v-if='arrOrderType.indexOf(5) !== -1' style="width: 100%;" src="http://app.gacjc.com/app/download/help/contract.png" />
 				<br />
-				<img v-if='arrOrderType.indexOf(6) !== -1' style="width: 100%;" src="../../../assets/images/contractMake.png" />
+				<img v-if='arrOrderType.indexOf(6) !== -1' style="width: 100%;" src="http://app.gacjc.com/app/download/help/contractMake.png" />
 			</p>
 		</van-dialog>
 		<van-dialog v-model="collectionShow" class="collect" :show-confirm-button="false">

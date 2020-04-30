@@ -19,6 +19,9 @@ export const native = {
     return (!!window.Android || (!!window.webkit && !window.navigator.userAgent.includes('QQ') && !window.navigator.userAgent.includes('MicroMessenger'))) && (isCustomCookie == 1)
     //		return !!window.Android || (!!window.webkit && !window.navigator.userAgent.includes('QQ') && !window.navigator.userAgent.includes('MicroMessenger'))
   },
+  isAndroid() {
+    return !!window.Android
+  },
   isACity() {
     const isCustomCookie = Cookies.get('appType')
     return isCustomCookie
@@ -50,7 +53,8 @@ export const native = {
     )
     if (!!window.webkit) {
       window.webkit.messageHandlers.login.postMessage(JSON.stringify({
-        type: 'login'
+        type: 'login',
+        url: location.href
       }))
     }
     /*call(
@@ -110,10 +114,11 @@ export const native = {
       window.webkit.messageHandlers.goJewelryContentInfo.postMessage(id)
     }
   },
-  goToJewelryWeMedia(id) {
-    call('Android', 'jsToAndroidCall', id, 14)
+  goToJewelryWeMedia(data) {
+    const jsonStr = JSON.stringify(data)
+    call('Android', 'jsToAndroidCall', jsonStr, 14)
     if (!!window.webkit) {
-      window.webkit.messageHandlers.goJewelryAccount.postMessage(id)
+      window.webkit.messageHandlers.goJewelryAccount.postMessage(jsonStr)
     }
   },
   goToMerchant(id) {

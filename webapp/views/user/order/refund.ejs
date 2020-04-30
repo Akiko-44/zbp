@@ -1,117 +1,147 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
-<meta name="renderer" content="webkit">
-<meta name="description" content="">
-<meta name="keywords" content="">
-<title><%= title %></title>
-<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico"/>
-<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico"/>
-<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css"/>
-<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css"/>
-<link rel="stylesheet" type="text/css" href="../../dist/css/all.css"/>
-<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css"/>
-<script src="../../dist/js/template.js"></script>
-<script src="../../dist/js/lib.js"></script>
-<script src="../../dist/js/v.js"></script>
-<style>
-  
-input[type=text]{height: 40px;padding: 0;width: 200px;}
-/* .refundAddr .dialog-main {width: 644px;height: 558px;margin-left: -322px;margin-top: -279px;} */
-/* .refundAddr .dialog-body{bottom: 0;}
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<title><%= title %></title>
+	<link rel="shortcut icon" type="image/x-icon" href="../../dist/img/favicon.ico" />
+	<link rel="bookmark" type="image/x-icon" href="../../dist/img/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_718775_m854kdemp1s.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+	<script src="../../dist/js/template.js"></script>
+	<script src="../../dist/js/lib.js"></script>
+	<script src="../../dist/js/v.js"></script>
+	<style>
+		input[type=text] {
+			height: 40px;
+			padding: 0;
+			width: 200px;
+		}
+
+		/* .refundAddr .dialog-main {width: 644px;height: 558px;margin-left: -322px;margin-top: -279px;} */
+		/* .refundAddr .dialog-body{bottom: 0;}
 .refundAddr .dialog-body>div {padding: 0 35px;font-size: 12px;} */
-.refundAddr table {width: 100%;margin-top: 40px;}
-.refundAddr label {position: static;top: 5px;color: #666666;font-size: 14px;}
-.refundAddr .btn {width: 90px;}
-#refundAddrLook td{padding-bottom: 20px;font-size: 16px;}
+		.refundAddr table {
+			width: 100%;
+			margin-top: 40px;
+		}
 
-.userRightContent {
-  margin-bottom: 80px;
-}
-.order-box {
-  padding: 34px 20px;
-}
-.refuse-Popup .refuse{
-	position: fixed;
-	left: 50%;
-	top: 30%;
-	z-index: 200;
-	min-height: 100px;
-	width: 500px;
-	margin-left: -250px;
-	background-color: #fff;
-	padding: 0 20px 20px;
-}
-.refuse-Popup .refuse .refuse-header{
-	height: 60px;
-	line-height: 60px;
-}
-.refuse-Popup .refuse .refuse-header .dialog-title{
-	font-size: 16px;
-	float: left;
-	color: #333;
-	font-weight: 700;
-}
-.refuse-Popup .refuse .refuse-body{
-	width: 100%;
-	text-align: center;
-	font-size: 16px;
-	padding: 10px 0;
-	line-height: 24px;
-	color: #333;
-}
-.refuse-Popup .macks{
-	width: 100%;
-	height: 100%;
-	background-color: #000000;
-	opacity: 0.8;
-	position: fixed;
-	left: 0;
-	top: 0;
-	z-index: 100;
-}
-.show{
-	display: block;
-}
-.hide{
-	display: none;
-}
-.list-pagination {
-    padding: 50px 0 50px;
-}
+		.refundAddr label {
+			position: static;
+			top: 5px;
+			color: #666666;
+			font-size: 14px;
+		}
 
-</style>
+		.refundAddr .btn {
+			width: 90px;
+		}
+
+		#refundAddrLook td {
+			padding-bottom: 20px;
+			font-size: 16px;
+		}
+
+		.userRightContent {
+			margin-bottom: 80px;
+		}
+
+		.order-box {
+			padding: 34px 20px;
+		}
+
+		.refuse-Popup .refuse {
+			position: fixed;
+			left: 50%;
+			top: 30%;
+			z-index: 200;
+			min-height: 100px;
+			width: 500px;
+			margin-left: -250px;
+			background-color: #fff;
+			padding: 0 20px 20px;
+		}
+
+		.refuse-Popup .refuse .refuse-header {
+			height: 60px;
+			line-height: 60px;
+		}
+
+		.refuse-Popup .refuse .refuse-header .dialog-title {
+			font-size: 16px;
+			float: left;
+			color: #333;
+			font-weight: 700;
+		}
+
+		.refuse-Popup .refuse .refuse-body {
+			width: 100%;
+			text-align: center;
+			font-size: 16px;
+			padding: 10px 0;
+			line-height: 24px;
+			color: #333;
+		}
+
+		.refuse-Popup .macks {
+			width: 100%;
+			height: 100%;
+			background-color: #000000;
+			opacity: 0.8;
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 100;
+		}
+
+		.show {
+			display: block;
+		}
+
+		.hide {
+			display: none;
+		}
+
+		.list-pagination {
+			padding: 50px 0 50px;
+		}
+	</style>
 </head>
+
 <body class="userOrderRefund">
-	
-	<%- include ../../headerbar.ejs %>	
-	
+
+	<%- include ../../headerbar.ejs %>
+
 	<%- include ../userHeaderNav.ejs %>
-	
+
 	<div class="container">
 		<div class="router" id="router">
 			<el-breadcrumb separator-class="el-icon-arrow-right">
-			  	<el-breadcrumb-item>
-            <a href="/">首页</a>
-          </el-breadcrumb-item>
-          <el-breadcrumb-item :to="{ path: '/' }">
-            <a href="/user/acc_info">个人中心</a>
-          </el-breadcrumb-item>
-			  	<el-breadcrumb-item>售后订单</el-breadcrumb-item>
+				<el-breadcrumb-item>
+					<a href="/">首页</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item :to="{ path: '/' }">
+					<a href="/user/acc_info">个人中心</a>
+				</el-breadcrumb-item>
+				<el-breadcrumb-item>售后订单</el-breadcrumb-item>
 			</el-breadcrumb>
 		</div>
 	</div>
-	
+
 	<div id="main" class="main">
 		<div class="clearfix container">
 			<div class="userLeftNav">
 				<%- include ../userLeftNav.ejs %>
 			</div>
 			<div class="userRightContent">
-				 
+
 				<div id="orderList" class="order-box" v-cloak>
 					<!-- <div class="search-container hide">
 						<el-input
@@ -119,26 +149,28 @@ input[type=text]{height: 40px;padding: 0;width: 200px;}
 						    v-model="search">
 						    <i slot="prefix" class="el-input__icon el-icon-search"></i>
 						  </el-input>
-          </div> -->          
-          <div class="order-table-head" id="orderTableHead">
-            <div class="head-item type-item title-item">售后订单</div>
-            <span class="head-item count-item">数量</span>
-            <span class="head-item money-item">金额</span>
-            <span class="head-item operation-item">操作</span>
-          </div>
-          <div class="no-order tc" style="padding:100px 0;color:#333;font-size:16px;" v-if="tableData && !tableData.length && loadData">
-              <img src="/src/img/user/no_order.png" alt="" width="482">
-              <p style="margin-top:-50px;">暂无订单</p>
-            </div>
+          </div> -->
+					<div class="order-table-head" id="orderTableHead">
+						<div class="head-item type-item title-item">售后订单</div>
+						<span class="head-item count-item">数量</span>
+						<span class="head-item money-item">金额</span>
+						<span class="head-item operation-item">操作</span>
+					</div>
+					<div class="no-order tc" style="padding:100px 0;color:#333;font-size:16px;"
+						v-if="tableData && !tableData.length && loadData">
+						<img src="/src/img/user/no_order.png" alt="" width="482">
+						<p style="margin-top:-50px;">暂无订单</p>
+					</div>
 					<ul class="list-container" v-if="tableData && tableData.length && loadData">
 						<template v-for="(item,index) in tableData">
 							<li class="orderListItem" :data-id="item.id">
 								<div class="topinfo clearfix">
 									<!-- <i class="iconfont icon-orderShop"></i> -->
-                  <span class="shop-name">{{item.sellUserName}}</span>
-                  &emsp;&emsp;
-                  <span>订单号：{{item.orderNumber}}</span>
-                  <span class="fr state">{{refundState[item.newAuditState]}}</span>
+									<span class="shop-name">{{item.sellUserName}}</span>
+									&emsp;&emsp;
+									<span>订单号：{{item.orderNumber}}</span>
+									<!-- <span class="fr state">{{refundState[item.newAuditState]}}</span> -->
+									<span class="fr state">{{item.refundStateText}}</span>
 								</div>
 								<div>
 									<table>
@@ -146,32 +178,33 @@ input[type=text]{height: 40px;padding: 0;width: 200px;}
 											<td>
 												<ul class="goodsList">
 													<template v-for="(subitem,j) in item.revoList">
-													<li :skuId="item.skuId">
-														<table>
-															<tr>
-																<td width="120" class="tc">
-																	<img :src="subitem.skuMainPic|formatImg" width="70" height="70">
-																</td>
-																<td>
-                                  <h2 class="goodsName">{{subitem.skuName}}</h2>
-                                 
-                                    <span v-for="(thirdItem,thirdIndex) in subitem.skuExplain">
-                                        <span class="goodsIntro">{{thirdItem.specsName}}</span>
-                                        <span class="goodsIntro">:</span>
-                                        <span class="goodsIntro">{{thirdItem.attrValue}}</span>
-                                        <span v-if="thirdIndex !== subitem.skuExplain.length - 1" class="goodsIntro">；</span>
-                                    </span>                                  
-																</td>
-																<td width="70" class="goods-number">
-																	X{{subitem.goodsNumber}}
-																</td>
-																<td width="90" class="tc goods-price">
-																	<span>￥{{subitem.unitPrice}}</span>
-																	<p class="payWay hide">({{g_const.payType[item.payType]}})</p>
-																</td>
-															</tr>
-														</table>
-													</li>
+														<li :skuId="item.skuId">
+															<table>
+																<tr>
+																	<td width="120" class="tc">
+																		<img :src="subitem.skuMainPic|formatImg" width="70" height="70">
+																	</td>
+																	<td>
+																		<h2 class="goodsName">{{subitem.skuName}}</h2>
+
+																		<span v-for="(thirdItem,thirdIndex) in subitem.skuExplain">
+																			<span class="goodsIntro">{{thirdItem.specsName}}</span>
+																			<span class="goodsIntro">:</span>
+																			<span class="goodsIntro">{{thirdItem.attrValue}}</span>
+																			<span v-if="thirdIndex !== subitem.skuExplain.length - 1"
+																				class="goodsIntro">；</span>
+																		</span>
+																	</td>
+																	<td width="70" class="goods-number">
+																		X{{subitem.goodsNumber}}
+																	</td>
+																	<td width="90" class="tc goods-price">
+																		<span>￥{{subitem.unitPrice}}</span>
+																		<p class="payWay hide">({{g_const.payType[item.payType]}})</p>
+																	</td>
+																</tr>
+															</table>
+														</li>
 													</template>
 												</ul>
 											</td>
@@ -182,12 +215,19 @@ input[type=text]{height: 40px;padding: 0;width: 200px;}
 												<div>
 													<p><a class="btn toRefundDetail">售后详情</a></p>
 													<p class="btn refuseBtn" v-if="item.auditState == 6" @click="refuseBtn(index)">查看拒绝原因</p>
-													<p v-if="(item.auditState === 0) && (item.refundType === 1)"><a class="btn revokeCancelBtn" refundType="1" :orderId="item.id">撤销退款</a></p>
-													<p v-if="(item.auditState === 0 || item.auditState === 1 || item.auditState === 8) && (item.refundType === 2)"><a class="btn revokeCancelBtn" refundType="1" :orderId="item.id">撤销退货</a></p>
-													<p v-if="item.auditState === 2"><a class="expressOrderBtn btn btn-warning" :orderId="item.id" :orderNumber="item.orderNumber">查看物流</a></p>
-													<a v-if="(item.auditState === 1 || item.auditState === 8) && (item.refundType === 2)" class="btn btn-warning refundBtn" :data-id="item.id" :data-sellUserId="item.sellUserId">寄回商品</a>													
+													<p v-if="(item.auditState === 0) && (item.refundType === 1)"><a class="btn revokeCancelBtn"
+															refundType="1" :orderId="item.id">撤销退款</a></p>
+													<p
+														v-if="(item.auditState === 0 || item.auditState === 1 || item.auditState === 8) && (item.refundType === 2)">
+														<a class="btn revokeCancelBtn" refundType="1" :orderId="item.id">撤销退货</a></p>
+													<p v-if="item.auditState === 2"><a class="expressOrderBtn btn btn-warning" :orderId="item.id"
+															:orderNumber="item.orderNumber">查看物流</a></p>
+													<a v-if="(item.auditState === 1 || item.auditState === 8) && (item.refundType === 2)"
+														class="btn btn-warning refundBtn" :data-id="item.id"
+														:data-sellUserId="item.sellUserId">寄回商品</a>
 													<!--<button class="btn btn-info getRefundAddrBtn" v-if="item.auditState == 1" :selluserid="item.sellUserId">查看退货地址</button>-->
-													<a class="btn btn-warning" @click="applyArbitrate(item.id, item.orderNumber)" v-if="item.auditState === 6 || item.auditState === 11">申请仲裁</a>
+													<a class="btn btn-warning" @click="applyArbitrate(item.id, item.orderNumber)"
+														v-if="item.auditState === 6 || item.auditState === 11">申请仲裁</a>
 												</div>
 												<!--<div v-html="refundStateBtn[item.auditState]"></div>-->
 											</td>
@@ -211,337 +251,382 @@ input[type=text]{height: 40px;padding: 0;width: 200px;}
 										</div>
 									</div>
 								</div>
-								
-	
+
+
 							</li>
 						</template>
-          </ul>
-          <el-pagination class="tc list-pagination" v-if="pages>1"
-            background
-            @current-change="handleCurrentChange"
-            :current-page="current"
-            :page-size="size"
-            layout="prev, pager, next, jumper"
-            :total="total"  v-if="tableData && tableData.length">
-          </el-pagination>
-        </div>
-			</div>
-		</div>
-	</div>
-	
-<div class="dialog refundAddr" id="refundAddr">
-	<div class="mask"></div>
-	<div class="dialog-main">
-		<div class="dialog-header clearfix">
-			<a class="fr dialog-close"><i class="icon icon-close"></i></a>
-			<h3 class="dialog-title">退货信息</h3>
-		</div>
-		<div class="dialog-body">
-			<div>
-				<form>
-					<input type="hidden" name="orderId"/>
-					<table>
-						<tr>
-							<td valign="top" width="92"><label>快递公司：</label></td>
-							<td valign="top" width="400">
-								<div>
-									<select name="expressCompany" datatype="select" nullmsg="请选择快递公司"></select>    
-								</div>
-								<p class="Validform_checktip"></p>
-							</td>
-						</tr>
-						<tr>
-							<td valign="top" width="92"><label>快递单号：</label></td>
-							<td valign="top" width="400">
-								<div>
-									<input type="text" name="expressNum" datatype="expressNum" null="请输入快递单号"/>
-								</div>
-								<p class="Validform_checktip"></p>
-							</td>
-						</tr>
-						<tr>
-							<td valign="top" width="92"><label>备注：</label></td>
-							<td valign="top" width="400">
-								<div>
-									<input type="text" name="remark"/>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</form>
-				<div class="dialog-btn tc" style="margin-top: 30px;">
-					<a class="btn btn-warning" onclick="$('#refundAddr').removeClass('show')">取消</a>
-					<a class="btn btn-primary save">确定</a>
+					</ul>
+					<el-pagination class="tc list-pagination" v-if="pages>1" background @current-change="handleCurrentChange"
+						:current-page="current" :page-size="size" layout="prev, pager, next, jumper" :total="total"
+						v-if="tableData && tableData.length">
+					</el-pagination>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="dialog refundAddr" id="refundAddrLook">
-	<div class="mask"></div>
-	<div class="dialog-main">
-		<div class="dialog-header clearfix">
-			<a class="fr dialog-close"><i class="icon icon-close"></i></a>
-			<h3 class="dialog-title">退货地址</h3>
-		</div>
-		<div class="dialog-body">
-			<div>
-				<table>
-					<tr>
-						<td valign="top" width="92"><label>退货地址：</label></td>
-						<td valign="top" width="400">
-							<span id="addr"></span>
-						</td>
-					</tr>
-					<tr>
-						<td valign="top" width="92"><label>退货收件人：</label></td>
-						<td valign="top" width="400">
-							<span id="consignee"></span>
-						</td>
-					</tr>
-					<tr>
-						<td valign="top" width="92"><label>收件人手机号：</label></td>
-						<td valign="top" width="400">
-							<span id="mobileNum"></span>
-						</td>
-					</tr>
-				</table>
+	<div class="dialog refundAddr" id="refundAddr">
+		<div class="mask"></div>
+		<div class="dialog-main">
+			<div class="dialog-header clearfix">
+				<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+				<h3 class="dialog-title">退货信息</h3>
+			</div>
+			<div class="dialog-body">
+				<div>
+					<form>
+						<input type="hidden" name="orderId" />
+						<table>
+							<tr>
+								<td valign="top" width="92"><label>快递公司：</label></td>
+								<td valign="top" width="400">
+									<div>
+										<select name="expressCompany" datatype="select" nullmsg="请选择快递公司"></select>
+									</div>
+									<p class="Validform_checktip"></p>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top" width="92"><label>快递单号：</label></td>
+								<td valign="top" width="400">
+									<div>
+										<input type="text" name="expressNum" datatype="expressNum" null="请输入快递单号" />
+									</div>
+									<p class="Validform_checktip"></p>
+								</td>
+							</tr>
+							<tr>
+								<td valign="top" width="92"><label>备注：</label></td>
+								<td valign="top" width="400">
+									<div>
+										<input type="text" name="remark" />
+									</div>
+								</td>
+							</tr>
+						</table>
+					</form>
+					<div class="dialog-btn tc" style="margin-top: 30px;">
+						<a class="btn btn-warning" onclick="$('#refundAddr').removeClass('show')">取消</a>
+						<a class="btn btn-primary save">确定</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<%- include ../../footer.ejs %>
-<%- include commonJs.ejs %>
-	
-<script>
-$(".userLeftNav li[data-target='refund']").addClass("cur");
-var routerVm = new Vue({
-	el: "#router"
-})
 
-var validform = $(".refundAddr form").Validform({
-	tiptype: 2,
-	datatype:{
-		"expressNum" : /^[0-9a-zA-Z]+$/,
-		"select": function(gets,obj,curform,regxp){
-			if(gets != "" && gets.indexOf("请选择") == -1){
-				return true;
-			}
-			return false;
-		}
-	}
-})
+	<div class="dialog refundAddr" id="refundAddrLook">
+		<div class="mask"></div>
+		<div class="dialog-main">
+			<div class="dialog-header clearfix">
+				<a class="fr dialog-close"><i class="icon icon-close"></i></a>
+				<h3 class="dialog-title">退货地址</h3>
+			</div>
+			<div class="dialog-body">
+				<div>
+					<table>
+						<tr>
+							<td valign="top" width="92"><label>退货地址：</label></td>
+							<td valign="top" width="400">
+								<span id="addr"></span>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" width="92"><label>退货收件人：</label></td>
+							<td valign="top" width="400">
+								<span id="consignee"></span>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" width="92"><label>收件人手机号：</label></td>
+							<td valign="top" width="400">
+								<span id="mobileNum"></span>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%- include ../../footer.ejs %>
+	<%- include commonJs.ejs %>
 
-var listVm = new Vue({
-	el: "#orderList",
-	data: {
-    loadData: false,
-		tableData: [],
-		ShowBox: false,
-		show: false,
-		divIndex:-1,
-		current: 1,
-		size: 10,
-		search:  "",		
-    total: 0,	
-    pages: 0,	
-		refundState: g_const.refundState,
-		refundStateBtn: g_const.refundStateBtn
-	},
-	mounted: function(){
-		this.render();
-		utils.ajax({
-			type: 'get',
-			url: "/admin/merchant/order/expressMap",
-			success: function(data){
-				data = data.data;
-				var str = ''
-				for(key in data){
-					str += '<option>'+key+'</option>'
+	<script>
+		$(".userLeftNav li[data-target='refund']").addClass("cur");
+		var routerVm = new Vue({
+			el: "#router"
+		})
+
+		var validform = $(".refundAddr form").Validform({
+			tiptype: 2,
+			datatype: {
+				"expressNum": /^[0-9a-zA-Z]+$/,
+				"select": function (gets, obj, curform, regxp) {
+					if (gets != "" && gets.indexOf("请选择") == -1) {
+						return true;
+					}
+					return false;
 				}
-				$('[name=expressCompany]').html(str)
 			}
 		})
-	},
-	methods: {
-		refuseBtn: function(index) {
-	        var self = this;
-	        self.divIndex = index;
-			self.ShowBox = !self.ShowBox
-      	},
-  		closeBtn: function(){
-			var self = this;
-			self.ShowBox = !self.ShowBox
-		},
-		render: function(){
-			var self = this;
-			var json = {
-				offset: self.current,
-				limit: self.size,
-				//search: self.search
-			};
-			utils.ajax({
-				url: "/api/order/refund/page",
-				data: JSON.stringify(json),
-				success: function(data){
-					data = data.data;					
-					data.records.forEach((item)=>{
-						item.newAuditState = item.auditState
-						if (item.refundType == 1) {
-							if (item.auditState == 0) {
-								item.newAuditState = 16
-							} else if (item.auditState == 3) {
-								item.newAuditState = 12
-							} else if (item.auditState == 4) {
-								item.newAuditState = 13
-							} else if (item.auditState == 6) {
-								item.newAuditState = 13
-							} else if (item.auditState == 7) {
-								item.newAuditState = 18
-							} else if (item.auditState == 8) {
-								item.newAuditState = 12
-							} else if (item.auditState == 9) {
-								item.newAuditState = 13
-							}
-						} else {
-							if (item.auditState == 0) {
-								item.newAuditState = 17
-							} else if (item.auditState == 3) {
-								item.newAuditState = 14
-							} else if (item.auditState == 4) {
-								item.newAuditState = 15
-							} else if (item.auditState == 6) {
-								item.newAuditState = 15
-							} else if (item.auditState == 7) {
-								item.newAuditState = 19
-							} else if (item.auditState == 8) {
-								item.newAuditState = 1
-							} else if (item.auditState == 9) {
-								item.newAuditState = 15
-							}
+
+		var listVm = new Vue({
+			el: "#orderList",
+			data: {
+				loadData: false,
+				tableData: [],
+				ShowBox: false,
+				show: false,
+				divIndex: -1,
+				current: 1,
+				size: 10,
+				search: "",
+				total: 0,
+				pages: 0,
+				refundState: g_const.refundState,
+				refundStateBtn: g_const.refundStateBtn,
+			},
+			mounted: function () {
+				this.render();
+				utils.ajax({
+					type: 'get',
+					url: "/admin/merchant/order/expressMap",
+					success: function (data) {
+						data = data.data;
+						var str = ''
+						for (key in data) {
+							str += '<option>' + key + '</option>'
+						}
+						$('[name=expressCompany]').html(str)
+					}
+				})
+			},
+			methods: {
+				refuseBtn: function (index) {
+					var self = this;
+					self.divIndex = index;
+					self.ShowBox = !self.ShowBox
+				},
+				closeBtn: function () {
+					var self = this;
+					self.ShowBox = !self.ShowBox
+				},
+				render: function () {
+					var self = this;
+					var json = {
+						offset: self.current,
+						limit: self.size,
+						//search: self.search
+					};
+					utils.ajax({
+						url: "/api/order/refund/page",
+						data: JSON.stringify(json),
+						success: function (data) {
+							data = data.data;
+							data.records.forEach((item) => {
+								/* 与售后详情页保持一致 */
+								switch (item.auditState) {
+									case 0:
+										item.refundStateText = item.refundType === 2 ? "您已成功发起退货申请" : "您已成功发起退款申请"
+										break
+									case 1:
+										item.refundStateText = item.refundType === 2 ? "商家同意退货" : "商家同意退款"
+										break;
+									case 2:
+										item.refundStateText = "您已成功寄回商品"
+										break
+									case 3:
+										item.refundStateText = item.refundType === 2 ? "退货成功" : "退款成功"
+										break
+									case 4:
+										item.refundStateText = item.refundType === 2 ? "平台拒绝退货" : "商家拒绝了退款申请"
+										break;
+									case 5:
+										item.refundStateText = "您已撤销退款/货申请"
+										break;
+									case 6:
+										item.refundStateText = item.refundType === 2 ? "商家拒绝退货" : "商家拒绝退款"
+										break;
+									case 7:
+										item.refundStateText = item.refundType === 2 ? "退货仲裁中" : item.arbitrationType ===
+											1 ? "您已成功发起退款仲裁申请" : "商家成功发起退款仲裁申请"
+										break
+									case 8:
+										item.refundStateText = item.refundType === 2 ? "平台同意退货" : "退款成功"
+										break
+									case 9:
+										item.refundStateText = item.refundType === 2 ? "平台拒绝退货" : "平台拒绝了退款申请"
+										break
+									case 10:
+										item.refundStateText = "仲裁退回"
+										break
+									case 11:
+										item.refundStateText = "商家拒绝收货"
+										break
+									case 12:
+										item.refundStateText = "退货仲裁中"
+										break
+									case 13:
+										item.refundStateText = item.refundType === 2 ? "商家拒绝退货" : "商家拒绝退款"
+										break
+									case 14:
+										item.refundStateText = "商家拒绝收货"
+										break
+								}
+								/* item.newAuditState = item.auditState
+								if (item.refundType == 1) {
+									if (item.auditState == 0) {
+										item.newAuditState = 16
+									} else if (item.auditState == 3) {
+										item.newAuditState = 12
+									} else if (item.auditState == 4) {
+										item.newAuditState = 13
+									} else if (item.auditState == 6) {
+										item.newAuditState = 13
+									} else if (item.auditState == 7) {
+										item.newAuditState = 18
+									} else if (item.auditState == 8) {
+										item.newAuditState = 12
+									} else if (item.auditState == 9) {
+										item.newAuditState = 13
+									}
+								} else {
+									if (item.auditState == 0) {
+										item.newAuditState = 17
+									} else if (item.auditState == 3) {
+										item.newAuditState = 14
+									} else if (item.auditState == 4) {
+										item.newAuditState = 15
+									} else if (item.auditState == 6) {
+										item.newAuditState = 15
+									} else if (item.auditState == 7) {
+										item.newAuditState = 19
+									} else if (item.auditState == 8) {
+										item.newAuditState = 1
+									} else if (item.auditState == 9) {
+										item.newAuditState = 15
+									}
+								} */
+							})
+							self.tableData = data.records
+							self.total = data.total
+							self.pages = data.pages
+							self.loadData = true
+							// if (self.current == 1) {
+							//   if (data.pages > 0) {
+							//     $("#pagination").removeClass("hide");
+							//     $("#pagination").pagination({
+							//       pageCount: data.pages,
+							//       jump: true,
+							//       coping: true,
+							//       prevContent: '上一页',
+							//       nextContent: '下一页',
+							//       callback: function (api) {
+							//         render(state, api.getCurrent());
+							//       }
+							//     });
+							//   } else {
+							//     $("#pagination").addClass("hide");
+							//   }
+							// }
 						}
 					})
-					self.tableData = data.records
-          self.total = data.total
-          self.pages = data.pages
-          self.loadData = true
-          // if (self.current == 1) {
-          //   if (data.pages > 0) {
-          //     $("#pagination").removeClass("hide");
-          //     $("#pagination").pagination({
-          //       pageCount: data.pages,
-          //       jump: true,
-          //       coping: true,
-          //       prevContent: '上一页',
-          //       nextContent: '下一页',
-          //       callback: function (api) {
-          //         render(state, api.getCurrent());
-          //       }
-          //     });
-          //   } else {
-          //     $("#pagination").addClass("hide");
-          //   }
-          // }
+				},
+				handleCurrentChange: function (val) {
+					var self = this;
+					self.current = val;
+					self.render();
+				},
+				lookBtn: function (str) {
+					if (!!str) {
+						this.$message({
+							message: str,
+							type: 'warning'
+						})
+					} else {
+						this.$message({
+							message: '暂无原因',
+							type: 'info'
+						})
+					}
+				},
+				applyArbitrate(orderId, orderNumber) {
+					location.href = `/user/order/arbitrate_apply?orderId=${orderId}&orderNumber=${orderNumber}`
 				}
-			})
-		},
-		handleCurrentChange: function(val) {
-	        var self = this;
-	        self.current = val;
-	        self.render();
-      },
-      lookBtn:function(str){
-      	if(!!str){
-	      	this.$message({
-		      message: str,
-		      type: 'warning'
-		    })
-      	}else{
-      		this.$message({
-		      message: '暂无原因',
-		      type: 'info'
-		    })
-      	}
-      },
-      applyArbitrate (orderId, orderNumber) {
-      	location.href = `/user/order/arbitrate_apply?orderId=${orderId}&orderNumber=${orderNumber}`
-      }
-	},
-	filters: {
-		formatImg: function(str){
-			return utils.formatImg(str);
-		},
-		formatDep: function(str){
-			return utils.formatDep(str);
-		}
-	}
-})
-
-$(document).on("click", ".toRefundDetail", function(e){
-	var self = $(e.currentTarget);
-	var id = self.parents("li").attr("data-id");
-	location.href = "/user/order/refund_detail?id=" + id;
-}).on("click", ".toCancelRefund", function(e){
-	var self = $(e.currentTarget);
-	var id = self.parents("li").attr("data-id");
-	utils.ajax({
-		url: "/api/order/refund/cancel/" + id,
-		success: function(data){
-			if(data.success){
-				location.reload();
-			}else{
-				utils.alert("danger", data.msg)
-			}
-		}
-	})
-}).on("click", ".refundBtn", function(e){
-	var self = $(e.currentTarget);
-	var id = self.attr('data-id');
-  var sellUserId = self.attr('data-sellUserId');
-  location.href = "/user/order/returnGoods_apply?id=" + id + "&sellUserId=" + sellUserId;
-	// $('[name=orderId]').val(orderId);
-  // $("#refundAddr").addClass('show');  
-}).on("click",".save", function(){
-	// 寄回商品
-	if(validform.check(false)){
-		var str = $("#refundAddr form").serialize();
-		str = utils.str2json(str);
-		utils.ajax({
-			url: "/api/refund/express/save",
-			data: JSON.stringify(str),
-			success: function(data){
-				utils.alert('success', '提交成功')
-				setTimeout(function(){
-					location.reload()
-				},1000)
+			},
+			filters: {
+				formatImg: function (str) {
+					return utils.formatImg(str);
+				},
+				formatDep: function (str) {
+					return utils.formatDep(str);
+				}
 			}
 		})
-	}
-}).on("click", ".getRefundAddrBtn", function(e){
-	var self = $(e.currentTarget);
-	var selluserid = self.attr('selluserid');
-	utils.ajax({
-		type: 'get',
-		url: "/api/order/refundAddr/" + selluserid,
-		success: function(data){
-			data = data.data;
-			$("#addr").text(data.addr);
-			$("#consignee").text(data.consignee);
-			$("#mobileNum").text(data.mobileNum);
-			setTimeout(function(){
-				$("#refundAddrLook").addClass('show')
-			},100)
-		}
-	})
-})/*.on("click", ".refuseBtn", function(e){
+
+		$(document).on("click", ".toRefundDetail", function (e) {
+			var self = $(e.currentTarget);
+			var id = self.parents("li").attr("data-id");
+			location.href = "/user/order/refund_detail?id=" + id;
+		}).on("click", ".toCancelRefund", function (e) {
+			var self = $(e.currentTarget);
+			var id = self.parents("li").attr("data-id");
+			utils.ajax({
+				url: "/api/order/refund/cancel/" + id,
+				success: function (data) {
+					if (data.success) {
+						location.reload();
+					} else {
+						utils.alert("danger", data.msg)
+					}
+				}
+			})
+		}).on("click", ".refundBtn", function (e) {
+			var self = $(e.currentTarget);
+			var id = self.attr('data-id');
+			var sellUserId = self.attr('data-sellUserId');
+			location.href = "/user/order/returnGoods_apply?id=" + id + "&sellUserId=" + sellUserId;
+			// $('[name=orderId]').val(orderId);
+			// $("#refundAddr").addClass('show');  
+		}).on("click", ".save", function () {
+			// 寄回商品
+			if (validform.check(false)) {
+				var str = $("#refundAddr form").serialize();
+				str = utils.str2json(str);
+				utils.ajax({
+					url: "/api/refund/express/save",
+					data: JSON.stringify(str),
+					success: function (data) {
+						utils.alert('success', '提交成功')
+						setTimeout(function () {
+							location.reload()
+						}, 1000)
+					}
+				})
+			}
+		}).on("click", ".getRefundAddrBtn", function (e) {
+			var self = $(e.currentTarget);
+			var selluserid = self.attr('selluserid');
+			utils.ajax({
+				type: 'get',
+				url: "/api/order/refundAddr/" + selluserid,
+				success: function (data) {
+					data = data.data;
+					$("#addr").text(data.addr);
+					$("#consignee").text(data.consignee);
+					$("#mobileNum").text(data.mobileNum);
+					setTimeout(function () {
+						$("#refundAddrLook").addClass('show')
+					}, 100)
+				}
+			})
+		})/*.on("click", ".refuseBtn", function(e){
 	
  	e.currentTarget.querySelector(".refuse-Popup").style.display = "block"
 }).on("click", ".dialog-close", function(){
 	console.log(e.currentTarget)
  	//e.currentTarget.querySelector(".refuse-Popup").style.display = "none"
 })*/
-</script>
+	</script>
 </body>
-</html>
 
+</html>

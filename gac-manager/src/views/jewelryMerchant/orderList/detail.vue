@@ -24,7 +24,8 @@
             <span>{{ detail.createTime }}</span>
           </el-form-item>
           <el-form-item label="订单状态">
-            <span>{{ orderState[detail.state] }}</span>
+            <span v-if="detail.state === 6 && detail.isCommented === 2">已评价</span>
+            <span v-else>{{ orderState[detail.state] }}</span>
           </el-form-item>
           <el-form-item label="应付金额">
             <span>￥{{ detail.payMoney }}</span>
@@ -40,8 +41,7 @@
             <span>￥{{ detail.freightMoney }}</span>
           </el-form-item>
           <el-form-item label="优惠金额">
-            <span v-if="detail.userCouponsVO">￥{{ detail.userCouponsVO.couponsPrice }}</span>
-            <span v-else>￥0</span>
+            <span>￥{{ detail.discountPrice }}</span>
           </el-form-item>
           <el-form-item label="卖家">
             <span>{{ detail.sellUserName }}</span>
@@ -117,7 +117,7 @@
             label="商品ID"
           >
             <template slot-scope="{ row }">
-              <span>{{row.skuId}}</span>
+              <span>{{row.goodId}}</span>
             </template>
           </el-table-column>
 
@@ -272,10 +272,10 @@
               type="text"
               @click="dialogExpressVisible = true"
             >物流详情</el-button>）
-            （<el-button
+            <!-- （<el-button
               type="text"
               @click="dialogExpressNum = true"
-            >修改物流单号</el-button>）
+            >修改物流单号</el-button>） -->
           </template>
         </h4>
         <el-form
@@ -291,7 +291,7 @@
             <span v-if="status">{{ detail.orderExpress.expressNum }}</span>
           </el-form-item>
           <el-form-item label="发货时间">
-            <span v-if="status">{{ detail.orderExpress.createTime }}</span>
+            <span v-if="status">{{ detail.sendTime }}</span>
           </el-form-item>
         </el-form>
 

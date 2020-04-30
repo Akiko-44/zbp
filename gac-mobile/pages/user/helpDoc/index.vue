@@ -3,9 +3,9 @@
     class="help"
     title="帮助手册"
   >
-    <div>
+    <div class="help-doc">
       <van-cell-group>
-      	<van-cell
+        <van-cell
           title="珠宝店（企业）认证申请"
           is-link
           @click="$router.push({ name: 'user-helpDoc-detail-jewelryCompany' })"
@@ -59,6 +59,20 @@
 </template>
 
 <style lang="postcss" scoped>
+.help-doc {
+  padding: 10px;
+  & >>> .van-cell-group {
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  & >>> .van-cell:not(:last-child)::after {
+    left: 0;
+  }
+  & >>> .van-cell {
+    padding: 18px 12px;
+    font-size: 17px;
+  }
+}
 </style>
 
 <script>

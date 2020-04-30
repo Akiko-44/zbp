@@ -1,7 +1,7 @@
 <template>
   <AppView title="申请仲裁">
     <div class="applyArbitrate">
-      <textarea placeholder="请输入需求描述，200字以内"
+      <textarea placeholder="请输入仲裁原因，200字以内"
                 :maxlength="200"
                 v-model="form.comments"></textarea>
       <div class="upload-title">上传凭证</div>
@@ -71,35 +71,46 @@ export default {
 <style lang="postcss" scoped>
 .applyArbitrate {
   font-size: 12px;
-  padding: 10px;
+  padding: 10px 12px;
 }
 textarea {
-  /* width: 100%; */
-  width: 355px;
+  width: 351px;
   box-sizing: border-box;
-  height: 150px;
+  height: 148px;
   resize: none;
-  /* margin: 10px; */
-  padding: 10px;
-  /* font-size: 12px; */
-  background: var(--bg);
+  padding: 15px;
+  background: #ffffff;
+  border: 0;
+  border-radius: 5px;
 }
 .upload-title {
-  padding-left: 10px;
-  font-size: 14px;
-  margin: 10px 0;
+  font-size: 15px;
+  margin: 20px 0 10px;
 }
 .tip {
   overflow: hidden;
   width: 100%;
-  height: 20px;
+  line-height: 20px;
+  font-size: 13px;
+  color: #aaaaaa;
+}
+>>> .VUpload-area.min {
+  width: 86px;
+  height: 86px;
+  border-radius: 3px;
 }
 .submit.van-button {
-  position: fixed;
+  /* position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   border-radius: 0;
-  background: #c2a374;
+  background: #c2a374;*/
+  margin: 20px 12px 0;
+  width: 351px;
+  border-radius: 4px;
+  font-size: 16px;
+  border-color: #DF735A;
+  background: #DF735A;
 }
 </style>

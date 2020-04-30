@@ -4,6 +4,7 @@
       <el-form
         :inline="true"
         :model="listParams"
+        :rules="rules"
         ref="notifyListQueryForm"
         label-width="100px"
         class="notifyListQueryForm"
@@ -14,6 +15,14 @@
             style="width: 195px;"
             placeholder="请输入标题名称"
             v-model="listParams.title"
+          > </el-input>
+        </el-form-item>
+        <el-form-item prop="mobilePhone">
+          <el-input
+            @keyup.enter.native="handleFilter"
+            style="width: 195px;"
+            placeholder="请输入手机号"
+            v-model="listParams.mobilePhone"
           > </el-input>
         </el-form-item>
         <el-form-item>
@@ -51,6 +60,38 @@
         <el-form-item>
           <el-select
             style="width: 150px;"
+            v-model="listParams.topicId"
+            placeholder="请选择话题"
+            clearable
+          >
+            <el-option
+              v-for="item in topicList"
+              :key="item.id"
+              :label="item.topicName"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-select
+            style="width: 150px;"
+            v-model="listParams.contentOwnerType"
+            placeholder="作者类型"
+            clearable
+          >
+            <el-option
+              v-for="(value, key) in contentOwnerTypeMap"
+              :key="key"
+              :label="value"
+              :value="key"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-select
+            style="width: 150px;"
             v-model="listParams.contentStatus"
             placeholder="请选择内容状态"
             clearable
@@ -76,6 +117,22 @@
               :key="item.value"
               :label="item.label"
               :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-select
+            style="width: 150px;"
+            v-model="listParams.isTop"
+            placeholder="是否置顶"
+            clearable
+          >
+            <el-option
+              v-for="(value, key) in isTopMap"
+              :key="key"
+              :label="value"
+              :value="key"
             >
             </el-option>
           </el-select>
@@ -108,12 +165,14 @@
     </div>
 
     <el-table
+      :key="0"
       :data="list"
       v-loading.body="listLoading"
       border
       fit
       highlight-current-row
       style="width: 100%"
+      max-height="530"
     >
       <el-table-column
         type="index"
@@ -129,16 +188,20 @@
         label="标题"
       >
         <template slot-scope="{ row }">
-          <span @click="$router.push({ name: 'contentManageDetail', query: {id: row.id, isDraft: 0, from: 1}})">{{row.title}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        width="150px"
-        align="center"
-        label="作者"
-      >
-        <template slot-scope="{ row }">
-          <span>{{row.authorName}}</span>
+          <span @click="$router.push({ name: 'contentManageDetail', query: {id: row.id, isDraft: 0, from: 1}})">{{row.title}}
+            <img
+              src="../../../../assets/image/mobile.png"
+              width="20"
+              style="vertical-align: text-bottom;"
+              v-if="row.contentSourceType === 2"
+            />
+            <img
+              src="../../../../assets/image/PC.png"
+              width="20"
+              style="vertical-align: text-bottom;"
+              v-else
+            />
+          </span>
         </template>
       </el-table-column>
       <el-table-column
@@ -167,6 +230,15 @@
       >
         <template slot-scope="{ row, $index }">
           <span @click="modifyLabel(row, $index )">{{row.labelName || '无'}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        width="60px"
+        align="center"
+        label="话题"
+      >
+        <template slot-scope="{ row }">
+          <span>{{row.topicName?row.topicName:'无'}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -212,25 +284,43 @@
         label="推荐数量"
       >
         <template slot-scope="{ row }">
-          <span>{{row.recommendNumber}}</span>
+          <span>{{row.recommendNumber?row.recommendNumber:0}}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column
-        width="150px"
-        align="center"
-        label="绑定商品数量"
-      >
-        <template slot-scope="{ row }">
-          <span>{{row.goodsVOS.length}}</span>
-        </template>
-      </el-table-column> -->
       <el-table-column
         width="80px"
         align="center"
         label="推荐类型"
       >
         <template slot-scope="{ row }">
-          <span>{{recommendTypeMap[row.recommendType]}}</span>
+          <span>{{recommendTypeMap[row.recommendType]?recommendTypeMap[row.recommendType]:'无'}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        width="150px"
+        align="center"
+        label="作者"
+      >
+        <template slot-scope="{ row }">
+          <span>{{row.authorName}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        width="80px"
+        align="center"
+        label="作者类型"
+      >
+        <template slot-scope="{ row }">
+          <span>{{contentOwnerTypeMap[row.contentOwnerType]}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        width="80px"
+        align="center"
+        label="手机号"
+      >
+        <template slot-scope="{ row }">
+          <span>{{row.mobilePhone}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -281,17 +371,25 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="80px"
+        align="center"
+        label="是否置顶"
+      >
+        <template slot-scope="{ row }">
+          <span>{{row.isTop === 1 ? '是' : '否'}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         width="160px"
         align="center"
         label="更新时间"
       >
         <template slot-scope="{ row }">
-          <span>{{row.updateTime}}</span>
+          <span>{{row.updateTime ? row.updateTime: row.createTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
-        min-width="200px"
-        fixed="right"
+        min-width="100px"
         align="left"
         label="操作"
       >
@@ -306,6 +404,20 @@
             class="auditBtn"
             size="small"
             type="primary"
+            @click="handleTop(row, $index, 1)"
+            v-if="row.isTop === 1"
+          >取消置顶</el-button>
+          <el-button
+            class="auditBtn"
+            size="small"
+            type="primary"
+            @click="handleTop(row, $index, 2)"
+            v-if="row.isTop === 2 && topCount < 2"
+          >置顶</el-button>
+          <el-button
+            class="auditBtn"
+            size="small"
+            type="primary"
             @click="handlePush(row, $index)"
             v-if="row.contentStatus == 1 && row.pushStatus === 0 && userParentId == row.authorParentId"
           >申请推送</el-button>
@@ -314,7 +426,7 @@
             size="small"
             type="primary"
             @click="$router.push({ name:'contentManageModify',query:{id:row.id, isDraft: 0}})"
-            v-if="row.contentStatus !== 0 && userParentId == row.authorParentId"
+            v-if="row.contentStatus !== 0 && userParentId == row.authorParentId && row.contentSourceType === 1"
           >编辑</el-button>
           <el-button
             class="auditBtn"
@@ -365,7 +477,7 @@
 </template>
 
 <script>
-import { jewelryContentList, delJewelryContent, jewelryColumnList } from '@/api/public/jewelryRing'
+import { jewelryContentList, delJewelryContent, jewelryColumnList, getTopicList, stickJewelryContent } from '@/api/public/jewelryRing'
 import LabelDialog from './labelDialog'
 import ForcedoffDialog from './forcedoffDialog'
 import PushDialog from './pushDialog'
@@ -388,20 +500,37 @@ export default {
       total: null,
       listLoading: false,
       columnList: [],
+      topicList: [],
       authorId: Cookies.get('userId'),
       userParentId: Cookies.get('userParentId'),
       labelId: '',
+      topCount: '', // 目前置顶数量
       listParams: {
         offset: 1,
         limit: 20,
         title: '',
+        mobilePhone: '',
         authorId: '',
         type: '',
         columnId: '',
+        topicId: '',
+        contentOwnerType: '',
+        userType: Cookies.get('userType'),
+        isTop: '',
         contentStatus: '',
         pushStatus: '',
         startTime: '',
         endTime: ''
+      },
+      rules: {
+        mobilePhone: [
+          {
+            required: true,
+            pattern: /^[0-9]*$/,
+            message: '请输入正确的手机号',
+            trigger: 'blur'
+          }
+        ]
       },
       typeList: [
         { value: '1', label: '图文' },
@@ -411,13 +540,16 @@ export default {
         { value: '0', label: '待审核' },
         { value: '1', label: '审核通过' },
         { value: '2', label: '审核不通过' },
-        { value: '3', label: '强制下架' }
+        { value: '3', label: '强制下架' },
+        { value: '5', label: '已删除' }
       ],
       contentStatusMap: {
         0: '待审核',
         1: '审核通过',
         2: '审核不通过',
-        3: '强制下架'
+        3: '强制下架',
+        4: '草稿',
+        5: '已删除'
       },
       pushStatusList: [
         { value: '0', label: '未推送' },
@@ -438,6 +570,16 @@ export default {
         2: '店铺',
         3: '外链'
       },
+      contentOwnerTypeMap: {
+        1: '个人',
+        2: '商家',
+        3: '运营',
+        4: '自媒体'
+      },
+      isTopMap: {
+        1: '是',
+        2: '否'
+      },
       index: undefined
     }
   },
@@ -447,6 +589,7 @@ export default {
   created() {
     this.listParams.authorId = this.$route.query.authorId
     this.getColumnList()
+    this.getTopicList()
     // this.getList()
     this.fetchData()
   },
@@ -455,10 +598,15 @@ export default {
       this.listParams.offset = +this.$route.query.page || 1
       this.listParams.limit = +this.$route.query.limit || 20
       this.listParams.title = this.$route.query.title
+      this.listParams.mobilePhone = this.$route.query.mobilePhone
       this.listParams.authorId = this.$route.query.authorId
       this.listParams.type = this.$route.query.type
       this.listParams.columnId = this.$route.query.columnId
+      this.listParams.topicId = this.$route.query.topicId
+      this.listParams.contentOwnerType = this.$route.query.contentOwnerType
       this.listParams.contentStatus = this.$route.query.contentStatus
+      this.listParams.topicId = this.$route.query.topicId
+      this.listParams.isTop = this.$route.query.isTop
       this.listParams.pushStatus = this.$route.query.pushStatus
       if (this.$route.query.createTime) {
         this.createTime = JSON.parse(this.$route.query.createTime)
@@ -472,6 +620,9 @@ export default {
 
       jewelryContentList(this.listParams, 0).then(data => {
         this.list = data.data.records
+        if (this.list && this.list.length) {
+          this.topCount = this.list[0].topCount
+        }
         this.list.map(item => {
           if (item.recommendType === 1) {
             item.recommendNumber = item.contentToGoodsDTOS.length
@@ -485,6 +636,11 @@ export default {
         this.listLoading = false
       })
     },
+    getTopicList() {
+      getTopicList(0).then(data => {
+        this.topicList = data.data.page.records
+      })
+    },
     getColumnList() {
       jewelryColumnList().then(data => {
         data.data.records.map(item => {
@@ -492,10 +648,22 @@ export default {
             value: item.id,
             label: item.columnName
           })
-          this.columnList = this.columnList.filter(function(obj) {
+          this.columnList = this.columnList.filter(function (obj) {
             return obj.value !== '1000'
           })
         })
+      })
+    },
+    handleTop(row, index, status) {
+      const msg = status === 1 ? '取消置顶' : '置顶'
+      const changeStatus = status === 1 ? 2 : 1
+      this.$confirm(`确认${msg}该内容？`, `标题：${row.topicName}`, {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(() => {
+        stickJewelryContent(row.id, changeStatus).then(data => {
+          this.getList()
+        }).catch(() => { })
       })
     },
     delContent(id, index) {
@@ -561,9 +729,13 @@ export default {
           page: this.listParams.offset,
           limit: this.listParams.limit,
           title: this.listParams.title,
+          mobilePhone: this.listParams.mobilePhone,
           authorId: this.listParams.authorId,
           type: this.listParams.type,
           columnId: this.listParams.columnId,
+          topicId: this.listParams.topicId,
+          contentOwnerType: this.listParams.contentOwnerType,
+          isTop: this.listParams.isTop,
           contentStatus: this.listParams.contentStatus,
           pushStatus: this.listParams.pushStatus,
           createTime: JSON.stringify(this.createTime)
@@ -579,9 +751,13 @@ export default {
           page: this.listParams.offset,
           limit: val,
           title: this.listParams.title,
+          mobilePhone: this.listParams.mobilePhone,
           authorId: this.listParams.authorId,
           type: this.listParams.type,
           columnId: this.listParams.columnId,
+          topicId: this.listParams.topicId,
+          contentOwnerType: this.listParams.contentOwnerType,
+          isTop: this.listParams.isTop,
           contentStatus: this.listParams.contentStatus,
           pushStatus: this.listParams.pushStatus,
           createTime: JSON.stringify(this.createTime)
@@ -597,9 +773,13 @@ export default {
           page: val,
           limit: this.listParams.limit,
           title: this.listParams.title,
+          mobilePhone: this.listParams.mobilePhone,
           authorId: this.listParams.authorId,
           type: this.listParams.type,
           columnId: this.listParams.columnId,
+          topicId: this.listParams.topicId,
+          contentOwnerType: this.listParams.contentOwnerType,
+          isTop: this.listParams.isTop,
           contentStatus: this.listParams.contentStatus,
           pushStatus: this.listParams.pushStatus,
           createTime: JSON.stringify(this.createTime)
@@ -607,7 +787,6 @@ export default {
       })
     },
     resetQuery() {
-      this.listQuery.caseName = undefined
       this.$router.replace({ name: this.routerName })
       this.getList()
     }

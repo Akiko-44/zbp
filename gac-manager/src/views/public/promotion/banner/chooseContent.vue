@@ -192,6 +192,7 @@
 <script>
 import { jewelryContentList, jewelryColumnList } from '@/api/public/jewelryRing'
 import waves from '@/directive/waves' // 水波纹指令
+import Cookies from 'js-cookie'
 
 export default {
   name: 'chooseEnterprise',
@@ -211,7 +212,7 @@ export default {
         columnId: '',
         startTime: '',
         endTime: '',
-        contentStatus: 1
+        contentStatus: 1, userType: Cookies.get('userType')
       },
       total: 0,
       selectedName: {},
@@ -250,7 +251,7 @@ export default {
             value: item.id,
             label: item.columnName
           })
-          this.columnList = this.columnList.filter(function(obj) {
+          this.columnList = this.columnList.filter(function (obj) {
             return obj.value !== '1000'
           })
         })

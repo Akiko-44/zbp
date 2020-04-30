@@ -1,17 +1,19 @@
 <template>
   <AppView title="新增收货地址">
-    <van-address-edit :addressInfo="address"
-                      :area-list="areaList"
-                      :show-delete="showDelete"
-                      :is-saving="isSaving"
-                      :is-deleting="isDeleting"
-                      show-set-default
-                      show-search-result
-                      @save="onSave"
-                      @delete="onDelete"
-                      @change-detail="onChangeDetail"
-                      @setAddressDetail="onChangeDetail"
-                      ref="edit">
+    <van-address-edit
+      :addressInfo="address"
+      :area-list="areaList"
+      :show-delete="showDelete"
+      :is-saving="isSaving"
+      :is-deleting="isDeleting"
+      show-set-default
+      show-search-result
+      @save="onSave"
+      @delete="onDelete"
+      @change-detail="onChangeDetail"
+      @setAddressDetail="onChangeDetail"
+      ref="edit"
+    >
       <!--<van-field
       v-model="other.email"
       label="邮箱地址"
@@ -139,3 +141,30 @@ export default {
   }
 }
 </script>
+<style lang="postcss" scoped>
+>>> .van-address-edit {
+  padding: 10px;
+  & .van-cell {
+    line-height: 33px;
+  }
+  & .van-cell:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  & .van-cell:nth-child(5) {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  & .van-address-item {
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  & .van-address-edit__buttons {
+    padding: 50px 0 0;
+    & .van-button.van-button--danger {
+      background: #df735a;
+      border-color: #df735a;
+    }
+  }
+}
+</style>

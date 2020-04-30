@@ -48,6 +48,24 @@
             </el-option>
           </el-select>
         </el-form-item>
+
+        <el-form-item>
+          <el-select
+            style="width: 150px;"
+            v-model="listParams.topicId"
+            placeholder="请选择话题"
+            clearable
+          >
+            <el-option
+              v-for="item in topicList"
+              :key="item.id"
+              :label="item.topicName"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+
         <el-form-item>
           <el-select
             style="width: 150px;"
@@ -102,7 +120,7 @@
           class="fr"
           type="primary"
           v-waves
-          @click="$router.push({ name:'jccontentManageModify'})"
+          @click="releaseContent"
         >发布内容</el-button>
       </el-form>
     </div>
@@ -129,7 +147,20 @@
         label="标题"
       >
         <template slot-scope="{ row }">
-          <span @click="$router.push({ name: 'jccontentManageDetail', query: {id: row.id, isDraft: 0, from: 1, isWeMedia: true}})">{{row.title}}</span>
+          <span @click="$router.push({ name: 'jccontentManageDetail', query: {id: row.id, isDraft: 0, from: 1, isWeMedia: true, contentSourceType: row.contentSourceType}})">{{row.title}}
+            <img
+              src="../../../assets/image/mobile.png"
+              width="20"
+              style="vertical-align: text-bottom;"
+              v-if="row.contentSourceType === 2"
+            />
+            <img
+              src="../../../assets/image/PC.png"
+              width="20"
+              style="vertical-align: text-bottom;"
+              v-else
+            />
+          </span>
         </template>
       </el-table-column>
       <!-- <el-table-column
@@ -156,7 +187,16 @@
         label="栏目"
       >
         <template slot-scope="{ row }">
-          <span>{{row.columnName}}</span>
+          <span>{{row.columnName?row.columnName:'无'}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        width="60px"
+        align="center"
+        label="话题"
+      >
+        <template slot-scope="{ row }">
+          <span>{{row.topicName?row.topicName:'无'}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -202,7 +242,7 @@
         label="推荐数量"
       >
         <template slot-scope="{ row }">
-          <span>{{row.recommendNumber}}</span>
+          <span>{{row.recommendNumber?row.recommendNumber:0}}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column
@@ -220,7 +260,7 @@
         label="推荐类型"
       >
         <template slot-scope="{ row }">
-          <span>{{recommendTypeMap[row.recommendType]}}</span>
+          <span>{{recommendTypeMap[row.recommendType]?recommendTypeMap[row.recommendType]:'无'}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -276,7 +316,7 @@
         label="更新时间"
       >
         <template slot-scope="{ row }">
-          <span>{{row.updateTime}}</span>
+          <span>{{row.updateTime?row.updateTime:row.createTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -304,7 +344,7 @@
             size="small"
             type="primary"
             @click="$router.push({ name:'jccontentManageModify',query:{id:row.id, isDraft: 0}})"
-            v-if="row.contentStatus !== 0"
+            v-if="row.contentStatus !== 0 && row.contentSourceType === 1"
           >编辑</el-button>
           <!-- <el-button
             class="auditBtn"
@@ -346,7 +386,7 @@
 </template>
 
 <script>
-import { jewelryContentList, delJewelryContent, jewelryColumnList } from '@/api/public/jewelryRing'
+import { jewelryContentList, delJewelryContent, getTopicList, jewelryColumnList, getAcountDetail } from '@/api/public/jewelryRing'
 import PushDialog from './pushDialog'
 import waves from '@/directive/waves' // 水波纹指令
 import Cookies from 'js-cookie'
@@ -365,12 +405,17 @@ export default {
       total: null,
       listLoading: false,
       columnList: [],
+      topicList: [],
+      hasMobilePhone: false,
       listParams: {
         offset: 1,
         limit: 20,
         title: '',
         authorId: Cookies.get('userId'),
+        contentOwnerType: Cookies.get('userType'),
+        userType: Cookies.get('userType'),
         columnId: '',
+        topicId: '',
         contentStatus: '',
         pushStatus: '',
         startTime: '',
@@ -384,13 +429,16 @@ export default {
         { value: '0', label: '待审核' },
         { value: '1', label: '审核通过' },
         { value: '2', label: '审核不通过' },
-        { value: '3', label: '强制下架' }
+        { value: '3', label: '强制下架' },
+        { value: '5', label: '已删除' }
       ],
       contentStatusMap: {
         0: '待审核',
         1: '审核通过',
         2: '审核不通过',
-        3: '强制下架'
+        3: '强制下架',
+        4: '草稿',
+        5: '已删除'
       },
       pushStatusList: [
         { value: '0', label: '未推送' },
@@ -416,7 +464,13 @@ export default {
   },
   created() {
     this.getColumnList()
+    this.getTopicList()
     this.getList()
+    if (Cookies.get('userId')) {
+      getAcountDetail(Cookies.get('userId')).then(data => {
+        this.hasMobilePhone = !!data.data.mobilePhone
+      })
+    }
   },
   methods: {
     getList() {
@@ -438,6 +492,11 @@ export default {
         this.listLoading = false
       })
     },
+    getTopicList() {
+      getTopicList(0).then(data => {
+        this.topicList = data.data.page.records
+      })
+    },
     getColumnList() {
       jewelryColumnList().then(data => {
         data.data.records.map(item => {
@@ -445,7 +504,7 @@ export default {
             value: item.id,
             label: item.columnName
           })
-          this.columnList = this.columnList.filter(function(obj) {
+          this.columnList = this.columnList.filter(function (obj) {
             return obj.value !== '1000'
           })
         })
@@ -460,6 +519,18 @@ export default {
           this.list.splice(index, 1)
         }).catch(() => { })
       })
+    },
+    releaseContent() {
+      if (this.hasMobilePhone) {
+        this.$router.push({ name: 'jccontentManageModify' })
+      } else {
+        this.$confirm('发布内容前，请先绑定手机号', {
+          confirmButtonText: '前往绑定手机号',
+          cancelButtonText: '暂不绑定'
+        }).then(() => {
+          this.$router.push({ name: 'jcbindPhone' })
+        })
+      }
     },
     pushSuccess(form) {
       this.getList()

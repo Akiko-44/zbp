@@ -37,3 +37,37 @@ export function setRegular(data) {
   })
 }
 
+// 敏感词导入
+export function addSensitiveWordByFile(data) {
+  return request({
+    url: '/admin/sensitiveWord/addSensitiveWordByFile',
+    method: 'post',
+    data
+  })
+}
+
+// 敏感词列表
+export function getSensitiveWordList(params) {
+  return request({
+    url: '/admin/sensitiveWord/getSensitiveWordList',
+    method: 'get',
+    params
+  })
+}
+
+// 敏感词添加
+export function saveSensitiveWord(data) {
+  return request({
+    url: '/admin/sensitiveWord/saveSensitiveWord',
+    method: 'post',
+    data
+  })
+}
+
+// 敏感词删除
+export function deleteSensitivWord(wordId) {
+  return request({
+    url: `/admin/sensitiveWord/deleteSensitivWord/${wordId}`,
+    method: 'post'
+  })
+}

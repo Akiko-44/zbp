@@ -14,7 +14,7 @@
         <span>{{ form.name }}</span>
       </el-form-item>
 
-      <el-form-item
+      <!--<el-form-item
         label="店铺类别"
         v-if="form.merchantType == 1 && form.registType == 2"
       >
@@ -36,7 +36,7 @@
         v-if="form.merchantType == 3"
       >
         <span>{{designcategory}}</span>
-      </el-form-item>
+      </el-form-item>-->
 
       <el-form-item label="主营类目">
         <template v-if="form.categoryVOList && form.categoryVOList.length">
@@ -46,6 +46,39 @@
           >{{item}}</p>
         </template>
         <template v-else><span>{{ form.categoryDesc }}</span></template>
+      </el-form-item>
+      <el-form-item label="店铺logo">
+        <span
+          class="card"
+          v-if="form.logo"
+        ><img
+            :src="form.logo"
+            title="双击查看大图"
+            @dblclick="lookImg(form.logo)"
+          /></span>
+      </el-form-item>
+      <el-form-item label="店铺背景图">
+        <span
+          class="card"
+          v-if="form.backgroundImg"
+        ><img
+            :src="form.backgroundImg"
+            title="双击查看大图"
+            @dblclick="lookImg(form.backgroundImg)"
+          /></span>
+      </el-form-item>
+      <el-form-item
+        label="室内图片"
+        v-if="form.idroomPic"
+      >
+        <span
+          class="card"
+          v-if="form.idroomPic"
+        ><img
+            :src="form.idroomPic"
+            title="双击查看大图"
+            @dblclick="lookImg(form.idroomPic)"
+          /></span>
       </el-form-item>
 
       <el-form-item label="店铺简介">
@@ -389,7 +422,8 @@ export default {
   width: 100px;
 }
 .card img {
-  width: 300px;
+  max-width: 300px;
+  width: 100%;
 }
 .idcard img {
   width: 100%;

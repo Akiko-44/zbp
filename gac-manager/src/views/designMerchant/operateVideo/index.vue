@@ -1,40 +1,56 @@
 <template>
   <div class="app-container calendar-list-container">
-    <div class="video-box"
-         v-for="(item,index) in videoList"
-         :class="{active: item.isActive}"
-         :key="index"
-         @click="toVideoDetail(index, item.videoUrl)"
-         :style="{ 'background-image': 'url(../../../../../../static/img/' + item.imgUrl + '.png)'}">
-      <img class="video-play"
-           src="../../../../static/img/play.png"
-           alt="">
-      <img class="video-ink"
-           src="../../../../static/img/ink.png"
-           alt="">
+    <div
+      class="video-box"
+      v-for="(item,index) in videoList"
+      :class="{active: item.isActive}"
+      :key="index"
+      @click="toVideoDetail(index, item.videoUrl)"
+      :style="{ 'background-image': 'url(../../../../../../static/img/' + item.imgUrl + '.png)'}"
+    >
+      <img
+        class="video-play"
+        src="../../../../static/img/play.png"
+        alt=""
+      >
+      <img
+        class="video-ink"
+        src="../../../../static/img/ink.png"
+        alt=""
+      >
       <span class="video-title">{{item.title}}</span>
     </div>
     <div>
-      <video v-if="videoUrl"
-             controls="controls"
-             autoplay
-             :src="videoUrl"
-             style="width: 860px; height: 427px;object-fit: fill">
+      <video
+        v-if="videoUrl"
+        controls="controls"
+        autoplay
+        :src="videoUrl"
+        style="width: 860px; height: 427px;object-fit: fill"
+      >
         您的浏览器不支持 html5 video 属性，下载视频查看：
-        <button type="button"
-                class="el-button el-button--text el-button--mini">
-          <span><a :href="videoUrl"
-               target="_blank">下载视频</a></span></button></video>
+        <button
+          type="button"
+          class="el-button el-button--text el-button--mini"
+        >
+          <span><a
+              :href="videoUrl"
+              target="_blank"
+            >下载视频</a></span></button></video>
     </div>
 
-    <el-dialog :visible.sync="dialogVisible"
-               :show-close="false"
-               :close-on-click-modal="false"
-               custom-class="tipDialog">
-      <el-button class="confirm"
-                 @click="closeDialog"
-                 type="warning"
-                 round>知道了</el-button>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      :show-close="false"
+      :close-on-click-modal="false"
+      custom-class="tipDialog"
+    >
+      <el-button
+        class="confirm"
+        @click="closeDialog"
+        type="warning"
+        round
+      >知道了</el-button>
     </el-dialog>
   </div>
 </template>
@@ -55,15 +71,92 @@ export default {
         {
           id: '2',
           imgUrl: 'video_2_b',
-          videoUrl: 'http://image.gacjc.com/designer-video/1PhX8ffzRPljV0s',
-          title: '发起提现',
+          videoUrl: 'http://app.gacjc.com/app/download/help/gdsw.mp4',
+          title: '草稿箱',
           isActive: false
         },
         {
           id: '3',
           imgUrl: 'video_3_b',
-          videoUrl: 'http://image.gacjc.com/designer-video/1PhXdVBg6P54580',
-          title: '退款退货及仲裁',
+          videoUrl: 'http://app.gacjc.com/app/download/help/gsauy.mp4',
+          title: '订单管理',
+          isActive: false
+        },
+        {
+          id: '4',
+          imgUrl: 'video_4_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/eiusi.mp4',
+          title: '售后管理',
+          isActive: false
+        },
+        {
+          id: '5',
+          imgUrl: 'video_5_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/ufuf.mp4',
+          title: '发起提现',
+          isActive: false
+        },
+        {
+          id: '6',
+          imgUrl: 'video_1_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/fsgu.mp4',
+          title: '评论列表',
+          isActive: false
+        },
+        {
+          id: '7',
+          imgUrl: 'video_2_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/siuui.mp4',
+          title: '企业认证',
+          isActive: false
+        },
+        {
+          id: '8',
+          imgUrl: 'video_3_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/riiuhi.mp4',
+          title: '商家信息',
+          isActive: false
+        },
+        {
+          id: '9',
+          imgUrl: 'video_4_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/fheh.mp4',
+          title: '基本信息',
+          isActive: false
+        },
+        {
+          id: '10',
+          imgUrl: 'video_5_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/fgsiu.mp4',
+          title: '用户管理',
+          isActive: false
+        },
+        {
+          id: '11',
+          imgUrl: 'video_5_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/efiu.mp4',
+          title: '退货地址',
+          isActive: false
+        },
+        {
+          id: '12',
+          imgUrl: 'video_1_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/ewhih.mp4',
+          title: '修改密码',
+          isActive: false
+        },
+        {
+          id: '13',
+          imgUrl: 'video_2_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/ewhiu.mp4',
+          title: '消息中心',
+          isActive: false
+        },
+        {
+          id: '14',
+          imgUrl: 'video_2_b',
+          videoUrl: 'http://app.gacjc.com/app/download/help/xiaoneng.mp4',
+          title: '小能客服',
           isActive: false
         }
       ],
@@ -77,7 +170,8 @@ export default {
   },
   methods: {
     toVideoDetail(i, videoUrl) {
-      this.videoUrl = videoUrl
+      // this.videoUrl = videoUrl
+      window.open(videoUrl, '_blank')
       this.videoList.forEach(element => {
         element.isActive = false
       })

@@ -127,6 +127,7 @@
 }
 .query_id_card .query_price .query_form .query_form-item .query-input.select-box {
   line-height: 40px;
+  cursor: pointer;
 }
 .query_id_card .query_price .query_form .query_form-item .icon-right {
   width: 16px;
@@ -313,10 +314,12 @@
 }
 .query_result .result-item img {
   width: 100%;
+  margin-bottom: 76px;
 }
 .query_result .result-content {
   background: #fff;
   padding: 40px 60px;
+  margin-bottom: 76px;
 }
 .query_result .result-img iframe {
   width: 100%;

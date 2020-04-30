@@ -20,6 +20,8 @@
               	img: item.revoList[0].skuMainPic,
                 revoList: item.revoList,
                 barLeftText: '订单编号：' + item.orderNumber,
+                sellUserName: item.sellUserName,
+                sellUserId: item.sellUserId,
                 barRightText: orderState[item.state],
                 refundAmount: '￥' + item.refundAmount,
                 freightMoney: item.freightMoney,

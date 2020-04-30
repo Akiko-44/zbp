@@ -8,7 +8,7 @@
 	<meta name="renderer" content="webkit">
 	<meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
 	<meta name="keywords"
-		content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰  、有机宝石（除珍珠、琥珀）、培育钻石及首饰">
+		content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰 、有机宝石（除珍珠、琥珀）、培育钻石及首饰、珠宝一站式购物商城、品牌珠宝、买首饰、珠宝商城、专业珠宝、珠宝鉴定、最权威的珠宝鉴定网站、珠宝科普、钻石怎么买、什么是5G黄金、什么是千足金、翡翠鉴定、玉石变色的原因、海水珍珠怎么鉴别、爱迪生珍珠、什么是海蓝宝、什么是铂金、怎么计算钻石价格">
 	<title>中宝平 中国珠宝行业权威平台中宝平，带你到源头买真品！</title>
 	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
 	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
@@ -20,10 +20,6 @@
 	<script src="../../dist/js/lib.js"></script>
 	<script src="../../dist/js/v.js"></script>
 	<style>
-		body {
-			background: #eee;
-		}
-
 		body .slick-dots li button:before {
 			overflow: hidden;
 			border-radius: 50%;
@@ -647,6 +643,324 @@
 			width: 100%;
 			background: #ffffff;
 		}
+
+		/*新版样式*/
+		.goods-item {
+			background: #fff;
+			min-height: 270px;
+			margin-top: 30px;
+		}
+
+		.goods-item>div {
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.goods-item>div.top-part {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 18px;
+		}
+
+		.goods-item .right-part img {
+			width: 170px;
+			height: 170px;
+		}
+
+		.goods-item .pic {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+
+		.goods-item .right-part .pic:hover {
+			transform: scale(1.05);
+			cursor: pointer;
+		}
+
+		.goods-item .bottom-part img {
+			width: 180px;
+			height: 180px;
+		}
+
+		.goods-item .bottom-part img:hover {
+			transform: scale(1.05);
+			cursor: pointer;
+		}
+
+		.goods-item .newgoods-wrap .bottom-part {
+			display: inline-block;
+			margin-bottom: 16px;
+		}
+
+		.goods-item .newgoods-wrap .bottom-part:nth-child(6n) {
+			margin-right: 0;
+		}
+
+		.goods-item .left-part {
+			width: 190px;
+			height: 270px;
+			background: linear-gradient(to bottom, #FB746E, #E42B20);
+			text-align: center;
+			vertical-align: top;
+		}
+
+		.left-part h3 {
+			font-size: 30px;
+			font-weight: bold;
+			color: #fff;
+			margin: 50px 0 30px;
+		}
+
+		.left-part button {
+			margin-top: 59px;
+			width: 90px;
+			height: 24px;
+			border: 1px solid #fff;
+			color: #fff;
+			border-radius: 12px;
+			background: transparent;
+		}
+
+		.goods-item .right-part {
+			width: 170px;
+			position: relative;
+			margin: 20px 15px 15px;
+		}
+
+		.right-part .discount {
+			position: absolute;
+			width: 61px;
+			height: 27px;
+			line-height: 24px;
+			/* text-align: left; */
+			/* padding-left: 4px; */
+			background: url(../../src/img/index/group.png) no-repeat center;
+			top: 5px;
+			right: -10px;
+			font-size: 14px;
+			color: #fff;
+			z-index: 2;
+		}
+
+		.pic .activity-bg {
+			position: absolute;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			/* background: url("../../src/img/activity-md.png"); */
+			background-position: no-repeat;
+			background-size: 100% 100%;
+			z-index: 1;
+		}
+
+		.right-part .goods-name,
+		.bottom-part .goods-name,
+		.bottom-part-m .goods-name {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			margin: 18px 0 10px;
+		}
+
+		.right-part .goods-price {
+			width: 160px;
+			height: 24px;
+			background: url(../../src/img/index/twoPrice.png) no-repeat center;
+			text-align: center;
+		}
+
+		.right-part .goods-price>span {
+			display: inline-block;
+			height: 100%;
+			line-height: 24px;
+			text-align: center;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.right-part .goods-price>span:first-child {
+			width: 90px;
+			color: #fff;
+			font-size: 16px;
+			font-weight: bold;
+
+		}
+
+		.right-part .goods-price>span:last-child {
+			width: 70px;
+			text-decoration: line-through;
+			color: #999;
+		}
+
+		.top-part h3 {
+			font-size: 24px;
+			font-weight: bold;
+		}
+
+		.top-part .more {
+			font-size: 14px;
+			color: #666;
+			cursor: pointer;
+		}
+
+		.top-part .more img {
+			margin-left: 5px;
+			vertical-align: bottom;
+		}
+
+		.bottom-part {
+			width: 180px;
+			margin-right: 16px;
+		}
+
+		.bottom-part .goods-price,
+		.bottom-part-m .goods-price {
+			margin-bottom: 8px;
+			font-size: 16px;
+			font-weight: bold;
+			color: #FB746E;
+		}
+
+		.goods-price del {
+			font-weight: normal;
+			font-size: 12px;
+			color: #cccccc;
+		}
+
+		.promotion-btn {
+			padding: 0 16px;
+			height: 27px;
+			text-align: center;
+			font-size: 12px;
+			background: #FB746E;
+			border-color: #FB746E
+		}
+
+		.bottom-part .merchant {
+			font-size: 12px;
+			color: #999;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.bottom-part .merchant img {
+			margin-right: 5px;
+			width: 22px;
+			height: 22px;
+			border-radius: 50%;
+			vertical-align: middle;
+		}
+
+		.bottom-part .info>span {
+			display: inline-block;
+			color: #999;
+			margin-right: 20px;
+		}
+
+		.bottom-part-m {
+			margin-right: 20px;
+			margin-bottom: 20px;
+		}
+
+		.bottom-part-m:nth-child(2n+1) {
+			margin-right: 0;
+		}
+
+		.bottom-part-m>div {
+			display: inline-block;
+			vertical-align: top;
+		}
+
+		.bottom-part-m .merchant-info {
+			position: relative;
+			margin-right: 10px;
+			width: 244px;
+			height: 434px;
+		}
+
+		.bottom-part-m .merchant-info>div {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			height: 130px;
+			background: rgba(0, 0, 0, .5);
+			text-align: center;
+			color: #fff;
+		}
+
+		.bottom-part-m .merchant-info .name {
+			font-size: 16px;
+			font-weight: bold;
+			margin: 20px 0 10px;
+		}
+
+		.bottom-part-m .merchant-info .desc {
+			font-size: 14px;
+		}
+
+		.bottom-part-m .merchant-info .go {
+			display: inline-block;
+			width: 110px;
+			height: 30px;
+			line-height: 30px;
+			background: #FB746E;
+			font-size: 14px;
+			border-radius: 15px;
+			margin-top: 14px;
+			cursor: pointer;
+		}
+
+		.merchant-goods {
+			width: 312px;
+		}
+
+		.merchant-goods>div {
+			display: inline-block;
+			width: 150px;
+			margin-right: 10px;
+		}
+
+		.merchant-goods>div:nth-child(2n+2) {
+			margin-right: 0;
+		}
+
+		.merchant-goods img {
+			width: 150px;
+			height: 150px;
+		}
+
+		.merchant-goods img:hover {
+			transform: scale(1.05);
+			cursor: pointer;
+		}
+
+		.advertise {
+			margin-top: 40px;
+			height: 120px;
+		}
+
+		.group-icon>span {
+			display: inline-block;
+			width: 44px;
+			height: 44px;
+			position: relative;
+			border-radius: 50%;
+			vertical-align: top;
+		}
+
+		.group-icon .icon {
+			z-index: 2;
+			background: #fff url(../src/img/index/pintuan_icon.png) no-repeat center;
+			background-size: 44px;
+		}
+
+		.group-icon .circle {
+			border: 1px dashed #fff;
+			margin-left: -10px;
+			z-index: 1;
+		}
 	</style>
 </head>
 
@@ -786,7 +1100,9 @@
 						</p>
 						<div v-for="(item,index) in SearchSeven.slice(0,2)">
 							<p>{{item.name}} </p>
-							<p>零售价：<span class="import">{{item.minPrice}}</span>{{item.priceUnit}}</p>
+							<p>零售价：<span
+									class="import">{{item.todayGuidedPriceVOS[SearchSeven.slice(0,2).length-1].price}}</span>{{item.priceUnit}}
+							</p>
 						</div>
 					</div>
 					<a href="/home/query_id_card">
@@ -810,13 +1126,199 @@
 				</div>
 			</div>
 			<!-- shoppingTogether -->
-			<div class="containerJewelyIndex todayNew">
+			<div class="container" v-if="moduleGroupGoods.goodsVOList && moduleGroupGoods.goodsVOList.length">
+				<div class="goods-item">
+					<div class="left-part">
+						<h3 class="module-name">{{moduleGroupGoods.moduleName}}</h3>
+						<div class="group-icon">
+							<span class="icon"></span>
+							<span class="circle"></span>
+						</div>
+						<button class="more" @click="location.href = '/jewelry/goodsList?goodsType=1'">查看更多>></button>
+					</div>
+					<div class="right-part" v-for="(goods, index) in moduleGroupGoods.goodsVOList" :key="index"
+						@click="location.href = '/jewelry/details?id='+goods.id">
+						<div class="pic">
+							<span class="discount">{{goods.discount}}折</span>
+							<div class="activity-bg" v-if="goods.pcBigIcon"
+								:style="{backgroundImage: goods.pcBigIcon ? 'url(' + goods.pcBigIcon + ')' : ''}"></div>
+							<img :src="goods.imgUrl" />
+						</div>
+						<div class="goods-name">{{goods.goodsName}}</div>
+						<div class="goods-price">
+							<span class="cur-price">¥{{goods.groupPrice.toFixed(2)}}</span><span>¥{{goods.price.toFixed(2)}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- <div class="container" v-if="modulePromoteGoods.goodsVOList && modulePromoteGoods.goodsVOList.length">
+        <h4 class="title">{{modulePromoteGoods.moduleName}}<span class="more cur-pointer" @click="location.href = '/jewelry/goodsList?goodsType=2'">更多 ></h4>
+        <div class="goods-box">
+          <el-row :gutter="11">
+            <el-col :span="4" v-for="(subItem, subIndex) in modulePromoteGoods.goodsVOList" :key="subIndex"
+              @click.native="goGoodsDetail(subItem.id)">
+              <div class="goods cur-pointer">
+                <div class="pic">
+                  <div class="activity-bg" v-if="subItem.pcBigIcon"
+                    :style="{backgroundImage: subItem.pcBigIcon ? 'url(' + subItem.pcBigIcon + ')' : ''}"></div>
+                  <img :src="subItem.imgUrl" width="100%" height="100%">
+                </div>
+                <div class="card-info">
+                  <h4 class="card-title text-hidden">{{subItem.goodsName}}</h4>
+                  <p class="price">¥<span
+                      v-if="subItem.promotionPrice">{{subItem.promotionPrice.toFixed(2)}}</span><del>
+                      ¥<span v-if="subItem.price">{{subItem.price.toFixed(2)}}</span></del></p>
+                  <p class="goods-else">
+                    <el-button type="danger" class="promotion-btn">{{subItem.countDown}}</el-button>
+                  </p>
+                </div>
+              </div>
+            </el-col>
+          </el-row>
+        </div>
+      </div> -->
+
+			<div class="container" v-if="modulePromoteGoods.goodsVOList && modulePromoteGoods.goodsVOList.length">
+				<div class="goods-item" style="padding: 20px;">
+					<div class="top-part">
+						<h3 class="module-name">{{modulePromoteGoods.moduleName}}</h3>
+						<span class="more" @click="location.href = '/jewelry/goodsList?goodsType=2'">更多商品<img
+								src="../src/img/index/modulemore.png" /></span>
+					</div>
+					<div class="newgoods-wrap">
+						<div class="bottom-part" v-for="(goods, index) in modulePromoteGoods.goodsVOList" :key="index"
+							@click="location.href = '/jewelry/details?id='+goods.id">
+							<div class="pic">
+								<div class="activity-bg" v-if="goods.pcBigIcon"
+									:style="{backgroundImage: goods.pcBigIcon ? 'url(' + goods.pcBigIcon + ')' : ''}"></div>
+								<img :src="goods.imgUrl" width="100%" height="100%">
+							</div>
+							<div class="card-info">
+								<h4 class="goods-name text-hidden">{{goods.goodsName}}</h4>
+								<p class="goods-price">
+									¥<span v-if="goods.promotionPrice">
+										{{goods.promotionPrice.toFixed(2)}}
+									</span>
+									<del>
+										¥<span v-if="goods.price">
+											{{goods.price.toFixed(2)}}
+										</span>
+									</del>
+								</p>
+								<p class="goods-else">
+									<el-button type="danger" class="promotion-btn">{{goods.countDown}}</el-button>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div v-if="advertiseList[0] && advertiseList[0].pcPicture" class="container advertise"
+				@click="goBannerUrl(advertiseList[0])"
+				:style="{backgroundImage: 'url(' + advertiseList[0].pcPicture + ')', backgroundSize:'contain'}">
+			</div>
+
+			<div class="container" v-if="moduleNewGoods.goodsVOList && moduleNewGoods.goodsVOList.length">
+				<div class="goods-item" style="padding: 20px;">
+					<div class="top-part">
+						<h3 class="module-name">{{moduleNewGoods.moduleName}}</h3>
+						<span class="more" @click="location.href = '/jewelry/goodsList'">更多商品<img
+								src="../src/img/index/modulemore.png" /></span>
+					</div>
+					<div class="newgoods-wrap">
+						<div class="bottom-part" v-for="(goods, index) in moduleNewGoods.goodsVOList" :key="index"
+							@click="location.href = '/jewelry/details?id='+goods.id">
+							<div class="pic">
+								<div class="activity-bg" v-if="goods.pcBigIcon"
+									:style="{backgroundImage: goods.pcBigIcon ? 'url(' + goods.pcBigIcon + ')' : ''}"></div>
+								<img :src="goods.imgUrl" />
+							</div>
+							<div class="goods-name">{{goods.goodsName}}</div>
+							<div class="goods-price">
+								<span>¥{{goods.price.toFixed(2)}}</span>
+							</div>
+							<div class="merchant">
+								<img :src="goods.merchantLogo" />
+								<span>{{goods.merchantName}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div v-if="advertiseList[1] && advertiseList[1].pcPicture" class="container advertise"
+				@click="goBannerUrl(advertiseList[1])"
+				:style="{backgroundImage: 'url(' + advertiseList[1].pcPicture + ')', backgroundSize:'contain'}">
+			</div>
+
+			<!-- <div class="container" v-if="moduleContent.contentVOList && moduleContent.contentVOList.length">
+				<div class="goods-item" style="padding: 20px;">
+					<div class="top-part">
+						<h3 class="module-name">{{moduleContent.moduleName}}</h3>
+						<span class="more" @click="location.href = '/jewelryCircle/index'">更多内容<img
+								src="../src/img/index/modulemore.png" /></span>
+					</div>
+					<div class="bottom-part" v-for="(goods, index) in moduleContent.contentVOList" :key="index"
+						@click="location.href = '/jewelryCircle/index'">
+						<div class="pic">
+							<img :src="goods.thumbnail" />
+						</div>
+						<div class="goods-name">{{goods.goodsName}}</div>
+						<div class="info">
+							<span>阅读{{goods.viewNumber}}</span>
+							<span>点赞{{goods.likeNumber}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div v-if="advertiseList[2] && advertiseList[2].pcPicture" class="container advertise"
+				@click="goBannerUrl(advertiseList[2])"
+				:style="{backgroundImage: 'url(' + advertiseList[2].pcPicture + ')', backgroundSize:'contain'}">
+			</div>-->
+
+			<div class="container" v-if="moduleMerchant.merchantVOList && moduleMerchant.merchantVOList.length">
+				<div class="goods-item" style="padding: 20px;">
+					<div class="top-part">
+						<h3 class="module-name">{{moduleMerchant.moduleName}}</h3>
+						<span class="more" @click="location.href = '/jewelry/shopList'">更多商家<img
+								src="../src/img/index/modulemore.png" /></span>
+					</div>
+					<div class="bottom-part-m" v-for="(merchant, index) in moduleMerchant.merchantVOList" :key="index">
+						<div class="merchant-info" @click="location.href = '/jewelry/shopSearch?id='+merchant.id">
+							<img :src="merchant.merchantPic" width="244" height="434" />
+							<div>
+								<div class="name">{{merchant.merchantName}}</div>
+								<div class="desc">{{merchant.recommendDetail}}</div>
+								<span class="go">进店逛逛</span>
+							</div>
+						</div>
+						<div class="merchant-goods">
+							<div v-for="goods in merchant.goodsVOList" @click="location.href = '/jewelry/details?id='+goods.id">
+								<div class="pic">
+									<div class="activity-bg" v-if="goods.pcBigIcon"
+										:style="{backgroundImage: goods.pcBigIcon ? 'url(' + goods.pcBigIcon + ')' : ''}"></div>
+									<img :src="goods.imgUrl" />
+								</div>
+								<div class="goods-name">{{goods.goodsName}}</div>
+								<div class="goods-price">
+									<span>¥{{goods.price.toFixed(2)}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--<div class="containerJewelyIndex todayNew">
 				<div class="exchangeTitle" style="margin-top: 30px;">
 					<a class="fr" href="/jewelry/goodsList">更多商品<i class="el-icon-d-arrow-right"></i></a>
 					<strong>拼团1折起</strong>
 				</div>
 				<ul class="clearfix">
-					<li class="gripper" :class="{first: index == 0 || index == 4}" v-for="(item,index) in newGoods" :key="index">
+					<li class="gripper" :class="{first: index == 0 || index == 4}" v-for="(item,index) in moduleItem.goodsVOList"
+						:key="index">
 						<div class="discount">{{item.discount}}折</div>
 						<div class="img-box" :data-id="item.id" @click="toDetail(item)">
 							<img :src="item.goodsPic | formatImg" width="100%" height="100%">
@@ -839,7 +1341,7 @@
 						</div>
 					</li>
 				</ul>
-			</div>
+			</div>-->
 			<!-- b2企业入口 -->
 			<!-- <div class="containerJewelyIndex hotStyle">
 				<div @click="btUrl">
@@ -855,6 +1357,13 @@
 		var mainVm = new Vue({
 			el: "#main",
 			data: {
+				homeModule: [],
+				advertiseList: [],
+				moduleGroupGoods: {},
+				modulePromoteGoods: {},
+				moduleNewGoods: {},
+				moduleContent: {},
+				moduleMerchant: {},
 				dmBannerDTOList: [],
 				categoryShow: [],
 				brand: [],
@@ -870,21 +1379,18 @@
 				notice: [],
 				SearchSeven: [],
 				systemDate: '',
-				background: {}
+				background: {},
+				timeOut: []
 			},
 			created() {
 
 			},
 
 			mounted: function () {
+				this.getHomePage()
 				this.getBackground()
-				this._getNotice()
 				var self = this
 				this.showMarquee(this.num);
-				this.bannerShow();
-				this.getSearchSeven()
-				this.getCateBrand()
-				this.getActivitiesShow()
 				this.CurrentTime()
 				setTimeout(function () {
 					self.getCategoryShow()
@@ -892,6 +1398,43 @@
 
 			},
 			methods: {
+				getHomePage() {
+					if (localStorage.getItem('homePageStorage')) {
+						this.setHomePage(JSON.parse(localStorage.getItem('homePageStorage')))
+					}
+					utils.ajax({
+						type: 'get',
+						url: '/app/homePage/new',
+						success: (data) => {
+							this.setHomePage(data)
+							localStorage.setItem('homePageStorage', JSON.stringify(data))
+						}
+					})
+				},
+				setHomePage(data) {
+					this.notice = data.data.platformNotice.records
+					this.dmBannerDTOList = data.data.banner
+					this.SearchSeven = data.data.todayGuidePrice
+					this.homeModule = data.data.homeModule
+					this.homeModule.map(item => {
+						if (item.id === '1000') {
+							this.moduleGroupGoods = item
+						} else if (item.id === '1001') {
+							this.moduleNewGoods = item
+						} else if (item.id === '1002') {
+							this.moduleContent = item
+						} else if (item.id === '1003') {
+							this.moduleMerchant = item
+						} else if (item.id === '1017') {
+							this.modulePromoteGoods = item
+							this.modulePromoteGoods.goodsVOList.map((goodsItem, goodsIndex) => {
+								goodsItem.countDown = goodsItem.endTime
+								this.getCountDown(goodsItem.endTime, goodsIndex)
+							})
+						}
+					})
+					this.advertiseList = data.data.advertise
+				},
 				// 背景图配置
 				getBackground() {
 					utils.ajax({
@@ -1127,9 +1670,59 @@
 						}
 					});
 				},
+				getCountDown(time, index) {
+					let finishTime = +new Date(Date.parse(time.replace(/-/g, "/")))
+					let diferentTime = this.leftTimer(finishTime - new Date())
+					this.modulePromoteGoods.goodsVOList[index].countDown = diferentTime
+					this.timeOut[index] = setInterval(() => {
+						let finishTime = +new Date(Date.parse(time.replace(/-/g, "/")))
+						let diferentTime = this.leftTimer(finishTime - new Date())
+						this.modulePromoteGoods.goodsVOList[index].countDown = diferentTime
+						this.$forceUpdate()
+					}, 1000)
+				},
+				leftTimer(leftTime) {
+					var text = "";
+					var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+					var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+					var minutes = parseInt(leftTime / 1000 / 60 % 60, 10); //计算剩余的分钟
+					var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数
+					if (seconds < 0) {
+						return text
+					}
+					days = this.checkTime(days)
+					hours = this.checkTime(hours)
+					minutes = this.checkTime(minutes)
+					seconds = this.checkTime(seconds)
+					if (days) {
+						text = days + "天" + hours + "时" + minutes + "分"
+					} else {
+						text = hours + "时" + minutes + "分" + seconds + "秒"
+					}
+					return text
+				},
+				checkTime(i) { //将0-9的数字前面加上0，例1变为01
+					if (i < 10) {
+						i = "0" + i
+					}
+					return i
+				},
 				toDetail: function (item) {
 					// var id = event.currentTarget.getAttribute("data-id");
 					window.location = "/jewelry/details?id=" + item.goodsId
+				},
+				goBannerUrl(data) {
+					if (data.linkType === 1) {
+						this.goGoodsDetail(data.linkTypeId)
+					} else if (data.linkType === 2) {
+						this.goMerchantDetail(data.linkTypeId)
+					} else if (data.linkType === 3) {
+						window.location = '/jewelryCircle/index'
+					} else if (data.linkType === 4) {
+						window.location = '/jewelryCircle/index'
+					} else if (data.pcUrl) {
+						window.location = data.pcUrl
+					}
 				},
 				toAddCar: function (id, skuid) {
 					if (!utils.islogin()) {

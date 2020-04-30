@@ -156,3 +156,135 @@ export function contentCommentSave(data) {
     data
   })
 }
+
+// 话题管理
+export function getTopicList(status, params) {
+  return request({
+    url: `/admin/jewelryTopic/getTopicList/${status}`,
+    method: 'get',
+    params
+  })
+}
+
+export function saveOrUpdateTopic(data) {
+  return request({
+    url: '/admin/jewelryTopic/saveOrUpdate',
+    method: 'post',
+    data
+  })
+}
+
+// 话题管理-是否置顶
+export function stickTopic(id, status) {
+  return request({
+    url: `/admin/jewelryTopic/setOrCancelTop/${id}/${status}`,
+    method: 'post'
+  })
+}
+
+export function delTopic(id) {
+  return request({
+    url: `/admin/jewelryTopic/delete/${id}`,
+    method: 'post'
+  })
+}
+
+// 话题管理-参与人数
+export function topicJoinNumList(params) {
+  return request({
+    url: `/admin/jewelryTopic/topicJoinNumList`,
+    method: 'get',
+    params
+  })
+}
+
+// 内容管理-内容置顶1、置顶2、不置顶
+export function stickJewelryContent(id, topStatus) {
+  return request({
+    url: `/admin/jewelryContent/setTop/${id}/${topStatus}`,
+    method: 'get'
+  })
+}
+
+// 自媒体后台相关接口
+// 账户信息获取
+export function getAcountDetail(id) {
+  return request({
+    url: `/admin/accountManage/getAcountDetail/${id}`,
+    method: 'get'
+  })
+}
+
+// 账户信息修改
+export function updateAcount(data) {
+  return request({
+    url: '/admin/accountManage/updateAcount',
+    method: 'post',
+    data
+  })
+}
+
+// 手机号是否绑定
+export function isPhoneBinding(phoneNum) {
+  return request({
+    url: `/admin/phoneBinding/isBinding/${phoneNum}`,
+    method: 'get'
+  })
+}
+
+// 手机号绑定
+export function phoneBinding(data) {
+  return request({
+    url: '/admin/phoneBinding/bindingPhone',
+    method: 'post',
+    data
+  })
+}
+// 自媒体后台相关接口结束
+
+// 举报类型
+export function reportTypeList(params, type) {
+  return request({
+    url: '/admin/jewelry/reportType/listReport',
+    method: 'get',
+    params
+  })
+}
+export function updateReportType(data) {
+  return request({
+    url: '/admin/jewelry/reportType/saveOrUpdate',
+    method: 'post',
+    data
+  })
+}
+export function delReportType(id) {
+  return request({
+    url: `/admin/jewelry/reportType/delete/${id}`,
+    method: 'post'
+  })
+}
+
+// 举报管理
+export function reportList(params) {
+  return request({
+    url: '/admin/jewelry/report/list',
+    method: 'get',
+    params
+  })
+}
+
+export function reportCheck(reportId, params) {
+  return request({
+    url: `/admin/jewelry/report/check/${reportId}`,
+    method: 'post',
+    params
+  })
+}
+
+export function reportDetail(id, params) {
+  return request({
+    url: `/admin/jewelry/report/detail/${id}`,
+    method: 'get',
+    params
+  })
+}

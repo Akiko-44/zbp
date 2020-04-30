@@ -58,12 +58,12 @@ export const actions = {
       } else if (data) {
         // 如果第二个参为router 回调url为原来的地址 反之为包含fromUrl的对象 跳指定url
         if (data.fromUrl) {
-          localStorage.setItem('fromUrl',  data.fromUrl)
+          localStorage.setItem('fromUrl', data.fromUrl)
           data.router.push({
             name: 'user-login'
           })
         } else {
-          localStorage.setItem('fromUrl',  location.href)
+          localStorage.setItem('fromUrl', location.href)
           data.push({
             name: 'user-login'
           })

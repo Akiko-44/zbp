@@ -260,7 +260,7 @@ export default {
             item.createTime = item.createTime.split(' ')[0]
           })
           if (Object.keys(this.yesterdayData).length === 0 && this.listData && this.listData.length) {
-            this.yesterdayData = this.listData[0]
+            this.yesterdayData = this.listData[this.listData.length - 1]
           }
           this.total = succ.data.total
           this.xdata = []
@@ -337,7 +337,7 @@ export default {
         },
         legend: {
           right: '20%',
-          data: ['取消关注人数', '新增关注人数', '累计关注人数', '净增关注人数']
+          data: ['取消关注人次', '新增关注人次', '累计关注人次', '净增关注人次']
         },
         xAxis: [{
           type: 'category',
@@ -348,25 +348,25 @@ export default {
           type: 'value'
         }],
         series: [{
-          name: '取消关注人数',
+          name: '取消关注人次',
           type: 'line',
           stack: '总量',
           data: self.ydata1
         },
         {
-          name: '新增关注人数',
+          name: '新增关注人次',
           type: 'line',
           stack: '总量',
           data: self.ydata2
         },
         {
-          name: '累计关注人数',
+          name: '累计关注人次',
           type: 'line',
           stack: '总量',
           data: self.ydata3
         },
         {
-          name: '净增关注人数',
+          name: '净增关注人次',
           type: 'line',
           stack: '总量',
           data: self.ydata4

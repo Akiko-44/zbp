@@ -127,6 +127,7 @@ export default {
         offset: 1,
         limit: 20,
         authorId: Cookies.get('userId'),
+        userType: Cookies.get('userType'),
         title: '',
         startTime: '',
         endTime: ''

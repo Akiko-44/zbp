@@ -2,8 +2,13 @@
 <!-- <html xmlns:wb="http://open.weibo.com/wb"> -->
 
 <head>
+  <meta name="description" content="中宝协云平台-中国珠宝行业垂直云平台，聚集珠宝爱好者！最新珠宝新资讯，商品涵盖钻石、黄金、彩宝、翡翠玉石、珍珠琥珀等珍贵材质、独特设计、给您精致奢华精彩呈现。！">
+  <meta name="keywords"
+    content="中宝协云平台、中宝云、中宝平、珠宝圈、珠宝定制、珠宝鉴定、珠宝品牌、钻石戒指、玉石闲 置、珠宝直播、珠宝拍卖、珠宝行业、珠宝证书、求婚钻戒、彩宝、珠宝商城、珠宝首饰、珠宝展、珠宝设计、珠宝市场、珠宝图片、世界珠宝、钻戒定制、首饰、珠宝店、珠宝真品、黄金/K金及首饰、银饰及首饰、天然钻石及首饰、翡翠、和田玉、彩色宝石、珍珠、水晶、琥珀、黄龙玉、绿松石、玛瑙、印章石、其他玉石及首饰、贵金属（除黄金、K金、白银）首饰 、有机宝石（除珍珠、琥珀）、培育钻石及首饰、珠宝一站式购物商城、品牌珠宝、买首饰、珠宝商城、专业珠宝、珠宝鉴定、最权威的珠宝鉴定网站、珠宝科普、钻石怎么买、什么是5G黄金、什么是千足金、翡翠鉴定、玉石变色的原因、海水珍珠怎么鉴别、爱迪生珍珠、什么是海蓝宝、什么是铂金、怎么计算钻石价格">
   {{ HEAD }}
-
+  <!-- 友盟网站统计代码 -->
+  <script
+    type="text/javascript">document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1278840059'%3E%3C/span%3E%3Cscript src='https://s4.cnzz.com/z_stat.php%3Fid%3D1278840059' type='text/javascript'%3E%3C/script%3E"));</script>
   <!-- <script src="https://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script> -->
   <meta name="referrer" content="no-referrer" />
   <link href="//imgcache.qq.com/open/qcloud/video/tcplayer/tcplayer.min.css" rel="stylesheet">
@@ -75,7 +80,24 @@
   <!-- <wb:share-button appkey="1742873256" addition="simple" type="icon" style="display: none;"></wb:share-button> -->
   <!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" async></script> -->
 
+  <script>
+    var agent = navigator.userAgent.toLowerCase(); //检测是否是ios
+    var iLastTouch = null; //缓存上一次tap的时间
+    if (agent.indexOf('iphone') >= 0 || agent.indexOf('ipad') >= 0) {
+      document.body.addEventListener('touchend', function (event) {
+        var iNow = new Date()
+          .getTime();
+        iLastTouch = iLastTouch || iNow + 1 /** 第一次时将iLastTouch设为当前时间+1 */ ;
+        var delta = iNow - iLastTouch;
+        if (delta < 500 && delta > 0) {
+          event.preventDefault();
+          return false;
+        }
+        iLastTouch = iNow;
+      }, false);
+    }
 
+  </script>
   <script type="text/javascript" src="https://dl.ntalker.com/js/b2b/ntkfstat.js?siteid=zd_1000" charset="utf-8">
   </script>
 </body>

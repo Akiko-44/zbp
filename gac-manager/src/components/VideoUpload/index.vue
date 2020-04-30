@@ -68,7 +68,7 @@ export default {
   props: {
     tips: {
       type: String,
-      default: '仅支持mp4/avi/webm格式'
+      default: '建议大小50M以内；建议视频格式：MP4'
     },
     color: {
       type: String,
@@ -77,6 +77,16 @@ export default {
     uploadImg: {
       type: String,
       default: uploadImg
+    },
+    // 单文件大小限制
+    maxSize: {
+      type: Number,
+      'default': 50
+    },
+    // 文件格式限制
+    allowVideoFormat: {
+      type: Array,
+      'default': () => ['video/mp4', 'video/avi', 'video/webm']
     }
   },
   data() {
@@ -92,15 +102,15 @@ export default {
   methods: {
     // 上传前回调
     beforeUploadVideo(file) {
-      // const isLt30M = file.size / 1024 / 1024 < 30
-      if (['video/mp4', 'video/avi', 'video/webm'].indexOf(file.type) == -1) { // 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb'
+      const isLt = file.size / 1024 / 1024 < this.maxSize
+      if (this.allowVideoFormat.indexOf(file.type) == -1) { // 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb'
         this.$message.error('请上传正确的视频格式')
         return false
       }
-      /* if (!isLt30M) {
-        this.$message.error('上传视频大小不能超过30MB哦!')
+      if (!isLt) {
+        this.$message.error('上传视频大小不能超过' + this.maxSize + 'MB哦!')
         return false
-      } */
+      }
       this.isShowDelVideo = false
     },
     // 进度条

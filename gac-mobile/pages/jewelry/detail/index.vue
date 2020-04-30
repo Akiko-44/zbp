@@ -22,8 +22,9 @@
                 :src="detail.logo | setImg({ w: 180 })"
               />
             </div>
+            <div class="multScore">综合评分{{ detail.multipleScore ? detail.multipleScore.toFixed(1) : ''}}</div>
             <h4 class="merchant-name">{{detail.name}}</h4>
-            <div class="address">{{detail.provinceName}} | {{detail.cityName}}</div>
+            <div class="address">{{detail.provinceName}} <template v-if="detail.cityName">|</template> {{detail.cityName}}</div>
             <div
               class="brand text-hidden"
               v-if="detail.brands"
@@ -50,8 +51,11 @@
             </div>
           </div>
         </div>
-        <div class="explain tc">
-          <van-row>
+        <div
+          class="explain tc"
+          :class="{'hasBrand': detail.brands}"
+        >
+          <!-- <van-row>
             <van-col span="8">
               <p class="score value">{{ detail.multipleScore ? detail.multipleScore.toFixed(1) : ''}}</p>
               <p class="label">综合评分</p>
@@ -64,7 +68,7 @@
               <p class="value">{{detail.concernNum}}</p>
               <p class="label">粉丝</p>
             </van-col>
-          </van-row>
+          </van-row> -->
           <div
             class="notice"
             v-if="noticeList && noticeList.length"
@@ -353,6 +357,14 @@ export default {
     background-size: cover;
     background-position: center;
   }
+  & .multScore {
+    margin: 10px auto;
+    width: 90px;
+    height: 18px;
+    line-height: 18px;
+    border-radius: 9px;
+    background: #df735a;
+  }
   & .explain {
     margin: -50px 10px 0;
     padding: 0 10px;
@@ -363,6 +375,9 @@ export default {
     overflow: hidden;
     border-radius: 10px;
     background: #fff;
+    &.hasBrand {
+      margin-top: -10px;
+    }
     & .value {
       padding: 14px 0 6px;
       color: #000;

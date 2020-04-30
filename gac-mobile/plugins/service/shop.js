@@ -11,5 +11,11 @@ export default {
   intellectualDelete: ['/api/intellectual/delete', 'post'],
 
   // 商家开店简单注册
-  openShop: ['/api/userCenter/merchantInfo/simpleSave', 'post']
+  openShop: ['/api/userCenter/merchantInfo/simpleSave', 'post'],
+  // 商家开店简单注册，设计师选择分类
+  designmanuCategoryList: ['/admin/designmanu/category/list', 'post'],
+  // 营销-链接点击
+  attractSMSLink: ['/admin/AttractSMS/clickLink', 'post'],
+  // 营销-点击开店
+  attractSMSSetShop: ['/admin/AttractSMS/clickSetShop', 'post']
 }

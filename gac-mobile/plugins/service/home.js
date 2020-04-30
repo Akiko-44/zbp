@@ -5,5 +5,6 @@ export default {
   category: ['/api/homePage/categoryShow', 'get'],
   homeBanner: ['/api/homePage/bannerShow/1', 'get'],
   circleRecommend: ['/api/homePage/recommendation', 'get'],
-  homeBackground: ['/api/backgroundImg/getbackgroundImg', 'get']
+  homeBackground: ['/api/backgroundImg/getbackgroundImg', 'get'],
+  homePage: ['/app/homePage/new', 'get']
 }

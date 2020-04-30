@@ -12,16 +12,16 @@ module.exports = {
     proxyTable: {
       '/admin': {
         target: 'http://219.134.137.178:82'
-        // target: 'http://192.168.8.236:82'
+        // target: 'http://192.168.8.136:9000'
         // target: 'http://admin.gacjc.com'
-        // target: 'http://192.168.8.125:9000'
+        // target: 'http://192.168.8.133:9000'
         // target: 'http://192.168.8.159:9000'
         // target: 'http://192.168.8.171:9000'
         // changeOrigin: true
       },
       '/api': {
         target: 'http://219.134.137.178:81'
-        // target: 'http://192.168.8.236:81'
+        // target: 'http://192.168.8.136:9001'
         // target: 'http://gacjc.com'
         // target: 'http://192.168.8.150:9001'
         // target: 'http://192.168.8.159:9001'
@@ -30,7 +30,8 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: '192.168.8.80', // can be overwritten by process.env.HOST
+    // host: '127.0.0.1', // can be overwritten by process.env.HOST
+    host: '192.168.8.37', // can be overwritten by process.env.HOST
     port: 9527, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
@@ -86,7 +87,7 @@ module.exports = {
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

@@ -334,8 +334,17 @@ export const asyncRouterMap = [{
     authority: 'report',
     component: () => import('@/views/makeMerchant/fund/report'),
     meta: {
-      title: '报表'
+      title: '交易记录'
     }
+  }, {
+    path: 'orderCheckDetail',
+    name: 'orderCheckDetail',
+    authority: 'orderCheckDetail',
+    component: () => import('@/views/makeMerchant/fund/orderCheckDetail'),
+    meta: {
+      title: '订单详情'
+    },
+    hidden: true
   },
   {
     path: 'cardList',

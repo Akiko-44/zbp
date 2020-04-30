@@ -8,11 +8,12 @@
       :id="tinymceId"
     ></textarea>
     <div class="editor-custom-btn-container">
-      <p>图片格式：jpg/jpeg/png/gif，单张图片大小：2m以内，字数500字以内；</p>
+      <p>{{tips}}</p>
       <ImageUpload
         color="#1890ff"
         class="editor-upload-btn"
         @successCBK="imageSuccessCBK"
+        :maxSize="maxSize"
       ></ImageUpload>
     </div>
   </div>
@@ -49,6 +50,14 @@ export default {
       type: Number,
       required: false,
       default: 360
+    },
+    tips: {
+      type: String,
+      default: '图片格式：jpg/jpeg/png/gif，单张图片大小：5m以内'
+    },
+    maxSize: {
+      type: Number,
+      default: 5
     }
   },
   data() {
@@ -173,7 +182,7 @@ export default {
     imageSuccessCBK(arr) {
       const _this = this
       arr.forEach(v => {
-        window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v}" >`)
+        window.tinymce.get(_this.tinymceId).insertContent(`<p style="text-align:center"><img class="wscnph" src="${v}" ></p>`)
       })
     }
   },

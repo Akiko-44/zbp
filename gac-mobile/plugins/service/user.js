@@ -2,6 +2,7 @@ export default {
   userInfo: ['/api/userCenter/info', 'get'],
   userInfoUpdate: ['/api/userCenter/info/update', 'post'],
   userAuth: ['/api/userCenter/auth/save', 'post'],
+  userIsAuth: ['/api/userCenter/auth/userAuthMes', 'get'],
   userAuthList: ['/api/userCenter/auth/list', 'get'],
   userAuthDetail: ['/api/userCenter/auth/detail', 'get'],
   userDetail: ['/api/userCenter/auth/userDetail', 'get'],
@@ -42,6 +43,15 @@ export default {
   shopConcernList: ['/api/shopConcern/getShopConcern', 'get'],
   shopDeleteConcern: ['/api/shopConcern/remove', 'get'],
 
+  // 关注的话题列表
+  jewelryTopicList: ['/api/jewelryTopic/getTopicListByAuthorId', 'get'],
+  topicDeleteConcern: ['/api/jewelryTopic/setAttentionOrNot', 'post'],
+
+  // 举报记录列表
+  listReport: ['/api/jewelry/report/listReport', 'get'],
+  report: ['/api/jewelry/report/saveOrUpdate', 'post'],
+  reportDetail: ['/api/jewelry/report/detail', 'get'],
+
   userAddress: ['/api/userCenter/addr/page', 'get'],
   userAddressDetail: ['/api/userCenter/addr/detail', 'get'],
   userAddressUpdate: ['/api/userCenter/addr/addOrUpdate', 'post'],
@@ -49,8 +59,11 @@ export default {
   userSetDefault: ['/api/userCenter/addr/setDefault', 'post'],
   // 系统通知
   userMessage: ['/app/jewelry/message/page', 'get'],
+  userMessageDetail: ['/pc/portal/message/detail', 'get'],
   // 订单提醒
   userOrderMes: ['/api/order/message/page', 'get'],
+  messageOrderRead: ['/api/order/message/read', 'get'],
+  messageSystemRead: ['/pc/portal/message/isread', 'post'],
   // 售后列表
   userOrderRefund: ['/api/order/refund/page', 'post'],
   // 售后详情
@@ -76,6 +89,15 @@ export default {
   isCityEnter: ['/api/order/mobile/check', 'get'],
 
   //解除第三方绑定
-  thirdUnbind: ['/api/userCenter/third-unbind', 'post']
+  thirdUnbind: ['/api/userCenter/third-unbind', 'post'],
 
+  // 足迹
+  userFootprint: ['/app/jewelry/goods/page', 'get'],
+  circleFootprint: ['/app/jewelry/content/page', 'get'],
+  deleteUserFootprint: ['/api/userCenter/deleteUserFootprint', 'get'],
+
+  // 隐私设置
+  privacySetting: ['/api/jewelry/privacySetting', 'post'],
+  // 个性签名设置
+  userBriefSetting: ['/api/jewelry/updateUserBrief', 'post']
 }

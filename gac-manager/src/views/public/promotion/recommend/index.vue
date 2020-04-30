@@ -85,7 +85,7 @@
         label="推荐数量"
       >
         <template slot-scope="{ row }">
-          <span>{{row.recommendNumber}}</span>
+          <span>{{row.recommendNum}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -228,7 +228,7 @@ export default {
       this.listLoading = true
       getRecommendation(this.listParams).then(data => {
         this.list = data.data.records
-        this.list.map(item => {
+        /* this.list.map(item => {
           if (item.recommendType === 1) {
             item.recommendNumber = item.contentToGoodsDTOS.length
           } else if (item.recommendType === 2) {
@@ -236,7 +236,7 @@ export default {
           } else if (item.recommendType === 3) {
             item.recommendNumber = item.contentToExternalLinks.length
           }
-        })
+        })*/
         this.total = data.data.total
         this.listLoading = false
       })

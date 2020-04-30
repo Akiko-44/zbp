@@ -473,7 +473,7 @@ export default {
       memberData(0)
         .then(succ => {
           this.fixtotalData = succ.data
-          this.getListData(0)
+          this.getListData(0, this.listParams)
         })
     },
     getTotalData() {

@@ -1,4 +1,35 @@
+<style>
+  .bottom-line {
+    padding: 25px 0;
+  }
+
+  .bottom-line .container {
+    position: relative;
+    font-size: 14px;
+  }
+
+  .bottom-line .container:before,
+  .bottom-line .container:after {
+    content: '';
+    position: absolute;
+    width: 469px;
+    height: 1px;
+    background: #dddddd;
+    top: 6px;
+  }
+
+  .bottom-line .container:before {
+    left: 30px;
+  }
+
+  .bottom-line .container:after {
+    right: 30px;
+  }
+</style>
 <div id="footer" class="footer">
+  <!-- <div class="bottom-line tc">
+    <div class="container">中宝平 带你到源头买真品</div>
+  </div> -->
   <div class="footer-main">
     <div class="footerNav container">
       <ul class="clearfix top-four">

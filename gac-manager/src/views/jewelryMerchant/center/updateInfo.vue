@@ -23,10 +23,7 @@
             class="col"
             :span="6"
           >
-            <el-card
-              :body-style="{ padding: '0px' }"
-              style="width:202px;"
-            >
+            <el-card :body-style="{ padding: '0px' }">
               <a
                 target="_blank"
                 :href="form.userLogo | setImg"
@@ -45,11 +42,23 @@
             </el-card>
           </el-col>
         </el-row>
-        <ImageUpload
+        <el-button
           v-show="!form.userLogo"
-          :multiple="false"
+          @click="cropShow = true"
+          type="primary"
+        >上传</el-button>
+        <ImageCropper
+          ref="cropper"
+          v-model="cropShow"
+          :noCircle="true"
+          :noSquare="true"
+          :withCredentials="true"
+          imgFormat="jpg"
+          :width="500"
+          :height="500"
           prefix="userLogo"
-          @successCBK="userLogoUploadSuccess"
+          @crop-upload-success="userLogoUploadSuccess"
+          tips="5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸500*500"
         />
       </el-form-item>
       <el-form-item
@@ -78,17 +87,18 @@
 
 <script>
 import { getInfo, updateInfo } from '@/api/makeMerchant/center'
-import ImageUpload from '@/components/Upload'
+import ImageCropper from '@/components/ImageCropper'
 import { setImg } from '@/filters'
 import Cookies from 'js-cookie'
 
 export default {
   components: {
-    ImageUpload
+    ImageCropper
   },
   data() {
     return {
       loading: false,
+      cropShow: false,
       form: {
         userLogo: undefined,
         nickname: undefined
@@ -124,7 +134,9 @@ export default {
       }
     },
     userLogoUploadSuccess(imgs) {
-      this.form.userLogo = imgs[imgs.length - 1]/* [imgs.length - 1].key*/
+      this.form.userLogo = imgs
+      this.cropShow = false
+      this.$refs.cropper.setStep(1)
     },
     save() {
       const set = this.$refs

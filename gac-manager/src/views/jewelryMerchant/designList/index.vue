@@ -1,11 +1,15 @@
 
 <template>
-  <div class="app-container"
-       style="padding-right: 40px">
-    <el-form :model="form"
-             :rules="rules"
-             ref="form"
-             label-width="120px">
+  <div
+    class="app-container"
+    style="padding-right: 40px"
+  >
+    <el-form
+      :model="form"
+      :rules="rules"
+      ref="form"
+      label-width="120px"
+    >
 
       <el-form-item label="ID">
         <!-- <el-input disabled
@@ -24,15 +28,21 @@
            style="width: 200px; background-image: url('https://imgsa.baidu.com/forum/w%3D580%3B/sign=922bfcf78818367aad897fd51e4889d4/503d269759ee3d6d7781b6154d166d224e4adeac.jpg')"
            href="https://imgsa.baidu.com/forum/w%3D580%3B/sign=922bfcf78818367aad897fd51e4889d4/503d269759ee3d6d7781b6154d166d224e4adeac.jpg"
            alt=""></a> -->
-        <el-row class="row"
-                v-if="form.userLogo">
-          <el-col class="col"
-                  :span="6">
+        <el-row
+          class="row"
+          v-if="form.userLogo"
+        >
+          <el-col
+            class="col"
+            :span="6"
+          >
             <el-card :body-style="{ padding: '0px' }">
-              <a target="_blank"
-                 :href="form.userLogo | setImg"
-                 class="image"
-                 :style="getImageStyle(form.userLogo)"></a>
+              <a
+                target="_blank"
+                :href="form.userLogo | setImg"
+                class="image"
+                :style="getImageStyle(form.userLogo)"
+              ></a>
             </el-card>
           </el-col>
         </el-row>
@@ -62,50 +72,72 @@
       </el-form-item>
 
       <el-form-item label="设计年限">
-        <el-select v-model="form.ageLimit"
-                   placeholder="选择设计年限">
-          <el-option v-for="value in ageLimitData"
-                     :key="value"
-                     :label="value"
-                     :value="value">
+        <el-select
+          v-model="form.ageLimit"
+          placeholder="选择设计年限"
+        >
+          <el-option
+            v-for="value in ageLimitData"
+            :key="value"
+            :label="value"
+            :value="value"
+          >
           </el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="行业资历"
-                    prop="experience">
-        <el-input :autosize="{ minRows: 3, maxRows: 5}"
-                  type="textarea"
-                  v-model="form.experience"
-                  placeholder="请输入行业资历，不超过500字"></el-input>
+      <el-form-item
+        label="行业资历"
+        prop="experience"
+      >
+        <el-input
+          :autosize="{ minRows: 3, maxRows: 5}"
+          type="textarea"
+          v-model="form.experience"
+          placeholder="请输入行业资历，不超过500字"
+        ></el-input>
       </el-form-item>
 
-      <el-form-item label="获奖证书"
-                    prop="honor">
-        <el-input :autosize="{ minRows: 3, maxRows: 5}"
-                  type="textarea"
-                  v-model="form.honor"
-                  placeholder="请输入获奖证书，回车分段，不超过500字"></el-input>
+      <el-form-item
+        label="获奖证书"
+        prop="honor"
+      >
+        <el-input
+          :autosize="{ minRows: 3, maxRows: 5}"
+          type="textarea"
+          v-model="form.honor"
+          placeholder="请输入获奖证书，回车分段，不超过500字"
+        ></el-input>
       </el-form-item>
 
       <el-form-item label="描述图片">
-        <el-row class="row"
-                v-show="form.picUrlList.length">
-          <el-col class="col"
-                  :span="6"
-                  v-for="(picUrl, index) in form.picUrlList"
-                  :key="index">
-            <el-card style="width:250px;"
-                     :body-style="{ padding: '0px' }">
-              <a target="_blank"
-                 :href="picUrl | setImg"
-                 class="image"
-                 :style="getImageStyle(picUrl)"></a>
+        <el-row
+          class="row"
+          v-show="form.picUrlList.length"
+        >
+          <el-col
+            class="col"
+            :span="6"
+            v-for="(picUrl, index) in form.picUrlList"
+            :key="index"
+          >
+            <el-card
+              style="width:250px;"
+              :body-style="{ padding: '0px' }"
+            >
+              <a
+                target="_blank"
+                :href="picUrl | setImg"
+                class="image"
+                :style="getImageStyle(picUrl)"
+              ></a>
               <div style="padding: 14px;">
                 <div class="bottom clearfix">
-                  <el-button type="text"
-                             class="button"
-                             @click="form.picUrlList.splice(index, 1)">删除</el-button>
+                  <el-button
+                    type="text"
+                    class="button"
+                    @click="form.picUrlList.splice(index, 1)"
+                  >删除</el-button>
                 </div>
               </div>
             </el-card>
@@ -117,10 +149,12 @@
           prefix="dm-describe"
           @successCBK="describeUploadSuccess"
         />-->
-          <ImageUpload :multiple="true"
-                       prefix="dm-describe"
-                       @successCBK="describeUploadSuccess" />
-          <div>共<span class="danger">{{form.picUrlList.length}}</span>张，还能上传<span class="danger">{{9 - form.picUrlList.length}}</span>张，格式：jpg、jpeg、png、gif；大小：单张图片不超过3m</div>
+          <ImageUpload
+            :multiple="true"
+            prefix="dm-describe"
+            @successCBK="describeUploadSuccess"
+          />
+          <div>共<span class="danger">{{form.picUrlList.length}}</span>张，还能上传<span class="danger">{{9 - form.picUrlList.length}}</span>张，格式：jpg、jpeg、png、gif；大小：单张图片不超过5m</div>
         </div>
       </el-form-item>
 
@@ -228,9 +262,11 @@
       </el-form-item> -->
 
       <el-form-item>
-        <el-button type="primary"
-                   :loading="loading"
-                   @click="save">保存</el-button>
+        <el-button
+          type="primary"
+          :loading="loading"
+          @click="save"
+        >保存</el-button>
       </el-form-item>
     </el-form>
   </div>

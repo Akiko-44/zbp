@@ -55,11 +55,20 @@
       z-index: 1;
     }
 
+    .bginfo .score {
+      display: inline-block;
+      width: 110px;
+      line-height: 24px;
+      background: #fb746e;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
     .jewelry-shopSearch .bg img {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      margin: 65px auto 30px;
+      margin: 55px auto 10px;
     }
 
     .jewelry-shopSearch .bg h2 {
@@ -73,7 +82,7 @@
       height: 40px;
       line-height: 40px;
       border-radius: 4px;
-      margin: 25px 15px 30px;
+      margin: 25px 15px;
       padding: 0;
       cursor: pointer;
       border: 1px solid #fff;
@@ -257,10 +266,11 @@
       </div>
       <div class="bginfo">
         <img :src="data.logo" />
+        <p><span class="score">综合评分：{{data.multipleScore}}</span></p>
         <h2>{{data.name}}</h2>
         <p>{{data.provinceName}}<span style="margin: 0 5px;">|</span>{{data.cityName}}</p>
         <div class="server">
-          <span class="server-btn">客服</span>
+          <span class="server-btn" @click="contactKefu">客服</span>
           <el-button type="danger" class="server-btn" @click="shopConcern(data.userId,$event)" v-if="isShopConcern">关注
           </el-button>
           <el-button type="info" class="server-btn has-concerned" @click="removeShopConcern(data.userId,$event)" v-else>
@@ -272,7 +282,7 @@
         <p v-if="data.brands">经营品牌：{{data.brands}}</p>
       </div>
     </div>
-    <div class="grade">
+    <div class="grade hide">
       <div class="fl">
         <span>综合评分：{{data.multipleScore}}</span>
         <span>销售：{{data.goodsSaleCount}}</span>
@@ -339,6 +349,7 @@
     </div>
   </div>
   <script type="text/javascript">
+    var NTKF_PARAM = {}
     var mainVm = new Vue({
       el: '#main',
       data: {
@@ -423,6 +434,26 @@
               utils.alert('success', '您已取消关注')
             }
           });
+        },
+        contactKefu() {
+          NTKF.im_openInPageChat(this.data.keFuId)
+        },
+        // 初始化客服
+        initKefu(id, keFuId) {
+          var uname = utils.getCookie('nickName') || ""
+          var uid = utils.getCookie('userIdZBX') || ""
+          NTKF_PARAM = {
+            siteid: utils.getCookie('siteid'), //企业ID，为固定值，必填
+            sellerid: 'zd_' + utils.kefuStr(keFuId),
+            settingid: keFuId, //接待组ID，为固定值，必填
+            uid: uid, //用户ID，支持字母、数字、下划线。未登录可以为空，但不能给null，uid赋予的值在显示到小能客户端上
+            uname: uname, //未登录可以为空，但不能给null，uname赋予的值显示到小能客户端上
+            isvip: "0", //是否为vip用户，0代表非会员，1代表会员，取值显示到小能客户端上
+            userlevel: "0", //网站自定义会员级别，0-N，可根据选择判断，取值显示到小能客户端上
+            erpparam: "erp", //erpparam为erp功能的扩展字段，可选，购买erp功能后用于erp功能集成
+            itemid: id, //(必填)商品ID
+            itemparam: '1' //(选填)itemparam为商品接口扩展字段，用于商品接口特殊要求集成
+          }
         },
 
         render(page) {

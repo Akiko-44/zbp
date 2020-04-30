@@ -4,14 +4,12 @@
       <el-form
         :inline="true"
         :model="listParams"
+        :rules="rules"
         ref="weMediaListForm"
         label-width="100px"
         class="weMediaListForm"
       >
-        <el-form-item
-          label="作者名称:"
-          prop="name"
-        >
+        <el-form-item prop="name">
           <el-input
             class="search-input"
             placeholder="请输入作者名称"
@@ -20,16 +18,19 @@
             v-model="listParams.name"
           > </el-input>
         </el-form-item>
-        <el-form-item label="状态:">
+        <el-form-item prop="mobilePhone">
+          <el-input
+            placeholder="请输入手机号"
+            v-model="listParams.mobilePhone"
+          > </el-input>
+        </el-form-item>
+        <el-form-item>
           <el-select
             v-model="listParams.status"
             clearable
             placeholder="请选择状态"
           >
-            <el-option
-              label="全部"
-              :value="undefined"
-            >
+            <el-option :value="undefined">
             </el-option>
             <el-option
               v-for="(value, key) in statusList"
@@ -40,7 +41,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="创建时间:">
+        <el-form-item>
           <el-date-picker
             value-format="yyyy-MM-dd"
             type="daterange"
@@ -112,6 +113,13 @@
 
       <el-table-column
         align="center"
+        label="手机号"
+        property="mobilePhone"
+      >
+      </el-table-column>
+
+      <el-table-column
+        align="center"
         label="内容数"
         class-name="blue"
       >
@@ -172,7 +180,7 @@
             size="small"
             @click="changeStatus(row.id, 1, $index)"
             v-if="row.status == 0"
-          >解冻</el-button>
+          >正常</el-button>
         </template>
       </el-table-column>
 
@@ -213,6 +221,7 @@ export default {
         offset: 1,
         limit: 20,
         name: undefined,
+        mobilePhone: undefined,
         status: undefined,
         startTime: undefined,
         endTime: undefined
@@ -221,7 +230,12 @@ export default {
       dateValue: '',
       statusList: {
         0: '冻结',
-        1: '解冻'
+        1: '正常'
+      },
+      rules: {
+        mobilePhone: [
+          { pattern: /^[0-9]*$/, message: '请输入正确的手机号', trigger: 'blur' }
+        ]
       },
       joinState: 0,
       pickerOptions: {
@@ -304,7 +318,11 @@ export default {
        }) */
     },
     handleFilter() {
-      this.getList()
+      this.$refs['weMediaListForm'].validate((valid) => {
+        if (valid) {
+          this.getList()
+        }
+      })
     },
     handleSizeChange(val) {
       this.listParams.limit = val

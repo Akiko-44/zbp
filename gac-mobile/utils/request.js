@@ -10,7 +10,8 @@ import {
   AppToken,
   isAppToken,
   wechatToken,
-  isWechatToken
+  isWechatToken,
+  removeToken
 } from '~/utils/auth'
 import {
   Toast
@@ -60,9 +61,9 @@ service.interceptors.request.use(
     } else {
       config.headers['Authorization'] = getToken()
     }
-    if (config.url === '/api/goldRecycle/token') {
-      config.headers['reqSrc'] = 'h'
-    }
+    // if (config.url === '/api/goldRecycle/token') {
+    config.headers['reqSrc'] = 'h'
+    // }
     if (config.method === 'post') {
       config.cancelToken = new cancelToken((c) => {
         removePending(config, c)
@@ -83,19 +84,22 @@ service.interceptors.response.use(
     }
     const data = response.data
 
-    if (data.code === 9) {
+    if (data.code === 9 || data.code === 10 || data.code === 11) {
       if (native.isApp()) {
         native.goToLogin()
       } else {
         // jump('/user/login', {
         //   from: location.href
         // })
-        // alert('cookieToken---' + getToken())
-        // alert('headerToken---' + JSON.stringify(response.config.headers.Authorization))
+        removeToken()
         jump('/user/login')
         localStorage.setItem('fromUrl', location.href)
       }
       return Promise.reject(new Error('登录超时'))
+    }
+
+    if (location.href.indexOf('src=luckDrawWeb') > -1) {
+      return data
     }
 
     if (response.status !== 200 || !data.success) {

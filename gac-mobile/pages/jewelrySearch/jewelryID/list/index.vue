@@ -42,10 +42,12 @@
       v-show="!success"
     >
       <!-- <p>证书编号不存在或者查询码错误</p> -->
-      <img
+      <!-- <img
         src="../../../../assets/images/noResult.png"
         alt=""
-      >
+      > -->
+      <img src="../../../../assets/images/emptylist.png" />
+      <p>无查询结果</p>
     </div>
   </AppView>
 </template>
@@ -171,6 +173,8 @@ export default {
   & img {
     margin-top: 100px;
     width: 100%;
+  }
+  & p {
   }
 }
 </style>

@@ -7,7 +7,13 @@
     <div
       class="card-img lazy-img-box"
       v-lazy:background-image="setImg(imgUrl, { w: 400 })"
-    ></div>
+    >
+      <div
+        class="card-img-icon lazy-img-box"
+        v-lazy:background-image="setImg(appBigIcon, { w: 400 })"
+        v-if="appBigIcon != ''"
+      ></div>
+    </div>
     <div class="card-info">
       <h4 class="card-title text-hidden">{{title}}</h4>
       <!--<p class="dark-gray text-hidden" style="margin: 5px 0;">{{catName}}</p>-->
@@ -59,6 +65,7 @@ import { setImg } from '~/utils/qiniu'
 export default {
   props: {
     imgUrl: String,
+    appBigIcon: String,
     price: [String, Number],
     lowPrice: [String, Number],
     hightPrice: [String, Number],
@@ -87,6 +94,7 @@ export default {
   z-index: 0;
   overflow: hidden;
   margin-bottom: 10px;
+  height: 283px;
   & .discount {
     display: inline-block;
     position: absolute;
@@ -109,6 +117,9 @@ export default {
     width: 100%;
     height: 172px;
     background-color: var(--light-gray);
+  }
+  & .card-img-icon {
+    height: 100%;
   }
   & .card-info {
     font-size: 12px;

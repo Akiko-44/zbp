@@ -18,7 +18,8 @@
             :maxlength="20"
             style="width: 195px;"
             v-model.trim="listQuery.orderNumber"
-          > </el-input>
+          >
+          </el-input>
         </el-form-item>
         <el-form-item label="商品名称:">
           <el-input
@@ -26,7 +27,8 @@
             :maxlength="30"
             style="width: 195px;"
             v-model.trim="listQuery.goodsName"
-          > </el-input>
+          >
+          </el-input>
         </el-form-item>
         <el-form-item label="订单状态:">
           <el-select
@@ -100,14 +102,14 @@
           v-model="errorDialog"
           size="tiny"
         >
-          <span>{{errorMsg}}</span>
+          <span>{{ errorMsg }}</span>
           <span
             slot="footer"
             class="dialog-footer"
           >
             <el-button
               type="primary"
-              @click="errorDialog=false"
+              @click="errorDialog = false"
             >确认</el-button>
           </span>
         </el-dialog>
@@ -115,7 +117,7 @@
     </el-form>
 
     <el-table
-      :key='tableKey'
+      :key="tableKey"
       :data="list"
       v-loading.body="listLoading"
       border
@@ -137,12 +139,13 @@
         label="订单状态"
       >
         <template slot-scope="{ row }">
-          <span>{{orderState[row.state]}}</span>
+          <span v-if="row.state === 6 && row.isCommented === 2">已评价</span>
+          <span v-else>{{ orderState[row.state] }}</span>
         </template>
       </el-table-column>
 
       <el-table-column
-        width="110"
+        width="130"
         align="center"
         label="购买人手机号码"
         prop="buyUserName"
@@ -180,11 +183,11 @@
       >
         <template slot-scope="{ row }">
           <span
-            v-for="(item,index) in row.orderGoodVOList"
+            v-for="(item, index) in row.orderGoodVOList"
             :key="index"
           >
             <span v-if="index > 0">，</span>
-            {{item.skuName}}
+            {{ item.skuName }}
           </span>
         </template>
       </el-table-column>
@@ -211,7 +214,7 @@
         label="支付时间"
       >
         <template slot-scope="{ row }">
-          <span>{{row.payTime || '-'}}</span>
+          <span>{{ row.payTime || "-" }}</span>
         </template>
       </el-table-column>
 
@@ -224,7 +227,12 @@
         <template slot-scope="{ row }">
           <el-button
             size="small"
-            @click="$router.push({ name: 'orderDetail', query: { id: row.orderNumber } })"
+            @click="
+              $router.push({
+                name: 'orderDetail',
+                query: { id: row.orderNumber }
+              })
+            "
           >
             订单详情
           </el-button>
@@ -232,7 +240,7 @@
             type="success"
             size="small"
             @click="confirmOrder(row.orderNumber)"
-            v-if="row.state === 2"
+            v-if="row.state === 2 || row.state === 24"
           >
             确认订单
           </el-button>
@@ -240,7 +248,7 @@
             type="danger"
             size="small"
             @click="cancelOrder(row.orderNumber)"
-            v-if="row.state === 2"
+            v-if="row.state === 2 || row.state === 24"
           >
             取消订单
           </el-button>
@@ -272,7 +280,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page.sync="listQuery.offset"
-        :page-sizes="[10,20,30,50]"
+        :page-sizes="[10, 20, 30, 50]"
         :page-size="listQuery.limit"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -290,8 +298,8 @@
       title="物流详情"
       :visible.sync="dialogExpressVisible"
     >
-      <div>物流公司：{{orderExpressData.com}}</div>
-      <div>物流单号：{{orderExpressData.nu}}</div>
+      <div>物流公司：{{ orderExpressData.com }}</div>
+      <div>物流单号：{{ orderExpressData.nu }}</div>
       <el-table
         :data="orderExpressData.data"
         border
@@ -302,12 +310,12 @@
           width="200px"
         >
           <template slot-scope="{ row }">
-            <span>{{row.time}}</span>
+            <span>{{ row.time }}</span>
           </template>
         </el-table-column>
         <el-table-column label="物流信息">
           <template slot-scope="{ row }">
-            <span>{{row.context}}</span>
+            <span>{{ row.context }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -319,7 +327,11 @@
 // 引入xlsx
 var XLSX = require('xlsx')
 import {
-  getJewelryOrder, confirmOrder, cancelOrder, lookExpress, expressMap
+  getJewelryOrder,
+  confirmOrder,
+  cancelOrder,
+  lookExpress,
+  expressMap
 } from '@/api/common/order'
 
 import waves from '@/directive/waves' // 水波纹指令
@@ -360,31 +372,35 @@ export default {
       ],
       orderGoodVOList: [],
       pickerOptions: {
-        shortcuts: [{
-          text: '最近一周',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, end])
+        shortcuts: [
+          {
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          },
+          {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
+            }
           }
-        }, {
-          text: '最近一个月',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            picker.$emit('pick', [start, end])
-          }
-        }]
+        ]
       },
       orderState: {
         '1': '待付款',
@@ -414,25 +430,31 @@ export default {
       orderExpressData: {},
       rules: {
         orderNumber: [
-          { pattern: /^[0-9]*$/, message: '订单编号需为纯数字', trigger: 'blur' }
+          {
+            pattern: /^[0-9]*$/,
+            message: '订单编号需为纯数字',
+            trigger: 'blur'
+          }
         ]
       },
       // 导出文件
       outFile: '', // 导出文件el
       errorDialog: false, // 错误信息弹窗
       errorMsg: '', // 错误信息内容
-      excelTitle: [{
-        orderNumber: '订单编号',
-        state: '订单状态',
-        buyUserName: '购买人手机号码',
-        consignee: '收件人',
-        phone: '收件人手机号',
-        shippingAddress: '收货地址',
-        goodsNameList: '商品名称',
-        payMoney: '订单金额',
-        createTime: '下单时间',
-        payTime: '支付时间'
-      }]
+      excelTitle: [
+        {
+          orderNumber: '订单编号',
+          state: '订单状态',
+          buyUserName: '购买人手机号码',
+          consignee: '收件人',
+          phone: '收件人手机号',
+          shippingAddress: '收货地址',
+          goodsNameList: '商品名称',
+          payMoney: '订单金额',
+          createTime: '下单时间',
+          payTime: '支付时间'
+        }
+      ]
     }
   },
   computed: {
@@ -452,7 +474,7 @@ export default {
     }
   },
   watch: {
-    '$route': 'fetchData',
+    $route: 'fetchData',
     payDateValue(value) {
       this.listQuery.payStartTime = value ? value[0] : undefined
       this.listQuery.payEndTime = value ? value[1] : undefined
@@ -478,12 +500,11 @@ export default {
     },
     getList() {
       this.listLoading = true
-      getJewelryOrder(this.listQuery)
-        .then(data => {
-          this.list = data.data.records
-          this.total = data.data.total
-          this.listLoading = false
-        })
+      getJewelryOrder(this.listQuery).then(data => {
+        this.list = data.data.records
+        this.total = data.data.total
+        this.listLoading = false
+      })
     },
     getExportList() {
       getJewelryOrder({
@@ -513,7 +534,7 @@ export default {
       })
     },
     handleFilter() {
-      this.$refs['designListQueryForm'].validate((valid) => {
+      this.$refs['designListQueryForm'].validate(valid => {
         if (valid) {
           // this.getList()
           this.replaceRouter()
@@ -533,15 +554,18 @@ export default {
       //    this.getList()
     },
     replaceRouter() {
-      this.$router.replace({ name: 'orderList', query: {
-        page: this.listQuery.offset,
-        limit: this.listQuery.limit,
-        orderNumber: this.listQuery.orderNumber,
-        goodsName: this.listQuery.goodsName,
-        status: this.listQuery.status,
-        isCoupons: this.listQuery.isCoupons,
-        payDateValue: this.payDateValue
-      } })
+      this.$router.replace({
+        name: 'orderList',
+        query: {
+          page: this.listQuery.offset,
+          limit: this.listQuery.limit,
+          orderNumber: this.listQuery.orderNumber,
+          goodsName: this.listQuery.goodsName,
+          status: this.listQuery.status,
+          isCoupons: this.listQuery.isCoupons,
+          payDateValue: this.payDateValue
+        }
+      })
     },
     resetQuery() {
       this.listQuery = getInitQuery()
@@ -556,15 +580,14 @@ export default {
         cancelButtonText: '取消'
       }).then(({ value }) => {
         value = encodeURI(value)
-        cancelOrder(orderNo, value)
-          .then(_ => {
-            this.getList()
-            this.$notify({
-              title: '成功',
-              message: '已取消订单',
-              type: 'success'
-            })
+        cancelOrder(orderNo, value).then(_ => {
+          this.getList()
+          this.$notify({
+            title: '成功',
+            message: '已取消订单',
+            type: 'success'
           })
+        })
       })
     },
     confirmOrder(orderNo) {
@@ -572,15 +595,14 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
-        confirmOrder(orderNo)
-          .then(_ => {
-            this.getList()
-            this.$notify({
-              title: '成功',
-              message: '已确认订单',
-              type: 'success'
-            })
+        confirmOrder(orderNo).then(_ => {
+          this.getList()
+          this.$notify({
+            title: '成功',
+            message: '已确认订单',
+            type: 'success'
           })
+        })
       })
     },
     deliver(row) {
@@ -615,73 +637,108 @@ export default {
         }
       })
     },
-    downloadFile() { // 点击导出按钮
+    downloadFile() {
+      // 点击导出按钮
       const listData = this.exportList
       const downloadData = this.excelTitle.concat(listData)
       this.downloadExl(downloadData, '订单列表')
     },
-    downloadExl(json, downName, type) { // 导出到excel
+    downloadExl(json, downName, type) {
+      // 导出到excel
       const keyMap = [] // 获取键
       for (const k in json[0]) {
         keyMap.push(k)
       }
       const tmpdata = [] // 用来保存转换好的json
-      json.map((v, i) => keyMap.map((k, j) => Object.assign({}, {
-        v: v[k],
-        position: (j > 25 ? this.getCharCol(j) : String.fromCharCode(65 + j)) + (i + 1)
-      }))).reduce((prev, next) => prev.concat(next)).forEach(function(v) {
-        tmpdata[v.position] = {
-          v: v.v
-        }
-      })
+      json
+        .map((v, i) =>
+          keyMap.map((k, j) =>
+            Object.assign(
+              {},
+              {
+                v: v[k],
+                position:
+                  (j > 25 ? this.getCharCol(j) : String.fromCharCode(65 + j)) +
+                  (i + 1)
+              }
+            )
+          )
+        )
+        .reduce((prev, next) => prev.concat(next))
+        .forEach(function(v) {
+          tmpdata[v.position] = {
+            v: v.v
+          }
+        })
       const outputPos = Object.keys(tmpdata) // 设置区域,比如表格从A1到D10
       const tmpWB = {
         SheetNames: ['mySheet'], // 保存的表标题
         Sheets: {
-          'mySheet': Object.assign({},
+          mySheet: Object.assign(
+            {},
             tmpdata, // 内容
             {
               '!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1] // 设置填充区域
-            })
+            }
+          )
         }
       }
-      const tmpDown = new Blob([this.s2ab(XLSX.write(tmpWB,
-        { bookType: (type === undefined ? 'xlsx' : type), bookSST: false, type: 'binary' } // 这里的数据是用来定义导出的格式类型
-      ))], {
-        type: ''
-      }) // 创建二进制对象写入转换好的字节流
+      const tmpDown = new Blob(
+        [
+          this.s2ab(
+            XLSX.write(
+              tmpWB,
+              {
+                bookType: type === undefined ? 'xlsx' : type,
+                bookSST: false,
+                type: 'binary'
+              } // 这里的数据是用来定义导出的格式类型
+            )
+          )
+        ],
+        {
+          type: ''
+        }
+      ) // 创建二进制对象写入转换好的字节流
       var href = URL.createObjectURL(tmpDown) // 创建对象超链接
       this.outFile.download = downName + '.xlsx' // 下载名称
       this.outFile.href = href // 绑定a标签
       this.outFile.click() // 模拟点击实现下载
-      setTimeout(function() { // 延时释放
+      setTimeout(function() {
+        // 延时释放
         URL.revokeObjectURL(tmpDown) // 用URL.revokeObjectURL()来释放这个object URL
       }, 100)
     },
-    s2ab(s) { // 字符串转字符流
+    s2ab(s) {
+      // 字符串转字符流
       var buf = new ArrayBuffer(s.length)
       var view = new Uint8Array(buf)
       for (var i = 0; i !== s.length; ++i) {
-        view[i] = s.charCodeAt(i) & 0xFF
+        view[i] = s.charCodeAt(i) & 0xff
       }
       return buf
     },
-    getCharCol(n) { // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
+    getCharCol(n) {
+      // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
       let s = ''
       let m = 0
       while (n > 0) {
-        m = n % 26 + 1
+        m = (n % 26) + 1
         s = String.fromCharCode(m + 64) + s
         n = (n - m) / 26
       }
       return s
     },
-    fixdata(data) { // 文件流转BinaryString
+    fixdata(data) {
+      // 文件流转BinaryString
       var o = ''
       var l = 0
       var w = 10240
       for (; l < data.byteLength / w; ++l) {
-        o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)))
+        o += String.fromCharCode.apply(
+          null,
+          new Uint8Array(data.slice(l * w, l * w + w))
+        )
       }
       o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)))
       return o
@@ -712,4 +769,3 @@ export default {
   padding-top: 0;
 }
 </style>
-

@@ -31,8 +31,9 @@
 .van-button.van-button--primary,
 .van-button.primary-btn {
   color: white;
-  background: var(--brown);
-  border-color: var(--brown);
+  background: var(--theme);
+  border-color: var(--theme);
+
   &.block {
     height: 38px;
     line-height: 38px;
@@ -43,6 +44,7 @@
   color: white;
   background: var(--red);
   border-color: var(--red);
+
   &.van-button--block {
     height: 38px;
     line-height: 38px;
@@ -53,6 +55,7 @@
   background: transparent;
   color: var(--brown);
   border-color: var(--brown);
+
   & .van-loading--white circle {
     stroke: #c9c9c9;
   }

@@ -166,19 +166,21 @@ module.exports = {
   proxy: {
     '/app': {
       // target: 'http://192.168.8.236:83'
-      target: 'http://192.168.8.177:83'
+      target: 'http://219.134.137.178:83'
       // target: 'http://app.gacjc.com'
     },
     '/api': {
       // target: 'http://192.168.8.236:83'
-      target: 'http://192.168.8.177:83'
       // target: 'http://219.134.137.178:83'
-      // target: 'http://192.168.8.133:9001'
+      target: 'http://219.134.137.178:83'
+      // target: 'http://192.168.8.182:9001' // 王
+      // target: 'http://192.168.8.199:9001'  // 席
       // target: 'http://app.gacjc.com'
     },
     '/admin': {
       // target: 'http://192.168.8.236:83'
-      target: 'http://192.168.8.177:83'
+      target: 'http://219.134.137.178:82'
+      // target: 'http://192.168.8.199:9000'
       // target: 'http://app.gacjc.com'
     },
     '/pc': {
@@ -213,6 +215,10 @@ module.exports = {
     },
     {
       src: '~/plugins/native',
+      ssr: false
+    },
+    {
+      src: '~/plugins/route',
       ssr: false
     }
   ],

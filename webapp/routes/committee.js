@@ -13,5 +13,11 @@ router.get("/app", function (req, res, next) {
     headerIndex: 1
   });
 });
+router.get("/activity", function (req, res, next) {
+  res.render("committee/activity", {
+    title: "3.8女王节",
+    headerIndex: 1
+  });
+});
 
 module.exports = router;

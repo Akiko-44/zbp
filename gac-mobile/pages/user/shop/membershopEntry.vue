@@ -226,7 +226,8 @@ export default {
         mobilePhone: "",
         dynamicVerifyCode: "",
         msgId: "",
-        passWord: ""
+        passWord: "",
+        setshopType: 4 //开店入口方式：1APP-安卓、2APP-苹果、3PC、4H5、5招商短信
       },
       memberColumns: [
         "副会长单位",
@@ -282,6 +283,13 @@ export default {
   },
   methods: {
     submit() {
+      if (!!window.Android) {
+        this.form.setshopType = 1
+      } else if (!!window.webkit) {
+        this.form.setshopType = 2
+      } else if (this.$route.query.setshopType === 5) {
+        this.form.setshopType = 5
+      }
       if (this.$refs.form.checkAll(error => this.$toast(error[0]))) {
         console.log(this.form);
         this.$loading(this.$service("openShop", { data: this.form }))
@@ -419,5 +427,8 @@ export default {
   & .red {
     color: red;
   }
+}
+>>> .van-cell__value {
+  overflow: visible;
 }
 </style>

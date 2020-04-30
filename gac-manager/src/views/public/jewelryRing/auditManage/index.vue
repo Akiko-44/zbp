@@ -62,6 +62,22 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item>
+          <el-select
+            style="width: 120px;"
+            v-model="listParams.topicId"
+            placeholder="请选择话题"
+            clearable
+          >
+            <el-option
+              v-for="item in topicList"
+              :key="item.id"
+              :label="item.topicName"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="添加时间:">
           <el-date-picker
             value-format="yyyy-MM-dd HH:mm:ss"
@@ -129,7 +145,25 @@
         label="栏目"
       >
         <template slot-scope="{ row }">
-          <span>{{row.columnName}}</span>
+          <span>{{row.columnName?row.columnName:'无'}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        width="80px"
+        align="center"
+        label="标签"
+      >
+        <template slot-scope="{ row }">
+          <span>{{row.labelName?row.labelName:'无'}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        width="80px"
+        align="center"
+        label="话题"
+      >
+        <template slot-scope="{ row }">
+          <span>{{row.topicName?row.topicName:'无'}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -175,7 +209,7 @@
         label="推荐数量"
       >
         <template slot-scope="{ row }">
-          <span>{{row.recommendNumber}}</span>
+          <span>{{row.recommendNumber?row.recommendNumber:0}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -184,7 +218,7 @@
         label="推荐类型"
       >
         <template slot-scope="{ row }">
-          <span>{{recommendTypeMap[row.recommendType]}}</span>
+          <span>{{recommendTypeMap[row.recommendType]?recommendTypeMap[row.recommendType]:'无'}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -194,7 +228,7 @@
         v-if="activeName == 'contentAudit'"
       >
         <template slot-scope="{ row }">
-          <span>{{row.updateTime}}</span>
+          <span>{{row.updateTime?row.updateTime:row.createTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -204,7 +238,7 @@
         v-if="activeName == 'pushAudit'"
       >
         <template slot-scope="{ row }">
-          <span>{{recommendTypeMap[row.recommendType]}}</span>
+          <span>{{pushStatusMap[row.pushStatus]}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -267,10 +301,11 @@
 </template>
 
 <script>
-import { jewelryContentList, delJewelryContent, jewelryColumnList } from '@/api/public/jewelryRing'
+import { getTopicList, jewelryContentList, delJewelryContent, jewelryColumnList } from '@/api/public/jewelryRing'
 import AuditContentDialog from './auditContentDialog'
 import AuditPushDialog from './auditPushDialog'
 import waves from '@/directive/waves' // 水波纹指令
+import Cookies from 'js-cookie'
 
 export default {
   directives: {
@@ -295,10 +330,12 @@ export default {
         authorId: '',
         columnId: '',
         contentStatus: 0,
+        userType: Cookies.get('userType'),
         pushStatus: '',
         startTime: '',
         endTime: ''
       },
+      topicList: [],
       typeList: [
         { value: '1', label: '图文' },
         { value: '2', label: '视频' }
@@ -340,6 +377,7 @@ export default {
   created() {
     this.listParams.authorId = this.$route.query.authorId
     this.getColumnList()
+    this.getTopicList()
     this.getList()
   },
   methods: {
@@ -362,6 +400,11 @@ export default {
         this.listLoading = false
       })
     },
+    getTopicList() {
+      getTopicList(0).then(data => {
+        this.topicList = data.data.page.records
+      })
+    },
     getColumnList() {
       jewelryColumnList().then(data => {
         data.data.records.map(item => {
@@ -369,7 +412,7 @@ export default {
             value: item.id,
             label: item.columnName
           })
-          this.columnList = this.columnList.filter(function(obj) {
+          this.columnList = this.columnList.filter(function (obj) {
             return obj.value !== '1000'
           })
         })
@@ -444,7 +487,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .filter-label {
   font-size: 14px;
   color: #909399;

@@ -558,3 +558,217 @@ export function deleteRecommendation(id) {
     method: 'post'
   })
 }
+
+// 专区设置列表
+export function getZoneList() {
+  return request({
+    url: `/admin/zone/getList`,
+    method: 'get'
+  })
+}
+
+// 修改专区设置
+export function modifyZone(data) {
+  return request({
+    url: `/admin/zone/saveOrUpdate`,
+    method: 'post',
+    data
+  })
+}
+
+// 专区设置详情
+export function getZoneDetail(id) {
+  return request({
+    url: `/admin/zone/getZoneDetail/${id}`,
+    method: 'get'
+  })
+}
+
+// 专区绑定详情
+export function getZoneBindGoods(zoneId, params) {
+  return request({
+    url: `/admin/zone/getBindGoodsPage/${zoneId}`,
+    method: 'get',
+    params
+  })
+}
+
+// 首页模块列表
+export function getHomeModuleList(params) {
+  return request({
+    url: `/admin/homeModule/list`,
+    method: 'get',
+    params
+  })
+}
+
+// 新增首页模块内容
+export function modifyHomeModule(data) {
+  return request({
+    url: `/admin/homeModule/saveById`,
+    method: 'post',
+    data
+  })
+}
+
+// 首页模块详情
+export function getHomeModule(params) {
+  return request({
+    url: `/admin/homeModule/detail`,
+    method: 'get',
+    params
+  })
+}
+
+// 首页商家关联商品保存
+export function saveHomeModuleMerchant(data) {
+  return request({
+    url: `/admin/homeModule/merchant/goods/save`,
+    method: 'post',
+    data
+  })
+}
+
+// 首页获取商家关联商品
+export function getHomeModuleMerchant(params) {
+  return request({
+    url: `/admin/homeModule/merchant/goods/list`,
+    method: 'get',
+    params
+  })
+}
+
+// 获取广告列表
+export function getAdvertisement() {
+  return request({
+    url: `/admin/advertise/getList`,
+    method: 'get'
+  })
+}
+
+// 修改广告设置
+export function modifyAdvertisement(data) {
+  return request({
+    url: `/admin/advertise/saveOrUpdate`,
+    method: 'post',
+    data
+  })
+}
+
+// 清空广告设置
+export function delAdvertisement(id) {
+  return request({
+    url: `/admin/advertise/clear/${id}`,
+    method: 'post'
+  })
+}
+
+// APP应用图标，列表
+export function application(params) {
+  return request({
+    url: `/admin/application/getPage`,
+    method: 'get',
+    params
+  })
+}
+
+// APP应用图标，选中设置
+export function setShowApplication(data) {
+  return request({
+    url: `/admin/application/setShow`,
+    method: 'post',
+    data
+  })
+}
+
+// APP开屏页设置，列表
+export function openingPage(params) {
+  return request({
+    url: `/admin/openingPage/getPage`,
+    method: 'get',
+    params
+  })
+}
+
+// APP开屏页设置，详情
+export function openingPageDetail(params) {
+  return request({
+    url: `/admin/openingPage/detail`,
+    method: 'get',
+    params
+  })
+}
+// APP开屏页设置，新增编辑
+export function saveOrUpdateOpeningPage(data) {
+  return request({
+    url: `/admin/openingPage/saveOrUpdate`,
+    method: 'post',
+    data
+  })
+}
+// APP开屏页设置，删除
+export function deleteOpeningPage(id) {
+  return request({
+    url: `/admin/openingPage/delete/${id}`,
+    method: 'post'
+  })
+}
+
+// 活动主题，列表
+export function activityTheme(params) {
+  return request({
+    url: `/admin/activityTheme/getPage`,
+    method: 'get',
+    params
+  })
+}
+
+// 活动主题，详情
+export function activityThemeDetail(params) {
+  return request({
+    url: `/admin/activityTheme/detail`,
+    method: 'get',
+    params
+  })
+}
+
+// 活动主题，获取抽奖下拉框
+export function activityThemeDrawList(params) {
+  return request({
+    url: `/admin/draw/list`,
+    method: 'get',
+    params
+  })
+}
+
+// 活动主题，新增编辑
+export function saveOrUpdateActivityTheme(data) {
+  return request({
+    url: `/admin/activityTheme/saveOrUpdate`,
+    method: 'post',
+    data
+  })
+}
+// 活动主题，关联商品列表
+export function activityThemeGetGoodsPage(params) {
+  return request({
+    url: `/admin/activityTheme/getGoodsPage`,
+    method: 'get',
+    params
+  })
+}
+// 活动主题，关联解绑商品
+export function activityThemeSetRelationGoods(data) {
+  return request({
+    url: `/admin/activityTheme/setRelation`,
+    method: 'post',
+    data
+  })
+}
+// 活动主题，删除
+export function deleteActivityThemeSetRelationGoods(id) {
+  return request({
+    url: `/admin/activityTheme/delete/${id}`,
+    method: 'post'
+  })
+}

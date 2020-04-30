@@ -23,6 +23,7 @@ import jewelrySearch from './jewelrySearch'
 import home from './home'
 import help from './help'
 import shop from './shop'
+import draw from './draw'
 
 const service = request({
   ...swap,
@@ -47,7 +48,8 @@ const service = request({
   ...jewelrySearch,
   ...home,
   ...help,
-  ...shop
+  ...shop,
+  ...draw
 })
 
 Vue.prototype.$service = service

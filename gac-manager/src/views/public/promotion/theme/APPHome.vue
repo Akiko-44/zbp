@@ -7,7 +7,7 @@
       :model="form"
       :rules="rules"
       ref="form"
-      label-width="130px"
+      label-width="140px"
     >
       <h3>基础信息</h3>
       <el-form-item
@@ -100,14 +100,24 @@
         </div>
       </el-form-item>
 
-      <el-form-item label="定位字体颜色">
+      <el-form-item label="状态栏字体颜色">
         <el-radio-group v-model="form.appTopLocationFontColor">
           <el-radio :label="1">白色</el-radio>
           <el-radio :label="2">黑色</el-radio>
         </el-radio-group>
-        <div class="tip">
+        <!-- <div class="tip">
           （注：与状态栏同色）
+        </div> -->
+      </el-form-item>
+
+      <el-form-item label="定位字体颜色">
+        <el-color-picker v-model="form.appTopLocationFontColorString"></el-color-picker>
+        <div class="tip">
+          点击进行颜色选择或色值填写，若不选择颜色则使用默认色
         </div>
+        <!-- <div class="tip">
+          （注：与状态栏同色）
+        </div> -->
       </el-form-item>
 
       <el-form-item label="搜索框背景颜色">
@@ -603,6 +613,7 @@ export default {
         backgroundType: 4,
         appTopColor: '',
         appTopLocationFontColor: 1,
+        appTopLocationFontColorString: '',
         appTopSearchColor: '',
         appTopSearchFontColor: '',
         appTopLocationIcon: '',

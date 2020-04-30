@@ -174,3 +174,14 @@ export function jewelryContentDate(params) {
     params
   })
 }
+
+/**
+ * 招商短信
+ */
+export function getAttractSMSAnalysis(params) {
+  return request({
+    url: '/admin/AttractSMS/getAttractSMSAnalysis',
+    method: 'get',
+    params
+  })
+}

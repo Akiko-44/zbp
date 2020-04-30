@@ -222,7 +222,7 @@
       <el-table-column
         width="180px"
         align="center"
-        label="退款申请时间"
+        label="创建时间"
       >
         <template slot-scope="{ row }">
           <span>{{row.createTime}}</span>

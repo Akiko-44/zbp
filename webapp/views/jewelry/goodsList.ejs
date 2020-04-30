@@ -183,7 +183,7 @@
 		}
 
 		#list li .goods-discount {
-			background: url(../src/img/common/discount.png) no-repeat;
+			background: url(../src/img/jewelry/group.png) no-repeat;
 			background-size: 100% 100%;
 			text-align: center;
 			line-height: 32px;
@@ -192,8 +192,9 @@
 			color: #fff;
 			font-size: 18px;
 			position: absolute;
-			top: 20px;
-			left: -6px;
+			top: 7px;
+      right: -10px;
+      z-index: 2;
 		}
 
 		#list li a {
@@ -205,10 +206,21 @@
 		}
 
 		.goods-img {
+      position: relative;
 			width: 100%;
 			height: 288px;
 			overflow: hidden;
-		}
+    }
+    .goods-img .activity-bg {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      /* background: url("../../src/img/activity-md.png"); */
+      background-position: no-repeat;
+      background-size: 100% 100%;
+      z-index: 1;
+    }
 
 		.goods-msg {
 			padding: 9px 12px;
@@ -489,7 +501,7 @@
 		<div class="categorybar" v-if="goodsType">
 			<div class="container">
 				<ul class="clearfix">
-					<li @click="goto(0,'')" :class="{'cur': curCategory == 0}">推荐</li>
+					<!-- <li @click="goto(0,'')" :class="{'cur': curCategory == 0}">推荐</!-->
 					<li @click="goto(1,'')" :class="{'cur': curCategory == 1}">拼团</li>
 					<li @click="goto(2,'')" :class="{'cur': curCategory == 2}">促销</li>
 					<li v-for="(item,index) in categoryList" @click="goto(3,item.id)" :class="{'cur': curCategory == item.id}">
@@ -683,7 +695,11 @@
 				<li class="fl listShadow" v-for="item in goodsList">
 					<a @click="toDetail(item.goodsId)">
 						<span v-if="item.discount" class="goods-discount">{{item.discount}}折</span>
-						<div class="goods-img"><img :src="item.goodsPic | formatImg" alt="" width="288" height="288" /></div>
+						<div class="goods-img">
+              <div class="activity-bg" v-if="item.pcBigIcon"
+              :style="{backgroundImage: item.pcBigIcon ? 'url(' + item.pcBigIcon + ')' : ''}"></div>
+              <img :src="item.goodsPic | formatImg" alt="" width="288" height="288" />
+            </div>
 						<div class="goods-msg">
 							<p class="goods-name">{{item.goodsName}}</p>
 							<p class="clearfix goods-price">
@@ -754,7 +770,8 @@
 					searchWord: keyWords,
 					provice: undefined,
 					city: undefined,
-					entrance: 1
+          entrance: 1,
+          zoneId: undefined,
 				},
 				bySale: false,
 				byPrice: false,
@@ -768,7 +785,8 @@
 			},
 			mounted() {
 				this.getCategoryList()
-				this.goodsType = utils.getUrlParamVal('goodsType')
+        this.goodsType = utils.getUrlParamVal('goodsType')
+        this.form.zoneId = utils.getUrlParamVal('zoneId')  
 				this.curCategory = this.goodsType
 				if (this.goodsType == 3) {
 					this.form.categoryId = utils.getUrlParamVal('categoryId')

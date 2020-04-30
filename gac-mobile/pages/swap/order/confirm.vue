@@ -15,7 +15,7 @@
             class="merchant-logo"
             :src="detail.shopScore.logo"
           />
-          <span>{{detail.userName}}</span>
+          <span>{{ detail.userName }}</span>
         </div>
       </div>
       <div class="block-item">
@@ -162,7 +162,9 @@
           :key="item.id"
           v-if="item.caseType == 2"
         >
-          <p>用户{{item.buyUserName}}在商家{{item.sellName}}购买了如下商品：</p>
+          <p>
+            用户{{ item.buyUserName }}在商家{{ item.sellName }}购买了如下商品：
+          </p>
           <table border="1">
             <thead>
               <tr>
@@ -176,29 +178,29 @@
                 v-for="citem in item.orderGoodVOList"
                 :key="citem.goodId"
               >
-                <td>{{citem.skuName}}</td>
-                <td>￥{{citem.unitPrice}}</td>
-                <td>{{item.createTime}}</td>
+                <td>{{ citem.skuName }}</td>
+                <td>￥{{ citem.unitPrice }}</td>
+                <td>{{ item.createTime }}</td>
               </tr>
             </tbody>
           </table>
           <div class="tr">
-            <span>订单金额: ￥{{item.payMoney}}</span>
-            <span>(含运费: ￥{{item.freightMoney}})</span>
+            <span>订单金额: ￥{{ item.payMoney }}</span>
+            <span>(含运费: ￥{{ item.freightMoney }})</span>
           </div>
         </li>
       </ul>
       <p style="width: 100%;height: 200px;overflow-y: auto;">
         <img
-          v-if='arrOrderType.indexOf(5) !== -1'
+          v-if="arrOrderType.indexOf(5) !== -1"
           style="width: 100%;"
-          src="../../../assets/images/contract.png"
+          src="http://app.gacjc.com/app/download/help/contract.png"
         />
         <br />
         <img
-          v-if='arrOrderType.indexOf(6) !== -1'
+          v-if="arrOrderType.indexOf(6) !== -1"
           style="width: 100%;"
-          src="../../../assets/images/contractMake.png"
+          src="http://app.gacjc.com/app/download/help/contractMake.png"
         />
       </p>
     </van-dialog>
@@ -224,14 +226,6 @@
       <!-- </div> -->
     </van-dialog>
     <van-submit-bar
-      v-if="isFrom =='swap-auction-detail' "
-      :price="getTotal()"
-      button-text="立即支付"
-      @submit="submit2"
-      :loading="loading"
-    />
-    <van-submit-bar
-      v-else
       :price="getTotal()"
       label="实付款："
       button-text="立即支付"
@@ -242,9 +236,9 @@
   </AppView>
 </template>
 <script>
-import goodsCoupon from './goodsCoupon'
-import DefaultAddress from './defaultAddress'
-import AppCard from '~/components/common/card/item4'
+import goodsCoupon from "./goodsCoupon";
+import DefaultAddress from "./defaultAddress";
+import AppCard from "~/components/common/card/item4";
 
 export default {
   components: {
@@ -252,7 +246,7 @@ export default {
     AppCard,
     goodsCoupon
   },
-  middleware: 'auth',
+  middleware: "auth",
   data() {
     return {
       loading: false,
@@ -260,54 +254,54 @@ export default {
       detail: {
         goodsSku: {}
       },
-      message: '',
+      message: "",
       objCoupon: {},
-      activeNames: '',
+      activeNames: "",
       isFrom: this.$route.query.from,
       //发票
       invoiceShow: false,
       isReceipt: true,
-      invoiceRadio: '0',
-      receiptRadio: '1',
-      invoiceType: '0',
-      companyName: '',
-      code: '',
+      invoiceRadio: "0",
+      receiptRadio: "1",
+      invoiceType: "0",
+      companyName: "",
+      code: "",
       contractShow: false,
       contractDetail: {},
       arrOrderType: [], //来自定制的商品来源
       isContract: false,
-      billId: '',
+      billId: "",
       num: this.$route.query.number,
-      skuDescribe: '',
+      skuDescribe: "",
       collectionShow: false
-    }
+    };
   },
   beforeMount() {
-    this.$store.dispatch('user/checkLogin', this.$router)
+    this.$store.dispatch("user/checkLogin", this.$router);
     if (this.$native.isApp()) {
-      this.$native.getTitle('提交订单')
+      this.$native.getTitle("提交订单");
     }
   },
   head() {
     return {
-      title: '提交订单'
-    }
+      title: "提交订单"
+    };
   },
   beforeRouteEnter(to, from, next) {
-    if (from.name === 'user-address' && sessionStorage.getItem('orderInfo')) {
-      let orderObj = JSON.parse(sessionStorage.getItem('orderInfo'))
+    if (from.name === "user-address" && sessionStorage.getItem("orderInfo")) {
+      let orderObj = JSON.parse(sessionStorage.getItem("orderInfo"));
       next(vm => {
-        vm.message = orderObj.message
-        vm.invoiceShow = orderObj.invoiceShow
-        vm.isReceipt = orderObj.isReceipt
-        vm.invoiceRadio = orderObj.invoiceRadio
-        vm.receiptRadio = orderObj.receiptRadio
-        vm.invoiceType = orderObj.invoiceType
-        vm.companyName = orderObj.companyName
-        vm.code = orderObj.code
-      })
+        vm.message = orderObj.message;
+        vm.invoiceShow = orderObj.invoiceShow;
+        vm.isReceipt = orderObj.isReceipt;
+        vm.invoiceRadio = orderObj.invoiceRadio;
+        vm.receiptRadio = orderObj.receiptRadio;
+        vm.invoiceType = orderObj.invoiceType;
+        vm.companyName = orderObj.companyName;
+        vm.code = orderObj.code;
+      });
     } else {
-      next()
+      next();
     }
   },
   deactivated() {
@@ -320,378 +314,346 @@ export default {
       invoiceType: this.invoiceType,
       companyName: this.companyName,
       code: this.code
-    }
-    sessionStorage.setItem('orderInfo', JSON.stringify(orderObj))
-    this.$destroy()
+    };
+    sessionStorage.setItem("orderInfo", JSON.stringify(orderObj));
+    this.$destroy();
   },
   mounted() {
-    if (this.isFrom == 'swap-sales-detail') {
-      this.$loading(this.$service('swapGoodsDetail', {
-        resources: [this.$route.query.id]
-      }))
-        .then(data => data.data)
-        .then(detail => {
-          this.goods = {
-            imgUrl: detail.imgUrl,
-            title: detail.goodsName,
-            price: '￥' + detail.price,
-            describe: detail.categoryName + ' ' + detail.brandName,
-            num: 'x' + this.num
+    if (this.isFrom == "jewelry-work") {
+      this.$loading(
+        this.$service("jewelryInfo", {
+          data: {
+            goodsId: this.$route.query.id
           }
-          return detail
         })
-        .then(this.success)
-    } else if (this.isFrom == 'swap-auction-detail') {
-      this.$loading(this.$service('swapAuctionDetail', {
-        resources: [this.$route.query.id]
-      }))
+      )
         .then(data => data.data)
         .then(detail => {
-          detail.price = detail.dealPrice - detail.deposit
-          this.goods = {
-            imgUrl: detail.imgUrl,
-            title: detail.goodsName,
-            price: '￥' + detail.dealPrice,
-            describe: detail.categoryName + ' ' + detail.brandName,
-            num: 'x' + this.num
-          }
-          return detail
-        })
-        .then(this.success)
-    } else if (this.isFrom == 'jewelry-work') {
-      this.$loading(this.$service('jewelryInfo', {
-        data: {
-          goodsId: this.$route.query.id
-        }
-      }))
-        .then(data => data.data)
-        .then(detail => {
-          let purchaseType = Number(this.$route.query.purchaseType)
-          let attrSymbolPath = []
-          detail.goodsSkus.forEach((item) => {
+          let purchaseType = Number(this.$route.query.purchaseType);
+          let attrSymbolPath = [];
+          detail.goodsSkus.forEach(item => {
             if (item.id == this.$route.query.skuId) {
-              attrSymbolPath = item.attrSymbolPath.split(',')
+              attrSymbolPath = item.attrSymbolPath.split(",");
               detail.goodsSpecs.forEach(item => {
                 item.goodsSpecsAttrs.forEach(subItem => {
-                  if (attrSymbolPath.includes(String(this.PrefixZero(subItem.symbol, 4)))) {
-                    this.skuDescribe += item.specsName + '：' + subItem.attrValue + ' '
+                  if (
+                    attrSymbolPath.includes(
+                      // String(this.PrefixZero(subItem.symbol, 4))
+                      String(subItem.symbol)
+                    )
+                  ) {
+                    this.skuDescribe +=
+                      item.specsName + "：" + subItem.attrValue + " ";
                   }
-                })
-              })
-              detail.price = purchaseType === 1 ?
-                item.groupPrice :
-                purchaseType === 2 ?
-                  item.promotionPrice :
-                  item.price
-              detail.discountPrice = purchaseType === 1 ?
-                item.price - item.groupPrice :
-                purchaseType === 2 ?
-                  item.price - item.promotionPrice :
-                  0
+                });
+              });
+              detail.price =
+                purchaseType === 1
+                  ? item.groupPrice
+                  : purchaseType === 2
+                    ? item.promotionPrice
+                    : item.price;
+              detail.discountPrice =
+                purchaseType === 1
+                  ? item.price - item.groupPrice
+                  : purchaseType === 2
+                    ? item.price - item.promotionPrice
+                    : 0;
             }
-          })
+          });
           this.goods = {
             imgUrl: detail.goodsGallerys[0].imgUrl,
             title: detail.goodsName,
-            price: '￥' + detail.price.toFixed(2),
+            price: "￥" + detail.price.toFixed(2),
             describe: this.skuDescribe,
-            num: 'x' + this.num,
+            num: "x" + this.num,
             purchaseType: Number(this.$route.query.purchaseType)
-          }
-          detail.userName = detail.merchantName
-          return detail
+          };
+          detail.userName = detail.merchantName;
+          return detail;
         })
-        .then(this.success)
+        .then(this.success);
     } else {
-      this.$loading(this.$service('commonDmWorkInfo', {
-        resources: [this.$route.query.id]
-      }))
+      this.$loading(
+        this.$service("commonDmWorkInfo", {
+          resources: [this.$route.query.id]
+        })
+      )
         .then(data => data.data)
         .then(detail => {
-          let that = this
+          let that = this;
           detail.goodsSkus.forEach(function (item, i) {
             if (item.id == that.$route.query.skuId) {
-              detail.price = item.price
+              detail.price = item.price;
             }
-          })
+          });
           this.goods = {
             imgUrl: detail.picList[0],
             title: detail.caseName,
-            price: '￥' + detail.price,
+            price: "￥" + detail.price,
             describe: detail.secondaryCgyName,
-            num: 'x' + this.num
-          }
-          detail.userName = detail.merchantName
-          return detail
+            num: "x" + this.num
+          };
+          detail.userName = detail.merchantName;
+          return detail;
         })
-        .then(this.success)
+        .then(this.success);
     }
   },
   methods: {
     beforeClose(action, done) {
-      if (action === 'confirm') {
-        this.activeNames = ''
-        setTimeout(done, 1000)
+      if (action === "confirm") {
+        this.activeNames = "";
+        setTimeout(done, 1000);
       } else {
         done();
       }
     },
     beforeClose2(action, done) {
-      if (action === 'confirm') {
+      if (action === "confirm") {
         if (this.$native.isApp()) {
           this.$native.goToPay({
             billID: this.billId,
             payOrderType: 0
-          })
+          });
         } else {
           if (this.$native.isACity() == 2) {
             this.$native.goToPay({
               billID: this.billId,
               payOrderType: 0
-            })
+            });
           } else {
             this.$router.replace({
-              name: 'swap-order-pay',
+              name: "swap-order-pay",
               query: {
                 id: this.billId
               }
-            })
+            });
           }
-
         }
         setTimeout(done, 1000);
       } else {
         done();
-        history.back()
+        history.back();
       }
     },
     invoiceRadioChange(name) {
-      this.invoiceType = name
-      if (name == '0') {
-        this.invoiceShow = false
+      this.invoiceType = name;
+      if (name == "0") {
+        this.invoiceShow = false;
       } else {
-        this.invoiceShow = true
+        this.invoiceShow = true;
       }
     },
     receiptRadioChange(name) {
-      this.companyName = ''
-      this.code = ''
-      this.invoiceType = name
-      if (name == '2') {
+      this.companyName = "";
+      this.code = "";
+      this.invoiceType = name;
+      if (name == "2") {
         //个人发票
-        this.isReceipt = false
+        this.isReceipt = false;
       } else {
         //企业发票
-        this.isReceipt = true
+        this.isReceipt = true;
       }
     },
     getTotal() {
-      return this.detail.price * this.num ? this.$toFixed((this.detail.price * this.num + this.detail.freightPrice) * 100) : 0
+      return this.detail.price * this.num
+        ? this.$toFixed(
+          (this.detail.price * this.num + this.detail.freightPrice) * 100
+        )
+        : 0;
     },
     success(detail) {
-      this.detail = detail
+      this.detail = detail;
     },
     confirmSuccess(form) {
-      this.objCoupon = form
+      this.objCoupon = form;
     },
     getAddressId() {
-      let addressId = null
-      const addressList = this.$refs.address.addressList
+      let addressId = null;
+      const addressList = this.$refs.address.addressList;
       if (addressList.length > 0) {
         addressList.forEach(address => {
           if (address.isDefault === 1) {
-            addressId = address.id
+            addressId = address.id;
           }
-        })
+        });
         if (!addressId) {
-          addressId = addressList[0].id
+          addressId = addressList[0].id;
         }
       }
 
-      return addressId
+      return addressId;
     },
     getSkuList() {
-      const data = []
-      if (this.isFrom == 'swap-sales-detail') {
-        data.push({
-          skuId: this.$route.query.skuId,
-          goodsNumber: 1,
-          source: this.detail.goodsSku.source,
-          coupons: [this.objCoupon.id],
-          message: this.message
-        })
-      } else if (this.isFrom == 'swap-auction-detail') {
-        data.push({
-          skuId: this.$route.query.skuId,
-          goodsNumber: 1,
-          source: this.detail.goodsSku.source,
-          coupons: [this.objCoupon.id],
-          message: this.message
-        })
-      } else {
-        data.push({
-          skuId: this.$route.query.skuId,
-          goodsNumber: this.$route.query.number,
-          source: this.detail.goodsSource,
-          coupons: [this.objCoupon.id],
-          message: this.message
-        })
-      }
-      return data
+      const data = [];
+      data.push({
+        skuId: this.$route.query.skuId,
+        goodsNumber: this.$route.query.number,
+        source: this.detail.goodsSource,
+        coupons: [this.objCoupon.id],
+        message: this.message
+      });
+      return data;
     },
     submit() {
-      let that = this
+      let that = this;
       // if(!this.$refs.address.addressList.length) {
       // 	this.$toast('请先填写收货地址')
       // }
       if (!this.getAddressId()) {
-        this.$toast('请先填写收货地址')
-        return
+        this.$toast("请先填写收货地址");
+        return;
       }
       if (Number(this.invoiceType) == 1) {
-        let TEL_REGEXP = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
-        if (this.companyName == '') {
-          this.$toast('请填写抬头名称')
-          return
+        let TEL_REGEXP = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/;
+        if (this.companyName == "") {
+          this.$toast("请填写抬头名称");
+          return;
         }
-        if (this.code == '' & this.isReceipt) {
-          this.$toast('请填写纳税人识别号')
-          return
-        } else if (this.code == '' & (!this.isReceipt)) {
-          this.$toast('请填写手机号')
-          return
-        } else if (!TEL_REGEXP.test(this.code) & (!this.isReceipt)) {
-          this.$toast('请填写正确的手机号')
-          return
+        if ((this.code == "") & this.isReceipt) {
+          this.$toast("请填写纳税人识别号");
+          return;
+        } else if ((this.code == "") & !this.isReceipt) {
+          this.$toast("请填写手机号");
+          return;
+        } else if (!TEL_REGEXP.test(this.code) & !this.isReceipt) {
+          this.$toast("请填写正确的手机号");
+          return;
         }
       }
-      this.loading = true
-      if (this.isFrom == 'jewelry-work') {
-        let purchaseType = Number(this.$route.query.purchaseType) === 1 ? 1 : null
-        this.$loading(this.$service('orderSubmit', {
-          data: {
-            'addrId': this.getAddressId(),
-            'buySkuDTOList': this.getSkuList(),
-            'source': 2,
-            'invoiceType': Number(this.invoiceType),
-            'companyName': this.companyName,
-            'code': this.code,
-            'payType': 2,
-            'purchaseType': purchaseType,
-            'message': this.message
-          }
-        }), '提交中')
-          .then(result => {
-            that.loading = false
-            that.billId = result.data.id
-            sessionStorage.removeItem('orderInfo')
-            if (that.$native.isApp()) {
+      this.loading = true;
+      if (this.isFrom == "jewelry-work") {
+        let purchaseType =
+          Number(this.$route.query.purchaseType) === 1 ? 1 : null;
+        this.$loading(
+          this.$service("orderSubmit", {
+            data: {
+              addrId: this.getAddressId(),
+              buySkuDTOList: this.getSkuList(),
+              source: 2,
+              invoiceType: Number(this.invoiceType),
+              companyName: this.companyName,
+              code: this.code,
+              payType: 2,
+              purchaseType: purchaseType,
+              message: this.message
+            }
+          }),
+          "提交中"
+        ).then(result => {
+          that.loading = false;
+          that.billId = result.data.id;
+          sessionStorage.removeItem("orderInfo");
+          if (that.$native.isApp()) {
+            that.$native.goToPay({
+              billID: that.billId,
+              payOrderType: 0
+            });
+          } else {
+            if (that.$native.isACity() == 2) {
               that.$native.goToPay({
                 billID: that.billId,
                 payOrderType: 0
-              })
+              });
             } else {
-              if (that.$native.isACity() == 2) {
-                that.$native.goToPay({
-                  billID: that.billId,
-                  payOrderType: 0
-                })
-              } else {
-                that.$router.replace({
-                  name: 'swap-order-pay',
-                  query: {
-                    id: that.billId
-                  }
-                })
-              }
-
+              that.$router.replace({
+                name: "swap-order-pay",
+                query: {
+                  id: that.billId
+                }
+              });
             }
-          })
-      } else {
-        this.$loading(this.$service('orderSubmit', {
-          data: {
-            'addrId': this.getAddressId(),
-            'buySkuDTOList': this.getSkuList(),
-            'source': 2,
-            'invoiceType': Number(this.invoiceType),
-            'companyName': this.companyName,
-            'code': this.code,
-            'payType': 2,
-            'message': this.message
           }
-        }), '提交中')
+        });
+      } else {
+        this.$loading(
+          this.$service("orderSubmit", {
+            data: {
+              addrId: this.getAddressId(),
+              buySkuDTOList: this.getSkuList(),
+              source: 2,
+              invoiceType: Number(this.invoiceType),
+              companyName: this.companyName,
+              code: this.code,
+              payType: 2,
+              message: this.message
+            }
+          }),
+          "提交中"
+        )
           .then(result => {
-            that.loading = false
-            that.billId = result.data.id
-            sessionStorage.removeItem('orderInfo')
+            that.loading = false;
+            that.billId = result.data.id;
+            sessionStorage.removeItem("orderInfo");
             if (result.success) {
-              this.$loading(this.$service('orderContract', {
-                resources: [that.billId]
-              })).then(contractResult => {
-                that.contractDetail = contractResult.data
+              this.$loading(
+                this.$service("orderContract", {
+                  resources: [that.billId]
+                })
+              ).then(contractResult => {
+                that.contractDetail = contractResult.data;
                 if (contractResult.data.length) {
                   contractResult.data.forEach(function (item) {
                     if (that.arrOrderType.indexOf(item.orderType) < 0) {
-                      that.arrOrderType.push(item.orderType)
+                      that.arrOrderType.push(item.orderType);
                     }
                     if (item.caseType == 2) {
-                      that.contractShow = true
-                      that.isContract = true
-                      return null
+                      that.contractShow = true;
+                      that.isContract = true;
+                      return null;
                     } else {
                       if (that.$native.isApp()) {
                         that.$native.goToPay({
                           billID: that.billId,
                           payOrderType: 0
-                        })
+                        });
                       } else {
-
                         if (that.$native.isACity() == 2) {
                           that.$native.goToPay({
                             billID: that.billId,
                             payOrderType: 0
-                          })
+                          });
                         } else {
                           that.$router.replace({
-                            name: 'swap-order-pay',
+                            name: "swap-order-pay",
                             query: {
                               id: that.billId
                             }
-                          })
+                          });
                         }
-
                       }
                     }
-                  })
+                  });
                 } else {
                   if (that.$native.isApp()) {
                     that.$native.goToPay({
                       billID: that.billId,
                       payOrderType: 0
-                    })
+                    });
                   } else {
                     if (that.$native.isACity() == 2) {
                       that.$native.goToPay({
                         billID: that.billId,
                         payOrderType: 0
-                      })
+                      });
                     } else {
                       that.$router.replace({
-                        name: 'swap-order-pay',
+                        name: "swap-order-pay",
                         query: {
                           id: that.billId
                         }
-                      })
+                      });
                     }
-
                   }
                 }
-              })
+              });
             }
           })
           .catch(() => {
-            this.loading = false
-          })
+            this.loading = false;
+          });
       }
     },
     submit2() {
@@ -699,59 +661,61 @@ export default {
       //   this.$toast('请先填写收货地址')
       // }
       if (!this.getAddressId()) {
-        this.$toast('请先填写收货地址')
-        return
+        this.$toast("请先填写收货地址");
+        return;
       }
-      this.loading = true
-      this.$loading(this.$service('orderSubmit', {
-        data: {
-          'addrId': this.getAddressId(),
-          'buySkuDTOList': this.getSkuList(),
-          'source': 2,
-          'invoiceType': Number(this.invoiceType),
-          'companyName': this.companyName,
-          'code': this.code,
-          'payType': 2,
-          'message': this.message
-        }
-      }), '提交中')
+      this.loading = true;
+      this.$loading(
+        this.$service("orderSubmit", {
+          data: {
+            addrId: this.getAddressId(),
+            buySkuDTOList: this.getSkuList(),
+            source: 2,
+            invoiceType: Number(this.invoiceType),
+            companyName: this.companyName,
+            code: this.code,
+            payType: 2,
+            message: this.message
+          }
+        }),
+        "提交中"
+      )
         .then(result => {
-          this.loading = false
-          sessionStorage.removeItem('orderInfo')
+          this.loading = false;
+          sessionStorage.removeItem("orderInfo");
           if (this.$native.isApp()) {
             this.$native.goToPay({
               billID: result.data.id,
               payOrderType: 1
-            })
+            });
           } else {
             if (this.$native.isACity() == 2) {
               this.$native.goToPay({
                 billID: result.data.id,
                 payOrderType: 1
-              })
+              });
             } else {
               this.$router.replace({
-                name: 'swap-order-pay',
+                name: "swap-order-pay",
                 query: {
                   id: result.data.id
                 }
-              })
+              });
             }
-
           }
         })
         .catch(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
     },
     openCollection() {
-      this.collectionShow = true
+      this.collectionShow = true;
     },
     PrefixZero(num, n) {
       return (Array(n).join(0) + num).slice(-n);
     }
   }
-}
+};
 </script>
 
 <style lang="postcss" scoped>
@@ -827,7 +791,7 @@ export default {
   width: 311px;
   height: 460px;
   text-align: center;
-  background: url("../../../assets/images/collect_bg.png") no-repeat;
+  background: url('../../../assets/images/collect_bg.png') no-repeat;
   background-size: contain;
   & .collect-close {
     position: absolute;

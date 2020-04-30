@@ -1,113 +1,155 @@
 
 <template>
   <div class="app-container calendar-list-container">
-    <el-row :gutter="20"
-            class="total">
-      <el-col :span="6">
+    <el-row
+      :gutter="20"
+      class="total"
+    >
+      <el-col :span="5">
         <h4>总金额</h4>
         <p class="red">￥{{info.amount || 0}}</p>
       </el-col>
-      <el-col :span="6">
-        <h4>账户余额</h4>
-        <p class="red">￥{{(info.amount - info.lockAmount - info.freeMoney) | round}}</p>
+      <el-col :span="5">
+        <div style="display:inline-block;">
+          <h4>账户余额</h4>
+          <p class="red">￥{{balance | round}}</p>
+        </div>
+        <el-button
+          plain
+          type="primary"
+          v-waves
+          @click="kiting"
+          v-if="balance<100"
+          disabled
+        >提现</el-button>
+        <el-button
+          plain
+          type="primary"
+          v-waves
+          @click="kiting"
+          v-else
+        >提现</el-button>
+        <el-tooltip
+          placement="right"
+          effect="light"
+        >
+          <i class="el-icon-question"></i>
+          <div slot="content">
+            <div style="color: #FF0000;font-size: 12px;margin-bottom: 15px;line-height: 20px;">
+              <div>温馨提示：</div>
+              <div>1.最低提现金额为100元</div>
+              <div>2.可提现时间为工作日的14:00至17:00</div>
+              <div>3.平台手续费为每笔订单金额的1%</div>
+              <div>4.提现手续费为提现金额的0.02%</div>
+              <div>5.银联还会根据不同的支付方式对每笔完成订单收取对应的手续费，具体费率如下：</div>
+              <div style="padding-left:10px;">a、微信公众号、小程序、H5、PC扫码支付，费率为0.38%</div>
+              <div style="padding-left:10px;">b、APP支付（包含微信支付、支付宝支付），费率为0.63%</div>
+              <div style="padding-left:10px;">c、如果您是以个人身份入驻平台，那么每笔订单的交易费率会统一为0.63%</div>
+              <div>6.银联手续费=交易手续费+提现手续费</div>
+            </div>
+          </div>
+        </el-tooltip>
       </el-col>
-      <el-col :span="6">
-        <h4>累计手续费</h4>
+      <el-col :span="5">
+        <h4>银联手续费</h4>
         <p class="red">￥{{info.freeMoney || 0}}</p>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="5">
+        <h4>平台服务费</h4>
+        <p class="red">￥{{info.platServiceFee || 0}}</p>
+      </el-col>
+      <el-col :span="4">
         <h4>待入账金额</h4>
         <p class="red">￥{{info.lockAmount || 0}}</p>
       </el-col>
     </el-row>
     <div class="filter-container">
       <label class="filter-label">时间：</label>
-      <el-date-picker v-model="dateValue"
-                      value-format="yyyy-MM-dd"
-                      type="datetimerange"
-                      :picker-options="pickerOptions"
-                      range-separator="至"
-                      start-placeholder="开始日期"
-                      end-placeholder="结束日期"
-                      align="right">
+      <el-date-picker
+        v-model="dateValue"
+        value-format="yyyy-MM-dd"
+        type="datetimerange"
+        :picker-options="pickerOptions"
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        align="right"
+      >
       </el-date-picker>
       &nbsp;
-      <el-button type="primary"
-                 icon="el-icon-search"
-                 v-waves
-                 @click="handleFilter">查询</el-button>
+      <el-button
+        type="primary"
+        icon="el-icon-search"
+        v-waves
+        @click="handleFilter"
+      >查询</el-button>
       <!--<el-button type="text" @click="resetQuery">清空条件</el-button>-->
     </div>
 
     <div class="filter-container">
-      <el-button plain
-                 type="primary"
-                 v-waves
-                 @click="kiting"
-                 v-if="(info.amount - info.lockAmount - info.freeMoney)<1000"
-                 disabled>提现</el-button>
-      <el-button plain
-                 type="primary"
-                 v-waves
-                 @click="kiting"
-                 v-else>提现</el-button>
+
       <!--<el-button type="text" @click="$router.push({ name: 'cardList' })">添加银行卡</el-button>-->
     </div>
 
-    <div style="color: #FF0000;font-size: 12px;margin-bottom: 15px;line-height: 20px;">
-      <div>温馨提示：</div>
-      <!-- <div>1.最低提现金额为1000元</div>
-		<div>2.银联会对每笔订单收取一定比例的手续费，C扫B（即扫码支付）的手续费为每笔订单金额的0.3%，APP购买商品的手续费为每笔订单的0.63%</div> -->
-      <div>1.银联会对每笔交易成功的订单收取一定比例的交易手续费，C扫B（即PC端扫码）支付的订单将会收取订单金额的0.28%作为交易手续费，APP支付的订单将会收取订单金额的0.6%作为交易手续费</div>
-      <div>2.提现时，银联将会收取提现金额的0.02%，作为提现手续费</div>
-      <div>3.平台收取提现金额的1%作为服务费</div>
-    </div>
+    <el-table
+      :key='tableKey'
+      :data="list"
+      v-loading.body="listLoading"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%"
+    >
 
-    <el-table :key='tableKey'
-              :data="list"
-              v-loading.body="listLoading"
-              border
-              fit
-              highlight-current-row
-              style="width: 100%">
-
-      <el-table-column align="center"
-                       label="交易号">
+      <el-table-column
+        align="center"
+        label="交易号"
+      >
         <template slot-scope="{ row }">
-          <span>{{row.ssn}}</span>
+          <span>{{row.sysOrderId}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center"
-                       label="提现金额">
+      <el-table-column
+        align="center"
+        label="提现金额"
+      >
         <template slot-scope="{ row }">
-          <span>￥{{row.transAmt}}</span>
+          <span>￥{{transformMoney(row.transAmt)}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center"
-                       label="应到帐金额">
+      <!-- <el-table-column
+        align="center"
+        label="应到帐金额"
+      >
         <template slot-scope="{ row }">
-          <span>￥{{row.transAmt}}</span>
+          <span>￥{{transformMoney(row.transAmt)}}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
-      <el-table-column align="center"
-                       label="银行卡号">
+      <el-table-column
+        align="center"
+        label="银行卡号"
+      >
         <template slot-scope="{ row }">
           <span>{{row.cardNo}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center"
-                       label="提现状态">
+      <el-table-column
+        align="center"
+        label="提现状态"
+      >
         <template slot-scope="{ row }">
           <span>{{payState[row.status]}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center"
-                       label="提现时间">
+      <el-table-column
+        align="center"
+        label="提现时间"
+      >
         <template slot-scope="{ row }">
           <span>{{row.trxTime}}</span>
         </template>
@@ -115,20 +157,26 @@
 
     </el-table>
 
-    <div v-show="!listLoading"
-         class="pagination-container">
-      <el-pagination @size-change="handleSizeChange"
-                     @current-change="handleCurrentChange"
-                     :current-page.sync="listQuery.page"
-                     :page-sizes="[10,20,30,50]"
-                     :page-size="listQuery.limit"
-                     layout="total, sizes, prev, pager, next, jumper"
-                     :total="total"> </el-pagination>
-    </div>
+    <!-- <div
+      v-show="!listLoading"
+      class="pagination-container"
+    >
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="listQuery.page"
+        :page-sizes="[10,20,30,50]"
+        :page-size="listQuery.limit"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      > </el-pagination>
+    </div> -->
 
-    <KitingDialog ref="dialog"
-                  :dwMoney="dwMoney"
-                  @success="success" />
+    <KitingDialog
+      ref="dialog"
+      :dwMoney="dwMoney"
+      @success="success"
+    />
   </div>
 </template>
 
@@ -158,7 +206,13 @@ export default {
         '4': '成功',
         '5': '失败'
       },
-      info: {},
+      balance: 0,
+      info: {
+        amount: 0,
+        lockAmount: 0,
+        freeMoney: 0,
+        platServiceFee: 0
+      },
       dwMoney: undefined,
       list: null,
       total: null,
@@ -243,6 +297,8 @@ export default {
         this.info = result.data || {}
         this.info.freeMoney = this.info.freeMoney.toFixed(2)
         this.dwMoney = this.info.amount - this.info.lockAmount - this.info.freeMoney
+        this.info.platServiceFee = this.info.platServiceFee || 0
+        this.balance = this.info.amount - this.info.lockAmount - this.info.freeMoney - this.info.platServiceFee
       })
     },
     handleFilter() {
@@ -267,6 +323,15 @@ export default {
     },
     success(form) {
       this.getList()
+    },
+    transformMoney(val) {
+      let stringVal = val.toString()
+      const arr = stringVal.toString().split('')
+      if (arr.length === 2) {
+        stringVal = '0' + stringVal
+        arr.splice(0, 0, '0')
+      }
+      return stringVal.substr(0, arr.length - 2) + '.' + stringVal.substr(arr.length - 2)
     }
   }
 }

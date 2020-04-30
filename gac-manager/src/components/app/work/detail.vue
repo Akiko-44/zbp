@@ -31,6 +31,10 @@
         <span>{{form.keywords}}</span>
       </el-form-item>
 
+      <el-form-item label="所属专区">
+        <span>{{form.zoneName}}</span>
+      </el-form-item>
+
       <!-- <el-form-item label="商品类型" prop="caseTypes">
       <el-radio-group v-model.number="form.caseTypes">
         <el-radio disabled :label="1">实体商品</el-radio>
@@ -132,6 +136,14 @@
         <span v-if="form.freightType === 2">￥{{form.freightPrice}}元</span>
       </el-form-item>
 
+      <el-form-item label="售后保障">
+        <div>{{form.genuine == 0 ? '7天无理由退货' : ''}} {{form.restore == 0 ? '正品担保' : ''}}</div>
+      </el-form-item>
+
+      <el-form-item label="专用发票">
+        <div>{{form.isSupportInvoice == 0 ? '支持' : '不支持'}}</div>
+      </el-form-item>
+
       <el-form-item
         label="库存"
         prop="stock"
@@ -198,9 +210,29 @@
     </el-form-item> -->
 
       <el-form-item>
+        <div class="desc-table">
+          <div style="margin: 15px 10px 10px !important;">产品参数</div>
+          <table
+            style="width: 100%;word-wrap: break-word; word-break: break-all;"
+            cellpadding="0"
+            cellspacing="0"
+          >
+            <tr>
+              <td width="33%">品牌名称</td>
+              <td>{{form.brandName}}</td>
+            </tr>
+            <tr
+              v-for="(item, i) in form.goodsCategoryAttributesVOS"
+              :key="i"
+            >
+              <td width="33%">{{item.attributesName}}</td>
+              <td>{{item.subsidiaryAttributesValue?item.subsidiaryAttributesValue:'无'}}</td>
+            </tr>
+          </table>
+        </div>
         <div
           class="imgss"
-          v-html="form.caseInfo || form.designIdea"
+          v-html="form.caseInfo || form.goodsDesc"
         ></div>
       </el-form-item>
 
@@ -322,5 +354,14 @@ export default {
 .wscnph {
   max-width: 500px !important;
   height: auto !important;
+}
+.desc-table table {
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #666;
+  & td {
+    padding: 7px;
+    border: 1px solid #e5e5e5 !important;
+  }
 }
 </style>

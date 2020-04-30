@@ -80,6 +80,7 @@
           :height="400"
           prefix="logo"
           @crop-upload-success="uploadSuccess"
+          :maxSize="1.5"
         />
         <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸400*400</div>
       </el-form-item>
@@ -328,6 +329,8 @@
           :multiple="false"
           prefix="materials"
           @successCBK="materialsUploadSuccess"
+          :maxSize="1.5"
+          :limit="1"
         />
         <div>(请上传开户许可证照片或由银行提供的开户证明照片，需加盖本公司公章（可参考如下示例图）。支持jpg、jpeg、png格式，大小1.5兆以内，尺寸不限)
           <p><img
@@ -367,8 +370,10 @@
           :multiple="false"
           prefix="businessLicense"
           @successCBK="businessLicenseUploadSuccess"
+          :maxSize="1.5"
+          tips="1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限"
+          :limit="1"
         />
-        <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</div>
       </el-form-item>
 
       <el-form-item
@@ -401,6 +406,7 @@
           :multiple="false"
           prefix="legalPersonPic"
           @successCBK="legalPersonPicUploadSuccess"
+          :maxSize="1.5"
         />
         <div>《银联商务T+N自由划付业务（对公提现业务）承诺书》<a
             class="link aggrement"
@@ -439,6 +445,8 @@
           :multiple="false"
           prefix="doorPhotos"
           @successCBK="doorPhotosUploadSuccess"
+          :maxSize="1.5"
+          :limit="1"
         />
         <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</div>
       </el-form-item>
@@ -472,6 +480,8 @@
           :multiple="false"
           prefix="idroomPic"
           @successCBK="idroomPicUploadSuccess"
+          :maxSize="1.5"
+          :limit="1"
         />
         <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</div>
       </el-form-item>
@@ -548,6 +558,7 @@
             :multiple="true"
             prefix="materials"
             @successCBK="materialsUploadSuccess"
+            :maxSize="1.5"
           />
           <div>共<span class="danger">{{form.materials.length}}</span>张，还能上传<span class="danger">{{5 - form.materials.length}}</span>张；(银行卡正反面照片各一张；经营场所的租赁合同、或产权证明、或个体商户营业执照图片三者至少上传一张；格式支持jpg/jpeg/png，单张照片大小1.5M以内)</div>
         </div>
@@ -966,7 +977,7 @@ export default {
     })
   },
   watch: {
-    'form.registType': function(val) {
+    'form.registType': function (val) {
       this.form.materials = []
     }
   },

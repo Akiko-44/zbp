@@ -37,7 +37,7 @@ export function saveJewelryBanners(data) {
 export function delJewelryBanners(id) {
   return request({
     url: `/admin/banner/delete/${id}`,
-    method: 'post',
+    method: 'post'
   })
 }
 
@@ -45,7 +45,7 @@ export function delJewelryBanners(id) {
 export function pauseJewelryBanners(id, status) {
   return request({
     url: `/admin/banner/showStatus/${id}/${status}`,
-    method: 'post',
+    method: 'post'
   })
 }
 
@@ -137,14 +137,14 @@ export function saveJewelryGoods(data) {
 export function delJewelryGoods(id) {
   return request({
     url: `/admin/goods/delPatentGoods/${id}`,
-    method: 'get',
+    method: 'get'
   })
 }
 
 export function pauseJewelryGoods(id, status) {
   return request({
     url: `/admin/goods/updateStatus/${id}/${status}`,
-    method: 'get',
+    method: 'get'
   })
 }
 
@@ -174,13 +174,52 @@ export function saveJewelryMerchant(data) {
 export function delJewelryMerchant(id) {
   return request({
     url: `/admin/merchant/delMerchant/${id}`,
-    method: 'get',
+    method: 'get'
   })
 }
 
 export function pauseJewelryMerchant(id, status) {
   return request({
     url: `/admin/merchant/updateStatus/${id}/${status}`,
+    method: 'get'
+  })
+}
+
+// 珠宝圈广告位
+export function listAdvertising(params) {
+  return request({
+    url: '/admin/jewelry/advertising/listAdvertising',
     method: 'get',
+    params
+  })
+}
+
+export function getAdvertising(id) {
+  return request({
+    url: `/admin/jewelry/advertising/getAdvertising/${id}`,
+    method: 'get'
+  })
+}
+
+export function saveOrUpdateAdvertising(data) {
+  return request({
+    url: '/admin/jewelry/advertising/saveOrUpdate',
+    method: 'post',
+    data
+  })
+}
+
+export function delAdvertising(id) {
+  return request({
+    url: `/admin/jewelry/advertising/deleteAdvertising/${id}`,
+    method: 'post'
+  })
+}
+
+// 暂停 / 展示 珠宝圈广告位
+export function useOrStopAdvertising(id, status) {
+  return request({
+    url: `/admin/jewelry/advertising/useOrStop/${id}/${status}`,
+    method: 'post'
   })
 }

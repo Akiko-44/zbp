@@ -33,8 +33,8 @@ export const goodsSource = {
 export const orderState = {
   // 公共状态：
   1: '待付款',
-  2: '已支付',
-  3: '设计中&制造中',
+  2: '待发货', //已支付，待商家确认
+  3: '待付款', // 设计师生成订单待商家确认
   4: '待发货',
   5: '待收货',
   6: '待评价',
@@ -55,17 +55,6 @@ export const orderState = {
   22: '退货仲裁中',
   23: '拼团中',
   24: '拼团成功',
-  // 互换订单状态：
-  41: '待换出人确认',
-  42: '待付款',
-  43: '换入人已支付',
-  44: '换出人已支付',
-  45: '待发货',
-  46: '换入人已发货',
-  47: '换出人已发货',
-  48: '待收货',
-  49: '待换入已收货',
-  50: '换出人已收货',
   100: '待付款',
 }
 
@@ -90,7 +79,7 @@ export const refundState = {
 // 是否允许取消订单
 export const allowCancelOrder = (state, revoke) => {
   if (revoke == 0) {
-    return [1, 42, 44, 43, 100, 2, 41, 4, 23, 24].indexOf(+state) !== -1
+    return [1, 100, 2, 3, 4, 23, 24].indexOf(+state) !== -1
   }
 }
 // 互换坊拍卖、互换是否允许取消订单
@@ -99,13 +88,13 @@ export const allowSwapCancelOrder = state => [1, 42, 44, 43, 100, 2, 41, 4].inde
 export const allowPayOrder = state => [1, 42, 100].indexOf(+state) !== -1
 // 是否允许查看物流
 export const allowLogistics = state => {
-  const status = [41, 42, 43, 44, 45, 100, 8, 7, 17, 11, 14, 23, 24] // 不在status范围里
+  const status = [100, 8, 7, 17, 11, 14, 23, 24] // 不在status范围里
 
   return +state >= 5 && status.indexOf(+state) === -1
 }
 // 是否允许发货
 export const allowFollOrder = state => {
-  const stauts = [2, 42, 43, 44]
+  const stauts = [2]
   return +state >= 43 && stauts.indexOf(+state) != -1
 }
 // 是否同意交换
@@ -115,21 +104,21 @@ export const allowOpen = state => {
 }
 // 是否申请售后
 export const allowAfterSales = (state, type) => {
-  if (type == 5 || type == 6 || type == 2 || type == 1) {
-    return [5, 6, 47, 48, 16].indexOf(+state) !== -1
-  } else {
-    return false
-  }
+  // if (type == 5 || type == 6 || type == 2 || type == 1) {
+  return [5, 6, 16].indexOf(+state) !== -1
+  // } else {
+  //   return false
+  // }
 }
 // 是否申请退款
 export const allowRefund = (state, type, revoke) => {
-  if (type == 5 || type == 6 || type == 2 || type == 1) {
-    if (revoke == 0 || revoke == 1 || revoke == 2 || revoke == 5 || revoke == 6 || revoke == 7) {
-      return [5].indexOf(+state) !== -1
-    }
-  } else {
-    return false
+  // if (type == 5 || type == 6 || type == 2 || type == 1) {
+  if (revoke == 0 || revoke == 1 || revoke == 2 || revoke == 5 || revoke == 6 || revoke == 7) {
+    return [5].indexOf(+state) !== -1
   }
+  // } else {
+  //   return false
+  // }
 }
 
 // 是否允许撤销申请退款
@@ -143,13 +132,13 @@ export const allowCancelRefund = (state, revoke) => {
 }
 // 是否申请退货
 export const allowReturnGoods = (state, type, revoke) => {
-  if (type == 5 || type == 6 || type == 2 || type == 1) {
-    if (revoke == 0 || revoke == 1 || revoke == 2 || revoke == 3 || revoke == 4) {
-      return [6, 47, 48, 16, 18].indexOf(+state) !== -1
-    }
-  } else {
-    return false
+  // if (type == 5 || type == 6 || type == 2 || type == 1) {
+  if (revoke == 0 || revoke == 1 || revoke == 2 || revoke == 3 || revoke == 4) {
+    return [6, 47, 48, 16, 18].indexOf(+state) !== -1
   }
+  // } else {
+  //   return false
+  // }
 }
 // 是否允许撤销申请退货
 /*export const allowCancelRefund = state => [10,13].indexOf(+state) !== -1*/
@@ -162,19 +151,19 @@ export const allowCancelReturnGoods = (state, revoke) => {
 }
 // 取消申请
 export const allowNoApplication = (state, type) => {
-  if (type == 5 || type == 6 || type == 2 || type == 1) {
-    return [10].indexOf(+state) !== -1
-  } else {
-    return false
-  }
+  // if (type == 5 || type == 6 || type == 2 || type == 1) {
+  return [10].indexOf(+state) !== -1
+  // } else {
+  //   return false
+  // }
 }
-// 查看详情 
+// 查看详情
 export const allowNoDetails = (state, type) => {
-  if (type == 5 || type == 6) {
-    return [10].indexOf(+state) !== -1
-  } else {
-    return false
-  }
+  // if (type == 5 || type == 6) {
+  return [10].indexOf(+state) !== -1
+  // } else {
+  //   return false
+  // }
 }
 // 是否允许确认收货
 export const allowConfirmGoods = state => [5, 46, 47, 48].indexOf(+state) !== -1

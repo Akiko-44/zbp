@@ -26,7 +26,7 @@
           />
           <van-cell
             title="被投诉品牌："
-            :value="item.brandName"
+            :value="item.brandName || '无'"
           />
           <van-cell
             title="投诉商家："
@@ -77,7 +77,7 @@
           />
           <van-cell
             title="被投诉品牌："
-            :value="item.brandName"
+            :value="item.brandName || '无'"
           />
           <van-cell
             title="投诉商家："

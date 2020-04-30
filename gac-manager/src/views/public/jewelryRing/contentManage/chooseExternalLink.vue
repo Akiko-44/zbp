@@ -177,11 +177,11 @@ export default {
         ],
         pcUrl: [
           { message: '请输入链接地址', trigger: 'blur' },
-          { pattern: /^(https?:\/\/(([a-zA-Z0-9]+-?)+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/, message: '请输入正确的链接地址' }
+          { pattern: /^(https?:\/\/(([a-zA-Z0-9]+-?)+\.)+[a-zA-Z0-9]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/, message: '请输入正确的链接地址' }
         ],
         mobileUrl: [
-          { message: '请输入移动端链接地址', trigger: 'blur' }
-          // { pattern: /^(https?:\/\/(([a-zA-Z0-9]+-?)+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/, message: '请输入正确的移动端链接地址' }
+          { message: '请输入移动端链接地址', trigger: 'blur' },
+          { pattern: /^(https?:\/\/(([a-zA-Z0-9]+-?)+\.)+[a-zA-Z0-9]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/, message: '请输入正确的链接地址' }
         ],
         pcPicture: [
           { required: true, message: '请上传图片', trigger: 'blur' }

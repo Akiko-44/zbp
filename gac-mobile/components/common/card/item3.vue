@@ -1,40 +1,50 @@
 <template>
-  <div class="app-card-item3"
-       @click="toDetail(data.source,data.goodId)">
+  <div class="app-card-item3" @click="toDetail(data.source, data.goodId)">
     <div class="card-header flex-row">
-      <div class="card-image lazy-img-box"
-           v-lazy:background-image="setImg(data.imgUrl, { w: 400 })"></div>
+      <div
+        class="card-image lazy-img-box"
+        v-lazy:background-image="setImg(data.imgUrl, { w: 400 })"
+      ></div>
       <div class="card-info">
-        <div class="row-between"
-             v-if="data.name">
-          <div class="card-name"><span v-if="data.goodsType === 1"
-                  class="assemble-label">拼团</span>{{data.name}}</div>
+        <div class="row-between" v-if="data.name">
+          <div class="card-name">
+            <span v-if="data.goodsType === 1" class="assemble-label">拼团</span
+            >{{ data.name }}
+          </div>
         </div>
-        <div class="card-describe"
-             v-if="data.skuExplain">
-          <template v-for="item in data.skuExplain">
-            <span class="sku-item">{{item.specsName}}：{{item.attrValue}}</span>
+        <div class="card-describe" v-if="data.skuExplain">
+          <template v-for="(item, i) in data.skuExplain">
+            <span class="sku-item"
+              >{{ item.specsName }}：{{ item.attrValue
+              }}<span v-if="i !== data.skuExplain.length - 1">；</span></span
+            >
           </template>
         </div>
-        <div class="row-between price-box"
-             v-if="data.name">
-          <div v-if="data.unitPrice"
-               class="card-unitPrice">{{data.unitPrice}}</div>
-          <div class="goods-num">X{{data.goodsNumber}}</div>
+        <div
+          class="row-between price-box"
+          v-if="data.unitPrice && data.goodsNumber"
+        >
+          <div v-if="data.unitPrice" class="card-unitPrice">
+            <span>{{ data.unitPrice }}</span>
+            <del v-if="data.marketPrice && data.goodsType === 1">{{
+              data.marketPrice
+            }}</del>
+          </div>
+          <div class="goods-num">x{{ data.goodsNumber }}</div>
         </div>
       </div>
     </div>
-    <div class="card-footer row-between">
+    <!--<div class="card-footer row-between">
       <span class="red card-price">{{data.price}}</span>
       <div class="card-actions">
         <slot name="btns" />
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script>
-import { setImg } from '~/utils/qiniu'
+import { setImg } from "~/utils/qiniu";
 
 export default {
   props: {
@@ -43,45 +53,39 @@ export default {
   methods: {
     setImg,
     toDetail(source, id) {
-      var name = ''
-      var url = ''
+      var name = "";
+      var url = "";
       if (source == 1) {
-        // name = 'swap-exchange-detail'
-        name = 'jewelry-work'
-        url = 'jewelry/work?id=' + id
-      } else if (source == 2) {
-        name = 'swap-sales-detail'
-        url = 'swap/sales/detail?id=' + id
+        name = "jewelry-work";
+        url = "jewelry/work?id=" + id;
       } else if (source == 5) {
-        name = 'design-work'
-        url = 'design/work?id=' + id
+        name = "design-work";
+        url = "design/work?id=" + id;
       } else if (source == 6) {
-        name = 'maker-work'
-        url = 'maker/work?id=' + id
+        name = "maker-work";
+        url = "maker/work?id=" + id;
       }
       /*this.$router.push({
         name: name,
         query: { id: id, orderToDetail: true }
       })*/
       if (this.$native.isApp()) {
-        let data = {}
-        data.url = url
-        data.type = 1
-        this.$native.goToNextPage(data)
+        let data = {};
+        data.url = url;
+        data.type = 1;
+        this.$native.goToNextPage(data);
       } else {
         this.$router.push({
           name: name,
           query: {
             id: id
           }
-        })
+        });
       }
     },
-    goToNextPage(id) {
-
-    }
+    goToNextPage(id) {}
   }
-}
+};
 </script>
 
 <style lang="postcss">
@@ -91,16 +95,16 @@ export default {
   background-color: white;
   line-height: 18px;
   & .card-header {
-    padding: 10px;
+    padding: 0 10px 10px;
   }
   & .card-image {
-    width: 90px;
-    height: 85px;
-    border-radius: 5px;
+    width: 89px;
+    height: 89px;
+    border-radius: 3px;
   }
   & .card-info {
     flex: 1;
-    margin-left: 10px;
+    margin-left: 17px;
   }
   & .price-box {
     margin-top: 5px;
@@ -109,7 +113,7 @@ export default {
     flex: 1;
     /* margin-bottom: 5px; */
     min-height: 30px;
-    font-size: 15px;
+    font-size: 12px;
     color: #333;
     & .assemble-label {
       display: inline-block;
@@ -128,10 +132,15 @@ export default {
     width: 90px;
     color: #fb746e;
     font-size: 17px;
+    & del {
+      margin-left: 6px;
+      font-size: 12px;
+      color: #999;
+    }
   }
   & .goods-num {
-    font-size: 12px;
-    color: #aaaaab;
+    font-size: 13px;
+    color: #1f1f1f;
   }
   & .card-describe {
     height: 32px;
@@ -139,7 +148,7 @@ export default {
     color: #aaaaab;
     & .sku-item {
       display: inline-block;
-      margin-right: 26px;
+      margin-right: 10px;
     }
   }
   & .card-price {

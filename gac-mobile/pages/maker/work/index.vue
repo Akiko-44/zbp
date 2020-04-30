@@ -234,7 +234,7 @@ export default {
     if (getToken()) {
       this.$loading(this.$service('userCollectCheck', { resources: [this.$route.query.id, 6] }))
         .then(result => {
-          this.liked = !result.data
+          this.liked = !result.data.goodsCheck
         })
     }
     if (this.$route.query.orderToDetail) {
@@ -287,6 +287,11 @@ export default {
       }).then(() => {
         this.collectLoading = false
         this.liked = !this.liked
+        if (this.liked) {
+          this.$toast('收藏成功')
+        } else {
+          this.$toast('您已取消收藏')
+        }
       }).catch(() => {
         this.collectLoading = false
       })
@@ -428,6 +433,9 @@ body .van-tab.van-tab--active span {
 }
 body .van-tabs__line {
   background-color: #d0323d;
+}
+>>> .van-tabs__content {
+  padding-bottom: 50px;
 }
 >>> .van-button--default.waiting.van-goods-action-big-btn {
   background-color: #aaaaab;

@@ -33,7 +33,7 @@
               </div>
               <div
                 class="location"
-                :style="{color: (background.appTopLocationFontColor == 1 ? '#ffffff' : '#333333')}"
+                :style="{color: background.appTopLocationFontColorString}"
                 @click="$router.push({name: 'jewelrySearch-citySearch', query: {chooseCity: chooseCity}})"
               >
                 <span v-if="chooseCity">{{chooseCity}}</span>
@@ -54,14 +54,13 @@
             <div class="app-search vertical">
               <div
                 class="location"
-                :style="{color: (background.appTopLocationFontColor == 1 ? '#ffffff' : '#333333')}"
+                :style="{color: background.appTopLocationFontColorString}"
                 @click="$router.push({name: 'jewelrySearch-citySearch', query: {chooseCity: chooseCity}})"
               >
                 <span
                   v-if="chooseCity"
                   class="choose-City"
                 >{{chooseCity}}</span>
-                <!-- <i class="ico-pulldown"></i> -->
                 <img
                   class="icon-pulldown"
                   :src="background.appTopLocationIcon ? background.appTopLocationIcon : locationBaseImg"
@@ -73,11 +72,6 @@
                 :style="{background: (background.appTopSearchColor ? background.appTopSearchColor : '#f0f0f0')}"
                 @click="$router.push({name: 'jewelrySearch-wordSearch'})"
               >
-                <!-- <van-icon
-                  class="item-center"
-                  name="search"
-                  color="#999"
-                /> -->
                 <img
                   :src="background.appTopSearchIcon ? background.appTopSearchIcon : searchBaseImg"
                   height="16"
@@ -108,11 +102,6 @@
               v-lazy:background-image="setImg(item.mobilePicture, { w: 800 })"
               @click="linkTo(item)"
             ></div>
-            <!--<div
-              class="background"
-              style="background-image:url('http://app.gacjc.com/app/download/banner.png');"
-              @click="$router.push({name: 'jewelrySearch-homeBanner'})"
-            ></div>-->
           </van-swipe-item>
         </van-swipe>
         <van-row class="btn-group">
@@ -131,6 +120,7 @@
         </van-row>
       </div>
       <div
+        v-if="!hideNotice"
         class="notice"
         :style="{background: (background.appNoticeColor ? background.appNoticeColor : '#fff'), color: (background.appNoticeFontColor ? background.appNoticeFontColor : '#585859')}"
       >
@@ -147,7 +137,6 @@
             :key="i"
             @click.native="$router.push({name: 'notice', query: {id: item.id}})"
           >
-            <!-- <i class="ico-proclamation"></i>{{item.noticeName}} -->
             <img
               :src="background.appNoticeIcon ? background.appNoticeIcon : noticeBaseImg"
               height="13"
@@ -156,10 +145,15 @@
             <span style="margin-left:6px;vertical-align:middle;">{{item.noticeName}}</span>
           </van-swipe-item>
         </van-swipe>
+        <span
+          class="close-notice"
+          @click="hideNoticeHandler"
+        ></span>
       </div>
       <div class="items">
         <van-swipe
           :loop="false"
+          :show-indicators="menu.length > 4"
           v-if="loadTabbar"
         >
           <!-- 第一栏 -->
@@ -172,15 +166,13 @@
                 v-if="i < 4"
                 @click.native="gotoAction(item.tag,item.path)"
               >
-                <!-- <nuxt-link :to="{name: item.path}"> -->
-                <!-- <i :class="item.icon"></i> -->
                 <img
                   class="middle-icon"
                   :src="item.icon ? item.icon : item.baseIcon"
                   width="41"
                 >
                 <p>{{item.name ? item.name : item.defaultName}}</p>
-                <!-- </nuxt-link> -->
+
               </van-col>
             </van-row>
           </van-swipe-item>
@@ -193,14 +185,13 @@
                 v-if="i > 3"
                 @click.native="gotoAction(item.tag,item.path)"
               >
-                <!-- <nuxt-link :to="{name: item.path}"> -->
                 <img
                   class="middle-icon"
                   :src="item.icon ? item.icon : item.baseIcon"
                   width="41"
                 >
                 <p>{{item.name ? item.name : item.defaultName}}</p>
-                <!-- </nuxt-link> -->
+
               </van-col>
             </van-row>
           </van-swipe-item>
@@ -208,143 +199,319 @@
       </div>
     </div>
     <div class="guide-price">
-      <div class="block-header row-between">
-        <div>
-          <strong class="block-title">今日指导价</strong>
-          <span class="block-subtitle">({{today}})</span>
+      <div class="guide-price-box">
+        <div class="block-header row-between">
+          <div>
+            <strong class="block-title">今日指导价</strong>
+            <span class="block-subtitle">({{today}})</span>
+          </div>
+          <nuxt-link
+            class="more"
+            :to="{name: 'jewelrySearch-guidance'}"
+          > 更多></nuxt-link>
         </div>
-        <nuxt-link
-          class="more"
-          :to="{name: 'jewelrySearch-guidance'}"
-        > 更多</nuxt-link>
-      </div>
-      <div class="guide">
-        <van-swipe
-          class="assemble-swipe"
-          :show-indicators="false"
-          v-if="loadTabbar"
-        >
-          <van-swipe-item
-            v-for="(item,i) in guidePriceList"
-            :key="i"
+        <div class="guide">
+          <van-swipe
+            class="assemble-swipe"
+            :show-indicators="false"
+            :autoplay="3000"
+            v-if="loadTabbar"
           >
-            <div
-              class="assemble-item"
-              @click="$router.push({name: 'jewelrySearch-guidance'})"
+            <van-swipe-item
+              v-for="(item,i) in guidePriceList"
+              :key="i"
             >
-              <p class="item-name">{{item.name}}</p>
-              <div>
-                <p class="item-unit">{{item.todayGuidedPriceVOS[0].price}}{{item.priceUnit}}</p>
-                <p
-                  class="item-state"
-                  style="padding-top: 6px;"
-                >零售均价</p>
-              </div>
-              <div>
-                <div
-                  class="echart"
-                  ref="echarts"
-                >
-                  <span
-                    v-for="(subItem, subIndex) in item.todayGuidedPriceVOS"
-                    :key="subIndex"
-                  ><i></i>{{subItem.price}}</span>
+              <div
+                class="assemble-item"
+                @click="$router.push({name: 'jewelrySearch-guidance'})"
+              >
+                <p class="item-name">{{item.name}}</p>
+                <div>
+                  <p class="item-unit">{{item.todayGuidedPriceVOS[item.todayGuidedPriceVOS.length-1].price}}{{item.priceUnit}}</p>
+                  <p
+                    class="item-state"
+                    style="padding-top: 6px;"
+                  >零售均价</p>
                 </div>
-                <p class="item-state">近7日走势</p>
+                <div>
+                  <div
+                    class="echart"
+                    ref="echarts"
+                  >
+                    <span
+                      v-for="(subItem, subIndex) in item.todayGuidedPriceVOS"
+                      :key="subIndex"
+                    ><i></i>{{subItem.price}}</span>
+                  </div>
+                  <p class="item-state">近7日走势</p>
+                </div>
+              </div>
+            </van-swipe-item>
+          </van-swipe>
+        </div>
+      </div>
+    </div>
+
+    <!-- 模块开始 -->
+    <div
+      v-for="(homeModuleItem, homeModuleIndex) in homeModule"
+      :key="homeModuleIndex"
+    >
+      <template v-if="homeModuleItem.id == 1000 && homeModuleItem.goodsVOList.length">
+        <div class="group-goods card-block">
+          <div class="block-header row-between">
+            <div class="block-title">
+              {{homeModuleItem.moduleName}}
+            </div>
+            <nuxt-link
+              class="more"
+              :to="{name: 'jewelry-product-groupGoods', query:{title: homeModuleItem.moduleName}}"
+            > 更多></nuxt-link>
+          </div>
+          <div class="goods-box">
+            <div
+              class="goods"
+              v-for="(item, index) in homeModuleItem.goodsVOList"
+              :key="index"
+              @click="$router.push({name: 'jewelry-work', query: {id: item.id}})"
+            >
+              <div
+                class="card-img lazy-img-box"
+                v-lazy:background-image="setImg(item.imgUrl, { w: 400 })"
+              >
+                <div
+                  v-if="item.appSmallIcon != ''"
+                  class="card-img-icon lazy-img-box"
+                  v-lazy:background-image="setImg(item.appSmallIcon, { w: 400 })"
+                ></div>
+              </div>
+              <div class="card-info">
+                <p class="price">￥{{item.groupPrice.toFixed(2)}}</p>
+                <p class="pre-price">￥{{item.price.toFixed(2)}}</p>
+                <h4 class="card-title text-hidden">{{item.goodsName}}</h4>
+                <div class="tc">
+                  <van-button
+                    class="group-btn"
+                    round
+                    color="#FB746E"
+                  >{{item.discount}}折抢购</van-button>
+                </div>
               </div>
             </div>
-          </van-swipe-item>
-        </van-swipe>
-      </div>
-    </div>
-    <div
-      class="guide-price jewelry-circle"
-      v-if="jewelryList && jewelryList.length"
-    >
-      <div class="block-header row-between">
-        <div>
-          <strong class="block-title">珠宝知识</strong>
+          </div>
         </div>
-        <nuxt-link
-          class="more"
-          :to="{name: 'news-jewelryCircle'}"
-        > 更多</nuxt-link>
-      </div>
-      <div
-        class="main-item"
-        v-for="(item,i) in jewelryList"
-        :key="i"
-        @click="toDetail(item.type,item.id)"
-      >
-        <img
-          :src="item.thumbnail"
-          width="60"
-          height="60"
-        >
-        <div class="item-info">
-          <p class="item-title">{{item.title}}</p>
-          <van-row class="item-number">
-            <van-col
-              span="8"
-              class="tl"
-            >
-              浏览 {{item.viewNumber}}
-            </van-col>
-            <van-col
-              span="8"
-              class="tc"
-            >
-              评论 {{item.commentNumber}}
-            </van-col>
-            <van-col
-              span="8"
-              class="tr"
-            >
-              点赞 {{item.likeNumber}}
-            </van-col>
-          </van-row>
-        </div>
-      </div>
-    </div>
-    <div class="group-goods">
-      <div class="block-title">拼团<span>1</span>折起</div>
-      <!-- <div id="myEchart"></div> -->
-      <div class="goods">
-        <AppList
-          :query="query"
-          :isDisabled="true"
-          :postData="postData"
-          :getData="() => this.$service('groupGoods', { data: this.query, params: this.postData })"
-          ref="list"
-        >
-          <template slot-scope="{ list }">
+      </template>
+
+      <template v-if="homeModuleItem.id == 1001 && homeModuleItem.goodsVOList.length">
+        <div class="new-goods card-block">
+          <div class="block-header row-between">
+            <div class="block-title">
+              {{homeModuleItem.moduleName}}
+            </div>
+            <nuxt-link
+              class="more"
+              :to="{name: 'jewelry-product', query: {entrance: 1}}"
+            > 更多></nuxt-link>
+          </div>
+          <div class="goods">
             <van-row gutter="10">
               <van-col
                 span="12"
-                v-for="(item, i) in list"
+                v-for="(item, i) in homeModuleItem.goodsVOList"
                 :key="i"
+                @click="$router.push({name: 'jewelry-work', query: {id: item.id}})"
               >
                 <AppCard
-                  :imgUrl="item.goodsPic"
-                  :lowPrice="item.lowPrice"
-                  :hightPrice="item.hightPrice"
-                  :navLowPrice="item.navLowPrice ? item.navLowPrice : 0"
-                  :navHightPrice="item.navHightPrice ? item.navHightPrice : 0"
+                  :imgUrl="item.imgUrl"
+                  :appBigIcon="item.appBigIcon"
+                  :lowPrice="item.price"
+                  :hightPrice="item.price"
                   :title="item.goodsName"
                   :merchantName="item.merchantName"
-                  :merchantLogo="item.merchantPic"
-                  :discount="item.discount"
-                  @click.native="$router.push({name: 'jewelry-work', query: {id: item.goodsId}})"
+                  :merchantLogo="item.merchantLogo"
                 />
               </van-col>
             </van-row>
-          </template>
-        </AppList>
+          </div>
+        </div>
+      </template>
+
+      <template v-if="homeModuleItem.id == 1002 && homeModuleItem.contentVOList.length">
+        <div class="jewelry-circle card-block">
+          <div class="block-header row-between">
+            <div class="block-title">
+              {{homeModuleItem.moduleName}}
+            </div>
+            <nuxt-link
+              class="more"
+              :to="{name: 'jewelryCircle'}"
+            > 更多></nuxt-link>
+          </div>
+          <van-row gutter="10">
+            <van-col
+              span="12"
+              v-for="(item, i) in homeModuleItem.contentVOList"
+              :key="i"
+            >
+              <div
+                class="card-img lazy-img-box"
+                v-lazy:background-image="setImg(item.thumbnail, { w: 400 })"
+                @click="$router.push({name: 'jewelryCircle-detail', query: {id: item.id}})"
+              ></div>
+              <div class="item-info">
+                <p class="item-title text-hidden">{{item.title}}</p>
+                <van-row class="item-number">
+                  <van-col
+                    span="12"
+                    class="tl"
+                  >
+                    阅读 {{item.viewNumber}}
+                  </van-col>
+                  <van-col
+                    span="12"
+                    class="tr"
+                  >
+                    点赞 {{item.likeNumber}}
+                  </van-col>
+                </van-row>
+              </div>
+            </van-col>
+          </van-row>
+        </div>
+      </template>
+
+      <template v-if="homeModuleItem.id == 1003 && homeModuleItem.merchantVOList.length">
+        <div class="brand-goods card-block">
+          <div class="block-header row-between">
+            <div class="block-title">
+              {{homeModuleItem.moduleName}}
+            </div>
+            <nuxt-link
+              class="more"
+              :to="{name: 'jewelry-list'}"
+            > 更多></nuxt-link>
+          </div>
+          <div
+            class="brand-item"
+            v-for="(item, i) in homeModuleItem.merchantVOList"
+            :key="i"
+          >
+            <div
+              class="shop-box"
+              @click="$router.push({name: 'jewelry-detail', query: {id: item.id}})"
+            >
+              <div
+                class="shop-img lazy-img-box"
+                v-lazy:background-image="setImg(item.merchantPic, { w: 400 })"
+              ></div>
+              <div class="shop-info tc">
+                <h4>{{item.merchantName}}</h4>
+                <p>{{item.recommendDetail}}</p>
+                <van-button
+                  class="shop-btn"
+                  round
+                  color="#FB746E"
+                >进店逛逛 ></van-button>
+              </div>
+            </div>
+            <div
+              class="shop-goods"
+              v-if="item.goodsVOList && item.goodsVOList.length"
+            >
+              <div
+                class="goods-item"
+                v-for="(goodsItem, goodsIndex) in item.goodsVOList"
+                :key="goodsIndex"
+                @click="$router.push({name: 'jewelry-work', query: {id: goodsItem.id}})"
+              >
+                <div
+                  class="goods-img lazy-img-box"
+                  v-lazy:background-image="setImg(goodsItem.imgUrl, { w: 400 })"
+                >
+                  <div
+                    v-if="goodsItem.appSmallIcon != ''"
+                    class="goods-img-icon lazy-img-box"
+                    v-lazy:background-image="setImg(goodsItem.appSmallIcon, { w: 400 })"
+                  ></div>
+                </div>
+                <div class="goods-info tc">
+                  <h4 class="price">￥{{goodsItem.price.toFixed(2)}}</h4>
+                  <p class="title text-hidden">{{goodsItem.goodsName}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template v-if="homeModuleItem.id ==  1017 && promoteList.length">
+        <div class="promotion-goods card-block">
+          <div class="block-header row-between">
+            <div class="block-title">
+              {{ homeModuleItem.moduleName }}
+            </div>
+            <nuxt-link
+              class="more"
+              :to="{ name: 'jewelry-product-promotionGoods', query:{title: homeModuleItem.moduleName} }"
+            >
+              更多></nuxt-link>
+          </div>
+          <div class="goods-box">
+            <div
+              class="goods"
+              v-for="(subItem, subIndex) in promoteList"
+              :key="subIndex"
+              @click="$router.push({name: 'jewelry-work', query: {id: subItem.id}})"
+            >
+              <div
+                class="card-img lazy-img-box"
+                v-lazy:background-image="setImg(subItem.imgUrl, { w: 400 })"
+              >
+                <div
+                  v-if="subItem.appSmallIcon != ''"
+                  class="card-img-icon lazy-img-box"
+                  v-lazy:background-image="setImg(subItem.appSmallIcon, { w: 400 })"
+                ></div>
+              </div>
+              <div class="card-info">
+                <h4 class="card-title text-hidden">{{ subItem.goodsName }}</h4>
+                <p class="price">
+                  ¥<span v-if="subItem.promotionPrice">{{
+                    subItem.promotionPrice.toFixed(2)
+                  }}</span><del>
+                    ¥<span v-if="subItem.price">{{
+                      subItem.price.toFixed(2)
+                    }}</span></del>
+                </p>
+                <van-button
+                  class="promotion-btn"
+                  color="#FB746E"
+                >{{
+                  subItem.countDown
+                }}</van-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <div
+        v-if="advertise[homeModuleIndex] && advertise[homeModuleIndex].mobilePicture && homeModuleIndex <3"
+        class="poster-img lazy-img-box"
+        v-lazy:background-image="setImg(advertise[homeModuleIndex].mobilePicture, { w: 400 })"
+        @click="linkTo(advertise[homeModuleIndex])"
+      ></div>
+    </div>
+
+    <div class="status">
+      <div class="line">
+        <p>中宝平 带你到源头买真品</p>
       </div>
     </div>
+
     <AppTabbar
       :activeIndex="0"
-      v-if="loadTabbar"
+      v-show="loadTabbar"
     />
   </AppView>
 </template>
@@ -358,24 +525,8 @@ import sticky from '~/components/common/sticky'
 import { formatDate } from '~/utils/time'
 import AppList from '~/components/common/list'
 import AppCard from '~/components/common/card/item1'
-import { getLocation } from '~/utils/location'
+import { getCurrentCityName, getLocation } from '~/utils/location'
 import { getToken } from "~/utils/auth"
-
-function toParamMap(str) {
-  var map = {};
-  var segs = str.split("&");
-  for (var i in segs) {
-    var seg = segs[i];
-    var idx = seg.indexOf('=');
-    if (idx < 0) {
-      continue;
-    }
-    var name = seg.substring(0, idx);
-    var value = seg.substring(idx + 1);
-    map[name] = value;
-  }
-  return map;
-}
 
 export default {
   components: {
@@ -388,16 +539,15 @@ export default {
   data() {
     if (this.$data) return
     return {
+      hideNotice: false,
       isACity: false,
       today: undefined,
       imgs: [],
-      /*imgs: [{
-        id: 1,
-        img: 'http://app.gacjc.com/app/download/banner.png',
-        desc: '千度真珠宝，上中宝平'
-      }],*/
       marqueeList: [],
       guidePriceList: [],
+      homeModule: [],
+      advertise: [],
+      timeOut: [],
       postData: {
         offset: 1,
         limit: 20,
@@ -408,61 +558,51 @@ export default {
       chooseCity: '',
       loadTabbar: true,
       // 2: 路由跳转 1 a标签跳转 0 调用方法
-      menu: [{
-        id: "1000",
-        tag: 2,
-        name: "去哪儿买",
-        // icon: "icoindex-doubt",
-        path: "jewelry-index",
-        baseIcon: require('../assets/images/icon/doubt.png')
-      },
-      {
-        id: "1001",
-        tag: 2,
-        name: "找设计师",
-        // icon: "icoindex-designer",
-        path: "design-index",
-        baseIcon: require('../assets/images/icon/designer.png')
-      },
-      {
-        id: "1002",
-        tag: 2,
-        name: "寻代工",
-        // icon: "icoindex-foundry",
-        path: "maker-index",
-        baseIcon: require('../assets/images/icon/foundry.png')
-      },
-      {
-        id: "1003",
-        tag: 2,
-        name: "珠宝圈",
-        // icon: "icoindex-information",
-        path: "news-jewelryCircle",
-        baseIcon: require('../assets/images/icon/information.png')
-      },
-      {
-        id: "1004",
-        tag: 2,
-        name: "珠宝展",
-        // icon: "icoindex-exhibition",
-        path: "jewelryFair-index",
-        baseIcon: require('../assets/images/icon/doubt.png')
-      }
+      menu: [
+        {
+          id: "1000",
+          tag: 2,
+          name: "去哪儿买",
+          path: "jewelry-index",
+          baseIcon: require('../assets/images/icon/doubt.png')
+        },
+        {
+          id: "1001",
+          tag: 2,
+          name: "找设计师",
+          path: "design-index",
+          baseIcon: require('../assets/images/icon/designer.png')
+        },
+        {
+          id: "1002",
+          tag: 2,
+          name: "寻代工",
+          path: "maker-index",
+          baseIcon: require('../assets/images/icon/foundry.png')
+        },
+        {
+          id: "1003",
+          tag: 2,
+          name: "珠宝圈",
+          path: "jewelryCircle",
+          baseIcon: require('../assets/images/icon/information.png')
+        },
+        {
+          id: "1004",
+          tag: 2,
+          name: "珠宝展",
+          path: "jewelryFair-index",
+          baseIcon: require('../assets/images/icon/doubt.png')
+        }
       ],
       jewelryList: [],
       background: {},
+      promoteList: [],
       locationBaseImg: require('../assets/images/icon/pulldown.png'),
       searchBaseImg: require('../assets/images/icon/search.png'),
       bannerBaseImg: require('../assets/images/icon/btn-bg.png'),
       noticeBaseImg: require('../assets/images/icon/proclamation.png')
     }
-  },
-  beforeMount() {
-    this.$service('notice').then((data) => {
-      this.marqueeList = data.data.records
-    }).catch(() => {
-
-    })
   },
   mounted() {
     if (this.$native.isACity() == 2) {
@@ -473,6 +613,7 @@ export default {
     this.pushHistory()
     window.addEventListener("popstate", this.closeWeixinPage, false)
     this.getBackground()
+    this.hideNotice = sessionStorage.getItem('hideNotice')
   },
   activated() {
     this.loadTabbar = false
@@ -483,18 +624,9 @@ export default {
     // JCK获取权限后判断
     this.getUserType()
 
-    this.$service('guidePrice').then((data) => {
-      this.guidePriceList = data.data
-    }).catch(() => { })
-
-    this.$service('homeBanner').then((data) => {
-      this.imgs = data.data
-    }).catch(() => { })
-
-    this.getJewelryCircle()
-
     this.$nextTick(() => {
       this.loadTabbar = true
+      this.getHomePage()
     })
 
     if (this.$route.query.chooseCity) {
@@ -502,24 +634,14 @@ export default {
     } else {
       this.getLoc()
     }
-
-    //微信公众号回调地址获取code
-    let urlParameters = window.location.hash ? window.location.hash.substring(1) : window.location.search.substring(1)
-    let map = toParamMap(urlParameters)
-
-    if (map.state == '123' && !getToken()) {
-      this.$service('getUserInfoForWeChat', {
-        params: {
-          'code': map.code,
-          'state': '123'
-        }
-      })
-        .then(this.success)
-        .catch(this.fail)
-    }
   },
   deactivated() {
     this.$destroy()
+  },
+  beforeDestroy() {
+    this.timeOut.map(item => {
+      item && clearInterval(item);
+    });
   },
   updated() {
     if (this.$refs.echarts) {
@@ -537,7 +659,7 @@ export default {
         let menuList = []
         this.background.appMiddleNavigations.map(item => {
           this.menu.map((subItem, subIndex) => {
-            if (item.id === subItem.id) {
+            if (item.id == subItem.id) {
               menuList.push(Object.assign({}, subItem, item))
             }
           })
@@ -550,20 +672,66 @@ export default {
   methods: {
     setImg,
     getLocation,
+    getCurrentCityName,
+    getHomePage() {
+      if (localStorage.getItem('marqueeList')) {
+        this.marqueeList = JSON.parse(localStorage.getItem('marqueeList'))
+      }
+      if (localStorage.getItem('imgs')) {
+        this.imgs = JSON.parse(localStorage.getItem('imgs'))
+      }
+      if (localStorage.getItem('guidePriceList')) {
+        this.guidePriceList = JSON.parse(localStorage.getItem('guidePriceList'))
+      }
+      if (localStorage.getItem('homeModule')) {
+        this.homeModule = JSON.parse(localStorage.getItem('homeModule'))
+      }
+      if (localStorage.getItem('advertise')) {
+        this.advertise = JSON.parse(localStorage.getItem('advertise'))
+      }
+      this.$service('homePage').then((data) => {
+        this.marqueeList = data.data.platformNotice.records
+        this.imgs = data.data.banner
+        this.guidePriceList = data.data.todayGuidePrice
+        this.homeModule = data.data.homeModule
+        this.advertise = data.data.advertise
+
+        localStorage.setItem('marqueeList', JSON.stringify(this.marqueeList))
+        localStorage.setItem('imgs', JSON.stringify(this.imgs))
+        localStorage.setItem('guidePriceList', JSON.stringify(this.guidePriceList))
+        localStorage.setItem('homeModule', JSON.stringify(this.homeModule))
+        localStorage.setItem('advertise', JSON.stringify(this.advertise))
+        this.homeModule.map(item => {
+          if (item.id == "1017") {
+            this.promoteList = item.goodsVOList;
+            this.promoteList.map((goodsItem, goodsIndex) => {
+              goodsItem.countDown = goodsItem.endTime;
+              this.getCountDown(goodsItem.endTime, goodsIndex);
+            });
+          }
+        })
+      }).catch(() => { })
+    },
+    getCountDown(time, index) {
+      let finishTime = +new Date(Date.parse(time.replace(/-/g, "/")));
+      let diferentTime = this.leftTimer(finishTime - new Date());
+      this.promoteList[index].countDown = diferentTime;
+      this.timeOut[index] = setInterval(() => {
+        let finishTime = +new Date(Date.parse(time.replace(/-/g, "/")));
+        let diferentTime = this.leftTimer(finishTime - new Date());
+        this.promoteList[index].countDown = diferentTime;
+        this.$forceUpdate();
+      }, 1000);
+    },
     getBackground() {
       if (localStorage.getItem('appHomeTheme')) {
         this.background = JSON.parse(localStorage.getItem('appHomeTheme'))
       }
-      this.$service("homeBackground", { data: { backgroundImgType: 4 } }).then(data => {
-        this.background = data.data
-        localStorage.setItem('appHomeTheme', JSON.stringify(this.background))
-      })
     },
     async getLoc() {
-      let [city] = await Promise.all([
-        this.getLocation()
-      ])
-      this.chooseCity = city
+      getCurrentCityName().then((city) => {
+        this.chooseCity = city.replace('市', '')
+      })
     },
     getJewelryCircle() {
       this.$service("circleRecommend").then(data => {
@@ -572,13 +740,13 @@ export default {
     },
     toDetail(type, id) {
       if (type === 1) {
-        this.$router.push({ name: 'news-jewelryCircle-detail', query: { id: id } })
+        this.$router.push({ name: 'jewelryCircle-detail', query: { id: id } })
       } else {
         if (this.$native.isApp()) {
           this.$native.goToJewelryVideo(id);
         } else {
           this.$router.push({
-            name: "news-jewelryCircle-videoDetail",
+            name: "jewelryCircle-videoDetail",
             query: { id: id }
           });
         }
@@ -601,14 +769,14 @@ export default {
         })
       } else if (data.linkType === 3) {
         this.$router.push({
-          name: "news-jewelryCircle-detail",
+          name: "jewelryCircle-detail",
           query: {
             id: data.linkTypeId
           }
         })
       } else if (data.linkType === 4) {
         this.$router.push({
-          name: "news-jewelryCircle-weMidea",
+          name: "jewelryCircle-weMidea",
           query: {
             id: data.linkTypeId
           }
@@ -676,36 +844,20 @@ export default {
       }
     },
     // JCK调用个人中心方法获取用户权限
-    getUserType() {
+    async getUserType() {
       if (getToken()) {
-        // 调用个人中心接口
-        this.$service("userInfo")
-          .then(result => {
-            // JCK根据角色显示菜单 1个人 2商家
-            if (result.data.userType == 1) {
-              /*this.menu.splice(4, 1)
-              this.menu.splice(2, 1)*/
-              this.menu.splice(2, 1)
-            }
-          })
-          .catch(err => { });
+        const userInfo = await this.$store.dispatch("user/getUserInfo");
+        // JCK根据角色显示菜单 1个人 2商家
+        if (userInfo.userType == 1) {
+          this.menu.splice(2, 1)
+        }
       } else {
-        /*this.menu.splice(4, 1)
-        this.menu.splice(2, 1)*/
         this.menu.splice(2, 1)
       }
     },
     //点击返回调用原生方法
     goBack() {
       this.$native.goToHome()
-    },
-
-    success(result) {
-      //微信公众号后台返回参数
-      result.data.accessToken && this.$store.commit('user/setToken', result.data.accessToken)
-    },
-    fail() {
-      //微信公众号后台返回参数失败
     },
     pushHistory() {
       let state = {
@@ -715,10 +867,42 @@ export default {
       window.history.pushState(state, "title", "#")
     },
     closeWeixinPage() {
-      let ua = navigator.userAgent.toLowerCase();
+      let ua = navigator.userAgent.toLowerCase()
       if (ua.match(/MicroMessenger/i) == "micromessenger") {
         WeixinJSBridge.call('closeWindow'); //微信
       }
+    },
+    // 隐藏公告
+    hideNoticeHandler() {
+      this.hideNotice = true
+      sessionStorage.setItem('hideNotice', this.hideNotice)
+    },
+    leftTimer(leftTime) {
+      var text = "";
+      var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+      var hours = parseInt((leftTime / 1000 / 60 / 60) % 24, 10); //计算剩余的小时
+      var minutes = parseInt((leftTime / 1000 / 60) % 60, 10); //计算剩余的分钟
+      var seconds = parseInt((leftTime / 1000) % 60, 10); //计算剩余的秒数
+      if (seconds < 0) {
+        this.isPromoteSale = false;
+      }
+      days = this.checkTime(days);
+      hours = this.checkTime(hours);
+      minutes = this.checkTime(minutes);
+      seconds = this.checkTime(seconds);
+      if (days) {
+        text = days + "天" + hours + "时" + minutes + "分";
+      } else {
+        text = hours + "时" + minutes + "分" + seconds + "秒";
+      }
+      return text;
+    },
+    checkTime(i) {
+      //将0-9的数字前面加上0，例1变为01
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
     }
   }
 }
@@ -727,8 +911,10 @@ export default {
 <style lang="postcss" scoped>
 @import "../assets/css/index/sprite.css";
 .Gac-index {
+  padding-bottom: 50px;
   min-height: 100vh;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   & /deep/ .sideMenu {
     display: none;
   }
@@ -748,6 +934,12 @@ export default {
   padding-bottom: 10px;
 }
 
+>>> .card-price {
+  margin-bottom: 10px;
+}
+>>> .app-card-item1 strong {
+  font-weight: bold;
+}
 .app-search {
   position: relative;
   width: 100%;
@@ -840,11 +1032,11 @@ export default {
   overflow: hidden;
   & .index-swipe {
     height: 175px;
-    background-color: #1a2b5d;
     & .background {
       height: 100%;
       width: 100%;
-      background-size: 100% 175px;
+      /* background-size: 100% 175px; */
+      background-size: cover;
       background-position: top;
     }
   }
@@ -861,6 +1053,7 @@ export default {
       color: #fff;
       font-size: 14px;
       border: none;
+      white-space: nowrap;
     }
   }
 }
@@ -870,6 +1063,7 @@ export default {
   height: 30px;
   /* background: white; */
   padding: 0 10px;
+  position: relative;
   & .assemble-swipe {
     height: 100%;
     line-height: 30px;
@@ -884,20 +1078,33 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+  & .close-notice {
+    position: absolute;
+    padding: 7px;
+    width: 15px;
+    height: 15px;
+    background: url(../assets/images/icon/closeproclamation.png) no-repeat
+      center;
+    right: 0;
+    top: 0;
+    background-size: 15px;
+  }
 }
 
 .items {
-  margin-top: 10px;
-  height: 90px;
-  padding: 10px;
+  margin: 10px 10px 0;
+  /* height: 100px; */
+  padding-top: 15px;
   background: white;
   text-align: center;
   font-size: 12px;
   box-sizing: border-box;
+  border-radius: 5px;
   & .van-swipe {
-    height: 80px;
+    height: 75px;
   }
   & /deep/ .van-swipe__indicators {
+    bottom: 8px;
     & .van-swipe__indicator {
       border-radius: 2px;
       background-color: #e0e3ec;
@@ -918,15 +1125,19 @@ export default {
 }
 
 .guide-price {
-  padding: 10px 0;
+  padding: 5px 10px;
   width: 100%;
   box-sizing: border-box;
+  & .guide-price-box {
+    height: 100px;
+    background: #fff;
+    border-radius: 5px;
+  }
   & .block-header {
-    margin-bottom: 15px;
-    padding: 0 12px;
+    padding: 10px;
   }
   & .block-title {
-    font-size: 17px;
+    font-size: 16px;
     color: var(--black);
     font-weight: bold;
   }
@@ -936,19 +1147,18 @@ export default {
   }
   & .more {
     font-size: 12px;
-    color: var(--dark-gray);
+    color: #666;
   }
   & .guide {
     & .assemble-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 89px;
+      /* height: 89px;
       width: 350px;
-      margin: 0 auto;
-      padding: 0 19px;
-      background: white;
-      border-radius: 8px;
+      height: 76px;*/
+      width: 355px;
+      padding: 0 10px 0 20px;
       text-align: center;
       box-sizing: border-box;
       & .item-name {
@@ -966,7 +1176,7 @@ export default {
       }
     }
     & .van-swipe {
-      height: 89px;
+      padding-top: 10px;
     }
   }
   & .echart {
@@ -976,49 +1186,221 @@ export default {
 }
 
 .jewelry-circle {
-  & .main-item {
-    display: flex;
-    margin: 0 10px 10px 10px;
-    padding: 15px;
-    background: #fff;
-    border-radius: 5px;
-    & .item-info {
-      display: inline-block;
-      margin-left: 10px;
-      width: 250px;
-      vertical-align: top;
-      & .item-title {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        margin: 4px 0;
-        height: 40px;
-        line-height: 20px;
-        color: #333;
-        font-size: 16px;
-      }
-      & .item-number {
-        color: #aaa;
-        font-size: 12px;
-      }
-    }
+  & .card-img {
+    width: 100%;
+    height: 172px;
+    background-color: var(--light-gray);
+    border-radius: 5px 5px 0px 0px;
   }
-  & .main-item:last-child {
-    margin-bottom: 0;
+  & .item-title {
+    margin: 12px 0 7px;
+    font-size: 15px;
+    color: #333333;
+  }
+  & .item-number {
+    margin-bottom: 15px;
+    font-size: 12px;
+    color: #999999;
+  }
+}
+
+.card-block {
+  padding: 0 10px;
+  background: #fff;
+  margin: 10px;
+  border-radius: 5px;
+  & .block-title {
+    padding: 15px 0 10px;
+    font-size: 16px;
+    color: var(--black);
+    font-weight: bold;
+  }
+  & .more {
+    font-size: 12px;
+    color: #666666;
+    padding-top: 18px;
   }
 }
 
 .group-goods {
-  padding: 0 10px;
-  & .block-title {
-    margin-bottom: 10px;
-    font-size: 17px;
-    color: var(--black);
-    font-weight: bold;
-    & span {
-      font-size: 28px;
+  padding-bottom: 15px;
+  white-space: nowrap;
+  & .goods-box {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 185px;
+    & .goods {
+      display: inline-block;
+      margin-right: 5px;
+      width: 95px;
+      font-size: 12px;
+      & .card-img {
+        width: 100%;
+        height: 95px;
+        border-radius: 2px;
+        position: relative;
+        & span {
+          line-height: 16px;
+          padding: 1px 2px 1px 3px;
+          background: #fb746e;
+          top: 14px;
+          font-size: 10px;
+          color: #fff;
+          position: absolute;
+          right: 0;
+          border-bottom-left-radius: 9px;
+          border-top-left-radius: 9px;
+        }
+      }
+      & .card-img-icon {
+        height: 100%;
+        background-size: 100% 100%;
+      }
+      & .price {
+        margin-top: 8px;
+        font-weight: bold;
+        font-size: 15px;
+        color: #fb746e;
+      }
+      & .pre-price {
+        padding-top: 4px;
+        font-size: 12px;
+        color: #999999;
+        text-decoration: line-through;
+      }
+      & .card-title {
+        margin: 8px 0 6px;
+      }
+      & .group-btn {
+        padding: 0;
+        width: 75px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.promotion-goods {
+  padding-bottom: 15px;
+  white-space: nowrap;
+  & .goods-box {
+    width: 335px;
+    overflow-x: scroll;
+    min-height: 184px;
+    & .goods {
+      display: inline-block;
+      margin-right: 5px;
+      width: 104px;
+      & .card-img {
+        width: 100%;
+        height: 104px;
+        border-radius: 5px;
+      }
+      & .card-img-icon {
+        height: 100%;
+        background-size: 100% 100%;
+      }
+      & .card-title {
+        padding-top: 12px;
+        font-size: 14px;
+      }
+      & .price {
+        margin: 8px 0 10px;
+        font-size: 12px;
+        color: #333333;
+        & del {
+          font-size: 11px;
+          color: #cccccc;
+        }
+      }
+      & .promotion-btn {
+        padding: 0;
+        /* width: 75px; */
+        width: 90px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        border-radius: 5px;
+      }
+    }
+  }
+}
+
+.brand-goods {
+  padding-bottom: 5px;
+  & .brand-item {
+    padding-bottom: 6px;
+    & .shop-box {
+      display: inline-block;
+      width: 135px;
+      vertical-align: top;
+      & .shop-img {
+        width: 100%;
+        height: 196px;
+        background-color: var(--light-gray);
+      }
+      & .shop-info {
+        padding-top: 10px;
+        height: 80px;
+        font-size: 14px;
+        color: #333333;
+        background: #f2f2f2;
+        & p {
+          margin: 7px 0 13px;
+          font-size: 12px;
+          color: #666666;
+        }
+        & .shop-btn {
+          padding: 0;
+          width: 87px;
+          height: 20px;
+          line-height: 20px;
+          font-size: 12px;
+        }
+      }
+    }
+    & .shop-goods {
+      display: inline-block;
+      width: 200px;
+      vertical-align: top;
+      & .goods-item {
+        padding: 2px 2px 8px;
+        display: inline-block;
+        width: 95px;
+        &:nth-child(2) {
+          border-left: 1px solid #f2f2f2;
+        }
+        &:nth-child(3) {
+          border-top: 1px solid #f2f2f2;
+        }
+        &:nth-child(4) {
+          border-top: 1px solid #f2f2f2;
+          border-left: 1px solid #f2f2f2;
+        }
+      }
+      & .goods-img {
+        width: 95px;
+        height: 95px;
+      }
+      & .goods-img-icon {
+        height: 100%;
+        background-size: 100% 100%;
+      }
+      & .goods-info {
+        padding: 0 10px;
+      }
+      & .price {
+        margin: 6px 0;
+        color: #fb746e;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      & .title {
+        font-size: 12px;
+        color: #666666;
+      }
     }
   }
 }
@@ -1053,5 +1435,69 @@ export default {
 
 .btn-back {
   margin-right: 10px;
+}
+
+.poster-img {
+  width: 355px;
+  height: 75px;
+  margin: 15px 10px;
+}
+
+.finish-line {
+  position: relative;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--dark-gray);
+  &::before {
+    position: absolute;
+    content: "";
+    height: 1px;
+    width: 280px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--dark-gray);
+  }
+  & span {
+    position: absolute;
+    display: inline-block;
+    width: 150px;
+    background: var(--bg);
+    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.status {
+  position: relative;
+  /* z-index: -1; */
+  width: 100%;
+  padding: 20px 0;
+  line-height: 15px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--gray);
+  & .line {
+    position: relative;
+    display: inline-block;
+    &::before,
+    &::after {
+      position: absolute;
+      content: "";
+      width: 80px;
+      height: 1px;
+      top: 50%;
+    }
+    &::before {
+      left: -90px;
+      background: linear-gradient(to left, #ddd, transparent);
+    }
+    &::after {
+      right: -90px;
+      background: linear-gradient(to right, #ddd, transparent);
+    }
+  }
 }
 </style>

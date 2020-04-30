@@ -23,6 +23,7 @@
 
 <script>
 // import { getInfo } from '@/api/jewelryMerchant/merchant'
+import { page } from '@/api/common/mid'
 import { getInfo, getMerchantInfo } from '@/api/makeMerchant/center'
 import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
@@ -40,12 +41,18 @@ export default {
   },
   data() {
     return {
-      show: true
+      show: true,
+      getMid: false
     }
   },
   created() {
+    page().then(data => {
+      if (data.data != '') {
+        this.getMid = true
+      }
+    })
     getMerchantInfo().then(data => {
-      if (data.data.isCheck === 0 || data.data.isCheck === 1 || data.data.isCheck === 2 || data.data.isCheck === 11 || data.data.isCheck === 12) {
+      if (data.data.isCheck === 0 || data.data.isCheck === 1 || data.data.isCheck === 2 || data.data.isCheck === 11 || data.data.isCheck === 12 || this.getMid) {
         this.routers[0].children[6].hidden = true
         this.show = false
         this.$nextTick(() => {

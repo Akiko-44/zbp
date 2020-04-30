@@ -345,6 +345,7 @@ import goodsDialog from './chooseGoods'
 import enterpriseDialog from './chooseEnterprise'
 import contentDialog from './chooseContent'
 import weMediaDialog from './chooseWeMedia'
+import Cookies from 'js-cookie'
 
 export default {
   components: {
@@ -416,10 +417,11 @@ export default {
       rules: {
         pcUrl: [
           { message: '请输入链接地址', trigger: 'blur' },
-          { pattern: /^(https?:\/\/(([a-zA-Z0-9]+-?)+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/, message: '请输入正确的链接地址' }
+          { pattern: /^(https?:\/\/(([a-zA-Z0-9]+-?)+\.)+[a-zA-Z0-9]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/, message: '请输入正确的链接地址' }
         ],
         mobileUrl: [
-          { message: '请输入移动端链接地址', trigger: 'blur' }
+          { message: '请输入移动端链接地址', trigger: 'blur' },
+          { pattern: /^(https?:\/\/(([a-zA-Z0-9]+-?)+\.)+[a-zA-Z0-9]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/, message: '请输入正确的链接地址' }
           // { pattern: /^(https?:\/\/(([a-zA-Z0-9]+-?)+\.)+[a-zA-Z]+)(:\d+)?(\/.*)?(\?.*)?(#.*)?$/, message: '请输入正确的移动端链接地址' }
         ],
         pcPicture: [
@@ -461,7 +463,7 @@ export default {
           this.selectedEnterprise = data.data.records.length === 0 ? {} : data.data.records[0]
         })
       } else if (this.form.linkType === 3) {
-        jewelryContentList({ id: this.form.linkTypeId }, 1).then(data => {
+        jewelryContentList({ id: this.form.linkTypeId, userType: Cookies.get('userType') }, 0).then(data => {
           this.selectedContent = data.data.records.length === 0 ? {} : data.data.records[0]
         })
       } else if (this.form.linkType === 4) {
@@ -479,18 +481,18 @@ export default {
         })
       })
       this.categoryList = this.categoryList.concat(jewelryColumnList)
-      this.categoryList = this.categoryList.filter(function(obj) {
+      this.categoryList = this.categoryList.filter(function (obj) {
         return obj.value !== '1000'
       })
     })
   },
   watch: {
-    'checkedPcUrl': function(newValue, oldValue) {
+    'checkedPcUrl': function (newValue, oldValue) {
       if (newValue) {
         this.form.pcUrl = ''
       }
     },
-    'checkedMobileUrl': function(newValue, oldValue) {
+    'checkedMobileUrl': function (newValue, oldValue) {
       if (newValue) {
         this.form.mobileUrl = ''
       }

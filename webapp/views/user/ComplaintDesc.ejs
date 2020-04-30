@@ -487,10 +487,12 @@
       methods: {
         uploadGoodsImg(e) {
           let inputfile = this.$refs.inputfile
-          var formFile = this.formatUpLoadImg(inputfile.files[0], 3)
-          if (formFile && this.Img && this.Img.length < 9) {
-            this.Img.push(this._TemplateUploadImgAjax("post", "/api/pic/upload", formFile))
-          }
+          utils.uploadSectionFile(inputfile.files[0], 3).then(res => {
+            var formFile = this.formatUpLoadImg(res, 3)
+            if (res && this.Img && this.Img.length < 9) {
+              this.Img.push(this._TemplateUploadImgAjax("post", "/api/pic/upload", formFile))
+            }
+          })
         },
         // 格式化图片
         formatUpLoadImg(_file, _fileSize) {
@@ -498,10 +500,10 @@
           var file = _file;
           var fileSize = (file.size / 1024 / 1024).toFixed(0);
           console.log("size", fileSize);
-          if (fileSize > _fileSize) {
-            alert("上传的文件不能超过" + fileSize + "M")
-            return
-          }
+          // if (fileSize > _fileSize) {
+          //   alert("上传的文件不能超过" + fileSize + "M")
+          //   return
+          // }
           formFile.append("file", file); //加入文件对象
           return formFile
         },

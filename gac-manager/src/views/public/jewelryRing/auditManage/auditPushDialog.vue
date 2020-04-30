@@ -117,6 +117,5 @@ export default {
 <style lang="postcss" scoped>
 >>> .el-dialog__body {
   text-align: center;
-  .el-form-item margin: 0;
 }
 </style>

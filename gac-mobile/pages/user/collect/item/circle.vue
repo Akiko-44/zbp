@@ -134,6 +134,11 @@ export default {
     /* flex: 1; */
     margin-bottom: 10px;
     width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
   & .card-brief {
     margin-bottom: 10px;

@@ -29,10 +29,10 @@
           icon="el-icon-search"
           @click="handleFilter"
         >查询</el-button>
-        <el-button
+        <!-- <el-button
           type="text"
           @click="resetQuery"
-        >清空条件</el-button>
+        >清空条件</el-button> -->
         <el-button
           class="fr"
           type="primary"
@@ -427,9 +427,9 @@ export default {
       this.getList()
     },
     handleCurrentChange(val) {
-      //    this.listParams.offset = val
-      //    this.getList()
-      this.$router.replace({ name: 'aftermarket', query: { page: val }})
+      this.listParams.offset = val
+      this.getList()
+      // this.$router.replace({ name: 'aftermarket', query: { page: val }})
     },
     resetQuery() {
       this.listQuery = getInitQuery()

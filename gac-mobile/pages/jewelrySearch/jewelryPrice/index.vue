@@ -72,7 +72,7 @@ export default {
       }
       this.$router.push({
         name: 'jewelry-product',
-        query: { searchWord: this.form.search }
+        query: { searchWord: this.form.search, entrance: 1 }
       })
     }
   }

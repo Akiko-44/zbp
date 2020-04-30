@@ -75,6 +75,16 @@
         </el-radio-group>
       </el-form-item>
 
+      <el-form-item label="参与话题">
+        <el-radio-group v-model="contentForm.topicId">
+          <el-radio
+            v-for="item in topicList"
+            :key="item.id"
+            :label="item.id"
+          >{{item.topicName}}</el-radio>
+        </el-radio-group>
+      </el-form-item>
+
       <el-form-item
         label="类型"
         prop="type"
@@ -130,6 +140,7 @@
           imgFormat="jpg"
           :width="500"
           :height="500"
+          :maxSize="5"
           :prefix="prefix"
           @crop-upload-success="uploadSuccess"
         />
@@ -144,6 +155,8 @@
           :height="500"
           ref="editor"
           v-model="contentForm.content"
+          tips="图片格式：jpg/jpeg/png/gif，单张图片大小：5m以内"
+          :maxSize="5"
         ></Tinymce>
       </el-form-item>
 
@@ -175,10 +188,7 @@
           @click="contentForm.content = ''"
         >删除视频</el-button>
         <template v-else>
-          <video-upload
-            @success="videoUploadScccess"
-            :tips="tips"
-          />
+          <video-upload @success="videoUploadScccess" />
         </template>
       </el-form-item>
 
@@ -635,7 +645,7 @@
 </template>
 
 <script>
-import { jewelryContentList, jewelryColumnList, contentLabelList, updateJewelryContent } from '@/api/public/jewelryRing'
+import { jewelryContentList, jewelryColumnList, contentLabelList, getTopicList, updateJewelryContent } from '@/api/public/jewelryRing'
 import waves from '@/directive/waves' // 水波纹指令
 import Tinymce from '@/components/Tinymce'
 import ImageCropper from '@/components/ImageCropper'
@@ -643,6 +653,7 @@ import VideoUpload from '@/components/VideoUpload'
 import goodsDialog from './chooseGoods'
 import enterpriseDialog from './chooseEnterprise'
 import externalLinkDialog from './chooseExternalLink'
+import Cookies from 'js-cookie'
 
 export default {
   directives: {
@@ -658,7 +669,6 @@ export default {
   },
   data() {
     return {
-      tips: '建议大小20M以内；建议视频格式：MP4',
       dialogVisible: false,
       dialogImgVisible: false,
       fullscreen: true,
@@ -710,6 +720,7 @@ export default {
       ],
       columnList: [],
       labelList: [],
+      topicList: [],
       contentForm: {
         id: undefined,
         title: undefined,
@@ -717,7 +728,8 @@ export default {
         keyword: undefined,
         brief: undefined,
         columnId: undefined,
-        labelId: undefined,
+        labelId: '',
+        topicId: '',
         type: 1, /* 类型：1、图文，2、视频 */
         thumbnail: undefined,
         content: '',
@@ -787,13 +799,14 @@ export default {
   },
   created() {
     if (this.id) {
-      jewelryContentList({ id: this.id }, this.isDraft).then(data => {
+      jewelryContentList({ id: this.id, userType: Cookies.get('userType') }, this.isDraft).then(data => {
         this.contentForm = data.data.records[0]
       })
       this.type = 'update'
     }
     this.getColumnList()
     this.getLabelList()
+    this.getTopicList()
   },
   beforeRouteLeave(to, from, next) {
     this.onbeforeunloadHandler(next)
@@ -873,6 +886,12 @@ export default {
       contentLabelList().then(data => {
         this.labelList = data.data.records
         this.labelList = [{ id: '', name: '无' }].concat(this.labelList)
+      })
+    },
+    getTopicList() {
+      getTopicList(0).then(data => {
+        this.topicList = data.data.page.records
+        this.topicList = [{ id: '', topicName: '不参与' }].concat(this.topicList)
       })
     },
     preView() {

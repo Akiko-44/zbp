@@ -1,7 +1,6 @@
 <template>
   <div class="login">
     <div class="logo">
-      <!--<img src="./images/logOne.png" width="160"/>-->
       <img
         src="./images/logo1.png"
         width="66"
@@ -34,7 +33,7 @@
                     v-model="mobileForm.mobilePhone"
                     placeholder="请输入手机号"
                     @input="widthCheck($event.target, 11)"
-                  >
+                  />
                 </div>
               </div>
             </div>
@@ -53,7 +52,7 @@
                     type="text"
                     placeholder="请输入验证码"
                     style="width: 100px;"
-                  >
+                  />
                   <CodeImage
                     ref="mobileCodeImage"
                     @refresh="refresh"
@@ -74,7 +73,7 @@
                     :maxlength="6"
                     placeholder="请输入验证码"
                     style="width: 100px;"
-                  >
+                  />
                   <CodeBtn
                     :form="mobileForm"
                     @fail="fail"
@@ -93,11 +92,18 @@
                 style="border: none;margin-left: 15px;background: none;"
               >
                 我已阅读和接受
-                <a @click="$router.push({name:'user-agreement', query: {verifyCode: mobileForm.dynamicVerifyCode}})">《中宝平用户注册协议》</a>
+                <a @click="
+                    $router.push({
+                      name: 'user-agreement',
+                      query: { mobilePhone: mobileForm.mobilePhone, verifyCode: mobileForm.dynamicVerifyCode }
+                    })
+                  ">《中宝平用户注册协议》</a>
                 <p
                   class="msg error"
                   style="background: none;"
-                >{{error.checked}}</p>
+                >
+                  {{ error.checked }}
+                </p>
               </div>
             </div>
             <van-button
@@ -118,7 +124,7 @@
                   src="../../../assets/images/qq.png"
                   width="30px"
                   height="30px"
-                >
+                />
               </a>
               <a
                 class="loginWbBtn"
@@ -128,10 +134,9 @@
                   src="../../../assets/images/weibo.png"
                   width="30px"
                   height="30px"
-                >
+                />
               </a>
             </div>
-
           </template>
         </validator>
       </div>
@@ -140,20 +145,21 @@
 </template>
 
 <script>
-import CodeImage from '~/components/common/verifyCode/codeImage'
-import CodeBtn from '~/components/common/verifyCode/codeBtn'
-import Validator from '~/components/common/validator'
-import axios from 'axios'
-import { getToken } from '~/utils/auth'
-const AccountNameKey = 'AccountName'
+import CodeImage from "~/components/common/verifyCode/codeImage";
+import CodeBtn from "~/components/common/verifyCode/codeBtn";
+import Validator from "~/components/common/validator";
+import axios from "axios";
+import { getToken } from "~/utils/auth";
+import { getUrlParam } from "~/utils/validate";
+const AccountNameKey = "AccountName";
 
 function getAccountName() {
-  if (process.server) return ''
-  return localStorage[AccountNameKey] || ''
+  if (process.server) return "";
+  return localStorage[AccountNameKey] || "";
 }
 
 function setAccountName(name) {
-  localStorage[AccountNameKey] = name
+  localStorage[AccountNameKey] = name;
 }
 
 function toParamMap(str) {
@@ -161,7 +167,7 @@ function toParamMap(str) {
   var segs = str.split("&");
   for (var i in segs) {
     var seg = segs[i];
-    var idx = seg.indexOf('=');
+    var idx = seg.indexOf("=");
     if (idx < 0) {
       continue;
     }
@@ -183,24 +189,24 @@ export default {
   // },
   data() {
     return {
-      fromUrl: '',
+      fromUrl: "",
       loading: false,
       isFormal: false,
-      qqUrl: '',
-      weiboUrl: '',
+      qqUrl: "",
+      weiboUrl: "",
       //				testRedirectUri: 'http://219.134.137.178:83/user/login',
-      testRedirectUri: 'http://192.168.8.62:3002/user/login',
-      formalRedirectUri: 'http://m.gacjc.com/user/login',
+      testRedirectUri: "http://192.168.8.62:3002/user/login",
+      formalRedirectUri: "http://m.gacjc.com/user/login",
 
-      redirectUri: '',
+      redirectUri: "",
       nextNum: 0,
       mobileForm: {
-        codeUuid: '123456',
-        mobilePhone: getAccountName(),
-        verifyCode: '123456',
-        dynamicVerifyCode: this.$route.query.verifyCode || '',
-        loginType: '2',
-        msgId: '',
+        codeUuid: "123456",
+        mobilePhone: getAccountName() || this.$route.query.mobilePhone,
+        verifyCode: "123456",
+        dynamicVerifyCode: this.$route.query.verifyCode || "",
+        loginType: "2",
+        msgId: "",
         verify: 1,
         loginMethod: 1,
         checked: false
@@ -208,201 +214,251 @@ export default {
       showLoginQqBtn: true,
       isClick: false,
       rules: {
-        mobilePhone: [{
-          required: true,
-          validator: this.validateMobile,
-          message: '请输入手机号码'
-        }],
-        dynamicVerifyCode: [{
-          required: true,
-          validator: this.validateDynamicVerifyCode,
-          message: '请输入短信验证码'
-        }],
-        verifyCode: [{
-          required: true,
-          message: '请输入图形验证码'
-        }],
-        msgId: [{
-          required: true,
-          message: '短信验证码有误'
-        }],
-        checked: [{
-          required: true,
-          message: '请同意珠宝云平用户注册协议'
-        }]
+        mobilePhone: [
+          {
+            required: true,
+            validator: this.validateMobile,
+            message: "请输入手机号码"
+          }
+        ],
+        dynamicVerifyCode: [
+          {
+            required: true,
+            validator: this.validateDynamicVerifyCode,
+            message: "请输入短信验证码"
+          }
+        ],
+        verifyCode: [
+          {
+            required: true,
+            message: "请输入图形验证码"
+          }
+        ],
+        msgId: [
+          {
+            required: true,
+            message: "短信验证码有误"
+          }
+        ],
+        checked: [
+          {
+            required: true,
+            message: "请同意珠宝云平用户注册协议"
+          }
+        ]
       }
-
-    }
+    };
   },
   watch: {
-    'mobileForm.dynamicVerifyCode': function (val) {
-      if (val === '190326') {
-        this.mobileForm.msgId = '123456'
+    "mobileForm.dynamicVerifyCode": function (val) {
+      if (val === "190326") {
+        this.mobileForm.msgId = "123456";
       }
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    // 增加registerChannelId
+    if (from.path.indexOf('luckDraw?src=web') !== -1) {
+      next(vm => {
+        vm.mobileForm.registerChannelId = from.query.id
+      })
+    } else {
+      next(() => { })
     }
   },
   activated() {
-    if (this.$native.isACity() === '2') {
-      this.showLoginQqBtn = false
+    if (this.$native.isACity() === "2") {
+      this.showLoginQqBtn = false;
     }
-    this.fromUrl = localStorage.getItem('fromUrl')
-    document.title = '登录'
-    this.isFormal = location.host === 'm.gacjc.com'
+    this.fromUrl = localStorage.getItem("fromUrl");
+    if (this.fromUrl && this.fromUrl.indexOf('src=luckDrawWeb') !== -1) {
+      this.mobileForm.registerChannelId = getUrlParam(this.fromUrl, 'id')
+    }
+    document.title = "登录";
+    this.isFormal = location.host === "m.gacjc.com";
     if (this.isFormal) {
-      this.redirectUri = this.formalRedirectUri
+      this.redirectUri = this.formalRedirectUri;
     } else {
-      this.redirectUri = this.testRedirectUri
+      this.redirectUri = this.testRedirectUri;
     }
 
-    let qqAppId = '101770824'
-    let qqAppKey = 'cd5a4477988f85e1b7bff5d3a14d2c8d'
+    let qqAppId = "101770824";
+    let qqAppKey = "cd5a4477988f85e1b7bff5d3a14d2c8d";
     //			let qqRedirectUri = this.redirectUri
-    let qqRedirectUri = this.formalRedirectUri
-    let weiboAppId = '1742873256'
-    let weiboSecret = '79951d03326308eb2c8376cc0b62016e'
-    let weiboRedirectUri = this.formalRedirectUri
+    let qqRedirectUri = this.formalRedirectUri;
+    let weiboAppId = "1742873256";
+    let weiboSecret = "79951d03326308eb2c8376cc0b62016e";
+    let weiboRedirectUri = this.formalRedirectUri;
 
     // this.qqUrl = `http://xui.ptlogin2.qq.com/cgi-bin/xlogin?appid=716027609&pt_3rd_aid=${qqAppId}&daid=383&pt_skey_valid=0&style=35&s_url=http%3A%2F%2Fconnect.qq.com&refer_cgi=authorize&which=&response_type=code&client_id=${qqAppId}&redirect_uri=${qqRedirectUri}&state=qq`
-    this.qqUrl = `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=${qqAppId}&redirect_uri=${qqRedirectUri}&state=qq&display=mobile`
-    this.weiboUrl = `https://api.weibo.com/oauth2/authorize?client_id=${weiboAppId}&response_type=code&redirect_uri=${weiboRedirectUri}&state=weibo`
+    this.qqUrl = `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=${qqAppId}&redirect_uri=${qqRedirectUri}&state=qq&display=mobile`;
+    this.weiboUrl = `https://api.weibo.com/oauth2/authorize?client_id=${weiboAppId}&response_type=code&redirect_uri=${weiboRedirectUri}&state=weibo`;
 
-    let urlParameters = window.location.hash ? window.location.hash.substring(1) : window.location.search.substring(1)
-    let map = toParamMap(urlParameters)
+    let urlParameters = window.location.hash
+      ? window.location.hash.substring(1)
+      : window.location.search.substring(1);
+    let map = toParamMap(urlParameters);
 
-    if (map.state == 'qq') {
+    if (map.state == "qq") {
       this.$toast.loading({
-        message: '登录中...',
+        message: "登录中...",
         duration: 0
-      })
+      });
       let params = {
-        grant_type: 'authorization_code',
+        grant_type: "authorization_code",
         client_id: qqAppId,
         client_secret: qqAppKey,
         code: map.code,
         redirect_uri: qqRedirectUri
-      }
-      axios.get('/oauth2.0/token', {
-        params
-      }).then(response => {
-        let qqMaq = toParamMap(response.data)
-        let accessToken = qqMaq.access_token
-        axios.get('/oauth2.0/me', {
-          params: {
-            access_token: accessToken,
-            unionid: 1
-          }
-        }).then(res => {
-          let num1 = res.data.indexOf('(')
-          let num2 = res.data.indexOf(')')
-          let resultData = JSON.parse(res.data.substring(num1 + 1, num2))
-          let openid = resultData['openid']
-          let unionid = resultData['unionid']
+      };
+      axios
+        .get("/oauth2.0/token", {
+          params
+        })
+        .then(response => {
+          let qqMaq = toParamMap(response.data);
+          let accessToken = qqMaq.access_token;
+          axios
+            .get("/oauth2.0/me", {
+              params: {
+                access_token: accessToken,
+                unionid: 1
+              }
+            })
+            .then(res => {
+              let num1 = res.data.indexOf("(");
+              let num2 = res.data.indexOf(")");
+              let resultData = JSON.parse(res.data.substring(num1 + 1, num2));
+              let openid = resultData["openid"];
+              let unionid = resultData["unionid"];
 
-          axios.post('/api/userCenter/third-login', {
-            //							uid: openid,
-            uid: unionid,
-            loginType: '1'
-          }).then(result => {
-            this.$toast.clear()
-            if (!result.data.success) {
-              if (result.data.msg.includes('QQ未绑定') || result.data.msg.includes('微博未绑定') || result.data.msg.includes('微信未绑定')) {
-                this.$router.push({
-                  path: '/user/login/bindPhone',
-                  query: {
-                    accessToken: accessToken,
-                    openid: openid,
-                    unionid: unionid,
-                    loginType: 1
+              axios
+                .post("/api/userCenter/third-login", {
+                  //							uid: openid,
+                  uid: unionid,
+                  loginType: "1"
+                })
+                .then(result => {
+                  this.$toast.clear();
+                  if (!result.data.success) {
+                    if (
+                      result.data.msg.includes("QQ未绑定") ||
+                      result.data.msg.includes("微博未绑定") ||
+                      result.data.msg.includes("微信未绑定")
+                    ) {
+                      this.$router.push({
+                        path: "/user/login/bindPhone",
+                        query: {
+                          accessToken: accessToken,
+                          openid: openid,
+                          unionid: unionid,
+                          loginType: 1
+                        }
+                      });
+                    }
+                  } else {
+                    this.success(result.data);
                   }
                 })
-              }
-            } else {
-              this.success(result.data)
-            }
-          }).catch(error => {
-            console.log(error)
-          })
+                .catch(error => {
+                  console.log(error);
+                });
+            });
         })
-      }).catch(error => {
-        console.log(error)
-      })
+        .catch(error => {
+          console.log(error);
+        });
     }
 
-    if (map.state == 'weibo') {
+    if (map.state == "weibo") {
       this.$toast.loading({
-        message: '登录中...',
+        message: "登录中...",
         duration: 0
-      })
-      axios.post('/oauth2/access_token?client_id=' + weiboAppId +
-        '&client_secret=' + weiboSecret +
-        '&grant_type=authorization_code' +
-        '&code=' + map.code +
-        '&redirect_uri=' + weiboRedirectUri).then(response => {
-
-          axios.post('/api/userCenter/third-login', {
-            uid: response.data.uid,
-            loginType: '3'
-          }).then(result => {
-            this.$toast.clear()
-            if (!result.data.success) {
-              if (result.data.msg.includes('QQ未绑定') || result.data.msg.includes('微博未绑定') || result.data.msg.includes('微信未绑定')) {
-                this.$router.push({
-                  path: '/user/login/bindPhone',
-                  query: {
-                    accessToken: response.data.access_token,
-                    openid: response.data.uid,
-                    loginType: 3
-                  }
-                })
+      });
+      axios
+        .post(
+          "/oauth2/access_token?client_id=" +
+          weiboAppId +
+          "&client_secret=" +
+          weiboSecret +
+          "&grant_type=authorization_code" +
+          "&code=" +
+          map.code +
+          "&redirect_uri=" +
+          weiboRedirectUri
+        )
+        .then(response => {
+          axios
+            .post("/api/userCenter/third-login", {
+              uid: response.data.uid,
+              loginType: "3"
+            })
+            .then(result => {
+              this.$toast.clear();
+              if (!result.data.success) {
+                if (
+                  result.data.msg.includes("QQ未绑定") ||
+                  result.data.msg.includes("微博未绑定") ||
+                  result.data.msg.includes("微信未绑定")
+                ) {
+                  this.$router.push({
+                    path: "/user/login/bindPhone",
+                    query: {
+                      accessToken: response.data.access_token,
+                      openid: response.data.uid,
+                      loginType: 3
+                    }
+                  });
+                }
+              } else {
+                this.success(result.data);
               }
-            } else {
-              this.success(result.data)
-            }
-          }).catch(error => {
-            console.log(error)
-          })
-        })
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        });
     }
 
-    if (this.mobileForm.mobilePhone.length == 11) {
-      this.isClick = true
+    if (this.mobileForm.mobilePhone && this.mobileForm.mobilePhone.length == 11) {
+      this.isClick = true;
     } else {
-      this.isClick = false
+      this.isClick = false;
     }
-    window.addEventListener("popstate", this.back, false)
+    window.addEventListener("popstate", this.back, false);
   },
   deactivated() {
-    this.$destroy()
-    window.removeEventListener("popstate", this.back, false)
+    this.$destroy();
+    window.removeEventListener("popstate", this.back, false);
   },
   methods: {
     check(formName) {
-      return this.$refs[formName].checkAll(error => this.$toast(error[0]))
+      return this.$refs[formName].checkAll(error => this.$toast(error[0]));
     },
     login() {
-      const type = this.type
-      if (this.check('mobileForm')) {
-        this.loading = true
-        const data = this['mobileForm']
+      const type = this.type;
+      if (this.check("mobileForm")) {
+        this.loading = true;
+        const data = this["mobileForm"];
 
-        this.$service('userMobileLogin', {
+        this.$service("userMobileLogin", {
           data
         })
           .then(this.success)
-          .catch(this.fail)
-        setAccountName(data.mobilePhone || data.name)
+          .catch(this.fail);
+        setAccountName(data.mobilePhone || data.name);
       }
     },
     success(result) {
-      this.loading = false
-      this.$store.commit('user/setToken', result.data.accessToken)
-      if (!window.navigator.userAgent.includes('MicroMessenger')) {
-        this.$native.loginOrLogout(result.data.accessToken)
+      this.loading = false;
+      this.$store.commit("user/setToken", result.data.accessToken);
+      if (!window.navigator.userAgent.includes("MicroMessenger")) {
+        this.$native.loginOrLogout(result.data.accessToken);
       }
       this.$toast({
-        type: 'success',
-        message: '成功'
-      })
+        type: "success",
+        message: "成功"
+      });
       /* if (this.fromUrl) {
         location.replace(this.fromUrl)
       } else {
@@ -410,69 +466,80 @@ export default {
           path: '/user/mine'
         })
       } */
-      if (this.fromUrl && (!this.fromUrl.endsWith('/user/login'))) {
-        location.replace(this.fromUrl)
+      if (this.fromUrl && !this.fromUrl.endsWith("/user/login")) {
+        location.replace(this.fromUrl);
       } else {
         this.$router.replace({
-          path: '/user/mine'
-        })
+          path: "/user/mine"
+        });
       }
     },
     fail() {
       if (this.nextNum >= 4) {
-        this.mobileForm.verify = 0
-        this['mobileForm'].verifyCode = ''
-        this.$refs['mobileCodeImage'].refresh()
+        this.mobileForm.verify = 0;
+        this["mobileForm"].verifyCode = "";
+        this.$refs["mobileCodeImage"].refresh();
       } else {
-        this.nextNum++
+        this.nextNum++;
       }
-      this.loading = false
+      this.loading = false;
     },
     refresh(code) {
-      this['mobileForm'].codeUuid = code.uuid
+      this["mobileForm"].codeUuid = code.uuid;
     },
     back() {
-      if (!localStorage.getItem('fromUrl')) {
+      if (!localStorage.getItem("fromUrl")) {
         this.$router.replace({
-          name: 'index'
-        })
-      } else if ((localStorage.getItem('fromUrl').endsWith('/swap/cart') && !getToken()) || (localStorage.getItem('fromUrl').endsWith('/user/mine') && !getToken()) || (localStorage.getItem('fromUrl').endsWith('/user/login') && !getToken())) {
+          name: "index"
+        });
+      } else if (
+        (localStorage.getItem("fromUrl").endsWith("/swap/cart") &&
+          !getToken()) ||
+        (localStorage.getItem("fromUrl").endsWith("/user/mine") &&
+          !getToken()) ||
+        (localStorage.getItem("fromUrl").endsWith("/user/login") && !getToken())
+      ) {
         this.$router.replace({
-          name: 'index'
-        })
-      } else if (localStorage.getItem('fromUrl').endsWith('/complaints') || localStorage.getItem('fromUrl').endsWith('/complaints/list')) {
+          name: "index"
+        });
+      } else if (
+        localStorage.getItem("fromUrl").endsWith("/complaints") ||
+        localStorage.getItem("fromUrl").endsWith("/complaints/list")
+      ) {
         this.$router.replace({
-          name: 'jewelrySearch-attackFake'
-        })
+          name: "jewelrySearch-attackFake"
+        });
       } else {
-        this.$router.go(-1)
+        this.$router.go(-1);
         // location.replace(localStorage.getItem('fromUrl'))
       }
 
-      localStorage.removeItem('fromUrl')
+      localStorage.removeItem("fromUrl");
     },
     widthCheck(str, len) {
-      var temp = 0
+      var temp = 0;
       for (var i = 0; i < str.value.length; i++) {
-        temp++
+        temp++;
         if (temp == len) {
-          this.isClick = true
+          this.isClick = true;
         } else {
-          this.isClick = false
+          this.isClick = false;
         }
       }
     },
     openQQ() {
-      location.href = this.qqUrl
+      location.href = this.qqUrl;
     },
     validateMobile(rule, value) {
-      return /^[1][3,4,5,7,8][0-9]{9}$/.test(value) ? '' : '请输入正确的手机号'
+      return /^[1][3,4,5,6,7,8][0-9]{9}$/.test(value)
+        ? ""
+        : "请输入正确的手机号";
     },
     validateDynamicVerifyCode(rule, value) {
-      return /^[0-9]*$/.test(value) ? '' : '请输入正确的验证码'
+      return /^[0-9]*$/.test(value) ? "" : "请输入正确的验证码";
     }
   }
-}
+};
 </script>
 
 <style lang="postcss" scoped>

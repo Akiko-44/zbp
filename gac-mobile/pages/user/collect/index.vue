@@ -274,7 +274,7 @@ export default {
       if (this.$native.isApp()) {
         this.$native.goToJewelryCircle();
       } else {
-        this.$router.push({ name: "news-jewelryCircle" });
+        this.$router.push({ name: "jewelryCircle" });
       }
     },
     toCircleDetail(type, id, status) {
@@ -289,7 +289,7 @@ export default {
           this.$native.goToJewelryDetail(id);
         } else {
           this.$router.push({
-            name: "news-jewelryCircle-detail",
+            name: "jewelryCircle-detail",
             query: { id: id }
           })
         }
@@ -298,7 +298,7 @@ export default {
           this.$native.goToJewelryVideo(id);
         } else {
           this.$router.push({
-            name: "news-jewelryCircle-videoDetail",
+            name: "jewelryCircle-videoDetail",
             query: { id: id }
           });
         }

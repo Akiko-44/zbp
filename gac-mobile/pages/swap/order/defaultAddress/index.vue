@@ -1,18 +1,27 @@
 <template>
-  <div class="default-address"
-       @click="$router.push({ name: 'user-address', query: {name: 'is-go'} })">
+  <div
+    class="default-address"
+    @click="$router.push({ name: 'user-address', query: {name: 'is-go'} })"
+  >
 
     <div class="address-bar">
       <template v-if="!loading">
         <div class="a-detail">
-          <van-row type="flex"
-                   justify="space-between">
-            <van-col span="3"><i class="ico-address"></i> </van-col>
+          <van-row
+            type="flex"
+            justify="space-between"
+          >
+            <van-col span="3"><img
+                class="icon-address"
+                src="../../../../assets/images/icon/address_icon.png"
+              /></van-col>
             <van-col span="21">
               <p>{{address.consignee}}
                 <span class="mobile">{{address.mobile}}</span></p>
-              <p v-if="address.province"
-                 class="a-size">{{address.province}}{{address.city}}{{address.area}}{{address.detail}}</p>
+              <p
+                v-if="address.province"
+                class="a-size"
+              >{{address.province}}{{address.city}}{{address.area}}{{address.detail}}</p>
               <p v-else>暂无收货地址，去填写一个吧~</p>
             </van-col>
           </van-row>

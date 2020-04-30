@@ -47,8 +47,8 @@
           :height="400"
           prefix="merchantLogo"
           @crop-upload-success="uploadSuccess"
+          tips="5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸400*400"
         />
-        <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸400*400</div>
       </el-form-item>
 
       <el-form-item
@@ -89,11 +89,10 @@
           imgFormat="jpg"
           :width="355"
           :height="175"
-          :maxSize="1.5"
           prefix="backgroundImg"
           @crop-upload-success="backgroundUploadSuccess"
+          tips="5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸355*175"
         />
-        <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸355*175</div>
       </el-form-item>
 
       <el-form-item

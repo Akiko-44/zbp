@@ -1,54 +1,82 @@
 <template>
-  <el-dialog :title="title"
-             :visible.sync="dialogFormVisible">
-    <el-form :model="form"
-             :rules="rules"
-             ref="form"
-             label-width="100px">
-      <el-form-item label="仲裁意见:"
-                    prop="opinion"
-                    v-if="form.auditState == 2">
+  <el-dialog
+    :title="title"
+    :visible.sync="dialogFormVisible"
+  >
+    <el-form
+      :model="form"
+      :rules="rules"
+      ref="form"
+      label-width="100px"
+    >
+      <el-form-item
+        label="仲裁意见:"
+        prop="opinion"
+        v-if="form.auditState == 2"
+      >
         <el-input v-model="form.opinion"></el-input>
       </el-form-item>
-      <el-form-item label="仲裁意见:"
-                    v-if="form.auditState == 1">
+      <el-form-item
+        label="仲裁意见:"
+        v-if="form.auditState == 1"
+      >
         <el-input v-model="form.opinion"></el-input>
       </el-form-item>
     </el-form>
     <div style="font-weight: 700;padding-left: 27px;">
       <p>上传凭证：</p>
-      <el-row class="row"
-              v-if="form.picUrlList.length">
-        <el-col class="col"
-                :span="6"
-                v-for="(picUrl, index) in form.picUrlList"
-                :key="index">
+      <el-row
+        class="row"
+        v-if="form.picUrlList.length"
+      >
+        <el-col
+          class="col"
+          :span="6"
+          v-for="(picUrl, index) in form.picUrlList"
+          :key="index"
+        >
           <el-card :body-style="{ padding: '0px' }">
-            <a target="_blank"
-               :href="picUrl | setImg"
-               class="image"
-               :style="getImageStyle(picUrl)"></a>
+            <a
+              target="_blank"
+              :href="picUrl | setImg"
+              class="image"
+              :style="getImageStyle(picUrl)"
+            ></a>
             <div style="padding: 14px;">
               <div class="bottom clearfix">
-                <el-button type="text"
-                           class="button"
-                           @click="form.picUrlList.splice(index, 1)">删除</el-button>
+                <el-button
+                  type="text"
+                  class="button"
+                  @click="form.picUrlList.splice(index, 1)"
+                >删除</el-button>
               </div>
             </div>
           </el-card>
         </el-col>
       </el-row>
-      <ImageUpload :multiple="true"
-                   @successCBK="workUploadSuccess" />
-      <p class="tip"
-         v-if="form.auditState == 1">同意退款后，退款金额将会原路返回</p>
+      <ImageUpload
+        :multiple="true"
+        @successCBK="workUploadSuccess"
+      />
+      <p
+        class="tip"
+        v-if="form.auditState == 1 && form.refundType == 1"
+      >同意退款后，退款金额将会原路返回</p>
+      <p
+        class="tip"
+        v-if="form.auditState == 1 && form.refundType == 2"
+      >同意退货后,系统会将您的退货地址发送给买家</p>
     </div>
-    <div slot="footer"
-         class="dialog-footer">
+    <div
+      slot="footer"
+      class="dialog-footer"
+    >
       <el-button @click="cancel('form')">取 消</el-button>
-      <el-button type="primary"
-                 :loading="loading"
-                 @click="update('form')">确 定</el-button>
+      <el-button
+        type="primary"
+        :loading="loading"
+        @click="update('form')"
+      >确 定</el-button>
     </div>
   </el-dialog>
 </template>
@@ -68,7 +96,8 @@ export default {
         opinion: '',
         refundId: '',
         auditState: 0,
-        picUrlList: []
+        picUrlList: [],
+        refundType: ''
       },
       rules: {
         opinion: [
@@ -82,12 +111,12 @@ export default {
     ImageUpload
   },
   watch: {
-  	dialogFormVisible: function(){
-  		this.form.picUrlList=[]
-  	},
-  	'form.picUrlList': function(val){
-  		console.log(val)
-  	}
+    dialogFormVisible: function() {
+      this.form.picUrlList = []
+    },
+    'form.picUrlList': function(val) {
+      console.log(val)
+    }
   },
   methods: {
     resetForm(formName, cb) {
@@ -100,7 +129,7 @@ export default {
     cancel() {
       this.dialogFormVisible = false
       this.resetForm('form')
-      this.form.picUrlList=[]
+      this.form.picUrlList = []
     },
     // 提交成功
     success() {
@@ -114,7 +143,7 @@ export default {
           this.loading = true
           auditArbitrate(this.form).then(() => {
             this.dialogFormVisible = false
-            this.form.picUrlList=[]
+            this.form.picUrlList = []
             this.$notify({
               title: '成功',
               message: '编辑成功',

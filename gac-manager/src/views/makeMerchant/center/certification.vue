@@ -71,6 +71,7 @@
           imgFormat="jpg"
           :width="400"
           :height="400"
+          :maxSize="1.5"
           prefix="logo"
           @crop-upload-success="uploadSuccess"
         />
@@ -318,6 +319,7 @@
           :multiple="false"
           prefix="materials"
           @successCBK="materialsUploadSuccess"
+          :maxSize="1.5"
         />
         <div>(请上传开户许可证照片或由银行提供的开户证明照片，需加盖本公司公章（可参考如下示例图）。支持jpg、jpeg、png格式，大小1.5兆以内，尺寸不限)
           <p><img
@@ -356,6 +358,7 @@
           :multiple="false"
           prefix="businessLicense"
           @successCBK="businessLicenseUploadSuccess"
+          :maxSize="1.5"
         />
         <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</div>
       </el-form-item>
@@ -389,6 +392,7 @@
           :multiple="false"
           prefix="legalPersonPic"
           @successCBK="legalPersonPicUploadSuccess"
+          :maxSize="1.5"
         />
         <div>《银联商务T+N自由划付业务（对公提现业务）承诺书》<a
             class="link aggrement"
@@ -427,6 +431,7 @@
           :multiple="false"
           prefix="doorPhotos"
           @successCBK="doorPhotosUploadSuccess"
+          :maxSize="1.5"
         />
         <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</div>
       </el-form-item>
@@ -460,6 +465,7 @@
           :multiple="false"
           prefix="idroomPic"
           @successCBK="idroomPicUploadSuccess"
+          :maxSize="1.5"
         />
         <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</div>
       </el-form-item>

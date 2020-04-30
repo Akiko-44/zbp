@@ -8,9 +8,24 @@ export function page(params) {
   })
 }
 
+export function newPage(params) {
+  return request({
+    url: '/admin/report/adminReportNew',
+    method: 'get',
+    params
+  })
+}
+
+export function reportOrderDetail(id) {
+  return request({
+    url: `/admin/report/order/detail/${id}`,
+    method: 'get'
+  })
+}
+
 export function audit(params) {
   return request({
-    url: `/admin/report/audit/${params.id}/${params.state}`,
+    url: `/admin/report/audit/${params.id}/${params.state}?auditLog=${params.auditLog}`,
     method: 'get'
   })
 }

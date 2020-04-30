@@ -54,14 +54,20 @@
         v-if="type !== 2"
       >
         <template slot-scope="{ row, $index }">
-          <el-input-number
+          <!-- <el-input-number
             placeholder="输入活动价格"
             v-model="row.groupPrice"
             @change="vaidatePrice(row, $index)"
             :precision="2"
             :controls="false"
-            :min="0.01"
-          ></el-input-number>
+            :min="0"
+          ></el-input-number> -->
+          <el-input
+            placeholder="输入活动价格"
+            v-model="row.groupPrice"
+            @change="vaidatePrice(row, $index)"
+            :min="0"
+          ></el-input>
         </template>
       </el-table-column>
       <el-table-column
@@ -89,7 +95,7 @@
             @change="vaidatePrice(row, $index)"
             :precision="2"
             :controls="false"
-            :min="0.01"
+            :min="0"
           ></el-input-number>
         </template>
       </el-table-column>
@@ -127,7 +133,9 @@ export default {
       deep: true
     },
     goodsSpecTableData: {
-      handler(curVal, oldVal) { },
+      handler(curVal, oldVal) {
+        console.log(curVal)
+      },
       deep: true
     }
   },
@@ -166,12 +174,14 @@ export default {
     },
     vaidatePrice(val, i) {
       this.$nextTick(() => {
-        this.goodsSpecTableData[i].groupPrice = Number(
+        /* this.goodsSpecTableData[i].groupPrice = Number(
           val.groupPrice.toFixed(2)
         )
         this.goodsSpecTableData[i].promotionPrice = Number(
           val.promotionPrice.toFixed(2)
-        )
+        ) */
+        this.goodsSpecTableData[i].groupPrice = this.NumberCheck(val.groupPrice)
+        this.goodsSpecTableData[i].promotionPrice = this.NumberCheck(val.promotionPrice)
       })
     },
     doExchange() {
@@ -286,6 +296,11 @@ export default {
     },
     saveSpec() {
       console.log('exChange', this.goodsSpecData, this.goodsSpecTableData)
+    },
+    NumberCheck(num) {
+      num = num.replace(/^[\.]/, '').replace(/[^\d.]/g, '')
+      const str = Number(num.replace(/(.*)\.([\d]{2})(\d*)/g, '$1.$2')).toFixed(2)
+      return str
     }
   }
 }

@@ -23,10 +23,10 @@
             placeholder="请选择所属平台"
           >
             <el-option
-              v-for="(item,i) in platformMap"
+              v-for="(item,i) in platformList"
               :key="i"
-              :label="item"
-              :value="i+1"
+              :label="item.label"
+              :value="item.value"
             >
             </el-option>
           </el-select>
@@ -38,10 +38,10 @@
             placeholder="请选择所属商户"
           >
             <el-option
-              v-for="(item,i) in merchantTypeMap"
+              v-for="(item,i) in merchantTypeList"
               :key="i"
-              :label="item"
-              :value="i"
+              :label="item.label"
+              :value="item.value"
             >
             </el-option>
           </el-select>
@@ -204,6 +204,7 @@ export default {
         1: '综合运营管理平台',
         2: '商户管理后台'
       },
+
       merchantTypeMap: {
         undefined: '全部',
         0: '运营',
@@ -211,6 +212,18 @@ export default {
         2: '设计师',
         3: '制造间'
       },
+      platformList: [
+        { value: '', label: '全部' },
+        { value: '1', label: '综合运营管理平台' },
+        { value: '2', label: '商户管理后台' }
+      ],
+      merchantTypeList: [
+        { value: '', label: '全部' },
+        { value: '0', label: '运营' },
+        { value: '1', label: '珠宝店' },
+        { value: '2', label: '设计师' },
+        { value: '3', label: '制造间' }
+      ],
       // 导出文件
       outFile: '', // 导出文件el
       errorDialog: false, // 错误信息弹窗

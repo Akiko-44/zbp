@@ -1,12 +1,14 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form"
-             @keyup.enter.native="handleLogin"
-             autoComplete="on"
-             :model="loginForm"
-             :rules="loginRules"
-             ref="loginForm"
-             label-position="left">
+    <el-form
+      class="login-form"
+      @keyup.enter.native="handleLogin"
+      autoComplete="on"
+      :model="loginForm"
+      :rules="loginRules"
+      ref="loginForm"
+      label-position="left"
+    >
       <div class="title-container">
         <h3 class="title">{{title}}</h3>
         <lang-select class="set-language"></lang-select>
@@ -15,26 +17,32 @@
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
-        <el-input name="name"
-                  type="text"
-                  v-model="loginForm.name"
-                  autoComplete="on"
-                  placeholder="用户名/手机号"
-                  :maxlength="11" />
+        <el-input
+          name="name"
+          type="text"
+          v-model="loginForm.name"
+          autoComplete="on"
+          placeholder="用户名/手机号"
+          :maxlength="20"
+        />
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
-        <el-input name="password"
-                  :type="passwordType"
-                  @keyup.enter.native="handleLogin"
-                  v-model="loginForm.password"
-                  autoComplete="on"
-                  placeholder="密码" />
-        <span class="show-pwd"
-              @click="showPwd">
+        <el-input
+          name="password"
+          :type="passwordType"
+          @keyup.enter.native="handleLogin"
+          v-model="loginForm.password"
+          autoComplete="on"
+          placeholder="密码"
+        />
+        <span
+          class="show-pwd"
+          @click="showPwd"
+        >
           <svg-icon icon-class="eye" />
         </span>
       </el-form-item>
@@ -46,27 +54,36 @@
           </span>
         </el-col>
         <el-col :span="16">
-          <el-input name="code"
-                    type="text"
-                    v-model="loginForm.verifyCode"
-                    autoComplete="on"
-                    placeholder="验证码" />
+          <el-input
+            name="code"
+            type="text"
+            v-model="loginForm.verifyCode"
+            autoComplete="on"
+            placeholder="验证码"
+          />
         </el-col>
         <el-col :span="6">
-          <img @click="code = getVerifyCode()"
-               :src="code.url"
-               style="display: block;float: right; border-radius: 0 5px 5px 0; height: 47px;" />
+          <img
+            @click="code = getVerifyCode()"
+            :src="code.url"
+            style="display: block;float: right; border-radius: 0 5px 5px 0; height: 47px;"
+          />
         </el-col>
       </el-form-item>
 
-      <el-button type="primary"
-                 style="width:100%;margin-bottom:20px;"
-                 :loading="loading"
-                 @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
-                 
-      <div class="forget" v-if="loginType != 1">
-				<span @click="findPwd">忘记密码</span>
-			</div>
+      <el-button
+        type="primary"
+        style="width:100%;margin-bottom:20px;"
+        :loading="loading"
+        @click.native.prevent="handleLogin"
+      >{{$t('login.logIn')}}</el-button>
+
+      <div
+        class="forget"
+        v-if="loginType != 1"
+      >
+        <span @click="findPwd">忘记密码</span>
+      </div>
     </el-form>
   </div>
 </template>
@@ -162,8 +179,8 @@ export default {
         }
       })
     },
-    findPwd(){
-    	this.$router.push({ path: '/findPwd' })
+    findPwd() {
+      this.$router.push({ path: '/findPwd' })
     }
   }
 }
@@ -267,12 +284,12 @@ $light_gray: #eee;
     right: 35px;
     bottom: 28px;
   }
-  .forget{
-  	font-size: 14px;
-  	text-align: right;
-  	span{
-  		cursor: pointer;
-  	}
+  .forget {
+    font-size: 14px;
+    text-align: right;
+    span {
+      cursor: pointer;
+    }
   }
 }
 </style>

@@ -58,7 +58,6 @@
             </el-option>
           </el-select>
         </el-form-item>
-        </el-form-item>
         <el-button
           type="primary"
           v-waves
@@ -174,7 +173,7 @@
         label="发布时间"
       >
         <template slot-scope="{ row }">
-          <span>{{row.updateTime}}</span>
+          <span>{{row.updateTime?row.updateTime:row.startTime}}</span>
         </template>
       </el-table-column>
 

@@ -18,30 +18,46 @@
             <van-icon name="cross" /></span>
         </p>
       </div>
-      <div
-        class="list-box"
-        ref="listBox"
-        id="listBox"
+
+      <AppList
+        name="userLikeList"
+        :query="query"
+        :isDisabled="true"
+        :getData="
+        () =>
+          this.$service('userLikeList', {
+            data: this.query
+          })
+      "
+        ref="list"
       >
-        <div
-          class="collect-block-item vertical"
-          v-for="(goods, i) in goodsList"
-          :key="i"
-        >
-          <AppCard
-            :data="{
-              id: goods.id,
-              imgUrl: goods.thumbnail,
-              title: goods.title,
-              brief: goods.brief,
-              columnName: goods.columnName,
-              likeNumber: goods.likeNumber
-            }"
-            @likeSuccess="likeSuccess"
-            @click.native="toDetail(goods.type, goods.id)"
-          />
-        </div>
-      </div>
+        <template slot-scope="{ list }">
+          <div
+            class="list-box"
+            ref="listBox"
+            id="listBox"
+          >
+            <div
+              class="collect-block-item vertical"
+              v-for="(goods, i) in list"
+              :key="i"
+            >
+              <AppCard
+                :data="{
+                  id: goods.id,
+                  imgUrl: goods.thumbnail,
+                  title: goods.title,
+                  brief: goods.brief,
+                  columnName: goods.columnName,
+                  likeNumber: goods.likeNumber
+                }"
+                @likeSuccess="likeSuccess"
+                @click.native="toDetail(goods.type, goods.id)"
+              />
+            </div>
+          </div>
+        </template>
+      </AppList>      
     </div>
 
     <div
@@ -165,7 +181,7 @@ export default {
       if (this.$native.isApp()) {
         this.$native.goToJewelryCircle();
       } else {
-        this.$router.push({ name: "news-jewelryCircle" });
+        this.$router.push({ name: "jewelryCircle" });
       }
     },
     toDetail(type, id) {
@@ -174,7 +190,7 @@ export default {
           this.$native.goToJewelryDetail(id)
         } else {
           this.$router.push({
-            name: "news-jewelryCircle-detail",
+            name: "jewelryCircle-detail",
             query: { id: id }
           })
         }
@@ -183,7 +199,7 @@ export default {
           this.$native.goToJewelryVideo(id)
         } else {
           this.$router.push({
-            name: "news-jewelryCircle-videoDetail",
+            name: "jewelryCircle-videoDetail",
             query: { id: id }
           })
         }

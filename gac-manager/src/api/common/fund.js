@@ -8,7 +8,7 @@ export function page(data) {
   })
 }
 
-/*此接口暂被drawMoney取代*/
+/* 此接口暂被drawMoney取代*/
 export function accountInfo(params) {
   return request({
     url: '/api/pay/user_account/info',
@@ -23,7 +23,6 @@ export function drawMoney() {
     method: 'get'
   })
 }
-
 
 export function applyCash(amount) {
   return request({
@@ -73,9 +72,27 @@ export function payCashReview(params) {
   })
 }
 
-export function financeStatistics(type,isExport,params) {
+export function financeStatistics(type, isExport, params) {
   return request({
     url: `/admin/financialManagement/statistics/financeStatistics/${type}/${isExport}`,
+    method: 'get',
+    params
+  })
+}
+
+// 运营，平台提现/商家提现
+export function withdrawalPage(params) {
+  return request({
+    url: '/admin/pay/pay_cash/withdrawal/page',
+    method: 'get',
+    params
+  })
+}
+
+// 运营，平台提现/商家提现查看提现金额汇总,1、平台2、商家
+export function withdrawalTotal(params) {
+  return request({
+    url: '/admin/pay/pay_cash/withdrawal/total',
     method: 'get',
     params
   })

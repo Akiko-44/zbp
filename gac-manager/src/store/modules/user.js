@@ -86,6 +86,7 @@ const user = {
             Cookies.set('userParentId', data.data.userParentId)
             Cookies.set('logo', data.data.logo)
             Cookies.set('mobilePhone', data.data.mobilePhone)
+            Cookies.set('userType', data.data.userType)
             commit('SET_TOKEN', data.data.accessToken)
             resolve()
           }

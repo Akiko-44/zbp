@@ -55,7 +55,7 @@
               v-for="item in categories"
               :key="item.id"
               :label="item.catName"
-              :value="item.id"
+              :value="String(item.id)"
             ></el-option>
           </el-select>
           <el-select
@@ -68,7 +68,7 @@
               v-for="item in categoriesSecond"
               :key="item.id"
               :label="item.catName"
-              :value="item.id"
+              :value="String(item.id)"
             ></el-option>
           </el-select>
           <el-select
@@ -81,7 +81,7 @@
               v-for="item in categoriesThird"
               :key="item.id"
               :label="item.catName"
-              :value="item.id"
+              :value="String(item.id)"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -143,7 +143,7 @@
             :disabled="look"
           ></el-input>
           <p class="tip">商品货号是指商家个人管理商品的编号，买家不可见</p>
-          <p class="tip">最多可输入20个字符，支持输入中文、字母、数字、_、/、-和小数点</p>
+          <p class="tip">最多可输入20个字符，支持输入字母、数字、_、/、-和小数点</p>
         </el-form-item>
 
         <!--商品标签-->
@@ -207,7 +207,7 @@
                       v-for="subItem in item.subsidiaryAttributesVOs"
                       :key="subItem.id"
                       :label="subItem.subsidiaryName"
-                      :value="subItem.id"
+                      :value="String(subItem.id)"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -231,7 +231,7 @@
                         v-for="subItem in item.subsidiaryAttributesVOs"
                         :key="subItem.id"
                         :label="subItem.subsidiaryName"
-                        :value="subItem.id"
+                        :value="String(subItem.id)"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -254,7 +254,7 @@
                         v-for="thirdItem in identifyTypeList"
                         :key="thirdItem.id"
                         :label="thirdItem.name"
-                        :value="thirdItem.id"
+                        :value="String(thirdItem.id)"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -277,7 +277,7 @@
                         v-for="elseItem in item.authIdentifications"
                         :key="elseItem.id"
                         :label="elseItem.name"
-                        :value="elseItem.id"
+                        :value="String(elseItem.id)"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -323,12 +323,12 @@
                 <el-checkbox
                   :label="item.attrValue"
                   v-if="!item.custom"
-                  :name="ele.id"
+                  :name="String(ele.id)"
                 ></el-checkbox>
                 <template v-else>
                   <el-checkbox
                     :label="item.attrValue"
-                    :name="ele.id"
+                    :name="String(ele.id)"
                   ></el-checkbox>
                   <span class="custom-item">
                     <el-popover
@@ -582,8 +582,9 @@
               :multiple="true"
               prefix="work"
               @successCBK="workUploadSuccess"
+              :tips="'共'+form.picUrlList.length+'张，还能上传'+(5 - form.picUrlList.length)+'张；第一张图片默认为商品主图；图片尺寸：600*600以上；数量：5张以内；格式：jpg、jpeg、png、gif；大小：单张图片不超过5m'"
             />
-            <div>共<span class="danger">{{form.picUrlList.length}}</span>张，还能上传<span class="danger">{{5 - form.picUrlList.length}}</span>张；第一张图片默认为商品主图；图片尺寸：600*600以上；数量：5张以内；格式：jpg、jpeg、png、gif；大小：单张图片不超过3m</div>
+            <!-- <div>共<span class="danger">{{form.picUrlList.length}}</span>张，还能上传<span class="danger">{{5 - form.picUrlList.length}}</span>张；第一张图片默认为商品主图；图片尺寸：600*600以上；数量：5张以内；格式：jpg、jpeg、png、gif；大小：单张图片不超过3m</div> -->
           </div>
         </el-form-item>
 
@@ -1016,7 +1017,7 @@ export default {
       }).catch(() => { })
     },
     brandChange(brandId) {
-      const brandObj = this.brandList.find(item => item.brandId === brandId)
+      const brandObj = this.brandList.find(item => item.brandId == brandId)
       this.form.brandName = brandObj.brandName
     },
     // 获取鉴定类别
@@ -1026,7 +1027,7 @@ export default {
       this.categoryAttributesList.map(item => {
         if (item.attributesType === 2) {
           item.subsidiaryAttributesVOs.map(subItem => {
-            if (subItem.id === id) {
+            if (subItem.id == id) {
               this.identifyTypeList = subItem.identificationCategorys
             }
           })
@@ -1056,14 +1057,14 @@ export default {
           this.goodsSpecData = []
           this.goodsSpecTableData = []
           this.form.stock = undefined
-          const firstObj = this.categories.find(item => item.id === id)
+          const firstObj = this.categories.find(item => item.id == id)
           this.form.primaryCgyName = firstObj.catName
         }
       }).catch(() => { })
     },
     // 获取三级分类及类目属性
     getCategoriesThird(id) {
-      const secondObj = this.categoriesSecond.find(item => item.id === id)
+      const secondObj = this.categoriesSecond.find(item => item.id == id)
       this.categoryAttributesList = secondObj.categoryAttributesList
       this.form.secondaryCgyName = secondObj.catName
       categoryList(id).then(data => {
@@ -1072,7 +1073,7 @@ export default {
           this.getSku(this.form.thridaryCgyId)
           // 类目属性回显
           this.categoryAttributesList.map((item, i) => {
-            if (item.id === '1040') {
+            if (item.id == '1040') {
               this.getIdentifyTypeList(this.form.catAttrAndSubAttrDTOs[i].subsidiaryAttributesId)
               this.categoryAttributes.identificationCategoryId = this.form.catAttrAndSubAttrDTOs[i].identificationCategoryId
               this.categoryAttributes.authIdentificationId = this.form.catAttrAndSubAttrDTOs[i].authIdentificationId
@@ -1096,7 +1097,7 @@ export default {
     },
     // 获取sku
     getSku(id) {
-      const thirdObj = this.categoriesThird.find(item => item.id === id)
+      const thirdObj = this.categoriesThird.find(item => item.id == id)
       this.specsList = thirdObj.specsList
       this.form.thridaryCgyName = thirdObj.catName
       if (this.editCreate) {
@@ -1553,7 +1554,7 @@ export default {
           value: this.price
         },
         on: {
-          input: function(value) {
+          input: function (value) {
             _this.price = value
           }
         }
@@ -1569,7 +1570,7 @@ export default {
           value: this.stock
         },
         on: {
-          input: function(value) {
+          input: function (value) {
             _this.stock = value
           }
         }
@@ -1585,7 +1586,7 @@ export default {
           value: this.businessCode
         },
         on: {
-          input: function(value) {
+          input: function (value) {
             _this.businessCode = value
           }
         }
@@ -1601,7 +1602,7 @@ export default {
           value: this.businessBarcode
         },
         on: {
-          input: function(value) {
+          input: function (value) {
             _this.businessBarcode = value
           }
         }

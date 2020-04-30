@@ -110,6 +110,7 @@
 <script>
 import { jewelryContentList, delJewelryContent } from '@/api/public/jewelryRing'
 import waves from '@/directive/waves' // 水波纹指令
+import Cookies from 'js-cookie'
 
 export default {
   directives: {
@@ -127,7 +128,8 @@ export default {
         limit: 20,
         title: '',
         startTime: '',
-        endTime: ''
+        endTime: '',
+        userType: Cookies.get('userType')
       },
       index: undefined
     }

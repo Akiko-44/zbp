@@ -1291,6 +1291,7 @@ export default {
   },
   created() {
     this.getFixTotalData()
+    this.getListData(1, 0, this.listParams)
   },
   mounted() {
     this.outFile = document.getElementById('downlink')
@@ -1300,7 +1301,6 @@ export default {
       goodsDataTotal(0)
         .then(succ => {
           this.fixtotalData = succ.data
-          this.getListData(1, 0)
         })
     },
     getTotalData(type, params) {

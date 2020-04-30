@@ -55,7 +55,7 @@
               v-for="item in categories"
               :key="item.id"
               :label="item.catName"
-              :value="item.id"
+              :value="String(item.id)"
             ></el-option>
           </el-select>
           <el-select
@@ -68,7 +68,7 @@
               v-for="item in categoriesSecond"
               :key="item.id"
               :label="item.catName"
-              :value="item.id"
+              :value="String(item.id)"
             ></el-option>
           </el-select>
           <el-select
@@ -81,7 +81,7 @@
               v-for="item in categoriesThird"
               :key="item.id"
               :label="item.catName"
-              :value="item.id"
+              :value="String(item.id)"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -130,6 +130,24 @@
             :maxlength="50"
             placeholder="用于分享商品时的介绍，最长50个汉字"
           ></el-input>
+        </el-form-item>
+
+        <el-form-item
+          label="所属专区"
+          prop="zoneIdList"
+        >
+          <el-checkbox-group
+            v-model="form.zoneIdList"
+            :max="3"
+          >
+            <el-checkbox
+              v-for="item in zoneList"
+              :key="item.id"
+              :label="item.id"
+              @change="$forceUpdate()"
+            >{{item.zoneName}}</el-checkbox>
+          </el-checkbox-group>
+          <p class="tip">请关联1~3个专区</p>
         </el-form-item>
 
         <!--商品货号-->
@@ -207,7 +225,7 @@
                       v-for="subItem in item.subsidiaryAttributesVOs"
                       :key="subItem.id"
                       :label="subItem.subsidiaryName"
-                      :value="subItem.id"
+                      :value="String(subItem.id)"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -231,7 +249,7 @@
                         v-for="subItem in item.subsidiaryAttributesVOs"
                         :key="subItem.id"
                         :label="subItem.subsidiaryName"
-                        :value="subItem.id"
+                        :value="String(subItem.id)"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -254,7 +272,7 @@
                         v-for="thirdItem in identifyTypeList"
                         :key="thirdItem.id"
                         :label="thirdItem.name"
-                        :value="thirdItem.id"
+                        :value="String(thirdItem.id)"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -277,7 +295,7 @@
                         v-for="elseItem in item.authIdentifications"
                         :key="elseItem.id"
                         :label="elseItem.name"
-                        :value="elseItem.id"
+                        :value="String(elseItem.id)"
                       ></el-option>
                     </el-select>
                   </el-form-item>
@@ -308,7 +326,7 @@
               <span
                 class="cur-pointer blue"
                 v-if="!look"
-                @click="addSkuAttr(skuAttrValue[index],ele.specsAttrsList,skuAttr[index])"
+                @click="addSkuAttr(skuAttrValue[index],ele.specsAttrsList,skuAttr[index]);skuAttrValue[index]=''"
               >添加</span>
             </div>
             <el-checkbox-group
@@ -324,12 +342,12 @@
                 <el-checkbox
                   :label="item.attrValue"
                   v-if="!item.custom"
-                  :name="ele.id"
+                  :name="String(ele.id)"
                 ></el-checkbox>
                 <template v-else>
                   <el-checkbox
                     :label="item.attrValue"
-                    :name="ele.id"
+                    :name="String(ele.id)"
                   ></el-checkbox>
                   <span class="custom-item">
                     <el-popover
@@ -507,6 +525,12 @@
             </el-table-column>
             <el-table-column
               align="center"
+              label="活动库存"
+              prop="activityStock"
+              v-if="look"
+            ></el-table-column>
+            <el-table-column
+              align="center"
               :render-header="renderHeaderCode"
             >
               <template slot-scope="{ row }">
@@ -586,8 +610,9 @@
               :multiple="true"
               prefix="work"
               @successCBK="workUploadSuccess"
+              :tips="'共'+form.goodsGallerys.length+'张，还能上传'+(5 - form.goodsGallerys.length)+'张；第一张图片默认为商品主图；图片尺寸：600*600以上；数量：5张以内；格式：jpg、jpeg、png、gif；大小：单张图片不超过5m'"
             />
-            <div>共<span class="danger">{{form.goodsGallerys.length}}</span>张，还能上传<span class="danger">{{5 - form.goodsGallerys.length}}</span>张；第一张图片默认为商品主图；图片尺寸：600*600以上；数量：5张以内；格式：jpg、jpeg、png、gif；大小：单张图片不超过3m</div>
+            <!-- <div>共<span class="danger">{{form.goodsGallerys.length}}</span>张，还能上传<span class="danger">{{5 - form.goodsGallerys.length}}</span>张；第一张图片默认为商品主图；图片尺寸：600*600以上；数量：5张以内；格式：jpg、jpeg、png、gif；大小：单张图片不超过5m</div> -->
           </div>
         </el-form-item>
 
@@ -811,7 +836,7 @@ import { setImg } from '@/filters'
 import { domain } from '@/api/qiniu'
 import Tinymce from '@/components/Tinymce'
 import { getObj, putObj, getBrand } from '@/api/jewelryMerchant/works'
-import { categoryList } from '@/api/public/system'
+import { categoryList, getZoneList } from '@/api/public/system'
 import { getParamSettings } from '@/api/public/system'
 
 export default {
@@ -833,6 +858,8 @@ export default {
       categories: [],
       categoriesSecond: [],
       categoriesThird: [],
+      // 专区
+      zoneList: [],
       // 类目属性
       categoryAttributes: {},
       categoryAttributesList: [],
@@ -879,6 +906,7 @@ export default {
         remark: undefined,
         associateGoodsId: [],
         catList: [],
+        zoneIdList: [],
         genuine: 0,
         restore: 1,
         primaryCgyId: undefined,
@@ -975,6 +1003,12 @@ export default {
           required: true,
           message: '请选择分类',
           trigger: 'blur'
+        }],
+        zoneIdList: [{
+          type: 'array',
+          required: true,
+          message: '请至少选择一个专区',
+          trigger: 'change'
         }]
       },
       editStatus: true,
@@ -1024,7 +1058,7 @@ export default {
       this.goodsSpecData = form.goodsSpecs
       this.goodsSpecTableData = form.goodsSkus
       this.form.goodsCategoryAttributes = form.goodsCategoryAttributes
-      this.form.goodsCategoryAttributes = this.form.goodsCategoryAttributes.sort(function(a, b) {
+      this.form.goodsCategoryAttributes = this.form.goodsCategoryAttributes.sort(function (a, b) {
         return a.categoryAttributesId - b.categoryAttributesId
       })
       this.editCreate = true
@@ -1037,8 +1071,10 @@ export default {
       }, 1000 * 60 * 15)
     }
     this.getCategory()
+    this.getZoneList()
     this.getBrand()
     this.getParamSettings()
+    this.stockChange()
   },
   beforeDestroy() {
     clearInterval(this.timeout)
@@ -1054,6 +1090,12 @@ export default {
     }
   },
   methods: {
+    // 获取所有专区
+    getZoneList() {
+      getZoneList().then(data => {
+        this.zoneList = data.data
+      }).catch(() => { })
+    },
     // 获取系统设置
     getParamSettings() {
       getParamSettings().then(data => {
@@ -1077,7 +1119,7 @@ export default {
       this.categoryAttributesList.map(item => {
         if (item.attributesType === 2) {
           item.subsidiaryAttributesVOs.map(subItem => {
-            if (subItem.id === id) {
+            if (subItem.id == id) {
               this.identifyTypeList = subItem.identificationCategorys
             }
           })
@@ -1108,16 +1150,16 @@ export default {
           this.goodsSpecData = []
           this.goodsSpecTableData = []
           this.form.stock = undefined
-          const firstObj = this.categories.find(item => item.id === id)
+          const firstObj = this.categories.find(item => item.id == id)
           this.form.primaryCgyName = firstObj.catName
         }
       }).catch(() => { })
     },
     // 获取三级分类及类目属性
     getCategoriesThird(id) {
-      const secondObj = this.categoriesSecond.find(item => item.id === id)
+      const secondObj = this.categoriesSecond.find(item => item.id == id)
       this.categoryAttributesList = secondObj.categoryAttributesList
-      this.categoryAttributesList = this.categoryAttributesList.sort(function(a, b) {
+      this.categoryAttributesList = this.categoryAttributesList.sort(function (a, b) {
         return a.id - b.id
       })
       this.form.secondaryCgyName = secondObj.catName
@@ -1127,7 +1169,7 @@ export default {
           this.getSku(this.form.thridaryCgyId)
           // 类目属性回显
           this.categoryAttributesList.map((item, i) => {
-            if (item.id === '1040') {
+            if (item.id == '1040') {
               this.getIdentifyTypeList(this.form.goodsCategoryAttributes[i].subsidiaryAttributesId)
               this.categoryAttributes.identificationCategoryId = this.form.goodsCategoryAttributes[i].identificationCategoryId
               this.categoryAttributes.authIdentificationId = this.form.goodsCategoryAttributes[i].authIdentificationId
@@ -1151,7 +1193,7 @@ export default {
     },
     // 获取sku
     getSku(id) {
-      const thirdObj = this.categoriesThird.find(item => item.id === id)
+      const thirdObj = this.categoriesThird.find(item => item.id == id)
       this.specsList = thirdObj.specsList
       this.form.thridaryCgyName = thirdObj.catName
       if (this.editCreate) {
@@ -1211,6 +1253,7 @@ export default {
         skuAttrList.push({ attrValue: skuAttrValue, custom: true })
         skuAttr.push(skuAttrValue)
         skuAttrValue = ''
+        this.customAttrValue = ''
       } else {
         this.$notify({
           title: '警告',
@@ -1294,6 +1337,7 @@ export default {
       this.goodsSpecTableData.map(item => {
         this.stock && (item.stock = this.stock)
         this.price && (item.price = this.price)
+        this.activityStock && (item.activityStock = this.activityStock)
         this.businessCode && (item.businessCode = this.businessCode)
         this.businessBarcode && (item.businessBarcode = this.businessBarcode)
       })
@@ -1303,8 +1347,8 @@ export default {
     composeCategoryAttributes() {
       this.form.goodsCategoryAttributes = []
       this.categoryAttributesList.map(item => {
-        const identificationCategoryId = item.id === '1040' ? this.categoryAttributes.identificationCategoryId : undefined
-        const authIdentificationId = item.id === '1040' ? this.categoryAttributes.authIdentificationId : undefined
+        const identificationCategoryId = item.id == '1040' ? this.categoryAttributes.identificationCategoryId : undefined
+        const authIdentificationId = item.id == '1040' ? this.categoryAttributes.authIdentificationId : undefined
         const subsidiaryAttributesId = item.attributesType ? this.categoryAttributes[item.id] : ''
         const subsidiaryAttributesValue = !item.attributesType ? this.categoryAttributes[item.id] : ''
         const obj = {
@@ -1322,7 +1366,7 @@ export default {
     stockChange() {
       let subStock = 0
       this.goodsSpecTableData.forEach((sub, index) => {
-        subStock += Number(sub.stock)
+        subStock = subStock + Number(sub.stock) + Number(sub.activityStock)
       })
       this.form.stock = subStock
     },
@@ -1394,6 +1438,7 @@ export default {
         var objTemp = {
           stock: '',
           price: '',
+          activityStock: '',
           businessCode: '',
           businessBarcode: '',
           id: ''
@@ -1419,6 +1464,7 @@ export default {
           if (sub.attrSymbolPath.split(',').sort().join(',') == sub2.attrSymbolPath.split(',').sort().join(',')) {
             sub2.stock = sub.stock
             sub2.price = sub.price
+            sub2.activityStock = sub.activityStock
             sub2.businessCode = sub.businessCode
             sub2.businessBarcode = sub.businessBarcode
             sub2.id = sub.id
@@ -1455,19 +1501,21 @@ export default {
       this.form.goodsSpecs = this.goodsSpecData
       this.form.goodsSkus = this.goodsSpecTableData
       this.form.cat = (this.form.primaryCgyId && this.form.secondaryCgyId && this.form.thridaryCgyId) ? this.form.primaryCgyId : ''
-      this.form.catList = [{
-        catId: this.form.primaryCgyId,
-        catLevel: '1',
-        catName: this.form.primaryCgyName
-      }, {
-        catId: this.form.secondaryCgyId,
-        catLevel: '2',
-        catName: this.form.secondaryCgyName
-      }, {
-        catId: this.form.thridaryCgyId,
-        catLevel: '3',
-        catName: this.form.thridaryCgyName
-      }]
+      if (this.form.cat) {
+        this.form.catList = [{
+          catId: this.form.primaryCgyId,
+          catLevel: '1',
+          catName: this.form.primaryCgyName
+        }, {
+          catId: this.form.secondaryCgyId,
+          catLevel: '2',
+          catName: this.form.secondaryCgyName
+        }, {
+          catId: this.form.thridaryCgyId,
+          catLevel: '3',
+          catName: this.form.thridaryCgyName
+        }]
+      }
       this.composeCategoryAttributes()
       this.draftLoading = true
       this.save(isToList)
@@ -1643,6 +1691,8 @@ export default {
     },
     goBack() {
       this.$router.go(-1)
+      // console.log(this.categoryAttributes)
+      // console.log(this.categoryAttributesList)
     },
     renderHeaderPrice(h, data) {
       const _this = this
@@ -1654,7 +1704,7 @@ export default {
           value: this.price
         },
         on: {
-          input: function(value) {
+          input: function (value) {
             _this.price = value
           }
         }
@@ -1670,7 +1720,7 @@ export default {
           value: this.stock
         },
         on: {
-          input: function(value) {
+          input: function (value) {
             _this.stock = value
           }
         }
@@ -1687,7 +1737,7 @@ export default {
           value: this.businessCode
         },
         on: {
-          input: function(value) {
+          input: function (value) {
             _this.businessCode = value
           }
         }
@@ -1704,7 +1754,7 @@ export default {
           value: this.businessBarcode
         },
         on: {
-          input: function(value) {
+          input: function (value) {
             _this.businessBarcode = value
           }
         }

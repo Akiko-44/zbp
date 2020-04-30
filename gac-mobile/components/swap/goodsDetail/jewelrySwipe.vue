@@ -12,46 +12,71 @@
            @click="$refs.share.show()"></i> -->
       </div>
     </div>
-    <van-swipe ref="detailSwipe"
-               class="detail-swipe"
-               :show-indicators="false"
-               @change="onChange">
+    <van-swipe
+      ref="detailSwipe"
+      class="detail-swipe"
+      :show-indicators="false"
+      @change="onChange"
+    >
       <van-swipe-item v-if="videoUrl">
-        <video :src="videoUrl"
-           style="width:100%;height:100%;object-fit: fill"
-           x5-video-player-type="h5"
-           webkit-playsinline
-           controls
-           playsinline
-           ref="video"
-           :poster="imgs[0].imgUrl"></video>
+        <video
+          :src="videoUrl"
+          style="width:100%;height:100%;background: #000;"
+          x5-video-player-type="h5"
+          webkit-playsinline
+          controls
+          playsinline
+          ref="video"
+          :poster="imgs[0].imgUrl"
+        ></video>
       </van-swipe-item>
-      <van-swipe-item v-for="(img, index) in imgs"
-                      :key="index"
-                      @click.native="swipeClick(index)">
-        <div class="background lazy-img-box"
-             v-lazy:background-image="setImg(img.imgUrl, { w: 800 })"></div>
+      <van-swipe-item
+        v-for="(img, index) in imgs"
+        :key="index"
+        @click.native="swipeClick(index)"
+      >
+        <div
+          class="background lazy-img-box"
+          v-lazy:background-image="setImg(img.imgUrl, { w: 800 })"
+        ></div>
       </van-swipe-item>
     </van-swipe>
-    <div class="toggle-indicator"
-         v-if="videoUrl">
-      <span class="video-indicator"
-            :class="{toggleActive:toggleActive==='video'}"
-            @click="toggleVideo">视频</span>
-      <span class="picture-indicator"
-            :class="{toggleActive:toggleActive==='picture'}"
-            @click="togglePicture">图片</span>
+    <div
+      v-if="appDetailIcon != ''"
+      class="background-icon lazy-img-box"
+      v-lazy:background-image="setImg(appDetailIcon, { w: 800 })"
+    ></div>
+    <div
+      class="toggle-indicator"
+      v-if="videoUrl"
+    >
+      <span
+        class="video-indicator"
+        :class="{toggleActive:toggleActive==='video'}"
+        @click="toggleVideo"
+      >视频</span>
+      <span
+        class="picture-indicator"
+        :class="{toggleActive:toggleActive==='picture'}"
+        @click="togglePicture"
+      >图片</span>
     </div>
-    <div class="custom-indicator"
-         v-if="!videoUrl">
+    <div
+      class="custom-indicator"
+      v-if="!videoUrl"
+    >
       {{ current + 1 }}/{{imgs.length}}
     </div>
-    <div class="custom-indicator"
-         v-if="videoUrl && toggleActive === 'picture'">
+    <div
+      class="custom-indicator"
+      v-if="videoUrl && toggleActive === 'picture'"
+    >
       {{ current }}/{{imgs.length}}
     </div>
-    <Share :info="info"
-           ref="share" />
+    <Share
+      :info="info"
+      ref="share"
+    />
   </header>
 </template>
 
@@ -75,6 +100,9 @@ export default {
       type: String
     },
     videoUrl: {
+      type: String
+    },
+    appDetailIcon: {
       type: String
     }
   },
@@ -102,8 +130,8 @@ export default {
       if (this.videoUrl) {
         this.toggleActive = this.current === 0 ? 'video' : 'picture'
       }
-      if(this.$refs.video) {
-      	this.$refs.video.pause()
+      if (this.$refs.video) {
+        this.$refs.video.pause()
       }
     },
     toggleVideo() {
@@ -148,6 +176,14 @@ export default {
       touch-action: none;
     }
   }
+  & .background-icon {
+    height: 375px;
+    width: 100%;
+    top: 0;
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+  }
 }
 .custom-indicator {
   position: absolute;
@@ -161,6 +197,7 @@ export default {
   color: #fff;
   background: #363636ff;
   border-radius: 10px;
+  z-index: 2;
 }
 .toggle-indicator {
   position: absolute;

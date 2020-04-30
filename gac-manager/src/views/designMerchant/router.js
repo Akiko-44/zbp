@@ -152,6 +152,50 @@ export const asyncRouterMap = [
       }
     },
     {
+      path: 'opusList',
+      name: 'opusList',
+      authority: 'opusList',
+      component: () => import('@/views/designMerchant/worksList/opus'),
+      meta: {
+        title: '作品列表'
+      },
+      hidden: true // 暂时hidden
+    }, {
+      path: 'addOpus',
+      name: 'addOpus',
+      component: () => import('@/views/designMerchant/worksList/addOpus'),
+      meta: {
+        title: '添加/修改作品'
+      },
+      hidden: true
+    }, {
+      path: 'customized',
+      name: 'customized',
+      authority: 'customized',
+      component: () => import('@/views/designMerchant/worksList/customized'),
+      meta: {
+        title: '定制商品'
+      },
+      hidden: true // 暂时hidden
+    }, {
+      path: 'addCustomized',
+      name: 'addCustomized',
+      component: () => import('@/views/designMerchant/worksList/addCustomized'),
+      meta: {
+        title: '添加/修改定制商品'
+      },
+      hidden: true
+    }, {
+      path: 'opusDraft',
+      name: 'opusDraft',
+      authority: 'opusDraft',
+      component: () => import('@/views/designMerchant/worksList/opusDraft'),
+      meta: {
+        title: '作品草稿箱'
+      },
+      hidden: true // 暂时hidden
+    },
+    {
       path: 'draftList',
       name: 'draftList',
       authority: 'draftList',
@@ -279,7 +323,7 @@ export const asyncRouterMap = [
       authority: 'list',
       component: () => import('@/views/designMerchant/orderList'),
       meta: {
-        title: '设计室订单'
+        title: '设计师订单'
       }
     },
     {
@@ -288,6 +332,23 @@ export const asyncRouterMap = [
       component: () => import('@/views/designMerchant/orderList/detail'),
       meta: {
         title: '订单详情'
+      },
+      hidden: true
+    }, {
+      path: 'customOrderList',
+      name: 'customOrderList',
+      authority: 'list',
+      component: () => import('@/views/designMerchant/orderList/custom'),
+      meta: {
+        title: '设计师定制订单'
+      },
+      hidden: true // 暂时hidden
+    }, {
+      path: 'customDetail',
+      name: 'customOrderDetail',
+      component: () => import('@/views/designMerchant/orderList/customDetail'),
+      meta: {
+        title: '定制订单详情'
       },
       hidden: true
     },
@@ -319,35 +380,136 @@ export const asyncRouterMap = [
       hidden: true
     }
     ]
-  }, {
-    path: '/designMerchantCustomer',
-    name: 'designMerchantCustomer',
-    authority: 'designMerchantCustomer',
+  },
+  {
+    path: '/designAwards',
+    name: 'designAwards',
+    authority: 'designAwards',
     component: Layout,
-    redirect: '/designMerchantCustomer/recommendUsers',
     meta: {
-      title: '用户管理'
+      title: '设计师奖项'
+    },
+    hidden: true, // 暂时hidden,
+    redirect: '/designAwards/index',
+    children: [{
+      path: 'index',
+      name: 'designAwardsIndex',
+      authority: 'index',
+      component: () => import('@/views/designMerchant/designAwards'),
+      meta: {
+        title: '设计奖项'
+      }
+    }, {
+      path: 'addDesignAwards',
+      name: 'addDesignAwards',
+      authority: 'addDesignAwards',
+      component: () => import('@/views/designMerchant/designAwards/add'),
+      meta: {
+        title: '添加/修改设计奖项'
+      },
+      hidden: true
+    }, {
+      path: 'designAwardsDetail',
+      name: 'designAwardsDetail',
+      authority: 'designAwardsDetail',
+      component: () => import('@/views/designMerchant/designAwards/detail'),
+      meta: {
+        title: '详情'
+      },
+      hidden: true
+    }]
+  },
+  {
+    path: '/promotedOperation',
+    name: 'promotedOperation',
+    authority: 'promotedOperation',
+    component: Layout,
+    redirect: '/promotedOperation/noticeList',
+    meta: {
+      title: '运营推广'
     },
     children: [{
+      path: 'noticeList',
+      name: 'noticeList',
+      authority: 'noticeList',
+      component: () => import('@/views/designMerchant/promotedOperation/noticeList'),
+      meta: {
+        title: '店铺公告'
+      }
+    }, {
+      path: 'saveOrUpdateNotice',
+      name: 'saveOrUpdateNotice',
+      authority: 'saveOrUpdateNotice',
+      component: () => import('@/views/designMerchant/promotedOperation/saveOrUpdateNotice'),
+      meta: {
+        title: '发布/编辑店铺公告'
+      },
+      hidden: true
+    }, {
+      path: 'noticeDetail',
+      name: 'noticeDetail',
+      authority: 'noticeDetail',
+      component: () => import('@/views/designMerchant/promotedOperation/noticeDetail'),
+      meta: {
+        title: '公告详情'
+      },
+      hidden: true
+    }, {
       path: 'recommendUsers',
       name: 'recommendUsers',
       authority: 'recommendUsers',
-      component: () => import('@/views/designMerchant/customer/recommendUsers'),
+      component: () => import('@/views/designMerchant/promotedOperation/recommendUsers'),
       meta: {
-        title: '推荐用户管理'
+        title: '我的粉丝'
       }
-    },
-    {
+    }, {
       path: 'purchasedCustomers',
       name: 'purchasedCustomers',
       authority: 'purchasedCustomers',
-      component: () => import('@/views/designMerchant/customer/purchasedCustomers'),
+      component: () => import('@/views/designMerchant/promotedOperation/purchasedCustomers'),
       meta: {
-        title: '已购买客户管理'
+        title: '我的顾客'
       }
-    }
-    ]
+    }, {
+      path: 'purchaseHistory',
+      name: 'purchaseHistory',
+      authority: 'purchaseHistory',
+      component: () => import('@/views/designMerchant/promotedOperation/purchaseHistory'),
+      meta: {
+        title: '消费记录'
+      },
+      hidden: true
+    }]
   },
+  /* {
+     path: '/designMerchantCustomer',
+     name: 'designMerchantCustomer',
+     authority: 'designMerchantCustomer',
+     component: Layout,
+     redirect: '/designMerchantCustomer/recommendUsers',
+     meta: {
+       title: '用户管理'
+     },
+     children: [{
+       path: 'recommendUsers',
+       name: 'recommendUsers',
+       authority: 'recommendUsers',
+       component: () => import('@/views/designMerchant/customer/recommendUsers'),
+       meta: {
+         title: '推荐用户管理'
+       }
+     },
+     {
+       path: 'purchasedCustomers',
+       name: 'purchasedCustomers',
+       authority: 'purchasedCustomers',
+       component: () => import('@/views/designMerchant/customer/purchasedCustomers'),
+       meta: {
+         title: '已购买客户管理'
+       }
+     }
+     ]
+   }, */
   {
     path: '/designMerchantFund',
     name: 'designMerchantFund',
@@ -372,8 +534,17 @@ export const asyncRouterMap = [
       authority: 'report',
       component: () => import('@/views/designMerchant/fund/report'),
       meta: {
-        title: '报表'
+        title: '交易记录'
       }
+    }, {
+      path: 'orderCheckDetail',
+      name: 'orderCheckDetail',
+      authority: 'orderCheckDetail',
+      component: () => import('@/views/designMerchant/fund/orderCheckDetail'),
+      meta: {
+        title: '订单详情'
+      },
+      hidden: true
     },
     {
       path: 'cardList',

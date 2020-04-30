@@ -813,10 +813,7 @@ export default {
       }, {
         title: '珠宝店',
         name: '1'
-      }, /*{
-        title: '互换坊',
-        name: '2'
-      }, */{
+      }, {
         title: '设计师',
         name: '5'
       }, {
@@ -826,10 +823,7 @@ export default {
       editableTabs2: [{
         title: '珠宝店',
         name: '1'
-      }, /*{
-        title: '互换坊',
-        name: '2'
-      }, */{
+      }, {
         title: '设计师',
         name: '5'
       }, {
@@ -839,7 +833,8 @@ export default {
       registerTypeData: [
         {
           1: '个人'
-        },{
+        },
+        {
           2: '公司'
         }
       ],
@@ -924,27 +919,25 @@ export default {
   },
   created() {
     this.getFixTotalData()
-    /*this.getTotalData(0)*/
-    
+    this.getListData(1, 0, this.listParams)
   },
-  mounted () {
+  mounted() {
     this.outFile = document.getElementById('downlink')
   },
   methods: {
-    getFixTotalData(){
+    getFixTotalData() {
       merchantDataTotal(0)
         .then(succ => {
           this.fixtotalData = succ.data
-          this.getListData(1, 0)
         })
     },
-    getTotalData(type, params){
+    getTotalData(type, params) {
       merchantDataTotal(type, params)
         .then(succ => {
           this.totalData = succ.data
         })
     },
-    getListData(type, isExport, params){
+    getListData(type, isExport, params) {
       this.listLoading = true
       merchantDataList(type, isExport, params)
         .then(succ => {
@@ -953,7 +946,7 @@ export default {
           this.listLoading = false
         })
     },
-    getExportList(){
+    getExportList() {
       merchantDataList(this.editableTabsValue2, 1, {
         startTime: this.listParams.startTime,
         endTime: this.listParams.endTime
@@ -963,12 +956,11 @@ export default {
       })
     },
     handleFilter() {
-      if(this.startTime !== undefined){
+      if (this.startTime !== undefined) {
         this.isSummary = true
-      }else{
+      } else {
         this.isSummary = false
       }
-      
       this.listParams.startTime = this.startTime
       this.listParams.endTime = this.endTime
       this.listParams.offset = 1
@@ -990,26 +982,26 @@ export default {
     handleClick2(tab, event) {
       this.getListData(this.editableTabsValue2, 0, this.listParams)
     },
-    downloadFile () { // 点击导出按钮
-      let listData = this.exportList
-      let data = this.excelTitle.concat(listData)
+    downloadFile() { // 点击导出按钮
+      const listData = this.exportList
+      const data = this.excelTitle.concat(listData)
       this.downloadExl(data, '统计')
     },
-    downloadExl (json, downName, type) {  // 导出到excel
-      let keyMap = [] // 获取键
-      for (let k in json[0]) {
+    downloadExl(json, downName, type) {  // 导出到excel
+      const keyMap = [] // 获取键
+      for (const k in json[0]) {
         keyMap.push(k)
       }
-      let tmpdata = [] // 用来保存转换好的json
+      const tmpdata = [] // 用来保存转换好的json
       json.map((v, i) => keyMap.map((k, j) => Object.assign({}, {
         v: v[k],
         position: (j > 25 ? this.getCharCol(j) : String.fromCharCode(65 + j)) + (i + 1)
-      }))).reduce((prev, next) => prev.concat(next)).forEach(function (v) {
+      }))).reduce((prev, next) => prev.concat(next)).forEach(function(v) {
         tmpdata[v.position] = {
           v: v.v
         }
       })
-      let outputPos = Object.keys(tmpdata)  // 设置区域,比如表格从A1到D10
+      let outputPos = Object.keys(tmpdata) // 设置区域,比如表格从A1到D10
       let tmpWB = {
         SheetNames: ['mySheet'], // 保存的表标题
         Sheets: {
@@ -1020,20 +1012,20 @@ export default {
             })
         }
       }
-      let tmpDown = new Blob([this.s2ab(XLSX.write(tmpWB,
-        {bookType: (type === undefined ? 'xlsx' : type), bookSST: false, type: 'binary'} // 这里的数据是用来定义导出的格式类型
+      const tmpDown = new Blob([this.s2ab(XLSX.write(tmpWB,
+        { bookType: (type === undefined ? 'xlsx' : type), bookSST: false, type: 'binary' } // 这里的数据是用来定义导出的格式类型
       ))], {
         type: ''
-      })  // 创建二进制对象写入转换好的字节流
-      var href = URL.createObjectURL(tmpDown)  // 创建对象超链接
-      this.outFile.download = downName + '.xlsx'  // 下载名称
-      this.outFile.href = href  // 绑定a标签
-      this.outFile.click()  // 模拟点击实现下载
-      setTimeout(function () {  // 延时释放
+      }) // 创建二进制对象写入转换好的字节流
+      var href = URL.createObjectURL(tmpDown) // 创建对象超链接
+      this.outFile.download = downName + '.xlsx' // 下载名称
+      this.outFile.href = href // 绑定a标签
+      this.outFile.click() // 模拟点击实现下载
+      setTimeout(function() { // 延时释放
         URL.revokeObjectURL(tmpDown) // 用URL.revokeObjectURL()来释放这个object URL
       }, 100)
     },
-    s2ab (s) { // 字符串转字符流
+    s2ab(s) { // 字符串转字符流
       var buf = new ArrayBuffer(s.length)
       var view = new Uint8Array(buf)
       for (var i = 0; i !== s.length; ++i) {
@@ -1041,7 +1033,7 @@ export default {
       }
       return buf
     },
-    getCharCol (n) { // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
+    getCharCol(n) { // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
       let s = ''
       let m = 0
       while (n > 0) {
@@ -1051,7 +1043,7 @@ export default {
       }
       return s
     },
-    fixdata (data) {  // 文件流转BinaryString
+    fixdata(data) { // 文件流转BinaryString
       var o = ''
       var l = 0
       var w = 10240

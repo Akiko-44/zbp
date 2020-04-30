@@ -234,7 +234,7 @@ export default {
     if (getToken()) {
       this.$loading(this.$service('userCollectCheck', { resources: [this.$route.query.id, 5] }))
         .then(result => {
-          this.liked = !result.data
+          this.liked = !result.data.goodsCheck
         })
     }
     if (this.$route.query.orderToDetail) {

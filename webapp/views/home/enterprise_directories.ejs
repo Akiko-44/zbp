@@ -2,170 +2,209 @@
 <html>
 
 <head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
-	<meta name="renderer" content="webkit">
-	<title>
-		<%= title %>
-	</title>
-	<link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
-	<link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
-	<link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
-	<link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
-	<link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
-	<script src="../../dist/js/template.js"></script>
-	<script src="../../dist/js/lib.js"></script>
-	<script src="../../dist/js/v.js"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />
+  <meta name="renderer" content="webkit">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="bookmark" type="image/x-icon" href="http://app.gacjc.com/app/download/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="../../dist/css/all.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/css/sprite.css" />
+  <link rel="stylesheet" type="text/css" href="../../src/js/vue/index.css" />
+  <script src="../../dist/js/template.js"></script>
+  <script src="../../dist/js/lib.js"></script>
+  <script src="../../dist/js/v.js"></script>
 </head>
 
 <body class="enterprise_directories">
-	<%- include ../headerbar.ejs %>
+  <%- include ../headerbar.ejs %>
 
-	<%- include ../header.ejs %>
+  <%- include ../header.ejs %>
 
-	<%- include ../headerNav.ejs %>
-	<div id="main" class="main">
-		<div class="container">
-			<div class="router">
-				<el-breadcrumb separator-class="el-icon-arrow-right">
-					<el-breadcrumb-item :to="{ path: '/' }">
-						<a href="/">首页</a>
-					</el-breadcrumb-item>
-					<el-breadcrumb-item>
-						<a href="/home/fidelity_index">打假保真</a>
-					</el-breadcrumb-item>
-					<el-breadcrumb-item>企业名录</el-breadcrumb-item>
-				</el-breadcrumb>
-			</div>
-			<div class="content">
-				<div class="enterprise-type clearfix">
-					<div class="fl tc general">企业名录</div>
-					<span class="fr tc search-enterprise" @click="searchEnterprise">查找</span>
-					<div class="search-input fr clearfix">
-						<i class="icon icon-search2 fl" style="margin-top: 7px;"></i>
-						<input class="fl" type="text" v-model="inputStoreName" placeholder="请输入企业名称" />
-						<i class="icon icon-close2 fr" style="margin-top: 10px;" @click="closeInput"></i>
-					</div>
-				</div>
-				<div v-if="enterpriseDirectories.length == 0" class="no-content">
-					<img src="../../src/img/common/no-content.png">
-					<p>暂无内容</p>
-				</div>
-				<div class="list">
-					<a class="list-item clearfix" v-for="item in enterpriseDirectories"
-						@click="toDetails(item.merchantType,item.externalLink,item.merchantId)">
-						<div class="clearfix fl">
-							<div class="enterprise-img fl">
-								<img :src="item.logo" />
-							</div>
-							<div class="fl">
-								<p class="name">
-									<span class="enterprise-name">{{item.companyName}}</span>
-									<span class="n tc">{{enterpriseNameList[item.companyType-1]}}</span>
-								</p>
-								<p class="management">主营范围：
-									<span v-for="(subItem,subIndex) in item.categoryList" :key="subIndex">
-										{{subItem.secondCatName}}
-										<span v-if="subIndex !== item.categoryList.length-1">、 </span>
-									</span>
+  <%- include ../headerNav.ejs %>
+  <div id="main" class="main">
+    <div class="container">
+      <div class="router">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }">
+            <a href="/">首页</a>
+          </el-breadcrumb-item>
+          <el-breadcrumb-item>
+            <a href="/home/fidelity_index">打假保真</a>
+          </el-breadcrumb-item>
+          <el-breadcrumb-item>企业名录</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+      <div class="content">
+        <div class="enterprise-type clearfix">
+          <div class="fl tc general">企业名录</div>
+          <span class="fr tc search-enterprise" @click="searchEnterprise">查找</span>
+          <div class="search-input fr clearfix">
+            <i class="icon icon-search2 fl" style="margin-top: 7px;"></i>
+            <input class="fl" type="text" v-model="inputStoreName" placeholder="请输入企业名称" />
+            <i class="icon icon-close2 fr" style="margin-top: 10px;" @click="closeInput"></i>
+          </div>
+        </div>
+        <div v-if="enterpriseDirectories.length == 0" class="no-content">
+          <img src="../../src/img/common/no-content.png">
+          <p>暂无内容</p>
+        </div>
+        <div class="list" v-else>
+          <a class="list-item clearfix" v-for="item in enterpriseDirectories"
+            @click="toDetails(item.merchantType,item.externalLink,item.merchantId)">
+            <div class="clearfix fl">
+              <div class="enterprise-img fl">
+                <img :src="item.logo" />
+              </div>
+              <div class="fl">
+                <p class="name">
+                  <span class="enterprise-name">{{item.companyName}}</span>
+                  <span class="n tc">{{enterpriseNameList[item.companyType-1]}}</span>
+                </p>
+                <p class="management">主营范围：
+                  <span v-for="(subItem,subIndex) in item.categoryList" :key="subIndex">
+                    {{subItem.secondCatName}}
+                    <span v-if="subIndex !== item.categoryList.length-1">、 </span>
+                  </span>
 
-								</p>
-								<p class="addr"><i class="icon icon-map"
-										style="margin-right: 5px;"></i>{{item.provinceName}}{{item.cityName}}</p>
-							</div>
-						</div>
-						<div class="fr">
-							<img v-if="item.sortOrder==1" src="../src/img/home/vip1.png" />
-							<img v-else-if="item.sortOrder==2" src="../src/img/home/vip2.png" />
-							<img v-else-if="item.sortOrder==3" src="../src/img/home/vip3.png" />
-							<span v-else class="vip">
-								<!-- <img src="../src/img/home/vip4.png" /> -->
-								<span class="vip_count">{{item.sortOrder}}</span>
-							</span>
+                </p>
+                <p class="addr"><i class="icon icon-map"
+                    style="margin-right: 5px;"></i>{{item.provinceName}}{{item.cityName}}</p>
+              </div>
+            </div>
+            <div class="fr">
+              <img v-if="item.sortOrder==1" src="../src/img/home/vip1.png" />
+              <img v-else-if="item.sortOrder==2" src="../src/img/home/vip2.png" />
+              <img v-else-if="item.sortOrder==3" src="../src/img/home/vip3.png" />
+              <span v-else class="vip">
+                <!-- <img src="../src/img/home/vip4.png" /> -->
+                <span class="vip_count">{{item.sortOrder}}</span>
+              </span>
 
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div><%- include ../footer.ejs %>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="tr container" style="margin-top: 30px;" v-show="listPages > 1">
+      <div id="pagination" class="pagination"></div>
+    </div>
+  </div>
+  <%- include ../footer.ejs %>
 </body>
 <script type="text/javascript">
-	var mainVm = new Vue({
-		el: '#main',
-		data: {
-			companyName: '', //查询条件
-			inputStoreName: '',
-			enterpriseDirectories: [{
-				cityId: '',
-				cityName: '',
-				companyName: '',
-				companyType: '',
-				createTime: '',
-				externalLink: '',
-				logo: '',
-				merchantId: '',
-				merchantType: '',
-				provinceId: '',
-				provinceName: '',
-				sortOrder: '',
-				categoryList: [{
-					secondCatName: ''
-				}]
-			}],
-			enterpriseNameList: ['专委会主任企业', '专委会副主任企业', '专委会成员', '中宝协会员', '其它成员']
-		},
-		mounted: function () {
-			//获取所有企业名录
-			utils.ajax({
-				type: "get",
-				url: "/api/portal/companyDirectory/getList",
-				success: (res) => {
-					this.enterpriseDirectories = res.data
-				}
-			});
-		},
-		methods: {
-			searchEnterprise: function () {
-				utils.ajax({
-					type: "get",
-					data: {
-						companyName: this.inputStoreName
-					},
-					url: "/api/portal/companyDirectory/getList",
-					success: (res) => {
-						this.enterpriseDirectories = res.data
-					}
-				});
-			},
+  var mainVm = new Vue({
+    el: '#main',
+    data: {
+      companyName: '', //查询条件
+      inputStoreName: '',
+      form: {
+        offset: 1,
+        limit: 20,
+      },
+      listPages: 0,
+      enterpriseDirectories: [{
+        cityId: '',
+        cityName: '',
+        companyName: '',
+        companyType: '',
+        createTime: '',
+        externalLink: '',
+        logo: '',
+        merchantId: '',
+        merchantType: '',
+        provinceId: '',
+        provinceName: '',
+        sortOrder: '',
+        categoryList: [{
+          secondCatName: ''
+        }]
+      }],
+      enterpriseNameList: ['专委会主任企业', '专委会副主任企业', '专委会成员', '中宝协会员', '其它成员']
+    },
+    mounted: function () {
+      //获取所有企业名录
+      // utils.ajax({
+      // 	type: "get",
+      //   url: "/api/portal/companyDirectory/getPage",
+      // 	success: (res) => {
+      // 		this.enterpriseDirectories = res.data
+      // 	}
+      // });
+      this.render(1)
+    },
+    methods: {
+      render(page) {
+        let self = this
+        self.form.offset = page || 1
+        //获取总榜数据
+        utils.ajax({
+          type: "get",
+          url: "/api/portal/companyDirectory/getPage",
+          data: self.form,
+          success: (res) => {
+            // this.integrityEnterprise = res.data
+            let resData = res.data
+            self.enterpriseDirectories = res.data.records
+            self.listPages = resData.pages
+            if (self.form.offset == 1) {
+              $("#pagination").pagination({
+                pageCount: resData.pages,
+                jump: true,
+                coping: true,
+                current: resData.current,
+                prevContent: '上一页',
+                nextContent: '下一页',
+                callback: function (api) {
+                  self.render(api.getCurrent())
+                }
+              })
+            }
+          }
+        })
+      },
+      searchEnterprise: function () {
+        utils.ajax({
+          type: "get",
+          data: {
+            companyName: this.inputStoreName
+          },
+          url: "/api/portal/companyDirectory/getList",
+          success: (res) => {
+            this.enterpriseDirectories = res.data
+          }
+        });
+      },
 
-			closeInput: function () {
-				this.inputStoreName = ""
-			},
+      closeInput: function () {
+        this.inputStoreName = ""
+      },
 
-			toDetails: function (type, url, id) {
-				if (type == 1) {
-					//珠宝店
-					location.href = "../jewelry/shopSearch?id=" + id;
-				} else if (type == 2) {
-					//设计师
-					utils.alert('danger', '该企业暂无更多信息')
-					// location.href = "../design/detail/?id=" + id;
-				} else if (type == 3) {
-					//制造间
-					utils.alert('danger', '该企业暂无更多信息')
-					// location.href = "../maker/detail/?id=" + id;
-				} else {
-					if (url == '') {
-						utils.alert('danger', '该企业暂无更多信息')
-					} else {
-						location.href = url;
-					}
-				}
-			}
-		}
-	})
+      toDetails: function (type, url, id) {
+        if (type == 1) {
+          //珠宝店
+          location.href = "../jewelry/shopSearch?id=" + id;
+        } else if (type == 2) {
+          //设计师
+          utils.alert('danger', '该企业暂无更多信息')
+          // location.href = "../design/detail/?id=" + id;
+        } else if (type == 3) {
+          //制造间
+          utils.alert('danger', '该企业暂无更多信息')
+          // location.href = "../maker/detail/?id=" + id;
+        } else {
+          if (url == '') {
+            utils.alert('danger', '该企业暂无更多信息')
+          } else {
+            location.href = url;
+          }
+        }
+      }
+    }
+  })
 </script>
 
 </html>

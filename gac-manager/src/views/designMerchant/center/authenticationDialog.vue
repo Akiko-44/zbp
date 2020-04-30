@@ -54,6 +54,7 @@
           v-show="!authenticationForm.facePhoto"
           :multiple="false"
           prefix="facePhoto"
+          :maxSize="1.5"
           @successCBK="facePhotoUploadSuccess"
         />
         <span>示例：</span>
@@ -88,6 +89,7 @@
           v-show="!authenticationForm.backPhoto"
           :multiple="false"
           prefix="backPhoto"
+          :maxSize="1.5"
           @successCBK="backPhotoUploadSuccess"
         />
         <span>示例：</span>

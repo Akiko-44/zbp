@@ -33,4 +33,7 @@ export default {
   //商家列表筛选项
   getMerchantFilter: ['/app/search/getMerchantFilter', 'get'],
 
+  //去哪买首页配置
+  getJewelryHome: ['/app/homePage/whereBuy/new', 'get']
+
 }

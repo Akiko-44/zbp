@@ -29,62 +29,68 @@
       :rules="rules"
       :model="form"
       ref="form"
-      class="mobileForm"
+      class="mobileForm step-wrap"
     >
-      <div class="input-row">
-        <label>手机号</label>
-        <div class="border-input">
-          <input
-            v-model="form.mobilePhone"
-            type="text"
-            disabled
-          >
+      <div class="block">
+        <div class="input-row">
+          <label>手机号</label>
+          <div class="border-input">
+            <input
+              v-model="form.mobilePhone"
+              type="text"
+              disabled
+            >
+          </div>
         </div>
-      </div>
-      <div
-        class="input-row"
-        v-if="verify == 0"
-      >
-        <label>图形验证码</label>
-        <div class="border-input">
-          <input
-            v-model="form.verifyCode"
-            type="text"
-            placeholder="请输入图形验证码"
-            maxlength="6"
-          >
+        <div
+          class="input-row"
+          v-if="verify == 0"
+        >
+          <label>图形验证码</label>
+          <div class="border-input">
+            <input
+              v-model="form.verifyCode"
+              type="text"
+              placeholder="请输入图形验证码"
+              maxlength="6"
+            >
+          </div>
+          <CodeImage
+            ref="codeImage"
+            @refresh="refresh"
+          />
         </div>
-        <CodeImage
-          ref="codeImage"
-          @refresh="refresh"
-        />
-      </div>
-      <div class="input-row">
-        <label>短信验证码</label>
-        <div class="border-input">
-          <input
-            v-model="form.dynamicVerifyCode"
-            type="text"
-            placeholder="请输入短信验证码"
-            maxlength="6"
-          >
+        <div class="input-row">
+          <label>短信验证码</label>
+          <div class="border-input">
+            <input
+              v-model="form.dynamicVerifyCode"
+              type="text"
+              placeholder="请输入短信验证码"
+              maxlength="6"
+            >
+          </div>
+          <CodeBtn
+            :form="form"
+            @fail="fail"
+            :isClick="true"
+          />
         </div>
-        <CodeBtn
-          :form="form"
-          @fail="fail"
-        />
       </div>
       <div class="input-row agreement">
-        <van-checkbox v-model="form.checked"></van-checkbox>
+        <van-checkbox
+          v-model="form.checked"
+          shape="square"
+        ></van-checkbox>
         <div
           class="border-input dark-gray"
-          style="border: none;margin-left: 15px;background: none;line-height: 20px;"
+          style="border: none;margin-left: 15px;background: none;line-height: 20px;font-size:12px;"
         >
           我已阅读并同意
           <a
             @click="shopAgreement"
             class="blue"
-          >《中宝平开店协议》</a>和
+          >《中宝平账户注册服务条款》</a>和
           <a
             @click="cooperateAgreement"
             class="blue"
@@ -250,17 +256,30 @@ export default {
 <style lang="postcss" scoped>
 .mobileForm {
   padding: 0 10px;
-  background: white;
   & .input-row {
+    height: 59px;
     margin-bottom: 0;
-    border-bottom: 1px solid #e8e8e8;
-    font-size: 14px;
+    padding: 0 15px;
+    border-bottom: 1px solid #eaebf0;
     &.agreement {
       border-bottom: none;
     }
   }
+  & .block {
+    background: #fff;
+    border-radius: 5px;
+  }
   & .border-input {
+    padding: 0;
     border: none;
+    & input {
+      padding: 0;
+    }
+  }
+  & .primary-btn {
+    height: 44px;
+    background: #df735a;
+    border-color: #df735a;
   }
   & .code-btn {
     margin: 0;

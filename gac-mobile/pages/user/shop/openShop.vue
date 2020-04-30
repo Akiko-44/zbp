@@ -30,7 +30,34 @@
             :value="form.type"
             @click="typePickerShow = true"
           />
-          <van-cell
+          <van-collapse
+            v-model="activeNames"
+            v-if="form.merchantType == 2"
+          >
+            <van-collapse-item
+              name="1"
+              title-class="van-cell--required"
+            >
+              <div slot="title">设计师类型（可多选）</div>
+              <ul class="designmanuCategoryList">
+                <li
+                  class="items"
+                  :class="{ selected: item.selected }"
+                  :designerCatId="item.id"
+                  v-for="(item, index) in designmanuCategoryList"
+                  :key="index"
+                  @click="selectedItem(index, $event)"
+                >
+                  <p>
+                    <span>{{ item.name }}</span>
+                  </p>
+                </li>
+              </ul>
+            </van-collapse-item>
+          </van-collapse>
+        </van-cell-group>
+        <!-- <van-cell-group> -->
+        <!-- <van-cell
             class="van-cell--required"
             title="店铺LOGO"
             label="尺寸500*500，大小1.5M（兆）以内，支持jpg/jpeg/png/gif格式"
@@ -51,29 +78,80 @@
                 @success="uploadSuccessLogo"
               />
             </div>
-          </van-cell>
-          <van-cell
-            class="van-cell--required"
-            title="店铺背景图"
-            label="尺寸710*350，大小1.5M（兆）以内，支持jpg/jpeg/png/gif格式"
-            title-class="min-width"
-          >
-            <div class="img-upload">
+          </van-cell> -->
+        <div class="common-area">
+          <div class="upload-area">
+            <div class="">
               <img
-                v-if="form.backgroundImg"
-                :src="form.backgroundImg | setImg({ w: 150 })"
-              >
-              <img
-                v-else
-                src="../../../assets/images/uploadImg.png"
-              >
-              <VUpload
-                :width="355"
-                :height="175"
-                @success="uploadSuccessBg"
+                v-if="form.logo"
+                :src="form.logo | setImg(form.logo, { w: 150 })"
               />
+              <i
+                class="icon"
+                v-else
+              ></i>
             </div>
-          </van-cell>
+            <VUpload
+              @success="uploadSuccessLogo"
+              :width="400"
+              :height="400"
+              :maxSize="1.5"
+            />
+          </div>
+          <div class="right-area">
+            店铺LOGO
+          </div>
+        </div>
+        <p class="tips">尺寸500*500，大小1.5M（兆）以内，支持jpg/jpeg/png/gif格式</p>
+        <div class="common-area">
+          <div class="upload-area">
+            <div class="">
+              <img
+                class="top22"
+                v-if="form.backgroundImg"
+                :src="form.backgroundImg | setImg(form.backgroundImg, { w: 150 })"
+              />
+              <i
+                class="icon"
+                v-else
+              ></i>
+            </div>
+            <VUpload
+              :width="355"
+              :height="175"
+              :maxSize="1.5"
+              @success="uploadSuccessBg"
+            />
+          </div>
+          <div class="right-area">
+            店铺背景图
+          </div>
+        </div>
+        <p class="tips">尺寸710*350，大小1.5M（兆）以内，支持jpg/jpeg/png/gif格式</p>
+        <!-- <van-cell
+          class="van-cell--required"
+          title="店铺背景图"
+          label="尺寸710*350，大小1.5M（兆）以内，支持jpg/jpeg/png/gif格式"
+          title-class="min-width"
+        >
+          <div class="img-upload">
+            <img
+              v-if="form.backgroundImg"
+              :src="form.backgroundImg | setImg({ w: 150 })"
+            >
+            <img
+              v-else
+              src="../../../assets/images/uploadImg.png"
+            >
+            <VUpload
+              :width="355"
+              :height="175"
+              @success="uploadSuccessBg"
+            />
+          </div>
+        </van-cell> -->
+        <!-- </van-cell-group> -->
+        <van-cell-group>
           <van-field
             v-model="form.companyName"
             label="企业名称"
@@ -159,12 +237,16 @@ export default {
       // chooseShow: false,
       typePickerShow: false,
       typeColumns: ['珠宝店', '设计师', '制造间'],
+      activeNames: ['1'],
+      designmanuCategoryList: [],
       form: {
         name: '',
         merchantType: 1,
         companyName: '',
         logo: '',
         backgroundImg: '',
+        designerCategeryId: [],
+        setshopType: 4 //开店入口方式：1APP-安卓、2APP-苹果、3PC、4H5、5招商短信
       },
       rules: {
         name: [
@@ -178,6 +260,9 @@ export default {
         ],
         backgroundImg: [
           { required: true, message: '请上传店铺背景图' }
+        ],
+        designerCategeryId: [
+          { validator: this.validateDesignerCategeryId }
         ]
       },
     }
@@ -198,14 +283,40 @@ export default {
         })
       }
     }).catch(err => { })
+    this.$service("designmanuCategoryList", { data: { flag: 0 } }).then(result => {
+      this.designmanuCategoryList = result.data
+      this.designmanuCategoryList.map(item => {
+        item.selected = false
+      })
+    }).catch(err => { })
   },
   methods: {
+    selectedItem(index, e) {
+      let designerCatId = e.currentTarget.getAttribute("designerCatId");
+      this.designmanuCategoryList[index].selected = !this.designmanuCategoryList[index].selected;
+      if (this.designmanuCategoryList[index].selected) {
+        this.form.designerCategeryId.push(designerCatId);
+      } else {
+        this.form.designerCategeryId = this.form.designerCategeryId.filter(i => {
+          return i !== designerCatId;
+        });
+      }
+      this.$forceUpdate();
+    },
     submit() {
+      if (!!window.Android) {
+        this.form.setshopType = 1
+      } else if (!!window.webkit) {
+        this.form.setshopType = 2
+      } else if (this.$route.query.setshopType === 5) {
+        this.form.setshopType = 5
+      }
       if (this.$refs.form.checkAll(error => this.$toast(error[0]))) {
         console.log(this.form)
         this.$loading(this.$service('openShop', { data: this.form }))
           .then(() => {
             this.success = true
+            this.$forceUpdate();
           }).catch()
       }
     },
@@ -233,12 +344,92 @@ export default {
     },
     clickLeft() {
       this.$router.push({ name: 'user-shop' })
+    },
+    validateDesignerCategeryId(rule, value) {
+      if (this.form.merchantType == 2) {
+        if (value.length === 0) {
+          return "请选择设计师类型";
+        }
+      }
     }
   }
 }
 </script>
 
 <style lang="postcss" scoped>
+.type {
+  padding: 10px;
+  & >>> .van-cell-group {
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  & >>> .van-cell:not(:last-child)::after {
+    left: 0;
+  }
+  & >>> .van-cell {
+    padding: 18px 15px;
+    font-size: 17px;
+  }
+  & >>> .van-cell__value {
+    font-size: 13px;
+  }
+  & >>> .van-button.van-button--primary.block,
+  & >>> .van-button.primary-btn.block {
+    height: 44px;
+    line-height: 44px;
+    font-size: 15px;
+  }
+
+  /* 拍照上传 */
+  & .common-area {
+    display: flex;
+    & .right-area {
+      font-size: 15px;
+      margin-left: 30px;
+      line-height: 84px;
+    }
+  }
+  & .tips {
+    font-size: 14px;
+    color: #999;
+    margin: 5px 0 20px;
+  }
+  & .upload-area {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    background-color: #ffffff;
+    text-align: center;
+    & img {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+    }
+    & .top22 {
+      top: 22px;
+    }
+    & .icon {
+      position: absolute;
+      top: 50%;
+      margin-top: -25px;
+      left: 50%;
+      margin-left: -25px;
+      width: 50px;
+      height: 50px;
+      background-image: url(../../../assets/images/icon_uploadadd.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    & p {
+      color: var(--dark-gray);
+      padding-top: 15px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+  }
+}
 .success-state {
   text-align: center;
   & .imgwrap {
@@ -273,8 +464,7 @@ export default {
   float: right;
 }
 .block {
-  margin: 25px auto;
-  width: 90%;
+  margin-top: 50px;
 }
 .min-width {
   min-width: 220px;
@@ -317,6 +507,50 @@ export default {
   }
   & .blue {
     color: #2d69c3;
+  }
+}
+/* 设计师类型选择 */
+.designmanuCategoryList {
+  & .items {
+    display: inline-table;
+    position: relative;
+    margin: 0 3px 5px;
+    min-width: 65px;
+    padding: 5px;
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+    color: #aaaaaa;
+    background: #f0f0f1;
+    border-radius: 5px;
+    &.selected {
+      color: white;
+      background: #d57e6a;
+    }
+    & p {
+      display: table-cell;
+      vertical-align: middle;
+      & span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+    }
+    & .ico-close {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+    }
+    &.active {
+      color: white;
+      background: #f4b1a4;
+      & .ico-close {
+        opacity: 1;
+      }
+    }
   }
 }
 </style>

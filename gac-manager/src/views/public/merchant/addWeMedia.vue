@@ -210,11 +210,6 @@ export default {
         if (valid) {
           this.add()
         } else {
-          this.$notify({
-            title: '警告',
-            message: '请务必填写必选项',
-            type: 'warning'
-          })
           return false
         }
       })

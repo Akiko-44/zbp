@@ -3,53 +3,102 @@
   <div class="app-container calendar-list-container">
 
     <div class="filter-container">
-      <label class="filter-label">手机号：</label>
-      <el-input
-        @keyup.enter.native="handleFilter"
-        style="width: 195px;"
-        v-model="listQuery.mobilePhone"
-      > </el-input>
-      &emsp;
-      <label class="filter-label">注册时间：</label>
-      <el-date-picker
-        v-model="dateValue"
-        value-format="yyyy-MM-dd HH:mm:ss"
-        type="datetimerange"
-        :picker-options="pickerOptions"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        align="right"
+      <el-form
+        :inline="true"
+        :model="listQuery"
+        :rules="rules"
+        ref="userListQueryForm"
+        label-width="100px"
+        class="userListQueryForm"
       >
-      </el-date-picker>
-      <el-button
-        type="primary"
-        icon="el-icon-search"
-        @click="handleFilter"
-      >查询</el-button>
-      <el-button
-        v-waves
-        class="fr"
-        @click="downloadFile"
-      >导出</el-button>
-      <a id="downlink"></a>
-      <!--错误信息提示-->
-      <el-dialog
-        title="提示"
-        v-model="errorDialog"
-        size="tiny"
-      >
-        <span>{{errorMsg}}</span>
-        <span
-          slot="footer"
-          class="dialog-footer"
+        <el-form-item prop="mobilePhone">
+          <el-input
+            @keyup.enter.native="handleFilter"
+            style="width: 195px;"
+            placeholder="请输入手机号"
+            v-model="listQuery.mobilePhone"
+          > </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-input
+            @keyup.enter.native="handleFilter"
+            style="width: 195px;"
+            placeholder="请输入渠道"
+            v-model="listQuery.registerChannel"
+          > </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-select
+            v-model="listQuery.registAccess"
+            clearable
+            placeholder="请选择注册入口"
+          >
+            <el-option
+              v-for="(value, key) in registAccess"
+              :key="key"
+              :label="value"
+              :value="key"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-select
+            v-model="listQuery.status"
+            clearable
+            placeholder="请选择状态"
+          >
+            <el-option
+              v-for="(value, key) in statusMap"
+              :key="key"
+              :label="value"
+              :value="key"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-date-picker
+            v-model="dateValue"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            type="datetimerange"
+            :picker-options="pickerOptions"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            align="right"
+          >
+          </el-date-picker>
+        </el-form-item>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="handleFilter"
+        >查询</el-button>
+        <el-button
+          v-waves
+          class="fr"
+          @click="downloadFile"
+        >导出</el-button>
+        <a id="downlink"></a>
+        <!--错误信息提示-->
+        <el-dialog
+          title="提示"
+          v-model="errorDialog"
+          size="tiny"
         >
-          <el-button
-            type="primary"
-            @click="errorDialog=false"
-          >确认</el-button>
-        </span>
-      </el-dialog>
+          <span>{{errorMsg}}</span>
+          <span
+            slot="footer"
+            class="dialog-footer"
+          >
+            <el-button
+              type="primary"
+              @click="errorDialog=false"
+            >确认</el-button>
+          </span>
+        </el-dialog>
+      </el-form>
     </div>
 
     <el-table
@@ -80,6 +129,11 @@
           <span>{{row.realname || '--'}}</span>
         </template>
       </el-table-column>
+      <el-table-column label="手机号码">
+        <template slot-scope="{ row }">
+          <span>{{row.mobilePhone}}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         label="推荐用户数"
         class-name="blue"
@@ -98,19 +152,50 @@
           <span>{{row.referrerMobilePhone || '--'}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="账户流水">
-        <template slot-scope="{ row }">
-          <span class="marriageState">{{row.sum}}</span>
-        </template>
-      </el-table-column>
       <el-table-column label="来源类型">
         <template slot-scope="{ row }">
-          <span class="marriageState">{{souceTypeMap[row.sourceType]}}</span>
+          <span>{{souceTypeMap[row.sourceType]}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="注册时间">
+      <el-table-column label="渠道">
+        <template slot-scope="{ row }">
+          <span v-if="row.registerChannel">抽奖:{{row.registerChannel}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="注册入口">
+        <template slot-scope="{ row }">
+          <span>{{registAccess[row.registAccess]}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="注册时间"
+        width="160"
+      >
         <template slot-scope="{ row }">
           <span>{{row.createTime}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态">
+        <template slot-scope="{ row }">
+          <span>{{statusMap[row.status]}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        align="left"
+        label="操作"
+      >
+        <template slot-scope="{ row, $index}">
+          <el-button
+            size="small"
+            @click="changeStatus(row.id, 2, $index, row.nickname)"
+            v-if="row.status == 1"
+          >冻结</el-button>
+          <el-button
+            size="small"
+            @click="changeStatus(row.id, 1, $index, row.nickname)"
+            v-if="row.status == 2"
+          >解冻</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -149,7 +234,7 @@
 <script>
 // 引入xlsx
 var XLSX = require('xlsx')
-import { usersList } from '@/api/public/merchantAuth'
+import { usersList, isFreezed } from '@/api/public/merchantAuth'
 import userinfoDialog from './userinfoDialog'
 import waves from '@/directive/waves' // 水波纹指令
 
@@ -171,12 +256,31 @@ export default {
         offset: 1,
         limit: 20,
         mobilePhone: undefined,
+        registerChannel: undefined,
+        status: undefined,
+        registAccess: undefined,
         beginTime: undefined,
         endTime: undefined
       },
       souceTypeMap: {
         0: '中宝平',
         1: '1县1特'
+      },
+      statusMap: {
+        1: '正常',
+        2: '冻结'
+      },
+      registAccess: {
+        1: '安卓',
+        2: 'IOS',
+        3: 'PC',
+        4: '微信公众号',
+        5: 'H5'
+      },
+      rules: {
+        mobilePhone: [
+          { pattern: /^[0-9]*$/, message: '请输入正确的手机号', trigger: 'blur' }
+        ]
       },
       dateValue: '',
       pickerOptions: {
@@ -214,15 +318,15 @@ export default {
         id: '会员ID',
         nickname: '账户名',
         realname: '用户姓名',
-        mobilePhone: '手机号',
-        userLogo: '头像',
-        birthday: '出生年月',
-        region: '所在城市',
-        occupation: '职业',
-        hobby: '爱好',
-        email: '邮箱',
-        sum: '账户流水',
-        createTime: '注册时间'
+        mobilePhone: '手机号码',
+        recommendNumber: '推荐用户数',
+        referrerNickname: '推荐人',
+        referrerMobilePhone: '推荐人手机号',
+        sourceType: '来源类型',
+        registerChannel: '渠道',
+        registAccess: '注册入口',
+        createTime: '注册时间',
+        status: '状态'
       }]
     }
   },
@@ -252,8 +356,47 @@ export default {
           this.listLoading = false
         })
     },
+    changeStatus(id, status, index, name) {
+      if (status === 2) {
+        this.$prompt('冻结【' + name + '】后，该账号仅可浏览平台内容，不可进行任何操作，确定冻结么？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /^[\s\S]*.*[^\s][\s\S]*$/,
+          inputErrorMessage: '请输入冻结原因',
+          inputPlaceholder: '请输入冻结原因'
+        }).then(({ value }) => {
+          console.log(value)
+          this.changeStatusRequest(id, status, { freezedReason: value })
+        })
+      } else {
+        this.$confirm('解冻【' + name + '】后，该账号将恢复操作权限，确定解冻么？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        })
+          .then(() => {
+            this.changeStatusRequest(id, status, { freezedReason: '' })
+          })
+      }
+    },
+    changeStatusRequest(id, status, obj) {
+      isFreezed(id, status, obj)
+        .then(() => {
+          this.$notify({
+            title: '成功',
+            message: '操作成功',
+            type: 'success',
+            duration: 2000
+          })
+          this.getList()
+        })
+    },
     handleFilter() {
-      this.getList()
+      this.$refs['userListQueryForm'].validate((valid) => {
+        if (valid) {
+          this.getList()
+        }
+      })
     },
     handleSizeChange(val) {
       this.listQuery.limit = val
@@ -277,8 +420,14 @@ export default {
       usersList(this.listQuery)
         .then(res => {
           listData = res.data.records
+          for (let i = 0; i < listData.length; i++) {
+            listData[i].sourceType = this.souceTypeMap[listData[i].sourceType]
+            listData[i].registAccess = this.registAccess[listData[i].registAccess]
+            listData[i].status = this.statusMap[listData[i].status]
+          }
           const data = this.excelTitle.concat(listData)
           this.downloadExl(data, '会员列表')
+          this.$router.go(0)
         })
     },
     downloadExl(json, downName, type) { // 导出到excel

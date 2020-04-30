@@ -27,7 +27,11 @@
           <div
             class="status"
             v-show="finished && !empty"
-          >我们是有底线的平台</div>
+          >
+            <div class="line">
+              <p>中宝平 带你到源头买真品</p>
+            </div>
+          </div>
         </slot>
       </van-list>
     </van-pull-refresh>
@@ -182,6 +186,26 @@ export default {
   text-align: center;
   font-size: 14px;
   color: var(--dark-gray);
+  & .line {
+    position: relative;
+    display: inline-block;
+    &::before,
+    &::after {
+      position: absolute;
+      content: "";
+      width: 80px;
+      height: 1px;
+      top: 50%;
+    }
+    &::before {
+      left: -90px;
+      background: linear-gradient(to left, #ddd, transparent);
+    }
+    &::after {
+      right: -90px;
+      background: linear-gradient(to right, #ddd, transparent);
+    }
+  }
 }
 .status-no {
   line-height: 1;

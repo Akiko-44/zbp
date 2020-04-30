@@ -4,12 +4,18 @@
     title="我要开店"
     :clickLeft="clickLeft"
   >
-    <div>
+    <div class="user-shop">
       <van-cell-group>
-        <van-cell
+        <!--<van-cell
           title="开店入口"
           is-link
           :to="{ name: 'user-shop-openShop' }"
+        >
+        </van-cell>-->
+        <van-cell
+          title="开店入口"
+          is-link
+          @click.native="toShop"
         >
         </van-cell>
         <!-- <van-cell
@@ -42,6 +48,20 @@
 </template>
 
 <style lang="postcss" scoped>
+.user-shop {
+  padding: 10px;
+  & >>> .van-cell-group {
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  & >>> .van-cell:not(:last-child)::after {
+    left: 0;
+  }
+  & >>> .van-cell {
+    padding: 18px 12px;
+    font-size: 17px;
+  }
+}
 </style>
 
 <script>
@@ -60,6 +80,18 @@ export default {
         this.$native.goToHelpVideo()
       } else {
         this.$router.push({ name: 'user-helpVideo' })
+      }
+    },
+    toShop() {
+      let userType = localStorage.getItem('userType')
+      if (userType == 3 || userType == 2) {
+        this.$router.push({
+          name: 'user-shop-createShop'
+        })
+      } else {
+        this.$router.push({
+          name: 'user-shop-openShop'
+        })
       }
     }
   }

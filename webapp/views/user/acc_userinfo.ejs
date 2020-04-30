@@ -1064,8 +1064,7 @@
                     //		str.cityId: ,
                     //str.countryName= $("[name='countryId'] option:selected").text(),
                     // countryId: $("[name='countryId'] option:selected").val(),
-                    str.region = $("[name='provinceId'] option:selected").text() + $("[name='cityId'] option:selected").text()
-
+                    str.region = $("[name='provinceId'] option:selected").text().trim() + $("[name='cityId'] option:selected").text().trim()
 
                     utils.ajax({
                         url: "/api/userCenter/info/update",

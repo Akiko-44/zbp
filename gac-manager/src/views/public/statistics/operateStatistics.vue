@@ -373,7 +373,7 @@ export default {
   created() {
     this.getFixTotalData()
     this.getTotalData(0)
-    this.getListData(0, 0)
+    this.getListData(0, 0, this.listParams)
   },
   mounted() {
     this.outFile = document.getElementById('downlink')

@@ -1,8 +1,21 @@
 <template>
   <div class="app-order-item">
     <div @click="toOrderDetail">
-      <div class="card-bar row-between vertical van-hairline--bottom">
-        <p>{{data.barLeftText}}</p>
+      <div class="card-bar row-between vertical">
+        <!--<p>{{data.barLeftText}}</p>-->
+        <p>
+          <img
+            class="icon-shop"
+            src="../../../assets/images/icon/shop.png"
+            alt=""
+          />
+          <span>{{ data.sellUserName }}</span>
+          <img
+            class="icon-more"
+            src="../../../assets/images/icon/more.png"
+            alt=""
+          />
+        </p>
         <p class="red">{{refundStateText}}</p>
       </div>
       <div
@@ -32,13 +45,17 @@
                 <span
                   v-for="(skuitem, skui) in item.skuExplain"
                   :key="skui"
-                >{{skuitem.specsName}}：{{skuitem.attrValue}} &nbsp;&nbsp;</span>
+                >{{skuitem.specsName}}：{{skuitem.attrValue}}<span v-if="skui !== item.skuExplain.length - 1">；</span></span>
               </template>
             </p>
-            <p class="red">￥{{goods.unitPrice}}</p>
+            <p class="card-unit-price">
+              ￥{{ goods.unitPrice
+              }}<span class="card-number">x{{ goods.goodsNumber }}</span>
+            </p>
           </div>
         </div>
       </div>
+      <div class="card-line"></div>
       <div class="card-footer row-between">
         <p>
           <span>共{{data.revoList.length}}件商品 合计：</span>
@@ -47,37 +64,37 @@
         </p>
       </div>
       <div
-        class="card-footer row-between van-hairline--top"
+        class="card-footer row-between card-action-box"
         v-if="showBtns"
       >
         <div class="card-actions">
           <!-- <button v-if="data.auditState == 6"
                   @click.stop="checkRefuse"
-                  class="card-actions-btn van-hairline--surround">查看拒绝原因</button> -->
+                  class="card-actions-btn">查看拒绝原因</button> -->
           <button
             v-if="(data.auditState === 0 || data.auditState === 1 || data.auditState === 8) && (data.refundType === 1)"
             @click.stop="refundCancel(data.id)"
-            class="card-actions-btn van-hairline--surround"
+            class="card-actions-btn"
           >撤销退款</button>
           <button
             v-if="(data.auditState === 0 || data.auditState === 1 || data.auditState === 8) && (data.refundType === 2)"
             @click.stop="refundCancel(data.id)"
-            class="card-actions-btn van-hairline--surround"
+            class="card-actions-btn"
           >撤销退货</button>
           <button
             v-if="data.auditState === 2"
             @click.stop="logistics"
-            class="card-actions-btn van-hairline--surround"
+            class="card-actions-btn"
           >查看物流</button>
           <button
             v-if="(data.auditState === 1 || data.auditState === 8) && (data.refundType === 2)"
             @click.stop="returnGoods(data.id,data.sellUserId)"
-            class="card-actions-btn van-hairline--surround"
+            class="card-actions-btn"
           >寄回商品</button>
           <button
             v-if="data.auditState === 6 || data.auditState === 11"
             @click.stop="applyArbitrate(data.id)"
-            class="card-actions-btn van-hairline--surround"
+            class="card-actions-btn"
           >申请仲裁</button>
         </div>
       </div>
@@ -158,7 +175,7 @@ export default {
       })
     },
     toOrderDetail() {
-      this.$router.push({ name: 'user-orderRefund-detail', query: { id: this.data.id, orderNumber: this.data.orderNumber, state: this.data.state, type: this.data.type, img: this.data.revoList[0].skuMainPic } })
+      this.$router.push({ name: 'user-orderRefund-detail', query: { id: this.data.id } })
     }
   }
 }
@@ -166,18 +183,29 @@ export default {
 
 <style lang="postcss" scoped>
 .app-order-item {
-  margin-top: 10px;
+  margin: 10px;
   font-size: 12px;
   color: var(--black);
   background-color: white;
   line-height: 18px;
+  border-radius: 6px;
   & .card-bar,
   & .card-header {
     padding: 10px;
   }
+  & .card-bar img {
+    margin-right: 9px;
+    height: 13px;
+    vertical-align: middle;
+    &.icon-more {
+      margin-left: 13px;
+      height: 9px;
+    }
+  }
   & .card-image {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
+    border-radius: 3px;
   }
   & .card-info {
     flex: 1;
@@ -195,22 +223,41 @@ export default {
   & .card-describe {
     line-height: 22px;
   }
+  & .card-unit-price {
+    margin-top: 5px;
+    font-size: 13px;
+    color: #333333;
+    & .card-number {
+      float: right;
+      color: #999999;
+      font-size: 10px;
+    }
+  }
   & .card-price {
     font-size: 15px;
+  }
+  & .card-line {
+    margin: 0 10px;
+    height: 1px;
+    background: #dddddd;
   }
   & .card-footer {
     padding: 10px;
     align-items: center;
     justify-content: flex-end;
+    &.card-action-box {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
   }
   & .card-actions-btn {
-    margin-right: 5px;
+    margin: 5px 5px 10px 0;
     padding: 4px 14px;
     background-color: #ffffff;
-    border: none;
-    border-radius: 3px;
+    border: 1px solid #999999;
+    border-radius: 4px;
     line-height: normal;
-    color: #c2a374;
+    color: #666666;
     &:after {
       border-radius: 36px;
     }

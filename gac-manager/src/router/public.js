@@ -230,6 +230,53 @@ export default [{
     meta: {
       title: '报表'
     }
+  }, {
+    path: 'orderCheck',
+    name: 'orderCheck',
+    authority: 'orderCheck',
+    component: () => import('@/views/public/fund/orderCheck'),
+    meta: {
+      title: '订单初审'
+    }
+  }, {
+    path: 'orderRecheck',
+    name: 'orderRecheck',
+    authority: 'orderRecheck',
+    component: () => import('@/views/public/fund/orderRecheck'),
+    meta: {
+      title: '订单复审'
+    }
+  }, {
+    path: 'orderListCheck',
+    name: 'orderListCheck',
+    authority: 'orderListCheck',
+    component: () => import('@/views/public/fund/orderListCheck'),
+    meta: {
+      title: '订单列表'
+    }
+  }, {
+    path: 'orderCheckDetail',
+    name: 'orderCheckDetail',
+    // authority: 'orderCheckDetail',
+    component: () => import('@/views/public/fund/orderCheckDetail'),
+    meta: {
+      title: '订单详情'
+    },
+    hidden: true
+  }, {
+    path: 'platformKitingRecords',
+    name: 'platformKitingRecords',
+    component: () => import('@/views/public/fund/platformKitingRecords'),
+    meta: {
+      title: '平台提现'
+    }
+  }, {
+    path: 'merchantKitingRecords',
+    name: 'merchantKitingRecords',
+    component: () => import('@/views/public/fund/merchantKitingRecords'),
+    meta: {
+      title: '商家提现'
+    }
   }
   ]
 },
@@ -485,6 +532,14 @@ export default [{
     component: () => import('@/views/public/statistics/jewelryCircleStatistics.vue'),
     meta: {
       title: '珠宝圈统计'
+    }
+  }, {
+    path: 'messageStatistics',
+    name: 'messageStatistics',
+    authority: 'messageStatistics',
+    component: () => import('@/views/public/statistics/messageStatistics.vue'),
+    meta: {
+      title: '招商短信'
     }
   }
   ]
@@ -855,6 +910,13 @@ export default [{
     meta: {
       title: '操作日志'
     }
+  }, {
+    path: 'designCategory',
+    name: 'publicDesignCategory',
+    component: () => import('@/views/public/system/designCategory'),
+    meta: {
+      title: '设计师分类'
+    }
   }
   ]
 },
@@ -946,6 +1008,460 @@ export default [{
       title: '首页推荐'
     },
     hidden: true
+  }, {
+    path: 'jewelryHomepage',
+    name: 'jewelryHomepage',
+    // authority: 'operateVideo',
+    // component: () => import('@/views/public/promotion/theme'),
+    component: container,
+    redirect: '/promotion/jewelryHomepage/index',
+    meta: {
+      title: '去哪儿买首页配置'
+    },
+    children: [{
+      path: 'index',
+      name: 'jewelryHomepageIndex',
+      component: () => import('@/views/public/promotion/jewelryHomepage'),
+      meta: {
+        title: '首页配置'
+      }
+    }, {
+      path: 'business',
+      name: 'jewelryHomepageBusiness',
+      component: () => import('@/views/public/promotion/jewelryHomepage/business'),
+      meta: {
+        title: '品牌商家'
+      }
+    }, {
+      path: 'businessDetail',
+      name: 'jewelryHomepageBusinessDetail',
+      component: () => import('@/views/public/promotion/jewelryHomepage/businessDetail'),
+      meta: {
+        title: '商家详情'
+      }
+    }, {
+      path: 'goods',
+      name: 'jewelryHomepageGoods',
+      component: () => import('@/views/public/promotion/jewelryHomepage/goods'),
+      meta: {
+        title: '普通商品'
+      }
+    }, {
+      path: 'assembleGoods',
+      name: 'jewelryHomepageAssemble',
+      component: () => import('@/views/public/promotion/jewelryHomepage/assembleGoods'),
+      meta: {
+        title: '拼团商品'
+      }
+    }, {
+      path: 'promoteGoods',
+      name: 'jewelryHomepagePromotion',
+      component: () => import('@/views/public/promotion/jewelryHomepage/promoteGoods'),
+      meta: {
+        title: '促销商品'
+      }
+    }, {
+      path: 'zone',
+      name: 'jewelryHomepageZone',
+      component: () => import('@/views/public/promotion/jewelryHomepage/zone'),
+      meta: {
+        title: '专区设置'
+      }
+    }]
+  }, {
+    path: 'advertisement',
+    name: 'advertisement',
+    // authority: 'advertisement',
+    component: container,
+    redirect: '/promotion/advertisement/index',
+    meta: {
+      title: '广告设置'
+    },
+    children: [{
+      path: 'index',
+      name: 'advertisementIndex',
+      component: () => import('@/views/public/promotion/advertisement'),
+      meta: {
+        title: '广告设置列表'
+      }
+    }, {
+      path: 'modify',
+      name: 'advertisementModify',
+      component: () => import('@/views/public/promotion/advertisement/modify'),
+      meta: {
+        title: '修改广告设置'
+      }
+    }]
+  }, {
+    path: 'homePage',
+    name: 'homePage',
+    // authority: 'operateVideo',
+    // component: () => import('@/views/public/promotion/theme'),
+    component: container,
+    redirect: '/promotion/homePage/index',
+    meta: {
+      title: '首页配置'
+    },
+    children: [{
+      path: 'index',
+      name: 'homePageIndex',
+      component: () => import('@/views/public/promotion/homePage'),
+      meta: {
+        title: '模块配置'
+      }
+    }, {
+      path: 'business',
+      name: 'homePageBusiness',
+      component: () => import('@/views/public/promotion/homePage/business'),
+      meta: {
+        title: '品牌商家'
+      }
+    }, {
+      path: 'businessDetail',
+      name: 'homePageBusinessDetail',
+      component: () => import('@/views/public/promotion/homePage/businessDetail'),
+      meta: {
+        title: '商家详情'
+      }
+    }, {
+      path: 'goods',
+      name: 'homePageGoods',
+      component: () => import('@/views/public/promotion/homePage/goods'),
+      meta: {
+        title: '普通商品'
+      }
+    }, {
+      path: 'content',
+      name: 'homePageContent',
+      component: () => import('@/views/public/promotion/homePage/content'),
+      meta: {
+        title: '珠宝圈内容'
+      }
+    }, {
+      path: 'assembleGoods',
+      name: 'homePageAssemble',
+      component: () => import('@/views/public/promotion/homePage/assembleGoods'),
+      meta: {
+        title: '拼团商品'
+      }
+    }, {
+      path: 'promoteGoods',
+      name: 'homePagePromoteGoods',
+      component: () => import('@/views/public/promotion/homePage/promoteGoods'),
+      meta: {
+        title: '促销商品'
+      }
+    }]
+  }, {
+    path: 'designHomepage',
+    name: 'designHomepage',
+    // authority: 'operateVideo',
+    // component: () => import('@/views/public/promotion/theme'),
+    component: container,
+    redirect: '/promotion/designHomepage/index',
+    meta: {
+      title: '设计师首页配置'
+    },
+    children: [{
+      path: 'index',
+      name: 'designHomepageIndex',
+      component: () => import('@/views/public/promotion/designHomepage'),
+      meta: {
+        title: '首页配置'
+      }
+    }, {
+      path: 'designer',
+      name: 'designHomepageDesigner',
+      component: () => import('@/views/public/promotion/designHomepage/designer'),
+      meta: {
+        title: '设计师配置'
+      }
+    }, {
+      path: 'designerDetail',
+      name: 'designHomepageDesignerDetail',
+      component: () => import('@/views/public/promotion/designHomepage/designerDetail'),
+      meta: {
+        title: '设计师作品配置'
+      }
+    }, {
+      path: 'goods',
+      name: 'designHomepageGoods',
+      component: () => import('@/views/public/promotion/designHomepage/goods'),
+      meta: {
+        title: '作品配置'
+      }
+    }]
+  }, {
+    path: 'jewelryCircleAdv',
+    name: 'jewelryCircleAdv',
+    component: () => import('@/views/public/promotion/jewelryCircleAdv'),
+    meta: {
+      title: '珠宝圈广告位'
+    }
+  }, {
+    path: 'jewelryCircleAdvModify',
+    name: 'jewelryCircleAdvModify',
+    component: () => import('@/views/public/promotion/jewelryCircleAdv/modify'),
+    meta: {
+      title: '编辑珠宝圈广告位'
+    },
+    hidden: true
+  }, {
+    path: 'luckDraw',
+    name: 'luckDraw',
+    // authority: 'operateVideo',
+    component: container,
+    redirect: '/promotion/luckDraw/index',
+    meta: {
+      title: '抽奖活动'
+    },
+    children: [{
+      path: 'index',
+      name: 'luckDrawIndex',
+      component: () => import('@/views/public/promotion/luckDraw'),
+      meta: {
+        title: '活动列表'
+      }
+    }, {
+      path: 'draw',
+      name: 'addDraw',
+      component: () => import('@/views/public/promotion/luckDraw/draw'),
+      meta: {
+        title: '添加活动'
+      }
+    }, {
+      path: 'roster',
+      name: 'rosterDraw',
+      component: () => import('@/views/public/promotion/luckDraw/roster'),
+      meta: {
+        title: '中奖名单'
+      }
+    }]
+  }, {
+    path: 'appIcon',
+    name: 'appIcon',
+    component: () => import('@/views/public/promotion/appIcon'),
+    meta: {
+      title: '应用图标'
+    }
+  }, {
+    path: 'coopenAdv',
+    name: 'coopenAdv',
+    component: container,
+    redirect: '/promotion/coopenAdv/index',
+    meta: {
+      title: '开屏广告页'
+    },
+    children: [{
+      path: 'index',
+      name: 'coopenAdvIndex',
+      component: () => import('@/views/public/promotion/coopenAdv'),
+      meta: {
+        title: '广告列表'
+      }
+    }, {
+      path: 'modify',
+      name: 'coopenAdvModify',
+      component: () => import('@/views/public/promotion/coopenAdv/modify'),
+      meta: {
+        title: '添加/编辑开屏广告页'
+      }
+    }]
+  }, {
+    path: 'activityTheme',
+    name: 'activityTheme',
+    component: container,
+    redirect: '/promotion/activityTheme/index',
+    meta: {
+      title: '活动主题'
+    },
+    children: [{
+      path: 'index',
+      name: 'activityThemeIndex',
+      component: () => import('@/views/public/promotion/activityTheme'),
+      meta: {
+        title: '活动主题列表'
+      }
+    }, {
+      path: 'modify',
+      name: 'activityThemeModify',
+      component: () => import('@/views/public/promotion/activityTheme/modify'),
+      meta: {
+        title: '添加/编辑活动主题'
+      }
+    }, {
+      path: 'relationGoods',
+      name: 'activityThemeRelationGoods',
+      component: () => import('@/views/public/promotion/activityTheme/relationGoods'),
+      meta: {
+        title: '关联商品'
+      }
+    }]
+  }]
+},
+{
+  path: '/work',
+  name: 'publicWork',
+  // authority: 'operateVideo',
+  component: Layout,
+  redirect: '/work/jewelry',
+  meta: {
+    title: '商品管理'
+  },
+  children: [{
+    path: 'jewelry',
+    name: 'publicJewelryWork',
+    // authority: 'publicJewelryWork',
+    component: () => import('@/views/public/workList/jewelryWorkList'),
+    meta: {
+      title: '珠宝店商品'
+    }
+  }, {
+    path: 'jewelryDetail',
+    name: 'publicJewelryDetail',
+    // authority: 'publicJewelryDetail',
+    component: () => import('@/views/public/workList/jewelryDetail'),
+    meta: {
+      title: '商品详情'
+    },
+    hidden: true
+  }, {
+    path: 'design',
+    name: 'publicDesignWork',
+    // authority: 'operateVideo',
+    component: () => import('@/views/public/workList/index'),
+    meta: {
+      title: '设计师作品'
+    }
+  }, {
+    path: 'designDetail',
+    name: 'publicDesignDetail',
+    // authority: 'operateVideo',
+    component: () => import('@/views/public/workList/detail'),
+    meta: {
+      title: '作品详情'
+    },
+    hidden: true
+  }, {
+    path: 'customMade',
+    name: 'publicCustomMadeWork',
+    // authority: 'operateVideo',
+    component: () => import('@/views/public/workList/customMadeWorkList'),
+    meta: {
+      title: '定制商品'
+    }
+  },
+  {
+    path: 'publicjewelryComment',
+    name: 'publicjewelryComment',
+    component: () => import('@/views/public/workList/jewelryComment'),
+    meta: {
+      title: '珠宝店评论'
+    }
+  },
+  {
+    path: 'publicjewelryCommentDetail',
+    name: 'publicjewelryCommentDetail',
+    component: () => import('@/views/public/workList/jewelryCommentDetail'),
+    meta: {
+      title: '珠宝店评论'
+    }
+  }
+  ]
+},
+{
+  path: '/order',
+  name: 'publicOrder',
+  // authority: 'operateVideo',
+  component: Layout,
+  redirect: '/order/jewelry',
+  meta: {
+    title: '订单管理'
+  },
+  children: [{
+    path: 'jewelry',
+    name: 'publicJewelryOrder',
+    // authority: 'publicJewelryWork',
+    component: () => import('@/views/public/orderList/jewelry'),
+    meta: {
+      title: '珠宝店订单'
+    }
+  }, {
+    path: 'jewelryDetail',
+    name: 'publicOrderDetail',
+    // authority: 'publicJewelryDetail',
+    component: () => import('@/views/public/orderList/detail'),
+    meta: {
+      title: '订单详情'
+    },
+    hidden: true
+  }, {
+    path: 'customMade',
+    name: 'publicCustomMadeOrder',
+    // authority: 'operateVideo',
+    component: () => import('@/views/public/orderList/designer'),
+    meta: {
+      title: '定制订单'
+    }
+  }]
+},
+{
+  path: '/refundOrder',
+  name: 'publicRefundOrder',
+  // authority: 'operateVideo',
+  component: Layout,
+  redirect: '/refundOrder/jewelry',
+  meta: {
+    title: '退款管理'
+  },
+  children: [{
+    path: 'jewelry',
+    name: 'publicJewelryRefundOrder',
+    // authority: 'publicJewelryWork',
+    component: () => import('@/views/public/orderList/refund'),
+    meta: {
+      title: '珠宝店退款'
+    }
+  }, {
+    path: 'aftermarketDetail',
+    name: 'publicAftermarketDetail',
+    component: () => import('@/views/public/orderList/refundDetail'),
+    meta: {
+      title: '退款单详情'
+    }
+  }]
+},
+{
+  path: '/arbitrate',
+  name: 'publicArbitrate',
+  // authority: 'operateVideo',
+  component: Layout,
+  redirect: '/arbitrate/jewelry',
+  meta: {
+    title: '仲裁管理'
+  },
+  children: [{
+    path: 'jewelry',
+    name: 'publicJewelryArbitrate',
+    // authority: 'publicJewelryWork',
+    component: () => import('@/views/public/orderList/jewelryArbitrate'),
+    meta: {
+      title: '珠宝店仲裁'
+    }
+  }, {
+    path: 'design',
+    name: 'publicDesignArbitrate',
+    component: () => import('@/views/public/orderList/arbitrate'),
+    meta: {
+      title: '设计师仲裁'
+    }
+  }, {
+    path: 'arbitrateDetail',
+    name: 'publicArbitrateDetail',
+    component: () => import('@/views/public/orderList/arbitrateDetail'),
+    meta: {
+      title: '仲裁详情'
+    }
   }]
 },
 {
@@ -1106,6 +1622,48 @@ export default [{
     component: () => import('@/views/public/jewelryRing/auditManage'),
     meta: {
       title: '审核管理'
+    }
+  }, {
+    path: 'topicManage',
+    name: 'topicManage',
+    component: () => import('@/views/public/jewelryRing/topicManage'),
+    meta: {
+      title: '话题管理'
+    }
+  }, {
+    path: 'topicManageModify',
+    name: 'topicManageModify',
+    component: () => import('@/views/public/jewelryRing/topicManage/modify'),
+    meta: {
+      title: '话题添加/修改'
+    }
+  }, {
+    path: 'topicJoin',
+    name: 'topicJoin',
+    component: () => import('@/views/public/jewelryRing/topicManage/topicJoin'),
+    meta: {
+      title: '参与人数'
+    }
+  }, {
+    path: 'reportComplaints',
+    name: 'reportComplaints',
+    component: () => import('@/views/public/jewelryRing/reportComplaints'),
+    meta: {
+      title: '举报管理'
+    }
+  }, {
+    path: 'reportDetail',
+    name: 'reportDetail',
+    component: () => import('@/views/public/jewelryRing/reportComplaints/reportDetail'),
+    meta: {
+      title: '举报详情'
+    }
+  }, {
+    path: 'reportType',
+    name: 'reportType',
+    component: () => import('@/views/public/jewelryRing/reportType'),
+    meta: {
+      title: '举报类型'
     }
   }
   ]

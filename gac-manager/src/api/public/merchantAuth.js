@@ -14,3 +14,12 @@ export function usersList(params) {
     params
   })
 }
+
+// 会员列表账号冻结解冻
+export function isFreezed(uid, status, data) {
+  return request({
+    url: `/api/userCenter/isFreezed/${uid}/${status}`,
+    method: 'post',
+    data
+  })
+}

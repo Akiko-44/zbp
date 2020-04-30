@@ -181,6 +181,12 @@
         :total="total"
       > </el-pagination>
     </div>
+    <div class="text-center">
+      <el-button
+        type="primary"
+        @click="$router.go(-1)"
+      >返回</el-button>
+    </div>
   </div>
 </template>
 

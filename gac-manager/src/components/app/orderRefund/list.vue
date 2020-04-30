@@ -1,4 +1,3 @@
-
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
@@ -20,7 +19,8 @@
             :maxlength="20"
             @keyup.enter.native="handleFilter"
             v-model="listQuery.refundId"
-          > </el-input>
+          >
+          </el-input>
         </el-form-item>
         <el-form-item
           label="订单编号:"
@@ -32,7 +32,8 @@
             :maxlength="20"
             @keyup.enter.native="handleFilter"
             v-model="listQuery.orderNumber"
-          > </el-input>
+          >
+          </el-input>
         </el-form-item>
         <el-form-item
           label="购买人手机号:"
@@ -44,7 +45,8 @@
             :maxlength="20"
             @keyup.enter.native="handleFilter"
             v-model="listQuery.buyUserMobile"
-          > </el-input>
+          >
+          </el-input>
         </el-form-item>
         <el-form-item label="收货人名称:">
           <el-input
@@ -53,7 +55,8 @@
             :maxlength="30"
             @keyup.enter.native="handleFilter"
             v-model="listQuery.reviverName"
-          > </el-input>
+          >
+          </el-input>
         </el-form-item>
         <el-form-item
           label="收货人手机号:"
@@ -65,7 +68,8 @@
             :maxlength="20"
             @keyup.enter.native="handleFilter"
             v-model="listQuery.consigneeMobile"
-          > </el-input>
+          >
+          </el-input>
         </el-form-item>
         <el-form-item label="退款状态:">
           <el-select
@@ -118,14 +122,14 @@
           v-model="errorDialog"
           size="tiny"
         >
-          <span>{{errorMsg}}</span>
+          <span>{{ errorMsg }}</span>
           <span
             slot="footer"
             class="dialog-footer"
           >
             <el-button
               type="primary"
-              @click="errorDialog=false"
+              @click="errorDialog = false"
             >确认</el-button>
           </span>
         </el-dialog>
@@ -133,7 +137,7 @@
     </div>
 
     <el-table
-      :key='tableKey'
+      :key="tableKey"
       :data="list"
       v-loading.body="listLoading"
       border
@@ -141,7 +145,6 @@
       highlight-current-row
       style="width: 100%"
     >
-
       <el-table-column type="expand">
         <template slot-scope="{ row }">
           <el-table
@@ -155,7 +158,7 @@
               label="商品ID"
             >
               <template slot-scope="props">
-                <span>{{props.row.goodId}}</span>
+                <span>{{ props.row.goodId }}</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -164,7 +167,7 @@
               label="商品名"
             >
               <template slot-scope="props">
-                <span>{{props.row.skuName}}</span>
+                <span>{{ props.row.skuName }}</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -185,7 +188,7 @@
               label="单价"
             >
               <template slot-scope="props">
-                <span>{{props.row.unitPrice}}</span>
+                <span>{{ props.row.unitPrice }}</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -194,7 +197,7 @@
               label="数量"
             >
               <template slot-scope="props">
-                <span>x{{props.row.goodsNumber}}</span>
+                <span>x{{ props.row.goodsNumber }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -207,7 +210,7 @@
         label="退款编号"
       >
         <template slot-scope="{ row }">
-          <span>{{row.id}}</span>
+          <span>{{ row.id }}</span>
         </template>
       </el-table-column>
 
@@ -217,7 +220,9 @@
         label="订单编号"
       >
         <template slot-scope="{ row }">
-          <span @click="$router.push({ name: detailRouteName, query: { id: row.id } })">{{row.orderNumber}}</span>
+          <span @click="
+              $router.push({ name: detailRouteName, query: { id: row.id } })
+            ">{{ row.orderNumber }}</span>
         </template>
       </el-table-column>
 
@@ -227,7 +232,7 @@
         label="购买人手机号"
       >
         <template slot-scope="{ row }">
-          <span>{{row.buyUserMobile}}</span>
+          <span>{{ row.buyUserMobile }}</span>
         </template>
       </el-table-column>
 
@@ -237,7 +242,7 @@
         label="收货人"
       >
         <template slot-scope="{ row }">
-          <span>{{row.consignee}}</span>
+          <span>{{ row.consignee }}</span>
         </template>
       </el-table-column>
 
@@ -247,7 +252,7 @@
         label="收货人手机号"
       >
         <template slot-scope="{ row }">
-          <span>{{row.consigneeMobile}}</span>
+          <span>{{ row.consigneeMobile }}</span>
         </template>
       </el-table-column>
 
@@ -257,7 +262,7 @@
         label="运费"
       >
         <template slot-scope="{ row }">
-          <span>{{row.freightMoney}}</span>
+          <span>{{ row.freightMoney }}</span>
         </template>
       </el-table-column>
 
@@ -279,7 +284,7 @@
         label="退款金额"
       >
         <template slot-scope="{ row }">
-          <span>{{row.refundAmount}}</span>
+          <span>{{ row.refundAmount }}</span>
         </template>
       </el-table-column>
 
@@ -295,7 +300,7 @@
         label="支付时间"
       >
         <template slot-scope="{ row }">
-          <span>{{row.payTime}}</span>
+          <span>{{ row.payTime }}</span>
         </template>
       </el-table-column>
 
@@ -305,7 +310,7 @@
         label="退款申请时间"
       >
         <template slot-scope="{ row }">
-          <span>{{row.createTime}}</span>
+          <span>{{ row.createTime }}</span>
         </template>
       </el-table-column>
 
@@ -315,7 +320,7 @@
         label="订单状态"
       >
         <template slot-scope="{ row }">
-          <span>{{refundState[row.refundType]}}</span>
+          <span>{{ refundState[row.refundType] }}</span>
         </template>
       </el-table-column>
 
@@ -325,8 +330,10 @@
         label="退货状态"
       >
         <template slot-scope="{ row }">
-          <p style="margin: 0;">{{auditState[row.auditState]}}</p>
-          <span v-if="row.auditState === 0">{{row.auditStateTime}}后自动同意退款</span>
+          <p style="margin: 0;">{{ auditState[row.auditState] }}</p>
+          <span v-if="row.auditState === 0">{{ row.auditStateTime }}后自动同意退{{
+              row.refundType === 1 ? "款" : "货"
+            }}</span>
         </template>
       </el-table-column>
 
@@ -347,7 +354,9 @@
             style="margin-bottom: 5px;"
             type="primary"
             size="small"
-            @click="$router.push({ name: detailRouteName, query: { id: row.id } })"
+            @click="
+              $router.push({ name: detailRouteName, query: { id: row.id } })
+            "
           >
             详情
           </el-button>
@@ -434,7 +443,6 @@
         </el-dropdown>-->
         </template>
       </el-table-column>
-
     </el-table>
 
     <audit-dialog
@@ -455,19 +463,20 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page.sync="listParams.offset"
-        :page-sizes="[10,20,30,50]"
+        :page-sizes="[10, 20, 30, 50]"
         :page-size="listParams.limit"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-      > </el-pagination>
+      >
+      </el-pagination>
     </div>
 
     <el-dialog
       title="物流详情"
       :visible.sync="dialogExpressVisible"
     >
-      <p>物流公司：{{orderExpressData.com}}</p>
-      <p>物流单号：{{orderExpressData.nu}}</p>
+      <p>物流公司：{{ orderExpressData.com }}</p>
+      <p>物流单号：{{ orderExpressData.nu }}</p>
       <el-table
         :data="orderExpressData.data"
         border
@@ -478,12 +487,12 @@
           width="200px"
         >
           <template slot-scope="{ row }">
-            <span>{{row.time}}</span>
+            <span>{{ row.time }}</span>
           </template>
         </el-table-column>
         <el-table-column label="物流信息">
           <template slot-scope="{ row }">
-            <span>{{row.context}}</span>
+            <span>{{ row.context }}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -497,7 +506,12 @@ var XLSX = require('xlsx')
 import waves from '@/directive/waves' // 水波纹指令
 import { orderState, payType, auditState } from '@/utils/mixins/order'
 import { page } from '@/api/designMerchant/refundAddr'
-import { refunAmount, lookRefundExpress, refundDelayedReceipt, merchantAuditRefund } from '@/api/common/order'
+import {
+  refunAmount,
+  lookRefundExpress,
+  refundDelayedReceipt,
+  merchantAuditRefund
+} from '@/api/common/order'
 import { TimeDifference } from '@/utils/time'
 import auditDialog from './auditDialog'
 import arbitrateApplyDialog from './arbitrateApplyDialog'
@@ -549,51 +563,76 @@ export default {
         1: '待收货',
         2: '已收货'
       },
-      refundTypeList: [{
-        value: 1,
-        label: '待收货'
-      }, {
-        value: 2,
-        label: '已收货'
-      }, {
-        value: undefined,
-        label: '全部'
-      }],
+      refundTypeList: [
+        {
+          value: 1,
+          label: '待收货'
+        },
+        {
+          value: 2,
+          label: '已收货'
+        },
+        {
+          value: undefined,
+          label: '全部'
+        }
+      ],
       dialogExpressVisible: false,
       orderExpressData: {},
       isAddr: false,
       timeOut: null,
       rules: {
         refundId: [
-          { pattern: /^[0-9]*$/, message: '退款编号需为纯数字', trigger: 'blur' }
+          {
+            pattern: /^[0-9]*$/,
+            message: '退款编号需为纯数字',
+            trigger: 'blur'
+          }
         ],
         orderNumber: [
-          { pattern: /^[0-9]*$/, message: '订单编号需为纯数字', trigger: 'blur' }
+          {
+            pattern: /^[0-9]*$/,
+            message: '订单编号需为纯数字',
+            trigger: 'blur'
+          }
         ],
         buyUserMobile: [
-          { pattern: /^[0-9]*$/, message: '请输入正确的手机号', trigger: 'blur' }
+          {
+            pattern: /^[0-9]*$/,
+            message: '请输入正确的手机号',
+            trigger: 'blur'
+          }
         ],
         consigneeMobile: [
-          { pattern: /^[0-9]*$/, message: '请输入正确的手机号', trigger: 'blur' }
+          {
+            pattern: /^[0-9]*$/,
+            message: '请输入正确的手机号',
+            trigger: 'blur'
+          }
         ]
       },
       // 导出文件
       outFile: '', // 导出文件el
       errorDialog: false, // 错误信息弹窗
       errorMsg: '', // 错误信息内容
-      excelTitle: [{
-        orderNumber: '订单编号',
-        buyUserName: '购买人手机号码',
-        consignee: '收货人',
-        phone: '收货人手机号',
-        freightMoney: '运费',
-        payMoney: '退款金额',
-        createTime: '退款申请时间'
-      }]
+      excelTitle: [
+        {
+          orderNumber: '订单编号',
+          buyUserMobile: '购买人手机号码',
+          consignee: '收货人',
+          consigneeMobile: '收货人手机号',
+          freightMoney: '运费',
+          refundAmount: '退款金额',
+          payTime: '支付时间',
+          createTime: '退款申请时间',
+          refundType: '订单状态',
+          auditState: '退货状态'
+        }
+      ]
     }
   },
   watch: {
-    '$route': 'fetchData'
+    $route: 'fetchData'
   },
   computed: {
     orderStatus() {
@@ -630,33 +669,49 @@ export default {
       this.listLoading = true
       this.listQuery.payStartTime = this.createTime ? this.createTime[0] : ''
       this.listQuery.payEndTime = this.createTime ? this.createTime[1] : ''
-      this.getPage(this.listQuery, this.listParams)
-        .then(data => {
-          this.list = data.data.records
-          this.total = data.data.total
-          this.listLoading = false
-          this.list.forEach((item) => {
-            if (item.auditState === 0) {
-              const timeDifferenceInstance = new TimeDifference()
-              let createTime = +new Date(Date.parse(item.createTime.replace(/-/g, '/')))
+      this.getPage(this.listQuery, this.listParams).then(data => {
+        this.list = data.data.records
+        this.total = data.data.total
+        this.listLoading = false
+        this.list.forEach(item => {
+          if (item.auditState === 0) {
+            const timeDifferenceInstance = new TimeDifference()
+            let createTime = +new Date(
+              Date.parse(item.createTime.replace(/-/g, '/'))
+            )
+            createTime += 24 * 7 * 60 * 60 * 1000
+            const diferentTime = timeDifferenceInstance.format(
+              new Date(),
+              createTime
+            )
+            this.$set(item, 'auditStateTime', diferentTime)
+            this.timeOut = setInterval(() => {
+              let createTime = +new Date(
+                Date.parse(item.createTime.replace(/-/g, '/'))
+              )
               createTime += 24 * 7 * 60 * 60 * 1000
-              const diferentTime = timeDifferenceInstance.format(new Date(), createTime)
+              const diferentTime = timeDifferenceInstance.format(
+                new Date(),
+                createTime
+              )
               this.$set(item, 'auditStateTime', diferentTime)
-              this.timeOut = setInterval(() => {
-                let createTime = +new Date(Date.parse(item.createTime.replace(/-/g, '/')))
-                createTime += 24 * 7 * 60 * 60 * 1000
-                const diferentTime = timeDifferenceInstance.format(new Date(), createTime)
-                this.$set(item, 'auditStateTime', diferentTime)
-              }, 1000)
-            }
-          })
+            }, 1000)
+          }
         })
+      })
     },
     getExportList() {
       this.getPage({
         offset: 1,
         limit: 9999,
-        orderNumber: this.listQuery.orderNumber
+        refundId: this.listQuery.refundId,
+        orderNumber: this.listQuery.orderNumber,
+        buyUserMobile: this.listQuery.buyUserMobile,
+        reviverName: this.listQuery.reviverName,
+        reviverMobile: this.listQuery.reviverMobile,
+        refundType: this.listQuery.refundType,
+        payStartTime: this.listQuery.payStartTime,
+        payEndTime: this.listQuery.payEndTime
       }).then(data => {
         this.exportList = data.data.records
         this.exportList.map(item => {
@@ -668,7 +723,7 @@ export default {
       })
     },
     handleFilter() {
-      this.$refs['refundListQueryForm'].validate((valid) => {
+      this.$refs['refundListQueryForm'].validate(valid => {
         if (valid) {
           this.getList()
         } else {
@@ -704,21 +759,24 @@ export default {
         refundId: id,
         auditState: state
       }
-      const tip = type === 1 ? '同意退款后,退款金额将原路返回' : '确认同意退货?'
+      const tip =
+        type === 1 ? '同意退款后,退款金额将原路返回' : '确认同意退货?'
       this.$confirm(tip, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
-      }).then(() => {
-        merchantAuditRefund(data).then(() => {
-          this.$notify({
-            title: '成功',
-            message: '审核成功',
-            type: 'success',
-            duration: 2000
+      })
+        .then(() => {
+          merchantAuditRefund(data).then(() => {
+            this.$notify({
+              title: '成功',
+              message: '审核成功',
+              type: 'success',
+              duration: 2000
+            })
+            this.getList()
           })
-          this.getList()
         })
-      }).catch(() => { })
+        .catch(() => { })
     },
     audit(row, state, index) {
       if (state == 2 && !this.isAddr) {
@@ -730,9 +788,7 @@ export default {
           .then(() => {
             this.$router.push({ name: 'dmRefundAddrIndex' })
           })
-          .catch(action => {
-
-          })
+          .catch(action => { })
         return false
       }
       const dialog = this.$refs.auditDialog
@@ -745,6 +801,7 @@ export default {
     auditSuccess(form) {
       //    this.list[this.index].auditState = form.auditState
       this.getList()
+      this.$router.go(0)
     },
     handleCommand({ row, state, $index }) {
       this.audit(row, state, $index)
@@ -790,73 +847,108 @@ export default {
         })
       })
     },
-    downloadFile() { // 点击导出按钮
+    downloadFile() {
+      // 点击导出按钮
       const listData = this.exportList
       const downloadData = this.excelTitle.concat(listData)
-      this.downloadExl(downloadData, '取消订单列表')
+      this.downloadExl(downloadData, '售后列表')
     },
-    downloadExl(json, downName, type) { // 导出到excel
+    downloadExl(json, downName, type) {
+      // 导出到excel
       const keyMap = [] // 获取键
       for (const k in json[0]) {
         keyMap.push(k)
       }
       const tmpdata = [] // 用来保存转换好的json
-      json.map((v, i) => keyMap.map((k, j) => Object.assign({}, {
-        v: v[k],
-        position: (j > 25 ? this.getCharCol(j) : String.fromCharCode(65 + j)) + (i + 1)
-      }))).reduce((prev, next) => prev.concat(next)).forEach(function(v) {
-        tmpdata[v.position] = {
-          v: v.v
-        }
-      })
+      json
+        .map((v, i) =>
+          keyMap.map((k, j) =>
+            Object.assign(
+              {},
+              {
+                v: v[k],
+                position:
+                  (j > 25 ? this.getCharCol(j) : String.fromCharCode(65 + j)) +
+                  (i + 1)
+              }
+            )
+          )
+        )
+        .reduce((prev, next) => prev.concat(next))
+        .forEach(function(v) {
+          tmpdata[v.position] = {
+            v: v.v
+          }
+        })
       const outputPos = Object.keys(tmpdata) // 设置区域,比如表格从A1到D10
       const tmpWB = {
         SheetNames: ['mySheet'], // 保存的表标题
         Sheets: {
-          'mySheet': Object.assign({},
+          mySheet: Object.assign(
+            {},
             tmpdata, // 内容
             {
               '!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1] // 设置填充区域
-            })
+            }
+          )
         }
       }
-      const tmpDown = new Blob([this.s2ab(XLSX.write(tmpWB,
-        { bookType: (type === undefined ? 'xlsx' : type), bookSST: false, type: 'binary' } // 这里的数据是用来定义导出的格式类型
-      ))], {
-        type: ''
-      }) // 创建二进制对象写入转换好的字节流
+      const tmpDown = new Blob(
+        [
+          this.s2ab(
+            XLSX.write(
+              tmpWB,
+              {
+                bookType: type === undefined ? 'xlsx' : type,
+                bookSST: false,
+                type: 'binary'
+              } // 这里的数据是用来定义导出的格式类型
+            )
+          )
+        ],
+        {
+          type: ''
+        }
+      ) // 创建二进制对象写入转换好的字节流
       var href = URL.createObjectURL(tmpDown) // 创建对象超链接
       this.outFile.download = downName + '.xlsx' // 下载名称
       this.outFile.href = href // 绑定a标签
       this.outFile.click() // 模拟点击实现下载
-      setTimeout(function() { // 延时释放
+      setTimeout(function() {
+        // 延时释放
         URL.revokeObjectURL(tmpDown) // 用URL.revokeObjectURL()来释放这个object URL
       }, 100)
     },
-    s2ab(s) { // 字符串转字符流
+    s2ab(s) {
+      // 字符串转字符流
       var buf = new ArrayBuffer(s.length)
       var view = new Uint8Array(buf)
       for (var i = 0; i !== s.length; ++i) {
-        view[i] = s.charCodeAt(i) & 0xFF
+        view[i] = s.charCodeAt(i) & 0xff
       }
       return buf
     },
-    getCharCol(n) { // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
+    getCharCol(n) {
+      // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
       let s = ''
       let m = 0
       while (n > 0) {
-        m = n % 26 + 1
+        m = (n % 26) + 1
         s = String.fromCharCode(m + 64) + s
         n = (n - m) / 26
       }
       return s
     },
-    fixdata(data) { // 文件流转BinaryString
+    fixdata(data) {
+      // 文件流转BinaryString
       var o = ''
       var l = 0
       var w = 10240
       for (; l < data.byteLength / w; ++l) {
-        o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)))
+        o += String.fromCharCode.apply(
+          null,
+          new Uint8Array(data.slice(l * w, l * w + w))
+        )
       }
       o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)))
       return o

@@ -71,10 +71,11 @@
           imgFormat="jpg"
           :width="400"
           :height="400"
+          :maxSize="1.5"
           prefix="logo"
           @crop-upload-success="uploadSuccess"
+          tips="1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸400*400"
         />
-        <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸400*400</div>
       </el-form-item>
 
       <el-form-item
@@ -118,8 +119,8 @@
           :maxSize="1.5"
           prefix="backgroundImg"
           @crop-upload-success="backgroundUploadSuccess"
+          tips="1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸355*175"
         />
-        <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸355*175</div>
       </el-form-item>
 
       <el-form-item
@@ -296,8 +297,9 @@
           :multiple="false"
           prefix="doorPhotos"
           @successCBK="doorPhotosUploadSuccess"
+          :maxSize="1.5"
+          tips="1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限"
         />
-        <div>1.5兆（M）以内，1张，格式支持jpg\jpeg\png，尺寸不限</div>
       </el-form-item>
 
       <el-form-item
@@ -372,8 +374,10 @@
             :multiple="true"
             prefix="materials"
             @successCBK="materialsUploadSuccess"
+            :maxSize="1.5"
+            :tips="'共'+form.materials.length+'张，还能上传'+(5 - form.materials.length)+'张；(银行卡正反面照片各一张；经营场所的租赁合同、或产权证明、或个体商户营业执照图片三者至少上传一张；格式支持jpg/jpeg/png，单张照片大小1.5M以内)'"
           />
-          <div>共<span class="danger">{{form.materials.length}}</span>张，还能上传<span class="danger">{{5 - form.materials.length}}</span>张；(银行卡正反面照片各一张；经营场所的租赁合同、或产权证明、或个体商户营业执照图片三者至少上传一张；格式支持jpg/jpeg/png，单张照片大小1.5M以内)</div>
+          <!-- <div>共<span class="danger">{{form.materials.length}}</span>张，还能上传<span class="danger">{{5 - form.materials.length}}</span>张；(银行卡正反面照片各一张；经营场所的租赁合同、或产权证明、或个体商户营业执照图片三者至少上传一张；格式支持jpg/jpeg/png，单张照片大小1.5M以内)</div> -->
         </div>
       </el-form-item>
 

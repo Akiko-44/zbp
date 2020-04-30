@@ -37,6 +37,13 @@
         <span>{{contentForm.labelName}}</span>
       </el-form-item>
 
+      <el-form-item
+        label="参与话题"
+        v-if="contentForm.topicName"
+      >
+        <span>{{contentForm.topicName}}</span>
+      </el-form-item>
+
       <el-form-item label="类型">
         <span>{{contentForm.type == 1 ? '图文' : '视频'}}</span>
       </el-form-item>
@@ -313,28 +320,33 @@
     >
       <div
         class="preview-bg img"
-        v-if="contentForm.type == 1"
+        v-if="contentForm.type == 1 && contentForm.contentSourceType == 1"
       >
         <div class="main">
-          <h3>{{contentForm.title}}</h3>
-          <p>
-            <!-- <span>{{contentForm.contentSource}}</span> -->
-            <span>{{time | formatDate('yyyy-MM-dd hh:mm')}}</span>
-          </p>
-          <div class="author-info">
-            <img
-              :src="contentForm.authorLogo"
-              width="35"
-            />
-            <span>{{contentForm.authorName}}</span>
-            <span class="concern"><i class="el-icon-plus"></i>关注</span>
+          <div class="content-wrap">
+            <h3>{{contentForm.title}}</h3>
+            <p>
+              <!-- <span>{{contentForm.contentSource}}</span> -->
+              <span>{{time | formatDate('yyyy-MM-dd hh:mm')}}</span>
+            </p>
+            <div class="author-info">
+              <img
+                :src="contentForm.authorLogo"
+                width="35"
+              />
+              <span>{{contentForm.authorName}}</span>
+              <span class="concern"><i class="el-icon-plus"></i>关注</span>
+            </div>
+            <div
+              class="preview-content"
+              v-html="contentForm.content"
+            ></div>
           </div>
+          <!-- <div style="margin-bottom: 10px;font-size: 18px;">相关推荐</div> -->
           <div
-            class="preview-content"
-            v-html="contentForm.content"
-          ></div>
-          <div style="margin-bottom: 10px;font-size: 18px;">相关推荐</div>
-          <div v-if="contentForm.contentToGoodsDTOS && contentForm.contentToGoodsDTOS.length">
+            class="recommend-detail"
+            v-if="contentForm.contentToGoodsDTOS && contentForm.contentToGoodsDTOS.length"
+          >
             <div class="recommend-detail-img">
               <img :src="contentForm.contentToGoodsDTOS[0].imgUrl" />
               <div>
@@ -343,7 +355,10 @@
               </div>
             </div>
           </div>
-          <div v-if="contentForm.contentToMerchantDTOS && contentForm.contentToMerchantDTOS.length">
+          <div
+            class="recommend-detail"
+            v-if="contentForm.contentToMerchantDTOS && contentForm.contentToMerchantDTOS.length"
+          >
             <div class="recommend-detail-img">
               <img :src="contentForm.contentToMerchantDTOS[0].logo" />
               <div>
@@ -360,7 +375,103 @@
               </div>
             </div>
           </div>
-          <div v-if="contentForm.contentToExternalLinks && contentForm.contentToExternalLinks.length">
+          <div
+            class="recommend-detail"
+            v-if="contentForm.contentToExternalLinks && contentForm.contentToExternalLinks.length"
+          >
+            <div class="recommend-detail-img">
+              <img
+                :src="contentForm.contentToExternalLinks[0].mobilePicture"
+                style="width: 355px;height:86px;"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <span>
+            <img src="../../../../assets/image/edit.png" />说点什么...
+          </span>
+          <span>
+            <img src="../../../../assets/image/like.png" />0
+          </span>
+          <span>
+            <img src="../../../../assets/image/collect.png" />0
+          </span>
+          <span>
+            <img src="../../../../assets/image/comments.png" />0
+          </span>
+        </div>
+      </div>
+      <div
+        class="preview-bg img has-scroll-img"
+        v-else-if="contentForm.type == 1 && contentForm.contentSourceType == 2"
+      >
+        <div class="main">
+          <div class="scroll-img">
+            <img :src="contentForm.picList[0]" />
+            <div class="dot">1/{{contentForm.picList.length}}</div>
+          </div>
+          <div class="scroll-img-info">
+            <div class="author-info">
+              <img
+                :src="contentForm.authorLogo"
+                width="35"
+              />
+              <div class="location-wrap">
+                <span>{{contentForm.authorName}}</span><br />
+                <span class="location"><i class="el-icon-location"></i>{{contentForm.contentReleaseArea}}</span>
+              </div>
+              <span class="more-circle">
+                <img src="../../../../assets/image/more_circle.png" />
+              </span>
+              <span class="concern">关注</span>
+            </div>
+            <div
+              class="preview-content"
+              v-html="contentForm.content"
+            ></div>
+            <div class="topic">
+              <span class="topic-name">#{{contentForm.topicName}}#</span>
+              <span class="time">{{contentForm.applyPushTime}}</span>
+            </div>
+          </div>
+          <!-- <div style="margin-bottom: 10px;font-size: 18px;">相关推荐</div> -->
+          <div
+            class="recommend-detail"
+            v-if="contentForm.contentToGoodsDTOS && contentForm.contentToGoodsDTOS.length"
+          >
+            <div class="recommend-detail-img">
+              <img :src="contentForm.contentToGoodsDTOS[0].imgUrl" />
+              <div>
+                <div class="name">{{contentForm.contentToGoodsDTOS[0].goodsName}}</div>
+                <div class="sub">￥{{contentForm.contentToGoodsDTOS[0].lowPrice}}~￥{{contentForm.contentToGoodsDTOS[0].highPrice}}</div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="recommend-detail"
+            v-if="contentForm.contentToMerchantDTOS && contentForm.contentToMerchantDTOS.length"
+          >
+            <div class="recommend-detail-img">
+              <img :src="contentForm.contentToMerchantDTOS[0].logo" />
+              <div>
+                <div class="name">{{contentForm.contentToMerchantDTOS[0].name}}</div>
+                <div
+                  class="sub"
+                  v-if="contentForm.contentToMerchantDTOS[0].categoryList && contentForm.contentToMerchantDTOS[0].categoryList.length"
+                >
+                  主营：<span
+                    v-for="(categoryItem, categoryI) in contentForm.contentToMerchantDTOS[0].categoryList"
+                    :key="categoryI"
+                  >{{categoryItem.secondCatName}} </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="recommend-detail"
+            v-if="contentForm.contentToExternalLinks && contentForm.contentToExternalLinks.length"
+          >
             <div class="recommend-detail-img">
               <img
                 :src="contentForm.contentToExternalLinks[0].mobilePicture"
@@ -581,7 +692,7 @@ export default {
   },
   created() {
     if (this.id) {
-      jewelryContentList({ id: this.id }, this.isDraft).then(data => {
+      jewelryContentList({ id: this.id, userType: Cookies.get('userType') }, this.isDraft).then(data => {
         this.contentForm = data.data.records[0]
       })
       this.type = 'update'
@@ -704,7 +815,7 @@ export default {
     getColumnList() {
       jewelryColumnList().then(data => {
         this.columnList = data.data.records
-        this.columnList = this.columnList.filter(function(obj) {
+        this.columnList = this.columnList.filter(function (obj) {
           return obj.id !== '1000'
         })
       })
@@ -849,7 +960,31 @@ export default {
   margin: 0 !important;
 }
 // 预览样式
+/* 定义滚动条样式 */
+::-webkit-scrollbar {
+  width: 0;
+  height: 6px;
+  background-color: rgba(240, 240, 240, 1);
+}
+
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.5);
+  border-radius: 10px;
+  background-color: rgba(240, 240, 240, 0.5);
+}
+
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 0px rgba(240, 240, 240, 0.5);
+  background-color: rgba(240, 240, 240, 0.5);
+}
 .preview-bg {
+  & h3 {
+    margin: 0;
+    padding: 15px 0;
+  }
   position: relative;
   width: 375px;
   height: 667px;
@@ -857,17 +992,23 @@ export default {
   text-align: center;
   & .main {
     height: 617px;
-    padding: 0 10px;
+    // padding: 0 10px;
     text-align: left;
     color: #606266;
     overflow-x: hidden;
     overflow-y: auto;
+    background: #f2f2f2;
+  }
+  & .content-wrap {
+    padding: 0 10px;
+    background: #fff;
   }
   & .preview-content {
     text-align: left;
     padding: 0 10px;
+    overflow: hidden;
     & /deep/ img {
-      width: 350px !important;
+      width: 335px !important;
       height: auto;
     }
   }
@@ -891,6 +1032,7 @@ export default {
     text-align: left;
     img {
       width: 35px !important;
+      height: 35px;
       vertical-align: middle;
     }
     .concern {
@@ -921,11 +1063,14 @@ export default {
       }
     }
   }
+  & .recommend-detail {
+    padding: 10px;
+  }
   & .recommend-detail-img {
     padding: 10px;
     width: 100%;
     height: 86px;
-    background: #f2f2f2;
+    background: #ffffff;
     border-radius: 6px;
     & > img {
       float: left;
@@ -976,6 +1121,73 @@ export default {
         max-width: 17px;
         margin-right: 4px;
         vertical-align: middle;
+      }
+    }
+  }
+  &.has-scroll-img {
+    & .scroll-img {
+      position: relative;
+      line-height: 1;
+      & img {
+        width: 100% !important;
+      }
+      & .dot {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+      }
+    }
+    & .scroll-img-info {
+      background: #fff;
+    }
+    & .author-info {
+      border-bottom: 1px solid #e5e5e5;
+      padding: 15px;
+      & img {
+        border-radius: 50%;
+        vertical-align: text-bottom;
+      }
+      & .concern {
+        color: #fff;
+        background: #df735a;
+        border-radius: 5px;
+      }
+    }
+    & .location-wrap {
+      display: inline-block;
+      & .location {
+        color: #999;
+        font-size: 12px;
+        & i {
+          font-size: 10px;
+          color: #ddd;
+        }
+      }
+    }
+    & .more-circle {
+      float: right;
+      margin: 5px 0 0 10px;
+      padding-left: 10px;
+      border-left: 1px solid #ccc;
+      height: 24px;
+      & img {
+        width: 24px !important;
+        height: 24px !important;
+      }
+    }
+    & .topic {
+      padding: 10px;
+      position: relative;
+      & .topic-name {
+        display: inline-block;
+        padding: 7px 10px;
+        border-radius: 5px;
+        background: #f2f2f2;
+      }
+      & .time {
+        position: absolute;
+        right: 10px;
+        bottom: 16px;
       }
     }
   }

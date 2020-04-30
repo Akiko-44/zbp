@@ -7,3 +7,21 @@ export function page(params) {
     params
   })
 }
+
+// 申诉列表
+export function appealList(params) {
+  return request({
+    url: '/admin/jewelry/report/appealList',
+    method: 'get',
+    params
+  })
+}
+
+// 立即申诉
+export function reportUpdate(data) {
+  return request({
+    url: '/admin/jewelry/report/update',
+    method: 'post',
+    data
+  })
+}

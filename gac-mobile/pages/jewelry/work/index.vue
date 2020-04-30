@@ -1,17 +1,18 @@
 <template>
   <AppView
     class="Base-goods-detail"
-    :class="{baseAssembleDetail: isAssemble}"
-    title="商品详情"
+    :class="{ baseAssembleDetail: isAssemble }"
+    :title="title"
     :clickLeft="onClickLeft"
   >
     <AppDetailImages
       :imgs="imgs"
       :videoUrl="work.videoUrl"
       :info="info"
-      title='商品详情'
+      :title="title"
+      :appDetailIcon="work.appDetailIcon"
     />
-    <template v-if="work.goodsDesc">
+    <template v-if="work.goodsName">
       <div
         class="promote-sale-box"
         v-if="isPromoteSale"
@@ -22,30 +23,49 @@
               class="now-price"
               v-if="work.lowSalePrice === work.highSalePrice"
             >
-              ￥<span class="big-price">{{work.lowSalePrice.toFixed(2)}}</span>
+              ￥<span class="big-price">{{
+                work.lowSalePrice.toFixed(2)
+              }}</span>
             </div>
             <div
               class="now-price"
               v-else
             >
-              ￥<span class="big-price">{{work.lowSalePrice.toFixed(2)}}</span>~<span class="big-price">{{work.highSalePrice.toFixed(2)}}</span>
+              ￥<span class="big-price">{{ work.lowSalePrice.toFixed(2) }}</span>
+              ~<span class="big-price">{{
+                work.highSalePrice.toFixed(2)
+              }}</span>
             </div>
             <div class="origin-price">
-              <del>￥<span class="middle-price">{{work.lowOriginalPrice.toFixed(2)}}</span>~<span class="middle-price">{{work.highOriginalPrice.toFixed(2)}}</span></del>
+              <del>
+                ￥<span class="middle-price">{{
+                  work.lowOriginalPrice.toFixed(2)
+                }}</span>
+                <template v-if="work.lowOriginalPrice.toFixed(2) != work.highOriginalPrice.toFixed(2)">
+                  ~<span class="middle-price">{{
+                    work.highOriginalPrice.toFixed(2)
+                  }}</span>
+                </template>
+              </del>
             </div>
           </div>
           <div class="end-count-down">
             <p>距结束仅剩</p>
-            <p>{{countDown}}</p>
+            <p>{{ countDown }}</p>
           </div>
         </div>
         <div class="referencr-price-box">
           <div class="reference-price">
-            参考价格 ￥{{work.lowProposePrice.toFixed(2)}}~{{work.highProposePrice.toFixed(2)}}
+            参考价格 ￥{{ work.lowProposePrice.toFixed(2) }}
+            <template v-if="work.lowProposePrice.toFixed(2) != work.highProposePrice.toFixed(2)">
+              ~{{
+              work.highProposePrice.toFixed(2)
+            }}
+            </template>
           </div>
           <div
             class="reference"
-            @click="showReference=true"
+            @click="showReference = true"
           >参考机构 ></div>
         </div>
       </div>
@@ -53,10 +73,10 @@
         <div class="detail-label-box">
           <!-- <span class="detail-label brand-label">{{work.brandName}}</span> -->
           <!-- <span class="detail-label cat-label">{{work.catName}}</span> -->
-          <span class="detail-label">{{work.keywords}}</span>
+          <span class="detail-label">{{ work.keywords }}</span>
         </div>
         <div class="goods-name">
-          <h4 class="design-concept">{{work.goodsName}}</h4>
+          <h4 class="design-concept">{{ work.goodsName }}</h4>
           <div
             class="share-box"
             @click="$refs.share.show()"
@@ -74,25 +94,38 @@
               class="now-price"
               v-if="work.lowSalePrice === work.highSalePrice"
             >
-              ￥<span class="big-price">{{work.lowSalePrice.toFixed(2)}}</span>
+              ￥<span class="big-price">{{
+                work.lowSalePrice.toFixed(2)
+              }}</span>
             </div>
             <div
               class="now-price"
               v-else
             >
-              ￥<span class="big-price">{{work.lowSalePrice.toFixed(2)}}</span>~<span class="big-price">{{work.highSalePrice.toFixed(2)}}</span>
+              ￥<span class="big-price">{{ work.lowSalePrice.toFixed(2) }}</span>
+              <template v-if="work.lowSalePrice.toFixed(2) != work.highSalePrice.toFixed(2)">
+                ~<span class="big-price">{{
+                  work.highSalePrice.toFixed(2)
+                }}
+                </span>
+              </template>
             </div>
             <div class="reference-price">
-              参考价格 ￥{{work.lowProposePrice.toFixed(2)}}~{{work.highProposePrice.toFixed(2)}}
+              参考价格 ￥{{ work.lowProposePrice.toFixed(2) }}<template v-if="work.lowProposePrice.toFixed(2) != work.highProposePrice.toFixed(2)">
+                ~{{
+              work.highProposePrice.toFixed(2)
+            }}
+              </template>
             </div>
           </div>
           <div
             class="reference"
-            @click="showReference=true"
+            @click="showReference = true"
           >参考机构 ></div>
         </div>
         <div class="detail-row goods-else">
-          <span class="deliver-address"><span class="label">发货地：</span>{{work.provinceName}} {{work.cityName}}</span>
+          <span class="deliver-address"><span class="label">发货地：</span>{{ work.provinceName }}
+            {{ work.cityName }}</span>
           <span>
             <span class="separate">|</span>
             <span
@@ -106,9 +139,11 @@
             <span
               class="label"
               v-else
-            >运费：￥{{work.freightPrice.toFixed(2)}}</span>
+            >运费：￥{{ work.freightPrice.toFixed(2) }}</span>
           </span>
-          <span style="text-align:right;"><span class="label">销量：</span>{{work.salesCount}}</span>
+          <span style="text-align:right;">
+            <!-- <span class="label">销量：</span>{{ work.salesCount }}             -->
+          </span>
         </div>
       </div>
 
@@ -135,7 +170,7 @@
         v-if="isAssemble && work.groupUserList.length"
       >
         <div class="title">
-          <span class="title-name">{{work.groupSuccessPersonNum}}人已拼团成功</span>
+          <span class="title-name">{{ work.groupSuccessPersonNum }}人已拼团成功</span>
           <!-- <span class="more">查看更多 ></span> -->
         </div>
         <div class="body">
@@ -147,7 +182,7 @@
             vertical
           >
             <van-swipe-item
-              v-for="(item,i) in assembleSwipeList"
+              v-for="(item, i) in assembleSwipeList"
               :key="i"
             >
               <div
@@ -158,16 +193,24 @@
                 <img
                   v-if="subItem"
                   class="user-logo"
-                  :src="subItem.userLogo ? subItem.userLogo : 'http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png'"
+                  :src="
+                    subItem.userLogo
+                      ? subItem.userLogo
+                      : 'http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png'
+                  "
                 />
                 <span
                   v-if="subItem"
                   class="user-name"
-                >{{subItem.nickname}}</span>
+                >{{
+                  subItem.nickname
+                }}</span>
                 <span
                   v-if="subItem"
                   class="assemble-time"
-                >{{subItem.groupTime}}</span>
+                >{{
+                  subItem.groupTime
+                }}</span>
               </div>
             </van-swipe-item>
           </van-swipe>
@@ -184,7 +227,7 @@
             :src="work.shopScore.logo"
           />
           <div class="merchant-info">
-            <h4 class="merchant-name">{{work.merchantName}}</h4>
+            <h4 class="merchant-name">{{ work.merchantName }}</h4>
             <div class="score">
               <span>综合评分</span>
               <van-rate
@@ -194,16 +237,19 @@
                 :size="12"
                 disabled
               />
-              <span>{{work.shopScore.multipleScore}}</span>
+              <span>{{ work.shopScore.multipleScore }}</span>
             </div>
           </div>
           <div class="enter">进店逛逛</div>
         </div>
 
         <div class="rate">
-          <span>宝贝描述 {{work.shopScore.spmxxfWholeScore.toFixed(1) || 5.0}}</span>
-          <span style="text-align:center;">卖家服务 {{work.shopScore.mjfwtdWholeScore.toFixed(1) || 5.0}}</span>
-          <span style="text-align:right;">物流速度 {{work.shopScore.wlfhsdWholeScore.toFixed(1) || 5.0}}</span>
+          <span>宝贝描述
+            {{ work.shopScore.spmxxfWholeScore.toFixed(1) || 5.0 }}</span>
+          <span style="text-align:center;">卖家服务
+            {{ work.shopScore.mjfwtdWholeScore.toFixed(1) || 5.0 }}</span>
+          <span style="text-align:right;">物流速度
+            {{ work.shopScore.wlfhsdWholeScore.toFixed(1) || 5.0 }}</span>
         </div>
       </div>
 
@@ -217,12 +263,27 @@
         >
           <van-tab title="商品描述">
             <div class="detail-describe">
+              <div class="desc-table">
+                <div style="margin: 15px 10px 10px !important;">产品参数</div>
+                <table style="width: 100%;word-wrap: break-word; word-break: break-all;">
+                  <tr>
+                    <td width="33%">品牌名称</td>
+                    <td>{{work.brandName}}</td>
+                  </tr>
+                  <tr
+                    v-for="(item, i) in work.goodsCategoryAttributesVOS"
+                    :key="i"
+                  >
+                    <td width="33%">{{item.attributesName}}</td>
+                    <td>{{item.subsidiaryAttributesValue?item.subsidiaryAttributesValue:'无'}}</td>
+                  </tr>
+                </table>
+              </div>
               <div
                 class="word-break"
                 v-lazy-container="{ selector: 'img' }"
                 v-html="lazyImgHtml(work.goodsDesc)"
-              >
-              </div>
+              ></div>
             </div>
           </van-tab>
           <van-tab :title="commentTitle">
@@ -247,19 +308,31 @@
                 class="text-align-center"
                 style="margin: 10px 0;color: #999;"
                 v-if="!comments.length"
-              >我们是有底线的平台</p>
+              >
+                中宝平 带你到源头买真品
+              </p>
             </div>
           </van-tab>
           <van-tab title="售后保障">
             <div class="security">
               <h3>权利声明</h3>
-              <p>中宝协珠宝店内所有商品信息、客户评价、商品咨询、网友讨论等内容，是中宝协重要的经营资源，未经许可，禁止非法转载使用。</p>
-              <p>注：本站商品信息均来自于合作方，其真实性、准确性和合法性由信息拥有者（合作方）负责。本站不提供任何保证，并不承担任何法律责任。</p>
+              <p>
+                中宝协珠宝店内所有商品信息、客户评价、商品咨询、网友讨论等内容，是中宝协重要的经营资源，未经许可，禁止非法转载使用。
+              </p>
+              <p>
+                注：本站商品信息均来自于合作方，其真实性、准确性和合法性由信息拥有者（合作方）负责。本站不提供任何保证，并不承担任何法律责任。
+              </p>
               <h3>中宝协承诺</h3>
-              <p>中宝协平台卖家销售并发货的商品，由平台卖家提供发票和相应的售后服务。请您放心购买！</p>
-              <p>注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，本司不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若本商城没有及时更新，请大家谅解！</p>
+              <p>
+                中宝协平台卖家销售并发货的商品，由平台卖家提供发票和相应的售后服务。请您放心购买！
+              </p>
+              <p>
+                注：因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，本司不能确保客户收到的货物与商城图片、产地、附件说明完全一致。只能确保为原厂正货！并且保证与当时市场上同样主流新品一致。若本商城没有及时更新，请大家谅解！
+              </p>
               <h3>正品行货</h3>
-              <p>中宝协商城向您保证所售商品均为正品行货，由商家开具机打发票或电子发票。</p>
+              <p>
+                中宝协商城向您保证所售商品均为正品行货，由商家开具机打发票或电子发票。
+              </p>
             </div>
           </van-tab>
         </van-tabs>
@@ -303,7 +376,7 @@
             <span
               class="price"
               style="color: white;"
-            >￥ {{work.lowOriginalPrice.toFixed(2)}}</span>
+            >￥ {{ work.lowOriginalPrice.toFixed(2) }}</span>
             <span style="color: white;">单独购买</span>
             <span></span>
           </a>
@@ -315,7 +388,7 @@
             <span
               class="price"
               style="color: white;"
-            >￥ {{work.lowSalePrice.toFixed(2)}}</span>
+            >￥ {{ work.lowSalePrice.toFixed(2) }}</span>
             <span style="color: white;">我要拼团</span>
             <span></span>
           </a>
@@ -348,23 +421,23 @@
       >
         <h3 class="title">参考价格提供机构</h3>
         <van-list>
-          <van-cell title="黄金/K金及首饰专委会" />
-          <van-cell title="银饰及首饰专委会" />
-          <van-cell title="天然钻石及首饰专委会" />
-          <van-cell title="翡翠专委会" />
-          <van-cell title="和田玉专委会" />
-          <van-cell title="彩色宝石专委会" />
-          <van-cell title="珍珠专委会" />
-          <van-cell title="水晶专委会" />
-          <van-cell title="琥珀专委会" />
-          <van-cell title="黄龙玉专委会" />
-          <van-cell title="绿松石专委会" />
-          <van-cell title="玛瑙专委会" />
-          <van-cell title="印章石专委会" />
-          <van-cell title="其他玉石及首饰专委会" />
-          <van-cell title="贵金属（除黄金、K金、白银）首饰专委会" />
-          <van-cell title="有机宝石（除珍珠、琥珀）专委会" />
-          <van-cell title="培育钻石及首饰专委会" />
+          <van-cell title="黄金/K金及首饰领导小组" />
+          <van-cell title="银饰及首饰领导小组" />
+          <van-cell title="天然钻石及首饰领导小组" />
+          <van-cell title="翡翠领导小组" />
+          <van-cell title="和田玉领导小组" />
+          <van-cell title="彩色宝石领导小组" />
+          <van-cell title="珍珠领导小组" />
+          <van-cell title="水晶领导小组" />
+          <van-cell title="琥珀领导小组" />
+          <van-cell title="黄龙玉领导小组" />
+          <van-cell title="绿松石领导小组" />
+          <van-cell title="玛瑙领导小组" />
+          <van-cell title="印章石领导小组" />
+          <van-cell title="其他玉石及首饰领导小组" />
+          <van-cell title="贵金属（除黄金、K金、白银）首饰领导小组" />
+          <van-cell title="有机宝石（除珍珠、琥珀）领导小组" />
+          <van-cell title="培育钻石及首饰领导小组" />
         </van-list>
       </van-popup>
       <Share
@@ -376,13 +449,13 @@
 </template>
 
 <script>
-import goodSku from './goodSku'
-import AppDetailComment from '~/components/swap/goodsDetail/jewelryCommentItem'
-import AppDetailImages from '~/components/swap/goodsDetail/jewelrySwipe'
-import Share from '~/components/common/share'
-import { lazyImgHtml } from '~/utils/filters'
-import { getToken } from '~/utils/auth'
-import { setImg } from '~/utils/qiniu'
+import goodSku from "./goodSku";
+import AppDetailComment from "~/components/swap/goodsDetail/jewelryCommentItem";
+import AppDetailImages from "~/components/swap/goodsDetail/jewelrySwipe";
+import Share from "~/components/common/share";
+import { lazyImgHtml } from "~/utils/filters";
+import { getToken } from "~/utils/auth";
+import { setImg } from "~/utils/qiniu";
 
 export default {
   components: {
@@ -393,11 +466,18 @@ export default {
   },
   head() {
     return {
-      title: '商品详情'
-    }
+      title: this.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.goodsBrief },
+        { name: 'keywords', content: this.keywords }
+      ]
+    };
   },
   data() {
     return {
+      title: '',
+      keywords: "",
+      goodsBrief: "",
       work: {
         picList: []
       },
@@ -406,10 +486,10 @@ export default {
       // 促销
       isPromoteSale: false,
       timeOut: null,
-      countDown: '',
+      countDown: "",
       assembleSwipeList: [],
       showReference: false,
-      userLogo: 'http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png',
+      userLogo: "http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png",
       score: 3.8,
       skuObj: {},
       imgs: [],
@@ -423,185 +503,228 @@ export default {
       orderToDetail: false,
       tabIndex: 0,
       commentActive: 0,
-      commentTitle: '评论',
-      tabs: [{
-        name: '商品描述'
-      }, {
-        name: '商品参数'
-      }, {
-        name: '用户评论'
-      }],
-      isApp: false
-    }
+      commentTitle: "评论",
+      tabs: [
+        {
+          name: "商品描述"
+        },
+        {
+          name: "商品参数"
+        },
+        {
+          name: "用户评论"
+        }
+      ],
+      isApp: false,
+      userId: ""
+    };
   },
-  beforeMount() {
+  async beforeMount() {
     //	判断微信和app
-    if (this.$native.isApp() || window.navigator.userAgent.includes('MicroMessenger')) {
-      this.isApp = true
+    if (
+      this.$native.isApp() ||
+      window.navigator.userAgent.includes("MicroMessenger")
+    ) {
+      this.isApp = true;
     }
-    this.$loading(this.$service('jewelryInfo', {
-      data: {
-        goodsId: this.$route.query.id
-      }
-    }))
-      .then(result => {
-        this.work = result.data
-        this.work.genuine = this.work.genuine === 0 ? '正品保证' : ''
-        this.work.restore = this.work.restore === 1 ? '七天无理由退货' : ''
-        this.work.guarantee = "保障："
-        if (this.work.genuine && this.work.restore) {
-          this.work.guarantee += this.work.genuine + ' · ' + this.work.restore
-        } else if (this.work.genuine) {
-          this.work.guarantee += this.work.genuine
-        } else if (this.work.restore) {
-          this.work.guarantee += this.work.restore
-        }
-        this.info.title = this.work.goodsName
-        this.info.link = location.href
-        this.info.imgUrl = this.work.goodsGallerys[0].imgUrl
-        this.info.desc = this.work.designIdea
-        if (getToken()) {
-          // 分享出去的链接加上userId 为之后注册时添加
-          if (this.info.link.includes('&userId')) {
-            this.info.link = this.info.link.substring(0, this.info.link.indexOf('&userId')) + `&userId=${result.data.id}`
-          } else {
-            this.info.link += `&userId=${result.data.id}`
-          }
-        }
-        this.work.goodsDesc = this.work.goodsDesc.replace(/pa95ui71l.bkt.clouddn/g, 'image.gacjc')
-        this.imgs = this.work.goodsGallerys.map(item => {
-          return {
-            imgUrl: item.imgUrl
-          }
-        })
-        if (this.work.cityName.includes(this.work.provinceName)) {
-          this.work.provinceName = ''
-        }
-        if (this.work.goodsType === 1) {
-          this.isAssemble = true
-          for (let i = 0; i < this.work.groupUserList.length; i += 2) {
-            this.assembleSwipeList.push([this.work.groupUserList[i], this.work.groupUserList[i + 1]])
-          }
-          if (getToken()) {
-            this.$loading(this.$service('userInfo')).then(result => {
-              this.userLogo = result.data.userLogo ? result.data.userLogo : 'http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png'
-            })
-          }
-        } else if (this.work.goodsType === 2) {
-          this.isPromoteSale = true
-          this.getCountDown()
-        }
-      })
-      .then(this.success)
-
+    // 获取商品详情
+    this.getJewelryInfo();
+    // 判断商品收藏状态
     if (getToken()) {
-      this.$loading(this.$service('userCollectCheck', {
-        resources: [this.$route.query.id, 1]
-      }))
-        .then(result => {
-          this.liked = !result.data.goodsCheck
+      this.$loading(
+        this.$service("userCollectCheck", {
+          resources: [this.$route.query.id, 1]
         })
+      ).then(result => {
+        this.liked = !result.data.goodsCheck;
+      });
     }
     if (this.$route.query.orderToDetail) {
-      this.orderToDetail = true
+      this.orderToDetail = true;
     }
     if (this.$native.isApp()) {
-      this.$native.getTitle('商品详情')
+      this.$native.getTitle("商品详情");
+    }
+
+    if (getToken()) {
+      // 获取用户信息
+      const userInfo = await this.$store.dispatch("user/getUserInfo");
+      this.userLogo = userInfo.userLogo
+        ? userInfo.userLogo
+        : "http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png";
+      this.userId = userInfo.id;
+      // 分享出去的链接加上userId 为之后注册时添加
+      this.info.link = location.href;
+      if (this.info.link.includes("&userId")) {
+        this.info.link =
+          this.info.link.substring(0, this.info.link.indexOf("&userId")) +
+          `&userId=${this.userId}`;
+      } else {
+        this.info.link += `&userId=${this.userId}`;
+      }
     }
   },
   deactivated() {
-    this.$destroy()
+    this.$destroy();
   },
   beforeDestroy() {
     if (document.querySelector("video")) {
-      document.querySelector("video").pause()
+      document.querySelector("video").pause();
     }
-    this.timeOut && clearInterval(this.timeOut)
+    this.timeOut && clearInterval(this.timeOut);
   },
   methods: {
     setImg,
     lazyImgHtml,
+    getJewelryInfo() {
+      this.$loading(
+        this.$service("jewelryInfo", {
+          data: {
+            goodsId: this.$route.query.id
+          }
+        })
+      )
+        .then(result => {
+          this.work = result.data;
+          this.title = this.work.goodsName.length > 8 ? this.work.goodsName.substr(0, 8).concat('...') : this.work.goodsName //标题超过8字显示省略号
+          this.keywords = this.work.keywords
+          this.goodsBrief = this.work.goodsBrief
+          this.work.genuine = this.work.genuine === 0 ? "正品保证" : "";
+          this.work.restore = this.work.restore === 1 ? "七天无理由退货" : "";
+          this.work.guarantee = "保障：";
+          if (this.work.genuine && this.work.restore) {
+            this.work.guarantee +=
+              this.work.genuine + " · " + this.work.restore;
+          } else if (this.work.genuine) {
+            this.work.guarantee += this.work.genuine;
+          } else if (this.work.restore) {
+            this.work.guarantee += this.work.restore;
+          }
+          this.info.title = this.work.goodsName;
+          this.info.imgUrl = this.work.goodsGallerys[0].imgUrl;
+          this.info.desc = this.work.designIdea;
+          this.work.goodsDesc = this.work.goodsDesc.replace(
+            /pa95ui71l.bkt.clouddn/g,
+            "image.gacjc"
+          );
+          this.imgs = this.work.goodsGallerys.map(item => {
+            return {
+              imgUrl: item.imgUrl
+            };
+          });
+          if (this.work.cityName.includes(this.work.provinceName)) {
+            this.work.provinceName = "";
+          }
+          if (this.work.goodsType === 1) {
+            this.isAssemble = true;
+            for (let i = 0; i < this.work.groupUserList.length; i += 2) {
+              this.assembleSwipeList.push([
+                this.work.groupUserList[i],
+                this.work.groupUserList[i + 1]
+              ]);
+            }
+            // if (getToken()) {
+            //   this.$loading(this.$service("userInfo")).then(result => {
+            //     this.userLogo = result.data.userLogo
+            //       ? result.data.userLogo
+            //       : "http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png";
+            //   });
+            // }
+          } else if (this.work.goodsType === 2) {
+            this.isPromoteSale = true;
+            this.getCountDown();
+          }
+        })
+        .then(this.success);
+    },
     onClickLeft() {
-      this.$router.go(-1)
+      this.$router.go(-1);
     },
     swipeClick(item) { },
     confirmSuccess(skuObj) {
-      this.skuObj = skuObj
+      this.skuObj = skuObj;
     },
     xiaoneng() {
       if (this.$native.isApp()) {
         this.$native.goToXiaoNeng({
           keFuId: this.work.keFuId,
           id: this.$route.query.id
-        })
+        });
       } else {
-        NTKF.im_openInPageChat(this.work.keFuId)
+        NTKF.im_openInPageChat(this.work.keFuId);
       }
     },
     async success(detail) {
       const [comments] = await Promise.all([
         // 评论数据
-        this.$service('jewelryComment', {
+        this.$service("jewelryComment", {
           resources: [this.$route.query.id, 1]
         })
           .then(result => {
-            this.commentTitle = result.data.total ?
-              this.commentTitle + '(' + result.data.total + ')' :
-              this.commentTitle
-            return result.data ? result.data.records : []
+            this.commentTitle = result.data.total
+              ? this.commentTitle + "(" + result.data.total + ")"
+              : this.commentTitle;
+            return result.data ? result.data.records : [];
           })
-          .catch(() => ([]))
-      ])
-      this.comments = comments
+          .catch(() => [])
+      ]);
+      this.comments = comments;
       for (var i = 0; i < this.comments.length; i++) {
         for (var j = 0; j < this.comments[i].gallerys.length; j++) {
-          if (this.comments[i].gallerys[j].imgUrl.indexOf('http://') == -1) {
-            this.comments[i].gallerys[j].imgUrl = 'http://image.gacjc.com/' + this.comments[i].gallerys[j].imgUrl
+          if (this.comments[i].gallerys[j].imgUrl.indexOf("http://") == -1) {
+            this.comments[i].gallerys[j].imgUrl =
+              "http://image.gacjc.com/" + this.comments[i].gallerys[j].imgUrl;
           }
           // this.comments[i].gallerys[j] = this.comments[i].gallerys[j].imgUrl
         }
-        if (this.comments[i].userLogo == '') {
-          this.comments[i].userLogo = 'http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png'
-        } else if (this.comments[i].userLogo.indexOf('http://') == -1) {
-          this.comments[i].userLogo = 'http://image.gacjc.com/' + this.comments[i].userLogo
+        if (this.comments[i].userLogo == "") {
+          this.comments[i].userLogo =
+            "http://image.gacjc.com/work_1KyFQUiR6eQkt3u_284_284.png";
+        } else if (this.comments[i].userLogo.indexOf("http://") == -1) {
+          this.comments[i].userLogo =
+            "http://image.gacjc.com/" + this.comments[i].userLogo;
         }
       }
     },
     collect() {
-      if (this.collectLoading) return
-      this.collectLoading = true
-      const serviceName = !this.liked ? 'userCollect' : 'userDeleteCollect'
+      if (this.collectLoading) return;
+      this.collectLoading = true;
+      const serviceName = !this.liked ? "userCollect" : "userDeleteCollect";
       this.$service(serviceName, {
         resources: [this.work.id, 1]
-      }).then(() => {
-        this.collectLoading = false
-        this.liked = !this.liked
-        if (this.liked) {
-          this.$toast('收藏成功')
-        } else {
-          this.$toast('您已取消收藏')
-        }
-
-      }).catch(() => {
-        this.collectLoading = false
       })
+        .then(() => {
+          this.collectLoading = false;
+          this.liked = !this.liked;
+          if (this.liked) {
+            this.$toast("收藏成功");
+          } else {
+            this.$toast("您已取消收藏");
+          }
+        })
+        .catch(() => {
+          this.collectLoading = false;
+        });
     },
     addCart() {
       if (getToken()) {
-        this.$refs.mychild.show = true
+        this.$refs.mychild.show = true;
         if (!this.skuObj.id) {
-          this.$toast('请选择规格')
-          return
+          this.$toast("请选择规格");
+          return;
         }
       } else {
         if (this.$native.isApp()) {
-          this.$native.goToLogin()
+          this.$native.goToLogin();
         } else {
           // this.$router.push({ name: 'user-login', query: { from: location.origin + this.$route.fullPath } })
           this.$router.push({
-            name: 'user-login'
-          })
-          localStorage.setItem('fromUrl', location.origin + this.$route.fullPath)
+            name: "user-login"
+          });
+          localStorage.setItem(
+            "fromUrl",
+            location.origin + this.$route.fullPath
+          );
         }
       }
       //    if (this.addLoading) return
@@ -623,10 +746,10 @@ export default {
     },
     buy() {
       if (getToken()) {
-        this.$refs.mychild.show = true
+        this.$refs.mychild.show = true;
         if (!this.skuObj.id) {
-          this.$toast('请选择规格')
-          return
+          this.$toast("请选择规格");
+          return;
         }
         /*this.$router.push({
           name: 'swap-order-confirm',
@@ -638,89 +761,98 @@ export default {
         })*/
       } else {
         if (this.$native.isApp()) {
-          this.$native.goToLogin()
+          this.$native.goToLogin();
         } else {
           // this.$router.push({ name: 'user-login', query: { from: location.origin + this.$route.fullPath } })
           this.$router.push({
-            name: 'user-login'
-          })
-          localStorage.setItem('fromUrl', location.origin + this.$route.fullPath)
+            name: "user-login"
+          });
+          localStorage.setItem(
+            "fromUrl",
+            location.origin + this.$route.fullPath
+          );
         }
       }
     },
     originBuy() {
-      this.$refs.mychild.isAssemblePrice = false
-      this.buy()
+      this.$refs.mychild.isAssemblePrice = false;
+      this.buy();
     },
     assembleBuy() {
-      this.$refs.mychild.isAssemblePrice = true
-      this.buy()
+      this.$refs.mychild.isAssemblePrice = true;
+      this.buy();
     },
     getCountDown() {
-      let finishTime = +new Date(Date.parse(this.work.finishTime.replace(/-/g, "/")))
+      let finishTime = +new Date(
+        Date.parse(this.work.finishTime.replace(/-/g, "/"))
+      );
       // finishTime += 24 * 7 * 60 * 60 * 1000
-      let diferentTime = this.leftTimer(finishTime - new Date())
-      this.countDown = diferentTime
+      let diferentTime = this.leftTimer(finishTime - new Date());
+      this.countDown = diferentTime;
       this.timeOut = setInterval(() => {
-        let finishTime = +new Date(Date.parse(this.work.finishTime.replace(/-/g, "/")))
+        let finishTime = +new Date(
+          Date.parse(this.work.finishTime.replace(/-/g, "/"))
+        );
         // finishTime += 24 * 7 * 60 * 60 * 1000
-        let diferentTime = this.leftTimer(finishTime - new Date())
-        this.countDown = diferentTime
-      }, 1000)
+        let diferentTime = this.leftTimer(finishTime - new Date());
+        this.countDown = diferentTime;
+      }, 1000);
     },
     getAllComments() {
-      this.commentActive = 0
+      this.commentActive = 0;
     },
     getNewComments() {
-      this.commentActive = 1
+      this.commentActive = 1;
     },
     getPicComments() {
-      this.commentActive = 2
+      this.commentActive = 2;
     },
     linkTo(work) {
       if (this.$native.isApp()) {
         this.$native.goToMerchant(work.merid);
       } else {
         this.$router.push({
-          name: 'jewelry-detail',
+          name: "jewelry-detail",
           query: {
-            'id': work.merid
+            id: work.merid
           }
-        })
+        });
       }
     },
     toSecurity() {
-      this.tabIndex = 2
+      this.tabIndex = 2;
       setTimeout(() => {
-        document.body.scrollIntoView(false)
+        document.body.scrollIntoView(false);
       }, 200);
     },
     leftTimer(leftTime) {
       var text = "";
       var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
-      var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
-      var minutes = parseInt(leftTime / 1000 / 60 % 60, 10); //计算剩余的分钟
-      var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数
+      var hours = parseInt((leftTime / 1000 / 60 / 60) % 24, 10); //计算剩余的小时
+      var minutes = parseInt((leftTime / 1000 / 60) % 60, 10); //计算剩余的分钟
+      var seconds = parseInt((leftTime / 1000) % 60, 10); //计算剩余的秒数
       if (seconds < 0) {
-        this.isPromoteSale = false
+        this.isPromoteSale = false;
+        this.getJewelryInfo()
       }
-      days = this.checkTime(days)
-      hours = this.checkTime(hours)
-      minutes = this.checkTime(minutes)
-      seconds = this.checkTime(seconds)
+      days = this.checkTime(days);
+      hours = this.checkTime(hours);
+      minutes = this.checkTime(minutes);
+      seconds = this.checkTime(seconds);
       if (days >= 0 || hours >= 0 || minutes >= 0 || seconds >= 0) {
-        text = days + "天" + hours + "小时" + minutes + "分" + seconds + "秒"
+        text = days + "天" + hours + "小时" + minutes + "分" + seconds + "秒";
       }
-      return text
+      return text;
     },
-    checkTime(i) { //将0-9的数字前面加上0，例1变为01
+    checkTime(i) {
+      //将0-9的数字前面加上0，例1变为01
       if (i < 10) {
-        i = "0" + i
+        i = "0" + i;
       }
-      return i
+      return i;
     }
   }
-}
+};
 </script>
 
 <style>
@@ -1150,5 +1282,14 @@ export default {
 }
 /deep/ .van-rate__item {
   display: inline-block;
+}
+.desc-table table {
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #666;
+  & td {
+    padding: 7px;
+    border: 1px solid #e5e5e5 !important;
+  }
 }
 </style>

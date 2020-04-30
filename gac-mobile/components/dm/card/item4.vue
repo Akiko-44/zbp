@@ -9,7 +9,8 @@
     ></div>
     <div class="jeweler-desc">
       <p class="jewelry-room-name">
-        {{data.name}}
+        <span class="name">{{data.name}}</span>
+        <span class="location"><i class="ico-location2"></i>{{data.merchantAddr}} {{data.merchantCity === data.merchantAddr ? '' : data.merchantCity}}</span>
       </p>
       <p
         class="jewelry-room-tag"
@@ -23,11 +24,11 @@
         v-else-if="data.skilld"
       >主营{{data.skilld}}等</p>
     </div>
-    <ul class="jeweler-info">
+    <!--<ul class="jeweler-info">
       <li><i class="ico-location2"></i>{{data.merchantAddr}} {{data.merchantCity === data.merchantAddr ? '' : data.merchantCity}}</li>
-      <!--<li><i class="ico-focus"></i>{{data.fansNum}}</li>-->
+      <li><i class="ico-focus"></i>{{data.fansNum}}</li>
       <li><i class="ico-browse"></i>{{data.sellCount}}</li>
-    </ul>
+    </ul>-->
   </div>
 </template>
 
@@ -55,17 +56,41 @@ export default {
 <style lang="postcss" scoped>
 .jewelry-room-list {
   margin: 10px 10px 0;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0px 2px 3px 0px rgba(230, 232, 235, 0.4);
+  border: 1px solid #e6e8eb;
+  /* box-shadow: 0px 2px 3px 0px rgba(230, 232, 235, 0.4); */
   border-radius: 7px;
   overflow: hidden;
   & .jeweler-photo {
     height: 175px;
   }
   & .jeweler-desc {
-    padding: 10px;
+    padding: 10px 10px 15px;
+    background: #ffffff;
     & .jewelry-room-name {
+      display: flex;
+      justify-content: space-between;
       font-size: 16px;
+      & .name {
+        display: inline-block;
+        width: 200px;
+        line-height: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      & .location {
+        max-width: 136px;
+        font-size: 15px;
+        font-weight: normal;
+        color: #999;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: right;
+        & i {
+          vertical-align: bottom;
+        }
+      }
     }
     & .jewelry-room-tag {
       overflow: hidden;

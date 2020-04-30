@@ -1,72 +1,78 @@
 <template>
-  <AppView title="发表评论">
+  <AppView title="评价">
     <div class="Order-comment-page">
-      <div v-for="(goodsItem, index) in data.orderGoodVOList"
-           :key="index"
-           v-if="goodsItem.isCommented == 1">
-        <!--<ul class="comment-results van-hairline--bottom">
-	        <li class="commodity-img"></li>
-	        <li class="comment">
-	          <i class="ico-good"></i>
-	          <strong class="active">好评</strong>
-	        </li>
-	        <li class="comment">
-	          <i class="ico-review"></i>
-	          <strong>中评</strong>
-	        </li>
-	        <li class="comment">
-	          <i class="ico-negative_comment"></i>
-	          <strong>差评</strong>
-	        </li>
-	      </ul>-->
+      <div
+        v-for="(goodsItem, index) in data.orderGoodVOList"
+        :key="index"
+        v-if="goodsItem.isCommented != 2"
+      >
         <div class="skuGoods">
           <img :src="goodsItem.skuMainPic | setImg" />
-          <span>{{goodsItem.skuName}}</span>
+          <span>{{ goodsItem.skuName }}</span>
         </div>
-        <van-cell-group>
-          <van-field type="textarea"
-                     v-model="goodsItem.content"
-                     autosize
-                     style="height:120px;"
-                     placeholder="宝贝满足您的期待吗? 说说您的使用心得，分享给想买的他们吧。" />
-        </van-cell-group>
+        <div class="input-box">
+          <van-cell-group>
+            <van-field
+              type="textarea"
+              v-model="goodsItem.content"
+              autosize
+              style="height:108px;"
+              placeholder="说说你的使用心得，分享给想买的人吧
+"
+            />
+          </van-cell-group>
 
-        <van-cell>
-          <template slot="title">
-            <!-- <VUpload ref="uploader" 
-	          	:limit=5 
-	          	:imgs="goodsItem.imgs" 
-	          	:props="{src: 'imgUrl'}"
-	          	:extend-fields="[{imgType: 2}]"
-	          	@success="img => { img.imgType = goodsItem.imgs.length <= 1 ? 1 : 2 }"/>-->
-            <VUpload ref="picUploader"
-                     :imgs="goodsItem.imgs"
-                     :limit=5
-                     :props="{src: 'imgUrl'}">
-            </VUpload>
-          </template>
-        </van-cell>
+          <van-cell>
+            <template slot="title">
+              <!-- <van-uploader
+                v-model="imgs[index]"
+                :max-count="9"
+                :name="index"
+                :before-read="beforeRead"
+                :after-read="afterRead"
+                :before-delete="beforeDelete"
+              >
+                <div class="bg"></div>
+              </van-uploader> -->
+              <CUploadList
+                ref="picUploader"
+                :imgs="imgs[index]"
+                :index="index"
+                :limit=9
+                :props="{src: 'imgUrl'}"
+                @success="uploadSuccess"
+              >
+              </CUploadList>
+            </template>
+          </van-cell>
+          <div class="tip">9张以内，支持jpg、gif、png格式，大小：5m以内</div>
+        </div>
 
         <div class="store-score-bar">
-          <div class="store-score">
-            <i class="ico-shop"></i>
-            <strong>店铺评分</strong>
-          </div>
           <ul>
             <li>
               <span>宝贝描述</span>
-              <van-rate class="rate"
-                        v-model="goodsItem.spmxxfScore" />
+              <van-rate
+                class="rate"
+                color="#D57E6A"
+                v-model="goodsItem.spmxxfScore"
+              />
             </li>
             <li>
               <span>卖家服务</span>
-              <van-rate class="rate"
-                        v-model="goodsItem.mjfwtdScore" />
+              <van-rate
+                class="rate"
+                color="#D57E6A"
+                v-model="goodsItem.mjfwtdScore"
+              />
             </li>
             <li>
               <span>物流速度</span>
-              <van-rate class="rate"
-                        v-model="goodsItem.wlfhsdScore" />
+              <van-rate
+                class="rate"
+                color="#D57E6A"
+                v-model="goodsItem.wlfhsdScore"
+              />
             </li>
           </ul>
         </div>
@@ -76,21 +82,27 @@
 	        <span class="tips">你写的评论会以匿名的形式展现</span>
 	      </div>-->
       </div>
+
+      <van-button
+        :loading="submiting"
+        @click="submit"
+        class="submit-btn primary-btn"
+        type="primary"
+      >
+        提交
+      </van-button>
     </div>
-    <van-button :loading="submiting"
-                @click="submit"
-                class="primary-btn fixed-btn"
-                type="primary">
-      发布
-    </van-button>
   </AppView>
 </template>
 
 <script>
-import VUpload from '~/components/common/upload'
-import { setImg } from '~/utils/qiniu'
+import { setImg } from "~/utils/qiniu";
+import CUploadList from '~/components/common/upload/customList'
+import { customUpload, getKey, uploadSectionFile } from "~/utils/qiniu";
 export default {
-  components: { VUpload },
+  components: {
+    CUploadList
+  },
   data() {
     return {
       data: {},
@@ -101,80 +113,129 @@ export default {
       imgs: [],
       checked: true,
       submiting: false
-    }
+    };
   },
   deactivated() {
     this.$destroy()
   },
   beforeMount() {
-    this.$service('orderCommentGoodVOList', {
+    this.$loading(this.$service("orderCommentGoodVOList", {
       resources: [this.$route.query.orderNumber]
-    }).then(data => {
+    })).then(data => {
       this.data = data.data
       this.data.orderGoodVOList.map((item, index) => {
-        this.$set(item, 'content', '')
-        this.$set(item, 'spmxxfScore', 5)
-        this.$set(item, 'mjfwtdScore', 5)
-        this.$set(item, 'wlfhsdScore', 5)
-        this.$set(item, 'gallerys', [])
-        this.$set(item, 'imgs', [])
+        this.$set(item, "content", "");
+        this.$set(item, "spmxxfScore", 5)
+        this.$set(item, "mjfwtdScore", 5)
+        this.$set(item, "wlfhsdScore", 5)
+        this.$set(item, "gallerys", [])
+        // this.$set(item, "imgs", [])
+        this.imgs.push([])
       })
-	    /*this.data.orderGoodVOList.forEach(goodsItem => {
-      	goodsItem.content = '',
-    		goodsItem.spmxxfScore = 0,
-    		goodsItem.mjfwtdScore = 0,
-    		goodsItem.wlfhsdScore = 0,
-    		goodsItem.gallerys = []
-      	goodsItem.imgs = []
-      })*/
     })
   },
   methods: {
     submit() {
-      this.submiting = true
+      this.submiting = true;
       this.data.orderGoodVOList.forEach(data => {
-        let imgArr = []
-        data.imgs.forEach(img => {
-          imgArr.push(img.imgUrl)
-        })
-        if (data.content || data.spmxxfScore || data.mjfwtdScore || data.wlfhsdScore || imgArr.length) {
+        if (
+          data.content ||
+          data.spmxxfScore ||
+          data.mjfwtdScore ||
+          data.wlfhsdScore ||
+          data.gallerys.length
+        ) {
           this.form.gcList.push({
             content: data.content,
             spmxxfScore: data.spmxxfScore,
             mjfwtdScore: data.mjfwtdScore,
             wlfhsdScore: data.wlfhsdScore,
             goodsId: data.goodId,
-            gallerys: imgArr
-          })
+            gallerys: data.gallerys
+          });
         }
-      })
+      });
       if (this.form.gcList.length == 0) {
-        this.$toast('请填写评价')
-        this.submiting = false
-        return false
+        this.$toast("请填写评价");
+        this.submiting = false;
+        return false;
       }
-      this.$service('orderCommentAdd', {
+      this.$service("orderCommentAdd", {
         data: this.form
-      }).then(data => {
-        // this.submiting = false
-        this.$toast({ type: 'success', message: '评价成功' })
-        if (this.$native.isApp()) {
-          this.$native.goToHome()
-        } else {
-          this.$router.go(-1)
-        }
-      }).catch(() => {
-        this.submiting = false
       })
+        .then(data => {
+          this.submiting = false
+          this.$toast({ type: "success", message: "评价成功" });
+          if (this.$native.isApp()) {
+            this.$native.goToHome();
+          } else {
+            this.$router.go(-1);
+          }
+        })
+        .catch(() => {
+          this.submiting = false;
+        });
+    },
+    uploadImgs(key, index) {
+      console.log(key, index)
+      this.data.orderGoodVOList[index].gallerys.push(key)
+    },
+    uploadSuccess(imgs, index) {
+      this.data.orderGoodVOList[index].gallerys = imgs
+    },
+    beforeRead(file) {
+      if (
+        file.type !== "image/png" &&
+        file.type !== "image/jpg" &&
+        file.type !== "image/jpeg" &&
+        file.type !== "image/gif"
+      ) {
+        this.$toast("请上传 jpg/png/gif 格式图片");
+        return false;
+      }
+
+      /* if (file.size > 3 * 1024 * 1024) {
+        this.$toast("图片大小不得超过3兆（M）");
+        return false;
+      } */
+      return true;
+    },
+    afterRead(file, detail) {
+      uploadSectionFile(file.file, 3).then((res) => {
+        customUpload(res)
+          .then(response => {
+            const result = response.data
+            this.data.orderGoodVOList[detail.name].gallerys.push(result.data.picUrl)
+            this.imgs[detail.name] = [...new Set(this.imgs[detail.name])];
+          })
+          .catch(() => {
+            this.$toast({ type: "fail", message: "上传错误" });
+          })
+      })
+    },
+    beforeDelete(file, detail) {
+      let index;
+      this.imgs[detail.name].map((item, i) => {
+        if (item.file && item.file.name == file.file.name) {
+          index = i;
+        } else if (item == file.url) {
+          index = i;
+        }
+      })
+      this.imgs[detail.name].splice(index, 1)
+      this.data.orderGoodVOList[detail.name].gallerys.splice(index, 1);
+      this.$forceUpdate()
     }
+
   }
-}
+};
 </script>
 
 <style lang="postcss">
 .Order-comment-page {
   background: #f5f5f5;
-  padding-bottom: 60px;
+  padding: 10px;
+  border-radius: 6px;
   & .comment-results {
     background: #fff;
     width: 100%;
@@ -211,9 +272,9 @@ export default {
   & .store-score-bar {
     background: #fff;
     margin: 10px 0;
-    font-size: 15px;
+    font-size: 14px;
     color: #333;
-    padding-bottom: 15px;
+    border-radius: 6px;
     & .store-score {
       padding: 0 20px;
       line-height: 50px;
@@ -225,12 +286,12 @@ export default {
       }
     }
     & ul li {
-      padding: 0 30px;
-      line-height: 30px;
+      padding: 10px;
+      line-height: 20px;
       display: flex;
       & span {
         vertical-align: middle;
-        margin-right: 20px;
+        margin-right: 30px;
       }
       & .rate svg {
         vertical-align: middle;
@@ -255,20 +316,75 @@ export default {
   }
 }
 .skuGoods {
+  background: #ffffff;
+  padding: 10px;
+  border-bottom: 1px solid #f4f4f4;
+  & img {
+    margin-right: 8px;
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
+  & span {
+    width: 260px;
+    line-height: 31px;
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 15px;
+  }
+}
+.VUpload-area.min {
+  width: 73px !important;
+  height: 73px !important;
+}
+.tip {
+  padding: 0 10px 12px;
+  font-size: 12px;
+  color: #aaaaab;
+  background: #fff;
+}
+.van-cell {
+  font-size: 12px;
+  padding: 10px;
+}
+.van-button.submit-btn {
+  /* position: fixed; */
+  /* bottom: 37px; */
+  /* left: 12px; */
+  /* right: 12px; */
+  margin-top: 100px;
+  width: 351px;
+  border-radius: 4px;
+  font-size: 16px;
+  z-index: 99;
+  border-color: #df735a;
+  background: #df735a;
+}
+.bg {
+  width: 84px;
+  height: 84px;
+  background: #fff url(../../../assets/images/icon_uploadadd.png) no-repeat
+    center;
+  background-size: 50px;
+}
+/* .skuGoods {
   position: relative;
   background: #ffffff;
   padding: 3px 16px;
   padding-left: 36px;
+  border-bottom: 1px solid #F4F4F4;
   & img {
-    width: 18px;
-    height: auto;
+    width: 31px;
+    height: 31px;
     position: absolute;
     left: 16px;
     top: 3px;
+    border-radius: 50%;
   }
   & span {
     width: 260px;
     line-height: 1.2;
   }
-}
+}*/
 </style>

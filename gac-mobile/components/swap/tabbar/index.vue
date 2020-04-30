@@ -172,7 +172,7 @@ export default {
           }
           this.background.appFootNavigations.map(item => {
             for (let key in this.navs) {
-              if (item.id === this.navs[key].id) {
+              if (item.id == this.navs[key].id) {
                 if (item.checkedIcon) {
                   this.$set(this.navs[key], 'baseAcitveIcon', item.checkedIcon)
                 }

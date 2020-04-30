@@ -425,7 +425,7 @@
 					<img src="../../src/img/user/icon_wechat.png" />
 					<span class="item_content">微信</span>
 					<!-- <span class="item_right_arrow" v-if="!userInfo.wechatUnionid">未绑定</span> -->
-					<span class="item_right_arrow" v-if="userInfo.wechatUnionid" @click="validate(2,'weixin')">已绑定<i
+					<span class="item_right_arrow" v-if="userInfo.wechatUnionid" @click="validate(1,'weixin')">已绑定<i
 							class="el-icon-arrow-right"></i></span>
 				</div>
 				<div class="userRightItem" v-if="userInfo.qunionid"></div>
@@ -433,7 +433,7 @@
 					<img src="../../src/img/user/icon_qq.png" />
 					<span class="item_content">QQ</span>
 					<!-- <span class="item_right_arrow" v-if="!userInfo.qunionid">未绑定</span> -->
-					<span class="item_right_arrow" v-if="userInfo.qunionid" @click="validate(1,'qq')">已绑定<i
+					<span class="item_right_arrow" v-if="userInfo.qunionid" @click="validate(2,'qq')">已绑定<i
 							class="el-icon-arrow-right"></i></span>
 				</div>
 				<div class="userRightItem" v-if="userInfo.weiboUnionid"></div>
@@ -723,7 +723,7 @@
 					$(".pretip").remove()
 				}
 				if ((!pwdRegex.test(this.newpwd))) {
-					utils.alert("danger", "您的密码复杂度太低（密码中必须包含大小写，字母和数")
+					utils.alert("danger", "您的密码复杂度太低（密码中必须包含大小写字母和数字）")
 					// alert("您的密码复杂度太低（密码中必须包含字母、数字），请及时修改密码！");
 					return
 				}

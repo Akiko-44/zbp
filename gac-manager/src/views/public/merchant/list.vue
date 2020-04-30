@@ -63,6 +63,21 @@
             v-model="listQuery.mobilePhone"
           > </el-input>
         </el-form-item>
+        <el-form-item label="开店入口:">
+          <el-select
+            v-model="listQuery.setshopType"
+            clearable
+            placeholder="请选择开店入口"
+          >
+            <el-option
+              v-for="(value, key) in setshopTypeMap"
+              :key="key"
+              :label="value"
+              :value="key"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item
           label="申请时间:"
           prop="merchantName"
@@ -85,15 +100,8 @@
           v-waves
           @click="handleFilter"
         >查询</el-button>
-      </el-form>
-      <!-- <el-button
-        v-waves
-        class="export-btn"
-        @click="downloadFile"
-      >导出</el-button> -->
-      <div class="filter-list">
         <el-button
-          class="export-btn"
+          class="export-btn fr"
           @click="downloadFile"
         >导出</el-button>
         <a id="downlink"></a>
@@ -114,14 +122,8 @@
             >确认</el-button>
           </span>
         </el-dialog>
-      </div>
+      </el-form>
     </div>
-    <!-- <div class="filter-container">
-      <el-button type="primary"
-                 icon="el-icon-search"
-                 v-waves
-                 @click="handleFilter">查询</el-button>
-    </div> -->
 
     <el-table
       :key='tableKey'
@@ -200,6 +202,16 @@
       >
         <template slot-scope="{ row }">
           <span>{{row.mobilePhone}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        width="110px"
+        align="center"
+        label="开店入口"
+      >
+        <template slot-scope="{ row }">
+          <span>{{setshopTypeMap[row.setshopType]}}</span>
         </template>
       </el-table-column>
 
@@ -317,7 +329,8 @@ const getInitQuery = () => {
     merchantType: undefined,
     startTime: undefined,
     endTime: undefined,
-    mobilePhone: undefined
+    mobilePhone: undefined,
+    setshopType: undefined
   }
 }
 
@@ -358,6 +371,13 @@ export default {
         '03': '入网成功',
         '04': '入网失败',
         '99': '其它错误'
+      },
+      setshopTypeMap: {
+        1: 'APP-安卓',
+        2: 'APP-苹果',
+        3: 'PC',
+        4: 'H5',
+        5: '招商短信'
       },
       list: [],
       total: null,
@@ -407,11 +427,13 @@ export default {
       errorMsg: '', // 错误信息内容
       excelTitle: [{
         id: '商户编号',
-        mapMerchantType: '商户类型',
+        userId: '客服ID',
+        mapMerchantType: '类别',
         name: '店铺名称',
+        companyName: '企业名称',
         linkman: '联系人',
         mobilePhone: '手机号码',
-        companyName: '企业名称',
+        setshopType: '开店入口',
         auditState: '审核状态',
         checkDesc: '备注',
         createTime: '申请时间'
@@ -444,6 +466,7 @@ export default {
       this.listQuery.endTime = this.$route.query.endTime !== 'undefined' ? this.$route.query.endTime : undefined
       this.dateValue = this.$route.query.endTime !== undefined ? [this.listQuery.startTime, this.listQuery.endTime] : ''
       this.listQuery.mobilePhone = this.$route.query.mobilePhone !== 'undefined' ? this.$route.query.mobilePhone : undefined
+      this.listQuery.setshopType = this.$route.query.setshopType !== 'undefined' ? this.$route.query.setshopType : undefined
       this.getList()
     },
     getList() {
@@ -459,6 +482,7 @@ export default {
             item.companyName = item.companyName || '/'
             item.checkDesc = item.checkDesc || '/'
           })
+
         }).catch(() => {
           this.listLoading = false
         })
@@ -475,7 +499,8 @@ export default {
               merchantType: this.listQuery.merchantType,
               startTime: this.listQuery.startTime,
               endTime: this.listQuery.endTime,
-              mobilePhone: this.listQuery.mobilePhone
+              mobilePhone: this.listQuery.mobilePhone,
+              setshopType: this.listQuery.setshopType
             }
           })
         } else {
@@ -550,9 +575,21 @@ export default {
       })
     },
     downloadFile() { // 点击导出按钮
-      const listData = this.list
-      const data = this.excelTitle.concat(listData)
-      this.downloadExl(data, '商户列表')
+      let listData = []
+      // const listData = this.list
+      this.listParams.offset = 1
+      this.listParams.limit = 99999
+
+      page(this.listQuery, this.listParams).then(res => {
+        listData = res.data.records
+        for (let i = 0;i < listData.length;i++) {
+          listData[i].setshopType = this.setshopTypeMap[listData[i].setshopType]
+          listData[i].mapMerchantType = this.types[listData[i].merchantType]
+          listData[i].auditState = this.auditState[listData[i].isCheck]
+        }
+        const data = this.excelTitle.concat(listData)
+        this.downloadExl(data, '商户列表')
+      })
     },
     downloadExl(json, downName, type) { // 导出到excel
       const keyMap = [] // 获取键
@@ -563,7 +600,7 @@ export default {
       json.map((v, i) => keyMap.map((k, j) => Object.assign({}, {
         v: v[k],
         position: (j > 25 ? this.getCharCol(j) : String.fromCharCode(65 + j)) + (i + 1)
-      }))).reduce((prev, next) => prev.concat(next)).forEach(function(v) {
+      }))).reduce((prev, next) => prev.concat(next)).forEach(function (v) {
         tmpdata[v.position] = {
           v: v.v
         }
@@ -588,14 +625,14 @@ export default {
       this.outFile.download = downName + '.xlsx' // 下载名称
       this.outFile.href = href // 绑定a标签
       this.outFile.click() // 模拟点击实现下载
-      setTimeout(function() { // 延时释放
+      setTimeout(function () { // 延时释放
         URL.revokeObjectURL(tmpDown) // 用URL.revokeObjectURL()来释放这个object URL
       }, 100)
     },
     s2ab(s) { // 字符串转字符流
       var buf = new ArrayBuffer(s.length)
       var view = new Uint8Array(buf)
-      for (var i = 0; i !== s.length; ++i) {
+      for (var i = 0;i !== s.length;++i) {
         view[i] = s.charCodeAt(i) & 0xFF
       }
       return buf
@@ -614,7 +651,7 @@ export default {
       var o = ''
       var l = 0
       var w = 10240
-      for (; l < data.byteLength / w; ++l) {
+      for (;l < data.byteLength / w;++l) {
         o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w, l * w + w)))
       }
       o += String.fromCharCode.apply(null, new Uint8Array(data.slice(l * w)))

@@ -1,63 +1,100 @@
 <template>
   <AppView class="search">
-    <van-search
-      class="search-box"
-      placeholder="输入关键词搜索"
-      v-model.trim="value"
-      show-action
-      autofocus
-      @search="onSearch"
-      @cancel="onCancel"
-    />
-    <div
-      class="hot-search"
-      v-if="hotList && hotList.length"
-    >
-      <h4>热门搜索</h4>
-      <span
-        v-for="(item,i) in hotList"
-        :key="i"
-        @click="hotSearch(item)"
-      >{{item}}</span>
-    </div>
-    <div
-      class="hot-search"
-      v-if="historyList && historyList.length"
-    >
-      <img
-        src="../../../assets/images/icon/delete.png"
-        class="del-btn"
-        @click="deleteHistory"
+    <div class="search-box">
+      <van-icon
+        name="arrow-left"
+        class="search-left"
+        @click.native="onCancel"
+      />
+      <van-search
+        class="search-right"
+        placeholder="输入关键词搜索"
+        v-model.trim="value"
+        shape="round"
+        show-action
+        autofocus
+        @cancel="onCancel"
       >
-      <h4>历史记录</h4>
-      <span
-        v-for="(item,i) in historyList"
-        :key="i"
-        @click="hotSearch(item)"
-      >{{item}}</span>
+        <div slot="left-icon">
+          <img
+            src="../../../assets/images/icon/search.png"
+            width="13"
+          >
+        </div>
+        <div
+          slot="action"
+          class="search-btn"
+          @click="onSearch"
+        >搜索
+        </div>
+      </van-search>
     </div>
+    <van-tabs
+      v-model="active"
+      v-if="type && type!=='jewelryCircle'"
+    >
+      <van-tab title="店铺">
+        <search-list
+          :hotList="hotList"
+          :historyList="historyList"
+          @hotSearch="hotSearch"
+          @deleteHistory="deleteHistory"
+        ></search-list>
+      </van-tab>
+      <van-tab title="商品">
+        <search-list
+          :hotList="hotList"
+          :historyList="historyList"
+          @hotSearch="hotSearch"
+          @deleteHistory="deleteHistory"
+        ></search-list>
+      </van-tab>
+    </van-tabs>
+    <search-list
+      v-if="type==='jewelryCircle'"
+      :hotList="hotList"
+      :historyList="historyList"
+      :topicList="topicList"
+      @hotSearch="hotSearch"
+      @deleteHistory="deleteHistory"
+      @topicSearch="topicSearch"
+    ></search-list>
   </AppView>
 </template>
 
 <script>
 import { getToken } from '~/utils/auth'
+import searchList from "./searchList";
 export default {
+  components: {
+    searchList
+  },
   data() {
     return {
       value: '',
       type: '',
+      active: '1',
       searchType: undefined,
       localName: '',
       hotList: [],
-      historyList: []
+      historyList: [],
+      topicList: [],
+      searchTypeMap: {
+        'jewelry': 0,
+        'jewelryCircle': 1,
+        'design': 1
+      }
     }
   },
   activated() {
     this.type = this.$route.query.type
     if (this.type) {
-      this.searchType = this.type === 'jewelryCircle' ? 1 : undefined
+      this.searchType = this.searchTypeMap[this.type]
       this.localName = this.type + 'SearchWord'
       this.getHot()
+      if (this.type === 'jewelryCircle') {
+        this.getTopic()
+      }
       if (getToken()) {
         this.getHistory()
       } else {
@@ -74,16 +111,28 @@ export default {
       })
     },
     getHistory() {
-      this.$service("jewelryCircleHistoryKeyword", { data: { type: this.searchType } }).then(result => {
+      let historyArr = []
+      if (localStorage.getItem(this.localName) !== null) {
+        historyArr = JSON.parse(localStorage.getItem(this.localName))
+      }
+      this.$service("jewelryCircleHistoryKeyword", { data: { type: this.searchType, keys: historyArr.join(',') } }).then(result => {
         this.historyList = result.data
+      })
+    },
+    getTopic() {
+      this.$service("searchTopicList", { data: { limit: 8 } }).then(result => {
+        this.topicList = result.data.records
       })
     },
     onSearch(value) {
       if (this.type == 'jewelryCircle') {
-        this.setHistory(value)
-        this.$router.push({ name: 'news-jewelryCircle-result', query: { searchWord: value } })
+        this.setHistory(this.value)
+        this.$router.push({ name: 'jewelryCircle-result', query: { searchWord: this.value } })
+      } else if (this.type == 'design') {
+        this.setHistory(this.value)
+        this.$router.push({ name: 'design-product', query: { searchWord: this.value } })
       } else {
-        this.$router.push({ name: 'jewelry-product', query: { searchWord: value, entrance: 1 } })
+        this.$router.push({ name: 'jewelry-product', query: { searchWord: this.value, entrance: 1 } })
       }
     },
     onCancel() {
@@ -94,7 +143,7 @@ export default {
       this.value = value
       this.onSearch(value)
     },
-    // 珠宝圈历史记录
+    // 历史记录
     setHistory(value) {
       if (value != '') {
         if (localStorage.getItem(this.localName) == null) {
@@ -120,6 +169,10 @@ export default {
       if (getToken()) {
         this.$service("jewelryCircleHistoryDelete", { resources: [this.searchType] }).then(result => { })
       }
+    },
+    topicSearch(value) {
+      this.value = value
+      this.$router.push({ name: 'jewelryCircle-result', query: { searchWord: this.value, type: 'topic' } })
     }
   }
 }
@@ -128,33 +181,30 @@ export default {
 <style lang="postcss" scoped>
 .search {
   height: 100vh;
-  background: #fff;
+  background: #f2f2f2;
   & .search-box {
-    border-bottom: 1px solid #e5e5e5;
+    /* border-bottom: 1px solid #e5e5e5; */
+    display: flex;
+    & .search-left {
+      width: 40px;
+      text-align: center;
+      line-height: 54px;
+      font-size: 13px;
+      background: #ffffff;
+    }
+    & .search-right {
+      flex: 1;
+      padding-left: 0;
+    }
   }
-}
-.hot-search {
-  position: relative;
-  padding: 17px 21px;
-  & .del-btn {
-    position: absolute;
-    right: 10px;
-    top: 20px;
-    width: 12px;
-  }
-  & h4 {
-    padding-bottom: 15px;
-    font-size: 16px;
-  }
-  & span {
-    display: inline-block;
-    margin: 0 5px 10px;
-    padding: 0 18px;
-    line-height: 26px;
-    font-size: 13px;
-    color: #727272;
-    background: #f6f6f6;
-    border-radius: 13px;
+  & .search-btn {
+    width: 53px;
+    height: 28px;
+    background: #df735a;
+    border-radius: 14px;
+    text-align: center;
+    color: #fff;
+    line-height: 28px;
   }
 }
 </style>

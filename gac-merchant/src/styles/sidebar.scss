@@ -1,0 +1,122 @@
+#app {
+
+  // 主体区域
+  // .main-container {
+  //   min-height: 100%;
+  //   transition: margin-left .28s;
+  //   margin-left: 210px;
+  // }
+
+  // 侧边栏
+  .sidebar-container {
+    float: left;
+    width: 200px !important;
+    height: 700px;
+    font-size: 0px;
+    overflow: hidden;
+    user-select: none;
+
+    .scrollbar-wrapper {
+      overflow-x: hidden !important;
+
+      .el-scrollbar__view {
+        height: 100%;
+      }
+    }
+
+    .is-horizontal {
+      display: none;
+    }
+
+    a {
+      display: inline-block;
+      width: 50%;
+      overflow: hidden;
+    }
+
+    // .svg-icon {
+    //   margin-right: 16px;
+    // }
+
+    .el-menu {
+      border: none;
+      height: 100%;
+      width: 100% !important;
+
+    }
+  }
+
+  // .hideSidebar {
+  //   .sidebar-container {
+  //     width: 36px !important;
+  //   }
+
+  //   .main-container {
+  //     margin-left: 36px;
+  //   }
+
+  //   .submenu-title-noDropdown {
+  //     padding-left: 10px !important;
+  //     position: relative;
+
+  //     .el-tooltip {
+  //       padding: 0 10px !important;
+  //     }
+  //   }
+
+  //   .el-submenu {
+  //     overflow: hidden;
+
+  //     &>.el-submenu__title {
+  //       padding-left: 10px !important;
+
+  //       .el-submenu__icon-arrow {
+  //         display: none;
+  //       }
+  //     }
+  //   }
+
+  //   .el-menu--collapse {
+  //     .el-submenu {
+  //       &>.el-submenu__title {
+  //         &>span {
+  //           height: 0;
+  //           width: 0;
+  //           overflow: hidden;
+  //           visibility: hidden;
+  //           display: inline-block;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  .sidebar-container .el-submenu .el-menu-item {
+    padding: 0 !important;
+    padding-left: 20px !important;
+    height: 24px !important;
+    line-height: 2em !important;
+    font-size: 12px;
+    min-width: 0;
+
+    &:hover {
+      color: #3D87FD !important;
+      background-color: transparent !important;
+    }
+  }
+
+  .sidebar-container .el-submenu>.el-submenu__title {
+    height: 38px !important;
+    line-height: 38px !important;
+    color: #333 !important;
+    font-weight: bold;
+
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+
+  .el-submenu__icon-arrow {
+    transform: rotate(-90deg);
+  }
+}

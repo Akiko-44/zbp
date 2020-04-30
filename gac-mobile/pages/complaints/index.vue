@@ -64,7 +64,7 @@
       </van-cell-group>
 
     </validator>
-    <van-cell-group>
+    <!-- <van-cell-group>
       <van-cell style="border-top: 15px solid #F8F8F8;">
         <template slot="title">
           <VUpload
@@ -78,6 +78,23 @@
       </van-cell>
       <van-cell>
         <div class="tips">9张以内，支持jpg/png/gif/jpeg，单张图片大小3m以内</div>
+      </van-cell>
+    </van-cell-group> -->
+    <van-cell-group>
+      <van-cell style="border-top: 15px solid #F8F8F8;">
+        <template slot="title">
+          <CUploadList
+            ref="picUploader"
+            :imgs="imgs"
+            :limit=9
+            :props="{src: 'imgUrl'}"
+            @success="uploadSuccess"
+          >
+          </CUploadList>
+        </template>
+      </van-cell>
+      <van-cell>
+        <div class="tips">9张以内，支持jpg/png/gif/jpeg，单张图片大小5m以内</div>
       </van-cell>
     </van-cell-group>
 
@@ -128,12 +145,14 @@
 <script>
 import Validator from '~/components/common/validator'
 import VUpload from '~/components/common/upload'
+import CUploadList from '~/components/common/upload/customList'
 import { setImg } from '~/utils/qiniu'
 
 export default {
   components: {
     Validator,
-    VUpload
+    VUpload,
+    CUploadList
   },
   head() {
     return {
@@ -261,10 +280,13 @@ export default {
       this.pickerBrandShow = false
       this.form.brandName = value
     },
-    uploadSuccess({
+    /* uploadSuccess({
       key
     }) {
       this.form.userLogo = key
+    }, */
+    uploadSuccess(imgs) {
+      this.form.imgUrl = imgs
     },
     regEmail() {
       let regEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
@@ -289,16 +311,17 @@ export default {
       })
     },
     submit() {
-      this.imgs.forEach(data => {
+      /* this.imgs.forEach(data => {
         this.form.imgUrl.push(data.imgUrl)
-      })
+      }) */
+      debugger
       if (this.$refs.form.checkAll(error => this.$toast(error[0]))) {
         this.loading = true
-        this.$service('complaintSave', {
+        /* this.$service('complaintSave', {
           data: this.form
         })
           .then(this.success)
-          .catch(this.fail)
+          .catch(this.fail) */
       }
     },
     success(result) {

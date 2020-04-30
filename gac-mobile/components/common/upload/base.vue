@@ -1,26 +1,31 @@
 <template>
-<div>
-  <input type="file" @change="onChange($event)" class="upload-input" accept="image/*">
-  <no-ssr>
-    <Crop
-      style="position: relative; z-index: 1999;"
-      :file="file"
-      :options="options"
-      @on-cancle="onCancle"
-      @on-confirm="onConfirm"
-      @on-error="onError"
-      ref="crop"
-    />
-  </no-ssr>
-</div>
+  <div>
+    <input
+      type="file"
+      @change="onChange($event)"
+      class="upload-input"
+      :accept="accept"
+    >
+    <no-ssr>
+      <Crop
+        style="position: relative; z-index: 999999;"
+        :file="file"
+        :options="options"
+        @on-cancle="onCancle"
+        @on-confirm="onConfirm"
+        @on-error="onError"
+        ref="crop"
+      />
+    </no-ssr>
+  </div>
 </template>
 
 <script>
 import { Toast } from 'vant'
-import { upload, getKey } from '~/utils/qiniu'
+import { upload, getKey, uploadSectionFile } from '~/utils/qiniu'
 const Crop = process.browser ? require('xcrop/src/components/VueCrop').default : {}
 
-function loadImage (url, cb) {
+function loadImage(url, cb) {
   const img = new Image()
   img.onload = function () {
     cb && cb(img)
@@ -42,12 +47,24 @@ export default {
     height: {
       type: Number,
       default: 0
+    },
+    maxSize: {
+      type: Number,
+      default: 5
+    },
+    compress: {
+      type: Boolean,
+      default: true
+    },
+    accept: {
+      type: String,
+      default: 'image/jpeg, image/png, image/jpg'
     }
   },
   components: {
     Crop
   },
-  data () {
+  data() {
     return {
       file: null,
       options: {},
@@ -55,20 +72,39 @@ export default {
     }
   },
   methods: {
-    onChange (e) {
+    onChange(e) {
+      if (this.accept.indexOf(e.target.files[0].type) === -1) {
+        Toast('请上传jpg/jpeg/png格式图片')
+        return false
+      }
+      if (this.compress) {
+        uploadSectionFile(e.target.files[0], this.maxSize).then((res) => {
+          if (res.size > this.maxSize * 1024 * 1024) {
+            this.$toast('图片大小不得超过' + this.maxSize + '兆（M）');
+            return false
+          }
+          this.file = res
+        })
+      } else {
+        if (e.target.files[0].size > this.maxSize * 1024 * 1024) {
+          this.$toast('图片大小不得超过' + this.maxSize + '兆（M）');
+          return false
+        }
+        this.file = e.target.files[0]
+      }
+
       const crop = this.$refs.crop[0]
       const size = {}
       this.width && (size.width = this.width)
       this.height && (size.height = this.height)
       crop.setBorder(size)
-      this.file = e.target.files[0]
       e.target.value = ''
     },
-    onCancle (crop) {
+    onCancle(crop) {
       this.file = null
       crop.hide()
     },
-    onConfirm (crop) {
+    onConfirm(crop) {
       if (this.uploading) return
 
       const src = crop.get({ format: 'objectUrl' })
@@ -89,24 +125,6 @@ export default {
           loadingType: 'spinner',
           message: '0%'
         })
-
-        /*upload(key, file, progress => {
-          toast.message = progress + '%'
-          this.$emit('progress', progress)
-        })
-          .then(response => {
-            setTimeout(() => {
-              const result = response.data
-              crop.hide()
-              Toast.clear()
-              this.uploading = false
-              this.$emit('success', 'http://image.gacjc.com/' + result.key)
-            }, 300)
-          })
-          .catch(() => {
-            this.uploading = false
-            this.$toast({ type: 'fail', message: '上传错误' })
-          })*/
         upload(file, progress => {
           toast.message = progress + '%'
           this.$emit('progress', progress)
@@ -117,8 +135,7 @@ export default {
               crop.hide()
               Toast.clear()
               this.uploading = false
-//            this.$emit('success', 'http://image.gacjc.com/' + result.key)
-							this.$emit('success', result.data.picUrl)
+              this.$emit('success', result.data.picUrl)
             }, 300)
           })
           .catch(() => {
@@ -127,7 +144,7 @@ export default {
           })
       })
     },
-    onError (error) {
+    onError(error) {
       this.$toast(error)
     }
   }
@@ -135,6 +152,4 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-
-
 </style>

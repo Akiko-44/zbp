@@ -1,6 +1,7 @@
 /* 页面公共布局样式 */
 body {
   padding-bottom: env(safe-area-inset-bottom);
+  -webkit-overflow-scrolling: touch;
 }
 
 /* fixed布局下的input虚拟键盘光标消失解决：*/

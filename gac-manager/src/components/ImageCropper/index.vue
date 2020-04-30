@@ -1,5 +1,6 @@
 <template>
-<div class="vue-image-crop-upload" v-show="value">
+<div>
+  <div class="vue-image-crop-upload" v-show="value">
   <div class="vicp-wrap">
     <div class="vicp-close" @click="off">
       <i class="vicp-icon4"></i>
@@ -100,6 +101,8 @@
     <canvas v-show="false" :width="width" :height="height" ref="canvas"></canvas>
   </div>
 </div>
+<div class="tip">{{tips}}</div>
+</div>
 </template>
 
 <script>
@@ -110,12 +113,17 @@ import language from './utils/language.js'
 import mimes from './utils/mimes.js'
 import data2blob from './utils/data2blob.js'
 import effectRipple from './utils/effectRipple.js'
-import { getToken, uploadUrl, getKey } from '@/api/qiniu'
+import { getToken, uploadUrl, getKey, uploadSectionFile } from '@/api/qiniu'
 import { uploadImg, uploadBatchApi } from '@/api/upload'
 import { domain} from '@/api/qiniu'
 
 export default {
   props: {
+    // 新增自定义tips
+    tips: {
+      type: String,
+      'default': ''
+    },
     // 域，上传文件name，触发事件会带上（如果一个页面多个图片上传控件，可以做区分
     field: {
       type: String,
@@ -178,7 +186,7 @@ export default {
     // 单文件大小限制
     maxSize: {
       type: Number,
-      'default': 2
+      'default': 5
     },
     // 语言类型
     langType: {
@@ -462,12 +470,14 @@ export default {
         that.errorMsg = lang.error.onlyImg
         return false
       }
-      // 超出大小
-      if (file.size / (1024*1024) > maxSize) {
-        that.hasError = true
-        that.errorMsg = lang.error.outOfSize + maxSize + 'M'
-        return false
-      }
+      uploadSectionFile(file, that.maxSize).then((res) => {
+        // 超出大小
+        if (res.size / (1024*1024) > that.maxSize) {
+          that.hasError = true
+          that.errorMsg = lang.error.outOfSize + that.maxSize + 'M'
+          return false
+        }
+      })
       return true
     },
     // 重置控件
@@ -873,9 +883,13 @@ export default {
 }
 </script>
 
-<!--
-<style lang='sass' src="./scss/upload.scss">
-</style> -->
+<style lang='scss' scoped>
+/* 自定义tips */
+.tip{
+  font-size: 12px;
+  color: #999;
+}
+</style>
 
 <style>
 @charset "UTF-8";

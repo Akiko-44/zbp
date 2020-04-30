@@ -1,24 +1,34 @@
 <template>
-  <AppView class="Base-goods-list">
-    <AppList :query="query"
-             :postData="postData"
-             :getData="() => this.$service('groupGoods', { data: this.query, params: this.postData })"
-             ref="list">
+  <AppView
+    class="Base-goods-list"
+    :title="title"
+  >
+    <AppList
+      :query="query"
+      :postData="postData"
+      :getData="() => this.$service('groupGoods', { data: this.query, params: this.postData })"
+      ref="list"
+    >
       <template slot-scope="{ list }">
         <van-row gutter="10">
-          <van-col span="12"
-                   v-for="(item, i) in list"
-                   :key="i">
-            <AppCard :imgUrl="item.goodsPic"
-                     :lowPrice="item.lowPrice"
-                     :hightPrice="item.hightPrice"
-                     :navLowPrice="item.navLowPrice"
-                     :navHightPrice="item.navHightPrice"
-                     :title="item.goodsName"
-                     :merchantName="item.merchantName"
-                     :merchantLogo="item.merchantPic"
-                     :discount="item.discount"
-                     @click.native="goToNextPage(item.goodsId)" />
+          <van-col
+            span="12"
+            v-for="(item, i) in list"
+            :key="i"
+          >
+            <AppCard
+              :imgUrl="item.goodsPic"
+              :appBigIcon="item.appBigIcon"
+              :lowPrice="item.lowPrice"
+              :hightPrice="item.hightPrice"
+              :navLowPrice="item.navLowPrice"
+              :navHightPrice="item.navHightPrice"
+              :title="item.goodsName"
+              :merchantName="item.merchantName"
+              :merchantLogo="item.merchantPic"
+              :discount="item.discount"
+              @click.native="goToNextPage(item.goodsId)"
+            />
           </van-col>
         </van-row>
       </template>
@@ -37,12 +47,13 @@ export default {
   },
   head() {
     return {
-      title: '团购列表'
+      title: this.title
     }
   },
   data() {
     if (this.$data) return
     return {
+      title: '',
       postData: {
         offset: 1,
         limit: 20,
@@ -58,9 +69,10 @@ export default {
   mounted() {
 
   },
-  beforeMount() {
+  activated() {
+    this.title = this.$route.query.title
     if (this.$native.isApp()) {
-    	this.$native.getTitle('团购列表')
+      this.$native.getTitle(this.title)
     }
   },
   methods: {

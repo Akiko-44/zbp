@@ -4,7 +4,7 @@
       v-model="h5ShareShow"
       title="分享至"
     >
-      <div class="row">
+      <div class="share-row">
         <van-row gutter="10">
           <!-- <van-col span="6"
                    @click.native="shareWeixin">
@@ -183,7 +183,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.row {
+.share-row {
   width: 90%;
   margin: 10px auto;
 }

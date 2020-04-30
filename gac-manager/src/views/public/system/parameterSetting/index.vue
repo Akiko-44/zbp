@@ -349,7 +349,8 @@
             v-model="merchantForm.platformServiceFee"
             :controls="false"
             :min="0"
-          ></el-input-number> %
+          ></el-input-number>
+          %
         </el-form-item>
 
         <el-form-item
@@ -382,6 +383,20 @@
           </el-radio-group>
         </el-form-item>
 
+        <el-form-item
+          label="设计师订单支付时间："
+          prop="designOrderCancelTime"
+        >
+          <el-input-number
+            placeholder="请输入数字"
+            v-model="merchantForm.designOrderCancelTime"
+            :controls="false"
+            :min="1"
+            :max="1000"
+          ></el-input-number>
+          <span>小时</span>
+        </el-form-item>
+
         <el-form-item>
           <el-button
             type="primary"
@@ -391,7 +406,6 @@
         </el-form-item>
       </el-form>
     </div>
-
   </div>
 </template>
 
@@ -413,7 +427,8 @@ export default {
         platformServiceFee: '',
         shopAuditSwitch: 0,
         gacAuditSwitch: 0,
-        goodsAuditSwitch: 0
+        goodsAuditSwitch: 0,
+        designOrderCancelTime: 24
       },
       yearForm: {},
       orderForm: {},
@@ -424,6 +439,9 @@ export default {
             message: '请输入平台服务费',
             trigger: 'blur'
           }
+        ],
+        designOrderCancelTime: [
+          { message: '请输入设计师订单支付时间', required: true, trigger: 'blur' }
         ]
       }
     }
@@ -436,17 +454,19 @@ export default {
   methods: {
     add() {
       this.loading = true
-      saveParamSettings(this.merchantForm).then(data => {
-        this.$notify({
-          title: '成功',
-          message: '提交成功',
-          type: 'success',
-          duration: 2000
+      saveParamSettings(this.merchantForm)
+        .then(data => {
+          this.$notify({
+            title: '成功',
+            message: '提交成功',
+            type: 'success',
+            duration: 2000
+          })
+          this.loading = false
         })
-        this.loading = false
-      }).catch(() => {
-        this.loading = false
-      })
+        .catch(() => {
+          this.loading = false
+        })
     },
     save() {
       this.$refs.merchantForm.validate(valid => {

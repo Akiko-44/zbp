@@ -1,11 +1,16 @@
 <template>
-  <AppView class="address"
-           title="收货地址">
-    <van-address-list v-model="chosenAddressId"
-                      :list="list"
-                      @add="onAdd"
-                      @edit="onEdit"
-                      @select="onSelect">
+  <AppView
+    class="address"
+    title="收货地址"
+  >
+    <van-address-list
+      v-model="chosenAddressId"
+      :list="list"
+      @add="onAdd"
+      @edit="onEdit"
+      @select="onSelect"
+      add-button-text="添加地址"
+    >
       <!-- 列表内容 -->
       <slot :list="list"></slot>
       <!--<slot name="empty">
@@ -26,7 +31,7 @@ export default {
   beforeMount() {
     this.$store.dispatch('user/checkLogin', this.$router)
     if (this.$native.isApp()) {
-    	this.$native.getTitle('收货地址')
+      this.$native.getTitle('收货地址')
     }
   },
   mounted() {
@@ -66,7 +71,9 @@ export default {
       this.$service('userSetDefault', { resources: [item.id] })
         .then(result => {
           this.$toast({ type: 'success', message: '选择成功' })
-          if (this.$route.query.name == 'is-go') {
+          if (this.$route.query.name == 'is-go' && !!window.webkit) {//判断IOS退回上一页面
+            this.$native.goToHome()
+          } else if (this.$route.query.name == 'is-go') {
             this.$router.go(-1)
           }
         })
@@ -84,6 +91,10 @@ export default {
   background-color: var(--light-gray);
 }
 >>> .van-address-list {
-	padding: 0;
+  padding: 10px;
+  & .van-address-item {
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
 }
 </style>

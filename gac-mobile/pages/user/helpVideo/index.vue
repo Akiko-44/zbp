@@ -38,25 +38,31 @@ export default {
       videoList: [
         {
           imgUrl: require('../../../assets/images/jewelryVideo.png'),
-          videoUrl: 'http://image.gacjc.com/%E7%8F%A0%E5%AE%9D%E5%BA%97%EF%BC%88%E4%BC%81%E4%B8%9A%EF%BC%89.mp4',
+          videoUrl: 'http://app.gacjc.com/app/download/help/agfdgu.mp4',
+          title: '我要开店',
+          isActive: false
+        },
+        {
+          imgUrl: require('../../../assets/images/jewelryVideo.png'),
+          videoUrl: 'http://app.gacjc.com/app/download/help/gsxdkyug.mp4',
           title: '珠宝店（企业）认证帮助视频',
           isActive: false
         },
         {
           imgUrl: require('../../../assets/images/jewelryVideo.png'),
-          videoUrl: 'http://image.gacjc.com/%E7%8F%A0%E5%AE%9D%E5%BA%97%EF%BC%88%E4%B8%AA%E4%BA%BA.mp4',
+          videoUrl: 'http://app.gacjc.com/app/download/help/gyusefv.mp4',
           title: '珠宝店（个人）认证帮助视频',
           isActive: false
         },
         {
           imgUrl: require('../../../assets/images/designVideo.png'),
-          videoUrl: 'http://image.gacjc.com/%E8%AE%BE%E8%AE%A1%E5%B8%88%EF%BC%88%E4%B8%AA%E4%BA%BA%EF%BC%89.mp4',
+          videoUrl: 'http://app.gacjc.com/app/download/help/fygfuy.mp4',
           title: '设计师认证帮助视频',
           isActive: false
         },
         {
           imgUrl: require('../../../assets/images/makerVideo.png'),
-          videoUrl: 'http://image.gacjc.com/%E5%88%B6%E9%80%A0%E9%97%B4%EF%BC%88%E4%BC%81%E4%B8%9A%EF%BC%89.mp4',
+          videoUrl: 'http://app.gacjc.com/app/download/help/cgdsuy.mp4',
           title: '制造间认证帮助视频',
           isActive: false
         }
@@ -90,27 +96,36 @@ export default {
 
 <style scoped lang="postcss">
 .video-box {
+  display: inline-block;
+  width: 173px;
+  height: 134px;
   position: relative;
-  margin: 10px 10px 16px;
+  margin-top: 10px;
+  margin-left: 10px;
+  background: #fff;
   & .video {
     width: 100%;
-    height: 200px;
+    height: 98px;
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
   & .video-play {
     position: absolute;
-    top: 73px;
-    left: 145px;
-    width: 48px;
-    height: 48px;
+
+    top: 50%;
+    left: 50%;
+    margin-left: -16px;
+    margin-top: -30px;
+    width: 32px;
+    height: 32px;
   }
   & .video-info {
     position: absolute;
-    bottom: 16px;
-    left: 16px;
-    color: #fff;
-    font-size: 14px;
+    bottom: 10px;
+    left: 7px;
+    color: #666;
+    font-size: 10px;
+    text-align: center;
   }
 }
 </style>

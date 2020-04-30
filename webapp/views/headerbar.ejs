@@ -91,6 +91,7 @@
 
   .head-right .app-download {
     width: 110px;
+    height: 28px;
     background: #424242;
     color: #cccccc;
   }
@@ -183,8 +184,8 @@
 
   #goTop {
     position: fixed;
-    bottom: 70px;
-    right: 246px;
+    top: 50%;
+    right: 0;
     width: 84px;
     height: 92px;
     text-align: center;
@@ -322,8 +323,8 @@
       console.log('failed' + this.getStatus());
     }
   }, {
-    enableHighAccuracy: true
-  });
+      enableHighAccuracy: true
+    });
 
   $(document).on('mouseenter', '#loginName', function () {
     $('.dropdown-list').show();

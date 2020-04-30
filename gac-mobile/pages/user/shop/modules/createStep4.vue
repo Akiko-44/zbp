@@ -30,8 +30,9 @@
       :rules="rules"
       :model="form.linkmanList[0]"
       ref="form"
+      class="step-wrap"
     >
-      <van-cell-group>
+      <van-cell-group class="margin">
         <van-field
           v-model="form.linkmanList[0].linkName"
           :label="(registType == 2 || form.registType == 2 || form4.registType == 2) ? '法人姓名' : '姓名' "
@@ -44,20 +45,47 @@
           type="text"
           :label="(registType == 2 || form.registType == 2 || form4.registType == 2) ? '法人身份证号' : '身份证号' "
           maxlength="18"
-          placeholder="请输入身份证号,目前仅支持中国大陆身份信息"
+          :label-width="(registType == 2 || form.registType == 2 || form4.registType == 2) ? '106px' : '90px' "
+          placeholder="请输入中国大陆的身份证号码"
           required
           @blur="validateidCard"
         />
-        <van-cell
+      </van-cell-group>
+
+      <div class="common-area">
+        <div class="upload-area">
+          <CUpload
+            @success="uploadfacePhoto"
+            :src="form.linkmanList[0].facePhoto"
+            :maxSize="1.5"
+          />
+        </div>
+        <div class="right-area">
+          身份证照片（人像面)
+        </div>
+      </div>
+
+      <p class="tips">1.5兆（M）以内，格式支持jpg\jpeg\png，尺寸不限</p>
+      <div class="common-area">
+        <div class="upload-area">
+          <CUpload
+            @success="uploadbackPhoto"
+            :src="form.linkmanList[0].backPhoto"
+            :maxSize="1.5"
+          />
+        </div>
+        <div class="right-area">
+          身份证照片（党徽面)
+        </div>
+      </div>
+      <p class="tips">1.5兆（M）以内，格式支持jpg\jpeg\png，尺寸不限</p>
+      <!-- <van-cell
           class="van-cell--required"
           :title="(registType == 2 || form.registType == 2 || form4.registType == 2) ? '法人手持身份证照片（人像面）' : '手持身份证照片（人像面）' "
           label="1.5兆（M）以内，格式支持jpg\jpeg\png，尺寸不限"
           title-class="min-width"
         >
           <div class="img-upload">
-            <!--<img v-if="form.linkmanList[0].facePhoto" :src="form.linkmanList[0].facePhoto">
-					<img v-else src="../../../../assets/images/uploadImg.png">
-					<VUpload :width="243" :height="153" @success="uploadfacePhoto" />-->
             <CUpload
               @success="uploadfacePhoto"
               :src="form.linkmanList[0].facePhoto"
@@ -71,16 +99,12 @@
           title-class="min-width"
         >
           <div class="img-upload">
-            <!--<img v-if="form.linkmanList[0].backPhoto" :src="form.linkmanList[0].backPhoto">
-					<img v-else src="../../../../assets/images/uploadImg.png">
-					<VUpload :width="243" :height="153" @success="uploadbackPhoto" />-->
             <CUpload
               @success="uploadbackPhoto"
               :src="form.linkmanList[0].backPhoto"
             />
           </div>
-        </van-cell>
-      </van-cell-group>
+        </van-cell> -->
     </validator>
     <div class="padding">
       <van-button
@@ -189,6 +213,83 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.step-wrap {
+  padding: 0 10px;
+  & >>> .van-cell-group {
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  & >>> .van-cell:not(:last-child)::after {
+    left: 0;
+  }
+  & >>> .van-cell {
+    padding: 18px 15px;
+    font-size: 17px;
+  }
+  & >>> .van-cell__value {
+    font-size: 13px;
+  }
+  & >>> .van-button.van-button--primary.block,
+  & >>> .van-button.primary-btn.block {
+    height: 44px;
+    line-height: 44px;
+    font-size: 15px;
+  }
+
+  /* 拍照上传 */
+  & .common-area {
+    display: flex;
+    & .right-area {
+      font-size: 15px;
+      margin-left: 30px;
+      line-height: 84px;
+    }
+  }
+  & .tips {
+    font-size: 12px;
+    line-height: 18px;
+    color: #999;
+    margin: 5px 0 20px;
+  }
+  & .upload-area {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    background-color: #ffffff;
+    text-align: center;
+    & img {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+    }
+    & .top22 {
+      top: 22px;
+    }
+    & .icon {
+      position: absolute;
+      top: 50%;
+      margin-top: -25px;
+      left: 50%;
+      margin-left: -25px;
+      width: 50px;
+      height: 50px;
+      background-image: url(../../../../assets/images/icon_uploadadd.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    & p {
+      color: var(--dark-gray);
+      padding-top: 15px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+  }
+}
+.margin {
+  margin-bottom: 20px;
+}
 .padding {
   padding: 12px;
 }

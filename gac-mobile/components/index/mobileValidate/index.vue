@@ -1,34 +1,81 @@
 <template>
-<validator ref="form" :model="form" :rules="rules" class="form">
-  <template slot-scope="{ error, check }">
-    <h4 class="title">第一步  验证手机号</h4>
-    <div class="input-row">
-      <!--<label>手机号:</label>-->
-      <div class="border-input">
-        <input v-model="form.mobilePhone" @blur="check('mobilePhone')" type="tel" placeholder="请输入手机号" readonly>
-        <p class="msg error">{{error.mobilePhone}}</p>
+  <validator
+    ref="form"
+    :model="form"
+    :rules="rules"
+    class="form first-step"
+  >
+    <template slot-scope="{ error, check }">
+      <div class="block">
+        <!-- <h4 class="title">第一步  验证手机号</h4> -->
+        <div class="input-row">
+          <!--<label>手机号:</label>-->
+
+          <div v-if="isBindPhone">
+            原手机号码：{{form.mobilePhone}}
+          </div>
+          <div
+            class="border-input"
+            v-else
+          >
+            <input
+              v-model="form.mobilePhone"
+              @blur="check('mobilePhone')"
+              type="tel"
+              maxlength="11"
+              placeholder="请输入手机号"
+            >
+            <p class="msg error">{{error.mobilePhone}}</p>
+          </div>
+        </div>
+        <div
+          class="input-row"
+          v-show="form.verify == 0"
+        >
+          <div class="border-input">
+            <input
+              v-model="form.verifyCode"
+              @blur="check('verifyCode')"
+              type="text"
+              maxlength="6"
+              placeholder="请输入图形验证码"
+            >
+            <!-- <p class="msg">不区分大小写</p> -->
+            <p class="msg error">{{error.verifyCode}}</p>
+          </div>
+          <CodeImage
+            ref="codeImage"
+            @refresh="refresh"
+          />
+        </div>
+        <div class="input-row">
+          <!--<label>动态验证码:</label>-->
+          <div class="border-input">
+            <input
+              v-model="form.dynamicVerifyCode"
+              @blur="check('dynamicVerifyCode')"
+              type="text"
+              maxlength="6"
+              placeholder="请输入短信验证码"
+            >
+            <p class="msg error">{{error.dynamicVerifyCode || error.msgId}}</p>
+          </div>
+          <CodeBtn
+            :form="form"
+            @fail="checkFail"
+            :isClick="true"
+          />
+        </div>
       </div>
-    </div>
-    <div class="input-row">
-      <!--<label>验证码:</label>-->
-      <div class="border-input">
-        <input v-model="form.verifyCode" @blur="check('verifyCode')" type="text" placeholder="请输入图形验证码">
-        <p class="msg">不区分大小写</p>
-        <p class="msg error">{{error.verifyCode}}</p>
-      </div>
-      <CodeImage ref="codeImage" @refresh="refresh" />
-    </div>
-    <div class="input-row">
-      <!--<label>动态验证码:</label>-->
-      <div class="border-input">
-        <input v-model="form.dynamicVerifyCode" @blur="check('dynamicVerifyCode')" type="text" placeholder="请输入短信验证码">
-        <p class="msg error">{{error.dynamicVerifyCode || error.msgId}}</p>
-      </div>
-      <CodeBtn :form="form" @fail="checkFail" />
-    </div>
-    <van-button :loading="loading" type="primary" block class="primary-btn block" @click="checkMobile">下一步</van-button>
-  </template>
-</validator>
+      <van-button
+        :loading="loading"
+        type="primary"
+        block
+        class="primary-btn"
+        @click="checkMobile"
+      >下一步</van-button>
+    </template>
+  </validator>
 </template>
 
 <script>
@@ -38,22 +85,28 @@ import Validator from '~/components/common/validator'
 
 export default {
   props: {
-    serviceName: String
+    serviceName: String,
+    isBindPhone: {
+      type: Boolean,
+      default: true
+    }
   },
   components: {
     CodeImage,
     CodeBtn,
     Validator
   },
-  data () {
+  data() {
     return {
       form: {
-        codeUuid: '',
+        codeUuid: '123456',
         mobilePhone: '',
-        verifyCode: '',
+        verifyCode: '123456',
         dynamicVerifyCode: '',
-        msgId: ''
+        msgId: '',
+        verify: 1
       },
+      nextNum: 0,
       rules: {
         mobilePhone: [
           { required: true, message: '请输入手机号' }
@@ -71,13 +124,13 @@ export default {
       loading: false
     }
   },
-  activated () {
+  activated() {
     this.$service('userInfo').then((result) => {
       this.form.mobilePhone = result.data.mobilePhone
     })
   },
   methods: {
-    checkMobile () {
+    checkMobile() {
       if (this.$refs.form.checkAll()) {
         this.loading = true
         this.$service(this.serviceName, { data: this.form })
@@ -85,15 +138,20 @@ export default {
           .catch(this.checkFail)
       }
     },
-    checkSuccess (result) {
+    checkSuccess(result) {
       this.$emit('success', result)
     },
-    checkFail () {
+    checkFail() {
+      if (this.nextNum >= 2) {
+        this.form.verify = 0
+        this.form.verifyCode = ''
+        this.$refs.codeImage.refresh()
+      } else {
+        this.nextNum++
+      }
       this.loading = false
-      this.form.verifyCode = ''
-      this.$refs.codeImage.refresh()
     },
-    refresh (code) {
+    refresh(code) {
       this.form.codeUuid = code.uuid
     }
   }
@@ -101,7 +159,31 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.form {
+.first-step {
+  padding: 10px;
+  & .block {
+    background: #fff;
+    border-radius: 5px;
+  }
+  & .input-row {
+    height: 59px;
+    margin-bottom: 0;
+    padding: 0 15px;
+    border-bottom: 1px solid #eaebf0;
+  }
+  & .border-input {
+    padding: 0;
+    border: none;
+    & input {
+      padding: 0;
+    }
+  }
+  & .primary-btn {
+    background: #df735a;
+    border-color: #df735a;
+  }
+}
+/* .form {
   padding: 0 20px;
 }
 .title {
@@ -110,8 +192,8 @@ export default {
   font-weight: bold;
   text-align: center;
 }
-.code-btn{
+.code-btn {
   margin: 0 0 0 0.2667rem;
   border: 1px solid #e9ebf1 !important;
-}
+} */
 </style>

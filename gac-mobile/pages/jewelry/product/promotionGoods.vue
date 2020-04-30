@@ -18,6 +18,7 @@
           >
             <AppCard
               :imgUrl="item.goodsPic"
+              :appBigIcon="item.appBigIcon"
               :lowPrice="item.lowPrice ? item.lowPrice : 0"
               :hightPrice="item.hightPrice ? item.hightPrice : 0"
               :navLowPrice="item.navLowPrice ? item.navLowPrice : 0"
@@ -46,7 +47,7 @@ export default {
   },
   head() {
     return {
-      title: '限时促销'
+      title: this.title
     }
   },
   data() {
@@ -68,12 +69,13 @@ export default {
   mounted() {
 
   },
-  beforeMount() {
+  activated() {
+    this.title = this.$route.query.title || '限时促销'
     if (!this.$native.isApp() && this.$route.name === 'jewelry-product-promotionGoods') {
-      this.title = '限时促销'
+      this.title = this.title
     }
     if (this.$native.isApp()) {
-      this.$native.getTitle('限时促销')
+      this.$native.getTitle(this.title)
     }
   },
   methods: {

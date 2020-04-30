@@ -194,7 +194,7 @@ export const asyncRouterMap = [
       authority: 'promotionList',
       component: () => import('@/views/jewelryMerchant/worksList/promotion'),
       meta: {
-        title: '促销列表'
+        title: '精品库存特卖'
       }
     },
     {
@@ -436,8 +436,18 @@ export const asyncRouterMap = [
       authority: 'report',
       component: () => import('@/views/jewelryMerchant/fund/report'),
       meta: {
-        title: '报表'
+        title: '交易记录'
       }
+    },
+    {
+      path: 'orderCheckDetail',
+      name: 'orderCheckDetail',
+      authority: 'orderCheckDetail',
+      component: () => import('@/views/jewelryMerchant/fund/orderCheckDetail'),
+      meta: {
+        title: '订单详情'
+      },
+      hidden: true
     },
     {
       path: 'cardList',
@@ -450,6 +460,103 @@ export const asyncRouterMap = [
       hidden: true
     }
     ]
+  },
+  {
+    path: '/jwcontentManage',
+    name: 'jwcontentManager',
+    component: Layout,
+    redirect: '/jewelryMerchant/jwcontentManage/index',
+    meta: {
+      title: '内容管理'
+    },
+    children: [{
+      path: 'index',
+      name: 'jwcontentManage',
+      component: () => import('@/views/jewelryMerchant/contentManage/index'),
+      meta: {
+        title: '内容列表'
+      }
+    }, {
+      path: 'jwcontentManageDetail',
+      name: 'jwcontentManageDetail',
+      // authority: 'callBackList',
+      component: () => import('@/views/jewelryMerchant/contentManage/detail'),
+      meta: {
+        title: '内容详情'
+      },
+      hidden: true
+    },
+    {
+      path: 'jwcontentManageModify',
+      name: 'jwcontentManageModify',
+      // authority: 'callBackList',
+      component: () => import('@/views/jewelryMerchant/contentManage/modify'),
+      meta: {
+        title: '内容添加/修改'
+      },
+      hidden: true
+    }, {
+      path: 'jwcontentDraftManage',
+      name: 'jwcontentDraftManage',
+      component: () => import('@/views/jewelryMerchant/contentManage/draft'),
+      meta: {
+        title: '草稿箱列表'
+      }
+    },
+    {
+      path: 'jcassociatedGoods',
+      name: 'jcassociatedGoods',
+      // authority: 'announcement',
+      component: () => import('@/views/jewelryMerchant/contentManage/associatedGoods'),
+      meta: {
+        title: '绑定商品'
+      },
+      hidden: true
+    },
+    {
+      path: 'jccommentsGoods',
+      name: 'jccommentsGoods',
+      // authority: 'announcement',
+      component: () => import('@/views/jewelryMerchant/contentManage/comments'),
+      meta: {
+        title: '全部评论'
+      },
+      hidden: true
+    }
+    ]
+  },
+  {
+    path: '/complaintsManage',
+    name: 'jwcomplaintsManage',
+    component: Layout,
+    redirect: '/jewelryMerchant/complaintsManage/index',
+    meta: {
+      title: '申诉管理'
+    },
+    children: [{
+      path: 'index',
+      name: 'complaintsManage',
+      component: () => import('@/views/jewelryMerchant/complaintsManage/index'),
+      meta: {
+        title: '申诉列表'
+      }
+    }, {
+      path: 'jwaddComplaint',
+      name: 'jwaddComplaint',
+      component: () => import('@/views/jewelryMerchant/complaintsManage/addComplaint'),
+      meta: {
+        title: '立即申诉'
+      },
+      hidden: true
+    }, {
+      path: 'jwreportDetail',
+      name: 'jwreportDetail',
+      component: () => import('@/views/jewelryMerchant/complaintsManage/reportDetail'),
+      meta: {
+        title: '举报/申诉详情'
+      },
+      hidden: true
+    }]
   },
   {
     path: '/comment',

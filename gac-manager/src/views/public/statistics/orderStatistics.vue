@@ -458,8 +458,8 @@ export default {
         waitConfirmOrderAmount: '待确认订单金额',
         waitDeliverOrderNum: '待发货订单数',
         waitDeliverOrderAmount: '待发货订单金额',
-        waitReceiveOrderAmount: '待收货订单数',
-        waitSaleGoodsNum: '待收货订单金额',
+        waitReceiveOrderNum: '待收货订单数',
+        waitReceiveOrderAmount: '待收货订单金额',
         receiveOrderNum: '已收货订单数',
         receiveOrderAmount: '已收货订单金额',
         finishOrderNum: '已完成订单数',
@@ -479,6 +479,7 @@ export default {
   },
   created() {
     this.getFixTotalData()
+    this.getListData(0, 0, this.listParams)
     /* this.getTotalData(0)*/
   },
   mounted() {
@@ -489,7 +490,6 @@ export default {
       orderStatisticsTotal(0)
         .then(succ => {
           this.fixtotalData = succ.data
-          this.getListData(0, 0)
         })
     },
     getTotalData(type, params) {
@@ -542,7 +542,12 @@ export default {
       this.getTotalData(this.editableTabsValue, this.listParams)
     },
     handleClick2(tab, event) {
-      this.getListData(this.editableTabsValue2, 0, this.listParams)
+      this.getListData(this.editableTabsValue2, 0, {
+        offset: 1,
+        limit: 20,
+        startTime: this.listParams.startTime,
+        endTime: this.listParams.endTime
+      })
     },
     downloadFile() { // 点击导出按钮
       const listData = this.exportList

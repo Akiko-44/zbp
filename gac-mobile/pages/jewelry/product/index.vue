@@ -6,6 +6,7 @@
     <div
       class="goods-list-search"
       :class="{'h5Class' : inH5}"
+      v-if="!type"
     >
       <AppFilter>
         <div
@@ -66,6 +67,7 @@
       :postData="postData"
       :getData="() => this.$service('getGoodsResultFilter', { data: this.query, params: this.postData })"
       ref="list"
+      :class="{'goods-list' : !type}"
     >
       <template slot-scope="{ list }">
         <van-row gutter="10">
@@ -73,9 +75,11 @@
             span="12"
             v-for="(item, i) in list"
             :key="i"
+            class="goods-item"
           >
             <AppCard
               :imgUrl="item.goodsPic"
+              :appBigIcon="item.appBigIcon"
               :discount="item.discount"
               :lowPrice="item.lowPrice ? item.lowPrice : 0"
               :hightPrice="item.hightPrice ? item.hightPrice : 0"
@@ -108,10 +112,16 @@ export default {
     styleId: {
       type: [String, Number]
     },
+    zoneId: {
+      type: [String, Number]
+    },
     fromWherebuy: {
       type: [String, Number]
     },
     entrance: {
+      type: [String, Number]
+    },
+    type: {
       type: [String, Number]
     }
   },
@@ -147,6 +157,7 @@ export default {
         provice: undefined,
         city: undefined,
         entrance: this.$route.query.entrance || 1,
+        zoneId: this.$route.query.zoneId,
         gram: undefined,
         chainLength: undefined,
         circle: undefined,
@@ -165,12 +176,16 @@ export default {
   mounted() {
     this.paramsFromWherebuy = this.$route.query.fromWherebuy ? this.$route.query.fromWherebuy : this.fromWherebuy
     this.query.entrance = this.fromWherebuy || this.entrance
-    this.getFilterList()
+    if (!this.type) {
+      this.getFilterList()
+    }
   },
   activated() {
     this.query.searchWord = decodeURIComponent(this.$route.query.searchWord) == 'undefined' ? '' : decodeURIComponent(this.$route.query.searchWord)
     this.query.entrance = this.fromWherebuy || this.entrance
-    this.getFilterList()
+    if (!this.type) {
+      this.getFilterList()
+    }
     if (!this.query.categoryId) {
       this.query.categoryId = decodeURIComponent(this.$route.query.categoryId) == 'undefined' ? '' : decodeURIComponent(this.$route.query.categoryId)
       this.filter.categoryId = this.query.categoryId
@@ -267,7 +282,7 @@ export default {
 
 <style lang="postcss" scoped>
 @import "../../../assets/css/swap/goodsList.css";
-.list {
+.goods-list {
   padding-top: 37px;
 }
 .goods-list-search {
